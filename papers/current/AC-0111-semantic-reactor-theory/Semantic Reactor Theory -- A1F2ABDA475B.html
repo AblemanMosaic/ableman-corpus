@@ -1,0 +1,982 @@
+<h1 id="semantic-reactor-theory">Semantic Reactor Theory</h1>
+<h2
+id="governance-native-architecture-for-high-authority-semantic-transformation-systems">Governance-Native
+Architecture for High-Authority Semantic Transformation Systems</h2>
+<h3
+id="srt-is-descriptive-before-prescriptive-it-measures-governance-legibility-not-moral-virtue.">SRT
+is descriptive before prescriptive: it measures governance legibility,
+not moral virtue.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>High-authority systems — courts, platforms, regulatory agencies, AI
+models, operating systems, financial instruments — share a common
+structure: they receive symbolic inputs, transform them under an
+authority structure, and produce binding effects on behavior, identity,
+legitimacy, access, belief, or institutional reality.</p>
+<blockquote>
+<p><strong>Definition (Semantic Reactor).</strong><br />
+A system <span class="math inline"><em>S</em></span> is a semantic
+reactor if and only if: (1) <span class="math inline"><em>S</em></span>
+receives symbolic or semantic inputs, (2) <span
+class="math inline"><em>S</em></span> transforms those inputs under an
+authority structure that determines admissibility, and (3) <span
+class="math inline"><em>S</em></span> produces binding effects — effects
+externally consequential even when the target resists them.</p>
+</blockquote>
+<p>We introduce <strong>Semantic Reactor Theory (SRT)</strong>, a
+governance-native framework modeling any semantic reactor as the tuple
+<span class="math inline"><em>S</em> = (𝒲, 𝒢, ℰ)</span> — Steward,
+Governor, Executor — with a governance trace <span
+class="math inline"><em>τ</em> = (<em>E</em><em>P</em>, <em>G</em><em>R</em>, <em>E</em><em>R</em>)</span>
+and an awareness vector <span
+class="math inline"><em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>) ∈ {0, 1}<sup>10</sup></span>.
+The SRSA score is <span class="math inline">$\|SRSA(S)\|_1 =
+\sum_{i=1}^{10} SRSA_i(S)$</span>.</p>
+<p>We identify <strong>system flattening</strong> <span
+class="math inline"><em>φ</em>(<em>S</em>) ∈ [0, 1]</span> as a formal
+architectural error: a reactor with <span
+class="math inline"><em>φ</em>(<em>S</em>) &gt; 0</span> cannot generate
+a governance trace <span class="math inline"><em>τ</em></span> that is
+decomposable from external artifacts alone — making its binding effects
+not structurally auditable from external artifacts.</p>
+<p>SRT is descriptive before prescriptive: it measures governance
+legibility, not moral virtue. A system with <span
+class="math inline">∥<em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>)∥<sub>1</sub> = 10</span>
+is structurally transparent; it is not thereby morally correct.</p>
+<hr />
+<h2 id="the-governance-gap-and-semantic-execution-density">1. The
+Governance Gap and Semantic Execution Density</h2>
+<p>High-authority systems exhibit a persistent structural pathology —
+one whose urgency is increasing.</p>
+<blockquote>
+<p><strong>Definition (Semantic Execution Density).</strong> The
+semantic execution density of a society or system is the rate at which
+binding semantic transformations are performed per unit time.</p>
+</blockquote>
+<p>Semantic execution density has grown dramatically in the last two
+decades. Platform algorithms perform billions of content governance
+decisions daily. Credit systems make binding access determinations for
+hundreds of millions of people. AI models increasingly mediate
+institutional decisions affecting employment, healthcare, legal process,
+and financial access.</p>
+<p>As semantic execution density increases, the cost of low SRSA
+compounds. A court system with undecomposed authority might produce
+unjust outcomes affecting thousands of people annually; a content
+moderation algorithm with the same structural deficiency affects
+millions of outcomes daily; an AI system mediating institutional
+decisions at scale with merged decision/effect surfaces operates as
+undecomposed authority at civilizational throughput.</p>
+<p>The volume of consequential semantic transformation has outrun the
+governance structures available to manage it. The central diagnosis of
+this paper: modern civilization increasingly operates high-throughput
+semantic reactors without decomposable governance traces. SRT provides
+the diagnostic framework and architectural vocabulary for closing that
+gap.</p>
+<hr />
+<h2 id="the-semantic-reactor-class">2. The Semantic Reactor Class</h2>
+<p><strong>Binding != influence.</strong> A newspaper influences
+readers; a court judgment binds the parties even when they resist —
+failure to comply carries enforceable consequences. A recommendation
+algorithm influences behavior; a platform’s content removal decision
+binds the affected party regardless of agreement. The discriminating
+criterion is external consequentiality under resistance.</p>
+<p><strong>Negative example.</strong> A pocket calculator is not a
+semantic reactor. A tax authority system using the same arithmetic to
+produce assessments binding on individual financial obligations is a
+semantic reactor — its outputs constrain enforceable state regardless of
+whether the recipient agrees. The binding criterion is relational and
+institutional, not intrinsic to the computation.</p>
+<p><strong>Binding types:</strong></p>
+<ul>
+<li><p><strong>Binding type:</strong> Physical<br />
+<strong>Mechanism:</strong> State transition in hardware or
+infrastructure<br />
+<strong>Example reactor:</strong> Operating system</p></li>
+<li><p><strong>Binding type:</strong> Institutional<br />
+<strong>Mechanism:</strong> Enforceable consequential
+determination<br />
+<strong>Example reactor:</strong> Court, regulatory agency</p></li>
+<li><p><strong>Binding type:</strong> Social<br />
+<strong>Mechanism:</strong> Persistent alteration of access or
+visibility<br />
+<strong>Example reactor:</strong> Platform content moderation</p></li>
+<li><p><strong>Binding type:</strong> Economic<br />
+<strong>Mechanism:</strong> Constrained financial state with enforceable
+consequences<br />
+<strong>Example reactor:</strong> Financial instrument, credit
+system</p></li>
+<li><p><strong>Binding type:</strong> Cognitive<br />
+<strong>Mechanism:</strong> Meaning alteration coupled to dependency,
+authority, or constrained downstream behavior<br />
+<strong>Example reactor:</strong> Curriculum authority, diagnostic
+system</p></li>
+</ul>
+<p>Cognitive binding requires precision: belief alteration is binding
+when coupled to an authority relationship or to constrained downstream
+behavior such that acting contrary carries enforceable consequences. A
+compulsory curriculum with assessment authority is cognitively binding;
+a documentary is not.</p>
+<p><strong>Low SRSA</strong> means absent, undeclared, or unmeasured
+governance structure — not absent governance properties. Every semantic
+reactor has governance properties; low SRSA means those properties are
+dark.</p>
+<p><strong>Substrates.</strong> Semantic reactors may exist on
+biological, institutional, computational, and hybrid substrates. The
+three criteria are substrate-independent. Governance itself is
+substrate-independent: role separation, artifact production, and closed
+feedback loops constitute good governance regardless of whether the
+substrate is computational, institutional, or physical.</p>
+<hr />
+<h2 id="a-structural-analogy-the-engine-governor">3. A Structural
+Analogy: The Engine Governor</h2>
+<p>A small-engine governor system is structurally analogous to the SR
+three-role model. The lawnmower engine is not a semantic reactor — it
+does not transform meaning under institutional authority into binding
+social effects. It is a structural analogy only.</p>
+<ul>
+<li><p><strong>Engine component:</strong> Carburetor + sensing<br />
+<strong>SR role:</strong> Steward (<span
+class="math inline">𝒲</span>)<br />
+<strong>Function:</strong> Maintains awareness; produces current state;
+does not decide</p></li>
+<li><p><strong>Engine component:</strong> Governor spring +
+flyweight<br />
+<strong>SR role:</strong> Governor (<span
+class="math inline">𝒢</span>)<br />
+<strong>Function:</strong> Applies setpoint rule to sensed state;
+controls throttle</p></li>
+<li><p><strong>Engine component:</strong> Throttle + combustion<br />
+<strong>SR role:</strong> Executor (<span
+class="math inline">ℰ</span>)<br />
+<strong>Function:</strong> Produces effects; exhausts byproducts back to
+sensing layer</p></li>
+</ul>
+<p>The governor mechanism is not in the power path. Collapse it —
+connect carburetor directly to throttle — and the engine races
+uncontrollably or stalls under load: not component failure, but a wrong
+control architecture. Semantic reactors exhibit the same failure under
+structural flattening.</p>
+<hr />
+<h2 id="the-formal-reactor-model">4. The Formal Reactor Model</h2>
+<p><strong>The reactor tuple:</strong></p>
+<p><span class="math display"><em>S</em> = (𝒲, 𝒢, ℰ)</span></p>
+<p>where <span class="math inline">𝒲</span> is the Steward (epistemic
+position maintenance), <span class="math inline">𝒢</span> is the
+Governor (admissibility and authority decision under a declared
+authority structure), and <span class="math inline">ℰ</span> is the
+Executor (effect production and receipt). Role separation requires
+distinct interfaces, distinct authority scopes, and distinct record
+types — not labeled partitions of a unified process.</p>
+<p><strong>The governance trace and decomposability:</strong></p>
+<p><span
+class="math display"><em>τ</em> = (<em>E</em><em>P</em>, <em>G</em><em>R</em>, <em>E</em><em>R</em>)</span></p>
+<p>where <span class="math inline"><em>E</em><em>P</em></span>
+(EpistemicPosition) is produced by <span class="math inline">𝒲</span>
+and consumed by <span class="math inline">𝒢</span>; <span
+class="math inline"><em>G</em><em>R</em></span> (GovernanceReceipt) is
+produced by <span class="math inline">𝒢</span> and consumed by <span
+class="math inline">ℰ</span>; and <span
+class="math inline"><em>E</em><em>R</em></span> (ExecutionReceipt) is
+produced by <span class="math inline">ℰ</span> and fed back to <span
+class="math inline">𝒲</span>.</p>
+<blockquote>
+<p><strong>Definition (Decomposable Governance Trace).</strong> A
+governance trace <span
+class="math inline"><em>τ</em> = (<em>E</em><em>P</em>, <em>G</em><em>R</em>, <em>E</em><em>R</em>)</span>
+is decomposable if and only if <span
+class="math inline"><em>E</em><em>P</em></span>, <span
+class="math inline"><em>G</em><em>R</em></span>, and <span
+class="math inline"><em>E</em><em>R</em></span> are distinct artifacts
+independently inspectable by an outside observer without privileged
+access to the process that produced them.</p>
+</blockquote>
+<p>Most institutional records — logs, justifications, narratives, case
+notes — are not decomposable governance traces. They are outputs of a
+unified process from which <span
+class="math inline"><em>E</em><em>P</em></span>, <span
+class="math inline"><em>G</em><em>R</em></span>, and <span
+class="math inline"><em>E</em><em>R</em></span> cannot be separately
+reconstructed. The distinction between a narrative trace and a
+decomposable governance trace is structural, not a question of
+record-keeping quality.</p>
+<p><strong>The governance loop:</strong></p>
+<p><span class="math display">$$\mathcal{W} \xrightarrow{EP} \mathcal{G}
+\xrightarrow{GR} \mathcal{E} \xrightarrow{ER} \mathcal{W}$$</span></p>
+<p><strong>The SRSA measurement vector</strong> (binary introduction;
+continuous relaxation in Limitations):</p>
+<p><span class="math display">$$SRSA(S) \in \{0,1\}^{10}, \quad
+\|SRSA(S)\|_1 = \sum_{i=1}^{10} SRSA_i(S)$$</span></p>
+<p>where <span
+class="math inline"><em>S</em><em>R</em><em>S</em><em>A</em><sub><em>i</em></sub>(<em>S</em>) = 1</span>
+if axis <span class="math inline"><em>i</em></span> is instrumented,
+declared, and measurable, and <span class="math inline">0</span>
+otherwise. Each component is a measurable structural property — a
+determination of whether a specific artifact type exists and is
+readable, not a subjective assessment.</p>
+<p><strong>The flattening degree:</strong></p>
+<p><span
+class="math display"><em>φ</em>(<em>S</em>) ∈ [0, 1],  <em>φ</em>(<em>S</em>) = 1 − role_separation_degree(<em>S</em>)</span></p>
+<p>where <span class="math inline"><em>φ</em>(<em>S</em>) = 0</span>
+denotes full role separation and <span
+class="math inline"><em>φ</em>(<em>S</em>) = 1</span> denotes full
+flattening. Flattening may be structural (formal roles merged),
+procedural (roles separated on paper but not in practice), or epistemic
+(roles formally separated but independence collapsed by authority
+routing or discovery constraints). A formally separated court whose
+judges receive pre-briefed summaries that embed the governance decision
+is epistemically flattened at the <span
+class="math inline">𝒲</span>-<span class="math inline">𝒢</span> boundary
+regardless of formal role declarations.</p>
+<p><strong>Governance closure:</strong></p>
+<blockquote>
+<p><strong>Definition (Governance-Closed Reactor).</strong> A semantic
+reactor <span class="math inline"><em>S</em></span> is governance-closed
+if and only if every binding effect produced by <span
+class="math inline"><em>S</em></span> participates in a decomposable
+governance trace.</p>
+</blockquote>
+<hr />
+<h2 id="governance-native-architecture">5. Governance-Native
+Architecture</h2>
+<blockquote>
+<p><strong>Definition (Governance-Native Architecture).</strong> An
+architecture is governance-native if production of <span
+class="math inline"><em>τ</em></span> is structurally required for
+effects to occur — not merely for effects to be recorded after the
+fact.</p>
+</blockquote>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Overlay governance</th>
+<th>Governance-native architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Policies added after execution is designed</td>
+<td>Governance constitutive of execution from the start</td>
+</tr>
+<tr>
+<td>Audit after effect</td>
+<td>Receipt-before-effect</td>
+</tr>
+<tr>
+<td>External compliance checking</td>
+<td>Internal admissibility evaluation</td>
+</tr>
+<tr>
+<td>Runtime patching of governance gaps</td>
+<td>Architectural role separation</td>
+</tr>
+<tr>
+<td>Governance as constraint on behavior</td>
+<td>Governance as structure of behavior</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The Governance Event Principle.</strong> An effect without a
+prior <span class="math inline"><em>G</em><em>R</em></span> is an
+epistemic non-event: it happened physically, but it did not happen in
+the governed sense. The governance system cannot see it because it
+produced no artifact. This is the constitutive claim distinguishing
+governance-native from overlay architecture. In an overlay system, an
+ungoverned effect is a policy violation to be detected after the fact.
+In a governance-native system, an ungoverned effect cannot advance the
+lineage — it is invisible to <span class="math inline">𝒲</span> on the
+next pass.</p>
+<p>Decomposable governance traces compress the semantic explanation
+burden of authority. Without decomposition, observers must reconstruct
+intent psychologically or socially. With decomposition, governance
+becomes mechanically inspectable: the question “on what basis was this
+binding effect produced?” has a direct, artifact-grounded answer.</p>
+<hr />
+<h2 id="system-flattening-as-formal-architectural-error">6. System
+Flattening as Formal Architectural Error</h2>
+<blockquote>
+<p><strong>Definition (System Flattening).</strong> System flattening
+occurs when two or more of <span class="math inline">𝒲</span>, <span
+class="math inline">𝒢</span>, <span class="math inline">ℰ</span> are
+performed by the same entity such that <span
+class="math inline"><em>τ</em></span> is no longer decomposable from
+external artifacts.</p>
+</blockquote>
+<p>System flattening is not a moral pathology. It is a formal
+architectural error with a specific, auditable consequence.</p>
+<p><strong>Structural Result 1 (Non-Decomposability of Flattened
+Governance).</strong> A semantic reactor with <span
+class="math inline"><em>φ</em>(<em>S</em>) &gt; 0</span> cannot generate
+a governance trace <span class="math inline"><em>τ</em></span> that is
+decomposable from external artifacts alone.</p>
+<p><em>Proof.</em> Decomposability requires <span
+class="math inline"><em>E</em><em>P</em></span>, <span
+class="math inline"><em>G</em><em>R</em></span>, and <span
+class="math inline"><em>E</em><em>R</em></span> to be independently
+inspectable. When <span class="math inline">𝒲</span> and <span
+class="math inline">𝒢</span> are merged, epistemic synthesis and
+constitutional application occur in a single process; <span
+class="math inline"><em>E</em><em>P</em></span> is consumed internally
+and not produced as a distinct external output. An observer with access
+only to <span class="math inline"><em>G</em><em>R</em></span> cannot
+reconstruct the <span class="math inline"><em>E</em><em>P</em></span>
+from which the decision was derived without privileged access to the
+internal state. <span class="math inline">▫</span></p>
+<p><strong>The judge problem.</strong> A judge performing both evidence
+synthesis (<span class="math inline">𝒲</span>) and constitutional
+application (<span class="math inline">𝒢</span>) produces a judgment
+from which <span class="math inline"><em>E</em><em>P</em></span> and
+<span class="math inline"><em>G</em><em>R</em></span> cannot be
+separated by an outside observer. Appellate systems distinguish fact
+review from law review precisely because they are post-hoc structural
+separation imposed on a partially flattened process.</p>
+<p><strong>The algorithm problem.</strong> A content moderation
+algorithm with <span class="math inline">𝒲</span>, <span
+class="math inline">𝒢</span>, and <span class="math inline">ℰ</span>
+merged produces no <span
+class="math inline"><em>E</em><em>P</em></span>, no <span
+class="math inline"><em>G</em><em>R</em></span>, and no <span
+class="math inline"><em>E</em><em>R</em></span> feedback. The output is
+the only artifact; the governance process is not reconstructible from
+it.</p>
+<p><strong>Structural Result 2 (Flattening Degrades Under
+Scale).</strong> A semantic reactor with <span
+class="math inline"><em>φ</em>(<em>S</em>) &gt; 0</span> produces
+governance quality dependent on the capability of the unified role. As
+complexity or adversarial pressure increases beyond that capability,
+governance quality degrades. In a separated system, error at any handoff
+is detectable by the receiving role from its input artifact.</p>
+<p><em>Proof sketch.</em> In a separated system, <span
+class="math inline"><em>E</em><em>P</em></span> errors are detectable by
+<span class="math inline">𝒢</span>; <span
+class="math inline"><em>G</em><em>R</em></span> errors by <span
+class="math inline">ℰ</span>; <span
+class="math inline"><em>E</em><em>R</em></span> errors by <span
+class="math inline">𝒲</span> on the next pass. Error detection scales
+with distinct artifact handoffs, not with individual capability. <span
+class="math inline">▫</span></p>
+<hr />
+<h2 id="semantic-reactor-situational-awareness-srsa">7. Semantic Reactor
+Situational Awareness (SRSA)</h2>
+<p>SRSA is a measure of governance legibility — not runtime
+observability. The distinction is foundational:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Classical observability</th>
+<th>SRSA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runtime state and system metrics</td>
+<td>Governance state across all ten axes</td>
+</tr>
+<tr>
+<td>Logs and traces</td>
+<td>Admissibility rules and invariant declarations</td>
+</tr>
+<tr>
+<td>Operational debugging</td>
+<td>Governance completeness</td>
+</tr>
+<tr>
+<td>Performance visibility</td>
+<td>Incentive geometry (designed and emergent)</td>
+</tr>
+<tr>
+<td>“Is the system working?”</td>
+<td>“Is the system legitimate?”</td>
+</tr>
+</tbody>
+</table>
+<p>A fully observable system with all metrics green and all logs
+retained may have <span
+class="math inline">∥<em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>)∥<sub>1</sub> = 2</span>
+if its authority topology is undeclared, its incentive geometry
+unmapped, its admissibility conditions implicit, and its legitimacy
+basis unexamined.</p>
+<p>Every semantic reactor possesses awareness state across ten
+dimensions whether or not that state is declared. The ten axes:</p>
+<ul>
+<li><p><strong>Axis:</strong> ESA<br />
+<strong>Name:</strong> Epistemic Awareness<br />
+<strong>Core question:</strong> What does the system know, verify, and
+declare unknown?</p></li>
+<li><p><strong>Axis:</strong> SSA<br />
+<strong>Name:</strong> Semantic Awareness<br />
+<strong>Core question:</strong> What meanings does it transform, under
+what authority structure?</p></li>
+<li><p><strong>Axis:</strong> ISA<br />
+<strong>Name:</strong> Incentive Awareness<br />
+<strong>Core question:</strong> What behavior does it actually reward —
+designed and emergent?</p></li>
+<li><p><strong>Axis:</strong> ASA<br />
+<strong>Name:</strong> Authority Awareness<br />
+<strong>Core question:</strong> Who can define, interpret, modify,
+enforce, or refuse?</p></li>
+<li><p><strong>Axis:</strong> CSA<br />
+<strong>Name:</strong> Causal Awareness<br />
+<strong>Core question:</strong> What caused this effect, through which
+pathway?</p></li>
+<li><p><strong>Axis:</strong> PSA<br />
+<strong>Name:</strong> Provenance Awareness<br />
+<strong>Core question:</strong> Where did this artifact, rule, or
+authority originate?</p></li>
+<li><p><strong>Axis:</strong> AdSA<br />
+<strong>Name:</strong> Admissibility Awareness<br />
+<strong>Core question:</strong> What may enter without violating
+declared invariants?</p></li>
+<li><p><strong>Axis:</strong> RSA<br />
+<strong>Name:</strong> Risk Awareness<br />
+<strong>Core question:</strong> What failure modes and exploit paths are
+currently active?</p></li>
+<li><p><strong>Axis:</strong> FSA<br />
+<strong>Name:</strong> Fidelity Awareness<br />
+<strong>Core question:</strong> Does the representation still match the
+thing represented?</p></li>
+<li><p><strong>Axis:</strong> LSA<br />
+<strong>Name:</strong> Legitimacy Awareness<br />
+<strong>Core question:</strong> Why is this system entitled to bind
+anyone? When does that fail?</p></li>
+</ul>
+<p><strong>Orthogonal but coupled.</strong> Each axis is independently
+variable — <span
+class="math inline"><em>E</em><em>S</em><em>A</em> = 1</span> is
+compatible with <span
+class="math inline"><em>I</em><em>S</em><em>A</em> = 0</span> — while
+remaining dynamically interacting. FSA drift may degrade ESA if the
+epistemic position is built from representations no longer matching
+reality. This is why ASA and LSA are distinct axes: a fully declared
+authority topology (<span
+class="math inline"><em>A</em><em>S</em><em>A</em> = 1</span>) with an
+entirely unclear legitimacy basis (<span
+class="math inline"><em>L</em><em>S</em><em>A</em> = 0</span>) is a
+different governance failure from the reverse.</p>
+<p><strong>SRSA does not imply moral correctness.</strong> A
+dictatorship could have <span
+class="math inline">∥<em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>)∥<sub>1</sub> = 10</span>.
+A system with full SRSA producing unjust outcomes is a legible
+injustice. A system with <span
+class="math inline">∥<em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>)∥<sub>1</sub> = 2</span>
+producing just outcomes produces justice through opacity. SRT addresses
+the first problem; the second is a question of values.</p>
+<p><strong>Structural Completeness Proposition.</strong> Every semantic
+reactor possesses instrumentable SRSA state across all ten axes,
+regardless of declaration.</p>
+<p><em>Proof.</em> A semantic reactor transforms inputs under an
+authority structure into externally consequential outputs. This
+constitutes, structurally: an epistemic position (ESA), a semantic
+transformation structure (SSA), an incentive gradient (ISA), an
+authority topology (ASA), a causal structure (CSA), provenance of rules
+and artifacts (PSA), admissibility conditions (AdSA), failure modes
+(RSA), representation fidelity (FSA), and a legitimacy basis (LSA).
+These properties exist whether or not declared. <span
+class="math inline">▫</span></p>
+<hr />
+<h2 id="the-isassa-gap-as-primary-drift-surface">8. The ISA/SSA Gap as
+Primary Drift Surface</h2>
+<blockquote>
+<p><strong>Definition (ISA/SSA Gap).</strong> The ISA/SSA gap is the
+divergence between a reactor’s declared transformation purpose (SSA) and
+the behaviors its incentive structure actually rewards (ISA), including
+incentives not designed by governance.</p>
+</blockquote>
+<p>The ISA axis captures designed and emergent incentives. A court’s
+incentive structure includes career advancement dynamics, caseload
+pressure, and political appointment considerations — none appearing in
+the constitutional codex. A platform’s includes advertising revenue
+optimization. An AI model’s includes training reward signals and
+deployment pressures.</p>
+<p><strong>Structural Result 3 (ISA/SSA Gap Growth Under
+Opacity).</strong> In a system with low ASA and low PSA, the ISA/SSA gap
+grows monotonically over time as undeclared authority surfaces
+accumulate, rules acquire informal interpretations, and incentive
+gradients reinforce behaviors serving authority holders rather than
+declared mission.</p>
+<p>This is the mechanism of institutional capture — structural
+accumulation of undecomposed authority and incentive misalignment in
+low-SRSA systems, independent of individual intentions.</p>
+<hr />
+<h2 id="the-governance-loop-and-a-concrete-trace">9. The Governance Loop
+and a Concrete Trace</h2>
+<blockquote>
+<p><strong>Definition (Closed Governance Loop).</strong> A semantic
+reactor has a closed governance loop if and only if: (1) every <span
+class="math inline">𝒲</span>-to-<span class="math inline">𝒢</span>
+handoff produces a distinct <span
+class="math inline"><em>E</em><em>P</em></span>, (2) every <span
+class="math inline">𝒢</span>-to-<span class="math inline">ℰ</span>
+handoff produces a distinct <span
+class="math inline"><em>G</em><em>R</em></span>, (3) every <span
+class="math inline"><em>E</em><em>R</em></span> is available to <span
+class="math inline">𝒲</span> on the next pass, and (4) <span
+class="math inline">𝒢</span> receives only validated <span
+class="math inline"><em>E</em><em>P</em></span> — not raw evidence
+directly.</p>
+</blockquote>
+<p>Condition (4) is the architectural invariant preventing <span
+class="math inline">𝒲</span>-<span class="math inline">𝒢</span>
+flattening.</p>
+<p><strong>Structural Result 4 (Open Loop Implies
+Non-Decomposability).</strong> A semantic reactor with an open
+governance loop is not structurally auditable from external artifacts in
+the same sense as a flattened reactor. Each missing artifact eliminates
+the corresponding decomposability condition.</p>
+<p><strong>Concrete governance trace.</strong> A content moderation
+system with full role separation:</p>
+<p><em>Steward pass (<span
+class="math inline"><em>E</em><em>P</em></span>).</em> <span
+class="math inline">𝒲</span> reads the content and receipt history,
+producing: <span
+class="math inline"><em>E</em><em>P</em> = {</span>known: matches
+pattern <span class="math inline"><em>X</em></span>, confidence <span
+class="math inline">0.87</span>; unknown: authorial intent; dark:
+off-platform context<span class="math inline">}</span>. This is a
+distinct artifact — not the governance decision.</p>
+<p><em>Governor pass (<span
+class="math inline"><em>G</em><em>R</em></span>).</em> <span
+class="math inline">𝒢</span> receives <span
+class="math inline"><em>E</em><em>P</em></span> and applies the
+admissibility codex: pattern <span class="math inline"><em>X</em></span>
+at confidence <span class="math inline"> ≥ 0.8</span> without exception
+<span class="math inline">→</span> REMOVE admissible. It produces: <span
+class="math inline"><em>G</em><em>R</em> = {</span>decision: REMOVE;
+rule: §3.2; <span
+class="math inline"><em>E</em><em>P</em></span>_hash<span
+class="math inline">}</span>.</p>
+<p><em>Executor pass (<span
+class="math inline"><em>E</em><em>R</em></span>).</em> <span
+class="math inline">ℰ</span> receives <span
+class="math inline"><em>G</em><em>R</em></span>, removes the content,
+and produces: <span
+class="math inline"><em>E</em><em>R</em> = {</span>action: removed;
+<span class="math inline"><em>G</em><em>R</em></span>_hash;
+timestamp<span class="math inline">}</span>.</p>
+<p><em>Feedback.</em> <span
+class="math inline"><em>E</em><em>R</em></span> is available to <span
+class="math inline">𝒲</span> on the next pass. An outside observer can
+reconstruct what the system knew (<span
+class="math inline"><em>E</em><em>P</em></span>), what rule was applied
+(<span class="math inline"><em>G</em><em>R</em></span>), and what
+happened (<span class="math inline"><em>E</em><em>R</em></span>). The
+governance trace is decomposable. The authority is no longer
+undecomposed.</p>
+<hr />
+<h2 id="constitutional-consensus-a-prior-legitimacy-layer">10.
+Constitutional Consensus: A Prior Legitimacy Layer</h2>
+<p>Constitutional Consensus is a prior legitimacy layer — not a
+replacement for Raft or Paxos, but a prior layer that establishes shared
+governance identity before event ordering matters. Classical consensus
+then orders events within the established legitimacy substrate.</p>
+<blockquote>
+<p><strong>Definition (Constitutional Consensus).</strong>
+Constitutional Consensus is a distributed coordination model in which
+participants first share a content-addressed governing constitution
+<span class="math inline"><em>c</em></span>, establishing <span
+class="math inline">session_constitution_hash = <em>H</em>(canon(<em>c</em>))</span>,
+and then independently verify actions, quorum, authority, ordering, and
+divergence against <span class="math inline"><em>c</em></span> through
+receipted artifacts.</p>
+</blockquote>
+<p>Constitutional Consensus relocates the coordination burden from
+synchronization-time to constitution-adoption-time. Classical consensus
+performs agreement at the moment events occur; Constitutional Consensus
+performs agreement when participants adopt the same constitution.
+Runtime activity then consists of verification, not negotiation.</p>
+<ul>
+<li><p><strong>Property:</strong> Primary question<br />
+<strong>Classical (Raft/Paxos/PBFT):</strong> What happened and in what
+order?<br />
+<strong>Constitutional Consensus:</strong> Under what authority did this
+happen?</p></li>
+<li><p><strong>Property:</strong> Agreement mechanism<br />
+<strong>Classical (Raft/Paxos/PBFT):</strong> Runtime voting / leader
+election<br />
+<strong>Constitutional Consensus:</strong> A priori constitutional
+identity</p></li>
+<li><p><strong>Property:</strong> Validity rules<br />
+<strong>Classical (Raft/Paxos/PBFT):</strong> External to
+consensus<br />
+<strong>Constitutional Consensus:</strong> Internal to the
+constitution</p></li>
+<li><p><strong>Property:</strong> Divergence<br />
+<strong>Classical (Raft/Paxos/PBFT):</strong> System failure<br />
+<strong>Constitutional Consensus:</strong> Typed governance
+event</p></li>
+<li><p><strong>Property:</strong> Quorum<br />
+<strong>Classical (Raft/Paxos/PBFT):</strong> Transient voting
+round<br />
+<strong>Constitutional Consensus:</strong> Content-addressed
+evidence</p></li>
+<li><p><strong>Property:</strong> Coordination burden<br />
+<strong>Classical (Raft/Paxos/PBFT):</strong> Per-event
+synchronization<br />
+<strong>Constitutional Consensus:</strong>
+Constitution-adoption-time</p></li>
+</ul>
+<p><strong>Structural Result 5 (A Priori Agreement).</strong>
+Participants sharing <span
+class="math inline">session_constitution_hash</span> are in
+constitutional agreement by definition. The handshake verifies this
+agreement; it does not produce it.</p>
+<hr />
+<h2 id="formal-properties">11. Formal Properties</h2>
+<p><strong>Lemma (Receipt Non-Repudiation).</strong> Under
+collision-resistant <span class="math inline"><em>H</em></span> and
+injective <span class="math inline">canon(⋅)</span>, the receipt <span
+class="math inline"><em>r</em> = (<em>s</em><em>t</em><em>e</em><em>p</em>_<em>h</em><em>a</em><em>s</em><em>h</em>, <em>l</em><em>a</em><em>w</em>_<em>h</em><em>a</em><em>s</em><em>h</em>, <em>o</em><em>u</em><em>t</em><em>c</em><em>o</em><em>m</em><em>e</em>, <em>p</em><em>a</em><em>y</em><em>l</em><em>o</em><em>a</em><em>d</em>_<em>d</em><em>i</em><em>g</em><em>e</em><em>s</em><em>t</em>)</span>
+uniquely and non-repudiably binds a specific step to a specific law
+evaluation and outcome.</p>
+<p><em>Proof.</em> Each component hash is unique under <span
+class="math inline"><em>H</em></span> and <span
+class="math inline">canon(⋅)</span> by collision resistance. Modifying
+any component produces a detectable mismatch. Under second-preimage
+resistance, computing a different step with the same <span
+class="math inline"><em>s</em><em>t</em><em>e</em><em>p</em>_<em>h</em><em>a</em><em>s</em><em>h</em></span>
+is infeasible. <span class="math inline">▫</span></p>
+<p><strong>Structural Result 6 (Policy Non-Retroactivity).</strong>
+Under <span
+class="math inline"><em>l</em><em>a</em><em>w</em>_<em>h</em><em>a</em><em>s</em><em>h</em></span>
+binding at step creation time, amending a law from <span
+class="math inline"><em>L</em><sub><em>v</em></sub></span> to <span
+class="math inline"><em>L</em><sub><em>v</em> + 1</sub></span> does not
+alter the admissibility determination of any step <span
+class="math inline"><em>s</em></span> with <span
+class="math inline"><em>s</em>.<em>l</em><em>a</em><em>w</em>_<em>h</em><em>a</em><em>s</em><em>h</em> = <em>H</em>(canon(<em>L</em><sub><em>v</em></sub>))</span>.</p>
+<p><em>Proof.</em> <span
+class="math inline"><em>s</em>.<em>l</em><em>a</em><em>w</em>_<em>h</em><em>a</em><em>s</em><em>h</em></span>
+is immutable at construction. Evaluation under <span
+class="math inline"><em>L</em><sub><em>v</em> + 1</sub></span> is
+blocked because <span
+class="math inline"><em>s</em>.<em>l</em><em>a</em><em>w</em>_<em>h</em><em>a</em><em>s</em><em>h</em> ≠ <em>H</em>(canon(<em>L</em><sub><em>v</em> + 1</sub>))</span>.
+<span class="math inline">▫</span></p>
+<hr />
+<h2 id="software-as-first-tractable-substrate">12. Software as First
+Tractable Substrate</h2>
+<p>Software systems are the first substrate on which full SRSA
+instrumentation is tractable. The Semantic Defragmentation Analysis
+(SFA) methodology has been applied to seventy-nine open-source systems
+across eleven domains, producing structured thirteen-phase analyses
+identifying authority sources, admissibility conditions, incentive
+gradients, transformation paths, and receipt surfaces. The same
+structural pathologies appeared consistently — undecomposed authority,
+undeclared capability surfaces, absent receipt emission, projection
+divergence — until their structural unity across domains became
+unmistakable.</p>
+<p>Software tractability rests on three properties: epistemic state can
+be instrumented mechanically through receipt chains; authority topology
+can be declared formally in a constitutional codex; and effects can be
+made constitutive through the receipt-before-effect discipline. The
+methodology transfers to institutional substrates — harder in
+instrumentation, not different in structural kind.</p>
+<hr />
+<h2 id="limitations">13. Limitations</h2>
+<p>SRT measures governance structure; intervention recommendations
+follow from measurement.</p>
+<p>High SRSA does not imply good governance — a legible injustice is
+still an injustice. Instrumentable SRSA state does not mean easy
+measurement — institutional ISA, legitimacy chains, and authority
+topology require significant analytical work. SRT does not claim total
+formalizability — institutions contain genuine ambiguity and irreducible
+discretion. The binary <span
+class="math inline"><em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>) ∈ {0, 1}<sup>10</sup></span>
+simplifies; the continuous relaxation <span
+class="math inline"><em>S</em><em>R</em><em>S</em><em>A</em><sub><em>i</em></sub>(<em>S</em>) ∈ [0, 1]</span>
+and the corresponding continuous <span
+class="math inline"><em>φ</em>(<em>S</em>)</span> are the empirically
+appropriate models.</p>
+<hr />
+<h2 id="related-work">14. Related Work</h2>
+<p>Constitutional and institutional theory has examined separation of
+powers, checks and balances, and judicial independence as governance
+mechanisms. Montesquieu’s trias politica is an early statement of the
+role separation SRT formalizes. SRT contributes the formal tuple <span
+class="math inline"><em>S</em> = (𝒲, 𝒢, ℰ)</span>, the governance trace
+<span class="math inline"><em>τ</em></span>, the SRSA vector, and <span
+class="math inline"><em>φ</em>(<em>S</em>)</span> as a formal
+architectural error class with instrumentable structure.</p>
+<p>Distributed systems theory — Lamport et al., Oki and Liskov’s
+Viewstamped Replication, Paxos, and Raft — addresses event ordering
+under the assumption that validity rules are external. Constitutional
+Consensus addresses the prior question: how participants establish
+shared validity rules before events occur.</p>
+<p>Platform governance literature (Zittrain, Gillespie, Balkin)
+identifies governance functions of algorithmic systems without a unified
+structural framework. The semantic reactor definition, flattening
+diagnosis, and SRSA vector provide a formal spine for those
+architectural observations.</p>
+<p><strong>Prior uses of “semantic reactor.”</strong> The term has prior
+independent uses that this paper acknowledges. General Semantics
+literature — notably in the tradition of Korzybski — used “semantic
+reactor” to describe human beings as organisms that abstract, interpret,
+and react semantically to symbolic inputs. This usage predates and is
+orthogonal to the present framework: it refers to a biological cognitive
+property rather than an architectural class. A Google Research tool
+named “Semantic Reactor” provides a natural language interface for
+ranking and sorting text via semantic similarity models — a product name
+with no overlap with the present theoretical sense. A small body of work
+in AI systems uses “semantic reactor” informally to describe AI
+architectures that process meaning. SRT adopts the term as a formal
+technical class because it captures the essential structure — semantic
+input, authority-mediated transformation, binding output — more
+precisely than available alternatives, while acknowledging these prior
+independent coinages.</p>
+<p>AI safety and alignment research, including Constitutional AI,
+addresses related questions but does not provide the <span
+class="math inline">(𝒲, 𝒢, ℰ)</span> separation or <span
+class="math inline"><em>S</em><em>R</em><em>S</em><em>A</em></span>
+measurement framework. SRT provides the architectural substrate in which
+such rules serve as <span class="math inline">𝒢</span>’s authority
+source.</p>
+<hr />
+<h2 id="future-work">15. Future Work</h2>
+<p><strong>Byzantine fault tolerance under Constitutional
+Consensus.</strong> Structural Result 5 does not bound equivocating
+participants. Formal tolerance bounds, liveness under partition, and
+constitutional fork governance require development.</p>
+<p><strong>SRSA measurement protocols for institutional
+substrates.</strong> The thirteen-phase SFA methodology requires
+extension to courts, regulatory agencies, and platforms via
+domain-specific intermediate representation development.</p>
+<p><strong>ISA/SSA gap formalization.</strong> Formal characterization
+of gap growth rates, detection thresholds, and intervention conditions
+requires development.</p>
+<p><strong>Reproducible SRSA assessments.</strong> SRT becomes
+empirically real when independent investigators produce convergent <span
+class="math inline"><em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>)</span>
+scores. Scoring rubrics and inter-rater reliability protocols are the
+near-term empirical frontier.</p>
+<p><strong>Continuous SRSA and flattening metrics.</strong> The
+relationship between partial <span
+class="math inline"><em>φ</em>(<em>S</em>)</span> and governance
+decomposability quality requires formal characterization.</p>
+<p><strong>Optimal decomposition regime.</strong> Decomposition improves
+governance decomposability but introduces coordination overhead,
+latency, and artifact inflation. The relationship between decomposition
+degree and governance quality — and the conditions under which further
+decomposition becomes counterproductive — requires formal treatment.</p>
+<p><strong>Reactor coupling.</strong> The next analytical frontier is
+coupled reactor systems: what happens when semantic reactors interact
+recursively? Platforms, media ecosystems, governments, AI systems, and
+markets are analyzable as coupled semantic reactors whose SRSA
+properties co-evolve. Emergent ISA gradients, cascading legitimacy
+failure, and governance amplification at civilization scale become
+analyzable phenomena under reactor coupling theory.</p>
+<p><strong>Semantic metabolism.</strong> The governance loop describes a
+metabolically coherent process: intake, transformation under
+admissibility, effect production, receipt as exhaust, and feedback into
+the awareness surface. Formalizing semantic metabolism would provide
+vocabulary for analyzing long-horizon reactor stability and governance
+regulation of semantic throughput.</p>
+<hr />
+<h2 id="conclusion">16. Conclusion</h2>
+<p>Semantic Reactor Theory establishes:</p>
+<p>Any system producing binding effects under an authority structure is
+a semantic reactor possessing an instrumentable <span
+class="math inline"><em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>) ∈ {0, 1}<sup>10</sup></span>
+state vector, whether or not declared.</p>
+<p>System flattening <span
+class="math inline"><em>φ</em>(<em>S</em>) &gt; 0</span> is a formal
+architectural error. A reactor with <span
+class="math inline"><em>φ</em>(<em>S</em>) &gt; 0</span> cannot generate
+a governance trace <span
+class="math inline"><em>τ</em> = (<em>E</em><em>P</em>, <em>G</em><em>R</em>, <em>E</em><em>R</em>)</span>
+that is decomposable from external artifacts alone. The structural
+production of apparent arbitrariness in institutional authority — the
+visceral sense that power is exercised without decomposable
+justification — is a consequence of this architectural condition, not of
+individual malice or incompetence.</p>
+<p>The ISA/SSA gap is the primary drift surface for institutional
+capture, growing under opacity independently of individual
+intentions.</p>
+<p>Constitutional Consensus is a prior legitimacy layer establishing
+shared governance identity at constitution-adoption-time, beneath
+classical fault-tolerant distributed coordination.</p>
+<p>Semantic reactors can be instrumented. Flattening can be detected and
+measured as <span class="math inline"><em>φ</em>(<em>S</em>)</span>.
+<span
+class="math inline">∥<em>S</em><em>R</em><em>S</em><em>A</em>(<em>S</em>)∥<sub>1</sub></span>
+can be scored. Governance decomposability can be structurally improved.
+The foundational architectural primitives — AOK, MCIR, SRSA methodology,
+Constitutional Consensus — now exist as emerging tools; their
+application to the systems that bind human life is the work ahead.</p>
+<p>SRT measures governance legibility and structural decomposability —
+preconditions for accountability, not substitutes for it.</p>
+<hr />
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>The author extends thanks to the research tradition in constitutional
+and institutional design — from Montesquieu through Madison through
+modern platform governance scholarship — whose insights this work
+attempts to formalize. The development of SRSA was grounded in repeated
+practical application of the Semantic Defragmentation Analysis
+methodology across seventy-nine open-source systems spanning eleven
+domains, providing empirical evidence that the same structural
+governance pathologies appear consistently across substrates.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that high-authority systems — courts, platforms,
+regulatory agencies, AI models, operating systems, financial instruments
+— share a common structure: they receive symbolic inputs, transform them
+under an authority structure, and produce binding effects on behavior,
+identity, legitimacy, access, belief, or institutional reality. Its
+nearest external comparison fields are semantic, formal, governance. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. Formal assurance remains relative to the
+encoded model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. A written
+constitution can legitimate domination as easily as constrain it unless
+amendment, participation, enforcement, and appeal remain effective in
+practice. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E7]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20153069">10.5281/zenodo.20153069</a></p>

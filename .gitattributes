@@ -1,0 +1,10 @@
+# Markdown files participate in byte-exact receipts and filename hashes.
+# Keep their committed LF bytes stable across Git checkout/archive platforms.
+.gitattributes -text
+*.md -text
+
+# The Bridge interface carries deterministic generated data and is verified by SHA-256.
+curation/** -text
+site-bridge/** -text
+tools/build_bridge_data.py -text
+tools/build_offline_atlas.py -text

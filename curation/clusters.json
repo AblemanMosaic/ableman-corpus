@@ -1,0 +1,192 @@
+{
+  "schema": "ableman.corpus-cluster-names.v0.1",
+  "about": "Author-editable names for the galaxies and families in the Galaxy layout. Membership is computed by tools/build_bridge_data.py from paper wording and generated cross-links; this file only names the groups. Each id is the group's most-listed paper (G: galaxy, F: family; ties go to the lower accession number). If a rebuild gives a group a different most-listed paper, the old id is reported as unknown rather than moved silently. The site reads this file at load time; edit and reload. Ids the build no longer produces are reported on the About page.",
+  "standing_values": {
+    "INTERFACE_DRAFT": "Named by the interface from the group's most distinctive words, awaiting author review.",
+    "AUTHOR_CURATED": "Named or confirmed by the author."
+  },
+  "pinned_galaxies_about": "Groups the author places by hand. The build keeps each pinned group together as its own galaxy (families inside it are still computed) and the remaining papers are grouped as before. Unlike names, pins change positions, so after editing them rerun tools/build_bridge_data.py; until then the site reports that the pins and the map disagree. Each id must start with G: and must not be an accession-style id.",
+  "pinned_galaxies": [
+    {
+      "id": "G:PHYSICAL-WORLD",
+      "name": "Physical World",
+      "standing": "INTERFACE_DRAFT",
+      "why": "Papers whose claims are about physical systems or materials: physics proper (Meaning-Inertia, the Ableman Wheel, the torque reactor, no-crack roasting), the craft-process theory beside roasting, and the earthworks set. Left out: papers that govern physical machines (robotics, cyber-physical syscalls, infrastructure), Water (an MCIR essay that uses soil as an image), and papers that use physics as metaphor, and the three EMRT publication companions.",
+      "members": [
+        "AC-0009",
+        "AC-0010",
+        "AC-0113",
+        "AC-0151",
+        "AC-0153",
+        "AC-0167",
+        "AC-0168",
+        "AC-0170",
+        "AC-0199",
+        "AC-0200",
+        "AC-0201"
+      ]
+    },
+    {
+      "id": "G:CRYPTOGRAPHY",
+      "name": "Cryptography",
+      "standing": "AUTHOR_CURATED",
+      "why": "Papers that make cryptographic identity, hashing, commitment, phase, jurisdiction, or verification a primary subject rather than merely using hashes or signatures as supporting machinery. Cross-cutting papers on storage, context, semantic compilation, and distributed systems remain in their principal regions and appear as linked bridges instead of being absorbed into this category.",
+      "members": [
+        "AC-0016",
+        "AC-0017",
+        "AC-0034",
+        "AC-0056",
+        "AC-0105",
+        "AC-0112",
+        "AC-0131",
+        "AC-0132",
+        "AC-0145",
+        "AC-0156"
+      ]
+    }
+  ],
+  "galaxies": [
+    {
+      "id": "G:AC-0059",
+      "name": "Meaning & Knowledge",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "G:AC-0143",
+      "name": "Constitutional Theory & Institutions",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "G:AC-0081",
+      "name": "Receipts, Integrity & Continuity",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "G:AC-0013",
+      "name": "MCIR & Governed Compilation",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "G:AC-0030",
+      "name": "Effects, Kernels & Safety",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "G:AC-0198",
+      "name": "Software, Code & Migration",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "G:AC-0001",
+      "name": "AI Reasoning & Context",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "G:AC-0008",
+      "name": "Consciousness & Experience",
+      "standing": "INTERFACE_DRAFT"
+    }
+  ],
+  "families": [
+    {
+      "id": "F:AC-0059",
+      "name": "Meaning, crystallization & knowledge bases",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0014",
+      "name": "Tokens & SemCrys",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0143",
+      "name": "Law, amendment & institutions",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0141",
+      "name": "Markets & quantitative finance",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0183",
+      "name": "Coordination & collectives",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0081",
+      "name": "Receipts, coverage & observation",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0156",
+      "name": "Cryptographic hashing",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0066",
+      "name": "Archives & cold continuity",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0095",
+      "name": "Observability & agent interfaces",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0013",
+      "name": "Governed compilation",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0162",
+      "name": "Intermediate representations & lowering",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0020",
+      "name": "Enforcement & capabilities",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0030",
+      "name": "Effects & cyber-physical control",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0126",
+      "name": "Code analysis & semantic debt",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0198",
+      "name": "Migration & sovereign software",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0001",
+      "name": "Reasoning protocols & training",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0027",
+      "name": "Retrieval, context & memory",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0008",
+      "name": "Consciousness & experience",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0010",
+      "name": "Physics, craft & electromechanical processes",
+      "standing": "INTERFACE_DRAFT"
+    },
+    {
+      "id": "F:AC-0167",
+      "name": "Earthworks & materials",
+      "standing": "INTERFACE_DRAFT"
+    }
+  ]
+}

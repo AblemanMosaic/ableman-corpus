@@ -1,0 +1,1262 @@
+<h1 id="mosaicos-a-constitutional-operating-system">MosaiCOS: A
+Constitutional Operating System</h1>
+<h2
+id="constitutional-os-discipline-configuration-manifold-analysis-and-a-proposed-mosaicos-instance">Constitutional
+OS Discipline, Configuration-Manifold Analysis, and a Proposed MosaiCOS
+Instance</h2>
+<h3
+id="kernel-mechanisms-become-governable-only-when-identity-authority-decision-effect-evidence-and-revision-remain-distinguishable.">Kernel
+mechanisms become governable only when identity, authority, decision,
+effect, evidence, and revision remain distinguishable.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Operating systems mediate memory, process execution, storage,
+devices, and communication, but their security mechanisms do not
+automatically constitute a reviewable governance order. An
+access-control decision may be enforced without binding the exact
+subject, authority chain, policy revision, intended effect, observed
+outcome, and later repair route into one inspectable lineage.</p>
+<p>This paper proposes the <strong>Constitutional Operating System
+(COS)</strong> discipline: a specification framework for operating
+systems whose consequential operations are attributable to stable
+constitutional identities, admitted under finite delegated authority,
+subject to typed decisions and refusals, and connected to evidence and
+revision through integrity-protected records. COS is not an operating
+system and does not prescribe one kernel architecture. It defines
+obligations that candidate realizations must interpret, implement, and
+test.</p>
+<p><strong>MosaiCOS</strong> is the paper’s proposed Instance
+Configuration for general-purpose constitutional computing. It combines
+process and artifact identities, constitutional capability tokens,
+pre-effect decision commitments, post-effect observations, typed
+refusal, declared governance and bootstrap boundaries, governed
+sessions, hardware-effect attribution, and epoch succession. These are
+proposals and proof obligations, not evidence that a conforming kernel
+already exists.</p>
+<p>The paper corrects three important category errors. First, a
+hash-linked receipt can preserve a decision record without proving that
+the record is truthful, complete, independently observed, or causally
+effective. Second, a stable program identity is not the same as a unique
+execution-instance identity or a continuity relation across restart.
+Third, a user-space governance layer on Linux or OpenWrt may be a
+valuable transition profile without thereby becoming a COS-conforming
+kernel.</p>
+<p>The source’s comparisons among Linux, seL4, Redox, Genode, and
+Fuchsia are therefore retained as hypotheses for a primary-source
+protocol-archaeology study, not as established compliance findings. The
+paper supplies that study design, a full
+Possibility-Specification-CM1-CM2-Instance Configuration-Implementation
+Realization-Evidence-Revision map, conformance levels, counterevidence
+conditions, and a bounded deployment spectrum. No implementation,
+conformance, novelty, or superiority claim is granted by this
+candidate.</p>
+<h2 id="the-problem-mechanisms-without-a-constitutional-account">1. The
+Problem: Mechanisms Without a Constitutional Account</h2>
+<p>An operating system already makes governance-like decisions. It
+decides which process may read a file, which principal may map a device,
+which packet may leave an interface, and which executable may enter
+memory. Conventional mechanisms can perform those decisions correctly
+for their threat models. The constitutional question is different:</p>
+<ul>
+<li>Which exact subject and artifact requested the operation?</li>
+<li>Under which authority chain and policy revision was the request
+evaluated?</li>
+<li>Which part of the system was responsible for the decision?</li>
+<li>Was the decision bound before the consequential effect?</li>
+<li>Which observer supports the claim that the effect did or did not
+occur?</li>
+<li>Which relevant paths were outside mediation or observation?</li>
+<li>How can a refusal, debt, exception, or later revision be contested
+and repaired?</li>
+</ul>
+<p>Access control, capabilities, isolation, logging, measured boot, and
+formal verification can each answer part of this account. None should be
+dismissed merely because it uses a different vocabulary. COS asks
+whether the parts compose into an inspectable relation among
+specification, configuration, realization, evidence, and revision.</p>
+<p>The paper’s central thesis is therefore narrower than “existing
+operating systems do not govern.” Existing systems implement many forms
+of policy and institutional control. The thesis is:</p>
+<blockquote>
+<p>A constitutional operating system must make the authority and meaning
+of consequential kernel decisions inspectable without treating security
+mechanisms, audit records, or cryptographic integrity as sufficient
+evidence of the whole governance claim.</p>
+</blockquote>
+<p>This formulation allows comparison without defining every difference
+as failure. It also places a burden on COS: if a simpler combination of
+capabilities, audit, attestation, and independent observation provides
+equivalent accountability at lower cost, the stronger architecture is
+not justified merely by its terminology.</p>
+<h2 id="discipline-instance-realization-and-evidence">2. Discipline,
+Instance, Realization, and Evidence</h2>
+<p>Four objects must remain distinct.</p>
+<ol type="1">
+<li><strong>COS discipline</strong> is a specification-level set of
+constitutional obligations.</li>
+<li><strong>MosaiCOS Instance Configuration</strong> is one proposed
+selection among admissible configurations.</li>
+<li><strong>MosaiCOS realization</strong> is an exact implementation
+artifact, environment, and deployment that claims to realize that
+configuration.</li>
+<li><strong>MosaiCOS evidence state</strong> is the bounded record
+supporting or contradicting particular claims about that
+realization.</li>
+</ol>
+<p>The relation is not identity:</p>
+<p><span
+class="math display">COSSpec  ≢ MosaiCOSIC  ≢ Implementation  ≢ Evidence .</span></p>
+<p>A specification can be coherent while no implementation conforms. An
+implementation can execute while violating its specification. A receipt
+chain can be internally valid while failing to observe a bypass.
+Evidence can support one claim without supporting the system as a
+whole.</p>
+<p>The source corpus also contains <strong>MosaicOS</strong> and
+<strong>MosaiCOS</strong> system codices and release candidates. Lexical
+similarity and shared source trees do not settle whether every named
+artifact is the same logical system, a renamed lineage, a profile, or a
+distinct project. This paper preserves that identity question for author
+adjudication rather than silently merging those records.</p>
+<h2 id="the-inherited-operating-system-floor">3. The Inherited
+Operating-System Floor</h2>
+<p>COS is additive. A claimed realization must first provide or
+explicitly delegate the ordinary substrate needed for its declared
+scope: memory protection where multiple protection domains exist,
+scheduling, persistent storage where promised, device I/O, lifecycle
+control, inter-process or inter-component communication, and network
+transport where offered.</p>
+<p>COS does not require one scheduling policy, file system, language, or
+microkernel. It governs the constitutional obligations attached to those
+mechanisms. A capability model can be inherited; the COS question is how
+capability identity, delegation, revocation, exercise, and evidence are
+bound. A measured boot chain can be inherited; the COS question is which
+claim it supports, which components remain outside measurement, and how
+succession is governed.</p>
+<p>This separation prevents two opposite errors:</p>
+<ul>
+<li><strong>mechanism laundering:</strong> treating the presence of a
+security primitive as proof of constitutional governance; and</li>
+<li><strong>constitutional laundering:</strong> describing a policy
+layer in constitutional language while the consequential substrate
+remains outside its mediation and evidence boundary.</li>
+</ul>
+<h2 id="identity-is-a-typed-family-not-one-hash">4. Identity Is a Typed
+Family, Not One Hash</h2>
+<p>The source proposed one Process Mosaic ID derived from a genesis
+artifact and spawning authority chain. That formula is useful for
+lineage but insufficient as unique process-instance identity: two
+concurrent instances of the same artifact under the same authority would
+collide, and a digest alone does not prove possession, liveness, or
+authorized succession.</p>
+<p>COS therefore distinguishes at least four identities:</p>
+<ul>
+<li><strong>artifact identity</strong> commits to exact program or plan
+bytes and relevant build representation;</li>
+<li><strong>constitutional profile identity</strong> commits to the
+policy, configuration, capability schema, and semantic regime under
+which the artifact is admitted;</li>
+<li><strong>execution-instance identity</strong> distinguishes one spawn
+or activation from another; and</li>
+<li><strong>continuity identity</strong> relates predecessor and
+successor instances across restart, migration, checkpoint, or epoch
+transition.</li>
+</ul>
+<p>One possible typed construction is:</p>
+<p><span
+class="math display"><em>A</em> = <em>H</em>(artifact  ∥ representation ),</span></p>
+<p><span
+class="math display"><em>P</em> = <em>H</em>(<em>A</em> ∥ constitution  ∥ configuration ),</span></p>
+<p><span
+class="math display"><em>I</em> = <em>H</em>(<em>P</em> ∥ spawnReceipt  ∥ instanceNonce  ∥ instanceKey ),</span></p>
+<p>with continuity expressed by an authorized relation</p>
+<p><span class="math display">$$
+I_{n} \xrightarrow{\operatorname{successionReceipt}} I_{n+1}.
+$$</span></p>
+<p>These formulas are candidate schemas, not a cryptographic protocol
+specification. Canonical serialization, domain separation, key
+lifecycle, nonce generation, replay resistance, privacy, collision
+assumptions, recovery, and revocation must be selected and tested at
+Instance Configuration and Implementation Realization.</p>
+<h2 id="the-nine-cos-invariants">5. The Nine COS Invariants</h2>
+<p>The following invariants are retained as the proposed COS
+specification. A profile that omits one may still be useful, but it must
+call itself partial rather than silently redefining full
+conformance.</p>
+<h3 id="cos-s-01-constitutional-attribution">COS-S-01: Constitutional
+Attribution</h3>
+<p>Every consequential kernel-mediated operation is attributable to an
+exact execution instance, artifact and profile lineage, presented
+authority, governing rule set, request identity, and declared semantic
+operation. Attribution does not imply moral legitimacy or factual truth.
+It makes the claim reviewable.</p>
+<h3 id="cos-s-02-typed-constitutional-identity">COS-S-02: Typed
+Constitutional Identity</h3>
+<p>Artifact, constitutional profile, execution instance, and continuity
+relations are distinct, integrity-protected, and resistant to accidental
+aliasing across domains. Runtime topology identifiers such as PID may
+remain useful implementation handles but must not be mistaken for the
+constitutional identity.</p>
+<h3 id="cos-s-03-finite-delegated-and-revocable-authority">COS-S-03:
+Finite, Delegated, and Revocable Authority</h3>
+<p>Consequential operations require authority that is finite in
+resource, operation, scope, time, delegation depth, and consequence
+class. Delegation and revocation are explicit. Bootstrap and recovery
+authority are not magically authority-free; they are declared exceptions
+with bounded custody and evidence obligations.</p>
+<h3
+id="cos-s-04-pre-effect-decision-commitment-and-post-effect-reconciliation">COS-S-04:
+Pre-Effect Decision Commitment and Post-Effect Reconciliation</h3>
+<p>Before a consequential effect, the system commits to the request
+identity, decision, authority, policy and configuration revision,
+intended effect, and predecessor record. After execution, an observer
+appropriate to the claim records completion, refusal, failure,
+uncertainty, or absence of observation.</p>
+<p>Let <span class="math inline"><em>D</em></span> be a decision record
+and <span class="math inline"><em>O</em></span> an outcome
+observation:</p>
+<p><span
+class="math display"><em>D</em> = <em>H</em>(<em>r</em>, <em>I</em>, <em>a</em>, <em>p</em>, <em>c</em>, <em>d</em>, <em>e</em>, <em>D</em><sub><em>p</em><em>r</em><em>e</em><em>v</em></sub>),</span></p>
+<p><span
+class="math display"><em>O</em> = <em>H</em>(<em>D</em>, <em>o</em>, <em>m</em>, <em>y</em>, <em>t</em>, <em>O</em><sub><em>p</em><em>r</em><em>e</em><em>v</em></sub>),</span></p>
+<p>where <span class="math inline"><em>r</em></span> is request
+identity, <span class="math inline"><em>I</em></span> is instance
+identity, <span class="math inline"><em>a</em></span> is authority,
+<span class="math inline"><em>p</em></span> is policy, <span
+class="math inline"><em>c</em></span> is configuration, <span
+class="math inline"><em>d</em></span> is disposition, <span
+class="math inline"><em>e</em></span> is intended effect, <span
+class="math inline"><em>o</em></span> is observer identity, <span
+class="math inline"><em>m</em></span> is observation method, <span
+class="math inline"><em>y</em></span> is observed outcome, and <span
+class="math inline"><em>t</em></span> is time evidence.</p>
+<p>Integrity of <span class="math inline"><em>D</em></span> shows that
+the committed record has not changed under the hash and custody
+assumptions. It does not prove that the evaluator was correct, the clock
+was sound, the effect occurred, the observer was independent, or every
+path was covered. Those are separate claims.</p>
+<h3 id="cos-s-05-typed-refusal-hold-and-failure">COS-S-05: Typed
+Refusal, Hold, and Failure</h3>
+<p>A negative result identifies the layer at which continuation became
+inadmissible or unsupported. The full realization funnel provides a
+richer taxonomy than the source’s compact S/C/I labels:</p>
+<ul>
+<li><code>SPECIFICATION_REFUSAL</code>: the requested semantics
+contradict the declared domain rules;</li>
+<li><code>CM1_EXCLUSION</code>: the candidate configuration is not
+admissible under the specification;</li>
+<li><code>CM2_NONPREFERENCE</code>: admissible but rejected by the
+selected preference constitution;</li>
+<li><code>INSTANCE_CONFIGURATION_REFUSAL</code>: excluded by this
+concrete configuration;</li>
+<li><code>IMPLEMENTATION_UNAVAILABLE</code>: admitted and configured but
+not implemented;</li>
+<li><code>IMPLEMENTATION_FAILURE</code>: attempted realization
+failed;</li>
+<li><code>EVIDENCE_HOLD</code>: the effect or required assurance cannot
+yet be established;</li>
+<li><code>AUTHORITY_REFUSAL</code>: the subject lacks eligible authority
+for this request.</li>
+</ul>
+<p>A deployment may encode these into a smaller wire taxonomy, but it
+must preserve the distinction needed for remediation.</p>
+<h3 id="cos-s-06-declared-governance-and-coverage-boundary">COS-S-06:
+Declared Governance and Coverage Boundary</h3>
+<p>The realization declares which operations, devices, services,
+recovery paths, interrupts, direct-memory-access paths, privileged
+tools, and external components it governs. It also declares what it does
+not govern. Conformance claims must name the discovered capability
+surface and the unmediated or unobserved remainder.</p>
+<h3 id="cos-s-07-governed-constitutional-sessions">COS-S-07: Governed
+Constitutional Sessions</h3>
+<p>For exchanges within the claimed governance scope, communicating
+instances establish a session that binds peer identities, protocol and
+semantic versions, negotiated capabilities, authority, transcript
+commitments, expiry, and termination. Not every byte requires a separate
+constitutional ceremony; the session defines which subsequent operations
+inherit which bounded standing.</p>
+<h3 id="cos-s-08-hardware-effect-attribution">COS-S-08: Hardware-Effect
+Attribution</h3>
+<p>Hardware effects within scope are tied to an admitted request,
+delegated authority, device or resource identity, decision record, and
+outcome observation. The observer and method must match the claim. A
+software receipt cannot alone prove a physical GPIO transition, radio
+transmission, DMA boundary, or user-visible display.</p>
+<h3 id="cos-s-09-bootstrap-and-succession-declaration">COS-S-09:
+Bootstrap and Succession Declaration</h3>
+<p>The pre-governance bootstrap surface, initial authority, recovery
+path, update mechanism, rollback conditions, and epoch succession rules
+are declared and committed. No system can produce a governed receipt
+before the machinery required to produce that receipt exists. The honest
+obligation is to minimize and expose the predecessor trust boundary,
+then reconcile it from the first governed state.</p>
+<h2 id="the-universal-realization-funnel">6. The Universal Realization
+Funnel</h2>
+<p>The original source compressed specification, configuration, and
+implementation into S/C/I. The universal GSM makes the choices and
+failure points more precise:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>COS responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore operating-system governance regimes, including undesirable,
+infeasible, or nonconstitutional possibilities.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define the nine obligations, identity domains, consequence classes,
+claim ceilings, and conformance vocabulary.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate configurations that satisfy the bare obligations. A point
+that uses ambient unlimited authority or omits evidence is outside CM1
+unless the specification explicitly permits it.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations by security, sovereignty, inspectability,
+availability, performance, privacy, portability, recoverability, and
+cost. Preference requires a declared constitution; it is not implied by
+admissibility.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select concrete algorithms, schemas, kernel architecture, capability
+representation, storage, observers, hardware targets, update rules, and
+deployment profile.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Produce exact source, build graph, binary or plan, boot image,
+runtime environment, configuration, and deployment state.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Test mediation coverage, identity, authority, decision ordering,
+physical and software effects, refusal typing, bypass, crash recovery,
+performance, privacy, and negative controls.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Change the specification, preference constitution, instance
+configuration, implementation, or evidence claims while preserving
+predecessor identity, debt, migration, and rollback.</td>
+</tr>
+</tbody>
+</table>
+<p>The nine design dimensions in the source - capability, identity,
+receipts, syscall governance, sessions, hardware mediation, execution
+substrate, bootstrap, and epoch governance - are useful axes, but their
+option lists mix admissible and inadmissible points. Ambient authority
+and absent receipts belong in the wider Possibility space when they
+contradict the COS specification. CM1 begins only after the invariant
+filter.</p>
+<h2 id="protocol-archaeology-as-a-research-program">7. Protocol
+Archaeology as a Research Program</h2>
+<p>The source compares Linux, seL4, Redox, Genode, and Fuchsia. Those
+comparisons are valuable orientation, but this version-family head
+contains no current primary-source citations, exact versions, test
+artifacts, or reproducible scoring method. The matrix must therefore be
+treated as a hypothesis register.</p>
+<h3 id="comparison-contract">7.1 Comparison Contract</h3>
+<p>For each target, a defensible review should bind:</p>
+<ul>
+<li>exact project, release, source revision, architecture, and
+configuration;</li>
+<li>the native identity, capability, IPC, driver, boot, audit, update,
+and recovery models;</li>
+<li>the semantic correspondence between native mechanisms and each COS
+invariant;</li>
+<li>evidence for <code>SATISFIED</code>, <code>PARTIAL</code>,
+<code>NOT_SATISFIED</code>, <code>UNKNOWN</code>, or
+<code>NOT_APPLICABLE</code>;</li>
+<li>whether the gap is an additive adapter, pervasive augmentation,
+architectural replacement, or unresolved question;</li>
+<li>performance, availability, security, and governance costs of the
+proposed change;</li>
+<li>an independent reviewer and reproducible evidence package.</li>
+</ul>
+<h3 id="current-hypotheses-not-findings">7.2 Current Hypotheses, Not
+Findings</h3>
+<p>The source advances the following hypotheses for later testing:</p>
+<ol type="1">
+<li>Pre-effect governance-decision commitments coupled to post-effect
+reconciliation are not a general kernel property of the selected
+comparison systems.</li>
+<li>Capability-oriented and component-oriented designs such as seL4,
+Genode, and Fuchsia may have smaller structural adaptation gaps than
+conventional monolithic designs.</li>
+<li>Linux’s pervasive PID use and ambient privileged paths make deep
+constitutional attribution expensive.</li>
+<li>A Rust or formally constrained substrate may reduce some
+implementation risks but does not itself provide constitutional
+governance.</li>
+<li>A clean-slate or constitution-first design may produce a more
+coherent obligation surface than incremental retrofit.</li>
+</ol>
+<p>These remain falsifiable. In particular, Linux may support a
+constitutional identity plane without replacing every internal PID use;
+a mediated overlay may cover the declared effects; or an existing
+microkernel plus a small verified adapter may outperform a new kernel.
+The phrase “cannot be augmented” is therefore too strong until an
+explicit impossibility argument rules out such profiles.</p>
+<p>External research is deliberately not performed in this revision
+pass. A current primary-source review is a publication blocker.</p>
+<h2 id="mosaicos-as-a-proposed-instance-configuration">8. MosaiCOS as a
+Proposed Instance Configuration</h2>
+<p>The paper proposes the following CM2 preferences: finite authority
+over ambient privilege, typed identities over overloaded identifiers,
+declared mediation over implicit coverage, pre-effect decision binding
+over post-hoc reconstruction alone, independent observations over
+self-report alone, user-space drivers where their isolation benefit
+exceeds cost, memory-safe or semantically constrained implementation
+substrates, explicit bootstrap custody, and receipted succession.</p>
+<p>From those preferences, a candidate MosaiCOS Instance Configuration
+follows.</p>
+<h3 id="candidate-dimension-selections">8.1 Candidate Dimension
+Selections</h3>
+<ol type="1">
+<li><strong>Capability model:</strong> signed, domain-separated,
+canonically serialized capability objects with explicit grantor,
+grantee, resource, operation, scope, delegation, expiry, revocation, and
+consequence class.</li>
+<li><strong>Identity model:</strong> separate artifact, profile,
+instance, continuity, principal, device, and session identifiers. BLAKE3
+and Ed25519 are candidate algorithms, not specification-level
+mandates.</li>
+<li><strong>Decision and evidence records:</strong> append-only
+commitments under a declared retention and witness profile; decision,
+attempt, outcome observation, reconciliation, contest, and revision are
+distinct record types.</li>
+<li><strong>Operation governance:</strong> consequence-classified
+mediation. Pure or low-risk operations may be covered by session or
+batch commitments; high-consequence effects require operation-specific
+admission and observation.</li>
+<li><strong>Session model:</strong> mutual typed identity binding,
+capability negotiation, semantic and protocol version commitments,
+transcript linkage, expiry, revocation, and termination.</li>
+<li><strong>Hardware model:</strong> least-authority device mediation
+with effect-specific observers and an explicit physical-world
+remainder.</li>
+<li><strong>Execution substrate:</strong> a staged path from a testable
+Rust realization toward PEIR or another obligation-carrying intermediate
+representation if evidence shows the added layer preserves rather than
+obscures obligations.</li>
+<li><strong>Bootstrap model:</strong> a minimal measured predecessor,
+exact plan or binary commitments, declared initial authority, recovery
+and rollback, and first-state reconciliation.</li>
+<li><strong>Epoch model:</strong> typed succession between exact
+predecessor and successor states, with carried debt, capability
+migration or revocation, compatibility claims, rollback bounds, and
+witness evidence.</li>
+</ol>
+<h3 id="selection-is-not-proof-of-optimality">8.2 Selection Is Not Proof
+of Optimality</h3>
+<p>The Configuration Manifold can make alternatives explicit; it cannot
+mechanically prove that MosaiCOS is uniquely optimal without a
+preference constitution and comparative evidence. “Recommended” means
+recommended by the paper’s declared preferences, not entailed by domain
+physics.</p>
+<p>Candidate alternatives include adapting seL4, Genode, Fuchsia, a
+Linux security and identity plane, or a userspace constitutional
+runtime. Each may dominate a clean-slate kernel for a particular cost,
+assurance, compatibility, or deployment profile. MosaiCOS remains a
+valuable proposal even if one of those realizations becomes the
+preferred implementation path.</p>
+<h2 id="prototype-sufficiency-and-conformance-levels">9. Prototype
+Sufficiency and Conformance Levels</h2>
+<p>The source named five load-bearing elements: process identity,
+capability token, kernel receipt chain, typed refusal, and bootstrap
+commitment. Those elements are an excellent <strong>minimal thesis
+demonstrator</strong>, but they cannot both be sufficient for full COS
+conformance and coexist with nine mandatory invariants that include
+sessions, hardware attribution, and succession.</p>
+<p>This candidate resolves the contradiction by defining levels:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Level</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COS-SPECIFIED</code></td>
+<td>The system or document defines how each invariant would be satisfied
+and names unresolved obligations.</td>
+</tr>
+<tr>
+<td><code>COS-PROTOTYPE</code></td>
+<td>An exact artifact demonstrates the five-element thesis on a bounded
+operation surface; omitted invariants and bypasses are explicit
+debts.</td>
+</tr>
+<tr>
+<td><code>COS-REALIZED</code></td>
+<td>An exact implementation claims all nine invariants for a declared
+capability and deployment surface.</td>
+</tr>
+<tr>
+<td><code>COS-EVIDENCED</code></td>
+<td>An evidence package supports that realization claim with negative
+controls, bypass testing, independent observation, reproducible
+verification, and explicit remainder.</td>
+</tr>
+</tbody>
+</table>
+<p>No named artifact receives one of these standings merely because the
+paper describes it. Standing attaches to an exact artifact and evidence
+package under an eligible review process.</p>
+<p>The five prototype elements become:</p>
+<ol type="1">
+<li>typed constitutional instance and artifact identity;</li>
+<li>finite delegated capability representation;</li>
+<li>pre-effect decision commitment plus post-effect reconciliation
+record;</li>
+<li>typed refusal or hold disposition;</li>
+<li>declared bootstrap predecessor and first governed state.</li>
+</ol>
+<p>This profile demonstrates the constitutional transition but carries
+explicit debts for sessions, hardware-effect evidence, full coverage,
+epoch succession, performance, recovery, and long-duration
+operation.</p>
+<h2 id="kernel-to-network-composition">10. Kernel-to-Network
+Composition</h2>
+<p>MosaiCOS, a governed execution substrate, and MIP/AMIP can form a
+cross-layer evidence lineage, but three local hash chains do not
+automatically form one continuous proof. Composition requires an
+explicit linkage contract.</p>
+<p>At minimum, a cross-layer transaction binds:</p>
+<pre class="text"><code>CrossLayerTransaction
+  transaction_id
+  initiating_instance_id
+  kernel_request_and_decision_commitments
+  execution_plan_and_gate_commitments
+  network_session_and_frame_commitments
+  authority_and_capability_lineage
+  semantic_operation_and_version
+  predecessor_and_successor_links
+  outcome_observers_and_methods
+  time_and_ordering_evidence
+  unresolved_remainder</code></pre>
+<p>The verifier must test not only hash continuity but also
+correspondence: that the kernel request is the execution operation
+claimed, the execution operation is the network request claimed, and the
+observed effect belongs to the same transaction. Provider translation,
+buffering, retries, concurrency, partial failure, and replay can
+otherwise create plausible but false joins.</p>
+<p>A shared receipt schema may reduce tooling cost, but schema
+uniformity is not semantic equivalence. Process, network, artifact,
+capability, and transaction identifiers require domain separation and
+explicit translation rules.</p>
+<h2 id="deployment-profiles-and-their-debts">11. Deployment Profiles and
+Their Debts</h2>
+<h3 id="general-purpose-mosaicos">11.1 General-Purpose MosaiCOS</h3>
+<p>The target is a desktop, server, cloud, or single-board-computer
+operating system with all nine invariants over a declared kernel
+surface. A Rust transition kernel and a later PEIR-based substrate are
+alternative realization paths. Neither is granted standing here.</p>
+<h3 id="mosaicos-lite">11.2 MosaiCOS Lite</h3>
+<p>A constrained single-process microcontroller profile can bind
+firmware identity, static authority, boot state, governed I/O requests,
+and bounded evidence. It may be a useful COS prototype, but static
+nonrevocable capabilities, a ring buffer that evicts history, absence of
+independent physical observers, and whole-image update semantics are
+conformance debts. Eviction changes the claim from complete append-only
+history to a declared retention window. A hash mismatch before receipt
+machinery exists must be represented by an external boot witness or
+later recovery evidence; “halt, no receipt” cannot satisfy universal
+refusal evidence by itself.</p>
+<h3 id="amr-cos">11.3 AMR-COS</h3>
+<p>An Ableman Mosaic Router profile composes router application
+governance with an operating-system substrate. The application, routing
+policy, network backends, host OS, drivers, and hardware must remain
+separate evidence surfaces. A governance layer running on Raspberry Pi
+OS can be an AMR constitutional application profile without proving the
+host kernel is COS-realized.</p>
+<h3 id="amr-cos-lite-on-openwrt">11.4 AMR-COS Lite on OpenWrt</h3>
+<p>An OpenWrt package can govern routing decisions and emit valuable
+evidence while relying on <code>netifd</code>,<br />
+<code>nftables</code>,<br />
+drivers, bootloaders, and the Linux kernel for enforcement. It is
+therefore a transition and compatibility profile unless those lower
+layers are brought within the declared COS mediation and evidence
+boundary. Calling the package a full constitutional OS would otherwise
+launder application-layer governance into kernel-level conformance.</p>
+<h3 id="cross-profile-equivalence">11.5 Cross-Profile Equivalence</h3>
+<p>Profiles are not constitutionally equivalent merely because they use
+related hashes or receipt shapes. Equivalence requires a named relation:
+shared identity schema, shared obligation satisfaction, protocol
+interoperability, trace translation, or behavior under selected
+observations. Resource-bounded profiles may legitimately satisfy
+narrower contracts.</p>
+<h2 id="evidence-and-evaluation-program">12. Evidence and Evaluation
+Program</h2>
+<p>An evidence package for a claimed COS realization should bind:</p>
+<ul>
+<li>exact source, dependencies, toolchain, build graph, binary or plan,
+configuration, boot image, and hardware or virtual platform;</li>
+<li>the declared capability surface and automated discovery of
+privileged or bypass paths;</li>
+<li>policy, preference constitution, Instance Configuration, identity
+and serialization schemas;</li>
+<li>admission, refusal, hold, execution, failure, crash, restart,
+update, rollback, and recovery traces;</li>
+<li>independent observers for software state and selected physical
+effects;</li>
+<li>performance, availability, storage, privacy, energy, and
+operator-cost measurements;</li>
+<li>mutation or fault-injection evidence showing that tests detect
+missing mediation, reordered records, forged identity, stale policy,
+unauthorized capability, and omitted effect;</li>
+<li>verifier identity, version, inputs, outputs, and reproducibility
+instructions;</li>
+<li>unresolved limitations, competing explanations, and open editorial
+questions.</li>
+</ul>
+<h3 id="core-tests">12.1 Core Tests</h3>
+<ol type="1">
+<li><strong>Unauthorized operation:</strong> a request lacking
+capability must not produce the effect; the negative disposition must
+identify the responsible layer and evidence limits.</li>
+<li><strong>Concurrent identity:</strong> two instances of the same
+artifact and authority must have distinct execution identities while
+preserving their shared artifact and profile lineage.</li>
+<li><strong>Restart continuity:</strong> a successor must not
+impersonate its predecessor merely by reusing a stable artifact hash;
+continuity requires an authorized succession relation.</li>
+<li><strong>Decision/effect ordering:</strong> a consequential effect
+cannot precede its decision commitment under the observed clock and
+mediation boundary.</li>
+<li><strong>Crash gap:</strong> interruption after admission but before
+completion remains detectable and recoverable without claiming an effect
+that was not observed.</li>
+<li><strong>Bypass mutation:</strong> an intentionally unmediated route
+must be detected by capability-surface discovery or an independent
+observer.</li>
+<li><strong>Receipt forgery:</strong> internally consistent forged or
+omitted records must not be accepted as evidence of truth or
+completeness merely because their hashes verify.</li>
+<li><strong>Epoch transition:</strong> predecessor debt, capabilities,
+sessions, and compatibility claims must be explicitly carried, revoked,
+or refused.</li>
+<li><strong>Cross-layer mismatch:</strong> a kernel record joined to the
+wrong execution or network transaction must be rejected.</li>
+<li><strong>Resource bound:</strong> receipt and mediation costs must be
+measured under realistic workload, saturation, storage pressure, network
+loss, and failure.</li>
+</ol>
+<h3 id="comparative-baselines">12.2 Comparative Baselines</h3>
+<p>Evaluation should compare at least:</p>
+<ul>
+<li>a conventional OS with native security and audit configuration;</li>
+<li>the same OS with a userspace constitutional layer;</li>
+<li>an adapted capability-oriented or component-oriented system;</li>
+<li>a MosaiCOS prototype over an identical workload.</li>
+</ul>
+<p>Outcomes should include security defects detected, false refusals,
+bypass coverage, recovery time, latency, throughput, storage growth,
+energy, operator comprehension, contestability, and
+independent-verification cost. A favorable receipt count is not a
+substitute for these outcomes.</p>
+<h3 id="status-of-source-reported-realizations">12.3 Status of
+Source-Reported Realizations</h3>
+<p>The source reports CC Computing builds, gate tests, a
+MosaiCOS-on-Linux v0.1, and future Rust and PEIR paths. This
+version-family head does not bind the exact artifacts and evidence
+required to verify those claims. They remain source-reported leads and
+integration targets. Application-layer evidence cannot, by itself, prove
+kernel-layer conformance.</p>
+<h2 id="integration-with-the-ableman-corpus">13. Integration with the
+Ableman Corpus</h2>
+<p>MosaiCOS becomes clearer when read as one realization of a larger
+constitutional-computing fabric:</p>
+<ul>
+<li><strong>Constitutional Computing</strong> supplies the general
+proposition that constraints and authority must survive into executable
+effect.</li>
+<li><strong>Admissibility Engineering</strong> supplies the method for
+distinguishing a declared surface from the constrained, implemented, and
+evidenced surface.</li>
+<li><strong>The Three Hash Rule</strong> warns against collapsing exact
+state, admissibility commitments, and meaning commitments into one
+digest. COS identity and receipts should preserve those
+distinctions.</li>
+<li><strong>Reasoning by Way of Receipts</strong> treats receipts as
+intermediate reason carriers with bounded claim ceilings, not proof
+tokens.</li>
+<li><strong>A Formal Theory of Work Custody</strong> clarifies who is
+responsible for unresolved transitions, evidence, and repair without
+confusing custody with ownership or authority.</li>
+<li><strong>The Constitutional Observability Platform</strong> supplies
+heterogeneous observers, verification, evidence-health, and explicit
+remainder needed to test kernel claims.</li>
+<li><strong>Governed Semantic Project Lineage</strong> supplies
+artifact, build, configuration, and succession lineage across
+implementation revisions.</li>
+<li><strong>GMB</strong>, the current Governed Meaning Base in the
+historical <code>CCF -&gt; CMB -&gt; GMB</code> terminology lineage, can
+hold the durable identities, claims, conflicts, decisions, evidence, and
+revision relations from which a specific OS constitution or policy
+projection is compiled. GMB is not the kernel and does not make the
+kernel conform.</li>
+<li><strong>MIP/AMIP and the Crystal Network</strong> provide network
+and distributed-knowledge composition surfaces; cross-layer linkage must
+remain explicit.</li>
+</ul>
+<p>This integration makes MosaiCOS more than a list of kernel features.
+It is an implementation target for constraint carriage from semantic
+specification through configuration, artifact realization, effect,
+evidence, and revision.</p>
+<h2 id="full-stack-constitutional-os-demonstrator">Full-Stack
+Constitutional OS Demonstrator</h2>
+<p>The completed P1 corpus positions MosaiCOS as the <strong>full-stack
+constitutional operating-system demonstrator and proposed Instance
+Constitution / Instance Configuration for the wider Constitutional OS
+discipline</strong>. It connects identity, authority, sessions, effects,
+evidence, bootstrap, and succession across an operating substrate. It is
+not the discipline itself, a proven optimal configuration, or a
+production-qualified implementation by virtue of the name.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Sovereign Software</em><br />
+<strong>Supplies:</strong> Inspectability, reconstructability,
+delegation, replacement, and exit across dependency closure.<br />
+<strong>MosaiCOS boundary:</strong> MosaiCOS proposes an OS realization
+path; sovereignty requires separate actor- and capability-relative
+evidence.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Ableman Format
+Specification (AFS)</em><br />
+<strong>Supplies:</strong> Profiles, schemas, and scoped conformance
+claims.<br />
+<strong>MosaiCOS boundary:</strong> A MosaiCOS profile may conform to
+AFS only under exact artifacts, validators, and evidence.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Semantic placement, courts, mediation,
+effects, and receipts.<br />
+<strong>MosaiCOS boundary:</strong> MosaiCOS composes enforcement
+mechanics into an OS setting.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Constitutional Syscall
+Architecture for Cyber-Physical Control Systems</em><br />
+<strong>Supplies:</strong> A minimal effect ABI and lifecycle for
+device-facing actions.<br />
+<strong>MosaiCOS boundary:</strong> The syscall architecture is one
+boundary profile; MosaiCOS spans the wider operating substrate.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Universal Governance Kernel
+(UGK)</em><br />
+<strong>Supplies:</strong> A reusable candidate governance-kernel
+architecture.<br />
+<strong>MosaiCOS boundary:</strong> UGK may implement a kernel role
+within MosaiCOS without becoming the complete OS or proving
+conformance.</p></li>
+</ul>
+<p>A MosaiCOS conformance subject should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O= (&amp;discipline\_version, IC, IR, identity\_roots, \\
+&amp;authority\_model, kernel, effect\_surface, sessions, \\
+&amp;profiles, bootstrap, succession, evidence)
+\end{aligned}.
+$$</span></p>
+<p>Here IC means Instance Constitution or Instance Configuration and
+realization-stage IR means Instance Realization or Implementation
+Realization. The discipline, selected configuration, source tree, build,
+runtime, deployment, device integration, and evidence package remain
+separate identities.</p>
+<p>Profile names such as Lite or domain-specific variants must enumerate
+removed obligations, altered threat models, and reduced claim ceilings.
+Cross-profile equivalence cannot be inferred from common APIs or shared
+source. Bootstrap and succession must state which root authorizes the
+initial state, how successors are admitted, and what happens when
+evidence, hardware, or constitutional state diverges.</p>
+<p>The universal GSM can type<br />
+<code>INSTANTIATES_CONSTITUTIONAL_OS_DISCIPLINE</code>,
+<code>SELECTS_OS_IC</code>,<br />
+<code>REALIZED_AS_OS_IR</code>, <code>BOOTS_FROM_ROOT</code>,
+<code>GOVERNS_SESSION</code>,
+<code>MEDIATES_EFFECT_SURFACE</code>,<br />
+<code>ATTRIBUTES_HARDWARE_EFFECT</code>,
+<code>CONFORMS_TO_PROFILE</code>,
+<code>REDUCES_PROFILE_OBLIGATION</code>,<br />
+<code>SUCCEEDS_DEPLOYMENT</code>,<br />
+and<br />
+<code>EVIDENCED_BY_OS_COURT</code>. These relations prevent a system
+name from carrying unearned maturity.</p>
+<p>This integration establishes four editorial commitments: adopt
+full-stack constitutional OS demonstrator as MosaiCOS’s official corpus
+role; adopt the conformance-subject envelope; require profile-specific
+obligation and claim-ceiling disclosure; and preserve
+discipline/IC/IR/build/runtime/deployment/evidence identities.</p>
+<h2
+id="evidence-loop-realization-consciousness-non-inference-physical-control-profile-and-transformation-substrate-composition">Evidence-Loop
+Realization, Consciousness Non-Inference, Physical-Control Profile, and
+Transformation-Substrate Composition</h2>
+<p>The fixed-seed comparison with the Constitutional Observability
+Platform, Qualia Binding and Realization Mapping, the Direct-Coupled
+Dynamic Torque Reactor, and Jnana II clarifies four possible MosaiCOS
+compositions:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O^*= (&amp;discipline\_version, IC, IR, identity\_roots, authority, \\
+&amp;kernel, effect\_surface, sessions, observation\_roles, \\
+&amp;transformation\_substrate, domain\_profiles, bootstrap, \\
+&amp;succession, evidence, remainder)
+\end{aligned}.
+$$</span></p>
+<p>COP roles can supply scenario execution, evidence health,
+verification, interface recognition, situated assessment, and projection
+fidelity. A MosaiCOS realization may combine these roles only while
+preserving their claim ceilings and shared failure domains. Qualia
+research has no direct evidentiary dependence on MosaiCOS: neither
+constitutional scheduling, self-observation, nor situated-awareness
+surfaces establish consciousness or experience.</p>
+<p>DCDTR can serve as a bounded cyber-physical domain profile whose
+controller, estimator, torque allocation, degraded modes, and hardware
+effects require explicit device capabilities and safety mediation. This
+transfers an architectural stress case, not vehicle feasibility or
+performance evidence.</p>
+<p>Jnana II may provide a constitutional transformation substrate for
+software, policy, configuration, package, and agentic toolchain changes
+within or targeting an OS environment. MosaiCOS and Jnana II remain
+distinct: one is an OS demonstrator/profile; the other is a
+transformation-substrate profile. Their composition requires explicit
+representation, law, capability, execution, effect, evidence, recovery,
+and platform-boundary contracts.</p>
+<p>The universal GSM can type<br />
+<code>REALIZES_EVIDENCE_LOOP_ROLE</code>,<br />
+<code>DOES_NOT_INFER_CONSCIOUSNESS_FROM_</code><br />
+<code>OBSERVABILITY</code>,
+<code>HOSTS_PHYSICAL_CONTROL_PROFILE</code>,<br />
+<code>COMPOSES_WITH_TRANSFORMATION_SUBSTRATE</code>,
+<code>PRESERVES_OS_SUBSTRATE_IDENTITY</code>,<br />
+<code>MEDIATES_HARDWARE_EFFECT</code>, and<br />
+<code>LEAVES_PLATFORM_REMAINDER</code>.</p>
+<p>This randomized review establishes four editorial commitments: extend
+the OS subject with observation, transformation, and domain-profile
+roles; preserve a consciousness non-inference boundary; treat DCDTR as a
+physical-control stress profile without empirical transfer; and define
+Jnana II composition without identity merger or conformance
+implication.</p>
+<h2 id="a-full-stack-demonstrator-with-an-explicit-trusted-remainder">A
+Full-Stack Demonstrator with an Explicit Trusted Remainder</h2>
+<p>Twelve retained downstream uses place MosaiCOS beneath capability
+contracts, constitutional syscalls, collective coordination, adversarial
+epistemology, physical-control profiles, GOORRT, Jnana, Jnana II, AFS,
+COP, semantic infrastructure, and APD-bounded computation. They confirm
+MosaiCOS as a proposed full-stack Constitutional OS demonstrator and
+configuration family, not the Constitutional OS discipline itself and
+not a production-qualified kernel.</p>
+<p><span class="math display">$$
+\begin{aligned}
+O^*= (&amp;discipline\_version, IC, IR, source, build, deployment, \\
+&amp;hardware, firmware, kernel, user\_space, identity\_roots, \\
+&amp;authority\_roots, sessions, capabilities, \\
+&amp;effect\_membranes, observers, receipts, profiles, \\
+&amp;bootstrap, succession, recovery, evidence, \\
+&amp;trusted\_remainder)
+\end{aligned}.
+$$</span></p>
+<p>Here IC may mean Instance Constitution or Instance Configuration,
+while realization-stage IR may mean Instance Realization or
+Implementation Realization. Discipline, selected configuration, source,
+build, runtime, deployment, hardware integration, and evidence package
+remain distinct. Profile reduction must enumerate removed obligations,
+changed threat assumptions, unavailable remedies, and reduced claim
+ceilings.</p>
+<p>No kernel fully governs the hardware, firmware, supply chain,
+operator, recovery root, external service, or observer merely by naming
+those boundaries. Bootstrap must identify the root of trust and the
+point where antecedent authority enters. Succession must preserve
+predecessor identity, migration, rollback, and unresolved state.
+Independent observation and recovery must not share every failure domain
+with the subject.</p>
+<p>The universal GSM can type<br />
+<code>INSTANTIATES_CONSTITUTIONAL_OS</code>,
+<code>SELECTS_OS_IC</code>,<br />
+<code>REALIZES_OS_IR</code>, <code>BOOTS_FROM_DECLARED_ROOT</code>,
+<code>MEDIATES_OS_EFFECT</code>,<br />
+<code>ATTRIBUTES_HARDWARE_BOUNDARY</code>,
+<code>REDUCES_PROFILE_OBLIGATION</code>,
+<code>OBSERVED_OUTSIDE_OS_DOMAIN</code>,<br />
+<code>SUCCEEDS_OS_DEPLOYMENT</code>, and<br />
+<code>RETAINS_TRUSTED_REMAINDER</code>.</p>
+<p>This review establishes four editorial commitments: retain
+demonstrator and configuration-family standing; adopt the complete OS
+subject record; require profile-reduction, bootstrap, succession,
+independent-observation, and trusted-remainder declarations; and
+prohibit component composition or system naming from implying
+conformance, optimality, deployment, or consciousness.</p>
+<h2 id="counterevidence-and-failure-conditions">14. Counterevidence and
+Failure Conditions</h2>
+<p>The proposal is weakened or requires revision if:</p>
+<ul>
+<li>native operating-system mechanisms already satisfy the same
+obligations under a simpler, well-evidenced composition;</li>
+<li>pre-effect recording creates unacceptable latency, storage, wear,
+energy use, or availability loss;</li>
+<li>batching or asynchronous effects make the decision/effect boundary
+semantically unstable;</li>
+<li>cryptographic identities expose sensitive lineage or enable durable
+tracking;</li>
+<li>authority registries centralize power or make recovery
+impossible;</li>
+<li>receipt production becomes a denial-of-service target or can be
+selectively bypassed;</li>
+<li>self-observation repeatedly disagrees with independent physical or
+state observation;</li>
+<li>typed refusals become misleading because failures cross multiple
+layers;</li>
+<li>a clean-slate kernel expands the trusted computing base more than an
+adapted verified system;</li>
+<li>users cannot understand, contest, or repair constitutional
+decisions;</li>
+<li>the GMB, policy compiler, verifier, or observer becomes an
+unreviewed oracle;</li>
+<li>cross-layer chains preserve hashes while losing semantic
+correspondence;</li>
+<li>the cost of exact evidence exceeds the consequence-adjusted
+benefit.</li>
+</ul>
+<p>The strongest counterexample would be a smaller architecture that
+offers equal or better mediation coverage, independent evidence,
+recovery, sovereignty, and performance without a new kernel. The
+research program should actively seek that result.</p>
+<h2 id="limits-and-claim-ceiling">15. Limits and Claim Ceiling</h2>
+<p>This paper does not establish:</p>
+<ul>
+<li>that the nine invariants are exhaustive or minimal;</li>
+<li>that no existing shipping OS satisfies any particular
+invariant;</li>
+<li>that Linux, seL4, Redox, Genode, or Fuchsia has the gap assigned by
+the source;</li>
+<li>that MosaiCOS is the first, only, or optimal constitutional
+operating system;</li>
+<li>that a MosaiCOS kernel, Lite device, router OS, or PEIR substrate
+currently conforms;</li>
+<li>that BLAKE3, Ed25519, Rust, PEIR, user-space drivers, or a
+microkernel are required by COS;</li>
+<li>that receipt integrity proves effect, correctness, completeness,
+non-bypassability, or moral legitimacy;</li>
+<li>that constitutional governance prevents compromise by hardware,
+firmware, kernel, operator, supply-chain, or authority failures.</li>
+</ul>
+<p>It establishes a coherent proposal: a constitutional OS discipline
+can be specified through typed identity, finite authority, pre-effect
+decision commitment, post-effect evidence, refusal semantics, declared
+coverage, sessions, hardware attribution, and bootstrap succession;
+MosaiCOS is one proposed configuration of that discipline; and both can
+be tested under an explicit evidence contract.</p>
+<h2 id="demonstrator-discipline-and-trusted-remainder">Demonstrator,
+Discipline, and Trusted Remainder</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>MosaiCOS presents constitutional operating-system design as a
+practical route to user sovereignty: identities, capabilities, refusals,
+effects, and receipts become inspectable and renegotiable up to a
+declared hardware boundary. The paper proposes an OS discipline and a
+named instance. It is not evidence that a production operating system
+already satisfies every claim.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Bypass attack.</strong> A device, driver, firmware
+component, DMA path, recovery mode, or privileged service acts outside
+the governed route. Complete mediation must be demonstrated per effect
+class.</li>
+<li><strong>Trusted-base creep.</strong> More policy and observability
+move into privileged code until the trusted computing base becomes
+unauditable. TCB size, interfaces, and justification require
+measurement.</li>
+<li><strong>Capability-confusion attack.</strong> Delegation,
+inheritance, namespace aliasing, or stale handles expand authority.
+Capabilities must bind subject, object, operation, scope, time,
+attenuation, and revocation.</li>
+<li><strong>Receipt-before-effect race.</strong> Concurrency, buffering,
+or device behavior lets an effect escape before durable evidence.
+Ordering and failure atomicity need implementation-level tests.</li>
+<li><strong>Recovery-authority attack.</strong> Emergency or repair
+paths bypass normal law and become permanent. Recovery profiles need
+bounded authority, visibility, expiry, and post-event review.</li>
+<li><strong>Usability failure.</strong> Sovereignty controls are too
+complex, inaccessible, or costly for ordinary users. Inspectability
+without comprehensibility or remedy is insufficient.</li>
+<li><strong>Performance and energy attack.</strong> Constitutional
+enforcement produces unacceptable latency, throughput loss, storage
+growth, or power cost. These are empirical tradeoffs, not dismissible
+implementation details.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The defensible current claim is that the paper specifies a full-stack
+constitutional OS architecture and evaluation program with an explicit
+trusted remainder. Source-reported prototypes or components must be
+bound to exact versions, environments, tests, and limitations before
+they support implementation claims.</p>
+<p>The paper does not yet prove production security, complete mediation,
+hardware-rooted sovereignty, performance acceptability, accessibility,
+or user benefit. Comparative OS claims require resolvable external
+sources and reproducible evaluation. No external research was added in
+this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The paper should foreground what changes for a person: software
+effects can be attributed, constrained, refused, inspected, contested,
+and reconstructed without surrendering the conventional OS primitive
+floor. The name MosaiCOS should remain the proposed instance; the
+Constitutional Operating System is the broader discipline.</p>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>The important shift is not from ungoverned computers to computers
+with more logs. It is from an implicit relation among identity,
+privilege, policy, effect, and evidence to an explicit and contestable
+one.</p>
+<p>COS names the discipline. MosaiCOS names a proposed Instance
+Configuration and system lineage whose exact identity still requires
+author adjudication across the wider corpus. A realization must then
+earn its claims one artifact, boundary, effect, and evidence relation at
+a time.</p>
+<p>The load-bearing rule is not that a receipt makes an effect
+legitimate. It is that no consequential effect should silently outrun
+its declared identity, authority, decision, observation, and revision
+obligations. A pre-effect commitment can show what the system decided to
+do. A post-effect observer can support what happened. A coverage account
+can show what neither record could see. A revision path can keep
+disagreement and repair alive.</p>
+<p>That is a stronger architecture than post-hoc narration and a
+narrower claim than perfect governance. It is also falsifiable. If
+MosaiCOS cannot preserve these distinctions under concurrency, crash,
+bypass, resource pressure, update, adversarial authority, and
+independent observation, then the proposal has not yet crossed from
+specification into evidenced realization.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that operating systems mediate memory, process
+execution, storage, devices, and communication, but their security
+mechanisms do not automatically constitute a reviewable governance
+order. Its nearest external comparison fields are governance, software,
+security. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are
+cited as predecessor literature, adjacent standards, or counterpressure
+- not as evidence that they caused the Ableman framework or that they
+validate its novel claims. The comparison isolates where established
+work already supplies provenance, formal assurance, institutional
+constraint, empirical method, or engineering practice, and where this
+paper adds a distinct claim about admissibility, authority, semantic
+custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Modularity, secure-development practice, and reproducibility reduce
+classes of failure but do not guarantee architectural coherence or user
+sovereignty. Unforgeable capabilities can constrain exercise of
+authority while still leaving allocation, delegation, revocation, and
+social legitimacy incorrectly specified. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E6]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Admissibility Engineering</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>Adam Ableman. <em>A Formal Theory of Work Custody</em>. Ableman
+Corpus current edition; conceptual claims retain the standing stated in
+the work.</p>
+<p>Adam Ableman. <em>Constitutional Computing: Structured
+Abundance</em>. Unpublished corpus source; exact publication identity
+requires verification.</p>
+<p>Adam Ableman. <em>The Constitutional Observability Platform</em>.
+Ableman Corpus current edition; conceptual claims retain the standing
+stated in the work.</p>
+<p>Adam Ableman. <em>From Content-Addressed Storage to Governed Semantic
+Project Lineage</em>. Ableman Corpus current edition; conceptual claims
+retain the standing stated in the work.</p>
+<p>Adam Ableman. <em>Governed Meaning Base (GMB)</em>. Ableman Corpus
+current edition in the author-confirmed historical terminology
+<code>CCF -&gt; CMB -&gt; GMB</code>; conceptual claims retain the
+standing stated in the work.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>Current primary-source literature and implementation review for
+Linux, seL4, Redox, Genode, Fuchsia, capability systems, measured boot,
+kernel audit, and operating-system identity remains required for a
+future evidence-qualified revision.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848092">10.5281/zenodo.23848092</a></p>

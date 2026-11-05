@@ -1,0 +1,104 @@
+{
+  "accession_id": "AC-0099",
+  "accession_number": 99,
+  "accession_frozen": true,
+  "work_id": "AMCS-LOCAL-WORK-F1E33B5E973B0900",
+  "title": "Admissibility Engineering",
+  "authors": [
+    "Adam Ableman"
+  ],
+  "description_html": "<p>Agentic software construction can produce implementations that compile, run, and pass the available tests while violating an invariant that the specification intended to preserve. This paper calls that family <strong>plausible-but-wrong realization</strong> and introduces <strong>admissibility engineering</strong> as the discipline of reducing it by binding important constraints into independently checkable specification, configuration, implementation, and evidence artifacts.</p>\n<p>The paper formalizes saturation relative to a declared architecture and boundary. For invariant <code>I</code> in architecture <code>A</code>, the realization surface <code>R_A(I)</code> contains the in-scope pathways through which <code>I</code> may be satisfied or violated; the evidenced constraint surface <code>C_A(S,I,E)</code> contains the pathways whose constraint is supported by specification <code>S</code> and evidence <code>E</code>. Their difference is the <strong>observed saturation gap</strong>. Because undeclared or undiscovered pathways may remain, an empty observed gap is not proof of absolute completeness. A saturation claim must name its architecture, capability boundary, threat model, enumeration method, evidence, tolerable ambiguity, and residual unknowns.</p>\n<p>Artifact-layer techniques--interfaces, type and schema constraints, executable contracts, reference models, behavioral oracles, mutation tests, capability mediation, and trace obligations--can reduce interpretive freedom at selected boundaries. None is self-validating: an artifact may encode the wrong invariant, cover only shape, or be bypassed. Admissibility engineering therefore composes constraints with independent observation and counterexample search rather than replacing tests with artifacts.</p>\n<p>Receipts are treated as governed evidence objects, not as behavior itself. They can bind declared transitions, inputs, decisions, and observations, but they establish an effect only when the receiving claim is supported by appropriate mediation coverage, witness, recomputation, or independent state observation. The resulting evaluation model distinguishes exact-artifact equality, trace equivalence, behavioral equivalence, and obligation satisfaction instead of collapsing them into one convergence claim.</p>\n<p>The present paper supplies a theory, design discipline, and empirical protocol. It does not report a completed experiment because the exact current measurements and bound evidence package are not supplied in this source head. Dominance, threshold, comparative-performance, and cross-executor claims therefore remain hypotheses to be tested rather than results to be backfilled from memory.</p>",
+  "abstract_text": "Agentic software construction can produce implementations that compile, run, and pass the available tests while violating an invariant that the specification intended to preserve. This paper calls that family plausible-but-wrong realization and introduces admissibility engineering as the discipline of reducing it by binding important constraints into independently checkable specification, configuration, implementation, and evidence artifacts.\n\n\nThe paper formalizes saturation relative to a declared architecture and boundary. For invariant I in architecture A, the realization surface R_A(I) contains the in-scope pathways through which I may be satisfied or violated; the evidenced constraint surface C_A(S,I,E) contains the pathways whose constraint is supported by specification S and evidence E. Their difference is the observed saturation gap. Because undeclared or undiscovered pathways may remain, an empty observed gap is not proof of absolute completeness. A saturation claim must name its architecture, capability boundary, threat model, enumeration method, evidence, tolerable ambiguity, and residual unknowns.\n\n\nArtifact-layer techniques--interfaces, type and schema constraints, executable contracts, reference models, behavioral oracles, mutation tests, capability mediation, and trace obligations--can reduce interpretive freedom at selected boundaries. None is self-validating: an artifact may encode the wrong invariant, cover only shape, or be bypassed. Admissibility engineering therefore composes constraints with independent observation and counterexample search rather than replacing tests with artifacts.\n\n\nReceipts are treated as governed evidence objects, not as behavior itself. They can bind declared transitions, inputs, decisions, and observations, but they establish an effect only when the receiving claim is supported by appropriate mediation coverage, witness, recomputation, or independent state observation. The resulting evaluation model distinguishes exact-artifact equality, trace equivalence, behavioral equivalence, and obligation satisfaction instead of collapsing them into one convergence claim.\n\n\nThe present paper supplies a theory, design discipline, and empirical protocol. It does not report a completed experiment because the exact current measurements and bound evidence package are not supplied in this source head. Dominance, threshold, comparative-performance, and cross-executor claims therefore remain hypotheses to be tested rather than results to be backfilled from memory.",
+  "keywords": [
+    "admissibility engineering",
+    "plausible-but-wrong realization",
+    "constraint saturation",
+    "Specification-Configuration-Realization",
+    "invariant preservation",
+    "verification receipts",
+    "counterexample search",
+    "agentic software development"
+  ],
+  "license": "cc-by-nd-4.0",
+  "resource_type": "publication",
+  "version": "1.0",
+  "language": "eng",
+  "publication_date": "2026-10-31",
+  "earliest_documented_date": "2026-05-06",
+  "earliest_documented_timestamp": "2026-05-06T11:49:42.344325-07:00",
+  "chronology_basis": "EARLIEST_VERSION_FAMILY_FILE_MTIME",
+  "chronology_confidence": "MEDIUM",
+  "first_publication_date": null,
+  "first_complete_draft_date": null,
+  "work_origin_date": null,
+  "corpus_admission_date": "2026-10-25",
+  "chronology_evidence": {
+    "kind": "VERSION_FAMILY_FILE_MTIME",
+    "locator": "CHC_PAPERS:01_Admissibility_Engineering.md",
+    "sha256": "FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3",
+    "observation": "LIVE_FILE_MTIME_WITH_MATCHING_SHA256",
+    "version_family_id": "AMCS-LOCAL-FAMILY-F1E33B5E973B0900",
+    "family_member_count": 2
+  },
+  "doi": "https://doi.org/10.5281/zenodo.23847370",
+  "provider_url": "https://doi.org/10.5281/zenodo.23847370",
+  "provider": "ZENODO",
+  "provider_record_id": "23847370",
+  "publication_association": "VERIFIED_PROVIDER_RECORD",
+  "publication_readiness": "GITHUB_CORPUS_RELEASE_AUTHORIZED",
+  "profiles": [
+    "formal",
+    "provenance",
+    "software"
+  ],
+  "territories": [
+    "Computation",
+    "Coordination",
+    "Possibility"
+  ],
+  "external_source_ids": [
+    "PCC",
+    "COMPCERT",
+    "ABSTRACT-INTERPRETATION",
+    "TLA",
+    "W3C-PROV",
+    "IN-TOTO",
+    "SLSA"
+  ],
+  "internal_work_ids": [
+    "PAPER.PUB.21095303",
+    "PAPER.PUB.18453681",
+    "PAPER.PUB.21228038",
+    "AMCS-LOCAL-WORK-30FB8F95BD990A47",
+    "AMCS-LOCAL-WORK-04E427F6F4D94454",
+    "AMCS-LOCAL-WORK-E0EC3DC7EABF5060",
+    "PAPER.PUB.20788617"
+  ],
+  "reference_count": 0,
+  "external_reference_count": 0,
+  "internal_reference_count": 0,
+  "has_related_work_section": true,
+  "standing": "AI_PREPARED_AUTHOR_REVIEW_SUCCESSOR",
+  "publication_effect": "GITHUB_CORPUS_PUBLICATION_AUTHORIZED",
+  "provider_effect": "NONE",
+  "release_root_sha256": "8FE5BAA3E45EEA836F292358CEA00DAD921C30568B8FD7E391B2B30CB0A17A72",
+  "formats": {
+    "markdown": {
+      "path": "papers/current/AC-0099-admissibility-engineering/Admissibility Engineering -- 8FE5BAA3E45E.md",
+      "sha256": "EFF7D5A568DA50149D6A08BFBD87626ECE161151C36D6A0810ACCEF0C2DD208C",
+      "bytes": 59790
+    },
+    "pdf": {
+      "path": "papers/current/AC-0099-admissibility-engineering/Admissibility Engineering -- 8FE5BAA3E45E.pdf",
+      "sha256": "027363448397DE4C43B825201F68E934DE7DF745021C5867C39D591739EB75A5",
+      "bytes": 308851
+    },
+    "html": {
+      "path": "papers/current/AC-0099-admissibility-engineering/Admissibility Engineering -- 8FE5BAA3E45E.html",
+      "sha256": "9E945842C53C9086B9537A174601B6BBDD189171AE7CE53C71A1B26F67EFE017",
+      "bytes": 71404
+    }
+  },
+  "receipt_path": "papers/current/AC-0099-admissibility-engineering/Admissibility Engineering -- 8FE5BAA3E45E.receipt.json",
+  "metadata_path": "papers/current/AC-0099-admissibility-engineering/metadata.json"
+}

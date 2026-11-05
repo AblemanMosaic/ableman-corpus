@@ -1,0 +1,698 @@
+<h1 id="minimal-smt-example-admissibility-gated-retrieval">Minimal SMT
+Example: Admissibility-Gated Retrieval</h1>
+<h2 id="node-admission-edge-admission-and-path-participation">Node
+Admission, Edge Admission, and Path Participation</h2>
+<h3
+id="when-the-transition-evidence-is-absent-the-system-returns-continuity-unknown-rather-than-projecting-continuity-or-fabricating-a-preferred-interpretation.">When
+the transition evidence is absent, the system returns CONTINUITY UNKNOWN
+rather than projecting continuity or fabricating a preferred
+interpretation.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Semantic similarity can retrieve two nearly identical artifacts
+without establishing that one continues, supersedes, rebinds, or
+inherits authority from the other. This technical companion gives a
+minimal Semantic Manifold Topology (SMT) example in which two documents
+are individually admitted under different policy versions but no
+admissible continuity edge connects them.</p>
+<p>The result is not that the second document is necessarily
+inadmissible. It is that retrieval, node admission, continuity, and
+participation in a governed traversal are separate judgments. Similarity
+proposes candidates; a versioned schema evaluates nodes, relations, and
+paths. When the transition evidence is absent, the system returns
+<code>CONTINUITY_UNKNOWN</code> rather than projecting continuity or
+fabricating a preferred interpretation.</p>
+<p>The example is hypothetical. It specifies expected semantics and
+tests, not an implemented retrieval result.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+source file. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/minimal-smt-</code></p>
+<p><code>admissibility-gated-retrieval/integration-</code><br />
+<code>custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>247EB1F9B1EAE249EAB6276F2318FB30FCB28AFF4C96F7CE31E334E46FEF6E0D</code>.
+The source remains unchanged.</p>
+<p>The source’s minimal example and core distinctions are retained. Its
+conversational/editorial passages and unrelated environment-specific
+framing are excluded from semantic integration. The 0.997 similarity
+value is illustrative, not a measured result.</p>
+<h2 id="smt-in-this-paper">1. SMT in This Paper</h2>
+<p>SMT means <strong>Semantic Manifold Topology</strong>, not
+satisfiability modulo theories. The method represents semantic objects,
+perspectives, typed relations, admissibility conditions, and governed
+transformations. This minimal example needs only a typed graph; it does
+not claim that the graph satisfies the stronger mathematical conditions
+of a manifold.</p>
+<h2 id="scenario">2. Scenario</h2>
+<p>An index retrieves two hypothetical records:</p>
+<h3 id="document-a">Document A</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;document_id&quot;</span><span class="fu">:</span> <span class="st">&quot;A&quot;</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lane&quot;</span><span class="fu">:</span> <span class="st">&quot;governor&quot;</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;authority_ref&quot;</span><span class="fu">:</span> <span class="st">&quot;policy_v1&quot;</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;grounding_posture&quot;</span><span class="fu">:</span> <span class="st">&quot;grounded&quot;</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;node_admission&quot;</span><span class="fu">:</span> <span class="st">&quot;admitted&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="document-b">Document B</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;document_id&quot;</span><span class="fu">:</span> <span class="st">&quot;B&quot;</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;lane&quot;</span><span class="fu">:</span> <span class="st">&quot;governor&quot;</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;authority_ref&quot;</span><span class="fu">:</span> <span class="st">&quot;policy_v2&quot;</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;grounding_posture&quot;</span><span class="fu">:</span> <span class="st">&quot;grounded&quot;</span><span class="fu">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;node_admission&quot;</span><span class="fu">:</span> <span class="st">&quot;admitted&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>The retrieval layer reports an illustrative cosine similarity:</p>
+<pre class="text"><code>similarity(A, B) = 0.997</code></pre>
+<p>The system has no bound transition contract, rebinding receipt,
+continuity declaration, or verified inheritance rule between
+<code>policy_v1</code> and</p>
+<p><code>policy_v2</code>.</p>
+<h2 id="four-distinct-judgments">3. Four Distinct Judgments</h2>
+<p><strong>Retrieval</strong> asks whether an artifact is a useful
+candidate for inspection.</p>
+<p><strong>Node admission</strong> asks whether an artifact may enter
+the governed working set under its own source, authority, standing, and
+scope.</p>
+<p><strong>Edge admission</strong> asks whether a proposed relation
+between artifacts is supported and permitted.</p>
+<p><strong>Path participation</strong> asks whether a node may
+contribute through a particular traversal, reasoning path, or answer
+under the admitted relations and task.</p>
+<p>Retrieval is neither admission nor participation. Node admission does
+not imply every proposed edge from that node is admitted.</p>
+<h2 id="proposed-continuity-edge">4. Proposed Continuity Edge</h2>
+<p>Let:</p>
+<p><span
+class="math display"><em>e</em> = (<em>A</em>, <em>c</em><em>o</em><em>n</em><em>t</em><em>i</em><em>n</em><em>u</em><em>e</em><em>s</em>_<em>a</em><em>s</em>, <em>B</em>).</span></p>
+<p>Continuity evaluation uses a schema <span
+class="math inline"><em>Σ</em></span> and evidence set <span
+class="math inline"><em>W</em></span>:</p>
+<p><span
+class="math display"><em>J</em><sub><em>e</em></sub>(<em>e</em>, <em>W</em>, <em>Σ</em>) ∈ {<em>A</em><em>D</em><em>M</em><em>I</em><em>T</em><em>T</em><em>E</em><em>D</em>, <em>R</em><em>E</em><em>F</em><em>U</em><em>S</em><em>E</em><em>D</em>, <em>C</em><em>O</em><em>N</em><em>F</em><em>L</em><em>I</em><em>C</em><em>T</em><em>E</em><em>D</em>, <em>I</em><em>N</em><em>S</em><em>U</em><em>F</em><em>F</em><em>I</em><em>C</em><em>I</em><em>E</em><em>N</em><em>T</em>, <em>U</em><em>N</em><em>K</em><em>N</em><em>O</em><em>W</em><em>N</em>}.</span></p>
+<p>For this example, the schema requires:</p>
+<ul>
+<li>identity or version-family relation;</li>
+<li>authority-transition rule;</li>
+<li>valid rebinding or inheritance evidence;</li>
+<li>scope and time compatibility;</li>
+<li>semantic transformation or continuity declaration;</li>
+<li>no unresolved revocation or conflict.</li>
+</ul>
+<p>Because those elements are absent, the result is:</p>
+<pre class="text"><code>node(A) = ADMITTED under policy_v1
+node(B) = ADMITTED under policy_v2
+edge(A continues_as B) = INSUFFICIENT
+continuity(A, B) = NOT_ESTABLISHED</code></pre>
+<p><code>REFUSED</code> would require a schema rule or evidence that
+prohibits the edge.</p>
+<p><code>UNKNOWN</code> is appropriate when the evaluator cannot
+determine whether required evidence exists or is accessible. The worked
+case uses <code>INSUFFICIENT</code> because the stipulated witness basis
+is known to omit the required transition artifacts.</p>
+<h2 id="similarity-as-candidate-generation">5. Similarity as Candidate
+Generation</h2>
+<p>Similarity is not irrelevant. It is useful for discovery, clustering,
+deduplication leads, and proposing relations. Its claim ceiling is lower
+than continuity:</p>
+<p><span
+class="math display"><em>H</em><em>i</em><em>g</em><em>h</em><em>S</em><em>i</em><em>m</em><em>i</em><em>l</em><em>a</em><em>r</em><em>i</em><em>t</em><em>y</em>(<em>A</em>, <em>B</em>) ⇏ <em>C</em><em>o</em><em>n</em><em>t</em><em>i</em><em>n</em><em>u</em><em>i</em><em>t</em><em>y</em>(<em>A</em>, <em>B</em>).</span></p>
+<p>Near-identical text can occur across revoked policy, copied
+artifacts, adversarial substitution, separate authorities, incompatible
+epochs, or independent derivation. Conversely, a legitimate revision may
+have low lexical or embedding similarity.</p>
+<p>The system should retain the similarity relation while refusing to
+promote it into identity, continuity, equivalence, supersession, or
+authority inheritance.</p>
+<h2 id="path-participation">6. Path Participation</h2>
+<p>For a query <span class="math inline"><em>q</em></span> and traversal
+path <span class="math inline"><em>p</em></span>, define:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Participates(B,p,q)=Retrieved(B,q) \\
+&amp;\land NodeAdmitted(B) \\
+&amp;\land PathAdmitted(p,q)
+\end{aligned}.
+$$</span></p>
+<p>If <span class="math inline"><em>p</em></span> depends on the
+unestablished edge <span
+class="math inline"><em>A</em> → <em>B</em></span>, then B cannot
+participate <strong>as A’s continuation</strong>. B may still
+participate independently under <code>policy_v2</code> if the query,
+authority, scope, and other path edges allow it.</p>
+<p>This is the important restraint: the system does not discard a useful
+artifact merely because one relation failed, and it does not use the
+artifact through a relation that lacks standing.</p>
+<h2 id="interpretation-unknown">7. Interpretation Unknown</h2>
+<p><code>INTERPRETATION_UNKNOWN</code> is a first-class disposition when
+several readings are plausible but the available evidence cannot
+authorize one. It records:</p>
+<pre class="text"><code>candidate interpretations
+evidence considered
+missing or conflicted requirements
+schema and authority used
+allowed bounded uses
+blocked projections
+next evidence that could resolve the state</code></pre>
+<p>Unknown is not a failure to reason. It is a result of reasoning under
+an evidence ceiling. It must not become a permanent excuse: the system
+should identify whether new observation, author decision, authority
+resolution, or source recovery could reduce the uncertainty.</p>
+<h2 id="minimal-evaluation-procedure">8. Minimal Evaluation
+Procedure</h2>
+<pre class="text"><code>1. retrieve candidates by declared retrieval methods
+2. preserve retrieval scores and model/version metadata
+3. resolve exact artifact and source custody
+4. evaluate each node under its own standing
+5. propose typed edges rather than infer them silently
+6. evaluate each required edge under a versioned schema
+7. evaluate the complete task path
+8. admit, qualify, refuse, defer, conflict, or preserve unknown
+9. emit an evaluation receipt with basis and claim ceiling</code></pre>
+<p>Pseudocode:</p>
+<pre class="text"><code>candidates = retrieve(query)
+nodes = evaluate_nodes(candidates, schema, time)
+edges = propose_edges(nodes, query)
+edge_results = evaluate_edges(edges, evidence, schema, time)
+path = build_path(nodes, edge_results, query)
+
+if path.required_edge in {INSUFFICIENT, UNKNOWN, CONFLICTED, REFUSED}:
+    return bounded_result(path, blocked_relation, next_evidence)
+return participate(path)</code></pre>
+<h2 id="relation-to-the-corpus">9. Relation to the Corpus</h2>
+<p><em>Semantic Manifold Topology - Worked Example</em> supplies the
+broader method. <em>Retrieval-Augmented Reasoning under Constitutional
+Constraints</em> separates candidate retrieval from governed reasoning.
+<em>Reasoning by Way of Receipts</em> constrains what the transition
+records can support. <em>Governed Context and Memory</em> governs which
+retrieved artifacts enter active context.</p>
+<p>The Governed Meaning Base can store exact nodes, candidate
+similarities, typed edge proposals, evaluations, receipts, conflicts,
+and unknowns. It must not convert stored proximity into identity. These
+interfaces do not merge the papers or transfer standing.</p>
+<h2 id="realization-funnel">10. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate retrieval candidates and
+possible relations.</li>
+<li><strong>Specification:</strong> define node, edge, path, evidence,
+and outcome semantics.</li>
+<li><strong>CM1:</strong> retain admissible interpretations, including
+wrong, weak, harmful, and unknown paths.</li>
+<li><strong>CM2:</strong> select preferable retrieval and evaluation
+profiles under accuracy, latency, provenance, and restraint
+criteria.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for a corpus and query class.</li>
+<li><strong>IR:</strong> construct its Instance Realization or
+Implementation Realization.</li>
+<li><strong>Evidence:</strong> run fixtures and adversarial
+retrieval/evaluation tests.</li>
+<li><strong>Revision:</strong> update schemas, edges, standings, and
+examples without rewriting source custody.</li>
+</ul>
+<p>This technical companion supplies a worked Specification and
+candidate test fixture. It does not implement an IC or IR.
+Realization-stage IR remains distinct from Intermediate Representation
+in MCIR and retrieval compiler contexts.</p>
+<h2 id="test-matrix">11. Test Matrix</h2>
+<p>Tests should cover: identical content under different authority;
+different content under valid continuity; expired policy; revoked
+policy; missing transition record; invalid rebinding; conflicting
+continuity declarations; copied artifact with new identity; same
+identity with changed hash; low similarity with valid lineage; high
+similarity with independent derivation; inaccessible evidence; malformed
+receipts; stale evaluation time; node admitted but edge refused; edge
+admitted but path blocked; artifact independently usable; and unknown
+later resolved by new evidence.</p>
+<h2 id="retrieval-admission-microcase">Retrieval-Admission
+Microcase</h2>
+<p>The completed P1 corpus positions this paper as the <strong>minimal
+worked microcase for separating retrieval candidacy, node admission,
+edge admission, path participation, and interpretation standing in
+Semantic Manifold Topology</strong>. It is a pedagogical and conformance
+fixture, not the full SMT theory or evidence that one retrieval policy
+generalizes.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Governed Semantic
+Cartography</em><br />
+<strong>Supplies:</strong> Coordinates, projections, traversal, and
+path-global admission.<br />
+<strong>Minimal-example boundary:</strong> The microcase exercises one
+retrieval path through that navigation surface.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Field
+Analysis</em><br />
+<strong>Supplies:</strong> Relations, tensions, gaps, and bounded field
+analysis.<br />
+<strong>Minimal-example boundary:</strong> SFA may generate candidate
+edges; this case adjudicates a small retrieval relation.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em><br />
+<strong>Supplies:</strong> GTK record, resolver, adjacency, and
+conformance machinery.<br />
+<strong>Minimal-example boundary:</strong> GTK resolves the nodes; node
+resolution does not admit an edge or path.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Legitimacy Before
+Context</em><br />
+<strong>Supplies:</strong> Admission discipline before content becomes
+binding context.<br />
+<strong>Minimal-example boundary:</strong> The retrieval case applies
+that distinction to a concrete path.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Warrant by
+Structure</em><br />
+<strong>Supplies:</strong> The evaluated relation among claim, authority
+path, evidence, and standing.<br />
+<strong>Minimal-example boundary:</strong> A path can supply structural
+support without making its interpretation true or sufficient.</p></li>
+</ul>
+<p>A retrieval case should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R= (&amp;query, registry, nodes, candidate\_edges, \\
+&amp;node\_decisions, edge\_decisions, path\_decision, \\
+&amp;interpretation, evidence, standing, remainder)
+\end{aligned}.
+$$</span></p>
+<p>Similarity proposes candidates; it does not establish identity,
+continuity, derivation, relevance, or path admissibility. A node can be
+admitted while a proposed edge is refused. Admitted edges can form a
+path that is globally refused. A path can be admitted while its
+interpretation remains unknown or disputed.</p>
+<p>The fixture should preserve negative results and the reason for each
+judgment. Repeated retrieval under another registry, profile, corpus
+snapshot, or time may yield a different decision without retroactively
+changing the earlier result.</p>
+<p>The universal GSM can type<br />
+<code>RETRIEVED_AS_CANDIDATE</code>,
+<code>RESOLVED_AS_NODE</code>,<br />
+<code>PROPOSED_EDGE_TO</code>, <code>NODE_ADMITTED_UNDER</code>,
+<code>EDGE_ADMITTED_UNDER</code>,
+<code>PARTICIPATES_IN_PATH</code>,<br />
+<code>PATH_REFUSED_BY</code>, <code>INTERPRETATION_UNKNOWN</code>,
+<code>SUPPORTED_BY_RETRIEVAL_EVIDENCE</code>,<br />
+and<br />
+<code>REVISED_UNDER_PROFILE</code>. These relations make the example
+reusable as a test fixture.</p>
+<p>This integration establishes four editorial commitments: classify the
+paper as a retrieval-admission microcase; adopt the retrieval-case
+envelope; preserve node/edge/path/interpretation decisions
+independently; and publish negative and unknown outcomes as first-class
+fixtures.</p>
+<h2 id="from-retrieval-admission-to-governed-use">From Retrieval
+Admission to Governed Use</h2>
+<p>The fixed-seed comparison with the Optional Coordinator, GOV anchors,
+Meta-Binding, and GOORRT extends the microcase by separating admitted
+retrieval from downstream use:</p>
+<p><span class="math display">$$
+\begin{aligned}
+U= (&amp;query, nodes, edges, path, interpretation, use\_purpose, \\
+&amp;representation\_jurisdiction, constraint\_uptake, effect, \\
+&amp;evidence)
+\end{aligned}.
+$$</span></p>
+<p>A GOV anchor can supply a deterministic candidate link from a source
+location to a task record, yet the record’s relation to another concept
+or action still requires the appropriate edge and path judgment. GOORRT
+adds jurisdiction: an object representation, operation representation,
+and realization representation may all be admitted while their claimed
+correspondence remains refused or unknown.</p>
+<p>Meta-Binding begins after retrieval and admission. The system must
+represent the governing constraint, operate over its relation to the
+task, and show a controlled behavioral difference. Repeated retrieval,
+context inclusion, citation, or verbal explanation does not establish
+constraint use.</p>
+<p>The Optional Coordinator adjacency produces<br />
+<code>NO_MATERIAL_RELATION</code>. A retrieval graph can help
+participants find information, but path admission does not show that
+arbitration, allocation, enforcement, recovery, accountability, or other
+coordinator functions were substituted.</p>
+<p>The universal GSM can type<br />
+<code>ADMITS_RETRIEVAL_FOR_USE_PURPOSE</code>,
+<code>ROUTES_FROM_GOV_ANCHOR</code>,<br />
+<code>CROSSES_REPRESENTATION_JURISDICTION</code>,
+<code>REFUSES_CORRESPONDENCE_DESPITE_NODE_ADMISSION</code>,<br />
+<code>USES_RETRIEVED_CONSTRAINT</code>, and<br />
+<code>HAS_NO_COORDINATOR_OPTIONALITY_FROM_PATH</code>.</p>
+<p>This randomized review establishes four editorial commitments: add
+governed use after interpretation standing; record representation
+jurisdiction and correspondence separately; require behavioral uptake
+before a Meta-Binding claim; and reject retrieval-path topology as
+coordinator-substitution evidence.</p>
+<h2 id="a-retrieval-fixture-that-ends-before-governed-use">A Retrieval
+Fixture That Ends Before Governed Use</h2>
+<p>Four downstream uses confirm that this minimal example is a reusable
+boundary fixture rather than a complete retrieval system. Governed
+Semantic Cartography uses it as one bounded traversal test. GOV uses it
+after anchor discovery to decide whether linked records may participate
+in a path. GOORRT uses it before correspondence among object, operation,
+and realization representations. Meta-Binding uses it before asking
+whether a retrieved constraint actually changes later operation.</p>
+<p>The resulting chain is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Candidacy \\
+&amp;\rightarrow NodeAdmission \\
+&amp;\rightarrow EdgeAdmission \\
+&amp;\rightarrow PathAdmission \\
+&amp;\rightarrow InterpretationStanding \\
+&amp;\rightarrow UseAdmission \\
+&amp;\rightarrow ConstraintUptake \\
+&amp;\rightarrow EffectEvidence
+\end{aligned}.
+$$</span></p>
+<p>Each arrow requires its own subject, profile, evidence, decision, and
+remainder. A deterministic anchor can improve candidate discovery
+without admitting an edge. An admitted path can support navigation
+without proving correspondence. Context inclusion, citation, verbal
+explanation, and repeated retrieval do not demonstrate constraint
+uptake. A controlled behavioral difference does not by itself establish
+that the intended semantic relation caused the effect.</p>
+<p>The Optional Coordinator comparison remains a deliberate nonrelation.
+Graph traversal can help participants find information, but this fixture
+supplies no evidence that allocation, arbitration, enforcement,
+recovery, custody, or accountability functions have been replaced.</p>
+<p>The universal GSM can type<br />
+<code>GENERATES_RETRIEVAL_CANDIDATE</code>,
+<code>ADMITS_NODE_SEPARATELY</code>,<br />
+<code>ADMITS_EDGE_SEPARATELY</code>, <code>ADMITS_PATH_GLOBALLY</code>,
+<code>GRANTS_INTERPRETATION_STANDING</code>,<br />
+<code>ADMITS_USE_FOR_PURPOSE</code>,
+<code>TESTS_CONSTRAINT_UPTAKE</code>,
+<code>OBSERVES_DOWNSTREAM_EFFECT</code>,<br />
+and<br />
+<code>REFUSES_COORDINATOR_SUBSTITUTION_INFERENCE</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: extend the fixture through governed use while preserving
+every prior gate; require subject/profile/evidence/remainder at each
+transition; retain Meta-Binding and effect evidence above retrieval
+admission; and preserve the Optional Coordinator result as an explicit
+nonrelation.</p>
+<h2 id="counterevidence-and-failure-tests">12. Counterevidence and
+Failure Tests</h2>
+<p>The example must narrow or fail if: (1) policy labels alone determine
+authority; (2) individual admission is mistaken for continuity; (3)
+similarity is treated as irrelevant to candidate discovery; (4)
+similarity is promoted to identity; (5) missing evidence is mislabeled
+refusal; (6) known insufficiency is mislabeled universal unknown; (7) B
+is discarded despite independent admissibility; (8) B participates
+through a blocked edge; (9) a valid low-similarity revision is rejected;
+(10) a copied high-similarity artifact inherits authority; (11) node and
+edge schemas use incompatible times; (12) an expired transition remains
+active; (13) a rebinding receipt does not bind both endpoints; (14) path
+evaluation ignores one required edge; (15) evaluation receipts omit
+excluded evidence; (16) retrieval model/version is not recorded; (17)
+context admits a result beyond the query authority; (18) unknown
+silently becomes admitted; (19) an author decision is fabricated from
+system inference; (20) the GMB merges near-duplicate nodes; (21) the
+paper claims a measured 0.997 result; (22) SMT is confused with
+satisfiability modulo theories; (23) graph structure is overstated as a
+mathematical manifold; or (24) the same fixture cannot be reproduced
+from retained inputs.</p>
+<h2
+id="similarity-retrieves-candidates-it-does-not-create-continuity">Similarity
+Retrieves Candidates; It Does Not Create Continuity</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>This minimal SMT companion separates four judgments: retrieval
+candidacy, node admission, edge admission, and path participation. Two
+highly similar documents may each be admitted under different policies
+while no evidence supports a continuity edge. The correct bounded result
+is <code>CONTINUITY_UNKNOWN</code>, not an inferred successor or
+preferred interpretation.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Similarity-continuity attack.</strong> High lexical or
+embedding similarity is treated as version lineage, supersession,
+equivalence, or inherited standing.</li>
+<li><strong>Node-edge attack.</strong> Admission of both endpoint nodes
+is treated as admission of the relation between them.</li>
+<li><strong>Edge-path attack.</strong> One admitted edge is treated as
+permission for every traversal, query purpose, or downstream use.</li>
+<li><strong>Policy-version attack.</strong> Admission under policy v1 is
+compared with admission under v2 as though criteria, authority, and
+effects were unchanged.</li>
+<li><strong>Schema-self-validation attack.</strong> A typed graph and
+rule evaluator are treated as proof that the selected policy is
+legitimate and complete.</li>
+<li><strong>Missing-edge-negative attack.</strong> Absence of continuity
+evidence is treated as proof of discontinuity or conflict rather than
+unknown.</li>
+<li><strong>Score-fiction attack.</strong> The illustrative 0.997 value
+is repeated as a measured retrieval result.</li>
+<li><strong>Fixture-system attack.</strong> Expected behavior in a
+hypothetical microcase is reported as an implemented SMT, retrieval, or
+admission system.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a hypothetical fixture, semantics, and test
+matrix. It does not report an implemented index, measured similarity,
+executed schema, validated policy, admitted corpus record, or real
+continuity judgment. SMT here means Semantic Manifold Topology, and the
+example needs only a typed graph rather than a mathematical manifold
+claim.</p>
+<p>Implementation evidence would require exact fixtures, policy and
+schema versions, positive and negative edges, unknown outcomes,
+path-purpose rules, hostile metadata, evaluator outputs, and replay. No
+implementation or external research occurred in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The example teaches a crucial refusal: when two records look alike
+but their governed relation is unsupported, preserve both nodes,
+preserve the uncertainty, and do not let retrieval manufacture
+history.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Retrieval finds candidates. Admission evaluates artifacts. Continuity
+evaluates relations. Participation evaluates complete task paths. These
+operations can agree, disagree, or remain unresolved.</p>
+<p>The minimal lesson is not that similarity has no value. It is that
+similarity cannot silently carry identity, continuity, or authority. A
+governed system preserves the useful candidate while refusing the
+unsupported edge.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<h3 id="author-corpus-interfaces-inspected-under-exact-custody">Author
+corpus interfaces inspected under exact custody</h3>
+<p>Ableman Adam Ableman <em>Semantic Manifold Topology - Worked
+Example.</em></p>
+<p>Ableman Adam Ableman <em>Retrieval-Augmented Reasoning under
+Constitutional Constraints.</em></p>
+<p>Ableman Adam Ableman <em>Reasoning by Way of Receipts.</em></p>
+<p>Ableman Adam Ableman <em>Governed Context and Memory.</em></p>
+<h3 id="external-verification-required">External verification
+required</h3>
+<p>No external literature was consulted. Publication comparison should
+examine vector retrieval, embeddings, graph and manifold
+representations, provenance, access control, retrieval-augmented
+generation, temporal knowledge graphs, and uncertainty-aware retrieval.
+The example remains hypothetical until implemented and measured.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+<li><strong>Publication form.</strong> This work is retained as a
+standalone technical companion because its concrete migration method is
+useful independently; it remains subordinate to the architecture it
+explains.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that semantic similarity can retrieve two nearly
+identical artifacts without establishing that one continues, supersedes,
+rebinds, or inherits authority from the other. Its nearest external
+comparison fields are ai, formal, provenance. The sources in [E1], [E2],
+[E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. Formal assurance remains relative to the
+encoded model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. A complete
+provenance graph can faithfully record a false or unauthorized process;
+provenance is evidence about lineage, not automatic truth or legitimacy.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E7]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Manifold Topology.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20257244</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848088">10.5281/zenodo.23848088</a></p>

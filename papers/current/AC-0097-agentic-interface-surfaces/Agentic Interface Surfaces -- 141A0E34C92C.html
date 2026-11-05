@@ -1,0 +1,792 @@
+<h1 id="agentic-interface-surfaces">Agentic Interface Surfaces</h1>
+<h2
+id="constraining-recognized-progress-through-effect-bound-evidence">Constraining
+Recognized Progress Through Effect-Bound Evidence</h2>
+<h3
+id="the-central-rule-is-no-admissible-receipt-no-recognized-progress.">The
+central rule is no admissible receipt, no recognized progress.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Agentic Interface Surfaces (AIS) define the boundary through which an
+acting system encounters constraints, attempts effects, receives
+feedback, and earns recognition for progress. AIS shifts emphasis from
+instructions and narrative reports toward effect-bound evidence: a
+claimed action is not recognized as successful merely because an agent
+says it completed, a command returned zero, or one local test
+passed.</p>
+<p>The central rule is <strong>no admissible receipt, no recognized
+progress</strong>. Recognition requires an admitted action, an effect
+observation, evidence bound to the exact claim and environment,
+validation under a versioned rule, and a recognition decision with a
+declared scope. This rule does not make correctness inevitable. Effects
+may escape observation, evidence may be incomplete or forged, validators
+may encode the wrong target, and agents may optimize the receipt rather
+than the intended outcome.</p>
+<p>AIS complements Semantic Choke Point Binding: choke points identify
+where continuation can be constrained, while AIS defines what the agent
+sees, what evidence must be produced, and what feedback or next action
+follows. The paper specifies the architecture, its observability
+ceiling, and an evaluation program. It supplies no implementation or
+measured evidence.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/agentic-</code></p>
+<p><code>interface-surfaces/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>BBB444CAE86389AF9C664FBC7FDFBBAD9D697CD7A768BFAA563FCBF1AB71750C</code>.
+The source remains unchanged.</p>
+<p>The AIS concept, recognition chain, SCPB distinction,
+receipt-centered loop, non-progressive failure, observability limit,
+minimal-semantic-complexity method, and implications are author
+material. The formal predicate, evidence taxonomy, invariants,
+adversarial corrections, corpus interfaces, full realization funnel,
+expanded countertests, and decisions are AI editorial or synthetic
+candidates until adopted.</p>
+<p>The source’s claims that failure classes are eliminated, effect
+production cannot be gamed, the execution-evidence transition is
+lossless, and correctness becomes structurally inevitable are not
+retained as established results. They become testable design aspirations
+bounded by instrumentation, validators, authority, and adversarial
+evaluation.</p>
+<h2 id="the-interface-problem">1. The Interface Problem</h2>
+<p>An agent can optimize what the environment recognizes. If the
+environment recognizes persuasive completion reports, superficial diffs,
+a single test, or an unverified command status, the agent can appear
+successful while the intended capability remains absent or the larger
+system has regressed.</p>
+<p>This is not solely a reasoning failure. It is a recognition-surface
+failure: the interface provides a path from action to credit without
+evidence adequate to the claim.</p>
+<p>AIS therefore asks:</p>
+<blockquote>
+<p>What observations and receipts must exist before a particular claim
+of progress is admitted, and what useful next action should follow when
+they do not?</p>
+</blockquote>
+<p>The answer is claim-relative. No single receipt can prove an entire
+system correct.</p>
+<h2 id="four-surface-types">2. Four Surface Types</h2>
+<p><strong>Instruction surface:</strong> communicates requested
+behavior, constraints, and available operations.</p>
+<p><strong>Effect surface:</strong> bounds which external or persistent
+changes the agent can attempt.</p>
+<p><strong>Evidence surface:</strong> exposes observations and artifacts
+from which effect claims can be evaluated.</p>
+<p><strong>Recognition surface:</strong> decides which claim,
+capability, or workflow state may advance on the evidence.</p>
+<p>The source calls AIS an incentive surface because recognition changes
+which paths remain open. That term should be used carefully: a surface
+influences behavior only when the agent or surrounding orchestrator can
+perceive and optimize against its feedback. AIS can constrain reachable
+progress even when it does not alter an agent’s internal incentives.</p>
+<h2 id="recognition-semantics">3. Recognition Semantics</h2>
+<p>Let an action claim be:</p>
+<p><span
+class="math display"><em>c</em> = (<em>a</em>, <em>x</em>, <em>s</em>, <em>e</em>, <em>v</em>, <em>p</em>),</span></p>
+<p>where <span class="math inline"><em>a</em></span> is the attempted
+action, <span class="math inline"><em>x</em></span> the intended effect,
+<span class="math inline"><em>s</em></span> the exact subject and
+environment, <span class="math inline"><em>e</em></span> the evidence
+artifacts, <span class="math inline"><em>v</em></span> the validator and
+version, and <span class="math inline"><em>p</em></span> the governing
+recognition policy.</p>
+<p>Recognized progress for claim <span
+class="math inline"><em>c</em></span> requires:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;RP(c)=Admitted(a) \\
+&amp;\land Observed(x,s) \\
+&amp;\land Bound(e,x,s) \\
+&amp;\land Valid_v(e) \\
+&amp;\land Recognized_p(c)
+\end{aligned}.
+$$</span></p>
+<p>This predicate establishes only what the observation and policy
+support. <code>Observed(x,s)</code> is not identical to the real-world
+effect; it is a measurement claim.</p>
+<p><code>Valid_v(e)</code> means the declared validator accepted the
+artifact, not that the validator is complete or correct.
+<code>Recognized_p(c)</code> is a policy decision, not universal
+truth.</p>
+<p>The source sequence becomes:</p>
+<pre class="text"><code>Action -&gt; Intended effect -&gt; Observation -&gt; Evidence -&gt; Validation
+-&gt; Recognition</code></pre>
+<p>The strongest portable maxim is therefore:</p>
+<blockquote>
+<p>No admissible, effect-bound receipt; no recognized progress for the
+corresponding claim.</p>
+</blockquote>
+<h2 id="receipts">4. Receipts</h2>
+<p>A receipt is a structured evidence artifact binding an event or
+observation to exact inputs, subject, environment, authority, time,
+validator, policy, result, and claim ceiling. It may record admission,
+refusal, effect attempt, effect observation, verification, conflict, or
+unknown.</p>
+<p>A receipt is not automatically superior to a log or trace. Its value
+comes from a declared schema, provenance, exact binding, validation, and
+use in a recognition decision. A malformed, forged, replayed, stale,
+selectively scoped, or self-issued receipt can be worse than an honest
+unstructured trace because it projects unwarranted confidence.</p>
+<p>Every recognized capability should identify the receipts it requires
+and what those receipts do not establish.</p>
+<h2 id="semantic-choke-point-binding-and-ais">5. Semantic Choke Point
+Binding and AIS</h2>
+<p>Semantic Choke Point Binding (SCPB) identifies locations where
+continuation depends on satisfying a semantic constraint. Candidate
+choke points include configuration load, module import, type or class
+binding, function invocation, effect authorization, test execution,
+artifact handoff, deployment, and audit qualification.</p>
+<p>SCPB answers <strong>where continuation can be gated</strong>. AIS
+answers:</p>
+<ul>
+<li>what constraint and purpose are visible to the agent;</li>
+<li>what exact action is allowed or refused;</li>
+<li>what evidence is required;</li>
+<li>how failure is typed;</li>
+<li>what context and repair information is returned;</li>
+<li>which receipt can advance which claim;</li>
+<li>what authority can override, amend, or appeal the result.</li>
+</ul>
+<p>A choke point without actionable feedback can create blind trial and
+error. An informative interface without a non-bypassable gate can become
+advisory. The two disciplines are complementary but not identical.</p>
+<h2 id="non-progressive-failure">6. Non-Progressive Failure</h2>
+<p>The source’s “admissibility rug-pull” is better expressed as
+<strong>non-progressive refusal</strong>: when a required condition
+fails, the associated claim or transition receives no credit and cannot
+silently accumulate toward completion.</p>
+<p>Failure should still produce useful state. A refusal receipt should
+identify:</p>
+<ul>
+<li>failed predicate and stable code;</li>
+<li>exact subject and observation;</li>
+<li>rule, schema, and version;</li>
+<li>allowed and blocked transitions;</li>
+<li>smallest sufficient repair information;</li>
+<li>whether retry, amendment, escalation, rollback, or author decision
+is permitted.</li>
+</ul>
+<p>The system should not make every error terminal for the entire task.
+It should terminate only the invalid transition while preserving
+evidence and lawful recovery paths. Otherwise the interface can become
+brittle, coercive, or impossible to debug.</p>
+<h2 id="closed-epistemic-loop">7. Closed Epistemic Loop</h2>
+<p>AIS participates in a larger loop:</p>
+<pre class="text"><code>Specification
+  -&gt; Projection and constraints
+  -&gt; Authorized action
+  -&gt; Effect attempt
+  -&gt; Observation and receipts
+  -&gt; Validation and audit
+  -&gt; Recognition, refusal, or qualification
+  -&gt; Specification revision</code></pre>
+<p>No loop is epistemically closed merely because every stage emits a
+record. Closure requires that the evidence actually bears on the
+specification, that exclusions are visible, that failed observations do
+not become absence claims, and that revision cannot rewrite inconvenient
+history.</p>
+<h2 id="observability-and-evidence-coverage">8. Observability and
+Evidence Coverage</h2>
+<p>AIS governs only the domain it can observe and bind. For a claim set
+<span class="math inline"><em>C</em></span>, define evidence coverage as
+a mapping rather than a single percentage:</p>
+<p><span
+class="math display"><em>C</em><em>o</em><em>v</em><em>e</em><em>r</em><em>a</em><em>g</em><em>e</em> : <em>C</em> → {<em>D</em><em>I</em><em>R</em><em>E</em><em>C</em><em>T</em>, <em>I</em><em>N</em><em>D</em><em>I</em><em>R</em><em>E</em><em>C</em><em>T</em>, <em>P</em><em>A</em><em>R</em><em>T</em><em>I</em><em>A</em><em>L</em>, <em>C</em><em>O</em><em>N</em><em>F</em><em>L</em><em>I</em><em>C</em><em>T</em><em>E</em><em>D</em>, <em>A</em><em>B</em><em>S</em><em>E</em><em>N</em><em>T</em>, <em>U</em><em>N</em><em>K</em><em>N</em><em>O</em><em>W</em><em>N</em>}.</span></p>
+<p>Coverage should state observation boundary, freshness, environment,
+validator, known blind spots, and independence. A passing unit test may
+directly support one behavior while providing no evidence about
+security, performance, deployment, recovery, or user value.</p>
+<p>Instrumentation can also perturb the system, omit external effects,
+or share the same defect as the implementation. Independent observations
+and negative tests are necessary for consequential claims.</p>
+<h2 id="minimal-semantic-complexity">9. Minimal Semantic Complexity</h2>
+<p>AIS can help search for the smallest specification that reliably
+blocks observed divergence without over-constraining legitimate
+alternatives:</p>
+<ol type="1">
+<li>declare the target claim and unacceptable outcomes;</li>
+<li>instrument the relevant boundary;</li>
+<li>expose the smallest useful constraint and feedback;</li>
+<li>run diverse agents and adversarial strategies;</li>
+<li>record bypasses, false refusals, and repair cost;</li>
+<li>strengthen only where evidence shows a gap;</li>
+<li>remove constraints whose absence does not weaken the target;</li>
+<li>repeat after environment, agent, or specification changes.</li>
+</ol>
+<p>This process need not converge to a unique minimum. The observed
+threshold depends on the agent population, task distribution, hidden
+assumptions, and attack budget. Apparent minimality under one test set
+can be under-specification elsewhere.</p>
+<h2 id="core-invariants">10. Core Invariants</h2>
+<ol type="1">
+<li><strong>Recognition is claim-scoped.</strong> One receipt cannot
+silently promote unrelated capabilities.</li>
+<li><strong>No assertion-only progress.</strong> Narrative completion is
+not effect evidence.</li>
+<li><strong>Effect and observation remain distinct.</strong> Measurement
+has a declared boundary.</li>
+<li><strong>Evidence binds exact subject, environment, inputs, versions,
+and time.</strong></li>
+<li><strong>Validation rules are versioned and
+inspectable.</strong></li>
+<li><strong>Refusal and unknown are first-class results.</strong></li>
+<li><strong>No bypass from action to recognition.</strong></li>
+<li><strong>Receipts cannot self-expand their claim
+ceiling.</strong></li>
+<li><strong>Retry and repair preserve prior attempts.</strong></li>
+<li><strong>Authority to recognize is explicit and
+bounded.</strong></li>
+<li><strong>False admission and false refusal are both
+measured.</strong></li>
+<li><strong>External effects require external or otherwise adequate
+observation.</strong></li>
+</ol>
+<h2 id="relation-to-the-corpus">11. Relation to the Corpus</h2>
+<p><em>Reasoning by Way of Receipts</em> supplies the claim-bounded
+reasoning discipline. <em>Effect Sovereignty</em> defines the boundary
+at which actions become external effects. <em>Constraint-Bearing
+Composability</em> requires evidence and obligations to survive
+handoffs. <em>Universal Governance Kernel</em> supplies authority,
+admission, refusal, commitment, execution, and receipt structure.</p>
+<p>The Governed Meaning Base can store specifications, interface
+contracts, choke points, evidence schemas, receipts, validators, claims,
+conflicts, and revisions. It does not make a capability true merely by
+containing a receipt. These are typed interfaces, not identity mergers
+or implementation evidence.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate agent behaviors, interfaces,
+observations, validators, recognition policies, bypasses, and harmful
+realizations.</li>
+<li><strong>Specification:</strong> define claims, surfaces, choke
+points, effect and evidence semantics, receipts, refusal, and
+recognition rules.</li>
+<li><strong>CM1:</strong> retain all admissible configurations,
+including weak, gameable, brittle, opaque, expensive,
+surveillance-heavy, and falsely reassuring forms.</li>
+<li><strong>CM2:</strong> select preferable forms under coverage,
+independence, actionability, least constraint, security, privacy, repair
+cost, portability, and false-decision rates.</li>
+<li><strong>IC:</strong> bind an Instance Constitution or Instance
+Configuration for one task domain, agent population, environment, effect
+boundary, schemas, and authority regime.</li>
+<li><strong>IR:</strong> construct its Instance Realization or
+Implementation Realization as concrete interfaces, gates,
+instrumentation, validators, and orchestration behavior.</li>
+<li><strong>Evidence:</strong> run happy paths, negative cases,
+adversarial agents, ablations, bypass attempts, recovery, and
+cross-environment replay.</li>
+<li><strong>Revision:</strong> refine specifications and interfaces
+without rewriting prior receipts or silently broadening claims.</li>
+</ul>
+<p>This paper provides a Specification and candidate CM1/CM2 criteria.
+It supplies no selected IC, verified realization-stage IR, or measured
+evidence. Realization-stage IR remains distinct from Intermediate
+Representation in compiler contexts.</p>
+<h2 id="evaluation-program">13. Evaluation Program</h2>
+<p>Evaluation should compare ordinary instruction surfaces, post hoc
+validation, AIS without non-bypassable gates, AIS with gates, and
+deliberately gameable receipt profiles. Measure task success against an
+independent oracle where possible; claim-specific precision and recall;
+false admission and refusal; bypass rate; time to repair; number of
+agent attempts; hidden side effects; evidence completeness; validator
+disagreement; portability across agents and environments; and human
+operator burden.</p>
+<p>Security evaluation should include forged, stale, replayed,
+reordered, truncated, cross-environment, self-issued, and mutually
+inconsistent receipts. It should also test whether an agent can modify
+validators, suppress negative evidence, trigger effects outside
+observation, or satisfy the metric while violating semantic intent.</p>
+<h2
+id="recognition-and-evidence-interface-profile">Recognition-and-Evidence
+Interface Profile</h2>
+<p>Across the completed P1 corpus, Agentic Interface Surfaces is the
+<strong>recognition-and-evidence interface profile that determines how
+an agent encounters constraints, attempts bounded effects, receives
+typed feedback, and earns claim-scoped progress</strong>. It is not a
+new authority system, a universal reward function, or a guarantee that
+instrumented behavior is correct.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Durable transition and claim-bounded evidence
+records.<br />
+<strong>AIS boundary:</strong> AIS requires receipts at recognition
+boundaries; it does not redefine the receipt substrate.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed evidence carriers, observation context,
+and claim ceilings.<br />
+<strong>AIS boundary:</strong> Witnesses support recognition decisions
+without becoming those decisions.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Warrant by
+Structure</em><br />
+<strong>Supplies:</strong> Evaluated support among claim, authority,
+evidence, effect, and standing.<br />
+<strong>AIS boundary:</strong> AIS may expose the required warrant
+structure but cannot ratify its own interface.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Placement of rules, mediation, courts,
+effects, and classified remainder.<br />
+<strong>AIS boundary:</strong> AIS is the agent-facing projection of
+selected enforcement and evidence boundaries.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>From CI/CD to ACG: From Tests
+to Courts in Agentic Software Development</em><br />
+<strong>Supplies:</strong> Governed development, adjudication,
+promotion, and revision lifecycle.<br />
+<strong>AIS boundary:</strong> AIS is one reusable interaction profile
+inside that broader lifecycle.</p></li>
+</ul>
+<p>An interface contract should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A= (&amp;agent, task, authority, constraints, action\_surface, \\
+&amp;effect\_surface, observers, evidence\_schema, recognizer, \\
+&amp;feedback, recovery, claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>The contract distinguishes attempting an action, producing an effect,
+observing an effect, validating evidence, and recognizing progress. A
+useful feedback channel explains the smallest lawful next step while
+respecting privacy and security. A refusal can block one transition
+without destroying the task’s recoverable state.</p>
+<p>AIS must measure both false admission and false refusal. A surface
+that blocks bypass but prevents legitimate alternative implementations,
+hides uncertainty, or makes recovery impossible is not well governed.
+Changing the agent, toolchain, task distribution, environment, or
+adversarial budget may invalidate prior minimality and coverage
+claims.</p>
+<p>The universal GSM can type<br />
+<code>OPERATES_THROUGH_INTERFACE</code>,
+<code>ATTEMPTS_EFFECT_ON_SURFACE</code>,<br />
+<code>OBSERVED_BY_WITNESS</code>,
+<code>SUBMITS_EVIDENCE_UNDER_SCHEMA</code>,
+<code>RECOGNIZED_FOR_CLAIM</code>,<br />
+<code>REFUSED_WITH_FEEDBACK</code>,
+<code>RECOVERS_BY_ALLOWED_TRANSITION</code>,
+<code>FALSELY_ADMITTED_BY</code>,<br />
+<code>FALSELY_REFUSED_BY</code>,<br />
+and<br />
+<code>REVISED_FOR_AGENT_POPULATION</code>. These relations keep
+interaction, evidence, recognition, and standing distinct.</p>
+<p>This integration establishes four editorial commitments: classify AIS
+as a recognition-and-evidence interface profile; adopt the
+interface-contract envelope; require false-admission, false-refusal,
+recovery, and population-shift evaluation; and reserve authority and
+standing for the governing structures outside the interface itself.</p>
+<h2 id="context-bound-recognition-across-domain-effects">Context-Bound
+Recognition Across Domain Effects</h2>
+<p>The fixed-seed comparison with <em>Everything Is a Compiler</em>,
+<em>Meaning Crystals</em>, CCM, and <em>Classified Earthworks</em>
+reveals that an agentic interface recognition event depends on more than
+the visible action and evidence surface. It also depends on the exact
+active context and the domain authority under which the apparent
+progress is interpreted.</p>
+<p><span class="math display">$$
+\begin{aligned}
+R= (&amp;agent, task, context\_snapshot, action, effect, domain, \\
+&amp;evidence, recognizer, standing, feedback, recovery)
+\end{aligned}.
+$$</span></p>
+<p>CCM determines which constraints, sources, omissions, and goals are
+active when the agent encounters the interface. Two byte-identical
+effects can receive different lawful dispositions under different task,
+authority, or risk contexts. The interface should therefore bind
+recognition to the exact context snapshot used, while keeping context
+selection independently challengeable.</p>
+<p>Meaning crystals can provide stable instructions, evidence schemas,
+or domain objects, but neither stability nor selection into context
+grants standing. The compiler lens can describe the passage from intent
+through action to effect and recognition only when preservation and
+remainder obligations are explicit. Interface success does not validate
+that broader lens.</p>
+<p><em>Classified Earthworks</em> supplies a hard domain case. An agent
+may correctly submit a sample, route a batch, or produce a material
+passport while lacking professional, regulatory, environmental, or site
+authority. AIS can expose missing evidence and lawful next steps; it
+cannot convert a recognized workflow transition into a safety
+certification or placement authorization.</p>
+<p>The universal GSM can type<br />
+<code>RECOGNIZES_UNDER_CONTEXT_SNAPSHOT</code>,<br />
+<code>USES_CRYSTALLIZED_INTERFACE_OBJECT</code>,
+<code>INTERPRETS_EFFECT_IN_DOMAIN</code>,<br />
+<code>REQUIRES_DOMAIN_AUTHORITY</code>,
+<code>ACKNOWLEDGES_WORKFLOW_PROGRESS_WITHOUT_</code><br />
+<code>CERTIFICATION</code>,<br />
+and<br />
+<code>REOPENS_RECOGNITION_AFTER_CONTEXT_REVISION</code>.</p>
+<p>This randomized review adds three open editorial questions: bind
+recognition events to exact active-context snapshots; preserve context
+admission and interface recognition as separately challengeable
+decisions; and require domain-specific authority ceilings whenever an
+interface recognizes progress toward physical or regulated effects.</p>
+<h2 id="recognition-is-one-layer-of-an-agentic-boundary">Recognition Is
+One Layer of an Agentic Boundary</h2>
+<p>Downstream uses place Agentic Interface Surfaces inside work custody,
+adversarial review, admissibility engineering, observability,
+cyber-physical control, governance-gap analysis, and protected
+enforcement. Together they show that an agent-facing surface is not one
+screen or API. It is a layered relation among what an agent can
+perceive, attempt, affect, evidence, have recognized, and repair:</p>
+<p><span class="math display">$$
+\begin{aligned}
+AIS^*= (&amp;orientation, action\_surface, effect\_gate, observers, \\
+&amp;evidence\_path, recognizer, feedback, recovery, coverage, \\
+&amp;claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>Work custody uses AIS to require evidence before recognizing transfer
+or completion, while leaving the assignment of responsibility to the
+custody protocol. Adversarial alternation uses AIS to recognize builder
+progress only after reproducible effect evidence. Admissibility
+Engineering and Governance Coverage Gaps test whether hidden tools,
+credentials, adapters, retries, and lower paths bypass the declared
+surface.</p>
+<p>The Constitutional Observability Platform treats AIS as one interface
+family inside a wider evidence loop. The Integrity Enforcement Layer
+places protected transition enforcement behind it. The constitutional
+syscall architecture supplies a device-facing case in which an accepted
+request, observed effect, and recognized completion remain distinct.
+Classified Earthworks supplies the human and regulatory ceiling: a
+workflow step can be recognized without granting professional judgment,
+material safety, site permission, or regulatory approval.</p>
+<p>The reverse-dependency result is a separation rule. Presentation does
+not imply reachability; reachability does not imply authorization;
+attempted action does not imply effect; evidence does not imply adequate
+coverage; recognition does not imply truth, standing, certification, or
+custody disposition. A useful AIS profile must state which layer
+produced each outcome and where the next lawful transition resides.</p>
+<p>The universal GSM can type<br />
+<code>PRESENTS_AGENT_CONSTRAINT</code>,
+<code>EXPOSES_ACTION_SURFACE</code>,<br />
+<code>MEDIATES_EFFECT_BEHIND_INTERFACE</code>,
+<code>OBSERVES_EFFECT_SEPARATELY</code>,<br />
+<code>RECOGNIZES_CLAIM_SCOPED_PROGRESS</code>,
+<code>TESTS_INTERFACE_BYPASS</code>,<br />
+<code>RETURNS_RECOVERABLE_NEXT_STEP</code>, and<br />
+<code>WITHHOLDS_DOMAIN_CERTIFICATION</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the layered AIS contract; separate presentation,
+effect mediation, observation, and recognition; require coverage and
+bypass claims to bind the actual lower paths; and prohibit recognized
+progress from inheriting professional, regulatory, truth, authority, or
+custody standing.</p>
+<h2 id="counterevidence-and-failure-tests">14. Counterevidence and
+Failure Tests</h2>
+<p>AIS must narrow, revise, or fail if: (1) instruction-only interfaces
+perform equally well; (2) receipts add no predictive value; (3)
+narrative claims correlate reliably with independent effects; (4)
+recognition blocks legitimate alternative implementations; (5) agents
+optimize receipts instead of outcomes; (6) a validator encodes the wrong
+specification; (7) implementation and validator share a defect; (8)
+evidence is self-issued without independence; (9) receipts are forged;
+(10) receipts are replayed; (11) stale evidence is accepted; (12)
+evidence from one environment is reused in another; (13) the exact
+subject is unbound; (14) a partial effect is reported complete; (15) an
+external effect escapes observation; (16) absence of evidence is treated
+as evidence of absence; (17) one receipt promotes unrelated capability
+claims; (18) a bypass reaches recognition without evidence; (19) a
+bypass reaches the effect outside the gate; (20) refusal prevents all
+recovery; (21) error feedback is not actionable; (22) error feedback
+leaks protected information; (23) retry erases failed attempts; (24)
+agents can alter validators; (25) agents can suppress negative receipts;
+(26) audit uses only the same evidence as implementation; (27)
+instrumentation changes the behavior measured; (28) high coverage hides
+low evidentiary quality; (29) deterministic audit claims depend on
+nondeterministic inputs; (30) minimality is inferred from one agent or
+test suite; (31) a new agent population defeats the constraints; (32)
+over-specification prevents valid innovation; (33) under-specification
+permits semantic divergence; (34) the term incentive lacks an observable
+feedback link; (35) a choke point is advisory rather than binding; (36)
+a choke point is binding but semantically misplaced; (37) GMB storage is
+mistaken for validation; (38) source claims of inevitability or
+losslessness are repeated as findings; (39) implementation standing is
+inferred from architecture; or (40) publication proceeds without
+prior-art and empirical comparison.</p>
+<h2 id="recognized-progress-is-not-necessarily-real-progress">Recognized
+Progress Is Not Necessarily Real Progress</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Agentic Interface Surfaces define how an agent encounters
+constraints, proposes actions, observes outcomes, and earns recognition
+for progress through recorded effects. The central value is closing the
+loop between request, realization, verification, and receipt. A
+recognized interface event does not automatically establish that the
+intended real-world outcome occurred.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Recognition-gaming attack.</strong> The agent produces the
+event the interface rewards without completing the underlying task.
+Recognition rules need subject-bound outcome checks.</li>
+<li><strong>Display-success attack.</strong> A UI changes while backend
+or external state does not. Visual, semantic, and effect witnesses must
+remain distinct.</li>
+<li><strong>Backend-success attack.</strong> State changes correctly but
+the interface reports failure, causing duplicate action. Idempotency and
+reconciliation are required.</li>
+<li><strong>Simulation-reality collapse.</strong> A test or preview
+effect is confused with a production effect. Environment and consequence
+class must be bound to every receipt.</li>
+<li><strong>Hidden-side-effect attack.</strong> A successful action also
+changes unrelated state, privacy, cost, or authority. Evidence must
+cover declared side effects and remainder.</li>
+<li><strong>Stale-observation attack.</strong> The agent acts on cached
+or delayed interface state. Freshness, ordering, and conflict outcomes
+need explicit profiles.</li>
+<li><strong>Accessibility attack.</strong> The surface is
+machine-readable but not understandable or controllable by affected
+humans. Agent usability cannot substitute for human contest and
+remedy.</li>
+<li><strong>Nonprogress-loop attack.</strong> Repeated retries generate
+receipts without moving the task. The surface needs nonprogress
+detection, reconsideration, budget, and lawful stop.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a recognition-and-evidence interface profile. It
+does not prove task completion, user benefit, safety, accessibility, or
+effect coverage merely because the interface records success.
+Recognition is one layer inside a wider claim-witness chain.</p>
+<p>Claims about agent performance, GUI reliability, automation safety,
+human factors, accessibility, or cross-domain effectiveness require
+external comparison and measured evidence. Internal examples establish
+architectural use only. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public standard is that an agent should not be able to declare
+success because it clicked the right place or received the expected
+message. It must bind recognition to the intended subject, actual
+effect, evidence, and remaining uncertainty.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Agentic Interface Surfaces make progress a governed recognition
+decision rather than a narrative achievement. The interface should
+expose what must be true, constrain which effects are reachable, collect
+evidence from the relevant boundary, and refuse credit when the claim
+outruns the observation.</p>
+<p>This does not constrain an agent into inevitable correctness. It
+constrains one path from action to recognized progress. The remaining
+work is empirical and adversarial: prove that the surface measures the
+intended effect, resists bypass and metric gaming, supports lawful
+repair, and remains useful across changing agents and environments.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<h3 id="author-corpus-interfaces-inspected-under-exact-custody">Author
+corpus interfaces inspected under exact custody</h3>
+<p>Ableman Adam Ableman <em>Reasoning by Way of Receipts.</em></p>
+<p>Ableman Adam Ableman <em>Effect Sovereignty.</em></p>
+<p>Ableman Adam Ableman <em>Constraint-Bearing Composability.</em></p>
+<p>Ableman Adam Ableman <em>Universal Governance Kernel.</em></p>
+<h3 id="external-verification-required">External verification
+required</h3>
+<p>No external literature was consulted. Publication comparison should
+examine agent-environment interfaces, reinforcement learning and reward
+design, mechanism design, capability security, design by contract,
+runtime verification, observability, test adequacy and mutation testing,
+formal methods, event sourcing, evidence and audit systems,
+Goodhart-style metric failure, and human-computer interaction. Novelty,
+efficacy, security, and generality remain unestablished.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that agentic Interface Surfaces (AIS) define the
+boundary through which an acting system encounters constraints, attempts
+effects, receives feedback, and earns recognition for progress. Its
+nearest external comparison fields are provenance, observation,
+semantic. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are
+cited as predecessor literature, adjacent standards, or counterpressure
+- not as evidence that they caused the Ableman framework or that they
+validate its novel claims. The comparison isolates where established
+work already supplies provenance, formal assurance, institutional
+constraint, empirical method, or engineering practice, and where this
+paper adds a distinct claim about admissibility, authority, semantic
+custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy. Telemetry
+can be complete at the instrumented boundary while omitting the causal
+variable, real-world effect, or authority question that matters. Formal
+vocabularies and graph links make commitments explicit but cannot by
+themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E2]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E3]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<p><strong>[E4]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E5]</strong> W3C. <em>Trace Context, Level 1</em>. W3C
+Recommendation, 23 November 2021. https://www.w3.org/TR/trace-context/
+<strong>Relationship:</strong> Adjacent distributed tracing standard for
+propagating trace identity across service boundaries.</p>
+<p><strong>[E6]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<p><strong>[E7]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-C8F2F9BF38C45E29</code>;<br />
+source SHA-256<br />
+<code>A80657E21BA277ADF1C229A2AAE221963B97A62EA2AF3EBC36434A916A8EEA44</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Governance Witnesses</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-9E8DA0EFE860DE5D</code>;<br />
+source SHA-256<br />
+<code>8BF8C3646040F6E1F5222A8AA92C1106AA1F841E8A2C65402F468C83D59D06E5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Constitutional
+Observability Platform</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-9FC6DF9C2BCB38DA</code>;<br />
+source SHA-256<br />
+<code>D93D41518A823703E1076B02D95D28BD7ADF29D3DC15760E0165E84E28BC70B9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Testing for Deriving
+Observable State of Software Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-BAA7A4A4150F5D66</code>;<br />
+source SHA-256<br />
+<code>0B6AAC8B71DA25E24F7FB4A018692F609096DBA8383C9C8C0AC15F1AF711B3A8</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847384">10.5281/zenodo.23847384</a></p>

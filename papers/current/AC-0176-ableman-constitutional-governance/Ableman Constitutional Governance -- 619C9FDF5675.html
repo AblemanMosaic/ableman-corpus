@@ -1,0 +1,1469 @@
+<h1 id="ableman-constitutional-governance">Ableman Constitutional
+Governance</h1>
+<h2
+id="interpretation-admissibility-authority-and-lineage-in-identity-bearing-systems">Interpretation,
+Admissibility, Authority, and Lineage in Identity-Bearing Systems</h2>
+<h3 id="how-anything-remains-itself-while-becoming-something-new.">How
+anything remains itself while becoming something new.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Systems change. Software is updated, constitutions are amended,
+models are realized, certificates are rotated, artifacts are replicated,
+standards are superseded, and institutions acquire successors. Yet
+change alone does not establish continuity. Ableman Constitutional
+Governance, or ACG, proposes that governed continuity requires four
+jointly necessary functions: an Interpretation Regime establishing what
+the governed object is and what counts as preserving its identity; an
+Admissibility Law distinguishing legitimate transformation from
+arbitrary mutation; an Authority Binding making that law operative
+rather than advisory; and Lineage Continuity relating predecessor,
+transformation, and successor through time. ACG was developed as a
+governance discipline, but its recurrence across model realization,
+execution, custody, kernel design, software succession, regulatory
+modification, standards processes, cryptographic trust, and scientific
+versioning suggests a broader hypothesis: ACG may describe the minimum
+constitutional form required whenever a system claims that a changed
+object is the legitimate continuation of a prior object. This paper
+develops that hypothesis, distinguishes the four functions through
+natural ablations, explains why fused rival models lose diagnostic
+power, and argues that kernelization is a specialized application of ACG
+because an operative kernel must define inherited identity, admissible
+descendants, binding conformance authority, and version lineage.
+Preliminary external validation found substantial cross-domain support.
+A frozen v0.1 instrument produced 69 of 72 exact judgments across two
+same-session passes. A contamination-declared coder from a different
+model family later agreed on 65 of 72 and 68 of 72 judgments against
+those passes, with minimum component kappas of 0.857 and 0.880,
+respectively, while finding no candidate falsifier. Those results remain
+evidence under instrument v0.1 only. A clarified instrument v0.2 is
+introduced here by explicit supersession for future independent review.
+The present claim is bounded: ACG is a falsifiable functional-necessity
+conjecture for governed identity continuity, not yet a universal theorem
+and not a sufficient condition for safety, justice, liveness, semantic
+adequacy, or trustworthy execution.</p>
+<h2 id="introduction-the-problem-of-legitimate-continuity">1.
+Introduction: The Problem of Legitimate Continuity</h2>
+<p>A thing changes. Under what conditions is it still the same
+thing?</p>
+<p>The question appears simple while change is trivial. A file copied
+without alteration appears to preserve identity. A document with one
+corrected comma appears continuous with its predecessor. The problem
+becomes harder when the transformation changes structure, semantics,
+authority, behavior, location, or institutional standing.</p>
+<p>Consider several events:</p>
+<ul>
+<li>a software release replaces an older release;</li>
+<li>a cryptographic key succeeds a revoked key;</li>
+<li>a constitutional amendment modifies governing text;</li>
+<li>a model is compiled into an executable artifact;</li>
+<li>an API representation is migrated into a successor version;</li>
+<li>a regulated device is modified after clearance;</li>
+<li>an artifact is transferred to another storage node;</li>
+<li>a standards body supersedes one recommendation with another.</li>
+</ul>
+<p>In each case, a successor may exist. Existence does not establish
+legitimacy.</p>
+<p>A software package may be authentic yet unauthorized. A certificate
+may be valid yet unrelated to the predecessor it appears to replace. A
+compiled binary may execute successfully while failing to preserve
+source meaning. A replicated artifact may possess a valid signature
+while lacking local recognition. A constitutional amendment may be
+substantively attractive but procedurally void.</p>
+<p>These failures reveal four questions inside every
+legitimate-continuation claim:</p>
+<ol type="1">
+<li>What is the object whose identity is said to continue?</li>
+<li>Which transformations are permitted?</li>
+<li>What makes those permissions binding?</li>
+<li>How is the successor related to the predecessor through time?</li>
+</ol>
+<p>Ableman Constitutional Governance names the corresponding
+functions:</p>
+<p><span class="math display">ACG = IR + AL + AB + LC,</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">IR</span> is the Interpretation
+Regime;</li>
+<li><span class="math inline">AL</span> is the Admissibility Law;</li>
+<li><span class="math inline">AB</span> is the Authority Binding;</li>
+<li><span class="math inline">LC</span> is Lineage Continuity.</li>
+</ul>
+<p>The claim is functional. A system need not use these terms. It must,
+however, perform their equivalents somewhere if it claims operatively
+that a changed object legitimately inherits the identity, authority, or
+standing of an earlier object.</p>
+<p>The deeper subject of ACG is therefore not governance in the narrow
+sense of committees, voting, or policy. Its subject is:</p>
+<blockquote>
+<p>The lawful continuity of identity-bearing systems under
+transformation.</p>
+</blockquote>
+<h2 id="the-four-functions-of-acg">2. The Four Functions of ACG</h2>
+<h3 id="interpretation-regime">2.1 Interpretation Regime</h3>
+<p>An Interpretation Regime determines what the governed object is and
+what it means for that object to remain continuous through change.</p>
+<p>It answers questions such as:</p>
+<ul>
+<li>Which properties are identity-bearing?</li>
+<li>Which changes preserve identity?</li>
+<li>Which changes create a new object?</li>
+<li>Is identity attached to bytes, meaning, role, lineage, location,
+authority, or a combination?</li>
+<li>Which representation is canonical?</li>
+<li>When two representations differ, are they equivalent, corresponding,
+related, or unrelated?</li>
+</ul>
+<p>An Interpretation Regime may use content hashes, canonical
+serialization, semantic schemas, type identities, accession numbers,
+legal definitions, name-bearing specimens, repository paths,
+constitutional texts, model identities, or declared equivalence
+relations.</p>
+<p>Identity is not self-interpreting. A digest can establish that two
+byte strings are identical. It cannot independently establish that two
+different byte strings express the same law, implement the same model,
+or continue the same institutional office. Those conclusions require an
+interpretation regime appropriate to the claim.</p>
+<p>Without <span class="math inline">IR</span>, a system cannot reliably
+answer:</p>
+<blockquote>
+<p>What exactly survived the transformation?</p>
+</blockquote>
+<p>The predicted failure is identity ambiguity: substitution,
+equivocation, category confusion, or inability to distinguish continuity
+from resemblance.</p>
+<h3 id="admissibility-law">2.2 Admissibility Law</h3>
+<p>An Admissibility Law determines which transformations are accepted as
+legitimate.</p>
+<p>It answers:</p>
+<ul>
+<li>Which transitions are allowed?</li>
+<li>Which evidence must precede them?</li>
+<li>Which invariants must remain true?</li>
+<li>Which changes require fresh admission?</li>
+<li>Which operations are forbidden?</li>
+<li>Which failures produce refusal, rollback, or recovery?</li>
+<li>When is a migration adequate?</li>
+<li>When is a successor merely different?</li>
+</ul>
+<p>An admissibility law may be expressed as a transition topology, type
+system, validation rule set, threshold condition, regulatory decision
+tree, compatibility policy, amendment procedure, or conformance
+profile.</p>
+<p>Without <span class="math inline">AL</span>, recognized authority can
+become arbitrary. An actor may be entitled to choose, but the system
+lacks a principled distinction between an admitted transformation and an
+authorized mutation.</p>
+<p>The predicted failure is transformation arbitrariness:</p>
+<blockquote>
+<p>The system may know who can decide, but not what makes the decision
+valid.</p>
+</blockquote>
+<h3 id="authority-binding">2.3 Authority Binding</h3>
+<p>Authority Binding makes the admissibility law operative rather than
+advisory.</p>
+<p>It answers:</p>
+<ul>
+<li>Who may judge admissibility?</li>
+<li>What gives that judgment standing?</li>
+<li>Which keys, roles, institutions, courts, thresholds, or capabilities
+are recognized?</li>
+<li>Can a violation prevent admission or reduce standing?</li>
+<li>Who may alter the law?</li>
+<li>Who hears appeal?</li>
+<li>What is the jurisdiction of the authority?</li>
+</ul>
+<p>Authority may be cryptographic, institutional, procedural, local,
+federated, capability-based, threshold-based, judicial, or socially
+recognized.</p>
+<p>Authority need not physically prevent every nonconforming act. A
+person may print a nomenclaturally invalid name. A developer may publish
+a falsely versioned package. A machine may execute code outside a
+protocol.</p>
+<p>The relevant test is narrower:</p>
+<blockquote>
+<p>Does the system confer, deny, preserve, or downgrade recognized
+standing on the basis of the rule?</p>
+</blockquote>
+<p>Without <span class="math inline">AB</span>, the law may be exact but
+optional.</p>
+<p>The predicted failure is advisory governance: the rule describes what
+should happen but cannot distinguish earned conformance from
+self-assertion.</p>
+<h3 id="lineage-continuity">2.4 Lineage Continuity</h3>
+<p>Lineage Continuity relates predecessor, transformation, and successor
+through time.</p>
+<p>It answers:</p>
+<ul>
+<li>Which object preceded this one?</li>
+<li>Is the new object a successor, fork, replacement, rollback,
+migration, correction, or unrelated artifact?</li>
+<li>Does the predecessor retain historical standing?</li>
+<li>Is the successor backward compatible?</li>
+<li>What was superseded?</li>
+<li>What was revoked?</li>
+<li>Can the system return to an earlier state?</li>
+<li>Does a new version retroactively alter old conformance?</li>
+</ul>
+<p>Lineage is not merely chronology. A timestamp list can show that
+events occurred in sequence. A commit graph can record ancestry. Neither
+necessarily determines which descendant is the legitimate successor for
+a declared jurisdiction.</p>
+<p>Lineage Continuity therefore requires a typed relation relevant to
+standing:</p>
+<p><span class="math display">$$
+\mathrm{Predecessor}
+\xrightarrow{\text{admitted transformation}}
+\mathrm{Successor}.
+$$</span></p>
+<p>Without <span class="math inline">LC</span>, a system may validate
+each state individually while remaining unable to distinguish renewal
+from replacement, supersession from revocation, or migration from
+substitution.</p>
+<p>The predicted failure is succession ambiguity.</p>
+<h2 id="the-acg-necessity-conjecture">3. The ACG Necessity
+Conjecture</h2>
+<p>Let a system <span class="math inline"><em>S</em></span> claim that
+object <span class="math inline"><em>x</em><sup>′</sup></span> is the
+legitimate continuation of object <span
+class="math inline"><em>x</em></span> under transformation <span
+class="math inline"><em>t</em></span>.</p>
+<p>For that claim to be operative, ACG conjectures that <span
+class="math inline"><em>S</em></span> requires functional mechanisms
+establishing:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{IR}(x,x') \\
+&amp;\land \mathrm{AL}(t) \\
+&amp;\land \mathrm{AB}(\mathrm{AL}) \\
+&amp;\land \mathrm{LC}(x,t,x')
+\end{aligned}.
+$$</span></p>
+<p>The terms mean:</p>
+<ul>
+<li><span
+class="math inline">IR(<em>x</em>, <em>x</em><sup>′</sup>)</span>
+identifies the object and continuity relation being claimed;</li>
+<li><span class="math inline">AL(<em>t</em>)</span> determines whether
+the transformation is admissible;</li>
+<li><span class="math inline">AB(AL)</span> determines why the
+admissibility judgment has operative standing;</li>
+<li><span
+class="math inline">LC(<em>x</em>, <em>t</em>, <em>x</em><sup>′</sup>)</span>
+binds predecessor, transformation, and successor into a continuing
+lineage.</li>
+</ul>
+<p>This is presently a functional-necessity conjecture. It is not a
+sufficiency theorem.</p>
+<p>An ACG-complete system may still possess an unjust law, corrupt
+authority, defective implementation, compromised trust root, inadequate
+interpretation regime, unsafe effect boundary, unavailable service, or
+fabricated evidence.</p>
+<p>ACG asks whether continuity is constitutionally formed. It does not
+guarantee that the constitution is wise, secure, or good.</p>
+<h2 id="why-the-four-functions-must-remain-distinct">4. Why the Four
+Functions Must Remain Distinct</h2>
+<p>A theory becomes suspicious when it can explain every case only by
+renaming. ACG gains force from systems in which its components separate
+naturally.</p>
+<h3 id="identity-is-not-lineage">4.1 Identity Is Not Lineage</h3>
+<p>Content-addressing systems can identify exact immutable objects.
+Changing the content changes the identifier. Yet an immutable content
+identifier alone does not say which new identifier is the legitimate
+successor of the old one.</p>
+<p>IPFS Content Identifiers provide content-derived identity. IPNS adds
+authenticated mutable naming that can point a stable name toward
+changing content over time <span class="citation"
+data-cites="ipfs-cid ipfs-ipns">[@ipfs-cid; @ipfs-ipns]</span>.</p>
+<p>Therefore:</p>
+<p><span class="math display">IR ≠ LC.</span></p>
+<p>The question “What is this?” differs from “How does this legitimately
+follow from that?”</p>
+<h3 id="admissibility-law-is-not-authority-binding">4.2 Admissibility
+Law Is Not Authority Binding</h3>
+<p>Semantic Versioning provides detailed rules for classifying changes
+as major, minor, or patch releases. It also defines precedence among
+version strings. Publishers can nevertheless declare versions without an
+independent universal court establishing that their classification is
+truthful <span class="citation"
+data-cites="semver">[@semver]</span>.</p>
+<p>Therefore:</p>
+<p><span class="math display">AL ≠ AB.</span></p>
+<p>A law can be precise while remaining advisory.</p>
+<h3 id="validity-is-not-succession">4.3 Validity Is Not Succession</h3>
+<p>X.509 certification-path validation determines whether a certificate
+path is valid relative to a trust anchor and defined constraints. It
+establishes a binding between a subject identity and a public key. Two
+independently valid end-entity certificates do not thereby form a
+governed predecessor-successor lineage <span class="citation"
+data-cites="rfc5280">[@rfc5280]</span>.</p>
+<p>Therefore:</p>
+<p><span class="math display">IR + AL + AB ⇏ LC.</span></p>
+<p>A succession relation requires more than repeated validity.</p>
+<h3 id="witness-continuity-is-not-authority-over-witnessed-content">4.4
+Witness Continuity Is Not Authority over Witnessed Content</h3>
+<p>Certificate Transparency uses append-only logs, signed tree states,
+inclusion proofs, and consistency proofs. These mechanisms can
+demonstrate continuity and detect log equivocation. They do not
+themselves establish that every logged certificate was legitimately
+issued <span class="citation"
+data-cites="rfc9162">[@rfc9162]</span>.</p>
+<p>Therefore:</p>
+<p><span
+class="math display">ACGComplete(Log) ⇏ Authorized(LoggedObject).</span></p>
+<p>A witness may possess a complete constitutional structure for its own
+history without acquiring authority over the events it records.</p>
+<h2 id="acg-and-the-mechanics-of-constitutional-enforcement">5. ACG and
+the Mechanics of Constitutional Enforcement</h2>
+<p>ACG identifies the functions a constitutional transformation
+requires. Constitutional enforcement concerns how those functions become
+operative in a machine.</p>
+<p>A recurring distinction is the placement of semantics.</p>
+<p>A rule may be encoded as checked data:</p>
+<p><span class="math display">count ≥ 7,</span></p>
+<p>or as transition topology:</p>
+<p><span
+class="math display"><em>S</em><sub>0</sub> → <em>S</em><sub>1</sub> → ⋯ → <em>S</em><sub>7</sub>.</span></p>
+<p>A counter can record that seven events occurred while forgetting
+whether they were distinct or ordered. A state chain can preserve those
+distinctions through the existence and absence of transitions.</p>
+<p>This yields the Semantic Placement Principle:</p>
+<blockquote>
+<p>Where a meaning lives determines how it can fail.</p>
+</blockquote>
+<p>Data-borne semantics depend on complete and correct checks.
+Topology-borne semantics constrain valid reachability. When the topology
+is canonically represented and cryptographically bound to identity,
+weakening the rule changes the identity-bearing constitutional
+artifact.</p>
+<p>This does not eliminate the nonconforming executor problem.
+Structural semantics make violations unrepresentable to a conforming
+executor. Constitutional mediation must additionally ensure that a
+nonconforming executor cannot silently convert arbitrary behavior into
+an authorized effect.</p>
+<p>ACG and structural enforcement operate at different levels:</p>
+<ul>
+<li>ACG asks which constitutional functions must exist.</li>
+<li>Structural enforcement asks how some functions can be encoded so
+violations become unreachable to conforming implementations.</li>
+<li>Custody asks whether the exact admitted structure is the structure
+being used.</li>
+<li>Effect mediation asks whether nonconforming execution can still
+cause consequential external effects.</li>
+</ul>
+<p>No layer silently inherits the standing of another.</p>
+<h2 id="kernelization-as-a-specialized-application-of-acg">6.
+Kernelization as a Specialized Application of ACG</h2>
+<p>An architecture describes how systems relate. A kernel does something
+stronger:</p>
+<blockquote>
+<p>A kernel establishes inherited semantic law for downstream
+systems.</p>
+</blockquote>
+<p>When a system claims conformance to a kernel, it does not merely
+understand a shared vocabulary. It agrees that certain distinctions and
+invariants govern its descendants.</p>
+<p>An abstraction becomes kernel-like when it gains:</p>
+<ol type="1">
+<li>normative inheritance;</li>
+<li>invariant preservation;</li>
+<li>conformance adjudication;</li>
+<li>downstream semantic consequence.</li>
+</ol>
+<p>Decomposing those requirements analytically reconstructs the ACG
+functions.</p>
+<p>A kernel must define what counts as an implementation, descendant,
+mandatory model element, and identity-preserving variation. That is
+<span class="math inline">IR</span>.</p>
+<p>It must define which mappings, extensions, escapes, and migrations
+are conforming. That is <span class="math inline">AL</span>.</p>
+<p>It must define who judges conformance, what evidence is required, and
+what standing a partial conformer receives. That is <span
+class="math inline">AB</span>.</p>
+<p>It must define version relations, supersession, migration,
+deprecation, revocation, and historical conformance. That is <span
+class="math inline">LC</span>.</p>
+<p>This supports the proposition:</p>
+<blockquote>
+<p>Kernelization is a specialized application of ACG.</p>
+</blockquote>
+<p>More precisely:</p>
+<blockquote>
+<p>An operative kernel is an ACG-complete model made inheritable.</p>
+</blockquote>
+<p>This is analytic convergence inside the same constitutional-computing
+corpus, not independent external confirmation. The external recurrence
+discussed later provides the independent evidence. The kernel analysis
+contributes internal coherence, explanatory compression, and a practical
+admission discipline.</p>
+<h2 id="kernel-inheritance-and-conformance">7. Kernel Inheritance and
+Conformance</h2>
+<p>Kernel inheritance does not require identical implementation.</p>
+<p>Let <span class="math inline"><em>K</em></span> be a kernel and <span
+class="math inline"><em>S</em></span> a downstream system. Conformance
+requires a mapping:</p>
+<p><span
+class="math display"><em>ϕ</em> : <em>S</em> → <em>K</em></span></p>
+<p>such that relevant downstream transitions preserve the kernel’s
+required invariants:</p>
+<p><span
+class="math display"><em>s</em> → <em>s</em><sup>′</sup> ⟹ <em>ϕ</em>(<em>s</em>)→<sub><em>K</em></sub><em>ϕ</em>(<em>s</em><sup>′</sup>).</span></p>
+<p>The mapping may be bounded to a subset, host profile, execution
+corridor, artifact class, or optional profile. Conformance should
+therefore not be binary.</p>
+<p>A useful kernel-conformance scale includes:</p>
+<ul>
+<li><code>FULL_CONFORMANCE</code>;</li>
+<li><code>BOUNDED_CONFORMANCE</code>;</li>
+<li><code>PROFILE_CONFORMANCE</code>;</li>
+<li><code>ADAPTER_ONLY</code>;</li>
+<li><code>PARTIAL_WITH_LIMITATIONS</code>;</li>
+<li><code>NONCONFORMANT</code>;</li>
+<li><code>UNASSESSED</code>.</li>
+</ul>
+<p>This scale is distinct from the ACG validation instrument’s standing
+classes. Kernel-conformance standing grades a descendant’s preservation
+of an inherited kernel model. ACG validation standing grades whether a
+continuity mechanism exhibits <span class="math inline">IR</span>, <span
+class="math inline">AL</span>, <span class="math inline">AB</span>, and
+<span class="math inline">LC</span> within a declared jurisdiction.</p>
+<ul>
+<li><p><strong>Vocabulary:</strong> ACG validation standing<br />
+<strong>Object judged:</strong> Continuity mechanism<br />
+<strong>Question:</strong> Does it instantiate the four ACG
+functions?</p></li>
+<li><p><strong>Vocabulary:</strong> Kernel-conformance standing<br />
+<strong>Object judged:</strong> Downstream implementation<br />
+<strong>Question:</strong> To what extent does it preserve the inherited
+model?</p></li>
+</ul>
+<p>An adapter capable of exchanging kernel-shaped artifacts does not
+necessarily inherit the kernel’s internal model. Syntax compatibility
+cannot be laundered into semantic conformance.</p>
+<p>A conformance record should identify:</p>
+<ul>
+<li>kernel identity and version;</li>
+<li>subject identity;</li>
+<li>claimed scope;</li>
+<li>mapping identity;</li>
+<li>preserved invariants;</li>
+<li>declared escapes;</li>
+<li>external authority boundaries;</li>
+<li>limitation records;</li>
+<li>court results;</li>
+<li>claim ceiling;</li>
+<li>supersession lineage.</li>
+</ul>
+<h2 id="courts-and-witnesses-need-constitutional-addresses">8. Courts
+and Witnesses Need Constitutional Addresses</h2>
+<p>A conformance court is not merely a test suite. It must have a
+constitutional address.</p>
+<p>The address must answer:</p>
+<ul>
+<li>Who defines the law?</li>
+<li>Who executes the tests?</li>
+<li>Who supplies evidence?</li>
+<li>Who authorizes the verdict?</li>
+<li>Who hears appeal?</li>
+<li>Who may amend the court?</li>
+<li>Who preserves the record?</li>
+</ul>
+<p>If one component defines, executes, adjudicates, amends, and
+custodies its own conformance law, it effectively owns the whole
+constitutional object.</p>
+<p>A mature architecture should distinguish at least four court
+types.</p>
+<h3 id="kernel-local-courts">8.1 Kernel-Local Courts</h3>
+<p>These judge implementations claiming conformance to one kernel.</p>
+<h3 id="corridor-courts">8.2 Corridor Courts</h3>
+<p>These govern transitions between layers or kernels, including:</p>
+<ul>
+<li>model to realization;</li>
+<li>realization to executable artifact;</li>
+<li>executable artifact to runtime effect;</li>
+<li>effect to receipt;</li>
+<li>receipt to recognized standing.</li>
+</ul>
+<p>Corridor courts enforce non-implication rules such as:</p>
+<p><span
+class="math display">RealizationCorrectness ⇏ ExecutionAuthority,</span></p>
+<p><span
+class="math display">ExecutionSuccess ⇏ SemanticCorrespondence,</span></p>
+<p>and</p>
+<p><span
+class="math display">SemanticCorrespondence ⇏ EffectAuthorization.</span></p>
+<h3 id="composition-courts">8.3 Composition Courts</h3>
+<p>These determine whether individually conforming components form a
+conforming composite system.</p>
+<h3 id="mechanic-admission-courts">8.4 Mechanic-Admission Courts</h3>
+<p>These determine whether the vocabulary, trusted mechanics, or court
+structure should change.</p>
+<p>The court that executes a law need not author it. The component that
+witnesses an event need not authorize it. The system that custodies a
+verdict need not decide it.</p>
+<h3 id="independent-witnessing">8.5 Independent Witnessing</h3>
+<p>Witnessing is a cross-cutting constitutional function. Its defining
+question is not merely whether evidence exists, but whether the evidence
+crosses an independent trust boundary.</p>
+<p>A witness controlled entirely by the actor under evaluation cannot by
+itself establish independence from that actor. A witness may testify to
+observation, consistency, absence, contradiction, or effect
+correspondence. It must not silently inherit authority over the object
+or event it witnesses.</p>
+<p>This paper does not decide whether witnessing requires a distinct
+Universal Witness Kernel, a shared profile, or composition among
+governance, execution, and custody systems. That classification remains
+a mechanic-admission question. The present obligation is narrower: every
+corridor that relies on independent testimony must identify the witness,
+its jurisdiction, its authority or evidentiary standing, and the lineage
+of its records.</p>
+<h2 id="supersession-amendment-and-non-retroactivity">9. Supersession,
+Amendment, and Non-Retroactivity</h2>
+<p>A ratified constitutional object should not be amended in place.</p>
+<p>Kernel evolution should occur through supersession:</p>
+<p><span
+class="math display"><em>K</em><sub>1</sub> → <em>K</em><sub>2</sub>.</span></p>
+<p>The predecessor remains an immutable historical object. The successor
+carries an explicit relationship to it.</p>
+<p>Useful relations include:</p>
+<ul>
+<li><code>COMPATIBLE_EXTENSION</code>;</li>
+<li><code>CLARIFYING_SUPERSESSION</code>;</li>
+<li><code>MIGRATION_REQUIRED</code>;</li>
+<li><code>INCOMPATIBLE_SUCCESSOR</code>;</li>
+<li><code>SECURITY_SUPERSESSION</code>;</li>
+<li><code>DEPRECATION_ONLY</code>;</li>
+<li><code>REVOCATION_OF_STANDING</code>.</li>
+</ul>
+<p>These relations must not be collapsed.</p>
+<p>Supersession changes which model is preferred or required for future
+work. Revocation claims that earlier standing was invalidly earned.
+Deprecation discourages new use while preserving prior validity.</p>
+<p>A system conforming to <span
+class="math inline"><em>K</em><sub>1</sub></span> does not automatically
+become nonconformant merely because <span
+class="math inline"><em>K</em><sub>2</sub></span> exists.</p>
+<p>Migration is itself a governed realization:</p>
+<p><span class="math display">$$
+\mathrm{System}@K_1
+\xrightarrow{\text{governed migration}}
+\mathrm{System'}@K_2.
+$$</span></p>
+<p>It requires source and target identities, a mapping, preserved and
+changed invariants, limitation records, migration courts, a new
+conformance judgment, and rollback or coexistence rules.</p>
+<p>W3C distinguishes superseded, obsolete, rescinded, and restored
+Recommendations through different procedures and continuing consequences
+<span class="citation" data-cites="w3c-process">[@w3c-process]</span>.
+Rust Editions permit language evolution while preserving
+interoperability and allowing packages to migrate independently <span
+class="citation" data-cites="rust-editions">[@rust-editions]</span>.
+Kubernetes API deprecation policy likewise preserves migration and
+decoding obligations rather than treating removal as an untyped
+disappearance <span class="citation"
+data-cites="kubernetes-deprecation">[@kubernetes-deprecation]</span>.</p>
+<p>The paper itself follows this rule. The scoring language in Appendix
+B is instrument v0.2, not an in-place rewrite of v0.1. All statistics
+reported under v0.1 remain v0.1-only evidence.</p>
+<h2 id="acg-as-a-meta-invariant-of-constitutional-systems">10. ACG as a
+Meta-Invariant of Constitutional Systems</h2>
+<p>An emerging constitutional-computing architecture distinguishes
+several functional organs:</p>
+<ul>
+<li>a Universal Modeling Kernel, or UMK, for modeled possibility;</li>
+<li>a Universal Governance Kernel, or UGK, for admissibility, authority,
+standing, and refusal;</li>
+<li>a Universal Realization Kernel, or URK, for preserving meaning
+through embodiment in a target;</li>
+<li>a Universal Execution Kernel, or UEK, for admitted execution,
+capability mediation, effects, and recovery;</li>
+<li>CGSOS for identity, custody, storage, recognition, replication, and
+reconstruction;</li>
+<li>CER for constitutional admission of changes to trusted
+mechanics;</li>
+<li>an explicit UCM composition profile for cross-organ law.</li>
+</ul>
+<p>Together these describe a candidate functional anatomy of a Universal
+Constitutional Machine.</p>
+<p>ACG does not replace these systems. It governs the constitutional
+completeness of their own transformation claims.</p>
+<p>A modeling kernel must govern continuity of models. A governance
+kernel must govern succession of its laws and courts. A realization
+kernel must distinguish source meaning from target testimony. An
+execution kernel must distinguish successful execution from authorized
+effect. A custody system must distinguish possession from local
+recognition. A mechanic-admission razor must govern its own supersession
+without allowing a candidate version to authorize itself.</p>
+<p>ACG therefore functions as a meta-invariant:</p>
+<blockquote>
+<p>Every operative constitutional organ must define identity,
+admissibility, authority, and lineage for the transformations it claims
+to govern.</p>
+</blockquote>
+<p>This does not make ACG a sovereign super-kernel. It is a completeness
+condition applied to each organ within its jurisdiction.</p>
+<h2 id="external-evidence">11. External Evidence</h2>
+<p>The larger claim must be tested outside the systems that produced it.
+The following cases were selected because they arise in materially
+different technical, legal, regulatory, and scientific traditions.</p>
+<h3 id="secure-software-updates">11.1 Secure Software Updates</h3>
+<p>The Update Framework uses trusted roles, signature thresholds,
+hashes, metadata versions, and expiry information to verify update
+metadata and target files while resisting rollback, freeze, and
+mix-and-match attacks <span class="citation"
+data-cites="tuf-spec">[@tuf-spec]</span>.</p>
+<p>Its structure is recognizably ACG-shaped:</p>
+<ul>
+<li><span class="math inline">IR</span> binds metadata and target
+identity;</li>
+<li><span class="math inline">AL</span> specifies the verification
+workflow;</li>
+<li><span class="math inline">AB</span> is supplied by trusted roles and
+thresholds;</li>
+<li><span class="math inline">LC</span> is preserved through version and
+rollback rules.</li>
+</ul>
+<p>Its jurisdiction is bounded. Verified acquisition does not itself
+establish installation or runtime authorization.</p>
+<h3 id="dnssec-trust-anchor-rollover">11.2 DNSSEC Trust-Anchor
+Rollover</h3>
+<p>RFC 5011 describes automated, authenticated, and authorized updating
+of DNSSEC trust anchors. Existing trust enables governed addition and
+succession of new anchors through explicit state, hold-down, and
+revocation mechanisms <span class="citation"
+data-cites="rfc5011">[@rfc5011]</span>.</p>
+<p>This is a clear instance of authority descending through lineage
+rather than being manufactured by the successor.</p>
+<h3 id="constitutional-amendment">11.3 Constitutional Amendment</h3>
+<p>Article V of the United States Constitution defines proposal and
+ratification procedures under which an amendment becomes valid as part
+of the continuing Constitution <span class="citation"
+data-cites="article-v">[@article-v]</span>.</p>
+<p>The case separates substantive desirability from constitutional
+admissibility. A proposed text does not acquire constitutional standing
+merely by existing or attracting support. It must pass the declared
+authority and lineage procedure.</p>
+<h3 id="regulatory-modification">11.4 Regulatory Modification</h3>
+<p>FDA guidance distinguishes modifications that may remain under an
+existing device’s authorization from changes requiring a new premarket
+submission. The purpose is to make the decision process predictable,
+consistent, and transparent <span class="citation"
+data-cites="fda-510k">[@fda-510k]</span>.</p>
+<p>The question is not simply whether the modified device exists or
+functions. It is whether the changed device may legitimately inherit the
+market standing of the previously authorized device.</p>
+<p>FAA Supplemental Type Certificates similarly govern major changes to
+approved type designs, including compatibility with previously approved
+modifications <span class="citation"
+data-cites="faa-stc faa-compatibility">[@faa-stc;
+@faa-compatibility]</span>.</p>
+<h3 id="standards-and-proposal-processes">11.5 Standards and Proposal
+Processes</h3>
+<p>W3C Recommendation status, IETF standards procedures, and Python PEP
+governance distinguish mere publication from recognized standing <span
+class="citation" data-cites="w3c-process rfc2026 pep1">[@w3c-process;
+@rfc2026; @pep1]</span>.</p>
+<p>These systems show that institutional authority may be operative
+within a declared jurisdiction even when it cannot physically prevent
+noncompliant speech or implementation.</p>
+<h3 id="scientific-sequence-versioning">11.6 Scientific Sequence
+Versioning</h3>
+<p>NCBI accession.version identifiers preserve a stable accession while
+incrementing a version suffix when sequence data changes <span
+class="citation"
+data-cites="ncbi-sequence-ids">[@ncbi-sequence-ids]</span>.</p>
+<p>This case is important because lineage identity persists while
+content changes. It demonstrates that constitutional identity need not
+be reducible to byte identity.</p>
+<h3 id="version-control-and-content-identity-as-partial-cases">11.7
+Version Control and Content Identity as Partial Cases</h3>
+<p>Git objects are immutable and content-identified; commits record
+parents and form a directed history. Git therefore provides strong
+object identity and ancestry mechanics. Its core object model does not
+determine which branch head is the universally legitimate successor for
+a project <span class="citation"
+data-cites="git-data-model git-user-manual">[@git-data-model;
+@git-user-manual]</span>.</p>
+<p>This is a claim boundary rather than a defect:</p>
+<p><span
+class="math display">IR + RecordedLineage ⇏ GovernedSuccession.</span></p>
+<p>Similarly, immutable content identifiers establish exact object
+identity without automatically providing successor authority.</p>
+<h2 id="validation-status-and-instrument-supersession">12. Validation
+Status and Instrument Supersession</h2>
+<h3 id="instrument-v0.1">12.1 Instrument v0.1</h3>
+<p>A frozen v0.1 instrument defined the four components,
+component-specific scoring criteria, falsifier conditions, anti-forcing
+rules, rival decompositions, and standing classes <span class="citation"
+data-cites="acg-instrument-v01">[@acg-instrument-v01]</span>.</p>
+<p>The initial same-session dual-pass pilot produced:</p>
+<ul>
+<li>69 exact agreements across 72 component judgments;</li>
+<li>0.9583 exact agreement;</li>
+<li>quadratic-weighted kappas of 1.000 for <span
+class="math inline">IR</span>, 0.889 for <span
+class="math inline">AL</span>, 1.000 for <span
+class="math inline">AB</span>, and 0.952 for <span
+class="math inline">LC</span>.</li>
+</ul>
+<p>A later coder from a different model family locked a record before
+unblinding but had already read a summary containing control
+expectations and three prior disagreement topics. The coder correctly
+declared the pass semi-independent rather than independent.</p>
+<p>Against the two initial passes, the new coding achieved:</p>
+<ul>
+<li>65 of 72 exact component agreements against pass A;</li>
+<li>68 of 72 against pass B;</li>
+<li>minimum component kappa of 0.857 against pass A;</li>
+<li>minimum component kappa of 0.880 against pass B;</li>
+<li>identical standing classes against pass B;</li>
+<li>detection of all four synthetic ablations;</li>
+<li>no candidate falsifier;</li>
+<li>replicated loss of diagnostic power in fused rival models.</li>
+</ul>
+<p>Those results support cross-model intelligibility and instrument
+stability. They do not discharge the independence gate.</p>
+<p>Calibration mutations are training and instrument checks, not
+external evidence. Future reliability reports should therefore make
+external-case agreement primary and report calibration performance
+separately.</p>
+<h3 id="instrument-v0.2">12.2 Instrument v0.2</h3>
+<p>The cross-model pass identified ambiguity in how v0.1 graded
+mechanisms that record ancestry or precedence without conferring
+operative successor standing. It also exposed boundary questions
+concerning authority over records versus authority over the exact
+continuity claim.</p>
+<p>Instrument v0.2 is a <code>CLARIFYING_SUPERSESSION</code> of v0.1. It
+preserves:</p>
+<ul>
+<li>the four components;</li>
+<li>the score range;</li>
+<li>the necessity conjecture;</li>
+<li>the falsifier rule;</li>
+<li>the standing classes;</li>
+<li>the rival-model protocol.</li>
+</ul>
+<p>It changes:</p>
+<ul>
+<li>the scope gate by adding a continuity-claim type;</li>
+<li>the <span class="math inline">IR</span> criteria for externally
+supplied object identity;</li>
+<li>the <span class="math inline">AB</span> criteria for record
+authority versus successor-standing authority;</li>
+<li>the <span class="math inline">LC</span> criteria for recorded
+lineage versus lineage used to confer standing;</li>
+<li>the statistical protocol by separating external cases from
+calibration cases.</li>
+</ul>
+<p>All v0.1 statistics remain evidence under v0.1 only. A retrospective
+v0.2 sensitivity pass is reported as measurement analysis, not as new
+validation evidence.</p>
+<p>The sensitivity pass altered six of 72 component scores relative to
+pass A, three relative to pass B, and one relative to the
+contamination-declared coder. The direction was bidirectional: the
+clarified lineage criteria moved the Git and Semantic Versioning cases
+toward the later coder’s minority scores, while the clarified authority
+criterion retained the pilot’s lower score for the NCBI case. No
+candidate falsifier appeared, and the v0.2 standing classes matched pass
+B on all 18 cases. These results reduce concern that the clarification
+merely selected one coder’s full record, but they do not substitute for
+clean independent coding.</p>
+<h2 id="rival-decompositions">13. Rival Decompositions</h2>
+<h3 id="fusing-interpretation-and-lineage">13.1 Fusing Interpretation
+and Lineage</h3>
+<p>A rival model might combine <span class="math inline">IR</span> and
+<span class="math inline">LC</span> into one category called identity
+continuity.</p>
+<p>This loses diagnostic resolution. An immutable digest can identify an
+object exactly while providing no successor relation. A lineage record
+can connect objects historically while leaving the identity criterion
+externally defined.</p>
+<p>The repair for missing <span class="math inline">IR</span> differs
+from the repair for missing <span class="math inline">LC</span>.</p>
+<h3 id="fusing-law-and-authority">13.2 Fusing Law and Authority</h3>
+<p>A rival model might combine <span class="math inline">AL</span> and
+<span class="math inline">AB</span> into governance.</p>
+<p>This also loses resolution. Semantic Versioning contains detailed
+rules but lacks a universal binding court. Conversely, an authority may
+possess power to designate a successor while lacking principled
+transformation rules.</p>
+<p>The repair for absent law differs from the repair for absent
+authority.</p>
+<h3 id="reducing-acg-to-identity-and-governance">13.3 Reducing ACG to
+Identity and Governance</h3>
+<p>A two-part model can classify systems broadly but cannot distinguish
+exact identity from legitimate descent, permissible change from
+authorized judgment, recorded history from operative supersession, or
+validation from continuity.</p>
+<p>A fused model may reproduce ACG’s binary results only by silently
+reconstructing the separated functions inside larger labels.</p>
+<p>ACG’s advantage is diagnostic locality:</p>
+<blockquote>
+<p>When a continuity claim fails, ACG predicts what kind of function is
+missing and what sort of repair is required.</p>
+</blockquote>
+<h2 id="the-governed-effect-completeness-hypothesis">14. The
+Governed-Effect Completeness Hypothesis</h2>
+<p>A related four-part decomposition emerged from the separation of
+semantic, execution, custody, and effect courts:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{GovernedEffectStanding} \stackrel{?}{=}
+\mathrm{SemanticAdequacy} \\
+&amp;\land \mathrm{ExecutorConformance} \\
+&amp;\land \mathrm{CustodyFidelity} \\
+&amp;\land \mathrm{EffectIntegrity}
+\end{aligned}.
+$$</span></p>
+<p>This formula is not a settled result. It is a working hypothesis.</p>
+<p>Its purpose is to prevent the following laundering paths:</p>
+<ul>
+<li>semantic adequacy silently becoming evidence of executor
+conformance;</li>
+<li>executor conformance silently becoming evidence of custody
+fidelity;</li>
+<li>custody fidelity silently becoming evidence that an external effect
+was authorized;</li>
+<li>effect occurrence silently becoming evidence that source meaning was
+preserved.</li>
+</ul>
+<p>The hypothesis has not undergone the ablation, rival-model, or
+external-validation program applied to ACG. It remains on the research
+docket.</p>
+<p>Questions include:</p>
+<ul>
+<li>Are all four functions independently necessary?</li>
+<li>Does authority mediation belong inside effect integrity or require
+another term?</li>
+<li>Is independent witnessing a fifth function or evidence supporting
+the four?</li>
+<li>Can a simpler decomposition preserve the same diagnostic power?</li>
+<li>Which historical systems added which repair after each function
+failed?</li>
+</ul>
+<h2 id="falsification-and-claim-ceiling">15. Falsification and Claim
+Ceiling</h2>
+<p>ACG should lose standing if a mature mechanism is found that:</p>
+<ol type="1">
+<li>genuinely makes an operative legitimate-continuation claim;</li>
+<li>is correctly scoped;</li>
+<li>lacks one ACG function;</li>
+<li>does not import that function from another component or external
+boundary;</li>
+<li>nevertheless sustains the claim.</li>
+</ol>
+<p>ACG should also be revised if:</p>
+<ul>
+<li>two components prove functionally inseparable across cases;</li>
+<li>a simpler decomposition predicts the same failures with equal
+diagnostic precision;</li>
+<li>mappings depend only on metaphor;</li>
+<li>or the model cannot make prospective predictions.</li>
+</ul>
+<p>The present evidence does not establish that ACG is a mathematical
+theorem, universally sufficient, a complete theory of governance, a
+safety proof, or a guarantee of legitimate authority.</p>
+<p>Its current standing is:</p>
+<blockquote>
+<p>ACG has substantial cross-domain support as a four-part functional
+model of governed identity continuity. Systems making operative
+succession claims repeatedly instantiate functional equivalents of
+Interpretation Regime, Admissibility Law, Authority Binding, and Lineage
+Continuity within the relevant jurisdiction, while partial systems
+lacking a component exhibit the predicted claim ceiling.</p>
+</blockquote>
+<h2 id="research-program">16. Research Program</h2>
+<h3 id="clean-independent-coding">16.1 Clean Independent Coding</h3>
+<p>The immediate gate requires:</p>
+<ul>
+<li>at least two genuinely independent reviewers;</li>
+<li>no prior exposure to expected scores or disagreement loci;</li>
+<li>locked records before unblinding;</li>
+<li>component-level agreement reporting;</li>
+<li>calibration reported separately from external cases;</li>
+<li>blind adjudication;</li>
+<li>preservation of disagreement history.</li>
+</ul>
+<h3 id="prospective-prediction">16.2 Prospective Prediction</h3>
+<p>The stronger test should begin with defective historical mechanisms
+before their repairs are revealed.</p>
+<p>Reviewers should predict:</p>
+<ul>
+<li>which ACG function is missing;</li>
+<li>what failure should occur;</li>
+<li>what kind of repair should later appear.</li>
+</ul>
+<p>A theory earns deeper standing when it predicts repairs rather than
+merely classifying completed systems.</p>
+<h3 id="natural-negative-cases">16.3 Natural Negative Cases</h3>
+<p>The corpus should include more systems with ambiguous object
+identity, authority without transformation law, chronology without
+successor standing, local authority without global jurisdiction, and
+multiple competing lineage claims.</p>
+<h3 id="formalization">16.4 Formalization</h3>
+<p>Further work should determine whether ACG can be represented in
+temporal logic, typed transition systems, category-theoretic
+transformations, or another formalism without losing its institutional
+and semantic meaning.</p>
+<h3 id="kernel-admission">16.5 Kernel Admission</h3>
+<p>Candidate kernels should provide an ACG record before admission:</p>
+<pre class="text"><code>kernel_identity
+interpretation_regime
+admissibility_law
+authority_binding
+lineage_model
+conformance_court
+witness_boundary
+escape_record
+supersession_rules
+rollback_criterion
+claim_ceiling</code></pre>
+<p>A proposed kernel lacking one field should remain a theory, protocol,
+profile, or framework rather than silently acquiring inherited
+authority.</p>
+<h2 id="constitutional-status-of-the-present-paper">17. Constitutional
+Status of the Present Paper</h2>
+<p>The following ledger prevents the synthesis from granting claims more
+standing than their evidence supports.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Present standing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACG consists of <span class="math inline">IR</span>, <span
+class="math inline">AL</span>, <span class="math inline">AB</span>, and
+<span class="math inline">LC</span></td>
+<td>Core theory</td>
+</tr>
+<tr>
+<td>The four functions are diagnostically separable</td>
+<td>Supported by natural and synthetic ablations</td>
+</tr>
+<tr>
+<td>ACG recurs across external domains</td>
+<td>Substantially supported</td>
+</tr>
+<tr>
+<td>ACG is necessary for every governed-continuity claim</td>
+<td>Falsifiable conjecture</td>
+</tr>
+<tr>
+<td>ACG is jointly sufficient</td>
+<td>Not established</td>
+</tr>
+<tr>
+<td>Kernelization is an application of ACG</td>
+<td>Analytically supported within the originating corpus</td>
+</tr>
+<tr>
+<td>UCM cross-organ non-implications require explicit constitutional
+homing</td>
+<td>Architectural requirement supported by corridor analysis</td>
+</tr>
+<tr>
+<td>The Governed-Effect Completeness formula is necessary and
+sufficient</td>
+<td>Working hypothesis only</td>
+</tr>
+<tr>
+<td>Witnessing requires a distinct universal kernel</td>
+<td>Open mechanic-admission question</td>
+</tr>
+<tr>
+<td>Instrument v0.1 statistics apply under v0.2 wording</td>
+<td>Explicitly refused</td>
+</tr>
+<tr>
+<td>Instrument v0.2 is ready for clean independent review</td>
+<td>Earned by clarifying supersession and sensitivity analysis</td>
+</tr>
+<tr>
+<td>Independent inter-rater validation</td>
+<td>Open</td>
+</tr>
+<tr>
+<td>ACG is a universal theorem</td>
+<td>Not claimed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="discussion-a-grammar-of-becoming">18. Discussion: A Grammar of
+Becoming</h2>
+<p>ACG began as a discipline for constitutional governance. Its broader
+significance emerged indirectly.</p>
+<p>Storage systems needed to distinguish possession from recognition.
+Realization systems needed to distinguish successful translation from
+preserved meaning. Execution systems needed to distinguish computation
+from authorized effect. Kernel systems needed to distinguish shared
+architecture from inherited law. Version systems needed to distinguish
+ordering from legitimate succession. Witness systems needed to
+distinguish recorded truth from authority over what was recorded.</p>
+<p>Across these cases, the same questions returned:</p>
+<ul>
+<li>What is the thing?</li>
+<li>What change is valid?</li>
+<li>What makes the judgment binding?</li>
+<li>How does the changed thing remain related to what came before?</li>
+</ul>
+<p>This recurrence suggests that ACG may connect domains usually
+separated: ontology, law, authority, and history.</p>
+<p>An identity system without admissibility can identify arbitrary
+mutations. An admissibility system without authority can recommend but
+not govern. An authority system without lineage can replace without
+preserving continuity. A lineage system without interpretation can
+connect names whose identity meaning remains undefined.</p>
+<p>ACG proposes that these are not independent conveniences. They form a
+constitutional whole.</p>
+<p>The poetic claim can therefore be stated carefully:</p>
+<blockquote>
+<p>ACG may be the grammar by which an identity-bearing system becomes
+something new without silently ceasing to be itself.</p>
+</blockquote>
+<h2 id="conclusion">19. Conclusion</h2>
+<p>Every transformation creates a temptation to collapse distinct
+claims.</p>
+<p>A new artifact exists, therefore it is the successor.</p>
+<p>A signature verifies, therefore the claim is true.</p>
+<p>A model executes, therefore the realization is faithful.</p>
+<p>A hash matches, therefore the semantics are preserved.</p>
+<p>A rule is written, therefore it governs.</p>
+<p>A history is recorded, therefore the lineage is legitimate.</p>
+<p>ACG refuses these shortcuts.</p>
+<p>It requires an Interpretation Regime to say what continues. It
+requires an Admissibility Law to say which transformation is valid. It
+requires an Authority Binding to say why that law has operative
+standing. It requires Lineage Continuity to say how predecessor and
+successor remain constitutionally related.</p>
+<p>Together, these functions provide a disciplined account of governed
+identity through change.</p>
+<p>Their implications extend beyond institutional governance. They shape
+software updates, model realization, artifact custody, kernel
+inheritance, execution authority, regulatory modification, standards
+succession, and cryptographic trust.</p>
+<p>The broadest claim remains unearned. ACG is not yet a universal
+law.</p>
+<p>It has nevertheless moved beyond an internal design intuition. It is
+now a falsifiable cross-domain theory with natural ablations, diagnostic
+rival tests, a versioned validation instrument, substantial cross-model
+stability, and a clear path toward independent verification.</p>
+<p>The present horizon can be stated in one sentence:</p>
+<blockquote>
+<p>Anything may change; ACG asks what must be true before the changed
+thing may legitimately inherit the name, authority, and history of what
+came before.</p>
+</blockquote>
+<h2 id="appendix-a-acg-diagnostic-matrix">Appendix A: ACG Diagnostic
+Matrix</h2>
+<ul>
+<li><p><strong>Question:</strong> What object is continuing?<br />
+<strong>Function:</strong> Interpretation Regime<br />
+<strong>Predicted absence failure:</strong> Identity ambiguity</p></li>
+<li><p><strong>Question:</strong> Which transformation is valid?<br />
+<strong>Function:</strong> Admissibility Law<br />
+<strong>Predicted absence failure:</strong> Arbitrary mutation</p></li>
+<li><p><strong>Question:</strong> What makes the judgment
+operative?<br />
+<strong>Function:</strong> Authority Binding<br />
+<strong>Predicted absence failure:</strong> Advisory or self-declared
+compliance</p></li>
+<li><p><strong>Question:</strong> How does the successor descend from
+the predecessor?<br />
+<strong>Function:</strong> Lineage Continuity<br />
+<strong>Predicted absence failure:</strong> Succession
+ambiguity</p></li>
+</ul>
+<h2
+id="appendix-b-proposed-acg-validation-instrument-v0.2-scoring-criteria">Appendix
+B: Proposed ACG Validation Instrument v0.2 Scoring Criteria</h2>
+<p>The criteria in this appendix belong to ACG Validation Instrument
+v0.2. They supersede v0.1 prospectively and do not amend it in place.
+All statistics in this paper were earned under v0.1 unless explicitly
+labeled as v0.2 sensitivity analysis.</p>
+<h3 id="b.1-continuity-claim-type">B.1 Continuity-Claim Type</h3>
+<p>Before component scoring, classify the claim as one of:</p>
+<ul>
+<li><code>OPERATIVE_SUCCESSION</code>;</li>
+<li><code>RECORDED_LINEAGE</code>;</li>
+<li><code>ADVISORY_CLASSIFICATION</code>;</li>
+<li><code>IDENTITY_ONLY</code>;</li>
+<li><code>NO_CONTINUITY_CLAIM</code>;</li>
+<li><code>SCOPE_ERROR</code>.</li>
+</ul>
+<h3 id="b.2-interpretation-regime">B.2 Interpretation Regime</h3>
+<ul>
+<li>Score 2: The mechanism defines both the governed object and the
+criteria by which identity or continuity across the relevant
+transformation is determined.</li>
+<li>Score 1: A stable identifier or representation exists, but the
+underlying object of continuity or sameness criterion is imported from
+naming convention, user assertion, or another system.</li>
+<li>Score 0: The mechanism cannot determine which object is claimed to
+persist.</li>
+<li>Score U: Evidence is insufficient.</li>
+</ul>
+<h3 id="b.3-admissibility-law">B.3 Admissibility Law</h3>
+<ul>
+<li>Score 2: Explicit operative rules distinguish admissible from
+inadmissible transformations.</li>
+<li>Score 1: Rules exist but are optional, local, incomplete,
+conventional, or partly externalized.</li>
+<li>Score 0: No rule distinguishes valid transformation from arbitrary
+change.</li>
+<li>Score U: Evidence is insufficient.</li>
+</ul>
+<h3 id="b.4-authority-binding">B.4 Authority Binding</h3>
+<ul>
+<li>Score 2: A declared authority, verifier, court, threshold, or
+enforcement mechanism can confer, deny, or downgrade the exact standing
+named by the continuity claim.</li>
+<li>Score 1: Authority is limited to recording, formatting, publication,
+local configuration, or social recognition while the claimed
+legitimate-succession standing remains external or only partly
+bound.</li>
+<li>Score 0: Compliance and standing are self-asserted or merely
+advisory.</li>
+<li>Score U: Evidence is insufficient.</li>
+</ul>
+<h3 id="b.5-lineage-continuity">B.5 Lineage Continuity</h3>
+<ul>
+<li>Score 2: A typed predecessor-successor, migration, supersession,
+rollback, or consistency relation is used by an operative mechanism to
+confer, deny, preserve, or downgrade successor standing within the
+declared jurisdiction.</li>
+<li>Score 1: A lineage, order, ancestry, or precedence relation is
+retained and materially used for navigation, comparison, compatibility,
+recording, or advisory classification, but it does not itself confer
+full operative successor standing, or that standing relation is
+externalized.</li>
+<li>Score 0: No relevant predecessor-successor relation exists beyond
+independent identity, arbitrary chronology, or unrelated validity.</li>
+<li>Score U: Evidence is insufficient.</li>
+</ul>
+<p>The complete frozen instrument, falsifier rule, anti-forcing rules,
+and reporting protocol are shipped with this paper package.</p>
+<h2 id="appendix-c-instrument-supersession-record">Appendix C:
+Instrument Supersession Record</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Field</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Predecessor</td>
+<td>ACG Validation Instrument v0.1</td>
+</tr>
+<tr>
+<td>Successor</td>
+<td>ACG Validation Instrument v0.2</td>
+</tr>
+<tr>
+<td>Relation</td>
+<td><code>CLARIFYING_SUPERSESSION</code></td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td>Ambiguity in recorded lineage, advisory precedence, externally
+supplied identity, and record authority</td>
+</tr>
+<tr>
+<td>Preserved</td>
+<td>Four functions, score range, falsifier rule, standing classes, rival
+tests</td>
+</tr>
+<tr>
+<td>Changed</td>
+<td>Scope typing, IR wording, AB wording, LC wording, calibration
+reporting</td>
+</tr>
+<tr>
+<td>Retroactive effect</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Prior statistics</td>
+<td>Remain v0.1-only evidence</td>
+</tr>
+<tr>
+<td>Future use</td>
+<td>Clean independent review</td>
+</tr>
+<tr>
+<td>Rollback condition</td>
+<td>v0.2 reduces clarity or reliability, introduces directed scoring
+bias, or erases a distinction preserved by v0.1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-d-acg-and-the-constitutional-organ-stack">Appendix D:
+ACG and the Constitutional Organ Stack</h2>
+<ul>
+<li><p><strong>Organ or profile:</strong> UMK<br />
+<strong>Primary question:</strong> What can be modeled?<br />
+<strong>ACG obligation:</strong> Model identity and version
+continuity</p></li>
+<li><p><strong>Organ or profile:</strong> UGK<br />
+<strong>Primary question:</strong> What may stand?<br />
+<strong>ACG obligation:</strong> Law, authority, judgment, and court
+succession</p></li>
+<li><p><strong>Organ or profile:</strong> URK<br />
+<strong>Primary question:</strong> What realization preserves
+meaning?<br />
+<strong>ACG obligation:</strong> Source-target interpretation and
+realization lineage</p></li>
+<li><p><strong>Organ or profile:</strong> UEK<br />
+<strong>Primary question:</strong> What may execute and cause
+effects?<br />
+<strong>ACG obligation:</strong> Execution authority, effect admission,
+and recovery lineage</p></li>
+<li><p><strong>Organ or profile:</strong> CGSOS<br />
+<strong>Primary question:</strong> What exact artifact is recognized and
+preserved?<br />
+<strong>ACG obligation:</strong> Custody identity, local admission, and
+replication lineage</p></li>
+<li><p><strong>Organ or profile:</strong> CER<br />
+<strong>Primary question:</strong> When should mechanics change?<br />
+<strong>ACG obligation:</strong> Self-amendment, court authority, and
+supersession</p></li>
+<li><p><strong>Organ or profile:</strong> Independent witnessing<br />
+<strong>Primary question:</strong> What testimony may be credited
+without relying solely on the actor evaluated?<br />
+<strong>ACG obligation:</strong> Witness identity, admissible
+observations, independent standing, and record lineage</p></li>
+<li><p><strong>Organ or profile:</strong> UCM composition profile<br />
+<strong>Primary question:</strong> How do the organs compose?<br />
+<strong>ACG obligation:</strong> Cross-organ non-implication and
+corridor law</p></li>
+</ul>
+<h2 id="appendix-e-kernel-admission-questions">Appendix E: Kernel
+Admission Questions</h2>
+<p>A proposed kernel should answer:</p>
+<ol type="1">
+<li>What insufficiency justifies kernelization?</li>
+<li>What model becomes inherited?</li>
+<li>What is the kernel’s jurisdiction?</li>
+<li>Which invariants must descendants preserve?</li>
+<li>What counts as conformance?</li>
+<li>Which court adjudicates conformance?</li>
+<li>What standing may partial conformers claim?</li>
+<li>Which escapes are typed?</li>
+<li>What evidence must cross an independent witness boundary?</li>
+<li>How is a successor kernel admitted?</li>
+<li>What evidence would demote the kernel to a profile, protocol,
+framework, or theory?</li>
+</ol>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that systems change. Its nearest external
+comparison fields are governance, security, provenance. The sources in
+[E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Unforgeable capabilities can constrain exercise of authority while still
+leaving allocation, delegation, revocation, and social legitimacy
+incorrectly specified. A complete provenance graph can faithfully record
+a false or unauthorized process; provenance is evidence about lineage,
+not automatic truth or legitimacy. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<ol type="1">
+<li><p>Ableman, A. <em>Ableman Constitutional Governance: Interpretation
+Regime, Admissibility Law, Authority Binding, and Lineage
+Continuity.</em> Ableman Corpus edition.</p></li>
+<li><p>Ableman, A. <em>The Mechanics of Constitutional Enforcement:
+Ratchets, Roles, Receipts, and Identity-Bearing State.</em> Ableman
+Corpus edition.</p></li>
+<li><p>Ableman, A. <em>ACG External Validation Instrument, version
+0.1.</em> Unpublished validation instrument and case corpus.</p></li>
+<li><p>The Update Framework. <em>Specification, Security Model, Roles,
+and Metadata.</em></p></li>
+<li><p>StJohns, M. <em>RFC 5011: Automated Updates of DNS Security Trust
+Anchors.</em> RFC Editor, 2007.</p></li>
+<li><p>Cooper, D., et al. <em>RFC 5280: Internet X.509 Public Key
+Infrastructure Certificate and Certificate Revocation List Profile.</em>
+RFC Editor, 2008.</p></li>
+<li><p>Laurie, B., et al. <em>RFC 9162: Certificate Transparency Version
+2.0.</em> RFC Editor, 2021.</p></li>
+<li><p>Kubernetes Project. <em>API Deprecation Policy and Deprecated API
+Migration Guide.</em></p></li>
+<li><p>World Wide Web Consortium. <em>W3C Process
+Document.</em></p></li>
+<li><p>Rust Project. <em>The Rust Edition Guide.</em></p></li>
+<li><p>Preston-Werner, T. <em>Semantic Versioning 2.0.0.</em></p></li>
+<li><p>Git Project. <em>Git Data Model, User Manual, and Git
+Objects.</em></p></li>
+<li><p>IPFS Project. <em>Content Identifiers and the InterPlanetary Name
+System.</em></p></li>
+<li><p>United States Food and Drug Administration. <em>Deciding When to
+Submit a 510(k) for a Change to an Existing Device.</em></p></li>
+<li><p>Python Software Foundation. <em>PEP 1: PEP Purpose and
+Guidelines</em> and <em>PEP 13: Python Language
+Governance.</em></p></li>
+</ol>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848570">10.5281/zenodo.23848570</a></p>

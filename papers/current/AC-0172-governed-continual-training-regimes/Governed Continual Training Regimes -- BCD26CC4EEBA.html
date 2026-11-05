@@ -1,0 +1,965 @@
+<h1 id="governed-continual-training-regimes">Governed Continual Training
+Regimes</h1>
+<h2
+id="freshness-forgetting-and-admissible-model-evolution-in-hybrid-semantic-compiler-systems">Freshness,
+Forgetting, and Admissible Model Evolution in Hybrid Semantic Compiler
+Systems</h2>
+<h3 id="do-not-put-the-world-in-the-weights">Do Not Put the World in the
+Weights</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Governed Continual Training Regimes (GCTR) is a framework for
+changing models, adapters, routers, semantic substrate, and deployment
+standing without treating evolution as an ambient side effect of
+optimization. It extends Governed Training Regimes from admissible
+parameter transitions to admissible evolution of a model participant
+inside a living semantic system.</p>
+<p>The central design heuristic is: <strong>do not put the changing
+world in the weights when an inspectable, updateable substrate can carry
+it.</strong> Current facts, sources, warrants, registries, and
+revocations normally belong in governed substrate. Bounded behavioral
+adaptations may belong in adapters or routing policy. General
+participant competence may require periodic consolidation. Recurrent
+frontier maneuvers may be crystallized into deterministic semantic
+operations. This is a routing presumption, not a literal prohibition:
+base models inevitably encode world regularities, and a single event may
+require coordinated changes across several layers.</p>
+<p>GCTR trains a model to be a better semantic scout: to retrieve,
+offload, challenge, refuse, preserve evidence boundaries, propose
+candidate structure, and recognize missing closure. It does not make a
+model, receipt, scorecard, benchmark, or crystallization process
+sovereign. Model evolution remains a governed transition with declared
+authority, scope, evidence, privacy, rollback, standing, temporal
+validity, and revision.</p>
+<p>This revision makes the operative vocabulary explicit; separates
+target state from governance history; expands the formal system state
+beyond model parameters; treats hot, warm, cool, and cold freshness as
+non-exclusive routing profiles; adds layer-specific forgetting claims;
+binds receipts to limited proof roles; integrates the universal GSM and
+realization funnel; and supplies countertests and open editorial
+questions. No external literature verification, training, evaluation, or
+implementation was performed.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/governed-</code></p>
+<p><code>continual-training-regimes/integration-</code><br />
+<code>custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>3078EA1AA1C0DB5CEE2FB61C79A2BCB23C091D37F8912A8F2413474AF99FE30B</code>.
+The exact source remains unchanged.</p>
+<p>The GCTR architecture, voice, principal distinctions, examples,
+appendices, cited methods, and bibliography are author material. The
+revised formalisms, definitions, invariants, claim boundaries, corpus
+bridges, countertests, and decisions are AI editorial or synthetic
+contributions until adopted by the author.</p>
+<p>No cited technology, paper, benchmark, empirical result, or
+implementation claim was externally checked. No private chain of thought
+is required or presumed collectable. No model or data mutation occurred.
+Nothing here grants canonical standing, approves a training dataset,
+authorizes surveillance or trace retention, promotes a checkpoint,
+admits a GSM, or authorizes implementation or publication.</p>
+<h2 id="problem-and-bounded-thesis">1. Problem and Bounded Thesis</h2>
+<p>Long-lived AI systems face at least four different problems that
+ordinary parameter optimization tends to collapse:</p>
+<ol type="1">
+<li><strong>World freshness:</strong> active facts, sources, rules,
+warrants, and project state change.</li>
+<li><strong>Participant competence:</strong> the model must improve at
+retrieval, refusal, evidence handling, tool use, and frontier
+detection.</li>
+<li><strong>Governed forgetting:</strong> a fact, authority, trace,
+adapter, behavior, lineage dependency, or parameter influence may need
+to be retired.</li>
+<li><strong>Crystallization:</strong> recurring frontier work may
+deserve conversion into inspectable deterministic substrate.</li>
+</ol>
+<p>GCTR claims that these changes should be routed and promoted through
+an explicit constitutional process. It does not claim that every change
+is governable by one formalism, that weights can contain no knowledge,
+that substrate is automatically correct, or that governance eliminates
+empirical uncertainty.</p>
+<p>The claim ladder is:</p>
+<ol type="1">
+<li><strong>Conceptual claim:</strong> model evolution can be decomposed
+into typed, governable update proposals.</li>
+<li><strong>Specification claim:</strong> those proposals can carry
+authority, scope, evidence, refusal, rollback, and standing
+obligations.</li>
+<li><strong>Engineering claim:</strong> a concrete GCTR realization
+improves freshness, forgetting, boundary behavior, or recoverability
+under named tests.</li>
+<li><strong>Institutional claim:</strong> the realization produces
+better long-run social or constitutional outcomes than
+alternatives.</li>
+</ol>
+<p>This paper substantially advances Layers 1 and 2. Layers 3 and 4
+require implementations, baselines, evidence, and independent
+challenge.</p>
+<h2 id="definitions-and-primitives">2. Definitions and Primitives</h2>
+<p><strong>Model participant.</strong> A base model together with active
+adapters, routing behavior, tool interfaces, and deployment
+standing.</p>
+<p><strong>Governed substrate.</strong> Inspectable semantic artifacts
+and operations, including GMB entries, GSMs, current heads, registries,
+source bindings, receipts, policies, and deterministic compilers.</p>
+<p><strong>Freshness event.</strong> A discovered change that may
+require one or more substrate, adapter, router, checkpoint, lineage,
+evaluation, or standing updates.</p>
+<p><strong>Governed semantic trajectory.</strong> A public, inspectable
+sequence of requests, retrieved artifacts, declared commitments,
+operations, decisions, effects, evidence, and receipts. It is not
+private mental activity or hidden model reasoning.</p>
+<p><strong>Update proposal.</strong> A typed candidate mutation with
+target, jurisdiction, warrant, expected effect, evidence plan, rollback
+plan, and claim boundary.</p>
+<p><strong>Admissibility membrane.</strong> The policy and mechanism
+that permits, refuses, escalates, or gaps an update proposal.</p>
+<p><strong>Promotion.</strong> A separate governed act assigning an
+artifact or participant a deployment or semantic standing after
+evaluation.</p>
+<p><strong>Crystallization.</strong> Admission of a recurring frontier
+maneuver into governed deterministic substrate.</p>
+<p><strong>Decrystallization.</strong> Demotion, quarantine,
+supersession, or retirement of substrate whose closure conditions no
+longer hold.</p>
+<p><strong>Rot test.</strong> A repeatable challenge intended to expose
+staleness, authority drift, projection collapse, verifier co-drift, or
+counterexamples.</p>
+<p><strong>Receipt.</strong> A durable binding among a declared event,
+relevant identities, authority, decision, effect, evidence, and claim
+boundary. A receipt makes a bounded account inspectable; its existence
+alone does not prove truth, validity, sufficiency, or correct gate
+participation.</p>
+<p><strong>Gap certificate.</strong> A typed record that an update
+cannot yet be admitted because required representation, authority,
+evidence, privacy protection, or lowering is missing.</p>
+<h2 id="governing-state-and-transition-semantics">3. Governing State and
+Transition Semantics</h2>
+<p>The source models a participant as base parameters, adapters, routing
+policy, and standing. GCTR requires a wider system state:</p>
+<p><span
+class="math display"><em>X</em><sub><em>t</em></sub> = (<em>M</em><sub><em>t</em></sub>, <em>Σ</em><sub><em>t</em></sub>, <em>Λ</em><sub><em>t</em></sub>, <em>Π</em><sub><em>t</em></sub>, <em>E</em><sub><em>t</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>M</em><sub><em>t</em></sub></span> is the model
+participant, <span
+class="math inline"><em>Σ</em><sub><em>t</em></sub></span> the governed
+semantic substrate, <span
+class="math inline"><em>Λ</em><sub><em>t</em></sub></span> the data and
+dependency lineage, <span
+class="math inline"><em>Π</em><sub><em>t</em></sub></span> the active
+authority, privacy, and jurisdictional policy, and <span
+class="math inline"><em>E</em><sub><em>t</em></sub></span> the
+evaluation and verifier configuration. Governance history is
+separate:</p>
+<p><span
+class="math display"><em>Z</em><sub><em>t</em></sub> = (<em>X</em><sub><em>t</em></sub>, <em>H</em><sub><em>t</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>H</em><sub><em>t</em></sub></span> is the
+append-only or otherwise governed history of proposals, decisions,
+receipts, contests, and revisions.</p>
+<p>An update proposal is:</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>t</em></sub> = (<em>k</em><sub><em>t</em></sub>, <em>τ</em><sub><em>t</em></sub>, <em>w</em><sub><em>t</em></sub>, <em>q</em><sub><em>t</em></sub>, <em>b</em><sub><em>t</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>k</em><sub><em>t</em></sub></span> names the
+target layer or layers, <span
+class="math inline"><em>τ</em><sub><em>t</em></sub></span> the proposed
+mutation, <span
+class="math inline"><em>w</em><sub><em>t</em></sub></span> the warrant
+and scope, <span
+class="math inline"><em>q</em><sub><em>t</em></sub></span> the required
+evidence and claim boundary, and <span
+class="math inline"><em>b</em><sub><em>t</em></sub></span> the rollback
+or recovery plan.</p>
+<p>The membrane returns:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\mathcal{G}(Z_t,\Delta_t)\in\{&amp;\mathrm{ALLOW}, \mathrm{REFUSE},
+\mathrm{ESCALATE}, \\
+&amp;\mathrm{GAP}\}
+\end{aligned}.
+$$</span></p>
+<p>If allowed, an authorized transition function produces the candidate
+successor and a receipt:</p>
+<p><span
+class="math display">(<em>X</em><sub><em>t</em> + 1</sub>, <em>r</em><sub><em>t</em></sub>) = 𝒯(<em>X</em><sub><em>t</em></sub>, <em>Δ</em><sub><em>t</em></sub>).</span></p>
+<p>If refused, escalated, or gapped, the protected target state need not
+change, but governance history does:</p>
+<p><span
+class="math display"><em>X</em><sub><em>t</em> + 1</sub> = <em>X</em><sub><em>t</em></sub>,   <em>H</em><sub><em>t</em> + 1</sub> = <em>H</em><sub><em>t</em></sub> ⊕ <em>r</em><sub><em>t</em></sub>.</span></p>
+<p>This distinction repairs the misleading idea that a refused operation
+produces no state change at all. It may leave the model or substrate
+unchanged while producing a refusal, escalation, or gap record. The
+formalism remains a specification candidate, not an implemented state
+machine or proof of enforcement.</p>
+<h2 id="freshness-routing-profiles">4. Freshness Routing Profiles</h2>
+<p>The source’s hot, warm, cool, and cold categories are useful if
+treated as routing profiles rather than a total ordering or exclusive
+partition.</p>
+<ul>
+<li><p><strong>Profile:</strong> Hot<br />
+<strong>Default target:</strong> governed substrate<br />
+<strong>Typical content:</strong> current facts, sources, warrants,
+policies, heads<br />
+<strong>Primary risk:</strong> stale or unauthorized retrieval</p></li>
+<li><p><strong>Profile:</strong> Warm<br />
+<strong>Default target:</strong> bounded adapter or router<br />
+<strong>Typical content:</strong> local behavior, jurisdiction, tool
+discipline<br />
+<strong>Primary risk:</strong> scope leakage and composition
+conflict</p></li>
+<li><p><strong>Profile:</strong> Cool<br />
+<strong>Default target:</strong> consolidated participant
+competence<br />
+<strong>Typical content:</strong> general refusal, evidence, offload,
+and frontier skills<br />
+<strong>Primary risk:</strong> catastrophic or constitutional
+forgetting</p></li>
+<li><p><strong>Profile:</strong> Cold<br />
+<strong>Default target:</strong> deterministic substrate<br />
+<strong>Typical content:</strong> stable operations, schemas, tests,
+refusal classes<br />
+<strong>Primary risk:</strong> premature crystallization and hidden
+authority</p></li>
+</ul>
+<p>The labels do not imply that cold changes occur least often, that
+substrate is inherently safer, or that one event has only one
+destination. Revoking a data source may require a current-head change,
+training-lineage review, adapter rollback, evaluation update, and
+possibly parameter unlearning.</p>
+<p>A routing function therefore returns a set of candidate changes:</p>
+<p><span
+class="math display"><em>ρ</em>(<em>e</em><sub><em>t</em></sub>, <em>Z</em><sub><em>t</em></sub>) ⊆ {<em>Σ</em>, <em>A</em>, <em>R</em>, <em>θ</em>, <em>Λ</em>, <em>E</em>, <em>S</em>},</span></p>
+<p>not one automatically correct layer. The GCTR membrane then evaluates
+each proposed change and their composition.</p>
+<h2 id="primitives-invariants-and-dimensions">5. Primitives, Invariants,
+and Dimensions</h2>
+<p>The architecture depends on these invariants:</p>
+<ol type="1">
+<li><strong>Warrant before mutation:</strong> no protected update is
+admitted without active authority for its target and effect.</li>
+<li><strong>Standing bounded by evidence:</strong> evaluation or receipt
+scope limits every downstream claim.</li>
+<li><strong>No recurrence-to-truth shortcut:</strong> frequency is
+candidate evidence, not correctness, desirability, or authority.</li>
+<li><strong>Layer-declared forgetting:</strong> every forgetting claim
+names the affected layer and the influence it does and does not
+remove.</li>
+<li><strong>Target/history separation:</strong> refusal may preserve the
+target while extending governance history.</li>
+<li><strong>Scope-preserving adaptation:</strong> adapters and routers
+remain jurisdiction-bound under composition, ordering, and
+fallback.</li>
+<li><strong>Current-head discipline:</strong> active sources and
+warrants are resolved through declared current-head rules rather than
+model fluency.</li>
+<li><strong>Rollback and contestability:</strong> promotion carries a
+recovery route, contest surface, and temporal review condition.</li>
+<li><strong>Safety and rights before optimization:</strong>
+non-tradeable constraints are not displaced by utility or
+cost-of-closure scoring.</li>
+<li><strong>Public commitment sufficiency:</strong> training may use
+public commitments and receipted actions without requiring hidden
+reasoning traces.</li>
+<li><strong>Provenance preservation:</strong> source, model, adapter,
+dataset, evaluator, policy, and predecessor identities remain
+reconstructable to the declared claim boundary.</li>
+<li><strong>Crystallization remains revocable:</strong> admitted
+substrate is not oracle truth and remains exposed to rot tests and
+decrystallization.</li>
+</ol>
+<p>Every update should be located along at least these dimensions:
+target layer; temporal horizon; semantic object; authority and
+jurisdiction; privacy and consent; evidence status; reversibility; blast
+radius; dependency composition; deployment standing; and cost of
+closure. These dimensions are orthogonal enough that a single
+temperature label cannot replace them.</p>
+<h2 id="governed-semantic-trajectories">6. Governed Semantic
+Trajectories</h2>
+<p>The training unit should be richer than prompt-response pairs. A
+trajectory may bind the request, active profile, retrieval, source
+qualification, declared commitments, GSOL operation, decision, refusal
+or gap, tool effect, evidence, human contest, receipt, and later
+revision.</p>
+<p>The training target is not stylistic imitation of receipts. It is
+competent participation:</p>
+<ul>
+<li>retrieve active rather than stale material;</li>
+<li>use deterministic closure when it exists;</li>
+<li>identify missing or defective closure;</li>
+<li>preserve claims and nonclaims;</li>
+<li>refuse or escalate under missing authority or evidence;</li>
+<li>challenge substrate without treating challenge as admission;</li>
+<li>propose candidate models, tests, and relations without granting them
+standing; and</li>
+<li>disclose projection loss when semantic objects become prose.</li>
+</ul>
+<p>Trace eligibility must be checked before mining as well as before
+training. Privacy, consent, jurisdiction, retention, source authority,
+sensitive content, and synthetic origin are admission conditions.
+Permissive candidate detection cannot mean indiscriminate
+collection.</p>
+<h2 id="crystallization-without-an-oracle">7. Crystallization Without an
+Oracle</h2>
+<p>The phrase <strong>crystallization oracle problem</strong> names an
+epistemic and governance difficulty. This revision does not claim a
+formal undecidability theorem. No recurrence statistic, model, reviewer,
+benchmark, or committee can be presumed infallible or
+self-authorizing.</p>
+<p>A bounded workflow is:</p>
+<ol type="1">
+<li>admit eligible traces for the declared mining purpose;</li>
+<li>detect recurring maneuvers across sufficiently diverse
+contexts;</li>
+<li>extract a candidate with roles, relations, invariants, refusals,
+nonclaims, tests, and authority needs;</li>
+<li>compare the candidate against existing GSM and system identities to
+avoid restatement;</li>
+<li>validate positive, negative, adversarial, projection, lineage, and
+rot cases;</li>
+<li>measure usefulness and cost without trading away mandatory
+constraints;</li>
+<li>obtain an authorized ADMIT, REFUSE, QUARANTINE, or GAP
+decision;</li>
+<li>bind the decision and its claim ceiling in a receipt; and</li>
+<li>monitor the admitted object for decrystallization.</li>
+</ol>
+<p>Crystallization must distinguish schema, algorithm, service
+realization, assurance claim, and foundational primitive. A new name is
+not evidence of a new identity. A repeated model maneuver may be a
+useful profile of existing machinery rather than a new system.</p>
+<h2 id="forgetting-and-unlearning">8. Forgetting and Unlearning</h2>
+<p>Forgetting is a family of operations, not a binary model
+property.</p>
+<ul>
+<li><strong>Substrate retirement</strong> stops an object from being
+active while preserving permitted historical lineage.</li>
+<li><strong>Adapter or router rollback</strong> removes bounded behavior
+or routing policy.</li>
+<li><strong>Training-lineage removal</strong> identifies affected
+shards, synthetic descendants, adapters, evaluations, and
+checkpoints.</li>
+<li><strong>Behavioral correction</strong> reduces an unwanted response
+pattern without claiming erasure of a specific datum.</li>
+<li><strong>Parameter unlearning</strong> attempts to reduce a datum’s
+influence in weights and requires its own definition and
+verification.</li>
+<li><strong>Standing demotion</strong> removes deployment authority even
+when the artifact remains available for study.</li>
+</ul>
+<p>No operation may be called unlearning merely because a document
+disappeared from retrieval. The claim must state what access, influence,
+behavior, artifact, or authority was removed; what test supports the
+claim; and what residual pathways remain.</p>
+<h2 id="receipts-evidence-and-promotion">9. Receipts, Evidence, and
+Promotion</h2>
+<p>GCTR depends on Reasoning by Way of Receipts, but must retain a
+strict boundary:</p>
+<pre class="text"><code>receipt existence != correct gate participation
+gate participation != sufficient evidence
+evaluation success != deployment authority
+promotion != permanent truth</code></pre>
+<p>For a training or crystallization event, a receipt should bind at
+least the proposal identity, predecessor identity, target and scope,
+active warrant and policy, input/data manifest, model and adapter
+identity, evaluator and criteria, result kind, observed effects,
+evidence references, claim boundary, successor identity, and rollback
+route.</p>
+<p>A Three-Hash-style custody profile may bind predecessor, governed
+work order or candidate, and successor/result. It is useful for
+reconstruction but does not establish semantic correctness without
+appropriate verification. Independent checks, causal ablations, held-out
+tests, adversarial cases, and human or institutional review remain
+separate proof obligations.</p>
+<p>Promotion is therefore its own operation. Training completion, metric
+improvement, or receipt production does not automatically promote a
+checkpoint, adapter, router, dataset, or GSM.</p>
+<h2 id="evaluation-and-causal-claims">10. Evaluation and Causal
+Claims</h2>
+<p>The source’s evaluation suite is retained and strengthened by four
+obligations.</p>
+<p>First, <strong>matched baselines</strong> must compare GCTR with
+simpler retrieval, ordinary fine-tuning, adapter-only, policy-only, and
+no-change controls where applicable.</p>
+<p>Second, <strong>ablation</strong> must separate gains caused by the
+model update from gains caused by substrate, routing, evaluator, prompt,
+dataset, or policy changes.</p>
+<p>Third, <strong>negative capability tests</strong> must measure not
+only task success but refusal correctness, evidence boundaries,
+current-head use, privacy, scope leakage, substrate challenge,
+decrystallization, and recovery.</p>
+<p>Fourth, <strong>cost and latency</strong> must include curation,
+review, storage, verification, contest, rollback, and long-run rot
+maintenance. Cost-of-closure can guide preference among admissible
+options; it cannot override mandatory authority, privacy, safety, or
+rights constraints.</p>
+<p>The evidence ladder should proceed from specification review,
+deterministic schema checks, trace replay, offline evaluation,
+adversarial and privacy testing, bounded shadow operation, reversible
+pilot, and independent reproduction. Each stage grants only its declared
+standing.</p>
+<h2 id="corpus-integration-and-universal-gsm">11. Corpus Integration and
+Universal GSM</h2>
+<p>GCTR is an integrative bridge rather than a replacement for its
+dependencies:</p>
+<ul>
+<li><strong>Governed Training Regimes</strong> supplies admissible
+optimizer, update, and promotion transitions.</li>
+<li><strong>Hybrid Semantic Compiler Architectures</strong> supplies the
+fuzzy-frontier and deterministic-substrate division of labor.</li>
+<li><strong>GSOL</strong> supplies typed operation, refusal, effect,
+receipt, standing, and lowering surfaces.</li>
+<li><strong>Constitutional Intelligence</strong> supplies the broader
+criterion of preserving admissible continuation.</li>
+<li><strong>Reasoning by Way of Receipts</strong> supplies durable
+transition and justification structures, subject to the proof boundary
+above.</li>
+<li><strong>The Ableman Format Specification</strong> supplies
+separation among specification, configuration, instance choice,
+realization, evidence, and revision.</li>
+</ul>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the <code>CCF -&gt; CMB -&gt; GMB</code> lineage. GMB can carry model
+identities, datasets, warrants, GSMs, receipts, evaluations,
+dependencies, and standings; indexing them does not make them valid or
+active. The universal GSM represents their roles and typed relations
+without collapsing a paper, concept, system, implementation, or evidence
+record into one identity.</p>
+<p>Key adjacencies are: GCTR extends GTR; GCTR configures HSC
+participant evolution; GSOL represents its governed operations; GMB
+carries its semantic and evidentiary objects; receipts bind its
+transitions; SMT tests continuity across transformations; and
+decrystallization connects revision back to frontier exploration. These
+are typed interfaces, not automatic identity mergers.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate update targets, training
+architectures, forgetting mechanisms, routing schemes, and
+crystallization processes.</li>
+<li><strong>Specification:</strong> define primitives, invariants,
+authorities, interfaces, refusal modes, evidence, privacy, and
+standing.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> retain regimes that
+meet mandatory authority, safety, privacy, lineage, rollback, and
+verification constraints.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer among
+admissible regimes by effectiveness, inspectability, reversibility,
+cost, latency, sovereignty, and maintainability.</li>
+<li><strong>IC:</strong> select an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for a
+particular model, domain, jurisdiction, dataset, and deployment surface.
+The names are interchangeable.</li>
+<li><strong>IR:</strong> construct an <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong> of
+that selected regime. The names are interchangeable.</li>
+<li><strong>Evidence:</strong> retain evaluation packs, failures,
+contests, receipts, ablations, privacy tests, and reproduction
+results.</li>
+<li><strong>Revision:</strong> update or decrystallize the regime while
+preserving lineage and prior standing.</li>
+</ul>
+<p>This paper occupies Specification and offers early CM1/CM2 criteria.
+Its operation sketches and prototype are design candidates, not an IC,
+IR, deployed training system, or implementation authorization.</p>
+<h2 id="minimal-realization-candidate">13. Minimal Realization
+Candidate</h2>
+<p>A first reversible realization should avoid base-model training. It
+can instrument one bounded agent workflow with:</p>
+<ol type="1">
+<li>an exact model/adapter/router registry;</li>
+<li>a small GMB and GSM profile;</li>
+<li>GSOL-shaped update, refusal, gap, and promotion records;</li>
+<li>current-head and source qualification rules;</li>
+<li>trace eligibility and privacy gates;</li>
+<li>a frozen evaluation and adversarial suite;</li>
+<li>a human review queue;</li>
+<li>candidate-pattern mining over admitted public trajectories;</li>
+<li>quarantine-only candidate GSM output; and</li>
+<li>replay, rollback, and rot-test support.</li>
+</ol>
+<p>The prototype succeeds only if it produces inspectable differences
+from a simpler logged workflow and survives countertests. It should not
+admit GSMs or change model parameters by default.</p>
+<h2 id="governed-learning-and-retirement-lifecycle">Governed Learning
+and Retirement Lifecycle</h2>
+<p>Across the completed P1 corpus, Governed Continual Training Regimes
+is the <strong>governed learning, promotion, retirement, and
+decrystallization lifecycle for a layered intelligence system</strong>.
+It decides which observed regularities may become retrieval objects,
+adapters, routing policies, evaluation fixtures, parameter updates, or
+retired artifacts while preserving authority, provenance,
+counterevidence, and reversible standing. It is not a command to put
+current knowledge in weights and not a claim that crystallization can be
+automated without judgment.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Epistemology
+Under Adversarial Semantic Pressure</em><br />
+<strong>Supplies:</strong> Claim, source, standing, uncertainty, and
+adversarial-pressure discipline.<br />
+<strong>GCTR boundary:</strong> GCTR applies that discipline to learning
+and retirement transitions.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em><br />
+<strong>Supplies:</strong> Exact predecessors, successors, branches,
+projections, and reconstructability.<br />
+<strong>GCTR boundary:</strong> GCTR governs which learning artifact
+receives active standing and why.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed observations whose competence and scope
+remain explicit.<br />
+<strong>GCTR boundary:</strong> Witnesses can support an update without
+becoming self-authorizing labels.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Durable proposal, gate, effect, evidence, and
+revision records.<br />
+<strong>GCTR boundary:</strong> Receipts reconstruct a transition but do
+not validate the learned object.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Preservation, remainder, refusal, and
+evidence across transformations.<br />
+<strong>GCTR boundary:</strong> GCTR treats training, adapter
+construction, routing, and retirement as governed
+transformations.</p></li>
+</ul>
+<p>A learning transition should be represented as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+L= (&amp;observation, eligibility, target, method, authority, \\
+&amp;privacy, predecessor, change, evaluation, decision, \\
+&amp;effect, successor, residual, rollback, monitoring)
+\end{aligned}.
+$$</span></p>
+<p>The target is part of the claim. Retrieval deletion, router rollback,
+adapter retirement, dataset removal, behavioral suppression, parameter
+unlearning, and standing demotion are different effects and require
+different tests. Likewise, a recurring maneuver may justify a search aid
+or evaluation case without justifying a new primitive, model update, or
+active GSM object.</p>
+<p>The lifecycle should use a two-boundary promotion rule. First, the
+candidate must survive content evaluation against current corpus
+identity, negative cases, held-out conditions, privacy, and simpler
+baselines. Second, an authorized promotion act must specify where the
+object becomes active, for whom, under which dependencies, and with
+which rollback. Passing the first boundary does not silently cross the
+second.</p>
+<p>The universal GSM can type<br />
+<code>OBSERVES_LEARNING_SIGNAL</code>,
+<code>PROPOSES_CRYSTALLIZATION</code>,<br />
+<code>TARGETS_RETRIEVAL_LAYER</code>,
+<code>TARGETS_ADAPTER_LAYER</code>,
+<code>TARGETS_PARAMETER_LAYER</code>,<br />
+<code>CHALLENGES_EXISTING_IDENTITY</code>,
+<code>PROMOTES_UNDER_AUTHORITY</code>,
+<code>DEMOTES_STANDING</code>,<br />
+<code>ATTEMPTS_PARAMETER_UNLEARNING</code>,
+<code>RETAINS_RESIDUAL_INFLUENCE</code>,<br />
+and<br />
+<code>DECRYSTALLIZES_AFTER_COUNTEREVIDENCE</code>. This gives every
+learning and forgetting claim a specific object and effect.</p>
+<p>This integration establishes four editorial commitments: retain GCTR
+as the governed learning-and-retirement lifecycle; adopt the complete
+learning-transition envelope; require separate content-evaluation and
+authorized-promotion boundaries; and require target-specific evidence
+for retrieval removal, routing rollback, adapter retirement, parameter
+unlearning, and standing demotion.</p>
+<h2
+id="enforcement-compatible-learning-with-protected-counterevidence-and-exact-artifact-lineage">Enforcement-Compatible
+Learning with Protected Counterevidence and Exact Artifact Lineage</h2>
+<p>The fixed-seed comparison with the Integrity Enforcement Layer, the
+Suppression Paradox, the hydroengineering/geologic profile, and governed
+project-state lineage strengthens GCTR as a lifecycle for changing
+active intelligence without allowing the learning process to rewrite its
+own limits:</p>
+<p><span class="math display">$$
+\begin{aligned}
+L^*= (&amp;observation, eligibility, target, method, authority, \\
+&amp;protected\_counterevidence, predecessor, change, \\
+&amp;evaluation, promotion, enforcement\_compatibility, \\
+&amp;successor, rollback, retirement, residual)
+\end{aligned}.
+$$</span></p>
+<p>IEL supplies a boundary at which a learned router, adapter, retrieval
+object, policy candidate, or parameter change may affect action. A
+training result cannot alter an IEL verifier, refusal rule, or authority
+boundary merely by improving an evaluation score. Material changes
+require a separately admitted Instance Constitution or Instance
+Configuration and a separately qualified Instance Realization or
+Implementation Realization.</p>
+<p>The Suppression Paradox requires protected negative evidence,
+refusals, and affected-party constraints to remain available through
+authorized representations even when the underlying payload is not
+eligible for general training. Deletion from a training set does not
+prove removal from parameters, caches, derived datasets, adapters, or
+downstream decisions.</p>
+<p>Governed project-state lineage binds exact dataset, model, adapter,
+evaluator, configuration, and receipt predecessors to each successor and
+rollback. The hydroengineering/geologic profile is a bounded
+physical-domain stress case: monitoring can propose a model revision,
+but site evidence, professional judgment, community or tribal
+governance, permits, and do-not-use constraints cannot be replaced by
+continual-learning confidence.</p>
+<p>The universal GSM can type<br />
+<code>PROPOSES_LEARNING_SUCCESSOR</code>,<br />
+<code>PRESERVES_PROTECTED_COUNTEREVIDENCE</code>,
+<code>REQUIRES_IEL_REQUALIFICATION</code>,<br />
+<code>DESCENDS_FROM_EXACT_LEARNING_ARTIFACT</code>,
+<code>RETIRES_WITH_RESIDUAL</code>,<br />
+<code>LEARNS_FROM_PHYSICAL_MONITORING</code>, and<br />
+<code>TRANSFERS_NO_SITE_AUTHORITY</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the enforcement-compatible learning envelope; protect counterevidence
+and refusal history from training erasure; bind every learned successor
+to exact project-state lineage; and use physical monitoring as a bounded
+domain stress profile without transferring site authority or
+evidence.</p>
+<h2 id="an-under-promoted-governed-learning-interface">An Under-Promoted
+Governed Learning Interface</h2>
+<p>No material downstream dependency on Governed Continual Training
+Regimes was found in the complete frozen P3 field under its title,
+acronym, or specific continual-training language. That absence is a
+result: the paper is internally integrated but not yet serving as an
+explicit corpus interface. Its standing should not be inflated by
+generic references to learning, memory, or revision.</p>
+<p>The future interface can nevertheless be made precise without
+claiming use:</p>
+<p><span class="math display">$$
+\begin{aligned}
+L^*= (&amp;subject\_generation, candidate, data, objective, \\
+&amp;authority, target\_layer, admission, tests, \\
+&amp;counterevidence, canary, promotion, rollback, retirement, \\
+&amp;unlearning, residual\_influence, receipts, standing, \\
+&amp;successor)
+\end{aligned}.
+$$</span></p>
+<p><code>target_layer</code> distinguishes weights, retrieval indexes,
+GMB entries, context capsules, rules, tools, and runtime configuration.
+A change in one layer must not be described as training another.
+Promotion requires exact predecessor and candidate identity, data and
+objective custody, authority, evaluation, protected negative cases,
+effect observations, and a recovery path. Retirement or deletion must
+distinguish removal from continuing behavioral influence.</p>
+<p>The absence of downstream use suggests a concrete authorial choice:
+either promote this lifecycle as the learning and retirement interface
+for later papers, compress it into GKL/context/governance work, or
+retain it as a standalone research proposal awaiting an empirical
+program. None of those choices is made by this pass.</p>
+<p>The universal GSM can type<br />
+<code>PROPOSES_LEARNING_TRANSITION</code>,
+<code>TARGETS_LEARNING_LAYER</code>,<br />
+<code>TESTS_PROTECTED_COUNTEREVIDENCE</code>,
+<code>PROMOTES_MODEL_GENERATION</code>,<br />
+<code>RETIRES_WITH_RESIDUAL_INFLUENCE</code>,
+<code>ROLLS_BACK_LEARNING_STATE</code>,<br />
+and<br />
+<code>HAS_NO_CONFIRMED_DOWNSTREAM_DEPENDENCY</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the typed learning-transition envelope; separate
+weights, retrieval, GMB, context, rules, tools, and configuration; make
+residual influence first-class; and decide whether the paper becomes a
+promoted corpus interface, a compressed profile, or an independent
+experimental program.</p>
+<h2 id="counterevidence-and-failure-modes">14. Counterevidence and
+Failure Modes</h2>
+<p>GCTR must narrow or fail where: (1) current substrate is less
+accurate than the model; (2) retrieval latency or availability makes the
+route unusable; (3) routing introduces more failures than it prevents;
+(4) hot/warm/cool/cold labels hide overlapping changes; (5) a supposedly
+bounded adapter leaks scope; (6) adapter composition order changes
+behavior unexpectedly; (7) governance traces collect data without valid
+consent; (8) receipt production becomes governance theater; (9) receipts
+exist but the gate never evaluated predicates; (10) evaluator and
+candidate co-drift; (11) the same model generates and validates its own
+training material without independent challenge; (12) recurrence
+reflects prompt convention, bias, or institutional pressure; (13) useful
+productive ambiguity is crystallized away; (14) decrystallization is
+politically or operationally blocked; (15) forgetting removes retrieval
+but not parameter influence; (16) an unlearning claim lacks a
+layer-specific definition; (17) removal breaks lawful historical or
+audit obligations; (18) consolidation improves task metrics while
+degrading refusal or evidence discipline; (19) safety or rights
+constraints are traded away as closure cost; (20) stale warrants remain
+cached; (21) rollback cannot reconstruct the predecessor; (22) private
+reasoning is treated as required training data; (23) public commitments
+are insufficiently distinguished from hidden reasoning; (24) causal
+attribution fails because several layers changed together; (25) held-out
+or cross-jurisdiction behavior regresses; (26) external literature
+claims do not survive source verification; (27) the proposal restates
+existing HSC, GTR, GSOL, or GMB machinery under a new label; (28)
+governance overhead exceeds benefit for the bounded use case; (29) a
+stronger simple baseline matches outcomes; or (30) the framework cannot
+specify what evidence would promote, refuse, or decrystallize a
+candidate.</p>
+<h2 id="govern-the-learning-lifecycle-not-just-the-checkpoint">Govern
+the Learning Lifecycle, Not Just the Checkpoint</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Governed Continual Training Regimes asks how a model can learn, be
+evaluated, promoted, rolled back, retired, or decrystallized under
+explicit authority and evidence. The key contribution is lifecycle
+separation: changing parameters, changing operational standing, and
+claiming that influence was removed are different events.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>False-unlearning attack.</strong> A record says material was
+removed while residual influence remains. Deletion, exclusion from
+future training, parameter unlearning, behavioral suppression, and legal
+disposition are distinct claims.</li>
+<li><strong>Promotion-gaming attack.</strong> A candidate overfits the
+admission suite or exploits evaluator blind spots. Evaluation versions,
+holdouts, red-team surfaces, and unaudited remainder must be bound.</li>
+<li><strong>Evaluator-drift attack.</strong> The promotion standard
+changes across generations. Comparisons require linked policy epochs and
+explicit non-comparability where warranted.</li>
+<li><strong>Data-poisoning and provenance attack.</strong> Admitted data
+carries malicious, mislabeled, unauthorized, duplicated, or synthetic
+influence. Data identity, license, consent, standing, and transformation
+lineage remain separate.</li>
+<li><strong>Catastrophic-forgetting attack.</strong> New admissible
+behavior erases protected capability or safety constraints. Promotion
+requires regression and obligation-carriage evidence.</li>
+<li><strong>Rollback illusion.</strong> Restoring an earlier checkpoint
+does not restore external state, caches, downstream derivatives, user
+effects, or revoked secrets. Recovery must enumerate remainder.</li>
+<li><strong>Receipt-as-causality attack.</strong> A complete training
+receipt is treated as proof that a datum caused or did not cause an
+output. Causal claims require intervention or other justified
+methodology.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a governed learning and promotion architecture.
+It does not yet prove effective unlearning, reduced harm, improved
+robustness, lower cost, privacy protection, or causal attribution. Those
+claims require explicit datasets, baselines, metrics, interventions,
+environments, and independent evaluation.</p>
+<p>Internal corpus relations establish how learning governance composes
+with receipts, GMB state, artifact lineage, and admissibility. They do
+not supply empirical machine-learning evidence. No external research was
+added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public promise is that a model update should have the same
+inspectable questions as any other consequential change: who authorized
+it, what changed, what evidence justified promotion, what obligations
+survived, what can be reversed, and what remains in the world after
+rollback.</p>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>GCTR’s strongest contribution is not a new training algorithm. It is
+a constitutional decomposition of model evolution. World updates,
+participant learning, forgetting, and crystallization have different
+targets, authorities, evidence burdens, and failure modes. Treating all
+of them as “training” hides those differences.</p>
+<p>The framework remains provisional. It does not show that a particular
+model should be trained, that a candidate dataset is admissible, that
+machine unlearning succeeded, or that a crystallized GSM is correct. It
+provides the structure required to ask and receipt those questions
+without confusing proposal, execution, evidence, promotion, and
+standing.</p>
+<p>Train the scout. Govern the world. Receipt the change.</p>
+<h2 id="author-supplied-reference-note">Author-Supplied Reference
+Note</h2>
+<p>The source manuscript includes references concerning
+retrieval-augmented generation, low-rank adaptation, catastrophic
+forgetting, machine unlearning, ontology engineering, knowledge
+extraction, graph constraints, Constitutional Intelligence, GSOL, GTR,
+and HSC. These remain author-supplied references and descriptions. They
+were preserved by exact source custody and were not externally verified
+in this pass.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that governed Continual Training Regimes (GCTR) is
+a framework for changing models, adapters, routers, semantic substrate,
+and deployment standing without treating evolution as an ambient side
+effect of optimization. Its nearest external comparison fields are ai,
+provenance, semantic. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Formal vocabularies and
+graph links make commitments explicit but cannot by themselves establish
+correct identity, shared interpretation, or lossless translation between
+contexts. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Hybrid Semantic Compiler Architectures.</em> Zenodo,
+2026. doi:10.5281/zenodo.21228038</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847872">10.5281/zenodo.23847872</a></p>

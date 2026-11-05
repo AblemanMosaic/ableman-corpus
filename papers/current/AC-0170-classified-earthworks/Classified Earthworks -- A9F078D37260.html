@@ -1,0 +1,800 @@
+<h1 id="classified-earthworks">Classified Earthworks</h1>
+<h2
+id="a-governed-materials-intelligence-architecture-for-soil-recovery-hydroengineering-and-landscape-restoration">A
+Governed Materials-Intelligence Architecture for Soil Recovery,
+Hydroengineering, and Landscape Restoration</h2>
+<h3
+id="screening-and-separation-can-concentrate-hazards-and-create-wastewater-dust-emissions-or-residuals.">Screening
+and separation can concentrate hazards and create wastewater, dust,
+emissions, or residuals.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Classified Earthworks is a proposed field-scale architecture for
+turning heterogeneous soil, excavation spoil, sediments, mineral fines,
+and biomass into source-traceable material classes whose possible uses
+are bounded by sampling, testing, transformation, engineering review,
+and continuing evidence. It joins materials recovery to landscape water
+design and makes each excavation both a custody event and a potential
+observation of soil, geology, and hydrology.</p>
+<p>The system is not a claim that local material is safe, that firing
+preserves its chemistry, that infiltration is desirable at every site,
+or that a passport certifies performance. Source material can be
+heterogeneous, contaminated, unstable, saline, reactive, culturally
+sensitive, legally restricted, or unsuitable for reuse. Screening and
+separation can concentrate hazards and create wastewater, dust,
+emissions, or residuals. Hydrologic interventions can mobilize
+contamination, destabilize slopes, damage habitat, or affect downstream
+rights.</p>
+<p>This paper defines a batch and use-class contract, custody chain,
+decision outcomes, transformation boundaries, material passport, safety
+and professional-authority gates, data-governance model, pilot evidence
+ladder, and realization funnel. Its central contribution is a governed
+routing architecture: material is characterized and assigned only to
+uses supported by the evidence and jurisdiction of a declared project
+profile.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/classified-</code></p>
+<p><code>earthworks/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>3C9EAA862406B663ED627C1470B128304C0BF0975A8A26100E216EEA5F86D612</code>.
+The source remains unchanged.</p>
+<p>The platform concept, product lines, applications, passport, data
+tiers, pilot path, metrics, and vision are author material. Formal
+contracts, safety qualifications, corpus integrations, tests, and
+decisions are AI editorial or synthetic candidates until adopted. No
+material, site, product, treatment, threshold, or deployment is approved
+here.</p>
+<h2 id="the-materials-intelligence-thesis">1. The Materials-Intelligence
+Thesis</h2>
+<p>Earthwork projects commonly encounter material described only as
+dirt, fill, fines, mulch, sediment, or waste. These names conceal
+origin, composition, variability, contamination, geotechnical behavior,
+hydrologic effect, biological maturity, and legal status.</p>
+<p>Classified Earthworks proposes a disciplined alternative:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;source \\
+&amp;\rightarrow custody \\
+&amp;\rightarrow sample \\
+&amp;\rightarrow characterize \\
+&amp;\rightarrow classify \\
+&amp;\rightarrow transform? \\
+&amp;\rightarrow verify \\
+&amp;\rightarrow route \\
+&amp;\rightarrow monitor
+\end{aligned}.
+$$</span></p>
+<p>The question is not how to reuse everything. It is which use,
+treatment, isolation, disposal, or non-use outcome is justified for each
+bounded batch.</p>
+<h2 id="batch-and-use-class-contract">2. Batch and Use-Class
+Contract</h2>
+<p>Represent a batch as:</p>
+<p><span
+class="math display"><em>B</em> = (<em>i</em><em>d</em>, <em>S</em>, <em>C</em>, <em>H</em>, <em>T</em>, <em>U</em>, <em>R</em>, <em>W</em>),</span></p>
+<p>where <span class="math inline"><em>i</em><em>d</em></span> is batch
+and lineage identity, <span class="math inline"><em>S</em></span> source
+and custody, <span class="math inline"><em>C</em></span> measured
+composition, <span class="math inline"><em>H</em></span> heterogeneity
+and uncertainty, <span class="math inline"><em>T</em></span> tests and
+methods, <span class="math inline"><em>U</em></span> candidate uses and
+prohibitions, <span class="math inline"><em>R</em></span> regulatory and
+professional-review status, and <span
+class="math inline"><em>W</em></span> observations, witnesses, and
+monitoring.</p>
+<p>A proposed use <span class="math inline"><em>u</em></span> is
+admissible only under a project profile <span
+class="math inline"><em>p</em></span> and current evidence <span
+class="math inline"><em>e</em></span>:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Admit(B,u,p,e)\in\{&amp;APPROVE, CONDITIONAL, HOLD, RETEST, REPROCESS,
+ISOLATE, \\
+&amp;DISPOSE, NOT\_COVERED\}
+\end{aligned}.
+$$</span></p>
+<p><code>APPROVE</code> means approved only within the specified
+profile, quantity, placement, epoch, and maintenance conditions. A
+material passport records the decision; it does not create the authority
+or evidence behind it.</p>
+<h2 id="classification-is-sampling-bound">3. Classification Is
+Sampling-Bound</h2>
+<p>Mixed earth and biomass are spatially and temporally heterogeneous. A
+sample result applies only under its sampling design, custody,
+laboratory method, detection limits, batch definition, and uncertainty.
+One clean aliquot cannot certify a pile.</p>
+<p>The program should define segregation before sampling, representative
+and targeted sampling, duplicate and blank strategy where appropriate,
+hold times, chain of custody, laboratory competence, resampling
+triggers, and how material movement invalidates or subdivides a
+batch.</p>
+<p>Unknown or suspect material remains segregated. Absence of a detected
+contaminant is not proof of universal cleanliness.</p>
+<h2 id="routing-architecture">4. Routing Architecture</h2>
+<p>Inputs may include topsoil, subsoil, excavation spoil, bedrock
+grindings, storm sediment, rocks, gravel, green waste, forestry
+residues, compost or mulch fines, and imported amendments. Their
+candidate routes include direct reuse, blending, physical separation,
+biological treatment, thermal transformation, structural evaluation,
+controlled isolation, remediation, or regulated disposal.</p>
+<p>Routing must preserve mass balance. The process cannot count only
+desirable products while ignoring wash water, sludge, dust, oversize,
+ash, rejected biomass, emissions, concentrated contaminants, or energy
+and water consumption.</p>
+<p>Every output becomes a new batch with parent lineage and new test
+requirements.</p>
+<h2 id="fines-value-and-hazard">5. Fines: Value and Hazard</h2>
+<p>Fine particles can provide mineral surfaces, water retention,
+nutrient interaction, or feedstock value. They can also seal pores, clog
+drainage, mobilize contaminants, create dust, shrink or swell, and alter
+structural behavior.</p>
+<p>The source principle “Keep the chemistry. Change the geometry” is too
+strong for transformation. Firing can change mineral phases, porosity,
+leachability, volume, and emissions. Composting, pyrolysis, pelletizing,
+washing, and inoculation can also change chemistry and biology.</p>
+<p>A safer design principle is:</p>
+<blockquote>
+<p>Preserve recoverable function where testing supports it; govern every
+change in chemistry, biology, and geometry.</p>
+</blockquote>
+<h2 id="candidate-product-lines">6. Candidate Product Lines</h2>
+<h3 id="fired-mineral-granules">6.1 Fired Mineral Granules</h3>
+<p>Mineral fines may be evaluated as feedstock for porous or graded
+aggregate. Suitability depends on mineralogy, contaminants, firing
+regime, energy, emissions, dust, expansion or shrinkage, strength,
+abrasion, leaching, freeze-thaw behavior, and field compatibility. The
+source’s claimed drainage, buffering, or root-zone benefits remain
+hypotheses until tested against conventional media.</p>
+<h3 id="organic-pellets-and-compost-products">6.2 Organic Pellets and
+Compost Products</h3>
+<p>Organic fractions require source control and tests appropriate to
+maturity, pathogens, contaminants, salinity, nutrients, phytotoxicity,
+decomposition, odor, vectors, oxygen demand, and storage. Pellet shape
+does not make an unsafe or unstable feedstock suitable.</p>
+<h3 id="biochar-and-blends">6.3 Biochar and Blends</h3>
+<p>Biochar performance depends on feedstock, process conditions,
+contaminants, particle size, charging, soil, climate, and use. Claims
+about carbon permanence, filtration, drought resilience, or microbial
+benefit require bounded evidence. Pyrolysis also creates process hazards
+and co-products that must remain inside the mass and emissions
+balance.</p>
+<h3 id="mineral-fill-and-drainage-media">6.4 Mineral Fill and Drainage
+Media</h3>
+<p>Structural, slope, retaining, road, drainage, and infiltration uses
+require project-specific geotechnical and civil engineering.
+Organic-rich or degradable material is excluded unless the design and
+evidence explicitly allow it. Classification does not replace compaction
+control, stability analysis, hydraulic design, or inspection.</p>
+<h2 id="hydroengineering-boundaries">7. Hydroengineering Boundaries</h2>
+<p>Landscape water design seeks to slow, route, store, infiltrate,
+reuse, or safely overflow water. Those objectives can conflict.
+Infiltration may be harmful where contamination, unstable slopes,
+expansive soils, high groundwater, vulnerable aquifers, buried
+infrastructure, cultural resources, or downstream impacts are
+present.</p>
+<p>A project should declare water sources, design storms and exceedance,
+inflow quality, pretreatment, hydraulic loading, overflow and
+safe-failure paths, inspection, maintenance, drought and fire behavior,
+monitoring, and responsible authority.</p>
+<p>No terrace, swale, basin, recharge gallery, drain, or subsurface work
+is authorized by the conceptual example in this paper.</p>
+<h2 id="geologic-intelligence-without-extraction">8. Geologic
+Intelligence Without Extraction</h2>
+<p>Excavation can yield useful observations of horizons, parent
+material, moisture, particle distribution, plasticity, density,
+mineralogy, groundwater, and contamination. A data event should bind
+observation method, spatial precision, uncertainty, access, ownership or
+stewardship, and permitted use.</p>
+<p>More data is not automatically beneficial. Parcel-level findings can
+create health, liability, land-value, mineral, groundwater, sovereignty,
+ecological, archaeological, or security consequences. Sampling plans
+must address notice, consent where applicable, Indigenous and tribal
+governance, cultural-resource procedures, public-health escalation,
+retention, correction, and deletion or restriction where law
+permits.</p>
+<p>The system should read earth without claiming an unrestricted right
+to extract data from land or communities.</p>
+<h2 id="material-passport">9. Material Passport</h2>
+<p>A passport should include:</p>
+<ul>
+<li>batch, parent, source, custody, mass or volume, and segregation
+history;</li>
+<li>sampling plan, laboratory, methods, dates, detection limits,
+results, and uncertainty;</li>
+<li>transformations, additives, process parameters, emissions or
+residual disposition;</li>
+<li>use classes, prohibited uses, spatial and temporal limits, and
+expiry or retest triggers;</li>
+<li>regulatory and professional reviews;</li>
+<li>placement location and responsible custodian;</li>
+<li>monitoring, maintenance, observed performance, incidents, and
+revisions; and</li>
+<li>access class, community or data obligations, and audit history.</li>
+</ul>
+<p>Passport identity is not certification. A use claim is bounded by its
+evidence and may be suspended when lineage breaks, conditions change, or
+monitoring fails.</p>
+<h2 id="custody-witness-and-governed-meaning">10. Custody, Witness, and
+Governed Meaning</h2>
+<p><strong>A Formal Theory of Work Custody</strong> supplies a useful
+separation between work identity, custodian, transfer, and completion.
+Here, every batch and sample requires an attributable custodian across
+intake, segregation, laboratory transfer, transformation, storage,
+transport, placement, and monitoring.</p>
+<p><strong>Governance Witnesses</strong> clarifies that a receipt
+records an observation under a regime; it does not prove the full
+material claim. Laboratory results, scale records, process logs,
+photographs, placement inspections, sensors, and community reports have
+different scopes.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> can retain exact
+methods, batches, passports, use-class definitions, evidence, disputes,
+and revision lineage. The universal <strong>GSM</strong> can type
+source-of, sampled-by, transformed-into, tested-under, approved-for,
+prohibited-for, placed-at, monitored-by, and supersedes relations
+without turning an edge into safety.</p>
+<h2 id="corpus-role">11. Corpus Role</h2>
+<p><strong>Classified Earthworks</strong> is the materials-intelligence
+and routing platform. <strong>Hydroengineering and Geologic Intelligence
+Modules</strong> is the broader companion for landscape sensing, design,
+and modular system architecture. Work Custody governs batch
+responsibility; Governance Witnesses governs observation claims.</p>
+<p>The interface is strong, but the works should remain
+identity-distinct. The applied domain does not create general authority
+for AMCS infrastructure, and the semantic architecture does not certify
+environmental practice.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate direct reuse, separation,
+transformation, isolation, disposal, centralized, mobile, and no-action
+alternatives.</li>
+<li><strong>Specification:</strong> define batches, sampling, tests, use
+classes, custody, safety, data rights, decisions, and evidence.</li>
+<li><strong>CM1:</strong> retain technically, legally, environmentally,
+and socially admissible configurations, including conservative
+disposal.</li>
+<li><strong>CM2:</strong> prefer configurations by safety, performance,
+reversibility, lifecycle impacts, local value, cost, and community
+acceptability.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for one site, jurisdiction, material stream, and
+responsible team.</li>
+<li><strong>IR:</strong> produce an Instance Realization or
+Implementation Realization of facilities, procedures, equipment, data
+systems, and monitoring.</li>
+<li><strong>Evidence:</strong> validate each product, site, operation,
+claim, and failure response.</li>
+<li><strong>Revision:</strong> update classifications, passports,
+configurations, and realizations from field evidence.</li>
+</ul>
+<p>This paper reaches Specification and sketches CM1/CM2. It does not
+select an IC, produce an IR, or authorize a pilot. Realization-stage IR
+remains distinct from Intermediate Representation in MCIR and related
+compiler contexts.</p>
+<h2 id="pilot-evidence-ladder">13. Pilot Evidence Ladder</h2>
+<p>Before field deployment, an authorized program would need sequential
+gates:</p>
+<ol type="1">
+<li>desk review of jurisdiction, standards, hazards, rights, and
+alternatives;</li>
+<li>bounded feedstock and sampling study;</li>
+<li>laboratory characterization and transformation trials;</li>
+<li>mass, water, energy, emissions, and residual balance;</li>
+<li>product-specific bench tests and comparator controls;</li>
+<li>contained test cells with recovery and disposal plans;</li>
+<li>independently reviewed small field demonstration;</li>
+<li>monitored scaling with stop, quarantine, recall, and remediation
+capacity.</li>
+</ol>
+<p>Each gate can refuse continuation. Success in one feedstock, site, or
+use class does not transfer automatically.</p>
+<h2 id="evaluation-program">14. Evaluation Program</h2>
+<p>Measure sampling representativeness, classification error,
+contaminant capture, mass closure, water and energy demand, emissions,
+residuals, worker exposure, product variability, leaching, durability,
+hydraulic behavior, clogging, structural behavior, vegetation outcomes,
+ecological effects, maintenance, failure recovery, data-access
+compliance, community impacts, and lifecycle cost.</p>
+<p>Compare each proposed product and intervention with no-action,
+conventional disposal, conventional imported material, and simpler
+local-reuse alternatives. Report failures, rejected batches, and
+uncertain outcomes alongside reuse rate.</p>
+<h2 id="governed-material-routing-domain-architecture">Governed
+Material-Routing Domain Architecture</h2>
+<p>Across the completed P1 corpus, Classified Earthworks is the
+<strong>governed material-routing domain architecture for soil, spoil,
+sediment, mineral fines, biomass, transformed products, and
+site-specific use decisions</strong>. It applies general custody,
+witness, admissibility, and meaning-base machinery to material recovery
+without creating new safety authority or treating classification as
+certification.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Technical Brief: Classified
+Earthworks System</em><br />
+<strong>Supplies:</strong> Concise system and deployment framing.<br />
+<strong>Classified Earthworks boundary:</strong> The paper supplies the
+deeper material, evidence, safety, and refusal model.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Technical Brief:
+Hydroengineering and Geologic Intelligence Modules</em><br />
+<strong>Supplies:</strong> Landscape-water and geologic observation
+modules.<br />
+<strong>Classified Earthworks boundary:</strong> Those modules are
+adjacent applications, not proof that a batch or intervention is
+safe.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Custodian, transfer, acceptance, return, and
+terminal disposition.<br />
+<strong>Classified Earthworks boundary:</strong> Material and sample
+custody specialize the general work-custody protocol.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed observations, methods, environments,
+and claim ceilings.<br />
+<strong>Classified Earthworks boundary:</strong> Tests and monitoring
+become witnesses without certifying the whole batch.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Durable records of sampling, transformation,
+decision, placement, and revision.<br />
+<strong>Classified Earthworks boundary:</strong> Receipts preserve the
+route but do not create professional or regulatory authority.</p></li>
+</ul>
+<p>A routing decision should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R= (&amp;batch, lineage, sampling, tests, uncertainty, \\
+&amp;transformation, mass\_balance, use\_class, jurisdiction, \\
+&amp;authority, decision, placement, monitoring, residuals)
+\end{aligned}.
+$$</span></p>
+<p>Every transformation creates a successor batch and a new evidence
+burden. Sampling, laboratory results, engineering review, regulatory
+disposition, material passport, placement, and monitored performance are
+different postures. No one posture substitutes for the others.
+<code>ISOLATE</code>,<br />
+<code>DISPOSE</code>, <code>RETEST</code>,<br />
+and <code>NOT_COVERED</code> remain successful governed outcomes when
+reuse is not justified.</p>
+<p>The architecture should preserve the full mass, water, energy,
+emission, and residual balance. A high reuse rate that omits sludge,
+dust, wash water, concentrated contaminants, rejected biomass, or
+downstream harm is a routing failure. Site and community data also
+remain governed objects with access, retention, correction, and
+disclosure boundaries.</p>
+<p>The universal GSM can type <code>ORIGINATES_AS_BATCH</code>,
+<code>SAMPLED_UNDER_PLAN</code>, <code>TESTED_BY_METHOD</code>,<br />
+<code>TRANSFORMED_INTO_BATCH</code>, <code>RETAINS_MASS_BALANCE</code>,
+<code>CANDIDATE_FOR_USE_CLASS</code>,<br />
+<code>REFUSED_FOR_USE</code>, <code>PLACED_UNDER_AUTHORITY</code>,
+<code>MONITORED_FOR_PERFORMANCE</code>,<br />
+and<br />
+<code>LEAVES_MATERIAL_RESIDUAL</code>. These relations make the
+architecture inspectable without converting a semantic edge into
+environmental evidence.</p>
+<p>This integration establishes four editorial commitments: classify the
+work as a governed material-routing domain architecture; adopt the
+routing-decision envelope; require successor-batch and full-balance
+accounting; and preserve non-use, disposal, privacy, professional
+authority, and site-specific refusal as first-class outcomes.</p>
+<h2 id="decision-context-and-evidence-path-assurance">Decision Context
+and Evidence-Path Assurance</h2>
+<p>The fixed-seed comparison with Agentic Interface Surfaces, CCM,
+Project57, and <em>Testing for Deriving Observable State of Software
+Systems</em> adds one material contract and one explicit non-relation. A
+material-routing decision is only as bounded as both the active decision
+context and the evidence path supporting the batch claim.</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;batch, use\_proposal, context\_snapshot, evidence\_path, \\
+&amp;authority, decision, effect, monitoring, expiry, reopen)
+\end{aligned}.
+$$</span></p>
+<p>CCM supplies the task-relative context in which lineage, sampling,
+tests, jurisdiction, site conditions, and use criteria were selected.
+The observability profile tests whether laboratory, sensor, custody,
+derivation, display, and monitoring evidence actually reaches the
+decision under declared latency and independence. A current-looking
+dashboard cannot repair a missing sample plan, circular oracle,
+inaccessible raw record, or stale site condition.</p>
+<p>AIS may expose lawful routing steps, refusals, evidence gaps, and
+recovery to an operator or agent. Recognition of a completed workflow
+step remains distinct from professional review, regulatory permission,
+material safety, and observed post-placement performance.</p>
+<p>The randomized adjacency to Project57 produces<br />
+<code>NO_MATERIAL_RELATION</code>. Both works use protocols, controlled
+conditions, instruments, and receipts, but those abstractions are
+already supplied by general experimental and evidentiary machinery. The
+response-level meta-binding construct and the material-routing domain do
+not gain a direct semantic dependency merely from procedural
+resemblance.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_MATERIAL_DECISION_CONTEXT</code>,<br />
+<code>ASSURES_BATCH_EVIDENCE_PATH</code>,
+<code>EXPIRES_SITE_SPECIFIC_EVIDENCE</code>,<br />
+<code>REOPENS_AFTER_MONITORING_SIGNAL</code>,<br />
+<code>RECOGNIZES_ROUTING_STEP_WITHOUT_SAFETY_</code><br />
+<code>CERTIFICATION</code>,<br />
+and<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_PROJECT57_</code><br />
+<code>CONSTRUCT</code>.</p>
+<p>This randomized review adds three open editorial questions: adopt the
+decision-context/evidence-path contract; require evidence expiry and
+reopening rules for site-specific routing; and record Project57 as a
+reviewed no-material-relation adjacency rather than manufacturing a
+corpus link.</p>
+<h2 id="from-material-identity-to-site-effect-and-recall">From Material
+Identity to Site Effect and Recall</h2>
+<p>Five retained downstream uses show that Classified Earthworks is the
+parent material-routing architecture, not a generic metaphor. The
+reader-facing technical brief projects it. The hydroengineering and
+geologic-intelligence brief specializes it for site and water decisions.
+CCM binds the active decision context. AIS exposes lawful next steps
+without certifying them. Observable-state testing checks whether
+sampling, laboratory, custody, sensor, placement, and monitoring
+evidence reaches the decision. Other screened analogies, including
+Project57 and frozen-compiler comparisons, do not create material-domain
+dependencies.</p>
+<p>The complete material-to-site chain is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M= (&amp;parent\_batch, successor\_batch, sample, classifier, \\
+&amp;route, transformation, use\_proposal, site, context, \\
+&amp;professional\_review, regulatory\_standing, release, \\
+&amp;transport, placement, observed\_effect, monitoring, \\
+&amp;recall, remediation)
+\end{aligned}.
+$$</span></p>
+<p>Each posture has a separate ceiling. Laboratory classification does
+not establish engineering suitability. Suitability does not establish
+legal permission. Permission does not establish operational release.
+Release does not prove correct transport or placement. Placement does
+not prove performance. A material passport carries the chain and its
+restrictions; it is not any one of those decisions.</p>
+<p>Batch split, blend, transformation, movement, and storage create
+lineage events that may change representativeness or use validity. Site
+selection creates a new Instance Constitution or Instance Configuration
+whose evidence cannot be inferred from the feedstock alone. Monitoring
+must be able to reopen the release, locate affected successor batches
+and placements, quarantine remaining material, issue a recall, and bind
+remediation responsibility. A clean aggregate reuse percentage cannot
+close the program while residual mass, water, emissions, rejected
+fractions, or placed failures remain unresolved.</p>
+<p>The universal GSM can type<br />
+<code>SPLITS_MATERIAL_BATCH</code>,
+<code>BLENDS_WITH_NEW_EVIDENCE_BURDEN</code>,<br />
+<code>CLASSIFIES_WITHOUT_RELEASING</code>,
+<code>SELECTS_SITE_SPECIFIC_IC</code>,<br />
+<code>RELEASES_UNDER_DISTINCT_AUTHORITY</code>,
+<code>OBSERVES_PLACED_EFFECT</code>,
+<code>REOPENS_MATERIAL_DECISION</code>,<br />
+<code>RECALLS_SUCCESSOR_BATCH</code>, and<br />
+<code>RETAINS_REMEDIATION_CUSTODY</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the full material-to-site chain; separate
+classification, suitability, permission, release, placement, and
+performance; require lineage-aware reopening and recall; and preserve
+residual balance and remediation custody through terminal
+disposition.</p>
+<h2 id="counterevidence-and-failure-modes">15. Counterevidence and
+Failure Modes</h2>
+<p>The proposal should be narrowed or rejected where: (1) a sample is
+treated as a pile; (2) heterogeneity is omitted; (3) nondetection is
+called clean; (4) source custody breaks; (5) suspect material is mixed;
+(6) dilution masks contamination; (7) separation concentrates untracked
+hazards; (8) wash water or sludge is omitted; (9) dust or worker
+exposure is omitted; (10) firing is said to preserve chemistry; (11)
+firing changes leachability adversely; (12) energy or emissions exceed
+benefits; (13) granules abrade or fail; (14) organic products are
+immature or contaminated; (15) biochar claims fail for the feedstock;
+(16) structural use lacks engineering; (17) slope stability worsens;
+(18) infiltration mobilizes contamination; (19) groundwater or
+downstream rights are harmed; (20) overflow is undersized; (21) extreme
+events exceed safe failure; (22) basins clog; (23) salinity accumulates;
+(24) habitat or cultural resources are damaged; (25) passport is
+mistaken for certification; (26) batch lineage breaks; (27) monitoring
+is absent; (28) recall or remediation is impossible; (29) private data
+becomes public; (30) public-health findings are suppressed; (31) tribal
+or community governance is bypassed; (32) product claims lack
+comparators; (33) reuse percentage hides residuals; (34) lifecycle cost
+exceeds alternatives; (35) GMB inclusion becomes validation; (36) GSM
+relations imply safety; (37) corpus works are merged; (38) a
+specification is presented as implemented; (39) cited practitioners are
+treated as endorsers; or (40) external research, law, or standards
+contradict feasibility.</p>
+<h2
+id="classify-for-bounded-routing-including-isolation-and-non-use">Classify
+for Bounded Routing, Including Isolation and Non-Use</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Classified Earthworks is the domain architecture behind the
+reader-facing technical brief. It treats excavation and landscape
+material as exact batches whose source, custody, sampling, composition,
+heterogeneity, hazards, transformations, candidate uses, professional
+review, destinations, monitoring, and recall remain linked. Its
+objective is justified routing, not universal reuse.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Representative-sample attack.</strong> Limited samples erase
+spatial, depth, temporal, handling, moisture, and transformation
+heterogeneity.</li>
+<li><strong>Screening-concentration attack.</strong> Separation creates
+hazardous fines, dust, wash water, emissions, leachate, or concentrated
+contaminants omitted from useful-product accounting.</li>
+<li><strong>Treatment-cleanliness attack.</strong> Heat, composting,
+washing, blending, or biochar processing is assumed to destroy or
+immobilize every relevant hazard.</li>
+<li><strong>Use-class-transfer attack.</strong> Evidence for one batch,
+site, exposure route, engineering function, crop, or jurisdiction is
+reused elsewhere.</li>
+<li><strong>Infiltration-good attack.</strong> Water retention or
+infiltration is treated as beneficial despite contamination transport,
+slope, habitat, structure, groundwater, and downstream-right
+effects.</li>
+<li><strong>Passport-certification attack.</strong> A material passport
+is treated as legal release, professional approval, safety
+certification, or performance guarantee.</li>
+<li><strong>Recovery-pressure attack.</strong> Circularity and
+waste-reduction goals discourage isolation, disposal, refusal, or
+leaving culturally and ecologically sensitive material undisturbed.</li>
+<li><strong>Data-extraction attack.</strong> Excavation intelligence
+becomes a route to collect, commercialize, or disclose geological,
+cultural, property, ecological, or community knowledge without
+authority.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a governed materials-intelligence architecture,
+batch contract, routing outcomes, passport, pilot ladder, and evaluation
+program. It approves no material, threshold, test panel, transformation,
+product, site, intervention, or deployment. It does not establish
+safety, efficacy, structural performance, agronomic benefit,
+remediation, circularity, economics, regulatory compliance, or
+environmental improvement.</p>
+<p>Any physical work requires exact batch and site evidence, accredited
+methods where applicable, full residual and exposure accounting,
+qualified domain review, affected-community and Indigenous-data
+obligations, safe handling and failure plans, recall capability, and
+separate authority. No testing or implementation occurred in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The architecture should make the non-use outcomes as visible and
+legitimate as reuse: route, condition, pilot, defer, refuse, isolate,
+remediate, dispose, or leave undisturbed according to exact evidence and
+jurisdiction.</p>
+<h2 id="conclusion">17. Conclusion</h2>
+<p>Classified Earthworks offers a compelling integration: treat
+disturbed earth and biomass as heterogeneous materials requiring
+evidence, and treat each handling step as both a custody event and an
+opportunity to learn about land and water.</p>
+<p>Its value depends on disciplined refusal. Some batches should be
+isolated or disposed. Some sites should not infiltrate. Some data should
+not be public. Some transformations will not outperform conventional
+alternatives. A regenerative materials platform becomes credible when it
+can prove not only what material may become, but why a particular use is
+warranted, who bears responsibility, what remains unknown, and how the
+decision can be revised.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires authorized primary-source review of soil science,
+geotechnical and civil engineering, hydrology and hydrogeology,
+environmental chemistry and toxicology, contaminated materials and waste
+law, ceramics, composting, biochar and pyrolysis, lifecycle assessment,
+worker safety, ecological restoration, stormwater and recharge design,
+Indigenous and tribal data governance, cultural resources,
+material-passport standards, and the practitioners named in the
+source.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm1.</strong> Existing source passages use this stage only
+as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that classified Earthworks is a proposed
+field-scale architecture for turning heterogeneous soil, excavation
+spoil, sediments, mineral fines, and biomass into source-traceable
+material classes whose possible uses are bounded by sampling, testing,
+transformation, engineering review, and continuing evidence. Its nearest
+external comparison fields are earth, governance. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Material classes are
+sampling- and method-dependent; heterogeneous sites, contaminant
+transport, and regulatory thresholds can defeat a neat
+classification-to-action mapping. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. These limits are
+not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> U.S. Army Corps of Engineers. <em>Sediment
+Investigations</em>, Engineer Manual EM 1110-2-4000. 14 February 2025.
+<a
+href="https://www.publications.usace.army.mil/Portals/76/Publications/EngineerManuals/EM%201110-2-4000_FINAL_14Feb2025.pdf">publications.usace.army.mil
+source</a> <strong>Relationship:</strong> Primary engineering guidance
+for material characterization and classification; included to ground
+classification claims in field and laboratory practice.</p>
+<p><strong>[E2]</strong> U.S. Environmental Protection Agency.
+<em>Guidance for Cleaning Up Groundwater, Soil and Air at Hazardous
+Waste Cleanup Facilities</em>. <a
+href="https://www.epa.gov/hw/guidance-cleaning-groundwater-soil-and-air-hazardous-waste-cleanup-facilities">epa.gov
+source</a> <strong>Relationship:</strong> Primary remediation guidance
+emphasizing media transfer, exposure, and site-specific cleanup
+decisions.</p>
+<p><strong>[E3]</strong> Edward R. Griffor et al. <em>Framework for
+Cyber-Physical Systems: Volume 1, Overview</em>. NIST SP 1500-201, 2017.
+DOI: 10.6028/NIST.SP.1500-201. https://doi.org/10.6028/NIST.SP.1500-201
+<strong>Relationship:</strong> Adjacent cyber-physical systems framework
+for trustworthiness, timing, data, and lifecycle concerns.</p>
+<p><strong>[E4]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Technical Brief: Classified
+Earthworks System</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-F4D74EA1DCD91309</code>;<br />
+source SHA-256<br />
+<code>3DCF2DFF9430B987F1D4BD8785D9A6ABB6309037FFC65ADA46F58AFD606DFFD8</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Technical Brief:
+Hydroengineering and Geologic Intelligence Modules</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-066CA7D56F2416A8</code>;<br />
+source SHA-256<br />
+<code>396731CC5A67026E88FD6028CD6A553066F7F7C352FA8072CC44389EBB93E94A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Water: MCIR as the
+Engineering of Governed Change</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-91A910961BA1B5AF</code>;<br />
+source SHA-256<br />
+<code>1C0B814A76E0724FAD8ECC7A71DBBFC55B3C13E8ED03ED6F399496A70C2587CD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847484">10.5281/zenodo.23847484</a></p>

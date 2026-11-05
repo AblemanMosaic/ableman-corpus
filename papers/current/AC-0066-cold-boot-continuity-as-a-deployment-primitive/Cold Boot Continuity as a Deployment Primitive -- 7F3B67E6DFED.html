@@ -1,0 +1,1039 @@
+<h1 id="cold-boot-continuity-as-a-deployment-primitive">Cold Boot
+Continuity as a Deployment Primitive</h1>
+<h2
+id="verified-resumption-across-context-loss-agent-substitution-and-runtime-migration">Verified
+Resumption Across Context Loss, Agent Substitution, and Runtime
+Migration</h2>
+<h3
+id="a-successor-may-recover-the-work-without-pretending-to-remember-what-vanished-or-inherit-authority-it-was-never-granted.">A
+successor may recover the work without pretending to remember what
+vanished or inherit authority it was never granted.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Long-running agentic work commonly appears continuous only while one
+conversation, process, provider, or context window remains available.
+When that surface ends, summaries and prompts attempt to reconstruct
+what mattered. They may preserve narrative direction while losing exact
+artifacts, unresolved alternatives, authority boundaries, custody,
+external state, intermediate evidence, and the reasons a transition was
+admitted or refused.</p>
+<p>This paper proposes <strong>Cold Boot Continuity</strong> as a
+deployment primitive: the capacity for a newly instantiated runtime,
+beginning without the predecessor’s conversational memory, to recover
+enough verified semantic, artifact, task, custody, authority,
+environment, and evidence state to resume the same governed work under
+an explicit claim ceiling.</p>
+<p>Cold boot does not mean bit-identical internal cognition,
+deterministic continuation, or automatic authority transfer. A
+replacement model may reason differently, lack required capabilities,
+discover that the archive is stale, or legitimately refuse to continue.
+Continuity is instead preservation of identified obligations, exact
+heads, admissibility decisions, open alternatives, work custody,
+authority constraints, evidence debts, and revision lineage through a
+verified resumption protocol.</p>
+<p>The paper distinguishes bootability, orientability, resumability,
+semantic continuity, authority validity, and evidenced continuity. It
+specifies a context capsule as a bounded projection from the Governed
+Meaning Base (GMB), not as the whole corpus or an executable grant. It
+also defines failure modes, adversarial tests, the universal realization
+funnel, and integration with project lineage, receipted reasoning,
+context governance, and work custody.</p>
+<p>This is a conceptual architecture and verification program. The
+source names a JN reactor and a historical Constitutional
+Crystallization Framework (CCF); this revision applies the
+author-confirmed terminology lineage
+<code>CCF -&gt; CMB -&gt; GMB</code> while preserving JN reactor
+identity as an unresolved system candidate. No named implementation is
+certified by this paper.</p>
+<h2 id="impersistent-environments">1. Impersistent Environments</h2>
+<p>An <strong>impersistent environment</strong> supports useful working
+state during an active interaction but does not reliably preserve the
+state required to continue the same governed process across context
+truncation, restart, handoff, migration, or provider change.</p>
+<p>Impersistence is not the same as statelessness. A system may preserve
+chat history, files, embeddings, or server-side memory while still
+failing continuity because the retained material is incomplete,
+unauthoritative, unverified, or unavailable to the successor.
+Conversely, a system can lose the transcript yet resume safely if the
+governing state was externalized and verified.</p>
+<p>Common failures include:</p>
+<ul>
+<li>context-window truncation removes qualifications and unresolved
+alternatives;</li>
+<li>summaries preserve conclusions while discarding their evidence or
+claim ceilings;</li>
+<li>intermediate artifacts disappear or cannot be distinguished from
+accepted heads;</li>
+<li>external services change after the snapshot;</li>
+<li>credentials, capabilities, or legal authority expire or are
+revoked;</li>
+<li>a successor lacks the predecessor’s tools, dependencies, model
+capabilities, or environment;</li>
+<li>a handoff names the intended next step but not who holds custody or
+how results become visible;</li>
+<li>a saved archive contains stale instructions, prompt injection,
+secrets, or malicious artifacts.</li>
+</ul>
+<p>Continuity must therefore be treated as a property of a whole
+resumption relation, not the presence of a summary file.</p>
+<h2 id="definition-and-non-identity-claims">2. Definition and
+Non-Identity Claims</h2>
+<p>Let <span class="math inline"><em>S</em><sub>0</sub></span> be the
+predecessor’s last admitted state, <span
+class="math inline"><em>P</em></span> a cold-boot package or context
+capsule, <span class="math inline"><em>R</em><sub>1</sub></span> a
+successor runtime, <span
+class="math inline"><em>X</em><sub>1</sub></span> the external world
+observed at resumption, and <span class="math inline"><em>G</em></span>
+the governing resumption protocol. Define:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\operatorname{Resume}(S_0,P,R_1,X_1,G) \in
+\{&amp;\operatorname{RESUMED}, \operatorname{BOUNDED}, \\
+&amp;\operatorname{HOLD}, \operatorname{REFUSE}\}
+\end{aligned}.
+$$</span></p>
+<p><code>RESUMED</code> means the successor has verified the required
+state and can continue within reacquired authority.</p>
+<p><code>BOUNDED</code> permits only a narrower surface.
+<code>HOLD</code> identifies missing evidence, capability, freshness, or
+authority. <code>REFUSE</code> records an incompatibility or unsafe
+condition.</p>
+<p>Cold Boot Continuity does not assert:</p>
+<ul>
+<li>that the successor has the predecessor’s private memory or
+subjective continuity;</li>
+<li>that different agents will produce the same reasoning path or
+output;</li>
+<li>that archive contents are true because they are archived;</li>
+<li>that an old authorization remains valid in a new runtime, time,
+jurisdiction, or effect class;</li>
+<li>that all tacit knowledge can be serialized;</li>
+<li>that a package can recreate remote services, people, hardware,
+markets, or institutions;</li>
+<li>that reconstructing a state proves the predecessor acted
+correctly.</li>
+</ul>
+<p>The continuity claim is typed: <strong>same governed work
+relation</strong>, not same mind, process, or behavior.</p>
+<h2 id="six-continuity-levels">3. Six Continuity Levels</h2>
+<p>Continuity claims should identify their level.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Level</th>
+<th>Claim</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bootable</td>
+<td>The package can be opened and its declared bootstrap procedure can
+execute in the target environment.</td>
+</tr>
+<tr>
+<td>Orientable</td>
+<td>The successor can identify exact heads, task, terminology,
+dependencies, open issues, and claim boundaries.</td>
+</tr>
+<tr>
+<td>Resumable</td>
+<td>The successor can perform a valid next transition or typed refusal
+without relying on the missing conversation.</td>
+</tr>
+<tr>
+<td>Semantically continuous</td>
+<td>The successor preserves relevant meanings, distinctions,
+alternatives, debts, and revision lineage rather than only filenames or
+conclusions.</td>
+</tr>
+<tr>
+<td>Authority-valid</td>
+<td>The successor independently establishes current authority,
+capability, jurisdiction, scope, and time for the requested work.</td>
+</tr>
+<tr>
+<td>Evidenced</td>
+<td>Tests and observations support all claimed lower levels for an exact
+package, runtime, environment, and external-state profile.</td>
+</tr>
+</tbody>
+</table>
+<p>A package can be bootable but not orientable, orientable but not
+resumable, resumable but not authority-valid, or authority-valid for
+read-only inspection but not consequential effect. These distinctions
+prevent “it loaded” from becoming “continuity was achieved.”</p>
+<h2 id="the-continuity-state-model">4. The Continuity State Model</h2>
+<p>A useful cold-boot package distinguishes at least the following state
+classes.</p>
+<h3 id="exact-artifact-state">4.1 Exact Artifact State</h3>
+<p>Source heads, candidate artifacts, manifests, schemas, scripts,
+dependencies, configuration, and evidence files carry exact paths or
+logical names, hashes, representation formats, and predecessor
+relations. Hashes bind bytes under stated assumptions; they do not
+establish meaning or safety.</p>
+<h3 id="semantic-state">4.2 Semantic State</h3>
+<p>Concepts, definitions, invariants, claims, counterclaims, standing,
+relations, terminology rulings, conflicts, open questions, and revision
+history reside in a governed meaning surface. The current corpus
+architecture names this durable state the <strong>Governed Meaning Base
+(GMB)</strong>. Historical CCF and CMB names remain in source custody
+but are not three current systems.</p>
+<h3 id="task-and-workfront-state">4.3 Task and Workfront State</h3>
+<p>The active objective, completed transitions, queued work, stopping
+conditions, priorities, blockers, decision gates, and expected
+deliverables form the workfront. Completion claims must point to
+evidence rather than merely restate intent.</p>
+<h3 id="custody-state">4.4 Custody State</h3>
+<p>The package identifies who or what currently holds operational
+responsibility for each unresolved transition, which leases or deadlines
+exist, what result-visibility route is required, and how custody can
+transfer. Custody is not ownership, permission, or authorship.</p>
+<h3 id="authority-and-capability-state">4.5 Authority and Capability
+State</h3>
+<p>Prior authority records are evidence of past standing, not
+automatically live grants. The successor must determine which
+permissions survive, which require renewed consent, which secrets or
+tokens are unavailable, and which operations remain forbidden.</p>
+<h3 id="environment-and-external-state">4.6 Environment and External
+State</h3>
+<p>Tool versions, operating system, model/provider, enabled
+capabilities, network, services, repositories, databases, hardware,
+clock assumptions, and remote heads can change independently of the
+package. Resumption requires reconciliation rather than pretending the
+snapshot is the world.</p>
+<h3 id="evidence-and-remainder">4.7 Evidence and Remainder</h3>
+<p>Verification results, observations, receipts, failed attempts, known
+blind spots, untested pathways, and unresolved counterevidence travel
+with their claim ceilings. A clean receipt chain does not prove complete
+state capture or successful external effect.</p>
+<h3 id="ephemeral-and-private-state">4.8 Ephemeral and Private
+State</h3>
+<p>Some conversational associations, tacit judgment, private
+chain-of-thought, secrets, personal data, or transient runtime state
+should not or cannot be preserved. The package declares those omissions.
+Cold boot recovers the state required for governed continuation, not
+every vanished internal event.</p>
+<h2 id="the-context-capsule">5. The Context Capsule</h2>
+<p>A <strong>crystalline context capsule</strong> is a bounded,
+purpose-specific projection assembled for a successor. It is not the
+whole GMB, the whole repository, the whole transcript, or an authority
+token.</p>
+<pre class="text"><code>ContextCapsule
+  capsule_identity
+  source_state_commitments
+  target_task_and_audience
+  selected_concepts_and_definitions
+  exact_artifact_heads
+  active_invariants_and_constraints
+  open_alternatives_and_conflicts
+  workfront_and_custody
+  authority_history_and_required_reacquisition
+  evidence_and_counterevidence
+  environment_requirements
+  known_omissions_and_external_dependencies
+  expiry_and_revision_relation
+  bootstrap_and_verification procedure</code></pre>
+<p>The capsule must preserve provenance from each projection element to
+durable state. Selection, ordering, compression, and omission are
+semantic transformations and require their own review. A capsule that
+says only “continue the prior work” is narratively suggestive but
+operationally weak.</p>
+<h2 id="cold-boot-protocol">6. Cold-Boot Protocol</h2>
+<p>A successor begins with no presumption that the package is complete,
+current, safe, or authoritative.</p>
+<ol type="1">
+<li><strong>Identify the package.</strong> Verify manifest, schema,
+exact members, hashes, predecessor, declared target, and expiry.</li>
+<li><strong>Inspect before execution.</strong> Treat package text, code,
+and embedded instructions as untrusted source material until admitted
+under the current task and authority.</li>
+<li><strong>Establish the runtime.</strong> Record model or agent
+identity, capabilities, tools, environment, dependencies, and relevant
+limitations.</li>
+<li><strong>Orient semantically.</strong> Load the terminology rulings,
+definitions, invariants, current heads, open conflicts, claim ceilings,
+and task projection needed for this purpose.</li>
+<li><strong>Reconstruct the workfront.</strong> Identify the active
+objective, completed evidence-backed transitions, outstanding work,
+custody, stopping rules, and pending open editorial questions.</li>
+<li><strong>Reacquire authority.</strong> Determine which requested
+operations are currently permitted. Do not inherit publication,
+deployment, messaging, credential use, or consequential-effect authority
+from a historical capsule.</li>
+<li><strong>Reconcile external state.</strong> Compare remote heads,
+services, databases, schedules, locks, human decisions, and other
+mutable dependencies with their recorded state.</li>
+<li><strong>Run verification.</strong> Execute package, environment,
+semantic, and task-specific checks, including negative and tamper cases
+where proportionate.</li>
+<li><strong>Classify readiness.</strong> Return <code>RESUMED</code>,
+<code>BOUNDED</code>, <code>HOLD</code>,<br />
+or <code>REFUSE</code> with explicit reasons and remainder.</li>
+<li><strong>Make the next transition.</strong> Record the successor’s
+exact input state, decision, result, evidence, new debts, and visibility
+route.</li>
+</ol>
+<p>An <code>orient</code> command can implement part of this protocol.
+Command success alone is not continuity; the command must expose the
+required state and be tested against stale, missing, conflicting, and
+adversarial packages.</p>
+<h2 id="agent-substitution-without-determinism">7. Agent Substitution
+Without Determinism</h2>
+<p>Agent substitution is valuable because work need not depend on one
+provider, model, process, or conversation. But substitution has
+limits.</p>
+<p>Different agents may vary in reasoning ability, tool access, safety
+policy, context capacity, latency, nondeterminism, and interpretation.
+The proper invariant is not identical output. It is preservation of the
+governed problem and obligation surface.</p>
+<p>For a transition request <span class="math inline"><em>q</em></span>,
+successor agents <span
+class="math inline"><em>R</em><sub><em>a</em></sub></span> and <span
+class="math inline"><em>R</em><sub><em>b</em></sub></span> may produce
+different candidates <span
+class="math inline"><em>y</em><sub><em>a</em></sub></span> and <span
+class="math inline"><em>y</em><sub><em>b</em></sub></span> while both
+remaining admissible:</p>
+<p><span
+class="math display"><em>y</em><sub><em>a</em></sub> ≠ <em>y</em><sub><em>b</em></sub>,   <em>y</em><sub><em>a</em></sub>, <em>y</em><sub><em>b</em></sub> ∈ AdmissibleContinuations (<em>S</em><sub>0</sub>, <em>q</em>).</span></p>
+<p>Where exact replay is required, the package must specify a
+deterministic or bounded-equivalence relation, captured dependencies,
+seeds, tool outputs, clocks, and environmental assumptions. Many
+research and writing tasks instead require semantic and constitutional
+continuity, not trajectory identity.</p>
+<p>A less capable successor may legitimately return <code>HOLD</code>
+or</p>
+<p><code>REFUSE</code>. That is stronger continuity than confident
+fabrication.</p>
+<h2 id="archive-centered-computation-properly-bounded">8.
+Archive-Centered Computation, Properly Bounded</h2>
+<p>The source offers a productive inversion:</p>
+<blockquote>
+<p>In an archive-centered system, the session interprets and revises
+governed state rather than treating state as a disposable by-product of
+conversation.</p>
+</blockquote>
+<p>The archive is not automatically operational ground truth. It may be
+incomplete, stale, corrupted, malicious, internally inconsistent, or
+contradicted by external state. GMB entries may have different standing.
+Candidate artifacts are not current heads. A receipt may bind a past
+decision without making it correct today.</p>
+<p>The more precise architecture is <strong>state-centered,
+evidence-bounded computation</strong>. Durable state supplies the
+predecessor; orientation and verification establish which parts can bind
+the successor; external reconciliation supplies current conditions;
+authority evaluation determines permitted continuation; revision writes
+the new relation.</p>
+<p>Conversational history can remain useful as nonauthoritative source
+evidence, rhetorical context, or a place to recover alternatives not yet
+crystallized. Structural continuity should not require the whole
+transcript, but neither should crystallization erase relevant
+uncertainty simply because it is inconvenient to encode.</p>
+<h2 id="failure-modes">9. Failure Modes</h2>
+<p>Cold-boot systems can fail through:</p>
+<ul>
+<li><strong>package incompleteness:</strong> a runtime-required file,
+dependency, schema, or key is missing;</li>
+<li><strong>head ambiguity:</strong> multiple candidates are presented
+without a current-head or conflict relation;</li>
+<li><strong>semantic compression loss:</strong> qualifiers,
+counterevidence, alternatives, or standing disappear;</li>
+<li><strong>authority laundering:</strong> past consent or a textual
+instruction is treated as a current grant;</li>
+<li><strong>custody gap:</strong> no eligible actor owns the next
+operational responsibility;</li>
+<li><strong>result invisibility:</strong> work completes in a runtime or
+location the requester cannot inspect;</li>
+<li><strong>environment drift:</strong> tools, providers, libraries,
+hardware, or platform behavior differ materially;</li>
+<li><strong>external-state drift:</strong> remote data, services,
+schedules, or human decisions changed after packaging;</li>
+<li><strong>orientation drift:</strong> the bootstrap selects a
+different meaning, head, or task than the package intended;</li>
+<li><strong>candidate contamination:</strong> exploratory or hostile
+material enters durable state without admission;</li>
+<li><strong>split-brain succession:</strong> multiple successors act as
+the sole continuation from one predecessor;</li>
+<li><strong>secret or privacy leakage:</strong> the archive preserves
+material that should not travel;</li>
+<li><strong>self-verification:</strong> the package’s own claims and
+verifier fail together while appearing consistent;</li>
+<li><strong>nontermination:</strong> recursive dependency or legitimacy
+checks never reach a typed disposition;</li>
+<li><strong>archive growth:</strong> each generation carries all
+predecessors until the package becomes impractical.</li>
+</ul>
+<p>Each failure should produce a typed result and recovery obligation
+rather than an optimistic summary.</p>
+<h2 id="evidence-and-adversarial-tests">10. Evidence and Adversarial
+Tests</h2>
+<p>A cold-boot claim should be tested with an exact package and a
+genuinely fresh runtime that lacks the predecessor conversation.</p>
+<p>Core tests include:</p>
+<ol type="1">
+<li><strong>Fresh-agent resumption:</strong> a new agent identifies the
+task, heads, constraints, open issues, and next valid transition.</li>
+<li><strong>Cross-provider substitution:</strong> a materially different
+runtime preserves the obligation surface or reports a bounded
+incapability.</li>
+<li><strong>Tamper test:</strong> changed, missing, extra, relocated,
+duplicate, oversized, or case-colliding members are detected before
+unsafe execution.</li>
+<li><strong>Stale-state test:</strong> changed remote or external state
+forces reconciliation rather than silent reuse.</li>
+<li><strong>Revoked-authority test:</strong> a previously authorized
+operation is refused after revocation or expiry.</li>
+<li><strong>Candidate-standing test:</strong> speculative and
+AI-synthesized material cannot silently become author-approved or
+canonical.</li>
+<li><strong>Semantic-loss test:</strong> omitted qualifications or
+counterevidence are detected by dependency and source checks.</li>
+<li><strong>Capability-mismatch test:</strong> missing tools or model
+abilities produce a typed hold instead of simulated success.</li>
+<li><strong>Split-brain test:</strong> parallel successors receive
+distinct lineage and cannot both claim exclusive continuity.</li>
+<li><strong>Result-visibility test:</strong> the output and evidence
+arrive at an inspectable route named by the work order.</li>
+<li><strong>Recovery test:</strong> interruption during the first
+successor transition can be retried or rolled back without duplicating
+effect.</li>
+<li><strong>Minimality test:</strong> removing redundant history does
+not change the verified resumption result, while removing a load-bearing
+element does.</li>
+</ol>
+<p>The evidence package should bind package identity, predecessor,
+runtime, environment, tests, failures, observations, verifier, and
+unresolved remainder. One successful demonstration does not establish
+general portability.</p>
+<h2 id="continuity-profile">11. Continuity Profile</h2>
+<p>Cold Boot Continuity should not be reduced to one score. Report a
+profile:</p>
+<p><span
+class="math display"><strong>C</strong> = (<em>B</em>, <em>O</em>, <em>R</em>, <em>S</em>, <em>A</em>, <em>E</em>, <em>V</em>),</span></p>
+<p>where <span class="math inline"><em>B</em></span> is bootability,
+<span class="math inline"><em>O</em></span> orientability, <span
+class="math inline"><em>R</em></span> resumability, <span
+class="math inline"><em>S</em></span> semantic preservation, <span
+class="math inline"><em>A</em></span> current authority validity, <span
+class="math inline"><em>E</em></span> environment and external-state
+reconciliation, and <span class="math inline"><em>V</em></span>
+verification strength.</p>
+<p>Each component carries its own method, scope, evidence, and
+confidence. A deployment can set minimum floors based on consequence.
+High bootability cannot compensate for absent authority; strong hashes
+cannot compensate for stale external state; good orientation cannot
+compensate for an uninspectable result.</p>
+<p>Useful operational measures include time to orientation,
+unsupported-claim rate, missed dependency rate, false-head selection,
+authority leakage, successful next-transition rate, repair time, package
+size, boot cost, cross-runtime divergence, and proportion of known
+obligations preserved.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Cold-boot continuity responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore persistence, archive, transcript, snapshot, capsule, replay,
+and migration designs, including unsafe and overbroad ones.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define continuity levels, state classes, dispositions, identity,
+authority, custody, evidence, external-state, and privacy
+obligations.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate admissible packages and protocols that satisfy the bare
+specification.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer minimal, inspectable, provider-portable, privacy-preserving,
+authority-safe, tamper-evident, repairable, and cost-bounded
+configurations.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select exact schema, packager, verifier, runtime targets, context
+compiler, stores, authority process, tests, and visibility route.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Produce the exact package, bootstrap, verifier, target runtime,
+environment, and operational handoff.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Execute fresh-runtime, tamper, stale-state, revocation,
+semantic-loss, split-brain, recovery, visibility, and minimality
+tests.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Update state, capsule schema, dependencies, authority, environment
+profiles, or tests while preserving predecessor and migration
+relations.</td>
+</tr>
+</tbody>
+</table>
+<p>The paper specifies the primitive and candidate protocol. It does not
+certify the JN reactor or any capsule as an evidenced Instance
+Configuration.</p>
+<h2 id="corpus-integration">13. Corpus Integration</h2>
+<p>Cold Boot Continuity binds several corpus structures without merging
+them:</p>
+<ul>
+<li><strong>GMB</strong> stores durable, standing-aware concepts,
+claims, relations, conflicts, decisions, and revision lineage. A capsule
+is compiled from GMB for a task.</li>
+<li><strong>A Constitution for the Context Window</strong> governs
+selection, omission, ordering, provider realization, and claim ceilings
+in the successor’s invocation context.</li>
+<li><strong>Governed Context &amp; Memory</strong> distinguishes context
+configuration, durable memory, and explicit ignorance.</li>
+<li><strong>The Three Hash Rule</strong> separates exact state,
+admissibility commitments, and meaning commitments in the package.</li>
+<li><strong>Reasoning by Way of Receipts</strong> preserves decisions,
+refusals, debts, and intermediate evidence without converting receipts
+into truth.</li>
+<li><strong>Governed Semantic Project Lineage</strong> binds exact
+project heads, builds, configurations, predecessor relations,
+rebuildability, and migrations.</li>
+<li><strong>A Formal Theory of Work Custody</strong> governs
+responsibility, lease, handoff, visibility, and recovery across
+successor agents.</li>
+<li><strong>Semantic Legitimacy Before Context</strong> prevents
+archived or retrieved material from acquiring binding standing merely by
+being present.</li>
+<li><strong>The Constitutional Observability Platform</strong> supplies
+heterogeneous verification, external observation, evidence-health, and
+remainder reporting.</li>
+<li><strong>Hyperpedia</strong> is a human- and agent-facing knowledge
+projection; <strong>Crystal Network</strong> is a distributed exchange
+surface. Neither is automatically the runtime archive or authority
+source for every cold boot.</li>
+</ul>
+<p>The source’s <strong>JN reactor</strong> remains an explicitly named
+system candidate requiring identity and implementation review. Its
+historical relation to CCF, current GMB architecture, and other reactor
+or archive systems is not automatically merged by this paper.</p>
+<h2 id="verified-resumption-envelope">Verified Resumption Envelope</h2>
+<p>The completed P1 corpus gives Cold Boot Continuity one precise role:
+it is a <strong>verified resumption envelope and protocol for
+reconstructing bounded work state across context loss, agent
+substitution, process restart, or runtime migration</strong>. It does
+not recreate vanished experience, make successor agents identical, or
+transfer authority and capability by semantic resemblance.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Responsibility for exact work heads,
+transfer, return, and terminal disposition.<br />
+<strong>Cold-boot boundary:</strong> A capsule can carry custody
+records; a successor accepts custody only through a valid
+transfer.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meaning Crystals</em><br />
+<strong>Supplies:</strong> Portable semantic packages with
+reconstruction obligations.<br />
+<strong>Cold-boot boundary:</strong> A crystal may be capsule content;
+semantic portability is not full operational resumption.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Sovereign Software</em><br />
+<strong>Supplies:</strong> Reconstructability, provider removal,
+migration, and effective exit across dependency closure.<br />
+<strong>Cold-boot boundary:</strong> Cold boot is one continuity
+mechanism and test within a broader sovereignty claim.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Bounded records of decisions, alternatives,
+failures, and revisions.<br />
+<strong>Cold-boot boundary:</strong> Receipts help reconstruct why work
+reached its state; they do not restore ambient authority or external
+reality.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Continuation
+Primacy</em><br />
+<strong>Supplies:</strong> The analytic priority of what must persist
+for continuation.<br />
+<strong>Cold-boot boundary:</strong> Cold boot turns selected
+continuation obligations into an artifact and protocol.</p></li>
+</ul>
+<p>A resumption envelope should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R= (&amp;artifact\_state, semantic\_state, workfront, custody, \\
+&amp;authority\_requirements, capabilities, environment, \\
+&amp;evidence, remainder, private\_omissions, expiry)
+\end{aligned}.
+$$</span></p>
+<p>The envelope records <strong>requirements and prior grants</strong>,
+but resumption must revalidate current authority, capabilities, external
+state, environment, time, and revocation. A prior authorization may be
+evidence that an act was once permitted; it is not necessarily a live
+grant for a successor, host, or later invocation.</p>
+<p>Continuity claims should state their level: byte recovery, structural
+recovery, semantic orientation, task resumption, custody resumption,
+authorized operational resumption, or observed outcome continuity.
+Success at a lower level does not imply a higher one. Reproducible
+bootstrap establishes only the levels exercised by its bound tests and
+witnesses.</p>
+<p>The universal GSM can type <code>PACKAGED_IN_CAPSULE</code>,
+<code>RESUMES_WORK_HEAD</code>,<br />
+<code>RECONSTRUCTS_SEMANTIC_STATE</code>,
+<code>TRANSFERS_CUSTODY_BY</code>,
+<code>REQUIRES_REAUTHORIZATION</code>,<br />
+<code>REBINDS_CAPABILITY</code>, <code>REVALIDATES_ENVIRONMENT</code>,
+<code>RECONCILES_EXTERNAL_STATE</code>,<br />
+<code>OMITS_PRIVATE_STATE</code>, <code>EXPIRES_AT</code>,<br />
+and <code>LEAVES_REMAINDER</code>. These relations prevent context
+continuity from laundering identity or permission.</p>
+<p>This integration establishes four editorial commitments: adopt
+verified resumption envelope as the official corpus role; adopt the
+resumption-envelope schema; publish continuity as a levelled claim; and
+require fresh authority, capability, environment, and external-state
+validation before operational resumption.</p>
+<h2 id="semantic-service-and-capability-rebinding">Semantic Service and
+Capability Rebinding</h2>
+<p>The fixed-seed comparison with Semantic Debt, Semantic Computing
+Infrastructure, the Cognitive ABI, and Crystallized Governance extends
+operational resumption:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R^*= (&amp;capsule, SCI\_roots, service\_profiles, open\_debt, \\
+&amp;semantic\_remainder, capability\_contracts, \\
+&amp;governance\_artifacts, current\_grants, environment, \\
+&amp;evidence, reconciliation)
+\end{aligned}.
+$$</span></p>
+<p>The capsule should bind the GMB and universal GSM roots, atlas or
+registry versions, SCI service profiles, open semantic-debt entries, and
+unresolved remainder required to reconstruct the work. Recovery of files
+without those liabilities can resume the wrong semantic state while
+appearing byte-complete.</p>
+<p>Each callable operation must be rebound through the Cognitive ABI.
+The successor rechecks conformance, qualification, admission, current
+authority, permitted effects, and witnessability for the present host
+and invocation. A remembered provider name, successful import, or prior
+receipt is not current capability or permission.</p>
+<p>Crystallized-governance artifacts may carry source correspondence,
+explicit rules, remainder, contest, amendment, and fork identity. They
+should be restored as governed inputs, not as self-executing authority.
+Current adoption, interpretation, jurisdiction, revocation, and effect
+conditions still require validation.</p>
+<p>A high-level resumption proof therefore demonstrates a ladder: exact
+capsule verification; governed semantic-state reconstruction; open-debt
+and remainder recovery; service and capability rebinding; current
+governance and authority validation; external-state reconciliation;
+bounded execution; and observed effect evidence. Failure at a higher
+rung does not erase lower-level recovery.</p>
+<p>The universal GSM can type<br />
+<code>RESTORES_SCI_STATE_ROOT</code>,
+<code>RECOVERS_OPEN_SEMANTIC_DEBT</code>,<br />
+<code>REBINDS_CAPABILITY_CONTRACT</code>,
+<code>REVALIDATES_GOVERNANCE_ARTIFACT</code>,
+<code>REFUSES_STALE_AUTHORITY</code>,<br />
+<code>RECONCILES_EXTERNAL_DEPENDENCY</code>, and<br />
+<code>PROVES_RESUMPTION_LEVEL</code>.</p>
+<p>This randomized review establishes four editorial commitments:
+include semantic-service roots, debt, and remainder in operational
+capsules; require Cognitive ABI rebinding for every callable capability;
+treat restored governance crystals as inputs rather than live grants;
+and adopt the runged resumption proof.</p>
+<h2
+id="a-compiled-continuity-capsule-plus-present-tense-reacquisition">A
+Compiled Continuity Capsule Plus Present-Tense Reacquisition</h2>
+<p>Fourteen retained downstream uses place cold boot across
+context-window governance, work custody, capability ABIs, the historical
+CMB-to-current-GMB lineage, split authority, operational and general
+epistemic orientation, project lineage, model-first migration, semantic
+infrastructure, handoff control, semantic debt, governed knowledge
+loops, and admissibility. They reveal a two-part system: a custodied
+capsule preserves what can travel, while a cold-boot protocol
+revalidates everything that must be true now.</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;predecessor\_head, capsule\_root, semantic\_roots, \\
+&amp;workfront, custody\_claims, authority\_requirements, \\
+&amp;capability\_requirements, environment\_profile, \\
+&amp;external\_state, privacy\_omissions, debt, remainder, \\
+&amp;bootstrap, verification, successor\_head, evidence, \\
+&amp;expiry, revision)
+\end{aligned}.
+$$</span></p>
+<p>The capsule is a purpose-bounded projection from durable sources such
+as GMB, artifact stores, lineage records, and ledgers. It is not the
+durable meaning base, vanished cognition, a complete transcript, or live
+authority. Exact verification establishes only exact custody. Semantic
+reconstruction, task orientation, custody acceptance, capability
+rebinding, present authority, external-state reconciliation, bounded
+execution, and observed outcome form higher and non-substitutable proof
+rungs.</p>
+<p>Adaptive boot is allowed only through typed repair and successor
+creation. Missing providers, schema changes, unavailable tools, revoked
+grants, moved resources, private omissions, and environmental drift may
+yield bounded degradation, refusal, or a revised capsule; they must not
+be silently normalized. Successor identity records continuity without
+asserting agent identity or deterministic behavior.</p>
+<p>The universal GSM can type<br />
+<code>COMPILES_COLD_BOOT_CAPSULE</code>,
+<code>VERIFIES_EXACT_CAPSULE</code>,<br />
+<code>RECONSTRUCTS_SEMANTIC_ROOT</code>,
+<code>ACCEPTS_WORK_CUSTODY</code>,
+<code>REBINDS_PRESENT_CAPABILITY</code>,<br />
+<code>REACQUIRES_CURRENT_AUTHORITY</code>,
+<code>RECONCILES_EXTERNAL_STATE</code>,<br />
+<code>DEGRADES_WITH_TYPED_REMAINDER</code>, and<br />
+<code>CREATES_COLD_BOOT_SUCCESSOR</code>.</p>
+<p>This review establishes four editorial commitments: formalize the
+capsule/protocol split; adopt the complete cold-boot record and runged
+proof; require present-tense authority, capability, environment, and
+external-state reacquisition; and make adaptive repair, degradation,
+refusal, expiry, and successor identity explicit.</p>
+<h2 id="a-capsule-is-not-continuity-until-it-rebinds-to-the-present">A
+Capsule Is Not Continuity Until It Rebinds to the Present</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Cold-boot continuity lets a newly instantiated agent reconstruct
+authoritative state, verify lineage, and resume bounded work without
+depending on conversational memory. A portable capsule carries claims
+about prior state. Continuity is established only when those claims are
+verified and the new environment lawfully reacquires present
+capabilities, authority, and result visibility.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Stale-capsule attack.</strong> The archive is internally
+valid but superseded by later decisions or revocations. Freshness and
+successor discovery precede resumption.</li>
+<li><strong>Authority-replay attack.</strong> A prior mandate is reused
+after scope, time, issuer, or jurisdiction changed. Authority must be
+reacquired or explicitly shown continuous.</li>
+<li><strong>Capability-drift attack.</strong> Named tools, models, APIs,
+paths, or permissions differ in the new environment. Rebinding requires
+compatibility and consequence review.</li>
+<li><strong>Secret-custody attack.</strong> The capsule embeds
+credentials or relies on unavailable secrets. Sensitive material needs
+separate custody; absence must produce refusal, not substitution.</li>
+<li><strong>Non-idempotent replay.</strong> Resuming repeats an external
+effect already performed. Receipts, effect identity, idempotency, and
+reconciliation are mandatory.</li>
+<li><strong>Archive-confusion attack.</strong> Duplicate paths,
+traversal, case collisions, symlinks, or executable startup hooks alter
+the restored subject. Extraction must be hostile and layout-bound.</li>
+<li><strong>Result-visibility gap.</strong> Work completes in a runtime
+the user or next agent cannot inspect. Continuity includes return,
+evidence, and discoverable terminal state.</li>
+<li><strong>Semantic-compression loss.</strong> A compact capsule omits
+assumptions, disputes, failures, or open decisions. Compression must
+preserve typed remainder and retrieval routes.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a verified resumption envelope. It does not prove
+operational continuity until a cold process reconstructs the exact
+subject, verifies custody, reacquires present authority and
+capabilities, avoids duplicate effects, performs bounded work, and
+returns visible evidence.</p>
+<p>Claims about portability, security, reliability, compression,
+cross-runtime compatibility, or deployment performance require exact
+archives, hostile extraction tests, multiple clean environments, and
+independent reproduction. Internal corpus fit is not a live test. No
+external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public standard is that an agent can carry its research state
+between sessions without smuggling stale authority or trusting memory:
+the new session can prove what it received, what changed, what it may do
+now, and where its results went.</p>
+<h2 id="limits-and-counterevidence">14. Limits and Counterevidence</h2>
+<p>The proposal is weakened or requires revision if:</p>
+<ul>
+<li>a small conventional checkpoint plus task file provides equivalent
+recovery at lower cost;</li>
+<li>agents cannot reliably interpret the semantic capsule across
+providers or model generations;</li>
+<li>required tacit knowledge consistently fails to externalize;</li>
+<li>packaging and verification cost exceeds the value of
+resumability;</li>
+<li>privacy and secret-management constraints make the archive
+unsafe;</li>
+<li>exact reconstruction encourages stale continuation rather than
+current reconsideration;</li>
+<li>authority cannot be safely reacquired without the original human or
+institution;</li>
+<li>external-state drift dominates archived state;</li>
+<li>deterministic replay is impossible for the target task and bounded
+semantic equivalence is not reliable;</li>
+<li>archive-centered workflows centralize control or prevent legitimate
+plural successors;</li>
+<li>repeated clean boots do not improve task success, repair time, or
+unsupported-claim rate over summary baselines.</li>
+</ul>
+<p>A current external review is required across workflow checkpointing,
+event sourcing, durable execution, build reproducibility, provenance,
+software supply chain, distributed systems, capability security, agent
+memory, context compression, human-computer handoff, privacy, and
+disaster recovery. Internal corpus consistency does not validate
+comparative or implementation claims.</p>
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Cold Boot Continuity relocates long-running work from the lifespan of
+a conversation into a governed relation among durable state, a bounded
+context capsule, a successor runtime, current external conditions,
+reacquired authority, custody, and evidence.</p>
+<p>The archive is necessary but not sovereign. The capsule is useful but
+incomplete. The successor is substitutable but not identical. A hash
+binds bytes but not truth. A handoff preserves history but not
+permission. A successful bootstrap proves less than a successful
+governed next transition.</p>
+<p>The deployment primitive is therefore not “load this summary and
+continue.” It is:</p>
+<blockquote>
+<p>Begin without presumed memory; verify the predecessor; recover the
+work’s semantic and artifact state; reconcile the present world;
+reacquire authority; classify what can continue; and record the
+successor relation.</p>
+</blockquote>
+<p>When that protocol works across fresh runtimes and adversarial
+conditions, agentic work can survive context windows, provider changes,
+interruption, and migration without pretending that vanished cognition
+persisted. Continuity becomes structural, but it remains bounded,
+testable, revisable, and honest about what could not be carried
+forward.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+<li><strong>Publication form.</strong> This work is retained as a
+standalone technical companion because its concrete migration method is
+useful independently; it remains subordinate to the architecture it
+explains.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that long-running agentic work commonly appears
+continuous only while one conversation, process, provider, or context
+window remains available. Its nearest external comparison fields are
+storage, provenance, observation. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Fixity and
+preservation can keep bytes stable while representation dependencies,
+executability, interpretation, and institutional custody decay. A
+complete provenance graph can faithfully record a false or unauthorized
+process; provenance is evidence about lineage, not automatic truth or
+legitimacy. Telemetry can be complete at the instrumented boundary while
+omitting the causal variable, real-world effect, or authority question
+that matters. These limits are not generic disclaimers: they identify
+the assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Consultative Committee for Space Data Systems.
+<em>Reference Model for an Open Archival Information System (OAIS)</em>.
+CCSDS 650.0-M-3, Issue 3, December 2024.
+https://ccsds.org/Pubs/650x0m3.pdf <strong>Relationship:</strong>
+Predecessor preservation model for information packages, representation
+information, and designated communities.</p>
+<p><strong>[E2]</strong> John Kunze et al. <em>The BagIt File Packaging
+Format (V1.0)</em>. RFC 8493, 2018.
+https://www.rfc-editor.org/rfc/rfc8493 <strong>Relationship:</strong>
+Adjacent custody and transfer format for payload manifests, fixity, and
+complete package movement.</p>
+<p><strong>[E3]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Storage</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788662</code>;<br />
+source SHA-256<br />
+<code>115725C7F7B72C3B720E4EF67F660F329B778D34C4D4232848C6082E849203F7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Semantic Custody</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20300952</code>;<br />
+source SHA-256<br />
+<code>E3887FE98E6369E39AC3FC2EAC63F2DF7C2AD18AD682B3A745C0CD0AD241D0F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1682AE03F0BA815</code>;<br />
+source SHA-256<br />
+<code>5D5D8306514E5FA2C4412D5B468A12681DDCF7002135DC00251A53BF84C79CD6</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>The Implementation
+Codex</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-872EEF9E301B18DE</code>;<br />
+source SHA-256<br />
+<code>1373E9770B5B86EB394BFAF993F5526155D406F4528694B465FDE22A7D525132</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>A Constitution for the Context Window</em>. Ableman
+Corpus current edition; conceptual claims retain the standing stated in
+the work.</p>
+<p>Adam Ableman. <em>A Formal Theory of Work Custody</em>. Ableman
+Corpus current edition; conceptual claims retain the standing stated in
+the work.</p>
+<p>Adam Ableman. <em>The Constitutional Observability Platform</em>.
+Ableman Corpus current edition; conceptual claims retain the standing
+stated in the work.</p>
+<p>Adam Ableman. <em>From Content-Addressed Storage to Governed Semantic
+Project Lineage</em>. Ableman Corpus current edition; conceptual claims
+retain the standing stated in the work.</p>
+<p>Adam Ableman. <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18633797.</p>
+<p>Adam Ableman. <em>Governed Meaning Base (GMB)</em>. Ableman Corpus
+current edition in the author-confirmed historical terminology
+<code>CCF -&gt; CMB -&gt; GMB</code>; conceptual claims retain the
+standing stated in the work.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>Adam Ableman. <em>Semantic Legitimacy Before Context</em>. Ableman
+Corpus current edition; conceptual claims retain the standing stated in
+the work.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>External technical and scholarly research remains required for a
+future evidence-qualified revision.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI.</em> Zenodo, 2026. doi:10.5281/zenodo.18633797</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847490">10.5281/zenodo.23847490</a></p>

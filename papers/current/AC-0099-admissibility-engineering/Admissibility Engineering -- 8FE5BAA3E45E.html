@@ -1,0 +1,1308 @@
+<h1 id="admissibility-engineering">Admissibility Engineering</h1>
+<h2
+id="governing-agentic-software-realization-through-constraint-binding-and-specification-saturation">Governing
+Agentic Software Realization Through Constraint Binding and
+Specification Saturation</h2>
+<h3
+id="a-realization-should-not-become-acceptable-merely-because-an-executor-found-a-path-the-specification-failed-to-constrain.">A
+realization should not become acceptable merely because an executor
+found a path the specification failed to constrain.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Agentic software construction can produce implementations that
+compile, run, and pass the available tests while violating an invariant
+that the specification intended to preserve. This paper calls that
+family <strong>plausible-but-wrong realization</strong> and introduces
+<strong>admissibility engineering</strong> as the discipline of reducing
+it by binding important constraints into independently checkable
+specification, configuration, implementation, and evidence
+artifacts.</p>
+<p>The paper formalizes saturation relative to a declared architecture
+and boundary. For invariant <span class="math inline"><em>I</em></span>
+in architecture <span class="math inline"><em>A</em></span>, the
+realization surface <span
+class="math inline"><em>R</em><sub><em>A</em></sub>(<em>I</em>)</span>
+contains the in-scope pathways through which <span
+class="math inline"><em>I</em></span> may be satisfied or violated; the
+evidenced constraint surface <span
+class="math inline"><em>C</em><sub><em>A</em></sub>(<em>S</em>, <em>I</em>, <em>E</em>)</span>
+contains the pathways whose constraint is supported by specification
+<span class="math inline"><em>S</em></span> and evidence <span
+class="math inline"><em>E</em></span>. Their difference is the
+<strong>observed saturation gap</strong>. Because undeclared or
+undiscovered pathways may remain, an empty observed gap is not proof of
+absolute completeness. A saturation claim must name its architecture,
+capability boundary, threat model, enumeration method, evidence,
+tolerable ambiguity, and residual unknowns.</p>
+<p>Artifact-layer techniques–interfaces, type and schema constraints,
+executable contracts, reference models, behavioral oracles, mutation
+tests, capability mediation, and trace obligations–can reduce
+interpretive freedom at selected boundaries. None is self-validating: an
+artifact may encode the wrong invariant, cover only shape, or be
+bypassed. Admissibility engineering therefore composes constraints with
+independent observation and counterexample search rather than replacing
+tests with artifacts.</p>
+<p>Receipts are treated as governed evidence objects, not as behavior
+itself. They can bind declared transitions, inputs, decisions, and
+observations, but they establish an effect only when the receiving claim
+is supported by appropriate mediation coverage, witness, recomputation,
+or independent state observation. The resulting evaluation model
+distinguishes exact-artifact equality, trace equivalence, behavioral
+equivalence, and obligation satisfaction instead of collapsing them into
+one convergence claim.</p>
+<p>The present paper supplies a theory, design discipline, and empirical
+protocol. It does not report a completed experiment because the exact
+current measurements and bound evidence package are not supplied in this
+source head. Dominance, threshold, comparative-performance, and
+cross-executor claims therefore remain hypotheses to be tested rather
+than results to be backfilled from memory.</p>
+<hr />
+<h2 id="the-failure-mode">1. The Failure Mode</h2>
+<h3 id="three-failure-classes">1.1 Three Failure Classes</h3>
+<p>Agentic coding systems–autonomous LLM-driven software construction
+loops that read repositories, modify files, execute tests, and
+iteratively refine–fail in qualitatively distinct ways. Conflating these
+failure modes obscures what kind of intervention is required to address
+each.</p>
+<p>The three failure classes are:</p>
+<p><strong>Hallucination.</strong> The model generates references to
+APIs, libraries, types, or behaviors that do not exist. This failure is
+loud: the resulting code typically does not compile or fails immediately
+at runtime. Conventional static analysis catches most hallucinations;
+the rest surface in the first execution.</p>
+<p><strong>Syntax failure.</strong> The generated code is structurally
+invalid–malformed parses, type errors, missing imports, mismatched
+brackets. Like hallucination, this failure is loud: compilers and
+interpreters reject the output before behavior is observable.</p>
+<p><strong>Plausible-but-wrong realization.</strong> The generated code
+is structurally valid, type-correct, syntactically well-formed, and
+superficially aligned with the specification. It compiles, runs, and
+frequently passes the tests written against it. Yet its behavior
+diverges from the specification’s intent in ways that are visible only
+under behavioral truth examination.</p>
+<p>The first two failure modes are often exposed by compilers, type
+checkers, dependency resolution, and execution, but they are not solved
+in general. Plausible-but-wrong realization can remain latent because
+the implementation agrees with the checks that exist while violating an
+unstated, mis-stated, or uncovered obligation. Whether it is the
+dominant failure class is an empirical question for a declared task
+distribution and measurement protocol.</p>
+<h3 id="why-plausible-but-wrong-can-persist">1.2 Why Plausible-But-Wrong
+Can Persist</h3>
+<p>As task and system complexity increase, the realization space
+available to an agentic executor can expand beyond what a short
+human-readable specification explicitly constrains. A specification
+stating “the function shall return the sorted list” admits many
+realizations:</p>
+<ul>
+<li>a correct sort implementation</li>
+<li>a sort that mutates input rather than returning a fresh list</li>
+<li>a sort that returns a fresh list but discards duplicate elements
+silently</li>
+<li>a sort that depends on incidental ordering properties of the
+input</li>
+<li>a sort whose comparator is unstable</li>
+<li>a sort that succeeds for the test inputs but fails for edge cases
+the test suite did not exercise</li>
+</ul>
+<p>An underspecified phrase may fail to rule out several of these
+variants. Whether any variant satisfies the specification depends on
+requirements the phrase leaves unstated–mutation policy, duplicate
+preservation, comparator semantics, stability, and domain boundaries.
+The example demonstrates specification ambiguity; it does not by itself
+prove a single recoverable authorial intent.</p>
+<p>This failure mode can be invisible to a unit-test suite whose cases
+and oracles do not exercise the violated obligation. A
+plausible-but-wrong implementation survives when it satisfies the tests
+as written while violating a requirement those tests and other checks do
+not encode.</p>
+<h3 id="concrete-failure-examples">1.3 Concrete Failure Examples</h3>
+<p>Concrete failure classes recurring across realization paths of
+substantial governed systems include:</p>
+<p><strong>Sort stability bug class.</strong> An implementation passes
+ordering tests because the input data happens to be presorted on a
+secondary key. The sort is unstable; the test never exposes this because
+the inputs are stable on that key by coincidence.</p>
+<p><strong>Receipt-wiring gap.</strong> A receipt-bound capability is
+declared and the action executes successfully; tests confirm the action
+produced the correct primary effect. But the receipt is not actually
+wired into the lineage graph. The system passes its tests; its lineage
+record is silently broken.</p>
+<p><strong>Authority laundering bug.</strong> A function checks
+authority at entry and passes the validated authority object to a
+helper; the helper does not re-validate but uses the authority object
+directly. Refactoring later moves the helper to a different invocation
+site where the entry-check no longer applies. Authority is laundered
+through the helper. No test exercises this because at the time of test
+authoring, the entry-check covered the helper’s only call site.</p>
+<p><strong>Plausible API names.</strong> The model generates calls to
+API surfaces that <em>should</em> exist by naming convention but do not
+exist in the actual library. Often caught by compilers, but not
+always–particularly in dynamically typed languages or when method
+dispatch uses string-based reflection.</p>
+<p>These are source-reported failure examples that motivate the
+taxonomy. Their frequency, representativeness, and dominance require the
+bound empirical record specified in Section 5.</p>
+<h3 id="tests-are-necessary-but-not-exhaustive">1.4 Tests Are Necessary
+but Not Exhaustive</h3>
+<p>Behavioral tests are indispensable evidence. Example tests,
+property-based generation, metamorphic relations, fuzzing, mutation
+testing, model checking, differential testing, and runtime monitoring
+can each expose different parts of a realization surface. No finite
+suite establishes unrestricted semantic correctness merely by
+passing.</p>
+<p>Admissibility engineering adds independent constraint surfaces; it
+does not replace testing. A type can enforce a shape while permitting
+the wrong behavior. An abstract base class can require a method while
+saying nothing about its semantics. A contract can encode the wrong
+postcondition. A receipt can be complete relative to an instrumented
+pathway while an unmediated pathway bypasses it.</p>
+<p>The desired structure is therefore plural:</p>
+<ol type="1">
+<li>declare the invariant and its scope;</li>
+<li>enumerate known realization pathways;</li>
+<li>bind the invariant at the strongest useful layer;</li>
+<li>test the binding with positive, negative, adversarial, and mutation
+cases;</li>
+<li>observe effects independently where consequence requires it;</li>
+<li>record residual unknowns and revise the pathway inventory when
+counterexamples appear.</li>
+</ol>
+<p>The target is not a system that needs fewer kinds of evidence. It is
+a system in which no single check is allowed to impersonate complete
+assurance.</p>
+<hr />
+<h2 id="specification-saturation">2. Specification Saturation</h2>
+<h3 id="architecture-relative-realization-surface">2.1
+Architecture-Relative Realization Surface</h3>
+<p>Let <span class="math inline"><em>A</em></span> be a declared
+architecture and <span class="math inline"><em>I</em></span> an
+invariant. The <strong>realization surface</strong></p>
+<p><span
+class="math display"><em>R</em><sub><em>A</em></sub>(<em>I</em>)</span></p>
+<p>is the set of enumerated in-scope pathways in <span
+class="math inline"><em>A</em></span> through which <span
+class="math inline"><em>I</em></span> may be satisfied or violated. A
+pathway may be a code path, state transition, capability edge,
+serialization boundary, configuration choice, retry route, error path,
+migration, or external effect surface. The subscript is essential:
+refactoring, configuration change, provider substitution, or newly
+discovered bypass can change the surface without changing the prose
+statement of <span class="math inline"><em>I</em></span>.</p>
+<p>The surface is an evidence-bearing inventory, not an omniscient set.
+A review must state how pathways were discovered and which capability
+surfaces were outside observation.</p>
+<h3 id="evidenced-constraint-surface">2.2 Evidenced Constraint
+Surface</h3>
+<p>Let <span class="math inline"><em>S</em></span> be the specification
+and configuration artifacts intended to preserve <span
+class="math inline"><em>I</em></span>, and let <span
+class="math inline"><em>E</em></span> be the available evidence.
+Define</p>
+<p><span
+class="math display"><em>C</em><sub><em>A</em></sub>(<em>S</em>, <em>I</em>, <em>E</em>) ⊆ <em>R</em><sub><em>A</em></sub>(<em>I</em>)</span></p>
+<p>as the pathways for which the claimed constraint is both applicable
+and supported by the declared evidence. A prose obligation, type,
+interface, contract, test, mediator, or receipt contributes only the
+coverage it can demonstrate. Artifact existence alone does not place a
+pathway in <span
+class="math inline"><em>C</em><sub><em>A</em></sub></span>.</p>
+<h3 id="observed-saturation-gap-and-unknown-surface">2.3 Observed
+Saturation Gap and Unknown Surface</h3>
+<p>The <strong>observed saturation gap</strong> is</p>
+<p><span
+class="math display"><em>G</em><sub><em>A</em></sub>(<em>S</em>, <em>I</em>, <em>E</em>) = <em>R</em><sub><em>A</em></sub>(<em>I</em>) \ <em>C</em><sub><em>A</em></sub>(<em>S</em>, <em>I</em>, <em>E</em>).</span></p>
+<p>Plausible-but-wrong realizations may inhabit this gap. In addition,
+let <span
+class="math inline"><em>U</em><sub><em>A</em></sub>(<em>I</em>)</span>
+denote pathways that exist but are absent from the current inventory.
+Since <span
+class="math inline"><em>U</em><sub><em>A</em></sub>(<em>I</em>)</span>
+is only discovered through new evidence, an observed empty gap does not
+prove absolute saturation:</p>
+<p><span
+class="math display"><em>G</em><sub><em>A</em></sub> = ⌀ ⇏ <em>U</em><sub><em>A</em></sub> = ⌀.</span></p>
+<p>Any completeness statement is therefore relative to an architecture
+revision, capability boundary, enumeration procedure, threat model,
+evidence package, and time.</p>
+<h3 id="complexity-threshold-as-a-hypothesis">2.4 Complexity Threshold
+as a Hypothesis</h3>
+<p>As component count, interaction depth, concurrency, configurability,
+and interface multiplicity increase, the cost of enumerating and
+constraining realization pathways may rise nonlinearly. Prose-only
+governance may then become too ambiguous or expensive to maintain. The
+paper calls the point at which additional artifact-bound constraints
+become cost-effective a <strong>complexity threshold</strong>.</p>
+<p>This is not asserted as a universal constant or phase law. It is a
+deployment-relative hypothesis. Evidence requires a declared complexity
+measure, observed defect classes, specification forms, comparable tasks,
+and intervention results. The threshold may differ across languages,
+teams, domains, tools, and consequence classes.</p>
+<h3 id="tolerable-ambiguity">2.5 Tolerable Ambiguity</h3>
+<p>Not every unconstrained choice is a defect. Algorithm selection,
+naming, internal decomposition, optimization, or presentation may remain
+open when all governing invariants are preserved. These are
+<strong>tolerable ambiguity regions</strong>.</p>
+<p>Tolerable ambiguity must be declared with its scope and
+non-negotiable boundary. Otherwise a later reviewer cannot distinguish
+intended executor freedom from an undiscovered gap. Ambiguity also
+remains revisable: operational evidence may reveal that a previously
+harmless degree of freedom affects security, interoperability,
+reproducibility, or cost.</p>
+<h3 id="operational-saturation">2.6 Operational Saturation</h3>
+<p>Absolute ideal saturation is generally unavailable as an empirical
+claim. <strong>Operational saturation</strong> is the stronger usable
+target: for a declared architecture revision and consequence class,</p>
+<ul>
+<li>the in-scope pathway inventory is current under the selected
+discovery method;</li>
+<li>every enumerated pathway has a justified constraint or declared
+tolerable ambiguity;</li>
+<li>negative and mutation tests challenge each binding;</li>
+<li>bypass and capability-surface discovery seek unenumerated
+pathways;</li>
+<li>residual unknowns and evidence limitations are explicit;</li>
+<li>new counterexamples reopen the claim.</li>
+</ul>
+<p>Operational saturation is thus a defeasible evidence state, not a
+permanent property conferred by the specification’s author.</p>
+<hr />
+<h2 id="admissibility-engineering-1">3. Admissibility Engineering</h2>
+<h3 id="definition">3.1 Definition</h3>
+<p><strong>Admissibility engineering</strong> is the discipline of
+identifying consequence-bearing realization pathways, binding their
+invariants into independently inspectable artifacts and runtime
+boundaries, and testing whether inadmissible realizations are refused
+before effect or explicitly classified as unverified.</p>
+<p>The discipline spans specification, configuration, implementation,
+evidence, and revision. It does not mean that every constraint belongs
+in code or that mechanical enforcement is always preferable. The
+appropriate layer depends on what must be constrained, who may revise
+it, what evidence exists, and which failures are tolerable.</p>
+<h3 id="constraint-binding">3.2 Constraint Binding</h3>
+<p><strong>Constraint binding</strong> connects a named invariant to a
+defined enforcement or evaluation point. A useful binding
+identifies:</p>
+<ul>
+<li>the exact invariant and consequence class;</li>
+<li>the architecture and configuration revision;</li>
+<li>the pathways it covers;</li>
+<li>the mechanism that admits, refuses, or observes them;</li>
+<li>authority to define and revise the mechanism;</li>
+<li>expected evidence and failure codes;</li>
+<li>known bypasses and residual unknowns.</li>
+</ul>
+<p>A binding may act at authoring, compilation, construction,
+deployment, invocation, transition, effect, or post-effect verification
+time. Calling every artifact-layer check “construction-time” would
+obscure these distinct assurance moments.</p>
+<h3 id="artifact-and-evidence-techniques">3.3 Artifact and Evidence
+Techniques</h3>
+<ul>
+<li><p><strong>Technique:</strong> Abstract interfaces and projected
+ABCs<br />
+<strong>Useful constraint:</strong> Required operation shape and
+dependency direction<br />
+<strong>Important limit:</strong> Presence of a method does not
+establish semantic behavior.</p></li>
+<li><p><strong>Technique:</strong> Type and schema scaffolds<br />
+<strong>Useful constraint:</strong> Representable values, field
+obligations, and some state distinctions<br />
+<strong>Important limit:</strong> Many semantic and temporal obligations
+remain expressible but unenforced.</p></li>
+<li><p><strong>Technique:</strong> Preconditions, postconditions, and
+invariants<br />
+<strong>Useful constraint:</strong> Local transition obligations<br />
+<strong>Important limit:</strong> A contract may be wrong, disabled, or
+bypassed.</p></li>
+<li><p><strong>Technique:</strong> Typestate and capability APIs<br />
+<strong>Useful constraint:</strong> Permitted operation order and
+authority attenuation<br />
+<strong>Important limit:</strong> Runtime bindings and hidden side
+channels still require evidence.</p></li>
+<li><p><strong>Technique:</strong> Reference models and behavioral
+oracles<br />
+<strong>Useful constraint:</strong> Expected externally observable
+behavior<br />
+<strong>Important limit:</strong> Oracle independence and completeness
+must be justified.</p></li>
+<li><p><strong>Technique:</strong> Property, metamorphic, fuzz, and
+mutation tests<br />
+<strong>Useful constraint:</strong> Broad counterexample search and test
+sensitivity<br />
+<strong>Important limit:</strong> Sampling does not prove
+exhaustion.</p></li>
+<li><p><strong>Technique:</strong> Structural and dependency
+checks<br />
+<strong>Useful constraint:</strong> Cross-component topology and
+forbidden adjacency<br />
+<strong>Important limit:</strong> Static structure may diverge from
+dynamic execution.</p></li>
+<li><p><strong>Technique:</strong> Receipt and trace obligations<br />
+<strong>Useful constraint:</strong> Declared transition, lineage, and
+observation evidence<br />
+<strong>Important limit:</strong> Self-reports do not prove mediation
+coverage or external effect.</p></li>
+<li><p><strong>Technique:</strong> Named adjacency targets<br />
+<strong>Useful constraint:</strong> A concrete nearby wrong system the
+binding must exclude<br />
+<strong>Important limit:</strong> The named list may omit novel
+failures.</p></li>
+</ul>
+<p>The catalog is intentionally heterogeneous. Saturation improves when
+independent techniques overlap in consequence-bearing regions and
+disagree detectably when one layer drifts.</p>
+<h3 id="constraint-relocation-and-its-risks">3.4 Constraint Relocation
+and Its Risks</h3>
+<p>Moving a rule from prose into an artifact can make a boundary more
+precise and testable, but relocation is not automatically an
+improvement. It may freeze a mistaken interpretation, hide policy in
+code, narrow legitimate implementations, increase migration cost, or
+transfer authority from an author to a toolchain. Every relocation
+therefore requires provenance, authority, scope, revision, and rollback
+semantics.</p>
+<p>The goal is not maximum constraint. It is the least restrictive set
+of bindings that excludes identified harmful or incorrect realization
+classes while preserving declared legitimate variation.</p>
+<h3 id="relationship-to-constraint-bound-inference">3.5 Relationship to
+Constraint-Bound Inference</h3>
+<p>Constraint-Bound Inference (CBI) describes an executor operating
+within declared bounds. Admissibility engineering constructs, tests, and
+revises those bounds. CBI is an execution posture; AE is the engineering
+discipline that asks whether the posture’s constraint surface is
+adequate for a particular architecture and consequence class.</p>
+<p>Neither term grants conformance. An executor can claim to be
+constrained while important pathways remain unbound, and a rich artifact
+package can exist while the runtime ignores it.</p>
+<hr />
+<h2 id="receipts-as-a-governed-evidence-substrate">4. Receipts as a
+Governed Evidence Substrate</h2>
+<h3 id="evidence-not-behavior">4.1 Evidence, Not Behavior</h3>
+<p>Receipts can make system claims durable, attributable, and
+recomputable. They can bind an input identity, admitted configuration,
+transition request, decision, expected effect, observation, and
+predecessor relation. This makes a receipt chain a valuable
+<strong>governed evidence substrate</strong>.</p>
+<p>A receipt is not the behavior it describes. A system may emit a
+success receipt before an effect, fabricate an observation, omit an
+unmediated pathway, or faithfully record an incorrect decision. The
+relevant chain is therefore:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Obligation} \\
+&amp;\rightarrow \operatorname{AdmittedConfiguration} \\
+&amp;\rightarrow \operatorname{Transition} \\
+&amp;\rightarrow \operatorname{EffectObservation} \\
+&amp;\rightarrow \operatorname{Receipt} \\
+&amp;\rightarrow \operatorname{IndependentVerification}
+\end{aligned}.
+$$</span></p>
+<p>Each arrow needs its own evidence and failure semantics.
+Cryptographic integrity can protect a receipt after creation; it cannot
+make the underlying claim true or complete.</p>
+<h3 id="receipt-backed-test-oracles">4.2 Receipt-Backed Test
+Oracles</h3>
+<p>Tests may use receipts as inputs to an oracle when the receipt schema
+exposes the transition evidence under examination. Stronger tests
+combine:</p>
+<ul>
+<li>receipt validation and predecessor continuity;</li>
+<li>independent observation of relevant state or effect;</li>
+<li>recomputation from exact inputs where deterministic;</li>
+<li>deliberate bypass and omission attacks;</li>
+<li>mutation of receipts and runtime bindings;</li>
+<li>negative cases that must produce typed refusal.</li>
+</ul>
+<p>This avoids both extremes: inspecting only mutable in-memory state,
+and trusting a self-consistent receipt chain as proof of reality.</p>
+<h3 id="mediation-and-completeness">4.3 Mediation and Completeness</h3>
+<p>A receipt-backed completeness claim requires evidence that every
+in-scope effect pathway crosses the receipt-producing boundary. That may
+require capability mediation, operating-system or hardware observation,
+external witnesses, reconciliation against independent logs, or
+destructive bypass tests. The strength of the claim cannot exceed the
+strength of that coverage evidence.</p>
+<h3 id="verification-harness-standing">4.4 Verification Harness
+Standing</h3>
+<p>The source describes a <code>HeadlessRunner</code> and</p>
+<p><code>ScenarioResult</code> pattern. In this candidate they remain an
+implementation profile to be bound to an exact artifact and evidence
+package. Their names do not establish that the harness observes real
+effects, resists stubbing, or covers every relevant pathway. A
+publication-ready empirical section must identify the exact harness
+revision, schemas, runner environment, fault injections, expected
+failures, and independently verified outputs.</p>
+<h3 id="corpus-integration">4.5 Corpus Integration</h3>
+<p>Receipt-Bound Capabilities binds permission to evidence obligations.
+<em>Reasoning by Way of Receipts</em> extends the model to intermediate
+epistemic transitions. <em>The Three Hash Rule</em> separates state,
+admissibility, and meaning commitments. Semantic Custody preserves who
+holds and may transform semantic material. Admissibility engineering
+contributes the complementary pathway question: which realized routes
+must be constrained or observed before any of those commitments can
+support a bounded claim?</p>
+<hr />
+<h2 id="evidence-contract-and-current-status">5. Evidence Contract and
+Current Status</h2>
+<h3 id="current-standing">5.1 Current Standing</h3>
+<p>This source head contains no publication-grade empirical package.
+Earlier scale counts and convergence examples were explicitly marked as
+stale placeholders and are not carried forward as results. The
+conceptual framework can be evaluated now; empirical claims remain
+pending exact evidence.</p>
+<h3 id="required-experiment-record">5.2 Required Experiment Record</h3>
+<p>Each reported build should bind:</p>
+<ul>
+<li>codex or specification identity and exact revision;</li>
+<li>Instance Configuration and implementation target;</li>
+<li>source and dependency commitments;</li>
+<li>executor, model, toolchain, environment, and authority surface;</li>
+<li>attempt, retry, intervention, and specification-amendment
+history;</li>
+<li>invariant catalog and realization-path inventory;</li>
+<li>constraint-to-path coverage matrix;</li>
+<li>test, mutation, fault-injection, and bypass corpus identities;</li>
+<li>effect observations and receipt commitments;</li>
+<li>failures, exclusions, timeouts, and missing evidence;</li>
+<li>final comparison relation and its decision procedure.</li>
+</ul>
+<h3 id="saturation-metrics">5.3 Saturation Metrics</h3>
+<p>For enumerated in-scope pathways,</p>
+<p><span class="math display">$$
+\operatorname{ObservedCoverage}(I)
+=
+\frac{|C_A(S,I,E)|}{|R_A(I)|}.
+$$</span></p>
+<p>The denominator must state the enumeration method and revision. A
+high fraction does not bound unknown surface <span
+class="math inline"><em>U</em><sub><em>A</em></sub>(<em>I</em>)</span>.
+Additional metrics should include newly discovered pathways per review
+pass, mutation survival, bypass success, false refusal,
+legitimate-variation loss, constraint-maintenance cost, and time to
+repair a discovered gap.</p>
+<h3 id="counterfactual-baselines">5.4 Counterfactual Baselines</h3>
+<p>At minimum, compare:</p>
+<ol type="1">
+<li>prose specification plus conventional tests;</li>
+<li>prose plus expanded property, fuzz, mutation, and differential
+tests;</li>
+<li>selected artifact bindings without receipts;</li>
+<li>receipts without independent effect observation;</li>
+<li>the full admissibility-engineering profile.</li>
+</ol>
+<p>The comparison should hold task, consequence class, and evaluation
+corpus as constant as practical. It should measure defects found,
+defects surviving, false refusals, legitimate implementation diversity,
+human and machine cost, latency, and maintenance burden.</p>
+<h3 id="negative-controls-and-fault-injection">5.5 Negative Controls and
+Fault Injection</h3>
+<p>The evaluation should deliberately introduce missing interface
+methods, wrong postconditions, authority bypass, unreceipted mutation,
+forged or replayed receipt, stale configuration, hidden effect routes,
+suppressed specification amendment, incorrect reference behavior, and
+semantically wrong implementations that satisfy shape constraints. A
+technique earns credit only when its claimed layer detects the relevant
+injected defect without relying on undisclosed manual knowledge.</p>
+<h3 id="evidence-gate">5.6 Evidence Gate</h3>
+<p>Until this package exists, the following remain hypotheses:</p>
+<ul>
+<li>plausible-but-wrong realization dominates mature agentic coding
+failures;</li>
+<li>a measurable complexity threshold separates prose-sufficient from
+artifact-bound regimes;</li>
+<li>the proposed bindings reduce residual defects more than expanded
+testing alone;</li>
+<li>receipt-backed evaluation improves causal confidence;</li>
+<li>cross-model, cross-path, or cross-language convergence predicts
+useful coding capability;</li>
+<li>the assurance gain justifies governance cost.</li>
+</ul>
+<hr />
+<h2 id="evaluation-and-convergence-profiles">6. Evaluation and
+Convergence Profiles</h2>
+<h3 id="convergence-is-relation-typed">6.1 Convergence Is
+Relation-Typed</h3>
+<p>Two realizations may converge under one relation and diverge under
+another. At least four relations must remain distinct:</p>
+<ol type="1">
+<li><strong>Exact artifact identity</strong>: canonical artifact
+commitments are identical.</li>
+<li><strong>Trace or receipt equivalence</strong>: admitted traces are
+equivalent under a declared canonicalization and observation
+policy.</li>
+<li><strong>Behavioral observational equivalence</strong>: a declared
+observer cannot distinguish relevant behavior over the evaluation
+domain.</li>
+<li><strong>Obligation satisfaction</strong>: each realization
+independently satisfies the same invariant and evidence
+obligations.</li>
+</ol>
+<p>Cross-language implementations ordinarily cannot share exact artifact
+hashes. They may satisfy the same obligations or produce traces related
+by a typed translation. Calling all four outcomes<br />
+<code>stream_hash convergence</code> would erase the property actually
+measured.</p>
+<p>Represent a result as a vector rather than a binary label:</p>
+<p><span
+class="math display"><em>V</em> = (<em>a</em>, <em>t</em>, <em>b</em>, <em>o</em>, <em>d</em>, <em>c</em>),</span></p>
+<p>where <span class="math inline"><em>a</em></span> is artifact
+identity, <span class="math inline"><em>t</em></span> trace equivalence,
+<span class="math inline"><em>b</em></span> behavioral equivalence,
+<span class="math inline"><em>o</em></span> obligation satisfaction,
+<span class="math inline"><em>d</em></span> discovered saturation debt,
+and <span class="math inline"><em>c</em></span> measured cost. Each
+component names its decision procedure and evidence.</p>
+<h3 id="evaluation-protocol">6.2 Evaluation Protocol</h3>
+<p>A comparative run should:</p>
+<ol type="1">
+<li>freeze the specification family and evaluation profile;</li>
+<li>declare allowed configuration choices and tolerable ambiguity;</li>
+<li>isolate hidden evaluation cases from executors where
+appropriate;</li>
+<li>record all retries, human interventions, tool failures, and
+specification amendments;</li>
+<li>execute negative, mutation, and bypass cases;</li>
+<li>compute each convergence component independently;</li>
+<li>report exclusions and missing observations;</li>
+<li>reproduce a sample through an independent verifier.</li>
+</ol>
+<p>Zero specification amendments is not automatically success. It may
+indicate a saturated specification, but it may also indicate suppressed
+feedback or an executor forced to implement a defect. Amendments must be
+typed as clarification, defect repair, scope change, configuration
+choice, or implementation accommodation.</p>
+<h3 id="what-becomes-comparable">6.3 What Becomes Comparable</h3>
+<p>Under a fixed evaluation profile, the method can compare models,
+prompts, toolchains, configuration choices, languages, and
+implementation paths. The comparison remains local to the tasks and
+consequence classes sampled. A result does not establish general model
+capability, universal language equivalence, or correctness outside the
+declared observer and threat model.</p>
+<h3 id="polyglot-realization">6.4 Polyglot Realization</h3>
+<p>A language-neutral invariant can be realized through
+language-specific binding guides. The useful question is not whether
+source artifacts are identical, but whether the guides preserve the same
+obligation set and whether the realized systems satisfy it under
+equivalent observations. Component-specific language selection is
+therefore an Instance Configuration decision subject to adapter,
+foreign-function, serialization, build, and operational boundary
+evidence.</p>
+<h3 id="threats-to-validity">6.5 Threats to Validity</h3>
+<p>Major threats include benchmark leakage, correlated executors,
+evaluator coupling, an incorrect reference model, underspecified
+equivalence, hidden human intervention, survivorship bias, changing
+toolchains, non-independent receipts, and an evaluation corpus derived
+from the same defects used to author the constraints. These should be
+reported as part of the result rather than treated as implementation
+notes.</p>
+<hr />
+<h2 id="related-work-and-positioning">7. Related Work and
+Positioning</h2>
+<p>This section locates admissibility engineering within the published
+research program and adjacent traditions. The relations are typed: AE
+extends, complements, or specializes prior work in defined ways.</p>
+<p><strong>Governed Agentic Coding (GAC) [Ableman 2026].</strong> GAC
+establishes the <em>thrash threshold</em>–the phase transition at which
+directive authority collapses within an agentic coding loop under
+context decay. AE introduces a specification-side complement: the
+<em>complexity threshold</em> at which prose specifications cease to
+close the saturation gap. GAC governs loop length; AE governs
+specification saturation. The two thresholds are independent failure
+modes; both must be addressed for stable agentic development.</p>
+<p><strong>Receipt-Bound Capabilities (RBC) [Ableman 2026].</strong> RBC
+defines the discipline of inseparably binding permission to act and
+obligation to produce evidence. Section 4 of this paper builds directly
+on RBC: the receipt chain as governance substrate is the architectural
+realization of RBC at the system scale.</p>
+<p><strong>Governance Coverage Gaps (GCG) [Ableman,
+forthcoming].</strong> GCG identifies failures in <em>governance
+scope</em>: a system’s failure to declare governance over capabilities
+it exercises. AE identifies failures in <em>constraint surface</em>: a
+specification’s failure to constrain the realization surface of its
+declared invariants. The two are complementary diagnostics: GCG asks
+whether the right things are governed; AE asks whether what is governed
+is governed completely.</p>
+<p><strong>The Constitutional Codex [Ableman, forthcoming].</strong> The
+Codex paper establishes the document type that makes governed
+AI-assisted construction possible. AE describes the discipline by which
+Codices reach ideal saturation above the complexity threshold–the
+<em>how</em> of writing a Codex that converges on a system whose
+complexity exceeds prose-only governance.</p>
+<p><strong>Constraint-Bound Inference (CBI) [Ableman 2026].</strong> CBI
+characterizes the inferential mode of executors operating within
+declared constraints. AE constructs the constraint surfaces on which CBI
+operates above the complexity threshold; CBI is the inferential
+mechanism, AE is the constraint discipline.</p>
+<p><strong>Testing for Deriving Observable State [Ableman,
+forthcoming].</strong> This paper grounds the evidence-vs-behavior
+distinction that Section 4 of AE depends on: tests must verify evidence,
+not just behavioral outputs. The receipt-chain-as-substrate architecture
+is the operational realization.</p>
+<p><strong>Constitutional Agentic Compilation (CAC) [Ableman,
+forthcoming].</strong> CAC introduces bounded-discretion realization
+from constitutional specifications. AE is the discipline that makes
+bounded discretion operational above the complexity threshold; without
+AE, “bounded discretion” remains aspirational because the specification
+cannot bound the discretion tightly enough.</p>
+<p><strong>Formal methods (TLA+, Alloy, Z) [Lamport 2002; Jackson
+2012].</strong> Formal methods aspire to language-agnostic correctness
+through mathematical specification. They provide rigorous languages and
+analyses but require specialized modeling and still leave refinement,
+implementation, environment, and assurance-boundary obligations. AE is
+more permissive–natural language plus artifact and evidence
+constraints–and should be evaluated as a complementary engineering
+discipline, not as a demonstrated substitute for formal proof. Their
+useful composition and division of labor are empirical and
+domain-specific questions. The relation is one of operational
+complementarity: formal methods for the highest-assurance components, AE
+for the system as a whole.</p>
+<p><strong>Design by Contract [Meyer 1992].</strong> DbC introduces
+preconditions, postconditions, and invariants at the method level.
+Implementation contracts in Section 3.3 are direct descendants of DbC.
+AE generalizes the DbC discipline to the system level: phases have
+preconditions (prerequisites), postconditions (exit criteria), and
+invariants spanning multiple phases.</p>
+<p><strong>LLM-assisted code generation.</strong> Agentic and
+non-agentic coding systems use heterogeneous generation, search, test,
+repair, and review loops. AE proposes an evaluation and constraint
+discipline that can be applied across those loops. A current external
+literature review is still required for a future evidence-qualified
+revision to compare it fairly with contemporary repository-level agents,
+specification-guided synthesis, proof-carrying code, refinement types,
+typestate, property-based testing, mutation testing, and formal
+verification.</p>
+<h3 id="ableman-corpus-and-realization-funnel-placement">7.1 Ableman
+Corpus and Realization-Funnel Placement</h3>
+<p>The current meaning architecture is the <strong>Governed Meaning Base
+(GMB)</strong> under the author-confirmed historical lineage
+<code>CCF -&gt; CMB -&gt; GMB</code>. GMB can hold the identity-bearing
+invariants, relations, standing, evidence links, and revision history
+that AE projects into a bounded construction task. It does not make
+those projections correct merely by storing them.</p>
+<p>The adjacent corpus roles are:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Work or structure</th>
+<th>Relation to admissibility engineering</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ableman’s Razor / Realization Funnel</td>
+<td>Separates possibility, specification, configuration, realized
+implementation, evidence, and revision so that a constraint cannot
+silently migrate between stages.</td>
+</tr>
+<tr>
+<td>Constraint-Bound Inference</td>
+<td>Describes execution within bounds; AE constructs and tests the
+bounds.</td>
+</tr>
+<tr>
+<td>Meaning as Binding</td>
+<td>Distinguishes semantic availability from material that has valid
+standing to bind realization.</td>
+</tr>
+<tr>
+<td>Constitutional Context Compilation</td>
+<td>Governs which specifications, evidence, tools, and prior decisions
+enter an agent invocation.</td>
+</tr>
+<tr>
+<td>The Three Hash Rule</td>
+<td>Prevents object state, admissibility, and meaning commitments from
+collapsing into one apparently sufficient digest.</td>
+</tr>
+<tr>
+<td>Reasoning by Way of Receipts</td>
+<td>Preserves intermediate decisions, alternatives, and debts during
+construction.</td>
+</tr>
+<tr>
+<td>Semantic and Work Custody</td>
+<td>Track who may transform meaning and who holds the bounded duty to
+advance the exact work head.</td>
+</tr>
+<tr>
+<td>Governed Semantic Project Lineage</td>
+<td>Binds project heads, rebuildability, cold-boot capsules, and
+successor relations across sessions.</td>
+</tr>
+</tbody>
+</table>
+<p>AE traverses the funnel as follows:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>AE responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Enumerate competing realizations, including harmful, brittle, and
+overconstrained ones.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Declare invariants, pathways, tolerable ambiguity, obligations, and
+refusal semantics.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate configurations satisfying the bare specification,
+including undesirable admissible cases.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations using safety, sovereignty, maintainability,
+portability, cost, and legitimate-freedom criteria.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select actual bindings, languages, tools, thresholds, test profiles,
+adapters, and observers.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Construct the system and expose actual capability and effect
+pathways.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Test constraints, effects, bypasses, equivalence relations, cost,
+and residual unknowns.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Feed counterexamples and operational evidence back into inventories,
+constraints, configurations, and claims.</td>
+</tr>
+</tbody>
+</table>
+<p>This paper primarily defines the Specification discipline and the
+transition into CM1/CM2. It supplies an evidence protocol, not a
+certified implementation realization.</p>
+<h3 id="counterevidence-and-compression-test">7.2 Counterevidence and
+Compression Test</h3>
+<p>AE’s distinctiveness is reduced if expanded property, mutation,
+differential, and formal testing closes the same defect classes without
+its additional vocabulary; if pathway enumeration proves too unstable to
+support meaningful denominators; if artifact bindings primarily shift
+defects into the binding artifacts; if legitimate implementation
+diversity collapses; if receipt requirements add cost without increasing
+effect confidence; or if convergence scores fail to predict maintenance,
+security, or user value.</p>
+<p>A strong evaluation should therefore include simpler baselines and
+report mechanisms removed after they fail to contribute independent
+assurance. Saturation of the paper’s own architecture requires authorial
+compression as much as implementation constraint.</p>
+<hr />
+<h2 id="pathway-constraint-saturation-discipline">Pathway-Constraint
+Saturation Discipline</h2>
+<p>Across the completed P1 corpus, Admissibility Engineering is the
+<strong>engineering discipline for discovering consequence-bearing
+realization pathways, binding the least restrictive adequate constraints
+at appropriate layers, independently challenging those bindings, and
+revising the observed saturation gap</strong>. It does not prove
+absolute completeness, replace testing with artifacts, or make receipts
+equivalent to behavior.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Implementation
+Codex</em><br />
+<strong>Supplies:</strong> Selected dependencies, phases, bindings,
+gates, evidence, and journal.<br />
+<strong>AE boundary:</strong> AE evaluates whether the package
+constrains the relevant realization surface.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Capabilities and effects omitted from the
+declared governance membrane.<br />
+<strong>AE boundary:</strong> GCG asks what escaped scope; AE asks what
+remains unconstrained inside declared scope.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Agentic Interface
+Surfaces</em><br />
+<strong>Supplies:</strong> Action, effect, evidence, feedback, and
+recognition surfaces.<br />
+<strong>AE boundary:</strong> AIS exposes agent-facing enforcement; AE
+tests its pathway coverage and false decisions.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Rule placement, mediation, courts, effect
+atomicity, and classified remainder.<br />
+<strong>AE boundary:</strong> AE supplies the saturation method for
+those enforcement locations.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Durable transition and evidence records with
+claim ceilings.<br />
+<strong>AE boundary:</strong> AE uses receipts in plural evidence
+without trusting them as complete effects.</p></li>
+</ul>
+<p>An operational saturation claim should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+S= (&amp;architecture, invariant, consequence\_class, \\
+&amp;pathway\_inventory, enumeration\_method, \\
+&amp;constraint\_bindings, evidence, ambiguity, bypasses, \\
+&amp;unknown\_surface, counterexamples, cost, revision)
+\end{aligned}.
+$$</span></p>
+<p>The observed gap is only over enumerated pathways. New capabilities,
+adapters, retries, error paths, providers, migrations, or physical
+effects can reopen the surface. Tolerable ambiguity must be declared so
+legitimate implementation diversity is not mistaken for a defect or
+silently destroyed by overconstraint.</p>
+<p>Every constraint relocation has authority and migration consequences.
+Types, schemas, contracts, mediators, oracles, receipts, tests, and
+models can each encode the wrong invariant or share one failure mode.
+The full profile therefore compares against expanded testing and simpler
+baselines, measures false admission and false refusal, and removes
+machinery that contributes no independent assurance.</p>
+<p>The universal GSM can type<br />
+<code>ENUMERATES_REALIZATION_PATHWAY</code>,
+<code>BINDS_INVARIANT_AT_LAYER</code>,<br />
+<code>COVERS_PATHWAY_WITH_EVIDENCE</code>,
+<code>LEAVES_OBSERVED_SATURATION_GAP</code>,<br />
+<code>PRESERVES_TOLERABLE_AMBIGUITY</code>,
+<code>DISCOVERS_UNKNOWN_PATHWAY</code>,
+<code>BYPASSES_CONSTRAINT_BINDING</code>,<br />
+<code>FALSELY_REFUSES_REALIZATION</code>,
+<code>REOPENS_SATURATION_CLAIM</code>,<br />
+and<br />
+<code>COMPRESSES_REDUNDANT_MECHANISM</code>. These relations make
+saturation defeasible and measurable.</p>
+<p>This integration establishes four editorial commitments: classify AE
+as the pathway-constraint saturation discipline; adopt the
+operational-saturation envelope; require explicit tolerable ambiguity,
+unknown surface, simpler baselines, and false-decision costs; and make
+every saturation claim reopenable by new pathways, counterexamples, or
+architecture revisions.</p>
+<h2
+id="capability-specific-admissibility-and-cross-domain-term-firewall">Capability-Specific
+Admissibility and Cross-Domain Term Firewall</h2>
+<p>The fixed-seed comparison with the Cognitive ABI, Crystallized
+Governance, the international-trade UGK profile, and Admissibility
+Theory of Consciousness makes admissibility explicitly typed:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A= (&amp;subject, domain, jurisdiction, requirement, \\
+&amp;capability\_contract, architecture, pathways, \\
+&amp;constraint\_bindings, evidence, false\_admission, \\
+&amp;false\_refusal, unknowns, revision)
+\end{aligned}.
+$$</span></p>
+<p>The Cognitive ABI names the capability contract and eligible
+realization conditions. Crystallized Governance supplies
+source-correspondence, remainder, adoption, contest, and amendment
+obligations that may constrain a realized pathway. Neither layer proves
+pathway coverage; AE inventories adapters, retries, fallbacks, caches,
+effectors, and error paths for the selected architecture.</p>
+<p>The international-trade material offers a bounded application surface
+for mandate, documentary claim, handoff, amendment, refusal, and
+jurisdictional decision. A trade pilot would need domain authority and
+legal validation in addition to engineering saturation. The current
+candidate title remains an AI proposal over an untitled source head and
+does not acquire author standing here.</p>
+<p>Admissibility Theory of Consciousness uses admissibility as a
+structural research vocabulary about possible, viable, reflexive, and
+self-authoring organization. AE uses it as an engineering decision over
+a named realization and requirement. Shared vocabulary does not transfer
+evidence, thresholds, mechanisms, or phenomenality claims between the
+two.</p>
+<p>The universal GSM can type<br />
+<code>EVALUATES_TYPED_ADMISSIBILITY</code>,
+<code>BINDS_CAPABILITY_PATHWAY</code>,<br />
+<code>IMPLEMENTS_CONSTITUTIONAL_OBLIGATION</code>,
+<code>PROFILES_TRADE_REALIZATION</code>,<br />
+<code>DISTINGUISHES_ADMISSIBILITY_DOMAIN</code>,
+<code>REFUSES_CROSS_DOMAIN_EVIDENCE_TRANSFER</code>,<br />
+and<br />
+<code>REOPENS_ON_ARCHITECTURE_CHANGE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the domain-typed AE object; bind saturation to capability contracts and
+constitutional obligations; retain trade as a separately authorized
+application profile; and install a terminology firewall between
+engineering admissibility and consciousness research.</p>
+<h2 id="a-reopenable-architecture-relative-saturation-ledger">A
+Reopenable Architecture-Relative Saturation Ledger</h2>
+<p>Twenty retained downstream uses place Admissibility Engineering
+across capability contracts, quant systems, collective coordination,
+context management, governance crystals, frozen compilers, physical
+control, possibility analysis, epistemic profiles, ACG courts, coverage
+gaps, incentive design, GCNL, anti-self-ratification, MosaiCOS, semantic
+binding quality, semantic debt, split authority, AFS, and COP. They
+confirm a cross-cutting engineering discipline for pathway discovery and
+constraint placement, not a claim of absolute completeness.</p>
+<p><span class="math display">$$
+\begin{aligned}
+A^*= (&amp;subject, generation, requirement, consequence\_class, \\
+&amp;architecture, capability\_surface, effect\_surface, \\
+&amp;pathway\_inventory, enumeration\_method, \\
+&amp;constraint\_bindings, placement\_authority, evidence, \\
+&amp;bypasses, false\_admission, false\_refusal, \\
+&amp;tolerable\_ambiguity, unknown\_surface, cost, \\
+&amp;reopen\_triggers, revision)
+\end{aligned}.
+$$</span></p>
+<p>Saturation is always relative to an exact architecture, generation,
+requirement, threat model, and enumerated pathway set. New adapters,
+providers, retries, caches, error paths, migration steps, privileges, or
+physical effects reopen the claim. A constraint moved into a type,
+schema, model, compiler, mediator, test, receipt, or oracle changes both
+failure mode and authority topology.</p>
+<p>The discipline must optimize a two-sided and noncompensatory profile:
+harmful false admission, legitimate false refusal, unobserved pathway,
+residual ambiguity, performance and maintenance cost, privacy,
+portability, sovereignty, and repairability. More constraints are not
+automatically better. Independent challenge must include mutation,
+bypass, shared-oracle, stale-policy, relocation, and simpler-baseline
+tests.</p>
+<p>The universal GSM can type<br />
+<code>DECLARES_SATURATION_SUBJECT</code>,<br />
+<code>ENUMERATES_REALIZATION_PATHWAY</code>,
+<code>BINDS_CONSTRAINT_AT_LAYER</code>,<br />
+<code>ASSIGNS_PLACEMENT_AUTHORITY</code>, <code>DISCOVERS_BYPASS</code>,
+<code>MEASURES_FALSE_ADMISSION</code>,<br />
+<code>MEASURES_FALSE_REFUSAL</code>,
+<code>PRESERVES_TOLERABLE_AMBIGUITY</code>,
+<code>REOPENS_ON_ARCHITECTURE_CHANGE</code>,<br />
+and<br />
+<code>COMPRESSES_REDUNDANT_ASSURANCE</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+complete reopenable saturation ledger; bind each claim to architecture,
+generation, requirement, consequence, threat, and pathway set; evaluate
+false admission, false refusal, ambiguity, unknown surface, and cost
+separately; and require authority-aware constraint placement,
+independent attacks, and simpler baselines.</p>
+<h2 id="constraints-can-be-wrong-too">Constraints Can Be Wrong Too</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Admissibility Engineering asks how an AI coding process can make
+prohibited outcomes structurally unavailable rather than merely
+discouraged in prose. Its central move is valuable only if the admitted
+region is itself reviewable: a machine can enforce the wrong boundary
+with perfect consistency.</p>
+<h3 id="operative-definition">Operative definition</h3>
+<p>For a declared profile <span class="math inline"><em>p</em></span>,
+request <span class="math inline"><em>x</em></span>, realization <span
+class="math inline"><em>r</em></span>, obligations <span
+class="math inline"><em>O</em><sub><em>p</em></sub></span>, and tests
+<span class="math inline"><em>T</em><sub><em>p</em></sub></span>,
+define:</p>
+<p><span
+class="math display"><em>A</em><sub><em>p</em></sub>(<em>r</em>, <em>x</em>) = 1  only
+if  <em>r</em> ⊨ <em>O</em><sub><em>p</em></sub> ∧ <em>T</em><sub><em>p</em></sub>(<em>r</em>, <em>x</em>) = PASS.</span></p>
+<p><code>PASS</code> means admitted under profile <span
+class="math inline"><em>p</em></span>; it does not mean optimal, safe in
+every environment, semantically correct beyond the tested obligations,
+or authorized for deployment. <code>FAIL</code>,<br />
+<code>UNKNOWN</code>, <code>CONFLICT</code>, <code>OUT_OF_SCOPE</code>,
+and <code>UNTESTED_REMAINDER</code> are distinct outcomes.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Wrong-invariant attack.</strong> A faithfully enforced
+invariant encodes a mistaken requirement. The profile must carry source,
+authority, revision, challenge, and supersession rather than treating
+enforcement as correctness.</li>
+<li><strong>Overconstraint attack.</strong> The profile excludes
+legitimate realizations and collapses useful diversity. Rejected regions
+require inspectable reasons and a governed amendment route.</li>
+<li><strong>Shared-failure convergence.</strong> Independent
+realizations produce the same digest or behavior because the
+specification, oracle, fixture, or environment is wrong. Convergence is
+evidence about relation to a fixed test surface, not truth.</li>
+<li><strong>Independence theater.</strong> Realizations described as
+independent share prompts, libraries, evaluators, fixtures, or model
+lineage. Independence must be dimension-typed and evidenced.</li>
+<li><strong>Metric gaming.</strong> A realization optimizes the declared
+evaluator while violating unstated purpose. The result exposes
+specification debt; it does not justify silently widening the
+oracle.</li>
+<li><strong>Polyglot drift.</strong> Different runtimes satisfy surface
+tests while diverging at serialization, arithmetic, exception,
+scheduling, or dependency boundaries. The equivalence profile must name
+these semantics.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper establishes a method and vocabulary for relocating
+obligations into inspectable artifacts. It does not yet establish a
+general reduction in defects, cost, energy, review burden, or security
+incidents. Stream-hash equality is a strong result only for subjects
+whose canonicalization and environmental closure are demonstrated.
+Behavioral agreement is bounded by the observation surface.</p>
+<p>Internal examples and corpus connections explain how the method
+composes with constitutional computing. Publication claims about
+comparative performance, reliability, or organizational outcomes require
+external or newly produced evidence. No external research was added in
+this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public value is not “more rules for AI.” It is the ability to
+state what a realization must preserve, test those obligations across
+implementations, refuse malformed results, and reopen the rules when the
+rules themselves fail. That distinction should lead the paper’s abstract
+and conclusion.</p>
+<h2 id="conclusion">8. Conclusion</h2>
+<p>Admissibility engineering addresses a real and often hidden problem:
+a system may satisfy the checks that exist while violating an obligation
+the specification failed to bind to the realized pathway.</p>
+<p>The discipline proposed here is not “replace prose with code” and not
+“trust receipts instead of tests.” It is a governed loop of pathway
+discovery, constraint placement, independent testing, effect
+observation, evidence binding, counterexample search, and revision. A
+saturation claim is always relative to an exact architecture,
+configuration, capability boundary, threat model, and evidence
+package.</p>
+<p>This reframing preserves the paper’s central insight while limiting
+its claim. Artifact-bound constraints can reduce some forms of
+plausible-but-wrong realization. They can also encode mistakes, hide
+authority, constrain legitimate variation, or be bypassed. Receipts can
+make transitions reviewable; they cannot prove their own completeness or
+the truth of the effects they report. Convergence can support comparison
+only after the relevant equivalence relation is named.</p>
+<p>The immediate research task is empirical: bind the current systems
+and codices to exact heads, construct pathway and constraint matrices,
+execute fault-injection and simpler-baseline comparisons, and measure
+defect survival, false refusal, legitimate variation, governance cost,
+and maintenance burden. Only then can the dominance, threshold,
+convergence, and comparative-capability hypotheses receive evidentiary
+standing.</p>
+<p>The long-term aim remains powerful: specifications that preserve
+intentional freedom while making consequence-bearing wrong realizations
+detectably inadmissible. Ambiguity engineering is the complementary
+discipline–not the absence of saturation, but the deliberate
+preservation of choice within a proven boundary.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm2.</strong> Existing source passages use this stage only
+as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that agentic software construction can produce
+implementations that compile, run, and pass the available tests while
+violating an invariant that the specification intended to preserve. Its
+nearest external comparison fields are formal, provenance, software. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Modularity,
+secure-development practice, and reproducibility reduce classes of
+failure but do not guarantee architectural coherence or user
+sovereignty. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman <em>Ableman’s Razor: A Typed Grammar for Ontology
+Exploration, Configuration Collapse, and Implementation Feedback.</em>
+Zenodo, 2026. doi:10.5281/zenodo.18113475</p>
+<p>Adam Ableman <em>Constraint-Bound Inference and Invariant
+Extraction.</em> Zenodo, 2026. doi:10.5281/zenodo.18175270</p>
+<p>Adam Ableman <em>Governed Agentic Coding (GAC): Thrash Threshold,
+Churn, and In-Loop Epistemic Authority Governance for Frontier AI Coding
+Systems.</em> Zenodo, 2026. doi:10.5281/zenodo.18629665</p>
+<p>Adam Ableman <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality.</em> Zenodo, 2026.
+doi:10.5281/zenodo.18601631</p>
+<p>Adam Ableman <em>The Constitutional Codex: AI-Executable
+Specification and Phase-Gated Construction for Deterministic System
+Realization.</em> Forthcoming.</p>
+<p>Adam Ableman <em>Governance Coverage Gaps: Diagnosing the Absence of
+Governance at Capability Boundaries.</em> Forthcoming.</p>
+<p>Adam Ableman <em>Testing for Deriving Observable State of Software
+Systems.</em> Forthcoming.</p>
+<p>Adam Ableman <em>Constitutional Agentic Compilation:
+Bounded-Discretion Realization from Constitutional Specifications.</em>
+Forthcoming.</p>
+<p>Lamport, L. <em>Specifying Systems: The TLA+ Language and Tools for
+Hardware and Software Engineers.</em> Addison-Wesley, 2002.</p>
+<p>Jackson, D. <em>Software Abstractions: Logic, Language, and
+Analysis.</em> MIT Press, 2012.</p>
+<p>Meyer, B. “Applying ‘Design by Contract.’” <em>IEEE Computer</em>
+25(10), pp. 40–51, 1992.</p>
+<p>Adam Ableman <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI.</em> Zenodo, 2026. doi:10.5281/zenodo.18633797</p>
+<p>Adam Ableman <em>Semantic Custody.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20300952</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Governed Meaning Base (GMB).</em> Ableman Corpus
+current edition in the historical CCF -&gt; CMB -&gt; GMB lineage;
+conceptual claims retain the standing stated in the work.</p>
+<p>Adam Ableman <em>Meaning as Binding.</em> Ableman Corpus current
+edition; conceptual claims retain the standing stated in the work.</p>
+<p>Adam Ableman <em>Reasoning by Way of Receipts.</em> Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>Adam Ableman <em>From Content-Addressed Storage to Governed Semantic
+Project Lineage.</em> Ableman Corpus current edition; conceptual claims
+retain the standing stated in the work.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847370">10.5281/zenodo.23847370</a></p>

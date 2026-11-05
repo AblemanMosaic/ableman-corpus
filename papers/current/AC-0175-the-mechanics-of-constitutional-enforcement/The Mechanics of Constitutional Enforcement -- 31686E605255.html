@@ -1,0 +1,2007 @@
+<h1 id="the-mechanics-of-constitutional-enforcement">The Mechanics of
+Constitutional Enforcement</h1>
+<h2 id="ratchets-roles-receipts-and-identity-bearing-state">Ratchets,
+Roles, Receipts, and Identity-Bearing State</h2>
+<h3 id="small-topologies-can-carry-large-laws.">Small topologies can
+carry large laws.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Governed systems frequently represent policy as runtime data
+evaluated by predicates: counters, flags, permission checks, validation
+functions, and conditional branches. This paper argues that the
+placement of governance semantics is itself a security and identity
+decision. A requirement represented as data depends on the completeness
+and integrity of every check that interprets it. The same requirement
+represented as state-transition topology constrains which executions are
+validly expressible. When that topology is canonically serialized and
+cryptographically bound into a constitution’s identity, a canonical
+change produces a different identity except with negligible collision
+probability; custody verification can detect substitution against an
+expected identity, while a semantic court must still decide whether the
+change is a weakening.</p>
+<p>The argument arises from a bounded repair in which a requirement for
+seven ordered, unique stages was initially represented by a counter.
+Seven repetitions of the same stage satisfied the quantity while
+violating the intended order and uniqueness. The repair added no new
+constructs: the same guards, effects, invariants, and kernel remained.
+The requirement was instead encoded as a state chain. The change did not
+enlarge the vocabulary; it relocated the semantics from data into
+topology.</p>
+<p>From this observation, the paper develops three propositions. First,
+the <strong>Semantic Placement Principle</strong>: data-borne semantics
+are protected by the completeness of checks, while topology-borne
+semantics are protected by the closure of valid transitions. Second, the
+<strong>Identity-Bearing Topology Principle</strong>: when semantically
+relevant enforcement topology lies inside a declared canonical identity
+boundary, changing that topology changes the governed artifact’s
+identity under the stated hash assumptions; a separate semantic judgment
+determines whether the change weakens the rule. Third, the
+<strong>Ratchet Governance Conjecture</strong>: a substantial class of
+governance requirements may be compilable into finite, monotone,
+role-gated, threshold-bounded transition systems.</p>
+<p>Structural semantics do not eliminate the problem of a defective or
+malicious executor. A nonconforming executor may abandon the automaton
+and impersonate its results. The paper therefore distinguishes
+structural adequacy, executor conformance, custody fidelity, and effect
+integrity. It argues that consequential effects should be mediated by
+independent authority brokers, external witnesses, transactional
+isolation, and absence-sensitive monitoring. The irreducible limit is
+not that malicious execution cannot be countered, but that no component
+can prove its own faithful behavior solely through evidence it alone
+controls.</p>
+<p>The result is a theory of constitutional systems in which the kernel
+need not contain every governance concept. Its task may instead be to
+provide the smallest trusted mechanics into which governance can be
+compiled without losing identity, auditability, bounded refusal, or
+externally observable custody.</p>
+<h2 id="introduction-where-does-the-rule-live">1. Introduction: Where
+Does the Rule Live?</h2>
+<p>A governed system may contain the right rule and still place it in
+the wrong part of the machine.</p>
+<p>Consider a workflow requiring seven distinct stages to occur once
+each and in a prescribed order. One implementation records progress
+using a counter:</p>
+<p><span
+class="math display"><em>c</em><em>o</em><em>u</em><em>n</em><em>t</em> ≥ 7</span>
+The counter proves only that seven qualifying events were counted. It
+does not inherently preserve which events occurred, whether they were
+unique, or whether they followed the required order. If the same stage
+can be submitted seven times, then seven duplicates satisfy the
+representation while violating the policy.</p>
+<p>The representation has preserved quantity and discarded identity.</p>
+<p>The repaired implementation uses a state chain:</p>
+<p><span
+class="math display"><em>S</em><sub>0</sub> → <em>S</em><sub>1</sub> → <em>S</em><sub>2</sub> → ⋯ → <em>S</em><sub>7</sub></span>
+Each transition corresponds to one particular stage. A duplicate
+submission at (S_1) cannot advance the machine unless a transition from
+(S_1) back through the same stage exists. An out-of-order submission
+cannot advance unless the topology contains the corresponding edge. An
+eighth duplicate has no transition to take.</p>
+<p>The illegal behavior is no longer merely prohibited by a predicate.
+It is absent from the transition relation.</p>
+<p>This repair introduced no new kernel construct. The same four guards,
+four effects, four invariants, and kernel bytes remained. What changed
+was the location of the meaning. In the first version, the semantics
+lived in data interpreted by checks. In the second, they lived in the
+structure of possible execution.</p>
+<p>That distinction is more than stylistic. It places the two designs
+under different failure regimes.</p>
+<p>A checked rule can fail because the check is missing, skipped,
+misordered, bypassed, weakened, or applied to the wrong data. A
+structural rule can still fail if the executor is defective or
+malicious, but a conforming executor cannot traverse an edge that the
+admitted machine does not contain. The question changes from:</p>
+<blockquote>
+<p>Did every relevant operation remember to enforce the rule?</p>
+</blockquote>
+<p>to:</p>
+<blockquote>
+<p>Does any valid path through the admitted system violate the rule?</p>
+</blockquote>
+<p>A second consequence follows when the state topology is included in
+the canonical representation of the governing constitution. If the
+constitution’s identity is derived from that representation, then adding
+a bypass edge, weakening a guard, or collapsing two stages changes the
+constitution’s identity. The enforcement structure becomes part of the
+custody surface.</p>
+<p>This yields the paper’s central claim:</p>
+<blockquote>
+<p>Governance rules become stronger when they are relocated from checked
+propositions into identity-bearing topology.</p>
+</blockquote>
+<p>This is not a claim that state machines are novel, nor that all
+governance can be reduced to linear workflows. It is a claim about the
+conjunction of semantic placement, structural reachability,
+cryptographic identity, and authority mediation.</p>
+<p>The bounded observation motivates four questions:</p>
+<ol type="1">
+<li>Which governance properties can be encoded structurally using a
+small transition vocabulary?</li>
+<li>What security changes when semantics move from runtime data into
+topology?</li>
+<li>How does cryptographic custody alter the status of that
+topology?</li>
+<li>What remains vulnerable when the executor itself is defective or
+hostile?</li>
+</ol>
+<p>The answers suggest a design discipline for constitutional systems:
+enlarge the trusted kernel only when a required property is genuinely
+inexpressible, not merely inconvenient to compile.</p>
+<h2 id="data-borne-and-topology-borne-semantics">2. Data-Borne and
+Topology-Borne Semantics</h2>
+<p>A semantic requirement can inhabit several layers of a system.</p>
+<p>It may live in:</p>
+<ul>
+<li>a runtime value,</li>
+<li>a predicate over values,</li>
+<li>a transition relation,</li>
+<li>a type or capability boundary,</li>
+<li>a cryptographic identity,</li>
+<li>an external witness,</li>
+<li>or some composition of these.</li>
+</ul>
+<p>These placements are not interchangeable. Each preserves different
+invariants and fails in different ways.</p>
+<h3 id="data-borne-semantics">2.1 Data-borne semantics</h3>
+<p>A semantic requirement is <strong>data-borne</strong> when its
+meaning depends on interpreting mutable runtime values.</p>
+<p>Examples include:</p>
+<ul>
+<li>a counter indicating completed approvals,</li>
+<li>a Boolean flag indicating verification,</li>
+<li>a list indicating which roles have acted,</li>
+<li>a timestamp indicating freshness,</li>
+<li>a string indicating a security state.</li>
+</ul>
+<p>The value does not enforce its own intended interpretation. A counter
+stores cardinality. It does not know whether the counted items were
+unique. A Boolean stores one bit. It does not prove the event whose
+truth it purports to summarize.</p>
+<p>Data-borne semantics therefore depend on a family of checks:</p>
+<p><span
+class="math display"><em>P</em><em>e</em><em>r</em><em>m</em><em>i</em><em>t</em>(<em>a</em><em>c</em><em>t</em><em>i</em><em>o</em><em>n</em>) ⇔ <em>P</em>(<em>d</em><em>a</em><em>t</em><em>a</em>)</span>
+Their safety depends not merely on predicate (P), but on the proposition
+that every consequential path invokes the correct (P) over authentic
+data at the correct time.</p>
+<p>The complete requirement is closer to:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Safety = Correct(P) \\
+&amp;\land CompleteInvocation(P) \\
+&amp;\land Authentic(data) \\
+&amp;\land CorrectOrdering(P)
+\end{aligned}
+$$</span> A defect in any term may convert a valid local predicate into
+a globally ineffective policy.</p>
+<h3 id="topology-borne-semantics">2.2 Topology-borne semantics</h3>
+<p>A semantic requirement is <strong>topology-borne</strong> when it is
+encoded in the existence or absence of transitions.</p>
+<p>Let a transition system be:</p>
+<p><span
+class="math display">ℳ = (<em>Q</em>, <em>Σ</em>, <em>δ</em>, <em>q</em><sub>0</sub>, <em>F</em>)</span>
+where <span class="math inline"><em>Q</em></span> is a set of states,
+<span class="math inline"><em>Σ</em></span> a set of admissible actions,
+and <span class="math inline"><em>δ</em></span> a transition
+relation.</p>
+<p>A policy violation is structurally excluded when no valid transition
+path realizes it:</p>
+<p><span
+class="math display">∄<em>π</em> ∈ <em>P</em><em>a</em><em>t</em><em>h</em><em>s</em>(ℳ) : <em>V</em><em>i</em><em>o</em><em>l</em><em>a</em><em>t</em><em>e</em><em>s</em>(<em>π</em>, <em>P</em>)</span>
+The system does not ask an executor to remember that stage four must
+follow stage three. It provides no admitted edge by which stage four
+follows stage one.</p>
+<p>The semantics are carried by reachability.</p>
+<p>This does not mean guards disappear. A transition may still be gated
+by evidence, role, threshold, identity, or resource conditions. The
+distinction is that the overall policy is not compressed into a summary
+value whose richer meaning must later be reconstructed.</p>
+<h3 id="the-semantic-placement-principle">2.3 The Semantic Placement
+Principle</h3>
+<p>The motivating case supports the following principle:</p>
+<blockquote>
+<p><strong>Semantic Placement Principle:</strong> A requirement encoded
+as runtime data is protected by the completeness and integrity of its
+interpretation; the same requirement encoded as topology is protected by
+the closure of the admitted transition system.</p>
+</blockquote>
+<p>This is not a universal ranking in which structure always dominates
+data. Some facts are intrinsically data-like. Amounts, identities,
+external measurements, signatures, and timestamps cannot be replaced
+wholesale by topology.</p>
+<p>The principle instead asks whether the structural part of a policy
+has been unnecessarily flattened into data.</p>
+<p>The relevant design question is:</p>
+<blockquote>
+<p>Which distinctions must the representation preserve for the policy to
+remain true?</p>
+</blockquote>
+<p>A counter preserves quantity. A set preserves uniqueness. A sequence
+preserves identity and order. A transition graph preserves admissible
+succession. A role-partitioned graph preserves who may cause which
+succession. A cryptographic digest preserves a custody commitment to a
+particular representation.</p>
+<p>A representation that discards a necessary distinction creates an
+attack surface aligned with what it forgets.</p>
+<h2 id="semantic-homomorphism-attacks">3. Semantic Homomorphism
+Attacks</h2>
+<p>The duplicate-stage failure can be understood as a broader class of
+representational attack.</p>
+<p>Suppose a rich policy domain (X) is mapped into a simpler
+representation (Y):</p>
+<p><span
+class="math display"><em>f</em> : <em>X</em> → <em>Y</em></span> The
+system then evaluates policy using only (f(x)). If two materially
+different states map to the same representation,</p>
+<p><span
+class="math display"><em>x</em><sub>1</sub> ≠ <em>x</em><sub>2</sub>  but  <em>f</em>(<em>x</em><sub>1</sub>) = <em>f</em>(<em>x</em><sub>2</sub>),</span>
+the enforcement layer cannot distinguish them without additional
+information.</p>
+<p>In the seven-stage example:</p>
+<p><span
+class="math display"><em>f</em>(<em>s</em><em>e</em><em>q</em><em>u</em><em>e</em><em>n</em><em>c</em><em>e</em>) = <em>l</em><em>e</em><em>n</em><em>g</em><em>t</em><em>h</em>(<em>s</em><em>e</em><em>q</em><em>u</em><em>e</em><em>n</em><em>c</em><em>e</em>)</span>
+Both a valid seven-stage sequence and seven duplicates have length
+seven:</p>
+<p><span
+class="math display"><em>f</em>([<em>A</em>, <em>B</em>, <em>C</em>, <em>D</em>, <em>E</em>, <em>F</em>, <em>G</em>]) = 7</span>
+<span
+class="math display"><em>f</em>([<em>A</em>, <em>A</em>, <em>A</em>, <em>A</em>, <em>A</em>, <em>A</em>, <em>A</em>]) = 7</span>
+The attack preserves what the representation measures while destroying
+what the policy means.</p>
+<p>This paper calls such a failure a <strong>semantic homomorphism
+attack</strong>:</p>
+<blockquote>
+<p>A semantic homomorphism attack preserves the invariant visible to an
+enforcement representation while violating a richer invariant that the
+representation was intended to stand for.</p>
+</blockquote>
+<p>Examples include:</p>
+<ul>
+<li>satisfying an approval count using repeated approval by one
+identity,</li>
+<li>satisfying a quorum count using aliases controlled by one
+authority,</li>
+<li>satisfying an “evidence present” flag with irrelevant evidence,</li>
+<li>satisfying a completion counter using repeated execution of one
+stage,</li>
+<li>satisfying a freshness field using an untrusted clock,</li>
+<li>satisfying a role list using duplicated or non-independent
+roles.</li>
+</ul>
+<p>The attack is not necessarily an exploit against correct code. It may
+be a faithful exploitation of an impoverished representation.</p>
+<p>Structuralization repairs the problem when it replaces the lossy
+mapping with a representation that retains the required
+distinctions.</p>
+<h3 id="terminology-boundary">3.1 Terminology boundary</h3>
+<p>“Semantic homomorphism attack” is used here as an architectural term
+for a many-to-one abstraction or quotient that preserves the
+enforcement-visible feature while collapsing a policy-material
+distinction. The paper does not claim that every mapping called <span
+class="math inline"><em>f</em></span> is a homomorphism under a
+specified algebraic structure. For formal publication, the author should
+either define the source and target structures and the preservation law,
+or retain the term while explicitly treating <strong>representation
+collision</strong> or <strong>policy-distinction collapse</strong> as
+the more general class.</p>
+<h2 id="structuralization">4. Structuralization</h2>
+<p><strong>Structuralization</strong> is the transformation of a
+semantic requirement from a value interpreted by checks into a
+constraint over admissible transitions, types, capabilities, or other
+reachable structures.</p>
+<p>For ordered unique stages, structuralization transforms:</p>
+<p><span
+class="math display"><em>c</em><em>o</em><em>m</em><em>p</em><em>l</em><em>e</em><em>t</em><em>e</em><em>d</em><sub><em>c</em></sub><em>o</em><em>u</em><em>n</em><em>t</em> = <em>n</em></span>
+into:</p>
+<p><span class="math display">$$
+S_0
+\xrightarrow{stage_1}
+S_1
+\xrightarrow{stage_2}
+S_2
+\cdots
+\xrightarrow{stage_n}
+S_n
+$$</span> For separation of duties, it may transform:</p>
+<p><span
+class="math display"><em>a</em><em>p</em><em>p</em><em>r</em><em>o</em><em>v</em><em>e</em><em>r</em><sub><em>r</em></sub><em>o</em><em>l</em><em>e</em> ≠ <em>r</em><em>e</em><em>q</em><em>u</em><em>e</em><em>s</em><em>t</em><em>e</em><em>r</em><sub><em>r</em></sub><em>o</em><em>l</em><em>e</em></span>
+from a repeatedly evaluated predicate into separate capabilities held by
+distinct principals, such that no one principal possesses both
+transition authorities.</p>
+<p>For evidence-before-effect, it may transform:</p>
+<p><span
+class="math display"><em>i</em><em>f</em><em>e</em><em>v</em><em>i</em><em>d</em><em>e</em><em>n</em><em>c</em><em>e</em><sub><em>v</em></sub><em>a</em><em>l</em><em>i</em><em>d</em> : <em>p</em><em>e</em><em>r</em><em>f</em><em>o</em><em>r</em><em>m</em><sub><em>e</em></sub><em>f</em><em>f</em><em>e</em><em>c</em><em>t</em>()</span>
+into a system where the capability to perform the effect is reachable
+only after an evidence-admission transition.</p>
+<p>Structuralization has several potential benefits.</p>
+<p>First, it centralizes policy in the machine’s shape rather than
+distributing it across call sites.</p>
+<p>Second, it makes invalid succession visible through graph
+analysis.</p>
+<p>Third, it enables mutation testing against transitions, guards, and
+terminal states.</p>
+<p>Fourth, it may bring enforcement semantics inside a cryptographic
+identity boundary.</p>
+<p>Fifth, it can reduce the semantic burden placed on ordinary runtime
+code.</p>
+<p>Yet structuralization also has costs. It may increase state count,
+introduce product-state explosion, or obscure policies that are
+naturally quantitative. The relevant goal is not maximal
+structuralization. It is correct semantic placement.</p>
+<h2 id="identity-bearing-topology">5. Identity-Bearing Topology</h2>
+<p>Structural semantics become constitutionally stronger when the
+transition system is part of the governed artifact’s identity.</p>
+<p>Let a constitution be represented as:</p>
+<p><span
+class="math display"><em>I</em><em>C</em> = <em>C</em><em>a</em><em>n</em><em>o</em><em>n</em><em>i</em><em>c</em><em>a</em><em>l</em><em>i</em><em>z</em><em>e</em>(<em>Q</em>, <em>T</em>, <em>G</em>, <em>E</em>, <em>I</em>, <em>R</em>)</span>
+where:</p>
+<ul>
+<li><ol start="17" type="A">
+<li>is the state set,</li>
+</ol></li>
+<li><ol start="20" type="A">
+<li>is the transition relation,</li>
+</ol></li>
+<li><ol start="7" type="A">
+<li>is the guard set,</li>
+</ol></li>
+<li><ol start="5" type="A">
+<li>is the effect specification,</li>
+</ol></li>
+<li><ol type="I">
+<li>is the invariant set,</li>
+</ol></li>
+<li><ol start="18" type="A">
+<li>is the role and authority partition.</li>
+</ol></li>
+</ul>
+<p>Let its identity be:</p>
+<p><span
+class="math display"><em>i</em><em>d</em>(<em>I</em><em>C</em>) = <em>H</em>(<em>I</em><em>C</em>)</span>
+where (H) is a cryptographic hash over the canonical representation.</p>
+<p>A semantic weakening produces a modified constitution (IC’). If the
+canonical representation changes, then under the declared
+canonicalization and collision-resistance assumptions:</p>
+<p><span
+class="math display"><em>I</em><em>C</em><sup>′</sup> ≠ <em>I</em><em>C</em> ⇒ <em>P</em><em>r</em>[<em>H</em>(<em>I</em><em>C</em><sup>′</sup>) = <em>H</em>(<em>I</em><em>C</em>)] ≤ <em>ϵ</em>(<em>λ</em>)</span>
+Under those assumptions, a bypass edge, removed guard, or collapsed
+stage cannot preserve the expected constitutional identity except with
+negligible collision probability. This detects canonical difference; it
+does not classify the difference as weakening without semantic
+review.</p>
+<p>The resulting property is not that mutation becomes impossible.
+Mutation remains physically possible. The property is:</p>
+<blockquote>
+<p>A semantic mutation whose material distinction is preserved by the
+declared canonicalization cannot remain custody-identical except within
+the stated collision bound.</p>
+</blockquote>
+<p>This motivates the <strong>Identity-Bearing Topology
+Principle</strong>:</p>
+<blockquote>
+<p>When a policy-material transition distinction is preserved by the
+declared canonical representation and cryptographically bound into a
+constitution’s identity, changing that distinction changes the expected
+identity under the stated hash assumptions; semantic review determines
+whether the change weakens the topology.</p>
+</blockquote>
+<p>The difference between a runtime check and identity-bearing topology
+is therefore not merely where enforcement occurs. It is whether changing
+the enforcement semantics changes the governed object’s cryptographic
+name.</p>
+<p>A skipped runtime check may leave the constitution’s identity
+untouched. A canonical change to a custody-covered transition graph
+changes the expected identity under the stated assumptions.</p>
+<p>This creates a bridge between semantics and custody.</p>
+<h3 id="structure-is-not-automatically-custody-covered">5.1 Structure is
+not automatically custody-covered</h3>
+<p>The principle depends on several conditions:</p>
+<ol type="1">
+<li>The representation must be canonical or unambiguous.</li>
+<li>All semantically relevant topology must be included.</li>
+<li>The hash must bind the exact admitted representation.</li>
+<li>The runtime must load the constitution identified by that hash.</li>
+<li>The verifier must compare against an independently trusted
+identity.</li>
+<li>Semantic equivalences and serialization ambiguities must not permit
+hidden mutation.</li>
+</ol>
+<p>If the runtime hashes one object but executes another, identity
+binding is ceremonial. If a parser interprets the same bytes differently
+across environments, the hash binds syntax without fixing meaning. If
+generated transitions are excluded from the digest, part of the
+operative topology remains outside custody.</p>
+<p>Identity-bearing topology is therefore a systems property, not merely
+a call to a hash function.</p>
+<h3 id="difference-detection-is-not-adequacy-judgment">5.2 Difference
+detection is not adequacy judgment</h3>
+<p>A changed digest detects a changed canonical representation relative
+to an expected identity; it does not reveal whether the change is a
+weakening, strengthening, repair, or irrelevant rewrite. That judgment
+requires the semantic court, a predecessor relation, an authorized
+amendment rule, and evidence that the canonicalization regime preserves
+the distinction being evaluated.</p>
+<p>The identity claim is therefore conditional:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Canonical(IC') \\
+&amp;\neq Canonical(IC) \\
+&amp;\Longrightarrow Pr[H(IC')=H(IC)] \leq \epsilon(\lambda)
+\end{aligned},
+$$</span></p>
+<p>under the declared canonicalization, domain separation, and
+collision-resistance assumptions. A hash is a commitment surface, not a
+semantic evaluator or a source of standing.</p>
+<h2 id="four-courts-and-four-distinct-claims">6. Four Courts and Four
+Distinct Claims</h2>
+<p>A constitutional system can be correct in one dimension and defective
+in another. At least four claims must be distinguished.</p>
+<h3 id="semantic-adequacy">6.1 Semantic adequacy</h3>
+<p>Does the constitution encode a policy strong enough to support the
+intended governance claim?</p>
+<p>A constitution that requires seven events but not seven unique
+ordered stages may be faithfully executed and perfectly custodied while
+remaining semantically inadequate.</p>
+<h3 id="executor-conformance">6.2 Executor conformance</h3>
+<p>Does the implementation faithfully realize the admitted
+constitution?</p>
+<p>A strong automaton does not help if the executor invents transitions,
+skips guards, or performs effects outside the transition mechanism.</p>
+<h3 id="custody-fidelity">6.3 Custody fidelity</h3>
+<p>Is the executed constitution the same constitution that was admitted,
+reviewed, and identified?</p>
+<p>A conforming executor can faithfully run a substituted or weakened
+constitution.</p>
+<h3 id="effect-integrity">6.4 Effect integrity</h3>
+<p>Can consequential external effects occur only through
+constitutionally authorized transitions?</p>
+<p>An executor may calculate state correctly yet possess direct
+authority to perform unmediated effects.</p>
+<p>A governed effect therefore requires a conjunction:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;GovernedEffect = Adequate(IC, P) \\
+&amp;\land Conforming(X, IC) \\
+&amp;\land Custodied(IC) \\
+&amp;\land Mediated(effect)
+\end{aligned}
+$$</span> These claims correspond to distinct courts.</p>
+<p>The <strong>semantic court</strong> evaluates whether the
+constitution contains the required policy shape.</p>
+<p>The <strong>mechanical court</strong> evaluates whether the executor
+implements the transition semantics correctly.</p>
+<p>The <strong>custody court</strong> evaluates whether the admitted and
+executed artifacts are identical or validly related.</p>
+<p>The <strong>effect court</strong> evaluates whether external
+consequences are possible only through authorized commitment.</p>
+<p>No single court subsumes the others.</p>
+<p>This separation prevents a dangerous form of laundering. A passing
+kernel verifier does not prove that a constitution is strong. A passing
+semantic profile does not prove that the executor obeys it. A matching
+hash does not prove that the hashed object is adequate. A valid internal
+receipt does not prove that no unreceipted external effect occurred.</p>
+<h3 id="proof-obligations-by-court">6.5 Proof obligations by court</h3>
+<ul>
+<li><p><strong>Court:</strong> semantic<br />
+<strong>Question:</strong> Does the admitted structure preserve the
+policy distinctions needed for the stated claim?<br />
+<strong>Minimum evidence surface:</strong> requirement mapping,
+counterexamples, mutation fixtures, claim ceiling<br />
+<strong>Does not establish:</strong> executor fidelity or effect
+mediation</p></li>
+<li><p><strong>Court:</strong> mechanical<br />
+<strong>Question:</strong> Does the executor implement the admitted
+transition semantics?<br />
+<strong>Minimum evidence surface:</strong> conformance traces, negative
+transitions, replay or refinement evidence<br />
+<strong>Does not establish:</strong> semantic adequacy of the
+constitution</p></li>
+<li><p><strong>Court:</strong> custody<br />
+<strong>Question:</strong> Is the executed object the admitted object or
+a validly receipted successor?<br />
+<strong>Minimum evidence surface:</strong> canonical identity, exact
+artifact, lineage and amendment receipts<br />
+<strong>Does not establish:</strong> that the object is adequate or
+safely executed</p></li>
+<li><p><strong>Court:</strong> effect<br />
+<strong>Question:</strong> Can the claimed consequential effect occur
+only through authorized commitment?<br />
+<strong>Minimum evidence surface:</strong> capability boundary,
+externally observed outcomes, classified partial effects<br />
+<strong>Does not establish:</strong> correctness of hidden or unobserved
+behavior</p></li>
+</ul>
+<p>These are court roles, not necessarily four software services. One
+implementation may evaluate several roles only if its authority,
+evidence, and failure-domain assumptions remain explicit. Independence
+is not achieved merely by using another process owned by the same actor
+with the same keys and observation boundary.</p>
+<h2 id="governance-as-ratchet-automata">7. Governance as Ratchet
+Automata</h2>
+<p>The bounded case suggests that many governance requirements share a
+common shape.</p>
+<p>They are frequently:</p>
+<ul>
+<li>monotone,</li>
+<li>ordered,</li>
+<li>role-gated,</li>
+<li>evidence-gated,</li>
+<li>threshold-bounded,</li>
+<li>consumption-bounded,</li>
+<li>terminal or semi-terminal,</li>
+<li>reversible only through explicit authority,</li>
+<li>and sensitive to replay or duplication.</li>
+</ul>
+<p>These properties resemble a ratchet: advancement occurs through
+discrete clicks; ordinary execution cannot silently move backward;
+reversal, when permitted, requires a separate governed mechanism.</p>
+<p>A <strong>ratchet automaton</strong> may be represented as:</p>
+<p><span
+class="math display">𝒢 = (<em>Q</em>, <em>R</em>, <em>A</em>, <em>E</em>, <em>Θ</em>, <em>δ</em>, <em>q</em><sub>0</sub>, <em>F</em>)</span>
+where:</p>
+<ul>
+<li><span class="math inline"><em>Q</em></span> is a finite set of
+governance states,</li>
+<li><span class="math inline"><em>R</em></span> is a set of roles or
+authority classes,</li>
+<li><span class="math inline"><em>A</em></span> is a set of proposed
+actions,</li>
+<li><span class="math inline"><em>E</em></span> is a set of admissible
+evidence classes,</li>
+<li><span class="math inline"><em>Θ</em></span> is a set of thresholds
+or bounded resources,</li>
+<li><span class="math inline"><em>δ</em></span> is a role-, evidence-,
+and threshold-gated transition relation,</li>
+<li><span class="math inline"><em>q</em><sub>0</sub></span> is the
+initial state,</li>
+<li><span class="math inline"><em>F</em></span> is a set of terminal,
+committed, refused, revoked, or recovery states.</li>
+</ul>
+<p>A transition may take the form:</p>
+<p><span
+class="math display"><em>δ</em>(<em>q</em>, <em>a</em>, <em>r</em>, <em>e</em>, <em>θ</em>) = <em>q</em><sup>′</sup></span>
+only when:</p>
+<ul>
+<li>role (r) has authority for action (a),</li>
+<li>evidence (e) is admissible,</li>
+<li>threshold condition <span class="math inline"><em>θ</em></span> is
+satisfied,</li>
+<li>the transition exists from state (q),</li>
+<li>replay and uniqueness constraints permit advancement.</li>
+</ul>
+<h3 id="structural-mappings">7.1 Structural mappings</h3>
+<p>Several common governance requirements map naturally into this
+form.</p>
+<p><strong>Ordered approval</strong></p>
+<p><span
+class="math display"><em>D</em><em>r</em><em>a</em><em>f</em><em>t</em> → <em>R</em><em>e</em><em>v</em><em>i</em><em>e</em><em>w</em><em>e</em><em>d</em> → <em>A</em><em>p</em><em>p</em><em>r</em><em>o</em><em>v</em><em>e</em><em>d</em> → <em>C</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em><em>t</em><em>e</em><em>d</em></span>
+<strong>Unique stage completion</strong></p>
+<p>Each stage has one outgoing advancement edge and no self-repeating
+advancement edge.</p>
+<p><strong>Separation of duties</strong></p>
+<p>Different transitions require capabilities held by distinct role
+partitions.</p>
+<p><strong>Evidence before effect</strong></p>
+<p>The effect-bearing state is unreachable until evidence admission has
+occurred.</p>
+<p><strong>Bounded retry</strong></p>
+<p>Each failure consumes a finite transition budget.</p>
+<p><strong>Quorum</strong></p>
+<p>Advancement requires a threshold over distinct admitted
+identities.</p>
+<p><strong>Monotone activation</strong></p>
+<p>Activation is a terminal or forward-only state unless an explicit
+revocation path exists.</p>
+<p><strong>Recovery</strong></p>
+<p>Incomplete states lead into a recovery subgraph rather than being
+interpreted as success.</p>
+<p><strong>Refusal</strong></p>
+<p>Invalid or unsupported requests terminate in an explicit refusal
+state that performs no consequential effect.</p>
+<h3 id="the-ratchet-governance-conjecture">7.2 The Ratchet Governance
+Conjecture</h3>
+<p>The broader conjecture is:</p>
+<blockquote>
+<p>A substantial class of practical governance requirements can be
+compiled into finite state chains or graphs combined with role
+partitions, evidence gates, threshold conditions, and bounded
+resources.</p>
+</blockquote>
+<p>This is not yet a theorem.</p>
+<p>The motivating evidence is bounded: one specification family, eleven
+constitutions, seventy-seven operations, and linearizable workflows. The
+demonstrated sufficiency of a small vocabulary establishes a case, not a
+universal expressive result.</p>
+<p>The research task is to characterize the class precisely.</p>
+<p>A possible target property class is:</p>
+<p><span
+class="math display"><em>F</em><em>i</em><em>n</em><em>i</em><em>t</em><em>e</em><em>S</em><em>t</em><em>a</em><em>t</em><em>e</em> × <em>R</em><em>o</em><em>l</em><em>e</em><em>P</em><em>a</em><em>r</em><em>t</em><em>i</em><em>t</em><em>i</em><em>o</em><em>n</em> × <em>T</em><em>h</em><em>r</em><em>e</em><em>s</em><em>h</em><em>o</em><em>l</em><em>d</em><em>G</em><em>u</em><em>a</em><em>r</em><em>d</em><em>s</em> × <em>M</em><em>o</em><em>n</em><em>o</em><em>t</em><em>o</em><em>n</em><em>e</em><em>E</em><em>f</em><em>f</em><em>e</em><em>c</em><em>t</em><em>s</em></span>
+The useful result may be either positive or negative.</p>
+<p>A positive characterization would show which governance policies can
+be compiled without kernel growth.</p>
+<p>A negative boundary would identify the first property that cannot be
+represented without an additional primitive, an external oracle, or
+unacceptable state expansion.</p>
+<p>Both outcomes would guide constitutional kernel design.</p>
+<h2 id="the-nonconforming-executor-problem">8. The Nonconforming
+Executor Problem</h2>
+<p>Topology makes violations unrepresentable to a conforming executor.
+It does not physically compel arbitrary machine code to remain
+conforming.</p>
+<p>Suppose the admitted automaton contains:</p>
+<p><span
+class="math display"><em>S</em><sub>0</sub> → <em>S</em><sub>1</sub> → <em>S</em><sub>2</sub></span>
+and no edge from (S_0) directly to (S_2).</p>
+<p>A faithful executor cannot validly take the absent transition. A
+defective or malicious executor may nevertheless execute code equivalent
+to:</p>
+<p><span
+class="math display"><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em> := <em>S</em><sub>2</sub></span>
+and perform the effect associated with (S_2).</p>
+<p>At that moment, it has not traversed an illegal edge within the
+automaton. It has abandoned the automaton and impersonated its
+result.</p>
+<p>This distinction should be stated precisely:</p>
+<blockquote>
+<p>Topology constrains execution inside the admitted model. It does not,
+by itself, imprison the physical machine hosting the model.</p>
+</blockquote>
+<p>The observation does not defeat structural semantics. It identifies
+their trust boundary.</p>
+<p>A type system cannot stop an attacker who replaces the compiler. A
+proof cannot control hardware that ignores the verified program. A
+protocol cannot restrain a participant that possesses direct external
+authority beyond the protocol’s mediation.</p>
+<p>The practical question is therefore not whether nonconforming
+execution is metaphysically impossible. It is whether a nonconforming
+executor can:</p>
+<ol type="1">
+<li>cause consequential effects,</li>
+<li>exceed a bounded damage radius,</li>
+<li>impersonate authorized execution,</li>
+<li>erase evidence of divergence,</li>
+<li>prevent external detection,</li>
+<li>or rewrite constitutional history.</li>
+</ol>
+<p>A well-designed system should make each progressively harder.</p>
+<h2 id="the-irreducible-limit">9. The Irreducible Limit</h2>
+<p>There is a narrow irreducible limit.</p>
+<p>If one actor controls:</p>
+<ul>
+<li>the executor,</li>
+<li>the effect-producing capability,</li>
+<li>the state store,</li>
+<li>the signing keys,</li>
+<li>the clock,</li>
+<li>the logs,</li>
+<li>the verifier,</li>
+<li>the witness,</li>
+<li>and the alert channel,</li>
+</ul>
+<p>then it may be able to perform an unauthorized effect and fabricate
+every locally available account of what occurred.</p>
+<p>No component can establish its own faithful execution solely through
+evidence that it alone creates and controls.</p>
+<p>This may be stated as an epistemic limit:</p>
+<blockquote>
+<p>A self-reporting executor cannot, by self-report alone, distinguish
+faithful execution from a sufficiently capable fabrication of faithful
+execution.</p>
+</blockquote>
+<p>The limit does not imply that trustworthy execution is impossible. It
+implies that trust cannot be eliminated by recursively asking the same
+compromised boundary to certify itself.</p>
+<p>The response is architectural separation:</p>
+<ul>
+<li>distribute authority,</li>
+<li>externalize observation,</li>
+<li>narrow capabilities,</li>
+<li>diversify witnesses,</li>
+<li>preserve independent custody,</li>
+<li>and make silence itself evidentiary.</li>
+</ul>
+<p>Trust is not removed. It is divided, bounded, and made
+contestable.</p>
+<h2 id="constitutional-mediation">10. Constitutional Mediation</h2>
+<p>The strongest practical defense is to prevent the executor from
+possessing unilateral authority over consequential effects.</p>
+<p>Instead of:</p>
+<p><span
+class="math display"><em>C</em><em>o</em><em>n</em><em>s</em><em>t</em><em>i</em><em>t</em><em>u</em><em>t</em><em>i</em><em>o</em><em>n</em> → <em>E</em><em>x</em><em>e</em><em>c</em><em>u</em><em>t</em><em>o</em><em>r</em> → <em>E</em><em>f</em><em>f</em><em>e</em><em>c</em><em>t</em></span>
+the system should use a mediated architecture:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Constitution \\
+&amp;\rightarrow Court \\
+&amp;\rightarrow AuthorityBroker \\
+&amp;\rightarrow BoundedExecutor \\
+&amp;\rightarrow StagedEffect
+\end{aligned}
+$$</span> The executor proposes an operation. It does not authorize
+itself.</p>
+<p>A proposal may contain:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Proposal = (&amp;constitution_hash, current_state, transition, evidence,
+\\
+&amp;requested_effect, input_hash, nonce)
+\end{aligned}
+$$</span> An independent broker verifies:</p>
+<ul>
+<li>the constitutional identity,</li>
+<li>the present state,</li>
+<li>the existence of the transition,</li>
+<li>the relevant role authority,</li>
+<li>evidence admissibility,</li>
+<li>replay status,</li>
+<li>resource bounds,</li>
+<li>and the proposed effect’s scope.</li>
+</ul>
+<p>Only then does the broker release a narrowly scoped capability.</p>
+<p>The executor may still calculate incorrectly. It may still crash,
+lie, stall, or submit malformed evidence. But it should not be able to
+transform that failure directly into an admitted effect.</p>
+<p>The design principle is:</p>
+<blockquote>
+<p>A defective executor may propose falsehood, but it should lack
+unilateral authority to make the falsehood consequential.</p>
+</blockquote>
+<h3 id="capability-release">10.1 Capability release</h3>
+<p>The broker can release authority scoped to:</p>
+<ul>
+<li>one operation,</li>
+<li>one artifact hash,</li>
+<li>one destination,</li>
+<li>one workspace,</li>
+<li>one transaction,</li>
+<li>one time window,</li>
+<li>one maximum resource budget,</li>
+<li>one expected output class.</li>
+</ul>
+<p>Authority should expire after use or after a bounded deadline.</p>
+<p>The executor is treated as an untrusted worker, not as the sovereign
+interpreter of the constitution.</p>
+<h3 id="reserve-execute-verify-commit">10.2 Reserve, execute, verify,
+commit</h3>
+<p>Consequential operations can be decomposed:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Propose \\
+&amp;\rightarrow Reserve \\
+&amp;\rightarrow ExecuteInIsolation \\
+&amp;\rightarrow Verify \\
+&amp;\rightarrow Commit
+\end{aligned}
+$$</span> The reserve step establishes an externally visible intention
+without yet producing the final effect.</p>
+<p>Execution occurs in a sandbox, copy-on-write environment,
+transactional namespace, or staged publication area.</p>
+<p>Verification evaluates the resulting state and evidence.</p>
+<p>Commit is performed or released by an authority distinct from the
+worker that produced the candidate result.</p>
+<p>If execution fails, stalls, or contradicts its reservation, the
+system enters recovery or refusal rather than silently interpreting
+partial work as success.</p>
+<h3 id="effects-as-capabilities">10.3 Effects as capabilities</h3>
+<p>The most consequential effects should not be ordinary function calls
+available to the executor.</p>
+<p>They should be capabilities whose possession is itself governed.</p>
+<p>Examples include:</p>
+<ul>
+<li>committing a filesystem transaction,</li>
+<li>publishing an artifact,</li>
+<li>activating installed software,</li>
+<li>releasing a signing key,</li>
+<li>changing an access-control state,</li>
+<li>transmitting protected information,</li>
+<li>accepting a financial transfer,</li>
+<li>updating an authoritative manifest.</li>
+</ul>
+<p>This moves enforcement from “remember to check before calling” toward
+“the call cannot be made until authority is released.”</p>
+<p>Structure closes the forbidden road. Capability mediation removes the
+executor’s independent machinery for building another.</p>
+<h3 id="effect-atomicity-and-classified-remainders">10.4 Effect
+atomicity and classified remainders</h3>
+<p><code>Reserve -&gt; ExecuteInIsolation -&gt; Verify -</code></p>
+<p><code>&gt; Commit</code> is a target protocol, not proof that the
+real-world effect is atomic. Some effects are irreversible, externally
+visible during staging, or only compensable after partial completion. A
+truthful implementation must distinguish at least:</p>
+<ul>
+<li><strong>NO_EFFECT:</strong> no consequential boundary was
+crossed;</li>
+<li><strong>STAGED:</strong> candidate state exists but is not
+authoritative;</li>
+<li><strong>COMMITTED:</strong> the authorized effect was durably
+admitted;</li>
+<li><strong>ABORTED:</strong> the reservation ended without the intended
+effect;</li>
+<li><strong>PARTIAL_EFFECT:</strong> some consequence occurred and exact
+rollback is not established;</li>
+<li><strong>COMMIT_AMBIGUOUS:</strong> the observer cannot establish
+whether commit occurred;</li>
+<li><strong>COMPENSATED:</strong> a later action counteracted an effect
+without pretending it never happened.</li>
+</ul>
+<p>Validation should precede mutation where possible, corrupt state must
+not be treated as missing state, read-only verification must not mutate
+the subject, and multi-artifact commits need either actual atomicity or
+truthful remainder classification. This is the paper’s direct adjacency
+to the Integrity Enforcement Layer; adjacency does not prove that a
+particular runtime implements IEL.</p>
+<h2 id="independent-evidence-and-witnessing">11. Independent Evidence
+and Witnessing</h2>
+<p>An executor’s own receipt is useful but insufficient as conclusive
+evidence of executor faithfulness.</p>
+<p>A stronger design requires evidence that the executor cannot forge
+alone.</p>
+<p>Possible evidence includes:</p>
+<ul>
+<li>independent transition recomputation,</li>
+<li>deterministic replay,</li>
+<li>pre-state and post-state hashes,</li>
+<li>signed broker authorizations,</li>
+<li>hash-chained receipts,</li>
+<li>witness signatures,</li>
+<li>externally observed effects,</li>
+<li>challenge-response transcripts,</li>
+<li>hardware-backed measurements,</li>
+<li>quorum attestations,</li>
+<li>public or organizational transparency logs.</li>
+</ul>
+<p>The guiding rule is:</p>
+<blockquote>
+<p>The actor whose conduct is being evaluated should not be the sole
+author of the evidence that vindicates that conduct.</p>
+</blockquote>
+<p>A transition receipt might bind:</p>
+<p><span
+class="math display"><em>R</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em> = <em>H</em>(<em>I</em><em>C</em>, <em>q</em>, <em>a</em>, <em>e</em>, <em>q</em><sup>′</sup>, <em>e</em><em>f</em><em>f</em><em>e</em><em>c</em><em>t</em>, <em>p</em><em>r</em><em>e</em><em>v</em><em>i</em><em>o</em><em>u</em><em>s</em><sub><em>r</em></sub><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em>, <em>n</em><em>o</em><em>n</em><em>c</em><em>e</em>)</span>
+The witness can verify that:</p>
+<ul>
+<li>the constitution matches the admitted identity,</li>
+<li>state (q) was current,</li>
+<li>action (a) was admissible,</li>
+<li>evidence (e) satisfied the transition,</li>
+<li>state (q’) follows from the constitution,</li>
+<li>the external effect corresponds to the committed result,</li>
+<li>the receipt extends the expected chain.</li>
+</ul>
+<p>A fabricated post-state may still be proposed, but it cannot obtain
+the independent commit signature unless the broker or witness is also
+compromised.</p>
+<h3 id="external-effect-observation">11.1 External effect
+observation</h3>
+<p>Internal state evidence is not enough when the real claim concerns
+the world outside the executor.</p>
+<p>If the executor claims that a file was not published, an independent
+observer may inspect the publication surface.</p>
+<p>If it claims that a package was activated only after approval, the
+activation substrate should require a broker-issued capability.</p>
+<p>If it claims that a protected record was not transmitted, network
+mediation must occur outside the executor’s direct control.</p>
+<p>Effect integrity requires observing or controlling the effect
+boundary, not merely trusting a log about it.</p>
+<h3 id="independent-commitments-and-receipt-claim-ceilings">11.2
+Independent commitments and receipt claim ceilings</h3>
+<p>The illustrative receipt hash is useful as a bundle commitment, but
+one digest should not collapse distinct governance decisions. Applying
+the separation discipline of <em>The Three Hash Rule</em>, a realization
+should distinguish:</p>
+<ul>
+<li><span class="math inline"><em>H</em><sub><em>s</em></sub></span>:
+state identity and transition outcome;</li>
+<li><span class="math inline"><em>H</em><sub><em>c</em></sub></span>:
+admissibility, role, evidence, replay, and authority judgment;</li>
+<li><span class="math inline"><em>H</em><sub><em>m</em></sub></span>:
+semantic regime and interpretation of the constitution/effect;</li>
+<li>optional <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span>: phase or
+jurisdictional locality;</li>
+<li><span class="math inline"><em>H</em><sub><em>r</em></sub></span>:
+receipt binding across the preceding commitments, predecessor receipt,
+nonce, and context.</li>
+</ul>
+<p>The receipt must also state what was observed and by whom. A signed
+internal assertion proves at most that a key signed the assertion. An
+external-effect claim requires an observer or mediator whose custody and
+failure assumptions match that claim.</p>
+<p>In <em>Reasoning by Way of Receipts</em> terms, the receipt should
+bind premises, decision procedure, evidence, limits, outcome, and
+unresolved remainder. It should never be promoted from “this transition
+record verifies” to “no alternate unreceipted effect occurred” without
+an effect-boundary proof.</p>
+<h2 id="absence-sensitive-monitoring">12. Absence-Sensitive
+Monitoring</h2>
+<p>A compromised executor can suppress its own alerts. Alerting must
+therefore live outside the suspected boundary.</p>
+<p>External monitors can expect:</p>
+<ul>
+<li>a completion receipt after a reservation,</li>
+<li>a signed heartbeat before a deadline,</li>
+<li>a monotonically increasing sequence number,</li>
+<li>publication of each committed transition,</li>
+<li>a matching abort receipt after failed execution,</li>
+<li>a corresponding constitutional commit for each observed effect.</li>
+</ul>
+<p>This enables <strong>absence alerts</strong>.</p>
+<p>The monitor need not wait for the executor to confess. It can detect
+that an expected event failed to appear.</p>
+<p>Examples include:</p>
+<blockquote>
+<p>A transition was reserved, but no valid completion or abort receipt
+arrived.</p>
+</blockquote>
+<blockquote>
+<p>A capability was released, but no terminal receipt was produced
+before expiry.</p>
+</blockquote>
+<blockquote>
+<p>An external effect exists without a corresponding commit record.</p>
+</blockquote>
+<blockquote>
+<p>The receipt chain advanced in one mirror but not another.</p>
+</blockquote>
+<blockquote>
+<p>The active artifact hash differs from the admitted manifest.</p>
+</blockquote>
+<blockquote>
+<p>A worker stopped responding while still holding a live
+reservation.</p>
+</blockquote>
+<p>Absence-sensitive monitoring is particularly valuable because
+fabricated positive evidence is often easier than fabricating consistent
+silence across independent observers.</p>
+<p>An alert may trigger:</p>
+<ul>
+<li>capability revocation,</li>
+<li>transaction rollback,</li>
+<li>workspace quarantine,</li>
+<li>key rotation,</li>
+<li>process termination,</li>
+<li>evidence preservation,</li>
+<li>operator review,</li>
+<li>or system-wide refusal.</li>
+</ul>
+<p>A system cannot always prevent the first deviation. It can make the
+deviation bounded, visible, and unable to mature into accepted
+history.</p>
+<h3 id="conditions-for-treating-absence-as-evidence">12.1 Conditions for
+treating absence as evidence</h3>
+<p>Silence becomes evidence only relative to a declared observation
+contract. The monitor must know which event was required, which observer
+and channel should carry it, the deadline and clock source, whether
+delivery is reliable, how partitions and observer failure are
+classified, and what conclusion non-arrival permits. Without these
+conditions, absence may indicate omission, delay, partition, crash,
+censorship, or monitor failure rather than executor misconduct.</p>
+<p>An absence alert is therefore evidence of a violated expectation
+under a bounded observation model. It is not direct proof of the hidden
+cause.</p>
+<h2 id="formal-verification-and-attestation">13. Formal Verification and
+Attestation</h2>
+<p>Formal verification may establish that an executor implementation
+refines an automaton specification. This can substantially reduce
+ordinary defects and narrow the trusted implementation.</p>
+<p>Yet verification does not abolish assumptions.</p>
+<p>The proof may depend on:</p>
+<ul>
+<li>the proof checker,</li>
+<li>the formal model,</li>
+<li>the compiler,</li>
+<li>the build process,</li>
+<li>the runtime,</li>
+<li>the operating system,</li>
+<li>the hardware,</li>
+<li>and the fidelity of external inputs.</li>
+</ul>
+<p>Reproducible builds can connect verified source to a deterministic
+binary. Measured boot can connect the binary to a running environment.
+Hardware-backed keys can bind receipts to a measured execution
+state.</p>
+<p>Each step reduces ambiguity, but none should be treated as an oracle
+of semantic truth.</p>
+<p>A measured binary can faithfully contain a defect. A verified model
+can omit an environmental behavior. A hardware root can fail or be
+subverted. A remote attestation can prove that a particular binary was
+loaded without proving that the wider system behaved correctly.</p>
+<p>Attestation is therefore one court among several.</p>
+<p>The goal is not an infinite regress of perfect proof. It is a small,
+explicit, diverse, and reviewable trust base whose failure modes are
+bounded and externally detectable.</p>
+<h2 id="mutation-courts">14. Mutation Courts</h2>
+<p>A minimal kernel can validate weak constitutions. Mechanical
+expressibility does not establish semantic adequacy.</p>
+<p>A second layer must therefore test whether the required policy shape
+is actually present.</p>
+<p>A <strong>mutation court</strong> evaluates whether materially
+weakened constitutions are rejected or differently identified.</p>
+<p>Mutation classes may include:</p>
+<ul>
+<li>duplicated stages,</li>
+<li>reordered stages,</li>
+<li>skipped evidence,</li>
+<li>forged role assignment,</li>
+<li>threshold reduction,</li>
+<li>repeated resource consumption,</li>
+<li>rollback after terminal commitment,</li>
+<li>removal of a refusal state,</li>
+<li>addition of a bypass edge,</li>
+<li>weakening of a transition guard,</li>
+<li>substitution of an untrusted external assertion,</li>
+<li>rehashing of a maliciously altered constitution.</li>
+</ul>
+<p>For each mutation, the court should ask:</p>
+<ol type="1">
+<li>Is the mutation structurally executable?</li>
+<li>Does it change the constitutional identity?</li>
+<li>Which court detects it?</li>
+<li>Can the executor produce an effect before detection?</li>
+<li>Does detection depend on a check controlled by the executor?</li>
+<li>Is the resulting failure bounded and recoverable?</li>
+<li>Can the mutation be accepted as a different, explicitly weaker
+constitution?</li>
+</ol>
+<p>The last question matters. A constitutional system need not prohibit
+weak constitutions from existing. It must prevent them from inheriting
+stronger standing than they earned.</p>
+<p>Mutation courts therefore police claim boundaries as much as
+execution boundaries.</p>
+<h2 id="expressive-boundaries">15. Expressive Boundaries</h2>
+<p>The ratchet model has known limits.</p>
+<h3 id="cross-entity-truth">15.1 Cross-entity truth</h3>
+<p>A constitution can bind another artifact by hash. It can require
+evidence that a foreign artifact possesses a particular identity. It
+cannot infer the foreign artifact’s truth merely from the binding.</p>
+<p>Federation by digest is not a semantic join.</p>
+<p>Cross-entity claims require additional admission procedures, shared
+courts, trusted witnesses, or independently verifiable proofs.</p>
+<h3 id="cryptographic-verification">15.2 Cryptographic verification</h3>
+<p>An automaton can contain a transition labeled “signature verified.”
+That representation does not perform cryptographic verification.</p>
+<p>The verification must occur in an admitted cryptographic component,
+and the transition must bind its result.</p>
+<p>This is the difference between representing an assertion and earning
+it.</p>
+<h3 id="time-and-freshness">15.3 Time and freshness</h3>
+<p>Time does not arise from finite topology alone.</p>
+<p>A policy such as “complete within ten minutes” requires a clock or
+temporal witness. Freshness may require comparison against local,
+organizational, public, peer-to-peer, or independently mirrored
+manifests.</p>
+<p>The topology can govern how temporal evidence is admitted and what
+follows from expiration. It cannot manufacture trustworthy time.</p>
+<h3 id="arbitrary-partial-orders">15.4 Arbitrary partial orders</h3>
+<p>A linear chain represents total order economically. A complex partial
+order may require a product state for every combination of completed
+dependencies.</p>
+<p>The result can be exponential state growth.</p>
+<p>Other formalisms–Petri nets, event structures, temporal logics,
+dependency graphs, or compositional automata–may be more
+appropriate.</p>
+<p>The relevant question is whether these should become kernel
+primitives or compile into a retained lower-level form.</p>
+<h3 id="liveness">15.5 Liveness</h3>
+<p>A topology can exclude invalid paths without guaranteeing that a
+valid path will complete.</p>
+<p>A system may remain forever in an intermediate state.</p>
+<p>Deadlines, fairness assumptions, recovery transitions, watchdogs, and
+bounded refusal are required to address liveness.</p>
+<h3 id="side-channels-and-unmediated-effects">15.6 Side channels and
+unmediated effects</h3>
+<p>A constitution cannot govern effects that occur through channels it
+does not mediate or observe.</p>
+<p>If an executor possesses unrestricted network, filesystem, device, or
+memory authority, it may act outside the constitutional path.</p>
+<p>The authority boundary must therefore match the claim boundary.</p>
+<h3 id="state-explosion">15.7 State explosion</h3>
+<p>A rule may be structurally expressible yet operationally
+impractical.</p>
+<p>This creates an intermediate category between fundamental
+inexpressibility and mere inconvenience:</p>
+<blockquote>
+<p>expressible only at unacceptable representational cost.</p>
+</blockquote>
+<p>Kernel growth may sometimes be justified as a compact primitive for a
+recurring structure. Such growth should be accompanied by a formal
+account of what complexity it removes and what new trust surface it
+creates.</p>
+<h2 id="the-kernel-growth-razor">16. The Kernel-Growth Razor</h2>
+<p>Every primitive added to a constitutional kernel enlarges the surface
+that must be frozen, implemented, tested, verified, custodied, and
+trusted.</p>
+<p>A new construct should therefore face a structured burden of
+proof.</p>
+<p>Before adding it, ask:</p>
+<ol type="1">
+<li>Is the required property genuinely inexpressible using the existing
+state, role, threshold, evidence, and effect vocabulary?</li>
+<li>Is it expressible only through unacceptable state-space
+expansion?</li>
+<li>Does it depend on an irreducible external oracle?</li>
+<li>Is the proposed construct semantic, or is it syntactic
+convenience?</li>
+<li>Could a compiler or profile layer produce the same result?</li>
+<li>What new executor behavior must enter the trusted base?</li>
+<li>What mutation court accompanies the construct?</li>
+<li>What weaker constitutions become expressible because of it?</li>
+<li>Can its authority be separated from its representation?</li>
+<li>Does it preserve deterministic identity and custody?</li>
+</ol>
+<p>This yields three broad categories.</p>
+<p><strong>Physics:</strong> the property cannot be represented or
+mediated without extending the model.</p>
+<p><strong>Complexity management:</strong> the property is representable
+but requires a more compact or compositional form.</p>
+<p><strong>Debt wearing a feature’s clothes:</strong> the property is
+already expressible, but tooling has not made the expression
+convenient.</p>
+<p>The razor is skeptical without being hostile to growth. Minimality is
+not an aesthetic absolute. It is an epistemic advantage: every omitted
+primitive is one less semantic mechanism whose behavior must be
+trusted.</p>
+<h2 id="implications-for-constitutional-systems">17. Implications for
+Constitutional Systems</h2>
+<p>The argument has direct consequences for systems such as GOORRT,
+CGSOS, Jnana, constitutional storage layers, governed inference systems,
+and software-admission frameworks.</p>
+<h3 id="goorrt">17.1 GOORRT</h3>
+<p>A realization system should distinguish between:</p>
+<ul>
+<li>whether a source constitution is structurally representable,</li>
+<li>whether the realization preserves its semantics,</li>
+<li>whether the resulting artifact is identity-bound,</li>
+<li>and whether the runtime mediates consequential effects.</li>
+</ul>
+<p>A successful realization is not merely a parser accepting a source
+grammar. It is a custody-preserving transformation whose semantic
+commitments survive into reachable execution.</p>
+<h3 id="cgsos">17.2 CGSOS</h3>
+<p>Any capability added beyond a minimal constitutional vocabulary
+should be tested against the kernel-growth razor.</p>
+<p>The central question is not:</p>
+<blockquote>
+<p>Would this primitive make governance easier to write?</p>
+</blockquote>
+<p>It is:</p>
+<blockquote>
+<p>What policy becomes possible that could not previously be
+represented, compiled, or externally mediated within acceptable
+bounds?</p>
+</blockquote>
+<p>Each added primitive should bring:</p>
+<ul>
+<li>a precise semantic definition,</li>
+<li>a custody representation,</li>
+<li>an executor-conformance court,</li>
+<li>a mutation court,</li>
+<li>an authority model,</li>
+<li>and a claim ceiling.</li>
+</ul>
+<h3 id="jnana-and-governed-execution-substrates">17.3 Jnana and governed
+execution substrates</h3>
+<p>A governed execution substrate should treat application code as a
+bounded worker rather than as the authority that defines its own
+compliance.</p>
+<p>The substrate should mediate:</p>
+<ul>
+<li>installation,</li>
+<li>activation,</li>
+<li>execution,</li>
+<li>protected storage,</li>
+<li>network access,</li>
+<li>signing,</li>
+<li>publication,</li>
+<li>recovery,</li>
+<li>and rollback.</li>
+</ul>
+<p>The executor may fail, but it should not be able to silently convert
+failure into standing.</p>
+<p>The desired system property is:</p>
+<blockquote>
+<p>A nonconforming executor may compute incorrectly, but it cannot
+independently produce an admitted consequential effect; incomplete,
+contradictory, or unreceipted behavior becomes externally detectable and
+recoverable.</p>
+</blockquote>
+<h3 id="constitutional-storage">17.4 Constitutional storage</h3>
+<p>Identity-bearing topology aligns naturally with content-addressed
+storage.</p>
+<p>The full hash can serve as the artifact’s hard storage identity,
+while semantic names remain in an index layer. A constitutional topology
+then has a stable, integrity-checkable true name.</p>
+<p>The semantic index can say what the constitution is for. The hash
+says which exact constitution it is.</p>
+<h3 id="governed-ai-agents">17.5 Governed AI agents</h3>
+<p>An AI agent should not directly possess all capabilities associated
+with its proposed actions.</p>
+<p>The model may suggest a transition. An independent policy and
+authority layer should determine whether the transition is admitted,
+whether evidence is sufficient, and whether the requested capability
+should be released.</p>
+<p>The agent is an engine of proposal, not the final court of
+authority.</p>
+<p>This architecture is especially important because semantic fluency
+can create the appearance of justified action without independently
+establishing custody, authorization, or effect integrity.</p>
+<h3 id="governed-meaning-base-and-historical-system-names">17.6 Governed
+Meaning Base and historical system names</h3>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current term
+in the author-confirmed lineage <code>CCF -&gt; CMB -&gt; GMB</code>. In
+this architecture, GMB can retain the requirement, structural
+representation, counterexamples, mutation fixtures, court judgments,
+implementation claims, receipts, and claim movement without making any
+of them authoritative merely by storing them.</p>
+<p>GOORRT, CGSOS, and Jnana are retained here as source-native system or
+architecture candidates with unresolved implementation and identity
+standing. Jnana is not silently merged into GMB, and the named systems
+are not treated as deployed proof of the paper’s propositions. Current
+synthesis should say GMB when it means the governed semantic substrate;
+exact historical names remain unchanged in source-scoped discussion.</p>
+<h2 id="research-program">18. Research Program</h2>
+<p>The bounded observation can be developed into a broader research
+program.</p>
+<h3 id="expressibility-characterization">18.1 Expressibility
+characterization</h3>
+<p>Construct a corpus of governance requirements and classify each
+as:</p>
+<ul>
+<li>directly structurally expressible,</li>
+<li>expressible through composition,</li>
+<li>expressible with state explosion,</li>
+<li>dependent on an external oracle,</li>
+<li>or genuinely inexpressible in the candidate vocabulary.</li>
+</ul>
+<h3 id="comparative-representations">18.2 Comparative
+representations</h3>
+<p>Encode equivalent policies as:</p>
+<ul>
+<li>runtime counters and flags,</li>
+<li>predicate systems,</li>
+<li>state chains,</li>
+<li>role-partitioned automata,</li>
+<li>capability graphs,</li>
+<li>richer concurrent models.</li>
+</ul>
+<p>Compare:</p>
+<ul>
+<li>mutation resistance,</li>
+<li>verifier complexity,</li>
+<li>audit surface,</li>
+<li>state-space cost,</li>
+<li>custody coverage,</li>
+<li>and executor trust requirements.</li>
+</ul>
+<h3 id="minimal-basis-inquiry">18.3 Minimal-basis inquiry</h3>
+<p>Determine whether a small set of guards, effects, invariants, and
+topology operators forms a useful basis for governance compilation.</p>
+<p>The goal need not be mathematical universality. A practically
+sufficient basis for a well-characterized governance class would already
+be valuable.</p>
+<h3 id="compiler-correctness">18.4 Compiler correctness</h3>
+<p>Develop a compiler from higher-level governance descriptions into
+ratchet automata.</p>
+<p>The compiler should emit:</p>
+<ul>
+<li>the constitution,</li>
+<li>the constitutional identity,</li>
+<li>a semantic correspondence proof or witness,</li>
+<li>mutation fixtures,</li>
+<li>executor test vectors,</li>
+<li>and claim-bounded receipts.</li>
+</ul>
+<h3 id="mediated-effect-courts">18.5 Mediated effect courts</h3>
+<p>Test whether an untrusted executor can cause any externally visible
+effect without an independently authorized commit.</p>
+<p>The strongest negative tests should include:</p>
+<ul>
+<li>forged completion,</li>
+<li>dropped commit acknowledgment,</li>
+<li>substituted abort,</li>
+<li>stale evidence,</li>
+<li>replayed authorization,</li>
+<li>forged session identity,</li>
+<li>unreceipted external effect,</li>
+<li>deliberately stalled execution,</li>
+<li>and compromised local logging.</li>
+</ul>
+<h3 id="plural-witnessing">18.6 Plural witnessing</h3>
+<p>Study the tradeoff between one trusted broker and multiple
+independent witnesses.</p>
+<p>Plurality may reduce single-boundary compromise but introduces
+coordination, availability, and disagreement problems.</p>
+<p>The goal is not maximal decentralization. It is enough independence
+that no actor can both commit the effect and author the sole accepted
+history of that effect.</p>
+<h2 id="discussion-toward-a-semantic-physics-of-governance">19.
+Discussion: Toward a Semantic Physics of Governance</h2>
+<p>The phrase “semantic physics” should be used carefully.</p>
+<p>The present result is not a universal law of meaning. It is a search
+for stable relations among:</p>
+<ul>
+<li>representation,</li>
+<li>reachability,</li>
+<li>identity,</li>
+<li>authority,</li>
+<li>mutation,</li>
+<li>and observable effect.</li>
+</ul>
+<p>The analogy is useful when it disciplines rather than inflates the
+claim.</p>
+<p>A physical law does not depend on a programmer remembering to invoke
+it. The aspiration of structural governance is similar: move recurring
+semantic obligations out of scattered discretionary checks and into the
+invariant mechanics of the system.</p>
+<p>Yet constitutional computing cannot eliminate interpretation. A
+semantic court must still decide which structure is adequate. External
+evidence must still be admitted. Executors must still be bounded.
+Effects must still be mediated. Roots of trust must still be chosen.</p>
+<p>The emerging picture is therefore layered.</p>
+<p>The kernel provides mechanics: what kinds of transitions can be
+enforced.</p>
+<p>The constitution provides topology: which transitions exist for this
+governed system.</p>
+<p>The semantic court provides statics: which structures must be present
+for a claim to stand.</p>
+<p>The custody layer provides identity: which exact structure was
+admitted.</p>
+<p>The executor provides realization: how the structure is enacted.</p>
+<p>The broker provides authority: which effects may become
+consequential.</p>
+<p>The witness provides observability: whether execution and effect
+correspond to the admitted history.</p>
+<p>The alert layer provides temporal accountability: whether expected
+evidence appeared when required.</p>
+<p>No layer is the whole system. Their composition is the constitutional
+regime.</p>
+<h2 id="semantic-placement-and-mediated-enforcement-mechanics">Semantic
+Placement and Mediated Enforcement Mechanics</h2>
+<p>Across the completed P1 corpus, The Mechanics of Constitutional
+Enforcement has a non-duplicative role: it is the <strong>mechanical
+theory of where constitutional meaning is placed and how that meaning is
+carried through identity-bearing structure, adjudication, mediation,
+effects, and receipts</strong>. It does not supply the whole
+constitution, legitimacy theory, development process, or universal
+governance implementation.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Integrity Enforcement
+Layer</em><br />
+<strong>Supplies:</strong> A general effect-mediation and
+protected-refusal architecture.<br />
+<strong>Enforcement-mechanics boundary:</strong> This paper analyzes
+placement, ratchet topology, court separation, and evidence obligations
+within such mediation.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Staged transformation, lowering, and semantic
+remainder.<br />
+<strong>Enforcement-mechanics boundary:</strong> Compilation constructs
+enforceable structures; enforcement still depends on mediation and
+observed effects.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>From CI/CD to ACG</em><br />
+<strong>Supplies:</strong> A constitutional development and assurance
+process.<br />
+<strong>Enforcement-mechanics boundary:</strong> ACG organizes the
+lifecycle; this paper explains the enforcement mechanisms evaluated
+within it.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Legitimacy Without
+Self-Ratification</em><br />
+<strong>Supplies:</strong> Antecedent authority, independence, and
+standing ceilings for protected transitions.<br />
+<strong>Enforcement-mechanics boundary:</strong> Enforcement can be
+mechanically complete while enforcing an illegitimate rule or
+self-ratifying verdict.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Universal Governance Kernel
+(UGK)</em><br />
+<strong>Supplies:</strong> A candidate reusable governance-kernel
+realization.<br />
+<strong>Enforcement-mechanics boundary:</strong> UGK may instantiate the
+mechanics; no single kernel is identified with the theory.</p></li>
+</ul>
+<p>A portable enforcement case is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M= (&amp;rule, placement, subject, prestate, identity, mediator, \\
+&amp;courts, executor, effect\_path, witnesses, receipts, \\
+&amp;remainder, poststate)
+\end{aligned}.
+$$</span></p>
+<p>The rule may be data-borne, topology-borne, or mixed. Moving a rule
+into topology can reduce some substitution attacks while introducing
+opacity, rigidity, state explosion, compiler dependence, and bypass
+risk. Structural difference detection only shows that structures differ;
+semantic adequacy still requires a declared model and evidence.</p>
+<p>The four court claims remain separate: semantic adequacy of the
+encoded rule, executor conformance, custody fidelity, and effect
+integrity. A pass in one court cannot stand in for another. Mediation
+further separates reserve, execute, observe, verify, and commit. Unknown
+or partially committed effects produce classified remainder rather than
+a synthetic success or failure.</p>
+<p>The universal GSM can type <code>RULE_PLACED_IN_DATA</code>,
+<code>RULE_PLACED_IN_TOPOLOGY</code>,<br />
+<code>STRUCTURALIZED_AS</code>, <code>IDENTITY_BEARING_STATE</code>,
+<code>MEDIATED_BY</code>, <code>ADJUDICATED_FOR_ADEQUACY</code>,<br />
+<code>ADJUDICATED_FOR_CONFORMANCE</code>,
+<code>ADJUDICATED_FOR_CUSTODY</code>,
+<code>ADJUDICATED_FOR_EFFECT</code>,<br />
+<code>BYPASSED_BY</code>, <code>LEAVES_EFFECT_REMAINDER</code>,<br />
+and <code>COMMITTED_AS</code>. These relations keep encoded law,
+enforcement, and observed outcome distinct.</p>
+<p>This integration establishes four editorial commitments: adopt
+semantic placement and mediated enforcement mechanics as the official
+corpus role; adopt the enforcement-case envelope; preserve the four
+court claims as independent assurance dimensions; and require classified
+remainder for uncertain or partial effects.</p>
+<h2 id="enforcement-freshness-and-coverage-closure">Enforcement
+Freshness and Coverage Closure</h2>
+<p>The fixed-seed comparison with GCML, Semantic Legitimacy Before
+Context, the Identity Spine Doctrine, and Governance Coverage Gaps
+reveals two additional prerequisites for an enforcement claim:
+<strong>the enforced meaning must remain current, and all relevant
+effect paths must actually cross the mechanism</strong>.</p>
+<p><span class="math display">$$
+\begin{aligned}
+E= (&amp;rule\_identity, standing\_version, procedural\_carrier, \\
+&amp;placement, mediators, effect\_paths, coverage, \\
+&amp;observations, invalidation, remainder)
+\end{aligned}.
+$$</span></p>
+<p>GCML can carry the admitted rule and its obligation status into
+runtime structures. SLBC supplies purpose-specific standing. Identity
+Spine decisions can split, merge, supersede, or contest the rule’s
+semantic subject. Enforcement must bind those exact versions and refuse
+or quarantine stale structures when identity or standing changes.</p>
+<p>Governance Coverage Gaps tests capability acquisition and effect
+routes outside the declared mediator. A mechanically correct court and
+ratchet can coexist with an administrative credential, retry path,
+plugin, build hook, emergency interface, or provider operation that
+bypasses it. Coverage is therefore an independent, interval-bounded
+court over the realized system.</p>
+<p>The architecture should distinguish<br />
+<code>RULE_CURRENT_BUT_UNCOVERED</code>,<br />
+<code>RULE_STALE_BUT_MEDIATED</code>,
+<code>RULE_CURRENT_AND_COVERED</code>,
+<code>EFFECT_PATH_UNKNOWN</code>,<br />
+and<br />
+<code>RULE_INVALIDATED_PENDING_REBUILD</code>. None proves legitimacy or
+correctness, but each locates a different repair.</p>
+<p>The universal GSM can type<br />
+<code>ENFORCES_RULE_AT_STANDING_VERSION</code>,<br />
+<code>INVALIDATED_BY_IDENTITY_CHANGE</code>,
+<code>QUARANTINES_STALE_TOPOLOGY</code>,<br />
+<code>DISCOVERS_BYPASS_EFFECT_PATH</code>,
+<code>COVERED_DURING_INTERVAL</code>,
+<code>REQUIRES_ENFORCEMENT_REBUILD</code>,<br />
+and<br />
+<code>LEAVES_EFFECT_PATH_UNKNOWN</code>.</p>
+<p>This randomized review establishes four editorial commitments: add
+exact semantic and standing versions to enforcement cases; require
+invalidation after identity or admission changes; make
+capability-surface coverage an independent assurance dimension; and
+adopt the five diagnostic states for freshness and coverage.</p>
+<h2 id="universal-gsm-integration">20. Universal GSM Integration</h2>
+<p>The paper’s core entities should remain distinct in the universal
+governed semantic model: requirement, policy distinction, source
+representation, target representation, abstraction map, collision
+witness, structuralization transform, constitution, constitution
+revision, state, transition, guard, role, evidence class, effect
+specification, executor, broker, capability, reservation, staged result,
+effect, witness, monitor, receipt, court judgment, mutation,
+canonicalization regime, identity commitment, trust assumption, and
+claim standing.</p>
+<p>High-value typed relations include:</p>
+<ul>
+<li>a requirement <strong>PRESERVES_DISTINCTION</strong> a named policy
+distinction;</li>
+<li>a representation <strong>COLLAPSES_DISTINCTION</strong> when two
+materially different cases share an enforcement-visible image;</li>
+<li>a structuralization <strong>TRANSFORMS</strong> one representation
+into another under a declared correspondence claim;</li>
+<li>a constitution revision <strong>HAS_CANONICAL_IDENTITY</strong>
+under a named regime;</li>
+<li>an executor <strong>REALIZES_CANDIDATE</strong> a constitution,
+without identity implication;</li>
+<li>a broker <strong>MEDIATES</strong> a capability release;</li>
+<li>a receipt <strong>BINDS</strong> a transition judgment and an
+observed or claimed effect;</li>
+<li>a court judgment <strong>ESTABLISHES_WITHIN_SCOPE</strong> one claim
+and explicitly excludes the other court claims;</li>
+<li>a mutation fixture <strong>COUNTERTESTS</strong> a policy or
+identity claim;</li>
+<li>an implementation result <strong>MOVES_CLAIM</strong> from proposed
+to supported, weakened, refused, or unresolved.</li>
+</ul>
+<p>Lexical similarity, shared hashes in different domains, or successful
+execution does not establish these relations. Consequential edges
+require exact source or receipt support.</p>
+<h2 id="corpus-placement">21. Corpus Placement</h2>
+<p>This paper supplies the mechanical bridge among several corpus
+layers:</p>
+<ol type="1">
+<li><em>Admissibility Engineering</em> asks whether incorrect
+realizations can be excluded structurally rather than discouraged in
+prose.</li>
+<li><em>The Integrity Enforcement Layer</em> makes
+validation-before-mutation, corrupt-not-missing, scoped verification,
+read-only inspection, and truthful effect trails part of the enforcement
+spine.</li>
+<li><em>The Three Hash Rule</em> prevents state identity, admissibility,
+meaning, locality, and receipt binding from collapsing into one
+digest.</li>
+<li><em>Reasoning by Way of Receipts</em> treats receipts as
+claim-bounded reasoning artifacts rather than generic logs.</li>
+<li><em>A Formal Theory of Work Custody</em> separates constitution,
+version family, executable realization, receipt, and effect
+identities.</li>
+<li><em>Constitutional Storage</em> provides content-addressed custody
+and lineage surfaces without turning a stored hash into semantic
+adequacy.</li>
+<li>GMB retains the semantic and evidentiary fabric; it is not the
+effect authority.</li>
+</ol>
+<p>The current UGK/IEL skill informed these proof boundaries as a
+compressed navigation aid. Its r165 pedagogical lane is an update
+candidate, not canonical law or publication evidence, and its
+verification results are not evidence for this paper’s source-reported
+bounded repair.</p>
+<h2 id="realization-funnel">22. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Enforcement-mechanics role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Enumerate data, predicates, sequences, graphs, types, capabilities,
+role partitions, witnesses, effect protocols, failure cases, and
+irreducible external oracles.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Declare preserved distinctions, court claims, canonicalization,
+transition semantics, evidence classes, authority, receipt schema,
+effect boundary, liveness requirements, and falsifiers.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Retain all admissible representations, including weak,
+state-explosive, unavailable, non-atomic, costly, or easily captured
+configurations.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations that preserve required distinctions with
+minimal trusted vocabulary, bounded authority, recoverable lineage,
+diverse evidence, and explicit remainders.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select the exact constitution, compiler/profile, executor, broker,
+witnesses, keys, clocks, effect adapters, monitors, budgets, and court
+procedures.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Compile or author the topology, instantiate components, mediate
+capabilities, execute protocols, and emit receipts.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Preserve fixtures, mutations, traces, canonical identities,
+commitment openings, effect observations, absence contracts, failures,
+and court judgments.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Repair representation or implementation, authorize successor
+constitutions, migrate state, retain predecessor identity, and record
+claim movement.</td>
+</tr>
+</tbody>
+</table>
+<p>The source-reported repair reaches Implementation Realization
+rhetorically, but the current paper package does not bind the external
+fixtures needed to establish that stage independently.</p>
+<h2
+id="enforcement-as-measured-coverage-of-consequential-paths">Enforcement
+as Measured Coverage of Consequential Paths</h2>
+<p>Twelve downstream uses apply the paper to agent interfaces,
+admissibility engineering, infrastructure, cyber-physical syscalls, ACG,
+GCML, operating systems, the Integrity Enforcement Layer, boundary
+accountability, APD containment, UGK, and structural warrant. These uses
+confirm the paper’s core contribution: rules must be placed in
+structures that mediate consequential paths. They also show that
+topology, ratchets, courts, receipts, and capabilities do not establish
+complete mediation merely by being present.</p>
+<p>The enforcement case is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+E^*= (&amp;rule\_identity, subject, operation, realization\_paths, \\
+&amp;entry\_points, monitor, gates, capabilities, roles, \\
+&amp;atomicity, retries, recovery, observers, evidence, \\
+&amp;coverage, exceptions, bypasses, liveness, remedy, \\
+&amp;remainder, revision)
+\end{aligned}.
+$$</span></p>
+<p>Coverage is claim-relative. The evaluator must enumerate or otherwise
+bound the consequential path family, including adapters, caches,
+retries, fallbacks, concurrency, administrative channels, updates,
+recovery tools, side channels, direct devices, and external actors. Each
+excluded path becomes an explicit assumption or remainder. Complete
+mediation is established only for the bounded family and environment
+challenged by the evidence.</p>
+<p>Semantic adequacy, executor conformance, custody fidelity, and effect
+integrity remain different courts with different subjects and oracles. A
+verdict does not issue execution authority. A receipt does not prove the
+external effect. Atomic commit inside the governed substrate cannot
+erase irreversible, delayed, partial, or independently caused external
+effects; reserve, compensate, reconcile, and classified-remainder
+outcomes must be first-class. Absence is evidence only with known
+observation coverage, freshness, liveness, and denominator.</p>
+<p>The universal GSM can type<br />
+<code>MEDIATES_CONSEQUENTIAL_PATH</code>,
+<code>BOUNDS_ENFORCEMENT_COVERAGE</code>,<br />
+<code>EXCLUDES_PATH_AS_ASSUMPTION</code>,
+<code>ATTACKS_ENFORCEMENT_BYPASS</code>,<br />
+<code>CLASSIFIES_PARTIAL_EFFECT_REMAINDER</code>,
+<code>OBSERVES_ABSENCE_WITH_DENOMINATOR</code>,<br />
+<code>PROVIDES_CONTEST_AND_REMEDY</code>, and<br />
+<code>INVALIDATES_ENFORCEMENT_CLAIM</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the path-coverage enforcement case; require explicit
+environment, exclusions, bypass tests, liveness, and remedy; preserve
+the four court subjects and their authority boundaries; and treat
+external partial or irreversible effects as classified remainder rather
+than atomicity success.</p>
+<h2 id="the-road-can-encode-the-wrong-law">The Road Can Encode the Wrong
+Law</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>The Mechanics of Constitutional Enforcement argues that consequential
+rules become stronger when represented in identity-bearing topology,
+capability release, ratchets, courts, and receipts rather than left as
+optional predicates. Structural placement can make violations harder. It
+cannot make the represented constitution correct, complete, legitimate,
+live, or immune to bypass.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Wrong-road attack.</strong> Topology faithfully enforces a
+mistaken rule. Structuralization must preserve authority, rationale,
+challenge, amendment, and supersession.</li>
+<li><strong>Semantic-homomorphism attack.</strong> A rich ordered
+obligation is replaced by a counter, flag, or aggregate that accepts
+invalid histories. The court must test preserved structure, not only
+final value.</li>
+<li><strong>Nonconforming-executor attack.</strong> The executor ignores
+or corrupts internal law. Consequential effects require mediation
+outside the executor’s self-report.</li>
+<li><strong>Coverage-gap attack.</strong> One effect path bypasses the
+ratchet or court. Complete mediation is always effect-class and boundary
+relative, with an explicit unmeasured remainder.</li>
+<li><strong>Stale-witness attack.</strong> Evidence is valid for an
+earlier generation, policy, environment, or subject. Freshness and exact
+binding are part of admissibility.</li>
+<li><strong>Absence-fallacy attack.</strong> No event was observed, so
+non-occurrence is inferred without coverage, liveness, clock, and loss
+guarantees. Absence becomes evidence only under a declared observation
+contract.</li>
+<li><strong>Atomicity-remainder attack.</strong> An external effect
+partially occurs before refusal or rollback. Effects need prepare,
+commit, observation, compensation, and classified remainder.</li>
+<li><strong>State-explosion and liveness attack.</strong> Stronger
+topology makes useful progress computationally or institutionally
+impossible. Cost and continuation are constitutional properties, not
+afterthoughts.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper establishes a design thesis and a research program. The
+Ratchet Governance Conjecture remains a conjecture until its system
+class, semantics, threat model, and proof obligations are fixed. Small
+examples show failure modes and candidate mechanisms; they do not
+establish general security, completeness, minimality, or
+performance.</p>
+<p>Claims about enforcement effectiveness, formal verification,
+attestation, side-channel resistance, liveness, or comparative cost
+require exact realizations and reproducible evidence. Internal corpus
+alignment establishes architectural composition only. No external
+research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The practical lesson is not merely that rules should be checked.
+Where possible, the path to an effect should carry the rule, identity,
+and evidence so that violating the rule requires leaving a visible
+governed road. The remaining paths must be named rather than assumed
+away.</p>
+<h2 id="publication-standing-and-evidence-limits">23. Publication
+Standing and Evidence Limits</h2>
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<h3 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h3>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author source. The source remains unchanged. The integration
+custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/mechanics-</code></p>
+<p><code>of-constitutional-enforcement/integration-</code><br />
+<code>custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>9FF205175F2D2BB69EEAEDC7C2D03ED1775A2D28058BEE84F9599FD09E817CD0</code>.
+A custody manifest binds the source and six exact internal comparison
+works. Exact hashes establish which texts were reviewed, not that their
+claims are correct, implemented, independently reproduced, secure, or
+current. The paper reports a bounded repair involving one specification
+family, eleven constitutions, seventy-seven operations, and linearizable
+workflows. No separate recoverable fixture, test corpus, receipt set, or
+repair record supporting those counts was identified in the reviewed
+paper corpus. The counts are therefore retained as
+<strong>source-reported internal case evidence</strong>, not
+independently replayed evidence. Copies found inside excluded AOK/AOK-G
+material were not used as Ableman semantic evidence. The paper is an
+architectural argument and research program. Its strongest demonstrated
+claim in this pass is the representational distinction illustrated by
+the seven-stage example. Claims about hostile executors, independent
+brokers, plural witnesses, atomic effects, and broad governance
+expressibility remain design propositions unless tied to an exact
+implementation and named proof surface.</p>
+<h2 id="conclusion-the-constitution-as-the-road">24. Conclusion: The
+Constitution as the Road</h2>
+<p>The motivating repair was small in code and large in meaning.</p>
+<p>A counter was replaced by a state chain. No new primitive was added.
+The kernel remained unchanged. Yet the system moved from counting seven
+events to representing seven ordered, unique stages.</p>
+<p>The lesson is not that counters are defective or that automata are
+magical. It is that the original representation preserved the wrong
+invariant.</p>
+<p>Where a meaning lives determines how it can fail.</p>
+<p>When a governance rule lives in runtime data, its force depends on
+every consequential path interpreting that data correctly. When the rule
+lives in topology, a conforming executor has no valid path through which
+to violate it. When the topology is canonically hash-bound, weakening
+the rule changes the identity of the constitution. When effects are
+mediated by independent authority, a nonconforming executor cannot
+silently transform arbitrary behavior into an authorized consequence.
+When witnesses and monitors exist outside the executor, missing or
+contradictory evidence can trigger refusal, rollback, quarantine, or
+alert.</p>
+<p>An absolute residue remains. If every authority, witness, verifier,
+key, clock, effect boundary, and physical substrate relevant to an event
+is compromised together, fabricated history may be indistinguishable
+from faithful execution. No semantic vocabulary abolishes that
+limit.</p>
+<p>But the practical design space is vast before that boundary is
+reached.</p>
+<p>Authority can be divided. Capabilities can be narrowed. Execution can
+be isolated. Effects can be staged. Commit can be separated from
+computation. Receipts can be independently signed. Silence can become
+evidence. Constitutions can be content-addressed. Mutations can be
+forced to declare themselves as changes of identity.</p>
+<p>The resulting aspiration is not a system in which failure becomes
+metaphysically impossible. It is a system in which failure cannot easily
+become invisible, unlimited, self-authorizing, or historically
+legitimate.</p>
+<p>A constitution written only as data asks the executor to remember the
+law.</p>
+<p>A constitution written as topology reshapes the space in which
+execution occurs.</p>
+<p>A constitution whose topology is identity-bearing makes semantic
+weakening visible as constitutional change.</p>
+<p>And a constitution whose effects are independently mediated does not
+merely place a sign beside the forbidden road.</p>
+<p>It closes the road, takes away the bulldozer, and stations a witness
+where new tracks would have to appear.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Constitutional Storage.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788662</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<p>Adam Ableman <em>Semantic Memory Hierarchies.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20793071</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that governed systems frequently represent policy
+as runtime data evaluated by predicates: counters, flags, permission
+checks, validation functions, and conditional branches. Its nearest
+external comparison fields are security, governance, provenance. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. A written constitution can legitimate domination as easily as
+constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E2]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E3]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[1]</strong> Ableman Adam Ableman <em>The Integrity
+Enforcement Layer.</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>FF7A53289D84BAEC82B89E55A9DA6088A8FD194399ABB6A57BFB739F3008B46B</code>.</p>
+<p><strong>[2]</strong> Ableman Adam Ableman <em>The Three Hash
+Rule.</em> Exact reviewed published author source,<br />
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<p><strong>[3]</strong> Ableman Adam Ableman <em>Reasoning by Way of
+Receipts.</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>.</p>
+<p><strong>[4]</strong> Ableman Adam Ableman <em>A Formal Theory of Work
+Custody.</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>49C38F60B95E107F8B3D864ACAFB4C49067A146C807E5248307DE7B009AD4696</code>.</p>
+<p><strong>[5]</strong> Ableman Adam Ableman <em>Admissibility
+Engineering.</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p><strong>[6]</strong> Ableman Adam Ableman <em>Constitutional
+Storage.</em> Exact reviewed published author source,<br />
+SHA-256<br />
+<code>BEE653947A4C17B3A7F02C4E2EB7F8C03A5E45A18FF3D86E6DB9766555A7FB1C</code>.</p>
+<p><strong>Reference-status note.</strong> These internal corpus sources
+support conceptual comparison and custody. No external research,
+implementation replay, security audit, independent replication, or
+product deployment assessment was performed.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848448">10.5281/zenodo.23848448</a></p>

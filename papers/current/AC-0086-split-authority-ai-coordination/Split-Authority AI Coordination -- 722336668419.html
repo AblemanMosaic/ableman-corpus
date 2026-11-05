@@ -1,0 +1,1278 @@
+<h1 id="split-authority-ai-coordination">Split-Authority AI
+Coordination</h1>
+<h2
+id="a-constitutional-protocol-for-separating-mandate-specification-execution-verification-and-effect-in-human-ai-system-construction">A
+Constitutional Protocol for Separating Mandate, Specification,
+Execution, Verification, and Effect in Human-AI System Construction</h2>
+<h3
+id="a-coder-necessarily-interprets-during-lowering-and-must-surface-gaps-rather-than-pretend-to-execute-without-interpretation.">A
+Coder necessarily interprets during lowering and must surface gaps
+rather than pretend to execute without interpretation.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>AI-assisted construction often lets one conversational agent
+interpret a request, choose an architecture, write artifacts, run tests,
+judge success, and present the result. This concentration is efficient,
+but it hides where intent became specification, where specification
+became implementation, who authorized deviations, which evidence
+supports success, and whether an external effect occurred. A coherent
+output can therefore validate the assumptions that produced it.</p>
+<p>The source paper introduces <strong>Split-Authority AI Coordination
+(SAAC)</strong>, using Governor, Coder, Codex, and Journal roles to
+separate semantic authority from execution. This revision preserves that
+insight while expanding the protocol into five authority-bearing
+functions: mandate, specification stewardship, execution, independent
+verification, and external effect. The Codex is a versioned contract
+binding these functions; the Journal becomes a custody-preserving
+evidence and correction ledger rather than an informal feedback
+channel.</p>
+<p>The central correction is that role separation does not itself create
+legitimate authority or correctness. A Governor receives a bounded
+mandate; it does not own the user’s meaning. A Coder necessarily
+interprets during lowering and must surface gaps rather than pretend to
+execute without interpretation. A verifier can establish only the claims
+supported by its observations and tests. An effect authority can commit
+only within a named capability and jurisdiction. Logical roles can still
+collude, share correlated failures, or be instantiated by one model
+under multiple prompts. Independence, non-collusion, source custody,
+claim ceilings, and recovery must be tested.</p>
+<p>SAAC therefore makes a narrower claim than the source. Under an exact
+Codex, bounded role authorities, independently checkable evidence,
+declared variability, and explicit effect gates, split authority can
+make specification drift and self-validation more visible and easier to
+refuse. It does not guarantee identical outputs, specification
+completeness, correctness, legitimacy, or cross-model reproducibility.
+The paper supplies a formal transition protocol, conflict and deadlock
+rules, cold-boot and provider-substitution obligations, counterevidence,
+conformance requirements, and placement in the full realization
+funnel.</p>
+<h2 id="problem-and-claim-ceiling">1. Problem and Claim Ceiling</h2>
+<p>A unified construction agent may perform all of the following:</p>
+<ul>
+<li>infer the principal’s objective;</li>
+<li>decide which requirements matter;</li>
+<li>write or revise the specification;</li>
+<li>select tools, dependencies, and architecture;</li>
+<li>produce implementation artifacts;</li>
+<li>run tests and choose what counts as evidence;</li>
+<li>interpret failures;</li>
+<li>declare completion;</li>
+<li>trigger external effects.</li>
+</ul>
+<p>The problem is not that one model can never perform several tasks.
+The problem is that the resulting claim has no visible authority
+topology. A reader cannot tell whether a requirement came from the
+principal, a specification steward, an executor convenience, a test
+limitation, or a post hoc explanation.</p>
+<p>SAAC’s thesis is:</p>
+<blockquote>
+<p>Construction becomes more governable when mandate, specification,
+execution, verification, and external effect are represented as distinct
+authorities connected by exact artifacts, explicit decisions, and
+independently checkable evidence.</p>
+</blockquote>
+<p>This paper does not establish that:</p>
+<ul>
+<li>semantic authority belongs inherently to a Governor role;</li>
+<li>a Codex is complete, correct, legitimate, or self-authorizing;</li>
+<li>a Coder can implement rich specifications without
+interpretation;</li>
+<li>logical role separation implies organizational, provider, model,
+data, or infrastructure independence;</li>
+<li>multiple agents are safer merely because they are multiple;</li>
+<li>passing gates proves all intended behavior or external effects;</li>
+<li>heterogeneous models should produce byte-identical
+implementations;</li>
+<li>every error is cleanly attributable to specification or
+execution;</li>
+<li>iteration converges monotonically toward completeness;</li>
+<li>the reported empirical improvement in the source is
+publication-grade evidence;</li>
+<li>any implementation, deployment, or external action is authorized
+here.</li>
+</ul>
+<p>The bounded claim is architectural: explicit authority and evidence
+boundaries can expose failure classes that a unified conversational loop
+tends to hide.</p>
+<h2 id="roles-authorities-and-artifacts">2. Roles, Authorities, and
+Artifacts</h2>
+<p>SAAC distinguishes a <strong>role</strong> from the person, model,
+process, or organization that realizes it. One actor may realize several
+roles across a program, but incompatible roles should not be combined
+for the same governed transition unless the exception is explicit and
+the claim ceiling is reduced.</p>
+<h3 id="principal-or-mandate-authority">2.1 Principal or Mandate
+Authority</h3>
+<p>The <strong>Principal</strong> supplies or delegates the objective,
+scope, values, constraints, resources, and effect authority. The
+principal may be a person, team, institution, or prior constitutional
+process.</p>
+<p>The principal does not need to write the technical specification. It
+retains standing over the mandate and must be able to detect, contest,
+revise, or withdraw delegated bindings within the declared regime.</p>
+<h3 id="governor-or-specification-steward">2.2 Governor or Specification
+Steward</h3>
+<p>The <strong>Governor</strong> translates the mandate and accepted
+evidence into a versioned Codex. It declares requirements, invariants,
+tolerable ambiguity, interfaces, phases, refusal conditions, test
+obligations, and claim ceilings.</p>
+<p>The Governor’s authority is delegated and bounded. It cannot invent
+the principal’s objective, widen jurisdiction, authorize external
+effects, validate its own completeness, or treat silence as
+permission.</p>
+<h3 id="coder-or-executor">2.3 Coder or Executor</h3>
+<p>The <strong>Coder</strong> lowers the admitted Codex into
+implementation candidates and execution records. It may choose among
+explicitly permitted realization alternatives.</p>
+<p>The Coder cannot avoid interpretation altogether. Every lowering
+selects representations, algorithms, dependencies, defaults, and
+environment behavior. Its obligation is therefore not <strong>no
+interpretation</strong>, but <strong>no silent semantic
+invention</strong>. When the Codex underdetermines a governance-relevant
+choice, the Coder emits <code>GAP</code> or</p>
+<p><code>DEFER</code> rather than laundering its choice into the
+specification.</p>
+<h3 id="verifier">2.4 Verifier</h3>
+<p>The <strong>Verifier</strong> evaluates the candidate against the
+exact Codex, environment, evidence contract, and claim ceiling. It
+should be independent enough for the claimed risk: separate prompts are
+weak separation; distinct code paths, tools, providers, data,
+organizations, or human review may provide stronger separation.</p>
+<p>Verification returns a bounded finding, not truth. The verifier
+cannot grant authority absent from the mandate or prove unobserved
+external effects.</p>
+<h3 id="effect-authority">2.5 Effect Authority</h3>
+<p>The <strong>Effect Authority</strong> holds the capability to commit
+a candidate into an external or canonical domain. Examples include
+merging code, deploying a service, publishing a record, changing data,
+sending a message, or operating hardware.</p>
+<p>Execution success is not effect authority. Verification success is
+not effect authority. The effect boundary remains separately authorized,
+scope-bound, time-bound, and receipted.</p>
+<h3 id="codex-and-journal">2.6 Codex and Journal</h3>
+<p>The <strong>Codex</strong> is the versioned construction contract
+binding mandate, requirements, invariants, interfaces, permitted
+variation, tests, authorities, environments, evidence, effects,
+nonclaims, and revision rules.</p>
+<p>The <strong>Journal</strong> is an append-only or equivalently
+tamper-evident evidence and correction ledger. It records proposals,
+gaps, assumptions, decisions, executions, observations, failures,
+refusals, effect attempts, disputes, and successor relations. It is not
+authoritative merely because it is a log.</p>
+<h2 id="formal-protocol">3. Formal Protocol</h2>
+<p>A configured SAAC instance is:</p>
+<p><span
+class="math display"><em>P</em> = ⟨<em>M</em>, <em>G</em>, <em>X</em>, <em>V</em>, <em>E</em>, <em>K</em>, <em>J</em>, <em>Q</em>⟩,</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>M</em></span> is the exact mandate and
+delegation state;</li>
+<li><span class="math inline"><em>G</em></span> is the
+specification-steward role;</li>
+<li><span class="math inline"><em>X</em></span> is the executor
+role;</li>
+<li><span class="math inline"><em>V</em></span> is the verification
+role;</li>
+<li><span class="math inline"><em>E</em></span> is the effect
+authority;</li>
+<li><span class="math inline"><em>K</em></span> is the versioned Codex
+family;</li>
+<li><span class="math inline"><em>J</em></span> is the evidence and
+correction journal;</li>
+<li><span class="math inline"><em>Q</em></span> is the quorum, conflict,
+recovery, and succession policy.</li>
+</ul>
+<p>For Codex version <span
+class="math inline"><em>K</em><sub><em>t</em></sub></span>, the normal
+flow is:</p>
+<p><span
+class="math display"><em>K</em><sub><em>t</em></sub> = <em>S</em><em>p</em><em>e</em><em>c</em><em>i</em><em>f</em><em>y</em><sub><em>G</em></sub>(<em>M</em><sub><em>t</em></sub>, <em>s</em><em>t</em><em>a</em><em>t</em><em>e</em><sub><em>t</em></sub>, <em>e</em><em>v</em><em>i</em><em>d</em><em>e</em><em>n</em><em>c</em><em>e</em><sub><em>t</em></sub>),</span></p>
+<p><span
+class="math display">(<em>I</em><sub><em>t</em></sub>, <em>r</em><sub><em>X</em></sub>) = <em>E</em><em>x</em><em>e</em><em>c</em><em>u</em><em>t</em><em>e</em><sub><em>X</em></sub>(<em>K</em><sub><em>t</em></sub>, <em>e</em><em>n</em><em>v</em><sub><em>X</em></sub>),</span></p>
+<p><span
+class="math display">(<em>d</em><sub><em>t</em></sub>, <em>r</em><sub><em>V</em></sub>) = <em>V</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em><sub><em>V</em></sub>(<em>K</em><sub><em>t</em></sub>, <em>I</em><sub><em>t</em></sub>, <em>e</em><em>n</em><em>v</em><sub><em>V</em></sub>, <em>e</em><em>v</em><em>i</em><em>d</em><em>e</em><em>n</em><em>c</em><em>e</em><sub><em>t</em></sub>),</span></p>
+<p>where:</p>
+<p><span
+class="math display"><em>d</em><sub><em>t</em></sub> ∈ {<em>A</em><em>D</em><em>M</em><em>I</em><em>T</em>, <em>D</em><em>E</em><em>F</em><em>E</em><em>R</em>, <em>R</em><em>E</em><em>F</em><em>U</em><em>S</em><em>E</em>, <em>G</em><em>A</em><em>P</em>}.</span></p>
+<p>An external commit is possible only when the configured effect rule
+admits it:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Commit_E(I_t) \text{ may occur only if } d_t = ADMIT \\
+&amp;\land Capability_E(target, effect, scope, time) \\
+&amp;\land Q_t
+\end{aligned}.
+$$</span></p>
+<p><code>ADMIT</code> supports only the exact claim tested.</p>
+<p><code>DEFER</code> identifies missing resolvable evidence or
+authority. <code>REFUSE</code> states a rule-bound inadmissibility.
+<code>GAP</code> states that the representation, identity,
+specification, environment, or observation is insufficient to
+decide.</p>
+<p>Codex revision is a governed successor transition:</p>
+<p><span
+class="math display"><em>K</em><sub><em>t</em> + 1</sub> = <em>A</em><em>m</em><em>e</em><em>n</em><em>d</em><sub><em>G</em></sub>(<em>K</em><sub><em>t</em></sub>, <em>M</em><sub><em>t</em></sub>, <em>J</em><sub><em>t</em></sub>, <em>a</em><em>u</em><em>t</em><em>h</em><em>o</em><em>r</em><em>i</em><em>t</em><em>y</em><sub><em>t</em></sub>).</span></p>
+<p>The predecessor remains reconstructable. A failing implementation
+does not automatically authorize a change to the mandate. A Governor
+cannot retroactively edit <span
+class="math inline"><em>K</em><sub><em>t</em></sub></span> to make <span
+class="math inline"><em>I</em><sub><em>t</em></sub></span> conform; it
+must create <span
+class="math inline"><em>K</em><sub><em>t</em> + 1</sub></span> and
+preserve the failed relation to <span
+class="math inline"><em>K</em><sub><em>t</em></sub></span>.</p>
+<h2 id="separation-invariants">4. Separation Invariants</h2>
+<p>The protocol depends on behavioral separation, not job titles.</p>
+<h3 id="no-self-granting-authority">4.1 No Self-Granting Authority</h3>
+<p>No role may manufacture the authority by which its own output becomes
+binding. The Governor needs mandate authority; the Coder needs an
+admitted Codex; the Verifier needs an exact evidence scope; the Effect
+Authority needs a capability and commit policy.</p>
+<h3 id="no-silent-semantic-widening">4.2 No Silent Semantic
+Widening</h3>
+<p>The Coder may realize permitted variability but may not silently
+widen requirements, authority, effects, jurisdiction, or claims. The
+verifier must test obligation carriage across lowering and composition
+[CBC].</p>
+<h3 id="no-self-verification-at-the-claimed-independence-level">4.3 No
+Self-Verification at the Claimed Independence Level</h3>
+<p>The same model can perform an exploratory self-check, but that
+evidence cannot be labeled independent. Independence claims must name
+the separated failure modes and shared dependencies.</p>
+<h3 id="no-verification-to-effect-collapse">4.4 No
+Verification-to-Effect Collapse</h3>
+<p>A passing verdict does not itself merge, deploy, publish, transmit,
+or mutate. The effect authority remains distinct and may still
+refuse.</p>
+<h3 id="no-journal-to-truth-collapse">4.5 No Journal-to-Truth
+Collapse</h3>
+<p>A journal entry proves that a record was retained under a named
+process. It does not prove the record’s factual correctness, authority,
+completeness, or external effect.</p>
+<h3 id="no-role-permanence">4.6 No Role Permanence</h3>
+<p>Provider, model, and human identities may change. Authority attaches
+to declared roles, credentials, mandates, artifacts, and epochs, not to
+the persistent reputation of one model session.</p>
+<h2 id="codex-completeness-and-tolerable-ambiguity">5. Codex
+Completeness and Tolerable Ambiguity</h2>
+<p>The source asks the Governor to ensure that the Codex is complete and
+predicts convergence toward completeness. Rich specifications are rarely
+complete in an absolute sense. The operational target is
+<strong>saturation relative to a declared realization surface and
+claim</strong> [AE].</p>
+<p>A Codex should distinguish:</p>
+<ul>
+<li><strong>closed constraints</strong>, where all conforming
+implementations must agree;</li>
+<li><strong>permitted variation</strong>, where different
+implementations may choose freely;</li>
+<li><strong>decision parameters</strong>, selected in Instance
+Configuration;</li>
+<li><strong>evidence obligations</strong>, which establish bounded
+claims;</li>
+<li><strong>known gaps</strong>, intentionally unresolved;</li>
+<li><strong>out-of-scope regions</strong>, excluded from the current
+claim;</li>
+<li><strong>revision triggers</strong>, which require a successor
+Codex.</li>
+</ul>
+<p>Let <span class="math inline"><em>R</em>(<em>i</em>)</span> be the
+realization surface of invariant <span
+class="math inline"><em>i</em></span> and <span
+class="math inline"><em>C</em>(<em>K</em>, <em>i</em>)</span> the
+portion constrained by Codex <span
+class="math inline"><em>K</em></span>. The saturation gap is:</p>
+<p><span
+class="math display"><em>G</em><em>a</em><em>p</em>(<em>K</em>, <em>i</em>) = <em>R</em>(<em>i</em>) \ <em>C</em>(<em>K</em>, <em>i</em>).</span></p>
+<p>SAAC does not require eliminating every gap. It requires that
+governance-relevant gaps be closed, refused, or declared as tolerable
+ambiguity. Unrecognized gaps remain a source of plausible-but-wrong
+realization.</p>
+<p>Iteration may improve the Codex, expose a wrong mandate, create
+regressions, overfit one executor, or increase complexity. Convergence
+must be measured and can fail. The Journal preserves these failures
+rather than assuming monotonic progress.</p>
+<h2 id="correctness-is-a-vector-of-claims">6. Correctness Is a Vector of
+Claims</h2>
+<p>The statement <strong>correct</strong> is incomplete without a claim
+dimension and evidence scope. A SAAC candidate may have:</p>
+<ul>
+<li><strong>structural conformance</strong>: required artifacts, types,
+and interfaces exist;</li>
+<li><strong>behavioral conformance</strong>: named behaviors hold under
+specified tests;</li>
+<li><strong>constitutional conformance</strong>: authorities,
+jurisdictions, refusals, and obligations were preserved;</li>
+<li><strong>evidentiary conformance</strong>: results bind to exact
+subject, method, environment, and evidence;</li>
+<li><strong>effect conformance</strong>: a named external effect
+occurred as intended;</li>
+<li><strong>operational fitness</strong>: performance, usability,
+accessibility, and recovery meet bounds;</li>
+<li><strong>semantic fidelity</strong>: implementation behavior
+preserves the admitted meaning within declared tolerances.</li>
+</ul>
+<p>No role can validate all dimensions merely by running the system. A
+test suite observes only a bounded surface. A successful effect can
+still be unauthorized. An authorized effect can still be harmful or
+incorrect. A byte-identical output can reproduce the same specification
+error.</p>
+<p>The completion claim should therefore be a tuple:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Claim = \langle &amp;K_t, I_t, env, verifier, evidence, dimensions,
+scope, \\
+&amp;nonclaims, ceiling\rangle
+\end{aligned}.
+$$</span></p>
+<h2 id="verification-courts-and-evidence">7. Verification, Courts, and
+Evidence</h2>
+<p>The verifier needs access to evidence independent of the Coder’s
+narrative. Minimum bindings include:</p>
+<ul>
+<li>mandate, Codex, and predecessor roots;</li>
+<li>source and dependency roots;</li>
+<li>executor identity, tools, configuration, and environment;</li>
+<li>implementation and build roots;</li>
+<li>tests, fixtures, oracles, and expected failure modes;</li>
+<li>execution receipts and raw observations;</li>
+<li>effect intents and effect evidence;</li>
+<li>unresolved gaps, nondeterminism, and excluded claims.</li>
+</ul>
+<p>Reasoning by Way of Receipts treats receipts as typed
+evidence-bearing transitions rather than decorative logs [RWR]. The
+Three Hash Rule distinguishes subject, procedure, and result bindings
+[THR]. These mechanisms strengthen SAAC only when the underlying
+artifacts and observations are independently inspectable.</p>
+<p>Verification must include adversarial cases that can pass ordinary
+tests: omitted requirements, receipt-without-behavior, authority
+laundering, wrong environment, stale Codex, hidden dependency, partial
+implementation, forged identity, unsupported completion, and an effect
+that occurred without a durable receipt.</p>
+<h2 id="journal-driven-correction-without-recursive-capture">8.
+Journal-Driven Correction Without Recursive Capture</h2>
+<p>The Journal supplies memory across iterations, sessions, models, and
+providers. It should record:</p>
+<ul>
+<li>the exact subject and Codex version;</li>
+<li>the role and authority producing each entry;</li>
+<li>observed failure or ambiguity;</li>
+<li>raw evidence and interpretation separately;</li>
+<li>proposed correction and affected invariants;</li>
+<li>decision outcome and reason;</li>
+<li>successor roots and invalidated claims;</li>
+<li>conflicts, dissent, deferrals, refusals, and gaps.</li>
+</ul>
+<p>The Journal does not update the Codex automatically. Otherwise the
+execution and observation loop can rewrite its own constitution. A
+journal entry becomes a revision input; the Governor or other authorized
+amendment process must create a successor, and the verifier must
+evaluate the transition.</p>
+<p>Journal pressure can also be adversarial. An executor may flood the
+ledger with low-value gaps, frame its convenience as a specification
+defect, or omit evidence that would identify an execution failure.
+Intake, prioritization, provenance, and refusal must therefore be
+governed.</p>
+<h2 id="model-and-provider-substitution">9. Model and Provider
+Substitution</h2>
+<p>SAAC should prefer <strong>conformance equivalence</strong> over byte
+identity. Different compliant executors may produce different code
+structures, algorithms, explanations, or performance profiles while
+satisfying the same closed constraints.</p>
+<p>Byte-identical results require the Codex to bind every relevant input
+and source of variation, including tools, dependencies, platforms,
+locale, clocks, randomness, ordering, network responses, and
+serialization. Even then, identity is a measured property, not a
+consequence of role separation.</p>
+<p>Provider substitution requires:</p>
+<ol type="1">
+<li>a portable Codex and exact custody bundle;</li>
+<li>a role and capability declaration for the successor;</li>
+<li>no ambient access to prior provider secrets or hidden state;</li>
+<li>reconstruction of the active mandate, Codex, Journal, open gaps, and
+claim ceilings;</li>
+<li>replay or qualification under the successor environment;</li>
+<li>explicit treatment of behavior differences;</li>
+<li>no claim that model diversity implies independent reasoning.</li>
+</ol>
+<p>Cold Boot Continuity treats reconstruction in a fresh environment as
+a deployment primitive [CBCP]. A Cognitive ABI supplies an adjacent
+interface for replacing capability providers while preserving
+evidence-bearing obligations [CABI]. SAAC supplies the authority
+topology governing which provider may occupy which role.</p>
+<h2 id="scaling-correlation-and-collusion">10. Scaling, Correlation, and
+Collusion</h2>
+<p>Multiple Coders can explore alternative realizations, but shared
+training, prompts, tools, dependencies, datasets, or infrastructure
+create common-mode failures. Multiple Verifiers can repeat the same
+blind spot. A Governor and Verifier run by the same organization may
+remain institutionally coupled.</p>
+<p>An independence statement should name dimensions such as:</p>
+<ul>
+<li>model family and provider;</li>
+<li>prompt and context construction;</li>
+<li>implementation language and toolchain;</li>
+<li>test and oracle provenance;</li>
+<li>data and dependency sources;</li>
+<li>infrastructure and credentials;</li>
+<li>organizational control and incentives;</li>
+<li>human review and effect authority.</li>
+</ul>
+<p>Quorum is not legitimacy. A majority of correlated agents can agree
+on an unauthorized or wrong result. The quorum policy <span
+class="math inline"><em>Q</em></span> must remain subordinate to
+mandate, constitutional constraints, and effect authority.</p>
+<h2 id="conflict-deadlock-and-emergency">11. Conflict, Deadlock, and
+Emergency</h2>
+<p>Split authority deliberately creates the possibility of refusal and
+deadlock. That is a safety property until the system must decide what to
+do next.</p>
+<p>Required states include:</p>
+<ul>
+<li>Governor-Coder interpretation conflict;</li>
+<li>Coder-Verifier evidence conflict;</li>
+<li>Verifier disagreement;</li>
+<li>mandate ambiguity;</li>
+<li>unavailable role or expired authority;</li>
+<li>no admissible implementation;</li>
+<li>effect uncertainty;</li>
+<li>irreconcilable jurisdictional rules;</li>
+<li>recovery after partial external effect.</li>
+</ul>
+<p>The default response is not for one role to absorb another’s
+authority. It is <code>DEFER</code>,<br />
+<code>REFUSE</code>, <code>GAP</code>, escalation, fork, or bounded
+termination.</p>
+<p>An emergency path, if any, must be predeclared with trigger, holder,
+scope, duration, logging, expiry, recovery, review, and claim
+consequences. Break-glass use should lower assurance and cannot be
+retroactively relabeled normal conformance.</p>
+<h2 id="human-authority-privacy-and-negative-power">12. Human Authority,
+Privacy, and Negative Power</h2>
+<p>SAAC can constrain AI coordination while still centralizing power in
+the Governor or exposing users through the Journal. Constitutional use
+therefore requires:</p>
+<ul>
+<li>visible mandate and delegation;</li>
+<li>practical contest of a Governor interpretation;</li>
+<li>selective disclosure and data minimization;</li>
+<li>no requirement to reveal irrelevant private reasoning or
+identity;</li>
+<li>accessible refusal, correction, exit, substitution, and fork
+paths;</li>
+<li>retention and deletion rules consistent with evidence needs;</li>
+<li>protection against retaliation for reporting gaps or failures;</li>
+<li>separation between observation needed for verification and ambient
+surveillance.</li>
+</ul>
+<p>The Ableman Prime Directive places detectability, refusal, exit, and
+renegotiation of bindings at the center of governed computing [APD].
+SAAC supports those capacities only when they are reachable in the
+configured socio-technical system, not merely named in the Codex.</p>
+<h2 id="worked-example-a-bounded-software-change">13. Worked Example: A
+Bounded Software Change</h2>
+<p>Assume a user authorizes a feature that exports one report from a
+local application without changing unrelated data or making network
+calls.</p>
+<h3 id="mandate">13.1 Mandate</h3>
+<p>The Principal states the required report, local-only boundary,
+protected data, accepted formats, and no-network invariant.</p>
+<h3 id="codex">13.2 Codex</h3>
+<p>The Governor creates <span
+class="math inline"><em>K</em><sub>1</sub></span> with:</p>
+<ul>
+<li>exact repository and source roots;</li>
+<li>feature behavior and nonclaims;</li>
+<li>protected paths and data classes;</li>
+<li>no-network and no-unrelated-mutation invariants;</li>
+<li>permitted library choices;</li>
+<li>acceptance, negative, privacy, and rollback tests;</li>
+<li>evidence and effect boundaries;</li>
+<li>known gaps and escalation rules.</li>
+</ul>
+<h3 id="execution">13.3 Execution</h3>
+<p>The Coder produces implementation <span
+class="math inline"><em>I</em><sub>1</sub></span>. It discovers that the
+source does not define how to handle an unsupported field type. Because
+that choice affects output meaning, it emits <code>GAP</code> rather
+than silently serializing the value.</p>
+<h3 id="revision">13.4 Revision</h3>
+<p>The Governor consults the Principal or delegated policy and creates
+<span class="math inline"><em>K</em><sub>2</sub></span>, preserving
+<span class="math inline"><em>K</em><sub>1</sub></span> and the gap
+receipt. The Coder creates <span
+class="math inline"><em>I</em><sub>2</sub></span>.</p>
+<h3 id="verification">13.5 Verification</h3>
+<p>The Verifier checks positive behavior, protected paths, network
+isolation, unsupported fields, replay, and exact roots. It returns
+<code>ADMIT</code> for a local candidate package with a claim limited to
+the tested environment.</p>
+<h3 id="effect">13.6 Effect</h3>
+<p>The Effect Authority decides whether to install or merge. A passing
+verification does not perform that mutation. After effect, a separate
+observation verifies the installed state. If the commit result is
+ambiguous, the Journal records <code>EFFECT_UNKNOWN</code> and initiates
+reconciliation.</p>
+<p>This example shows the protocol’s benefit: the under-specified
+semantic choice becomes visible, predecessor custody remains intact,
+verification cannot deploy, and a possible effect is not erased by a
+missing receipt.</p>
+<h2 id="corpus-placement-and-governed-meaning-base">14. Corpus Placement
+and Governed Meaning Base</h2>
+<p>SAAC is an authority-topology and coordination protocol. Its adjacent
+corpus relations are:</p>
+<ul>
+<li><strong>Constitutional Computing</strong> supplies the separation of
+law, authority, admissibility, execution, effect, evidence, and revision
+[CC].</li>
+<li><strong>Admissibility Engineering</strong> supplies the
+saturation-gap and artifact-layer constraint discipline for the Codex
+[AE].</li>
+<li><strong>Constraint-Bearing Composability</strong> tests whether
+Codex obligations survive modules, adapters, and downstream composition
+[CBC].</li>
+<li><strong>A Formal Theory of Work Custody</strong> distinguishes work,
+artifact, role, delegation, handoff, and result custody [FTC].</li>
+<li><strong>A Constitution for the Context Window</strong> governs which
+sources and standing enter each agent role [CCW].</li>
+<li><strong>A Cognitive ABI</strong> supplies provider- and
+model-substitution interfaces with evidence-bearing obligations
+[CABI].</li>
+<li><strong>Cold Boot Continuity</strong> supplies reconstruction and
+qualification across fresh environments [CBCP].</li>
+<li><strong>Operational Epistemic Situational Awareness in Agentic
+Orchestration</strong> supplies adjacent state and continuation
+awareness for multi-agent work [OESA].</li>
+<li><strong>GSOL</strong> can represent governed operations before
+machine lowering [GSOL].</li>
+<li><strong>Reasoning by Way of Receipts</strong> and <strong>The Three
+Hash Rule</strong> supply evidence and binding discipline [RWR]
+[THR].</li>
+</ul>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is current in the
+author-confirmed lineage <code>CCF -&gt; CMB -&gt; GMB</code>. It can
+preserve mandates, Codices, journals, role profiles, evidence, disputes,
+gaps, decisions, effects, and revisions. GMB does not become the
+Principal, Governor, Verifier, or Effect Authority by storing their
+records. Hyperpedia can project the coordination history for readers and
+agents while preserving authorship and standing.</p>
+<h2 id="authorial-compression-and-external-comparison">15. Authorial
+Compression and External Comparison</h2>
+<p>SAAC should remain a distinct corpus construct only if its
+differential obligations exceed ordinary multi-agent prompting or
+generic separation of duties:</p>
+<ol type="1">
+<li>exact mandate-to-Codex delegation;</li>
+<li>no silent semantic invention during lowering;</li>
+<li>independent verification with declared dependency dimensions;</li>
+<li>verification-to-effect separation;</li>
+<li>predecessor-bound Journal correction;</li>
+<li>explicit <code>DEFER</code>, <code>REFUSE</code>, <code>GAP</code>,
+and effect-ambiguity states;</li>
+<li>provider substitution and cold-boot qualification;</li>
+<li>claim ceilings and non-transferability across configurations.</li>
+</ol>
+<p>If these obligations are already fully supplied by Constitutional
+Computing, work custody, Cognitive ABI, admissibility engineering, and
+receipt machinery, SAAC may be better presented as a concrete
+orchestration profile rather than a new foundational system.</p>
+<p>Further evidentiary strengthening requires external comparison with
+separation of duties, dual control, least privilege, capability systems,
+N-version programming, diverse redundancy, software architecture, formal
+specification, multi-agent systems, Byzantine-fault models,
+human-in-the-loop governance, and institutional checks and balances. No
+external research was conducted in this pass. Novelty and empirical
+priority remain unestablished.</p>
+<h2 id="agentic-authority-topology-profile">Agentic Authority-Topology
+Profile</h2>
+<p>Across the completed P1 corpus, Split-Authority AI Coordination is
+the <strong>agentic authority-topology profile for separating mandate,
+specification, realization, verification, and external effect in
+AI-assisted construction</strong>. Its contribution is not the number of
+agents but the exact distribution of binding authority, custody,
+evidence, conflict, and negative power across roles and artifacts.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>A Cognitive ABI for
+Capability-Centered Computing</em><br />
+<strong>Supplies:</strong> Provider-neutral capability descriptions and
+substitution obligations.<br />
+<strong>SAAC boundary:</strong> SAAC configures authority among role
+realizations that may satisfy those capability contracts.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Live responsibility, handoff, succession, and
+result-custody relations.<br />
+<strong>SAAC boundary:</strong> SAAC assigns custody across one
+construction protocol without redefining work custody
+generally.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Admissibility
+Engineering</em><br />
+<strong>Supplies:</strong> Constraint saturation, gaps, and pathway
+assurance.<br />
+<strong>SAAC boundary:</strong> SAAC places admissibility checks at
+specification, realization, verification, and effect
+boundaries.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Operational Epistemic
+Situational Awareness in Agentic Orchestration</em><br />
+<strong>Supplies:</strong> Current-state and continuation orientation
+for orchestrated work.<br />
+<strong>SAAC boundary:</strong> OESA informs role decisions; SAAC
+governs which role may bind them.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Implementation
+Codex</em><br />
+<strong>Supplies:</strong> IC-to-IR realization package with phases,
+gates, evidence, and journals.<br />
+<strong>SAAC boundary:</strong> A Codex is SAAC’s construction contract,
+not an autonomous authority source.</p></li>
+</ul>
+<p>A configured authority topology should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A= (&amp;mandate\_authority, specification\_authority, \\
+&amp;realization\_custody, verification\_authority, \\
+&amp;effect\_authority, artifacts, dependencies, independence, \\
+&amp;quorum, conflict, recovery, contest)
+\end{aligned}.
+$$</span></p>
+<p>Role separation is a graph property, not a label. Model, provider,
+prompt, context, tools, data, organization, credentials, test oracle,
+and effect path can create common-mode control even when role names
+differ. Every independence claim must name which failure dimensions are
+separated and which remain shared.</p>
+<p>SAAC should return <code>ADMIT</code>, <code>DEFER</code>,
+<code>REFUSE</code>, <code>GAP</code>, <code>CONFLICT</code>,<br />
+or <code>EFFECT_UNKNOWN</code> at the relevant boundary. A verification
+result cannot cause the external effect by itself. Deadlock, unavailable
+roles, emergency paths, role succession, and provider substitution
+require explicit rules; urgency cannot silently collapse authority into
+the most capable agent.</p>
+<p>The universal GSM can type<br />
+<code>DELEGATES_MANDATE_AUTHORITY</code>,
+<code>STEWARDS_SPECIFICATION</code>,<br />
+<code>HOLDS_REALIZATION_CUSTODY</code>,
+<code>VERIFIES_UNDER_DECLARED_INDEPENDENCE</code>,<br />
+<code>CONTROLS_EXTERNAL_EFFECT</code>,
+<code>SHARES_COMMON_MODE_DEPENDENCY</code>,
+<code>ESCALATES_SEMANTIC_GAP</code>,<br />
+<code>ENTERS_ROLE_CONFLICT</code>,
+<code>SUBSTITUTES_PROVIDER</code>,<br />
+and<br />
+<code>PRESERVES_NEGATIVE_POWER</code>. These relations make the profile
+portable and testable.</p>
+<p>This integration establishes four editorial commitments: retain SAAC
+as the agentic authority-topology profile; adopt the topology envelope
+and six-valued outcome vocabulary; require dimension-specific
+independence and common-mode disclosure; and classify SAAC as an
+orchestration profile rather than a new foundational system unless its
+differential obligations remain unprovided elsewhere.</p>
+<h2
+id="anti-convergence-authority-revisable-orientation-obligation-carrying-handoffs-and-evidence-loop-separation">Anti-Convergence
+Authority, Revisable Orientation, Obligation-Carrying Handoffs, and
+Evidence-Loop Separation</h2>
+<p>The fixed-seed comparison with Semantic Gravitational Attractors,
+Recursive Semantic Orientation, transformation-dominant semantic
+systems, and the Constitutional Observability Platform gives the
+authority topology four additional common-mode tests:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A^*= (&amp;mandate, specification, realization, verification, \\
+&amp;effect, orientation, artifacts, dependencies, \\
+&amp;equivalence\_regimes, carriage, observers, independence, \\
+&amp;conflict, recovery, contest)
+\end{aligned}.
+$$</span></p>
+<p>Semantic convergence across prompts, schemas, models, or canonical
+artifacts can make role outputs easier to compare while also
+synchronizing the same defect. Shared terminology or hashes do not imply
+shared authority, semantic correctness, or independent verification.</p>
+<p>Recursive Semantic Orientation may supply each role with a bounded
+current-state model, explicit unknowns, and stopping rationale. It
+remains an input to role judgment, not a source of mandate or effect
+authority. Transformation-dominant diagnostics apply to delegation,
+lowering, handoff, review, and revision: every edge should state which
+obligations were carried, transformed, lost, refused, or left as
+remainder.</p>
+<p>The Constitutional Observability Platform can supply claim-scoped
+observers, evidence paths, projection fidelity, and visible
+<code>GAP</code>,<br />
+<code>CONFLICT</code>, <code>STALE</code>,
+<code>UNOBSERVED</code>,<br />
+and <code>UNKNOWN</code> states. Observer roles must remain distinct
+from specification, verification, and effect authority, and a shared
+platform cannot independently certify its own control domain.</p>
+<p>The universal GSM can type<br />
+<code>SHARES_CANONICAL_ARTIFACT_WITHOUT_AUTHORITY</code>,<br />
+<code>ORIENTS_ROLE_UNDER_CEILING</code>,
+<code>CARRIES_OBLIGATION_ACROSS_HANDOFF</code>,
+<code>REPORTS_HANDOFF_LOSS</code>,<br />
+<code>OBSERVED_BY_DISTINCT_ROLE</code>,
+<code>SHARES_PLATFORM_FAILURE_DOMAIN</code>,<br />
+and<br />
+<code>REFUSES_SELF_CERTIFICATION</code>.</p>
+<p>This randomized review establishes four editorial commitments: add
+convergence-regime and orientation risks to the authority topology;
+require obligation-carriage records at every role handoff; integrate
+decomposable evidence-loop roles without authority collapse; and treat
+common platforms and canonical artifacts as disclosed independence
+limitations.</p>
+<h2 id="authority-topology-not-agent-multiplicity">Authority Topology,
+Not Agent Multiplicity</h2>
+<p>Eight downstream uses apply SAAC to collectives, observability,
+recursive orientation, semantic attractors, optional coordination,
+transformation systems, trade authority chains, and work custody. They
+support SAAC as an orchestration profile for separating mandate,
+specification, execution, verification, and effect. Multiple agents,
+providers, or organizations do not create split authority when they
+share decisive control, collude, inherit one grant, or can silently
+substitute for one another.</p>
+<p><span class="math display">$$
+\begin{aligned}
+S^*= (&amp;subject, mandate, roles, actors, control\_domains, \\
+&amp;grants, artifacts, handoffs, custody, independence, \\
+&amp;conflicts, deadlock, emergency, evidence, \\
+&amp;effect\_authority, appeal, expiry, successor)
+\end{aligned}.
+$$</span></p>
+<p>Each role needs a scoped grant, negative powers, inputs, outputs,
+claim ceiling, and handoff conditions. One actor may occupy several
+roles only with declared loss of independence and narrowed claims.
+Distinct actors may still be one control domain through shared prompts,
+data, model, code, keys, infrastructure, employer, or incentive.
+Journals preserve attributable state but do not become truth or
+authority.</p>
+<p>Deadlock, disagreement, provider loss, compromise, emergency, and
+human unavailability require typed outcomes. Emergency combination of
+roles must be time-limited, receipted, independently reviewed, and
+unable to retroactively ratify itself. Substitution must preserve
+obligations, authority limits, refusal behavior, custody, and evidence,
+not merely output shape.</p>
+<p>The universal GSM can type <code>ASSIGNS_SAAC_ROLE</code>,
+<code>GRANTS_ROLE_AUTHORITY</code>,<br />
+<code>SHARES_DECISIVE_CONTROL_DOMAIN</code>,
+<code>COLLAPSES_ROLE_WITH_DISCLOSURE</code>,<br />
+<code>TRANSFERS_OBLIGATION_CUSTODY</code>,
+<code>INVOKES_EMERGENCY_ROLE_COMBINATION</code>,<br />
+and<br />
+<code>SEPARATES_VERDICT_FROM_EFFECT</code>.</p>
+<p>This review establishes four editorial commitments: retain SAAC as an
+authority-topology profile; adopt the role and control-domain record;
+require negative powers, handoff, deadlock, and emergency semantics; and
+measure independence by decisive control rather than participant
+count.</p>
+<h2 id="counterevidence-and-failure-modes">16. Counterevidence and
+Failure Modes</h2>
+<p>SAAC fails or requires revision when:</p>
+<ul>
+<li>the Governor rewrites the Principal’s objective without visible
+delegation;</li>
+<li>the Codex omits a governance-relevant choice and the Coder silently
+fills it;</li>
+<li>the Coder optimizes for gate tests while violating unobserved
+intent;</li>
+<li>the Governor defines correctness and also controls the Verifier’s
+observations;</li>
+<li>logical roles share correlated models, prompts, data, tools, or
+institutional incentives;</li>
+<li>a Journal records claims without raw evidence or predecessor
+bindings;</li>
+<li>Codex revision retroactively erases a failed implementation or
+invalidated claim;</li>
+<li>multiple agents agree because they copy the same error;</li>
+<li>byte-identical outputs reproduce a specification defect;</li>
+<li>permitted variability is mistaken for divergence or divergence is
+hidden as variability;</li>
+<li>verification passes while an external effect is absent, wrong,
+duplicated, or unknown;</li>
+<li>effect capability leaks into the Governor, Coder, or Verifier
+role;</li>
+<li>deadlock pressure causes silent authority consolidation;</li>
+<li>emergency use becomes a permanent bypass;</li>
+<li>private user data is exposed to satisfy broad observability
+demands;</li>
+<li>participation, contest, or provider substitution is only
+nominal;</li>
+<li>the protocol’s cost and latency exceed the risk of the governed
+task;</li>
+<li>a simpler compiler, review, capability, transaction, or CI process
+supplies equivalent assurance;</li>
+<li>the claimed empirical improvement cannot be reproduced from exact
+artifacts;</li>
+<li>no one can determine which role or artifact caused a failure.</li>
+</ul>
+<p>The strongest counterexample is <strong>constitutional
+theater</strong>: the system names every role and produces every
+receipt, but one actor controls the mandate interpretation, Codex,
+tests, credentials, and effect path. The topology appears split while
+authority remains unified.</p>
+<h2 id="evidence-and-conformance-program">17. Evidence and Conformance
+Program</h2>
+<p>A bounded SAAC conformance claim should require:</p>
+<ol type="1">
+<li>exact mandate, delegation, Codex, source, dependency, and
+environment roots;</li>
+<li>role identities, authority scopes, expiry, revocation, and conflict
+rules;</li>
+<li>evidence that incompatible roles are behaviorally separated at the
+claimed level;</li>
+<li>Codex closed constraints, permitted variation, gaps, nonclaims, and
+revision rules;</li>
+<li>no-silent-invention tests and required gap escalation;</li>
+<li>structural, behavioral, constitutional, evidentiary, effect, and
+operational claim dimensions;</li>
+<li>independent-oracle and common-mode-dependency analysis;</li>
+<li>adversarial fixtures for test gaming, receipt forgery, stale Codex,
+and authority laundering;</li>
+<li>effect success, refusal, timeout, duplication, partial commit, and
+ambiguity tests;</li>
+<li>Journal append, ordering, truncation, equivocation, privacy, and
+successor tests;</li>
+<li>deadlock, unavailable-role, break-glass, expiry, and recovery
+tests;</li>
+<li>provider substitution and fresh-environment cold boot;</li>
+<li>multiple compliant implementations exercising permitted
+variation;</li>
+<li>composition tests proving obligations survive downstream
+interfaces;</li>
+<li>accessible human contest, refusal, exit, revision, and fork
+paths;</li>
+<li>claim-ceiling tests that reject transfer from one configuration or
+court to another;</li>
+<li>an exact empirical package for any reproducibility or reliability
+improvement claim;</li>
+<li>independent review of at least one low-consequence vertical
+slice.</li>
+</ol>
+<p>Conformance attaches to the named Codex version, roles, artifacts,
+environment, tests, and evidence. It does not establish that SAAC is
+universally correct or that any other multi-agent system conforms.</p>
+<h2 id="realization-funnel">18. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>SAAC role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore role topologies, mandates, Codex forms, executor and
+verifier diversity, quorum rules, harmful centralizations, collusion,
+deadlock, privacy models, and alternative coordination
+architectures.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define roles, authority scopes, artifacts, transitions, outcomes,
+separation invariants, evidence, effects, recovery, claim dimensions,
+and nonclaims.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate configurations satisfying the specification, including
+nominally split but correlated, centralized, expensive,
+surveillance-heavy, deadlock-prone, or inaccessible variants.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations with bounded delegation, practical negative
+power, independent evidence, privacy, substitution, clear gaps, low
+correlated failure, recovery, and proportional cost.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Bind exact principals, agents, providers, models, prompts, contexts,
+Codex roots, tools, repositories, environments, credentials, verifiers,
+effect targets, quorums, and courts.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build the orchestration, role adapters, Codex compiler, executor,
+verifier, journal, effect membrane, recovery, and interfaces under
+separate authority.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Execute ordinary, adversarial, cross-model, substitution, cold-boot,
+composition, deadlock, privacy, effect, and recovery tests; preserve
+failures and uncertainty.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Create successor mandates, Codices, role assignments, tools,
+policies, courts, and claims when evidence, authority, environment,
+threats, or objectives change.</td>
+</tr>
+</tbody>
+</table>
+<p>The source paper supplies the core authority-separation proposal.
+This revision supplies a fuller Specification. Neither paper alone
+proves a complete Implementation Realization or evidence-qualified
+instance.</p>
+<h2 id="more-agents-do-not-mean-authority-is-split">More Agents Do Not
+Mean Authority Is Split</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Split-Authority AI Coordination separates mandate, specification,
+execution, verification, and external effect so one opaque process
+cannot silently define a task, build the answer, select the evidence,
+judge success, and commit the result. This is an authority-topology
+proposal, not a claim that multiple models, agents, or organizations are
+independent merely because they have different names.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Common-control attack.</strong> Distinct roles share
+decisive prompts, models, data, code, tools, credentials,
+infrastructure, employer, or incentives.</li>
+<li><strong>Governor-capture attack.</strong> The Governor rewrites the
+Principal’s mandate, defines tests, selects evidence, and controls the
+Verifier while appearing only to specify.</li>
+<li><strong>Test-gaming attack.</strong> The Coder satisfies the visible
+Codex and fixtures while violating unobserved intent or protected
+interests.</li>
+<li><strong>Journal-oracle attack.</strong> Attributed records become
+accepted as truth, authority, or complete evidence without independent
+observation.</li>
+<li><strong>Effect-leakage attack.</strong> A Governor, Coder, or
+Verifier can install, publish, spend, message, or mutate protected state
+despite nominal role separation.</li>
+<li><strong>Deadlock-consolidation attack.</strong> Delay or
+disagreement is used to silently combine roles and preserve the result
+as permanently authorized.</li>
+<li><strong>Emergency-ratification attack.</strong> Break-glass
+authority becomes self-justifying, unbounded, or capable of
+retroactively validating its own action.</li>
+<li><strong>Substitution-shape attack.</strong> A replacement provider
+produces the expected envelope while dropping obligations, refusals,
+custody, privacy, or evidence semantics.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>SAAC specifies a role, grant, handoff, custody, verification, and
+effect-separation profile. It does not make a mandate legitimate, a
+Codex complete, correlated evaluators independent, passing tests true,
+or external effects successful. Independence is dimension- and
+claim-specific; one actor may fill several roles only with disclosed
+loss of standing.</p>
+<p>Claims of security, correctness improvement, provider neutrality,
+organizational independence, cost effectiveness, or general coordination
+benefit require exact realizations, adversarial campaigns, common-mode
+analysis, human contest, and external comparison. No external research
+was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public test is who can reinterpret the mandate, change the rules,
+build the candidate, choose what is observed, issue the verdict, and
+cause the real-world effect - and whether any one control domain can
+secretly do all six.</p>
+<h2 id="research-agenda-and-open-questions">19. Research Agenda and Open
+Questions</h2>
+<ol type="1">
+<li>Decide whether SAAC is a distinct protocol or an orchestration
+profile of Constitutional Computing, Cognitive ABI, work custody,
+admissibility engineering, and receipts.</li>
+<li>Accept or revise the five authority-bearing functions: mandate,
+specification, execution, verification, and effect.</li>
+<li>Decide which incompatible roles may ever be realized by the same
+person, model, provider, or organization and how standing changes.</li>
+<li>Define the minimum Codex schema, permitted-variation contract,
+Journal schema, and outcome taxonomy.</li>
+<li>Accept conformance equivalence rather than byte identity as the
+default cross-model target.</li>
+<li>Define independence dimensions and quorum rules for different risk
+levels.</li>
+<li>Define deadlock, emergency, expiry, recovery, and effect-ambiguity
+semantics.</li>
+<li>Define human contest, privacy, refusal, substitution, exit, and fork
+requirements.</li>
+<li>Select any future low-consequence reference implementation only
+under separate implementation authority.</li>
+<li>Authorize external research for a future evidence-qualified
+revision-readiness, novelty, or empirical-improvement claims.</li>
+</ol>
+<h2 id="conclusion">20. Conclusion</h2>
+<p>Split-Authority AI Coordination begins with a simple and durable
+insight: the same opaque process should not silently define the task,
+realize it, select its evidence, judge its success, and commit its
+effects.</p>
+<p>The mature form of that insight is not a two-agent ritual. It is an
+authority and custody protocol. A Principal supplies a bounded mandate.
+A Governor creates a versioned Codex. A Coder produces a candidate while
+surfacing semantic gaps. A Verifier issues a scope-bound finding from
+independently checkable evidence. An Effect Authority decides whether
+anything becomes externally consequential. A Journal preserves the exact
+path and feeds authorized successor revision.</p>
+<p>This structure does not make a bad mandate good, a partial Codex
+complete, a correlated court independent, or a passing test true. It
+makes those limitations visible and gives the system lawful places to
+stop. Different executors may remain different. Correctness remains
+multidimensional. Deadlock may be preferable to silent authority
+consolidation. External effect remains a separate gate.</p>
+<p>SAAC’s defensible result is therefore:</p>
+<blockquote>
+<p>AI-assisted construction becomes more inspectable, substitutable, and
+governable when authority-bearing functions are separated by exact
+contracts, explicit outcomes, evidence, and effect boundaries, and when
+no role can silently promote its own output.</p>
+</blockquote>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Evidence.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that aI-assisted construction often lets one
+conversational agent interpret a request, choose an architecture, write
+artifacts, run tests, judge success, and present the result. Its nearest
+external comparison fields are ai, governance, security. The sources in
+[E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E7]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[SAAC-SOURCE]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Exact author source SHA-256<br />
+<code>AB9D992A4668946DB17F530B31BDD6DD35C6C247769D33F4C48897E29B337064</code>;
+unpublished source revised here as an AI-assisted integrated
+edition.</p>
+<p><strong>[CC]</strong> Adam Ableman. <em>Constitutional
+Computing</em>. Exact reviewed source SHA-256<br />
+<code>A1EF0D1F7B5DF84A107E986421EAA95827AEDCB801B7DA63F72BEECA6047BE8D</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p><strong>[AE]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Exact reviewed source SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CBC]</strong> Adam Ableman. <em>Constraint-Bearing
+Composability</em>. Exact reviewed source SHA-256<br />
+<code>BEEA0B56DBF7DC5274307E95E08AF0576A9F91A729C1962765361ADA34488B62</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p><strong>[FTC]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Exact reviewed source SHA-256<br />
+<code>49C38F60B95E107F8B3D864ACAFB4C49067A146C807E5248307DE7B009AD4696</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CCW]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Exact reviewed source SHA-256<br />
+<code>C4F6CC466FA4306C595AFF66D9EBD4F396E45B91876E1D32A5027FCF465312EE</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CABI]</strong> Adam Ableman. <em>A Cognitive ABI for
+Capability-Centered Computing</em>. Exact reviewed source SHA-256<br />
+<code>F7A7034BB9E382C91AEA693BD656040A93C5C5B504FE70425A31561CEECDC084</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CBCP]</strong> Adam Ableman. <em>Cold Boot Continuity as a
+Deployment Primitive</em>. Exact reviewed source SHA-256<br />
+<code>747CDF82833B2769317A3E63F0F6BA9D0A2CFA84C83E5A8CD72442F6E49C59F3</code>;
+unpublished technical companion.</p>
+<p><strong>[OESA]</strong> Adam Ableman. <em>Operational Epistemic
+Situational Awareness in Agentic Orchestration</em>. Exact reviewed
+source SHA-256<br />
+<code>7712462638A0BEDB1412B7F089C39D226AE24864FA15D7C667753AEE23795B1B</code>;
+separately custodied reviewed source.</p>
+<p><strong>[GSOL]</strong> Adam Ableman. <em>GSOL v0.1: Governed
+Semantic Operation Language</em>. Exact reviewed source SHA-256<br />
+<code>44F8689BF2FD50670CD25347FB2363491115CA7C049C2BBF71D7286A226DD1AC</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p><strong>[RWR]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Exact reviewed source SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>;
+separately custodied reviewed source.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.20788617</code>. Exact reviewed Markdown source
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<p><strong>[APD]</strong> Adam Ableman. <em>Turing Completeness and the
+Ableman Prime Directive</em>. Exact reviewed source SHA-256<br />
+<code>80F4FCB00B214D22BF0E0A2D67E726DBA4410BAA751300A24DAAD2610E6C395E</code>;
+separately custodied reviewed source.</p>
+<p>No external research was conducted in this pass. Current
+primary-source comparison and a conventional bibliography are required
+for a future evidence-qualified revision readiness, novelty, or
+empirical-improvement claims.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Governed Semantic Operation Language.</em> Zenodo,
+2026. doi:10.5281/zenodo.21214886</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848231">10.5281/zenodo.23848231</a></p>

@@ -1,0 +1,664 @@
+<h1
+id="dag-closure-and-acyclicity-by-construction-in-canonically-referenced-mcir-systems">DAG
+Closure and Acyclicity by Construction in Canonically Referenced MCIR
+Systems</h1>
+<h2
+id="referential-structural-closure-through-immutable-backward-reference">Referential
+Structural Closure Through Immutable Backward Reference</h2>
+<h3
+id="if-every-immutable-artifact-version-may-reference-only-strictly-earlier-immutable-versions-then-the-resulting-reference-graph-is-acyclic-by-construction.">If
+every immutable artifact version may reference only strictly earlier
+immutable versions, then the resulting reference graph is acyclic by
+construction.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This note formalizes a precise structural property of canonically
+referenced MCIR systems. If every immutable artifact version may
+reference only strictly earlier immutable versions, then the resulting
+reference graph is acyclic by construction. If admission also checks
+local schema and every outgoing reference against declared identity,
+type, scope, authority, and version constraints, then admitted graph
+state is structurally closed under those checks.</p>
+<p>The result is strong but narrower than universal correctness. It does
+not prove truth, semantic adequacy, policy justice, validator
+correctness, provenance, replayability, or continued validity after
+authority revocation or policy change. Canonical identity alone is
+insufficient if a target can mutate beneath the same identifier.
+Receipts and content/state bindings are required for custody;
+revalidation and invalidation propagation are required when governing
+assumptions change.</p>
+<p>This revision preserves the acyclicity proof, replaces the
+tautological phrase “global correctness” with <strong>referential
+structural closure</strong>, specifies versioned construction,
+distinguishes acceptance evidence from truth, integrates the result with
+constraint-bearing composition, semantic custody, receipts, the Governed
+Meaning Base (GMB), and the universal GSM, and supplies counterexamples
+and an evaluation program.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/dag-closure-</code></p>
+<p><code>acyclicity/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>C06628A9024AAA17979CF72F22DA7CDA3ECABA9D9788A744BCB779F51235E4D6</code>.
+The exact source remains unchanged. The title spelling correction
+from</p>
+<p><code>Constrution</code> to <code>Construction</code> is editorial
+and does not merge identities.</p>
+<p>The construction discipline, theorem, proof, and warrant-by-structure
+interpretation are author material. The narrowed correctness claim,
+version discipline, policy-change model, GMB/GSM integration,
+countertests, and decisions are AI editorial or synthetic contributions
+until adopted. No implementation or external research was performed.</p>
+<h2 id="typed-versioned-setup">1. Typed Versioned Setup</h2>
+<p>Let an artifact version be:</p>
+<p><span
+class="math display"><em>v</em> = (<em>i</em><em>d</em>, <em>v</em><em>e</em><em>r</em>, <em>h</em>, <em>τ</em>, <em>p</em>, <em>R</em>, <em>L</em>, <em>A</em>, <em>t</em>),</span></p>
+<p>where <span class="math inline"><em>i</em><em>d</em></span> is
+logical identity, <span
+class="math inline"><em>v</em><em>e</em><em>r</em></span> is immutable
+version identity, <span class="math inline"><em>h</em></span> is content
+or canonical-state hash, <span class="math inline"><em>τ</em></span> is
+type, <span class="math inline"><em>p</em></span> is payload, <span
+class="math inline"><em>R</em></span> is a finite set of version-bound
+references, <span class="math inline"><em>L</em></span> is applicable
+law or schema version, <span class="math inline"><em>A</em></span> is
+authority posture, and <span class="math inline"><em>t</em></span> is
+construction rank or receipt time.</p>
+<p>A reference must bind<br />
+<code>(logical identity, version, hash)</code>, not only a mutable name.
+Logical identity can persist across revisions; graph edges target
+immutable versions.</p>
+<p>Let <span class="math inline"><em>R</em>(<em>v</em>)</span> contain
+the artifact versions referenced by <span
+class="math inline"><em>v</em></span>. Version <span
+class="math inline"><em>v</em></span> is <strong>structurally admissible
+at construction</strong> iff:</p>
+<ol type="1">
+<li>its local schema is valid under <span
+class="math inline"><em>L</em></span>;</li>
+<li>every target version and hash resolves;</li>
+<li>every edge type is allowed for the endpoint types;</li>
+<li>scope, authority, and jurisdiction constraints pass;</li>
+<li>every target has lower rank than <span
+class="math inline"><em>v</em></span>; and</li>
+<li>the admission act emits a receipt binding input, rules, verdict,
+artifact version, and resulting graph root.</li>
+</ol>
+<h2 id="construction-order">2. Construction Order</h2>
+<p>Let <span class="math inline"><em>ρ</em> : <em>V</em> → ℕ</span>
+assign each admitted version a construction rank. The backward-reference
+rule is:</p>
+<p><span
+class="math display">∀<em>v</em> ∈ <em>V</em>, ∀<em>u</em> ∈ <em>R</em>(<em>v</em>): <em>ρ</em>(<em>u</em>) &lt; <em>ρ</em>(<em>v</em>).</span></p>
+<p>Using a natural-number rank provides a strict well-founded order. A
+timestamp alone is unsafe where clocks collide, reorder, or can be
+rewritten. A monotone sequence, parent receipt, or comparable admitted
+rank is required.</p>
+<p>Updates create new artifact versions and new edges. In-place mutation
+of an old version can introduce a cycle or invalidate prior checks
+without a new construction event, so immutability is required for the
+theorem as stated rather than merely optional strengthening.</p>
+<h2 id="the-acyclicity-theorem">3. The Acyclicity Theorem</h2>
+<blockquote>
+<p><strong>Theorem.</strong> If every reference edge <span
+class="math inline">(<em>v</em>, <em>u</em>)</span> satisfies <span
+class="math inline"><em>ρ</em>(<em>u</em>) &lt; <em>ρ</em>(<em>v</em>)</span>
+for a strict order, then <span
+class="math inline"><em>G</em> = (<em>V</em>, <em>E</em>)</span> is
+acyclic.</p>
+</blockquote>
+<p><strong>Proof.</strong> Assume a directed cycle <span
+class="math inline"><em>v</em><sub>1</sub> → <em>v</em><sub>2</sub> → ⋯ → <em>v</em><sub><em>n</em></sub> → <em>v</em><sub>1</sub></span>.
+The rule gives</p>
+<p><span
+class="math display"><em>ρ</em>(<em>v</em><sub>2</sub>) &lt; <em>ρ</em>(<em>v</em><sub>1</sub>), <em>ρ</em>(<em>v</em><sub>3</sub>) &lt; <em>ρ</em>(<em>v</em><sub>2</sub>), …, <em>ρ</em>(<em>v</em><sub>1</sub>) &lt; <em>ρ</em>(<em>v</em><sub><em>n</em></sub>).</span></p>
+<p>By transitivity, <span
+class="math inline"><em>ρ</em>(<em>v</em><sub>1</sub>) &lt; <em>ρ</em>(<em>v</em><sub>1</sub>)</span>,
+contradicting irreflexivity. Therefore no cycle exists. <span
+class="math inline">▫</span></p>
+<p>This proof is complete relative to exact edge coverage and
+enforcement of the rank rule. It says nothing about unrecorded
+references, runtime call cycles outside the artifact graph, or
+intentional recursive semantics represented through another layer.</p>
+<h2 id="referential-structural-closure">4. Referential Structural
+Closure</h2>
+<p>Define local structural validity:</p>
+<p><span
+class="math display">LocalOK(<em>v</em>, <em>L</em>) ∧ ⋀<sub><em>u</em> ∈ <em>R</em>(<em>v</em>)</sub>EdgeOK(<em>v</em>, <em>u</em>, <em>L</em>).</span></p>
+<p>If admission rejects every version failing this predicate, all
+admitted nodes and recorded edges satisfy the predicate at admission
+time. Calling that result “global correctness” adds more than the
+premises prove. The defensible result is:</p>
+<blockquote>
+<p><strong>Structural-closure proposition.</strong> For an exact
+immutable graph built solely through the declared admission function,
+every admitted node is locally schema-valid and every recorded reference
+satisfies the edge constraints checked at its construction version.</p>
+</blockquote>
+<p>This is compositional bookkeeping with real value. It is not semantic
+correctness, truth, completeness, evidence quality, or present-day
+admissibility.</p>
+<h2 id="what-acyclicity-does-and-does-not-establish">5. What Acyclicity
+Does and Does Not Establish</h2>
+<p>A finite version graph with finite references has terminating
+ancestry traversal. A DAG in the abstract need not have finite ancestry
+if it is infinite, and acyclicity alone does not establish provenance or
+replay.</p>
+<p>Additional properties require additional contracts:</p>
+<ul>
+<li><strong>Provenance:</strong> receipts bind producer, authority,
+inputs, transformation, output, and time.</li>
+<li><strong>Custody:</strong> content/state hashes bind exact versions
+and graph roots.</li>
+<li><strong>Replayability:</strong> transformations and all material
+inputs are available and deterministic or their uncertainty is
+declared.</li>
+<li><strong>Current admissibility:</strong> policy, authority,
+dependencies, and evidence remain valid or have been revalidated.</li>
+<li><strong>Semantic correctness:</strong> domain-specific invariants
+and evidence hold; graph form alone cannot prove them.</li>
+</ul>
+<h2 id="invalidation-and-revalidation">6. Invalidation and
+Revalidation</h2>
+<p>Prior-valid references can become unusable when a law changes, an
+authority is revoked, evidence is withdrawn, a vulnerability is
+discovered, or an identity decision is reversed. The immutable
+historical graph should not be rewritten. Instead, the system emits a
+typed invalidation, supersession, or standing change and computes
+affected dependents through reverse reachability.</p>
+<p>For changed condition <span class="math inline"><em>c</em></span>,
+let:</p>
+<p><span
+class="math display">Affected(<em>c</em>) = {<em>v</em> ∣ ∃<em>u</em> ∈ Changed(<em>c</em>) : <em>v</em> ⤳ <em>u</em>}.</span></p>
+<p>Policy determines whether affected versions remain historical
+evidence, become unusable for new composition, require revalidation, or
+trigger replacement. Thus no-global-revalidation is valid only while all
+governing assumptions remain unchanged and the admission checker was
+sound.</p>
+<h2 id="cycles-recursion-and-layering">7. Cycles, Recursion, and
+Layering</h2>
+<p>Some domains legitimately require mutual recursion, feedback, or
+strongly connected specifications. A backward-only artifact-dependency
+graph cannot encode these directly. Options include grouping a recursive
+component into one admitted unit, using symbolic forward declarations
+resolved before admission, or representing runtime feedback in a
+different graph layer.</p>
+<p>The theorem applies only to the selected canonical reference
+relation. It should not be generalized to claim that all cycles are
+undesirable or absent from the full system.</p>
+<h2 id="warrant-by-structure">8. Warrant by Structure</h2>
+<p>Construction can serve as evidence that a named validator accepted a
+version under named rules at a named time. The strongest safe statement
+is:</p>
+<pre class="text"><code>admitted existence proves recorded acceptance under the bound
+admission procedure</code></pre>
+<p>It does not prove that the procedure was correct, complete, current,
+authorized, or non-bypassable. “Construction is proof” is therefore
+shorthand whose proof object is the receipt plus the exact validator,
+law, inputs, artifact version, and graph root.</p>
+<h2 id="corpus-integration">9. Corpus Integration</h2>
+<p>MCIR supplies the canonical intermediate-representation context, but
+this note does not decide among disputed MCIR expansions or merge MCIR
+families. Constraint-Bearing Composability adds the requirement that
+obligations survive composition. The Three Hash Rule and Semantic
+Custody bind law, artifact, execution or result state, and lineage.
+Reasoning by Way of Receipts supplies structured admission evidence.
+Warrant by Structure supplies the broader proof-by-constructibility
+thesis.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the <code>CCF -&gt; CMB -&gt; GMB</code> lineage. The universal GSM
+can represent logical works, immutable versions, hashes, edge types,
+laws, receipts, invalidations, and revision lineage. Acyclicity is one
+invariant over a selected relation, not the whole GMB or GSM.</p>
+<h2 id="realization-funnel">10. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> consider dependency, versioning,
+recursion, and invalidation strategies.</li>
+<li><strong>Specification:</strong> define identities, immutable
+versions, rank, edge types, laws, receipts, and invalidation
+semantics.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> require exact
+version binding, backward edges, schema validity, authority, and
+non-bypassable admission.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer among
+admissible storage, indexing, receipt, and revalidation designs.</li>
+<li><strong>IC:</strong> choose an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong>. The
+names are interchangeable.</li>
+<li><strong>IR:</strong> build an <strong>Instance Realization</strong>
+or <strong>Implementation Realization</strong>. The names are
+interchangeable.</li>
+<li><strong>Evidence:</strong> test cycle attempts, mutation, stale law,
+revocation, deletion, corruption, bypass, replay, and scale.</li>
+<li><strong>Revision:</strong> add new versions and standing changes
+without erasing historical graph state.</li>
+</ul>
+<h2 id="version-ranked-referential-closure-theorem">Version-Ranked
+Referential Closure Theorem</h2>
+<p>The completed P1 corpus gives this paper a narrow technical role: it
+is the <strong>version-ranked construction and theorem for referential
+closure and acyclicity in a declared class of canonical MCIR
+graphs</strong>. It does not establish semantic correctness, absence of
+recursive meaning, implementation safety, or the superiority of DAGs for
+every representation.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Representational Topology in
+MCIR: AST, DAG, and Emergent Governance Capabilities</em><br />
+<strong>Supplies:</strong> The three-graph representation contract and
+topology tradeoffs.<br />
+<strong>DAG-theorem boundary:</strong> This paper proves one
+construction property for the canonical DAG layer.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Warrant by
+Structure</em><br />
+<strong>Supplies:</strong> Structural assurance relations and claim
+ceilings.<br />
+<strong>DAG-theorem boundary:</strong> Acyclic construction supplies one
+witness toward a bounded structural claim.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Ableman Format
+Specification (AFS)</em><br />
+<strong>Supplies:</strong> Profiles, schemas, canonicalization,
+validators, and vectors.<br />
+<strong>DAG-theorem boundary:</strong> AFS may make the construction a
+conformance obligation under an exact profile.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meta-Binding as Operational
+Invariant</em><br />
+<strong>Supplies:</strong> Obligations preserved across
+transformations.<br />
+<strong>DAG-theorem boundary:</strong> Closure says references resolve
+within the graph; it does not prove the referenced obligations were
+preserved.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Parsing, lowering, semantic remainder, and
+correspondence.<br />
+<strong>DAG-theorem boundary:</strong> The compiler must produce and
+validate the ranked graph without widening meaning.</p></li>
+</ul>
+<p>A theorem instance should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;schema, version\_order, node\_set, reference\_rule, \\
+&amp;construction\_order, closure\_check, cycle\_check, \\
+&amp;evidence, standing)
+\end{aligned}.
+$$</span></p>
+<p>Acyclicity follows only when every admitted edge respects the
+declared well-founded rank or construction order. Referential closure
+follows only when every required reference resolves to an admitted node
+under the exact schema and registry. External references, lazy imports,
+symbolic recursion, revision edges, receipt lineage, and cross-version
+mappings require separate layers or rules.</p>
+<p>Invalidation and revalidation must propagate through dependents. A
+graph can remain acyclic while containing stale, unauthorized,
+contradictory, or semantically defective nodes. Structural warrant
+therefore stays limited to the theorem’s subject and predicates.</p>
+<p>The universal GSM can type <code>RANKED_BEFORE_NODE</code>,
+<code>REFERENCES_ADMITTED_NODE</code>,<br />
+<code>CLOSED_UNDER_REFERENCE_RULE</code>,
+<code>ACYCLIC_BY_CONSTRUCTION</code>,
+<code>EXTERNAL_REFERENCE_TO</code>,<br />
+<code>RECURSION_REPRESENTED_OUTSIDE_DAG</code>,
+<code>INVALIDATES_DEPENDENT</code>,
+<code>REVALIDATED_UNDER_SCHEMA</code>,<br />
+and<br />
+<code>WARRANTED_FOR_STRUCTURE</code>. These relations isolate the
+theorem from broader claims.</p>
+<p>This integration establishes four editorial commitments: adopt
+version-ranked referential-closure theorem as the official corpus role;
+adopt the theorem-instance envelope; enumerate out-of-layer recursion
+and external-reference cases; and bind structural standing strictly to
+acyclicity and closure under the named profile.</p>
+<h2 id="closed-reference-substrate-not-closed-evidence">Closed Reference
+Substrate, Not Closed Evidence</h2>
+<p>The fixed-seed comparison with the Epistemic Lineage Engine, the
+seventeen-system evidence study, Semantic Field Analysis, and the
+Governed Meaning Base locates the theorem as one structural service:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;profile, schema, registry, version\_rank, nodes, edges, \\
+&amp;external\_references, layered\_relations, \\
+&amp;closure\_witness, cycle\_witness, invalidation, \\
+&amp;revalidation)
+\end{aligned}.
+$$</span></p>
+<p>The GMB may store entries whose canonical reference layer satisfies
+this profile. ELE may bind episode artifacts to roots in that layer
+while keeping ancestry, revision, authority, observation, compensation,
+and external-effect relations separately typed. Referential closure is
+relative to the exact registry and admitted external-reference
+policy.</p>
+<p>The software study can package case sources, analysis artifacts, and
+finding references through a closed graph. SFA can analyze a declared
+closed projection. Neither use makes source evidence adequate,
+interpretations correct, field measures valid, or omitted relations
+nonexistent.</p>
+<p>Invalidation must travel from changed or withdrawn nodes into
+dependent entries, projections, analyses, and case packages. The
+universal GSM can type<br />
+<code>IMPLEMENTS_CANONICAL_REFERENCE_LAYER</code>,<br />
+<code>HOSTED_IN_GMB_PROFILE</code>, <code>ROOTS_LINEAGE_ARTIFACT</code>,
+<code>SUPPORTS_ANALYSIS_PACKAGE</code>,<br />
+<code>EXTERNALIZES_NON_DAG_RELATION</code>,
+<code>INVALIDATES_DEPENDENT_PROJECTION</code>,<br />
+and<br />
+<code>WITHHOLDS_EVIDENCE_CLOSURE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the expanded structural-service object; profile the DAG as one GMB
+layer; externalize lineage and recursive relations explicitly; and
+prohibit graph closure from implying evidence completeness or analytic
+validity.</p>
+<h2 id="a-property-scoped-closure-certificate">A Property-Scoped Closure
+Certificate</h2>
+<p>Three downstream uses confirm the theorem’s narrow value. The
+historical CMB/GMB work may store an entry projection satisfying
+version-ranked referential closure. Epistemic Lineage Engine may root
+episode artifacts in that layer while keeping ancestry, authority,
+observation, and external effects separately typed. MCIR Topologies
+treats the result as one property of one selected canonical graph
+profile.</p>
+<p>The reusable certificate is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;graph\_generation, schema, registry, node\_set, \\
+&amp;edge\_types, rank, construction\_order, \\
+&amp;external\_reference\_policy, resolution, layered\_cycles, \\
+&amp;proof, witnesses, invalidations, ceiling)
+\end{aligned}.
+$$</span></p>
+<p>The certificate proves only the declared structural properties under
+the exact registry and admission rules. Structural closure, semantic
+completeness, evidence closure, currentness, authorization, consistency,
+and truth remain different predicates. Symbolic recursion, external
+references, lazy imports, version succession, and receipt or episode
+lineage may be lawful in separate layers without falsifying the
+canonical-DAG result.</p>
+<p>Any node, edge, schema, registry, rank, or external-reference-policy
+change invalidates the affected certificate and propagates revalidation
+to dependents. A successor may preserve the theorem while changing
+meaning, authority, or evidence. Consumers should cite the exact graph
+generation and property set rather than the general paper.</p>
+<p>The universal GSM can type<br />
+<code>CERTIFIES_REFERENTIAL_CLOSURE</code>,<br />
+<code>CERTIFIES_ACYCLICITY_UNDER_RANK</code>,
+<code>EXTERNALIZES_RECURSIVE_LAYER</code>,<br />
+<code>INVALIDATES_CLOSURE_CERTIFICATE</code>,
+<code>REQUIRES_DEPENDENT_REVALIDATION</code>,<br />
+and<br />
+<code>DOES_NOT_PROVE_SEMANTIC_OR_EVIDENCE_CLOSURE</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the property-scoped certificate; separate structural,
+semantic, evidentiary, and authority closure; require exact generation
+and external-reference policy; and propagate invalidation and
+revalidation through every consumer.</p>
+<h2 id="counterevidence-and-failure-modes">11. Counterevidence and
+Failure Modes</h2>
+<p>The claims fail or narrow where: (1) references target mutable names;
+(2) old versions mutate; (3) not all edges pass admission; (4) an import
+path bypasses validation; (5) rank can be forged or reused; (6) forward
+references are resolved after admission; (7) an edge type permits hidden
+dependency; (8) deletion leaves unresolved references; (9) validator or
+schema is defective; (10) policy changes invalidate prior edges; (11)
+authority is revoked; (12) graph storage is corrupted; (13) receipts
+bind the wrong version or root; (14) DAG ancestry is infinite; (15)
+replay depends on missing external state; (16) a valid recursive domain
+is forced into misleading acyclicity; (17) structural closure is
+presented as truth; or (18) scale makes reverse-dependency revalidation
+impractical.</p>
+<h2 id="evaluation-program">12. Evaluation Program</h2>
+<p>A minimal demonstrator should attempt direct cycles, multi-node
+cycles, mutable-target swaps, hash mismatches, stale-law admission,
+authority revocation, bypassed imports, deleted targets, forward
+references, receipt substitution, recursive-component packaging, and
+transitive invalidation. It should prove the graph invariant from
+exported state and compare incremental checks with full
+recomputation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+<li><strong>Revision.</strong> This stage is outside the present paper’s
+asserted contribution and evidentiary scope.</li>
+</ul>
+<h2 id="conclusion">14. Conclusion</h2>
+<p>Backward references to strictly earlier immutable versions do
+guarantee acyclicity. Admission-time local and edge checks also give
+useful structural closure over the exact recorded graph. Those are
+strong architectural properties precisely because their limits are
+clear.</p>
+<p>They do not make a graph true, semantically complete, permanently
+admissible, automatically replayable, or immune to policy change. With
+version immutability, exact identity, receipts, non-bypassable
+admission, invalidation propagation, and explicit graph layering, the
+note becomes a rigorous foundation for governed dependency structures
+rather than an overbroad claim that local validation proves an entire
+representational universe correct.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that this note formalizes a precise structural
+property of canonically referenced MCIR systems. Its nearest external
+comparison fields are formal, provenance, semantic. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Formal vocabularies and
+graph links make commitments explicit but cannot by themselves establish
+correct identity, shared interpretation, or lossless translation between
+contexts. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<h3 id="public-orientation">Public orientation</h3>
+<p>DAG Closure and Acyclicity by Construction provides a bounded
+structural result: if every admitted reference edge follows a declared
+well-founded rank, the resulting versioned reference graph is acyclic. A
+closure certificate can show that required reference targets are present
+under a profile. Neither result establishes semantic consistency,
+evidentiary sufficiency, authority, safety, or correctness.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Hidden-edge attack.</strong> Runtime imports, generated
+links, aliases, redirects, schemas, environment lookups, or human
+procedures create dependencies outside the certified edge registry.</li>
+<li><strong>Rank-forgery attack.</strong> A malformed, mutable,
+colliding, or semantically irrelevant rank satisfies the comparison
+while defeating the intended construction order.</li>
+<li><strong>Version-alias attack.</strong> Mutable names, latest
+pointers, case differences, platform normalization, or successor
+confusion create cycles or ambiguity outside exact identities.</li>
+<li><strong>Recursive-semantics attack.</strong> The graph is
+structurally acyclic while definitions, obligations, proofs, or
+interpretations depend circularly on one another.</li>
+<li><strong>Closed-falsehood attack.</strong> Every reference resolves
+and every artifact is false, stale, unauthorized, poisoned, or
+irrelevant to the dependent claim.</li>
+<li><strong>Invalidation-gap attack.</strong> A predecessor changes or
+is revoked but dependent certificates remain apparently current because
+propagation is incomplete.</li>
+<li><strong>Partial-view attack.</strong> Each subsystem certifies its
+local DAG while their composition contains cross-boundary cycles or
+unresolved dependencies.</li>
+<li><strong>Theorem-travel attack.</strong> The construction theorem is
+applied to graphs, edges, or update semantics that do not satisfy its
+typed assumptions.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper’s theorem is conditional on exact node identity, an
+immutable edge set for the certified snapshot, a well-founded rank, and
+strict rank decrease on every admitted edge. The closure claim is
+property- and profile-scoped. It does not prove complete dependency
+discovery, semantic closure, evidence closure, consistency, correctness,
+authority, execution safety, or implementation conformance.</p>
+<p>Further evidentiary strengthening requires machine-checked fixtures
+for valid and invalid cases, cross-platform identity tests, hidden-edge
+and composition tests, invalidation replay, and verification of any
+external mathematical or systems claims. No implementation or external
+research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The practical benefit is a certificate saying which exact references
+were checked, under which edge and rank rules, and which structural
+property followed - together with an explicit list of the properties
+that did not.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847631">10.5281/zenodo.23847631</a></p>

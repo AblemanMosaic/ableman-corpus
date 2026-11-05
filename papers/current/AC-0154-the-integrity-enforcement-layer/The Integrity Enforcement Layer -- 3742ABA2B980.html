@@ -1,0 +1,1218 @@
+<h1 id="the-integrity-enforcement-layer">The Integrity Enforcement
+Layer</h1>
+<h2 id="a-constitutional-substrate-for-refusal-centric-systems">A
+Constitutional Substrate for Refusal-Centric Systems</h2>
+<h3
+id="the-measure-of-trust-is-not-what-a-system-permits-but-what-it-can-refuse-without-ambiguity.">“The
+measure of trust is not what a system permits, but what it can refuse
+without ambiguity.”</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Most software systems are optimized for successful execution. Their
+primary question is:</p>
+<blockquote>
+<p>Can the requested action be performed?</p>
+</blockquote>
+<p>Governance systems, integrity systems, audit systems, provenance
+systems, and constitutional systems face a different question:</p>
+<blockquote>
+<p>Can an action be refused correctly, consistently, durably, and
+verifiably?</p>
+</blockquote>
+<p>This distinction is foundational.</p>
+<p>A conventional application often presents successful operation as
+evidence of trustworthiness. A governance system also requires
+principled refusal. Neither success nor refusal is sufficient by itself;
+each must be scoped, evidenced, and connected to observed effects. It
+must reject forged authority, corrupted records, invalid lineage,
+inconsistent state, replayed requests, malformed inputs, and
+unverifiable claims. Failure to refuse correctly is itself a governance
+failure.</p>
+<p>This paper proposes the Integrity Enforcement Layer (IEL), a
+constitutional substrate positioned beneath governance logic and above
+storage, execution, and transport mechanisms. The IEL centralizes
+adversarial validation, verification semantics, corruption handling,
+atomic mutation, and contextual reconstruction into a single enforcement
+spine.</p>
+<p>The purpose of the IEL is not to define governance. Governance
+defines meaning. The IEL enforces the declared admissibility and
+integrity conditions under which a governance result may acquire
+protected effects. It does not define truth or trust in the
+abstract.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Modern software commonly treats adversarial behavior as an edge
+case.</p>
+<p>Governance systems cannot.</p>
+<p>In ordinary applications, correctness is demonstrated through
+successful execution. In integrity systems, correctness is demonstrated
+through successful refusal.</p>
+<p>A banking system proves itself by refusing fraudulent transfers.</p>
+<p>A certificate authority proves itself by refusing invalid
+certificates.</p>
+<p>A governance kernel proves itself by refusing illegitimate
+governance.</p>
+<p>This inversion creates a fundamental architectural challenge.</p>
+<p>The system must ensure that every subsystem:</p>
+<ul>
+<li>validates before mutation,</li>
+<li>distinguishes corruption from absence,</li>
+<li>preserves historical context,</li>
+<li>performs atomic mutations,</li>
+<li>avoids hidden state changes,</li>
+<li>expresses precisely what has been verified.</li>
+</ul>
+<p>Experience suggests that implementing these principles independently
+within each subsystem leads to drift. The same classes of failures
+emerge repeatedly across manifests, archives, receipts, verifiers,
+transports, policy systems, and authority systems.</p>
+<p>The Integrity Enforcement Layer is proposed as a solution to this
+repetition.</p>
+<hr />
+<h2 id="the-refusal-problem">2. The Refusal Problem</h2>
+<p>Most architectures are designed around execution.</p>
+<p>The request enters.</p>
+<p>Validation occurs.</p>
+<p>The action executes.</p>
+<p>A result is returned.</p>
+<p>This model is insufficient for governance.</p>
+<p>Governance introduces a second responsibility:</p>
+<p>The refusal itself becomes a governed artifact.</p>
+<p>A refusal must be:</p>
+<ul>
+<li>correct,</li>
+<li>durable,</li>
+<li>explainable,</li>
+<li>attributable,</li>
+<li>reproducible,</li>
+<li>auditable.</li>
+</ul>
+<p>An integrity system therefore contains two products:</p>
+<ol type="1">
+<li>Actions.</li>
+<li>Refusals.</li>
+</ol>
+<p>Historically, engineering effort concentrates on the first.</p>
+<p>The IEL is motivated by the observation that trustworthy refusal is a
+load-bearing and frequently under-specified product of governance
+systems.</p>
+<hr />
+<h2 id="the-integrity-gap">3. The Integrity Gap</h2>
+<p>Many systems possess verification mechanisms.</p>
+<p>Fewer systems possess verification discipline.</p>
+<p>A recurring failure pattern appears across governance software:</p>
+<p>The claim becomes larger than the proof.</p>
+<p>Examples include:</p>
+<ul>
+<li>linkage verification presented as integrity verification,</li>
+<li>signature verification presented as context verification,</li>
+<li>receipt existence presented as receipt validity,</li>
+<li>authority declaration presented as authority legitimacy.</li>
+</ul>
+<p>In such cases, verification exists but its scope is ambiguous.</p>
+<p>The IEL introduces explicit verification semantics to eliminate this
+ambiguity.</p>
+<hr />
+<h2 id="architectural-position">4. Architectural Position</h2>
+<p>The IEL sits beneath governance semantics but above implementation
+details.</p>
+<pre class="text"><code>Applications
+
+Governance Layer
+
+Integrity Enforcement Layer
+
+Storage / Transport / Runtime</code></pre>
+<p>Applications define intent.</p>
+<p>Governance defines meaning.</p>
+<p>The IEL defines admissibility.</p>
+<p>Storage and transport persist or convey commitments and outcomes
+under their own failure models. They do not determine admissibility, but
+IEL claims remain false if those substrates are assumed infallible.</p>
+<h3 id="operative-primitives">4.1 Operative Primitives</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protected effect</td>
+<td>A state change or externally relevant action whose admission is
+governed.</td>
+</tr>
+<tr>
+<td>Integrity profile</td>
+<td>The declared invariants, evidence requirements, verification
+dimensions, refusal conditions, and atomic boundary for a class of
+effects.</td>
+</tr>
+<tr>
+<td>Integrity context</td>
+<td>The exact identity, authority, policy, epoch, state, admissibility,
+meaning, and validator frame under which a request is evaluated.</td>
+</tr>
+<tr>
+<td>Verification claim</td>
+<td>A scoped statement that named dimensions were checked against named
+commitments under a named profile.</td>
+</tr>
+<tr>
+<td>Refusal</td>
+<td>A governed terminal outcome denying the requested effect for
+explicit reasons.</td>
+</tr>
+<tr>
+<td>Defer</td>
+<td>A non-terminal outcome withholding decision until declared evidence
+or authority becomes available; it is not success or refusal.</td>
+</tr>
+<tr>
+<td>Mutation plan</td>
+<td>The complete intended effect set and commit boundary evaluated
+before authoritative mutation begins.</td>
+</tr>
+<tr>
+<td>Classified remainder</td>
+<td>Work or effects not completed atomically, retained as explicit
+indeterminate, compensating, or recovery state rather than hidden
+partial success.</td>
+</tr>
+<tr>
+<td>Integrity receipt</td>
+<td>A record binding request, context, profile, evidence, decision,
+attempted effects, committed effects, refusal or remainder, and
+resulting state.</td>
+</tr>
+</tbody>
+</table>
+<p>The IEL does not decide the substantive meaning of governance. It
+enforces the declared integrity conditions under which a governance
+decision may acquire effects.</p>
+<hr />
+<h2 id="foundational-laws">5. Foundational Laws</h2>
+<p>The IEL is built upon five proposed constitutional invariants, each
+interpreted through an explicit integrity profile.</p>
+<h3 id="compact-formal-contract">5.1 Compact Formal Contract</h3>
+<p>Let <span class="math inline"><em>q</em></span> be a request, <span
+class="math inline"><em>C</em></span> its integrity context, <span
+class="math inline"><em>P</em></span> the applicable integrity profile,
+<span class="math inline"><em>E</em></span> the evidence set, <span
+class="math inline"><em>M</em></span> the proposed mutation plan, and
+<span class="math inline"><em>o</em></span> the terminal outcome.
+Then:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Commit}(M) \\
+&amp;\Rightarrow \operatorname{ValidContext}(C) \\
+&amp;\land \operatorname{Applicable}(P,q,C) \\
+&amp;\land \operatorname{Satisfied}(P,E) \\
+&amp;\land \operatorname{Authorized}(q,C) \\
+&amp;\land \operatorname{AtomicOrClassified}(M,P)
+\end{aligned}.
+$$</span></p>
+<p>The terminal outcome must be explicit:</p>
+<p><span class="math display">$$
+\begin{aligned}
+o \in \{&amp;\operatorname{PERMIT}, \operatorname{REFUSE}, \\
+&amp;\operatorname{DEFER}, \operatorname{INDETERMINATE}\}
+\end{aligned}.
+$$</span></p>
+<p>No outcome may be inferred from the absence of an error.
+<code>INDETERMINATE</code> is required when the system cannot prove
+either complete commitment or complete non-effect. A receipt records the
+basis and consequences of the outcome; receipt existence does not by
+itself establish correctness, completeness, or standing.</p>
+<h3 id="law-a-validation-before-mutation">Law A: Validation Before
+Mutation</h3>
+<p>No protected state may change until every refusal condition declared
+applicable by the governing profile has been evaluated, or the operation
+terminates with an explicit defer or indeterminate outcome.</p>
+<p>Implications:</p>
+<ul>
+<li>no admission before authority verification,</li>
+<li>no receipt before semantic validation,</li>
+<li>no nonce consumption before request acceptance,</li>
+<li>no archive mutation before integrity checks.</li>
+</ul>
+<hr />
+<h3 id="law-b-corruption-is-not-absence">Law B: Corruption Is Not
+Absence</h3>
+<p>Missing state and corrupt state are fundamentally different
+conditions.</p>
+<pre class="text"><code>Missing -&gt; bootstrap may be possible under an antecedent profile
+Corrupt -&gt; fail closed for the affected boundary; quarantine,
+repair, bounded degradation, or halt must be explicit</code></pre>
+<p>The IEL forbids silent conversion between the two.</p>
+<hr />
+<h3 id="law-c-verification-must-state-its-scope">Law C: Verification
+Must State Its Scope</h3>
+<p>Verification results must describe exactly what was proven.</p>
+<p>The IEL defines:</p>
+<pre class="text"><code>LINKAGE
+BODY
+CONTEXT
+IDENTITY
+QUORUM
+FULLY_VERIFIED</code></pre>
+<p>A system may never claim a dimension or named verification profile
+that it has not established. The dimensions need not form a total order,
+and <code>FULLY_VERIFIED</code> means only that every dimension required
+by a declared profile was established for the scoped subject.</p>
+<hr />
+<h3 id="law-d-read-paths-must-not-mutate-authoritative-state">Law D:
+Read Paths Must Not Mutate Authoritative State</h3>
+<p>Observation must not create history.</p>
+<p>Verification.</p>
+<p>Attestation.</p>
+<p>Status inspection.</p>
+<p>Audit.</p>
+<p>Projection.</p>
+<p>All must remain free of changes to authoritative state, decision
+inputs, standing, evidence, and governed history. If caches or telemetry
+are permitted, they must be isolated, declared, and incapable of
+altering the observed outcome.</p>
+<hr />
+<h3 id="law-e-multi-step-mutations-must-be-atomic">Law E: Multi-Step
+Mutations Must Be Atomic</h3>
+<p>No operation may silently present a partial effect as a completely
+committed truth. The integrity profile must declare the atomic boundary
+and classify any remainder, compensation, recovery duty, or
+indeterminate external effect.</p>
+<p>Atomicity is not a storage concern alone.</p>
+<p>It applies equally to:</p>
+<ul>
+<li>manifests,</li>
+<li>archives,</li>
+<li>receipts,</li>
+<li>seals,</li>
+<li>validator sets,</li>
+<li>governance transitions.</li>
+</ul>
+<hr />
+<h2 id="core-components">6. Core Components</h2>
+<h3 id="integritycontext">6.1 IntegrityContext</h3>
+<p>Represents the trust boundary under which evaluation occurs.</p>
+<p>Provides:</p>
+<ul>
+<li>deployment identity,</li>
+<li>authority frame,</li>
+<li>policy frame,</li>
+<li>epoch frame,</li>
+<li>validator frame.</li>
+</ul>
+<hr />
+<h3 id="verificationlevel">6.2 VerificationLevel</h3>
+<p>Represents verified scope.</p>
+<pre class="text"><code>LINKAGE
+BODY
+CONTEXT
+IDENTITY
+QUORUM
+FULLY_VERIFIED</code></pre>
+<p>These names become structured claim dimensions or profiles rather
+than an assumed universal ladder. Each result binds the scoped subject,
+exact commitments, method, evidence, profile, and limitations.</p>
+<hr />
+<h3 id="corruptionkind">6.3 CorruptionKind</h3>
+<p>Provides a canonical corruption taxonomy.</p>
+<pre class="text"><code>MISSING
+MALFORMED
+CORRUPT
+FORGED
+STALE
+ORPHANED
+AMBIGUOUS
+UNVERIFIED</code></pre>
+<p>The goal is shared language across all subsystems.</p>
+<hr />
+<h3 id="readonlyguard">6.4 ReadOnlyGuard</h3>
+<p>Enforces mutation-free execution.</p>
+<p>Any attempted mutation of protected state causes refusal. Declared
+diagnostic side effects, if permitted, remain outside the protected
+decision state and must not alter the result.</p>
+<hr />
+<h3 id="mutationtransaction">6.5 MutationTransaction</h3>
+<p>Provides atomic governance mutation.</p>
+<p>All protected changes within the declared atomic boundary become one
+constitutional operation. External or distributed effects that cannot be
+made atomic require refusal, compensation, or an explicit classified
+remainder.</p>
+<hr />
+<h3 id="receiptcontextresolver">6.6 ReceiptContextResolver</h3>
+<p>Reconstructs historical context from evidence.</p>
+<p>Verification must not depend on current state.</p>
+<p>Verification must depend on receipt-time state.</p>
+<hr />
+<h3 id="adversarial-harness">6.7 Adversarial Harness</h3>
+<p>Provides reusable hostile testing.</p>
+<p>Every subsystem inherits the same adversarial test suite.</p>
+<hr />
+<h2 id="inheritance-of-integrity">7. Inheritance of Integrity</h2>
+<p>The most significant property of the IEL is inheritance.</p>
+<p>Applications should not merely inherit governance records.</p>
+<p>Applications should be able to inherit governance discipline through
+complete mediation and verified configuration; inheritance is never
+automatic merely because a library or substrate is present.</p>
+<p>An application built atop a governance substrate should automatically
+receive:</p>
+<ul>
+<li>replay protection,</li>
+<li>refusal receipts,</li>
+<li>verification semantics,</li>
+<li>corruption taxonomy,</li>
+<li>atomic mutations,</li>
+<li>adversarial testing infrastructure.</li>
+</ul>
+<p>This transforms integrity from a feature into an environmental
+condition.</p>
+<hr />
+<h2 id="relationship-to-existing-traditions">8. Relationship to Existing
+Traditions</h2>
+<p>The IEL does not emerge from a single predecessor.</p>
+<p>It is a synthesis.</p>
+<p>Its ancestry includes:</p>
+<h3 id="reference-monitors">Reference Monitors</h3>
+<p>Always-invoked enforcement mechanisms.</p>
+<h3 id="capability-systems">Capability Systems</h3>
+<p>Authority represented as explicit capability.</p>
+<h3 id="policy-engines">Policy Engines</h3>
+<p>Admission control before execution.</p>
+<h3 id="transaction-systems">Transaction Systems</h3>
+<p>Atomic mutation and durability guarantees.</p>
+<h3 id="provenance-systems">Provenance Systems</h3>
+<p>Traceable historical evidence.</p>
+<h3 id="constitutional-systems">Constitutional Systems</h3>
+<p>Higher-order constraints governing lower-order behavior.</p>
+<p>The IEL combines these traditions around a single objective:</p>
+<p>Trustworthy refusal.</p>
+<hr />
+<h2 id="the-adversarial-perspective">9. The Adversarial Perspective</h2>
+<p>The IEL treats every relevant trust and effect boundary as
+adversarially testable.</p>
+<p>Not because hostility is expected.</p>
+<p>Because trust claims require proof.</p>
+<p>Every subsystem must be evaluated against:</p>
+<ul>
+<li>malformed input,</li>
+<li>replay,</li>
+<li>corruption,</li>
+<li>omission,</li>
+<li>partial failure,</li>
+<li>inconsistent context,</li>
+<li>temporal drift,</li>
+<li>forged authority.</li>
+</ul>
+<p>The objective is not paranoia.</p>
+<p>The objective is determinism under adversity.</p>
+<hr />
+<h2 id="the-constitutional-model">10. The Constitutional Model</h2>
+<p>Governance systems traditionally describe what is permitted.</p>
+<p>The IEL describes what is impossible.</p>
+<p>This distinction mirrors constitutional law.</p>
+<p>Ordinary governance may evolve.</p>
+<p>Constitutional constraints exist above ordinary governance.</p>
+<p>In this sense, the IEL functions as a constitutional substrate.</p>
+<p>Subsystems may disagree about meaning.</p>
+<p>Subsystems may evolve.</p>
+<p>Subsystems may be replaced.</p>
+<p>The constitutional layer persists across ordinary subsystem change
+but may itself evolve only through its declared amendment, migration,
+and evidence rules.</p>
+<hr />
+<h2 id="stack-and-corpus-integration">11. Stack and Corpus
+Integration</h2>
+<p>The IEL is one layer in a larger constitutional-computing stack, not
+a synonym for that stack.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Relation to IEL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FGA</td>
+<td>Supplies the governed-transition grammar and admissibility form that
+an IEL profile can enforce.</td>
+</tr>
+<tr>
+<td>Three Hash Rule</td>
+<td>Keeps state, admissibility configuration, and meaning commitment
+distinct; an IEL check must not let one matching commitment stand in for
+another.</td>
+</tr>
+<tr>
+<td>CK</td>
+<td>Supplies a portable constitutional contract or profile. IEL
+enforcement should remain profile-driven rather than making CK dependent
+on one implementation.</td>
+</tr>
+<tr>
+<td>UGK</td>
+<td>Provides an executable reference realization and
+receipt/certification substrate in which IEL obligations such as
+verifier-boundary discipline and EffectAtomicity may be implemented and
+tested. Implementation proof remains scope-bounded.</td>
+</tr>
+<tr>
+<td>CGP</td>
+<td>Adds capability, evidence, posture, sufficiency, and execution
+surfaces over the kernel; posture is not automatically effect
+authority.</td>
+</tr>
+<tr>
+<td>GMB and universal GSM</td>
+<td>Preserve governed meaning and semantic commitments. IEL mediates
+protected GMB mutations but does not decide semantic truth merely
+because material is stored.</td>
+</tr>
+<tr>
+<td><em>Semantic Debt</em></td>
+<td>Diagnoses drift, opacity, overcoupling, standing collapse, and lossy
+translation in the very integrity surfaces IEL depends on.</td>
+</tr>
+<tr>
+<td><em>Semantic Legitimacy Before Context</em></td>
+<td>Requires candidate context to earn admissibility before becoming
+operative.</td>
+</tr>
+<tr>
+<td><em>Reasoning by Way of Receipts</em></td>
+<td>Makes reasoning and decision transitions reconstructable while
+denying that receipts create truth or independence.</td>
+</tr>
+<tr>
+<td><em>A Formal Theory of Work Custody</em></td>
+<td>Separates responsibility to advance or repair an integrity work item
+from authority to approve its effects.</td>
+</tr>
+<tr>
+<td><em>Legitimacy Without Self-Ratification</em></td>
+<td>Prevents a subject-controlled evidence route from being sufficient
+for the highest standing of that subject’s own integrity claims.</td>
+</tr>
+</tbody>
+</table>
+<p>The author-confirmed terminology lineage is
+<code>CCF -&gt; CMB -&gt; GMB</code>; <strong>Governed Meaning Base
+(GMB)</strong> is current. CCF and CMB remain historical names in exact
+source language and lineage explanations.</p>
+<p>Current UGK/FGA/IEL/CGP skill material is used here only as a
+compressed orientation candidate. Its reported r165 pedagogical checks
+and implementation concepts are not treated as a canonical release,
+global completion, or source-independent proof. Generated constitutional
+projection, human implementation navigation, conformance results,
+runtime authority, and release certification remain distinct.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>IEL content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Integrity can become an inherited environmental condition rather
+than a collection of local checks.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define effects, profiles, contexts, verification dimensions,
+terminal outcomes, corruption dispositions, receipts, atomic boundaries,
+remainders, and amendment rules.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate admissible enforcement designs, including centralized and
+distributed mediators, fail-closed and bounded-degradation profiles,
+exact atomic and compensating patterns, and explicit non-action.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer designs that minimize authority, expose scope, preserve exact
+commitments, distinguish corrupt from missing, classify partial effects,
+and remain testable under adversarial conditions.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select protected effects, policies, epochs, identities, trust
+domains, verification profiles, corruption rules, timeouts, recovery
+paths, storage and transport adapters, and audit surfaces.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Implement guards, context resolution, mutation planning, effect
+mediation, receipts, classified remainders, adversarial harnesses, and
+operator explanations.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Bind exact code or artifacts, profiles, fixtures, environments,
+commands, outputs, negative courts, effect observations, receipts,
+limitations, and independent review.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Amend profiles and mechanisms under governed procedures while
+preserving prior contexts, receipts, migrations, defeaters, and affected
+claims.</td>
+</tr>
+</tbody>
+</table>
+<p>This paper chiefly specifies the IEL and its CM1 design family. The
+proposed components are CM2 candidates. A particular UGK module,
+verifier, gate, archive, or deployment is an Instance Configuration or
+Implementation Realization whose standing cannot be inherited from this
+paper.</p>
+<h2 id="the-decision-to-effect-enforcement-contract">The
+Decision-to-Effect Enforcement Contract</h2>
+<p>The completed P1 corpus places the Integrity Enforcement Layer (IEL)
+at a precise boundary: IEL is the <strong>decision-to-effect enforcement
+contract</strong> that prevents a governance result from acquiring
+protected effects unless its exact subject, authority, evidence, and
+integrity conditions are satisfied. It is not the governance
+constitution, semantic substrate, evidence base, or whole executable
+kernel.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Universal Governance
+Kernel</em><br />
+<strong>Supplies:</strong> Candidate executable governance primitives,
+receipts, and certification surfaces.<br />
+<strong>IEL boundary:</strong> UGK can implement an IEL profile;
+implementation identity and proof remain separate.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Agentic Interface
+Surfaces</em><br />
+<strong>Supplies:</strong> What agents see, which effects they may
+attempt, what evidence they receive, and how progress is
+recognized.<br />
+<strong>IEL boundary:</strong> AIS describes the interaction and
+recognition surface; IEL enforces protected transitions behind
+it.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Legitimacy Without
+Self-Ratification</em><br />
+<strong>Supplies:</strong> Independence and authority limits on evidence
+and standing.<br />
+<strong>IEL boundary:</strong> IEL must not accept a subject-controlled
+path as sufficient for its strongest claim.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Who holds the scoped duty to investigate,
+repair, or advance an integrity item.<br />
+<strong>IEL boundary:</strong> Custody does not grant authority to
+change policy or admit effects.</p></li>
+<li><p><strong>Adjacent work:</strong> GMB and universal GSM<br />
+<strong>Supplies:</strong> Meaning, sources, claims, standing,
+conflicts, and revisions.<br />
+<strong>IEL boundary:</strong> IEL protects selected mutations and
+effects; it does not determine semantic truth.</p></li>
+</ul>
+<p>The enforcement envelope is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+I= (&amp;subject, request, profile, authority, evidence, context, \\
+&amp;effect, receipt, remainder)
+\end{aligned}.
+$$</span></p>
+<p>An IEL disposition is one of <code>PERMIT</code>,
+<code>REFUSE</code>, <code>DEFER</code>,
+<code>INDETERMINATE</code>,<br />
+or <code>PARTIAL_EFFECT</code>. <code>PARTIAL_EFFECT</code> is essential
+when an external action cannot be made exactly atomic: the system must
+classify what occurred, what remains, what compensation is possible, and
+which claims are invalidated. A refusal is correct only relative to a
+declared profile and evidence set; refusal volume is not itself
+integrity.</p>
+<p>Corpus integration adds a non-circularity requirement. The profile,
+verifier, context resolver, evidence source, and effect observer must
+expose their independence and shared dependencies. If they are all
+derived from the subject being checked, the IEL may provide a useful
+consistency check but cannot claim independent integrity
+enforcement.</p>
+<p>The universal GSM can type <code>REQUESTS_EFFECT</code>,
+<code>CHECKED_UNDER_PROFILE</code>, <code>AUTHORIZED_BY</code>,<br />
+<code>EVIDENCED_BY</code>, <code>PERMITTED_BY</code>,
+<code>REFUSED_BY</code>, <code>LEFT_REMAINDER</code>,
+<code>COMPENSATED_BY</code>,<br />
+and <code>INVALIDATES_CLAIM</code>. These relations preserve the
+difference between a decision, an attempted effect, an observed effect,
+and recognition.</p>
+<p>This integration establishes four editorial commitments: adopt
+decision-to-effect enforcement contract as IEL’s corpus role; adopt the
+enforcement envelope and <code>PARTIAL_EFFECT</code>; require explicit
+independence/shared-dependency disclosure; and decide which UGK
+realization, if any, will become the first bounded IEL case study
+through a separate evidence gate.</p>
+<h2
+id="authority-audited-enforcement-with-protected-constraint-channels-and-learning-boundaries">Authority-Audited
+Enforcement with Protected Constraint Channels and Learning
+Boundaries</h2>
+<p>The fixed-seed comparison with Authority Laundering Theory,
+Governance as Compilation, the Suppression Paradox, and governed
+continual training positions IEL as a causal enforcement boundary whose
+own rule and update paths remain reviewable:</p>
+<p><span class="math display">$$
+\begin{aligned}
+I^*= (&amp;proposal, compiled\_decision, normative\_warrant, \\
+&amp;capability, protected\_constraint, permit, refuse, defer, \\
+&amp;appeal, effect, receipt, learning\_boundary, \\
+&amp;requalification)
+\end{aligned}.
+$$</span></p>
+<p>Authority Laundering analysis audits the rule, delegation, and
+dependent claim entering IEL. Governance as Compilation supplies a typed
+decision-to-effect contract, including declared loss and remainder. The
+Suppression Paradox requires a protected channel through which a
+material blocker can cause refusal or deferment without exposing its
+full payload to every actor.</p>
+<p>Governed continual training cannot silently learn around a refusal,
+weaken a verifier, reinterpret an authority boundary, or promote a new
+enforcement rule. Any update that changes IEL behavior requires
+separately authorized admission, evaluation, rollback, and
+requalification. Prior receipts are evidence of prior behavior, not
+authority for the new behavior.</p>
+<p>The universal GSM can type<br />
+<code>ENFORCES_COMPILED_DECISION</code>,
+<code>AUDITS_RULE_AUTHORITY</code>,<br />
+<code>CARRIES_PROTECTED_BLOCKER</code>,
+<code>SUPPORTS_REFUSE_DEFER_APPEAL</code>,
+<code>EMITS_EFFECT_RECEIPT</code>,<br />
+<code>BLOCKS_SELF_AUTHORIZING_UPDATE</code>, and<br />
+<code>REQUIRES_POST_UPDATE_REQUALIFICATION</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the authority-audited IEL object; bind compiled decisions to mediated
+effects; create protected refusal, deferment, and appeal channels; and
+impose an explicit learning boundary with requalification after material
+change.</p>
+<h2 id="integrity-enforcement-as-a-bounded-mutation-service">Integrity
+Enforcement as a Bounded Mutation Service</h2>
+<p>Eleven retained downstream uses apply IEL to AFS profiles, authority
+laundering, cyber-physical effects, compilation, continual training,
+Jnana, enforcement mechanics, suppression testing, APD containment,
+structural warrant, and comparative software evidence. They support a
+reusable refusal-centric mutation service, not a universal trusted
+layer.</p>
+<p><span class="math display">$$
+\begin{aligned}
+I^*= (&amp;subject, generation, operation, policy, authority, \\
+&amp;preconditions, verification\_profile, read\_set, \\
+&amp;write\_set, transaction, effect\_boundary, witnesses, \\
+&amp;result, recovery, remainder, expiry, successor)
+\end{aligned}.
+$$</span></p>
+<p>Validation before mutation requires binding the exact subject and
+generation, not merely a path or label. Read-only operations must
+declare and test hidden writes through caches, timestamps, indexes,
+telemetry, learning, and external services. Corruption, absence,
+staleness, ambiguity, and unsupported format are distinct outcomes.
+Atomicity is bounded by the transaction and cannot hide irreversible
+external effects.</p>
+<p>IEL itself requires authority, update, bypass, liveness,
+denial-of-service, self-verification, recovery, and protected-constraint
+audits. Verification profiles must state dimensions, oracle, trusted
+base, negative vectors, and claim ceiling. A successful refusal or
+commit proves only the bound operation under that profile.</p>
+<p>The universal GSM can type<br />
+<code>SUBMITS_INTEGRITY_MUTATION</code>,
+<code>VALIDATES_BEFORE_MUTATION</code>,<br />
+<code>DISTINGUISHES_CORRUPTION_FROM_ABSENCE</code>,
+<code>DETECTS_HIDDEN_READ_WRITE</code>,<br />
+<code>COMMITS_BOUNDED_TRANSACTION</code>,
+<code>CLASSIFIES_EFFECT_REMAINDER</code>, and
+<code>AUDITS_IEL_BYPASS</code>.</p>
+<p>This review establishes four editorial commitments: adopt the bounded
+mutation-service record; require exact subject generation and
+hidden-write tests; type corruption, absence, staleness, and ambiguity
+separately; and subject IEL itself to authority, bypass, liveness,
+recovery, and independent-verification review.</p>
+<h2 id="failure-modes-counterexamples-and-limits">13. Failure Modes,
+Counterexamples, and Limits</h2>
+<ol type="1">
+<li><strong>Unbounded refusal.</strong> A system can refuse everything
+and still be useless or illegitimate. Refusal correctness requires
+liveness, proportionality, and governed appeal or amendment.</li>
+<li><strong>Incomplete validation.</strong><br />
+<code>All refusal conditions</code> is meaningful only relative to a
+declared profile; unknown conditions cannot be claimed evaluated.</li>
+<li><strong>Corruption overreaction.</strong> Corruption should fail
+closed for the affected boundary, but universal process halt may destroy
+availability or recovery. Quarantine, bounded degradation, repair, and
+stop are profile decisions.</li>
+<li><strong>Verification-ladder collapse.</strong> LINKAGE, BODY,
+CONTEXT, IDENTITY, and QUORUM are not necessarily one total order.
+<code>FULLY_VERIFIED</code> is meaningful only as all dimensions
+required by a named profile.</li>
+<li><strong>Read-path ambiguity.</strong> Observation must not mutate
+authoritative state. Isolated caches, access telemetry, or health
+counters may be permissible only when they cannot change the observed
+decision, standing, evidence, or history and are explicitly outside the
+protected state.</li>
+<li><strong>Distributed atomicity limit.</strong> Exact all-or-nothing
+mutation may be unavailable across external systems. The IEL must
+classify remainders and compensations rather than claim atomicity it
+cannot prove.</li>
+<li><strong>Verifier compromise.</strong> Centralizing enforcement
+creates a high-value failure point. The verifier boundary,
+implementation, configuration, and supply chain require their own
+evidence and cannot self-ratify.</li>
+<li><strong>Context reconstruction failure.</strong> Historical
+verification can be impossible when policy, epoch, identity, or meaning
+commitments were not retained exactly.</li>
+<li><strong>Refusal-code theater.</strong> A typed refusal without
+sufficient evidence, correct scope, and observed non-effect is not
+trustworthy refusal.</li>
+<li><strong>Bypass and confused deputy.</strong> An application can
+route around the IEL or induce a mediator to exercise broader authority
+than the requester holds.</li>
+<li><strong>Availability attack.</strong> Expensive checks, indefinite
+defer, or adversarial inputs can turn the integrity layer into denial of
+governance.</li>
+<li><strong>Semantic drift.</strong> Shared enums and profiles can
+preserve stable bytes while their meanings change; GMB, migration, and
+Three Hash commitments remain necessary.</li>
+</ol>
+<p>The IEL architecture has not been established here as complete,
+minimal, universally applicable, or empirically superior to reference
+monitors, policy-enforcement points, transaction systems, provenance
+systems, or domain-specific designs. Those are research and
+implementation questions.</p>
+<h2 id="future-directions">14. Future Directions</h2>
+<p>Several extensions become possible:</p>
+<ul>
+<li>formal verification of IEL primitives,</li>
+<li>cryptographic context sealing,</li>
+<li>adversarial conformance certification,</li>
+<li>machine-verifiable refusal proofs,</li>
+<li>constitutional inheritance across distributed systems,</li>
+<li>integrity-preserving agent architectures,</li>
+<li>governance-aware execution environments.</li>
+</ul>
+<p>The IEL is intended as a foundation rather than a complete
+solution.</p>
+<hr />
+<h2
+id="refusal-centric-integrity-without-a-monolithic-oracle">Refusal-Centric
+Integrity Without a Monolithic Oracle</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>The Integrity Enforcement Layer centralizes hostile-boundary
+validation, scoped verification, corruption handling, contextual
+reconstruction, and atomic mutation beneath governance meaning. It is
+designed to refuse malformed or untrusted transitions deterministically.
+Centralization also creates a high-value trust, liveness, and
+denial-of-service boundary.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Verifier-compromise attack.</strong> The layer that
+validates integrity is itself modified or misconfigured. Boot trust,
+measured identity, independent witness, and recovery are required.</li>
+<li><strong>Profile-confusion attack.</strong> An artifact passes one
+verification dimension and is treated as globally valid. Every result
+binds a named profile and claim ceiling.</li>
+<li><strong>TOCTOU attack.</strong> Subject state changes between
+verification and use. Atomic binding or revalidation is necessary at the
+effect boundary.</li>
+<li><strong>Partial-mutation attack.</strong> A failure occurs after
+some state changed. Prepare, commit, rollback, compensation, and
+residual state must be explicit.</li>
+<li><strong>Context-reconstruction attack.</strong> Missing context is
+rebuilt from stale, forged, or unauthorized sources. Reconstruction
+requires lineage and conflict handling.</li>
+<li><strong>Replay-and-downgrade attack.</strong> Older valid state or
+weaker policy is reintroduced. Freshness, monotonic constraints, and
+authorized rollback need separate rules.</li>
+<li><strong>Refusal-denial-of-service.</strong> Malformed or expensive
+inputs consume the verifier or block lawful work. Resource and liveness
+budgets are part of integrity.</li>
+<li><strong>Monolithic-oracle attack.</strong> IEL results are treated
+as semantic truth or governance authority. The layer verifies declared
+properties; it does not decide policy or meaning.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a bounded mutation and verification service with
+named capabilities and profiles. It does not establish formal
+correctness, complete corruption detection, atomicity across all
+external effects, security against every adversary, or production
+performance.</p>
+<p>Implementation claims require exact code, build, dependencies, threat
+model, mutation suite, concurrency and crash tests, recovery evidence,
+and independent reproduction. External security and systems comparisons
+require resolvable sources. No external research was added in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is a place where malformed, stale, corrupted, or
+wrongly scoped transitions can be refused before they rewrite governed
+state, while every refusal explains which property failed and which
+lawful recovery remains.</p>
+<h2 id="publication-standing-and-evidence-limits">15. Publication
+Standing and Evidence Limits</h2>
+<h3 id="current-standing">15.1 Current Standing</h3>
+<p>This candidate is a developed architectural proposal and corpus
+integration. It does not provide an exact implementation identity,
+source package, threat model, test corpus, adversarial court,
+performance result, deployment history, or independently reproduced
+verification package. The five laws, components, maturity profile, and
+verification dimensions therefore have design standing only unless tied
+to separately admitted evidence.</p>
+<p>The source bibliography is retained but was not externally
+revalidated during this closed-corpus pass. Citations, genealogy,
+comparative claims, and the relation to reference monitors, capability
+systems, policy engines, transactions, provenance, and constitutional
+systems require primary-source verification for a future
+evidence-qualified revision readiness.</p>
+<p>PDF rendering remains deferred until textual and semantic saturation.
+The authorized baseline is ordinary Pandoc mode:</p>
+<pre class="text"><code>pandoc INPUT.md -o OUTPUT.pdf</code></pre>
+<h3 id="corpus-sources">15.3 Corpus Sources</h3>
+<ul>
+<li>Adam Ableman, <em>The Integrity Enforcement Layer</em>. Exact author
+source SHA-256<br />
+<code>FF7A53289D84BAEC82B89E55A9DA6088A8FD194399ABB6A57BFB739F3008B46B</code>.</li>
+<li>Adam Ableman, <em>Semantic Debt</em>. Exact reviewed source
+SHA-256<br />
+<code>36BAE578CF1926981488982AB8C406E0EACB662E25E8B5F18F187A6E53AF933F</code>.</li>
+<li>Adam Ableman, <em>Reasoning by Way of Receipts</em>. Exact reviewed
+source SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>.</li>
+<li>Adam Ableman, <em>A Formal Theory of Work Custody</em>. Exact
+reviewed source SHA-256<br />
+<code>49C38F60B95E107F8B3D864ACAFB4C49067A146C807E5248307DE7B009AD4696</code>.</li>
+<li>Adam Ableman, <em>Semantic Legitimacy Before Context</em>. Exact
+reviewed source SHA-256<br />
+<code>1E9058F212FCB00E42E35E927DF2E7F830BC9C9499AAFF469FE65FF8AE137B68</code>.</li>
+<li>Adam Ableman, <em>The Three Hash Rule</em>. Zenodo, 2026. DOI:<br />
+<code>10.5281/zenodo.20788617</code>; exact reviewed source
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</li>
+<li>Governed Meaning Base terminology ruling:
+<code>CCF -&gt; CMB -&gt; GMB</code>, with GMB current. This establishes
+terminology lineage only.</li>
+<li>UGK/FGA/IEL/CGP Context Skill, r165 pedagogical-surface
+authoring-lane candidate. Used for stack-boundary orientation only; not
+treated as canonical law or release proof.</li>
+</ul>
+<p>The primitives, formal contract, stack map, GMB relation, realization
+funnel, limits, claim ceilings, and author-decision surface are
+AI-prepared editorial synthesis explicitly distinguished from the
+original author material. They grant no author, publication, canonical,
+implementation, conformance, certification, deployment, or effect
+standing.</p>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>Most software seeks successful execution.</p>
+<p>Integrity systems seek trustworthy refusal.</p>
+<p>This distinction creates a category of architectural problems that
+cannot be solved through isolated validation checks or
+subsystem-specific hardening.</p>
+<p>The Integrity Enforcement Layer is proposed as a constitutional
+enforcement substrate that centralizes adversarial validation,
+verification semantics, corruption handling, contextual reconstruction,
+and atomic mutation.</p>
+<p>Its purpose is not to determine what governance means.</p>
+<p>Its purpose is to ensure that governance claims remain
+trustworthy.</p>
+<p>A governance system should not be trusted merely because it
+succeeds.</p>
+<p>It should also demonstrate that it refuses correctly, classifies
+uncertainty and partial effects honestly, preserves liveness, and does
+not exceed its evidence or authority.</p>
+<p>The Integrity Enforcement Layer exists to make that refusal
+systematic.</p>
+<hr />
+<h2 id="appendix-a-integrity-capability-profile">Appendix A: Integrity
+Capability Profile</h2>
+<p>Level 0 – Executes</p>
+<p>The system performs requested actions.</p>
+<p>Level 1 – Refuses</p>
+<p>The system rejects invalid requests.</p>
+<p>Level 2 – Explains</p>
+<p>Refusals are attributable and understandable.</p>
+<p>Level 3 – Verifies</p>
+<p>Claims are supported by evidence.</p>
+<p>Level 4 – Preserves</p>
+<p>Historical truth survives corruption and failure.</p>
+<p>Level 5 – Governs</p>
+<p>Integrity becomes inheritable.</p>
+<hr />
+<h2 id="appendix-b-verification-dimensions-and-named-profile">Appendix
+B: Verification Dimensions and Named Profile</h2>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr>
+<th>Level</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LINKAGE</td>
+<td>Structural chain continuity verified</td>
+</tr>
+<tr>
+<td>BODY</td>
+<td>Data commitments verified</td>
+</tr>
+<tr>
+<td>CONTEXT</td>
+<td>Historical context reconstructed and verified</td>
+</tr>
+<tr>
+<td>IDENTITY</td>
+<td>Authority and identity bindings verified</td>
+</tr>
+<tr>
+<td>QUORUM</td>
+<td>Collective agreement verified</td>
+</tr>
+<tr>
+<td>FULLY_VERIFIED(profile)</td>
+<td>All dimensions required by the named profile established for the
+scoped subject</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-c-proposed-constitutional-invariants">Appendix C:
+Proposed Constitutional Invariants</h2>
+<ol type="1">
+<li>Validation Before Mutation</li>
+<li>Corruption Is Not Absence</li>
+<li>Verification Must State Its Scope</li>
+<li>Read Paths Must Not Mutate</li>
+<li>Multi-Step Mutations Must Be Atomic</li>
+</ol>
+<p>These invariants form the constitutional basis of the Integrity
+Enforcement Layer.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that most software systems are optimized for
+successful execution. Its nearest external comparison fields are
+security, governance, provenance. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. A written constitution can legitimate domination as easily as
+constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E2]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E3]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The following bibliography is retained from the author source and was
+not externally revalidated during this closed-corpus pass.</p>
+<p>Anderson, J. P. <em>Computer Security Technology Planning
+Study</em>.</p>
+<p>Lampson, B. <em>Protection</em>.</p>
+<p>Saltzer, J. H., and Schroeder, M. D. <em>The Protection of
+Information in Computer Systems</em>.</p>
+<p>Miller, M. S. <em>Robust Composition: Towards a Unified Approach to
+Access Control and Concurrency Control</em>.</p>
+<p>Weitzner, D. et al. <em>Transparent Accountable Data Mining</em>.</p>
+<p>The Update Framework (TUF).</p>
+<p>in-toto Supply Chain Framework.</p>
+<p>Object Capability Model.</p>
+<p>Reference Monitor Concept.</p>
+<p>Policy Enforcement Point / Policy Decision Point Architectures.</p>
+<p>Transactional Atomicity and Write-Ahead Logging Systems.</p>
+<p>Constitutional Governance Theory.</p>
+<p>Governance Kernel (UGK) Development Notes and Adversarial Review
+Findings.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848354">10.5281/zenodo.23848354</a></p>

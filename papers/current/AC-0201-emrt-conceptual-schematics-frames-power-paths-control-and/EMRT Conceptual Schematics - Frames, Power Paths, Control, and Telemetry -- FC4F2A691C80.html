@@ -1,0 +1,257 @@
+<h1 id="emrt-conceptual-schematics">EMRT Conceptual Schematics</h1>
+<h2 id="frames-power-paths-control-and-telemetry">Frames, Power Paths,
+Control, and Telemetry</h2>
+<h3 id="every-rotating-box-still-owes-the-ledger-a-reaction.">Every
+rotating box still owes the ledger a reaction.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="scope-and-standing">1. Scope and standing</h2>
+<p>These conceptual schematics accompany the published
+Electro-Mechanical Rotational Transformer (EMRT) manuscript and
+technical brief. They describe reference frames, functional power paths,
+controls, and observation channels for a two-machine simulation. They
+are <strong>not fabrication drawings, wiring diagrams, safety drawings,
+component selections, or operating instructions</strong>.</p>
+<p>No bearing arrangement, shaft fit, insulation system, containment
+design, conductor size, fuse, ground bond, creepage distance, clearance,
+snubber, precharge circuit, regenerative sink, or safe rating is
+specified. The source-isolated three-phase-short case is a model
+condition, not a recommended hardware shutdown. Hardware was not run and
+calibration was not supplied.</p>
+<p>Electro-Mechanical Rotational Transformer (EMRT) is the
+author-confirmed name and expansion used by this publication. The
+Direct-Coupled Dynamic Torque Reactor and the Ableman Wheel remain
+separate work identities.</p>
+<h2 id="frames-and-torque-transfer">2. Frames and torque transfer</h2>
+<figure>
+<img src="../assets/emrt-topology.png"
+alt="Two-machine EMRT topology and reference frames." />
+<figcaption aria-hidden="true">Two-machine EMRT topology and reference
+frames.</figcaption>
+</figure>
+<h3 id="laboratory-frame">2.1 Laboratory frame</h3>
+<p>The external housing, M1 case, M2 rotor shaft, stationary source, and
+supervisory observation surface are fixed in the laboratory frame.</p>
+<h3 id="carrier-frame">2.2 Carrier frame</h3>
+<p>M1’s rotor shaft drives the carrier. M2’s case and windings, its
+averaged converter, capacitor, and load rotate with the carrier at
+angular speed <span class="math inline"><em>ω</em></span>.</p>
+<h3 id="relative-machine-speeds">2.3 Relative machine speeds</h3>
+<table>
+<thead>
+<tr>
+<th>Machine</th>
+<th>Case motion</th>
+<th>Rotor motion</th>
+<th style="text-align: right;">Rotor-to-case speed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1</td>
+<td>fixed</td>
+<td><span class="math inline">+<em>ω</em></span></td>
+<td style="text-align: right;"><span
+class="math inline">+<em>ω</em></span></td>
+</tr>
+<tr>
+<td>M2</td>
+<td><span class="math inline">+<em>ω</em></span></td>
+<td>fixed</td>
+<td style="text-align: right;"><span
+class="math inline">−<em>ω</em></span></td>
+</tr>
+</tbody>
+</table>
+<p>Positive M2 rotor torque produces equal negative carrier-case torque.
+The fixed shaft reacts torque into the housing while its laboratory
+shaft power remains zero. The carrier supplies M2’s generating
+mechanical power.</p>
+<h3 id="carrier-equation">2.4 Carrier equation</h3>
+<p><span
+class="math display"><em>J</em><em>ω̇</em> = <em>τ</em><sub>1</sub> − <em>τ</em><sub>2</sub> − <em>τ</em><sub><em>b</em><em>e</em><em>a</em><em>r</em><em>i</em><em>n</em><em>g</em></sub> − <em>τ</em><sub><em>i</em><em>r</em><em>o</em><em>n</em></sub>.</span></p>
+<p>The moving inertia <span class="math inline"><em>J</em></span>
+includes the declared wheel or carrier inertia, M1 rotor inertia, and M2
+case-side inertia. A virtual-inertia control term may change torque
+response, but it does not change physical mass.</p>
+<h2 id="electrical-and-energy-paths">3. Electrical and energy paths</h2>
+<figure>
+<img src="../assets/emrt-energy-ledger.png"
+alt="Declared power and energy paths." />
+<figcaption aria-hidden="true">Declared power and energy
+paths.</figcaption>
+</figure>
+<h3 id="stationary-side">3.1 Stationary side</h3>
+<p>The stationary source feeds an averaged M1 converter. M1 electrical
+terminal power becomes magnetic storage change, copper loss, declared
+iron and converter losses, and mechanical shaft power.</p>
+<h3 id="rotating-side">3.2 Rotating side</h3>
+<p>Carrier mechanical power enters M2 through its rotating case. M2
+electrical output feeds an averaged rotating converter and DC link. The
+capacitor buffers the link; the C1 resistor consumes <span
+class="math inline"><em>V</em><sub><em>b</em><em>u</em><em>s</em></sub><sup>2</sup>/<em>R</em><sub><em>l</em><em>o</em><em>a</em><em>d</em></sub></span>.</p>
+<h3 id="total-ledger">3.3 Total ledger</h3>
+<p><span
+class="math display"><em>E</em><sub><em>i</em><em>n</em></sub> − <em>E</em><sub><em>l</em><em>o</em><em>a</em><em>d</em></sub> − <em>E</em><sub><em>l</em><em>o</em><em>s</em><em>s</em></sub> − <em>E</em><sub><em>d</em><em>u</em><em>m</em><em>p</em></sub> = <em>Δ</em>(<em>E</em><sub><em>k</em><em>i</em><em>n</em></sub> + <em>E</em><sub><em>m</em><em>a</em><em>g</em></sub> + <em>E</em><sub><em>c</em><em>a</em><em>p</em></sub>).</span></p>
+<p>The dump or regenerative-sink port is explicit even when zero. Energy
+may not be assigned to an unnamed residual. Heat is tracked through
+separate lumped nodes so declared electrical loss is not counted
+twice.</p>
+<h3 id="functional-block-status">3.4 Functional block status</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Block</th>
+<th>C1 standing</th>
+<th>Not implied</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1 and M2 converters</td>
+<td>Averaged voltage-command blocks</td>
+<td>Transistor bridge, gate drive, switching loss, EMC, or safe
+design</td>
+</tr>
+<tr>
+<td>DC capacitor</td>
+<td>Assigned simulation value</td>
+<td>Ripple-current rating, precharge, discharge, enclosure, or fault
+safety</td>
+</tr>
+<tr>
+<td>Resistor load</td>
+<td>Assigned simulation value</td>
+<td>Construction, cooling, isolation, or rated dissipation</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>Assigned bidirectional stiff source</td>
+<td>Battery, supply, regenerative sink, or protection
+implementation</td>
+</tr>
+<tr>
+<td>Thermal nodes</td>
+<td>Lumped assigned calculation</td>
+<td>Material field solution or validated cooling design</td>
+</tr>
+</tbody>
+</table>
+<h2 id="control-and-observation-paths">4. Control and observation
+paths</h2>
+<figure>
+<img src="../assets/emrt-control-telemetry.png"
+alt="Control, observation, and optional telemetry paths." />
+<figcaption aria-hidden="true">Control, observation, and optional
+telemetry paths.</figcaption>
+</figure>
+<h3 id="local-controls">4.1 Local controls</h3>
+<p>Each machine has a local current PI controller with bounded averaged
+<span class="math inline"><em>d</em><em>q</em></span> voltage and
+anti-windup. M2 regulates its DC-link energy. M1 may use fixed torque,
+speed feedback, filtered M2 reaction-torque feedforward, or their
+combination.</p>
+<h3 id="feedforward-path">4.2 Feedforward path</h3>
+<p>The stationary fixed-shaft torque sensor supplies a causal
+observation through an assigned 3 ms filter. It does not transmit the
+onboard load command and does not provide instantaneous truth about
+rotating state.</p>
+<h3 id="refusal-path">4.3 Refusal path</h3>
+<p>Declared current, voltage, speed, bus, temperature, and
+sensor-validity limits stop future simulation. The stop is a prediction
+refusal. It is not an emergency stop, safety relay, independent
+protection channel, or authority to operate hardware.</p>
+<h2 id="mechanical-telemetry">5. Mechanical telemetry</h2>
+<h3 id="downlink">5.1 Downlink</h3>
+<pre class="text"><code>stationary transmitter
+    -&gt; deliberate M1 torque modulation
+    -&gt; carrier speed / M2 electromagnetic response
+    -&gt; rotating observation of M2 terminal q voltage
+    -&gt; frame detector and later truth scoring</code></pre>
+<h3 id="uplink">5.2 Uplink</h3>
+<pre class="text"><code>rotating transmitter
+    -&gt; deliberate conductance modulation
+    -&gt; M2 generating torque / source response
+    -&gt; stationary observation of source current
+    -&gt; frame detector and later truth scoring</code></pre>
+<p>C1 sends one 192-bit frame at 10 bit/s in each direction with
+assigned Gaussian observation noise. Successful decoding in that
+deterministic test is not a measured error rate, channel capacity,
+synchronization proof, or authentication result. A stiff stationary
+voltage source has no voltage data observable in this model. Tight DC
+regulation can suppress the rotating voltage signature.</p>
+<h2 id="optical-telemetry-concept">6. Optical telemetry concept</h2>
+<pre class="text"><code>two optical data carriers
+        |
+        v
+four complementary detectors
+   |                     |
+   +-- detector sums ----+--&gt; data demodulation
+   |
+   +-- normalized differences --&gt; track phase estimate</code></pre>
+<p>The default assigned case uses 20 and 30 kHz carriers, 80 kHz
+detector bandwidth, 320 ksample/s sampling, 1 percent gain mismatch, and
+assigned observation noise. It recovers eight bits and estimates track
+phase with about 0.000140 mechanical radian RMS error. The angle is
+modulo one track, not an absolute revolution identity. Data-off and
+dropout controls produce erasures; 10 percent detector-gain mismatch
+increases the RMS error to about 0.000978 rad.</p>
+<p>A conventional two-way encoder does not automatically become a
+full-duplex data link. Independent duplex channels, measured detector
+response, optical containment, clock acquisition, authentication, and
+authorization remain separate obligations.</p>
+<h2 id="bench-realization-boundary">7. Bench realization boundary</h2>
+<p>The schematic becomes a hardware design only after all of the
+following are separately supplied and reviewed:</p>
+<ul>
+<li>selected machines and converters with phase, line, current, voltage,
+speed, torque, thermal, and insulation ratings;</li>
+<li>shaft, bearing, carrier, support, balance, guarding, containment,
+and overspeed analysis;</li>
+<li>source, precharge, discharge, regeneration, dump, fuse, breaker,
+ground, and emergency-stop design;</li>
+<li>calibrated torque, voltage, current, speed, temperature, and
+vibration instrumentation;</li>
+<li>failure analysis for sensor loss, controller loss, communication
+loss, source loss, load rejection, short circuit, and mechanical
+seizure;</li>
+<li>a staged low-power commissioning plan; and</li>
+<li>independent authority for physical actuation.</li>
+</ul>
+<p>Until then, the diagrams remain explanatory projections of a software
+model.</p>
+<h2 id="corpus-and-evidence-boundary">8. Corpus and evidence
+boundary</h2>
+<p>The DCDTR source provides adjacent language for governed torque,
+storage, and thermal composition. The Ableman Wheel provides an adjacent
+discipline of narrow experimental jurisdiction and structural
+falsifiability. Reasoning by Way of Receipts provides an adjacent
+discipline for binding results to exact configurations. Effect
+Sovereignty provides an adjacent distinction between observation and
+authorized effect. None of those relations merges the works or validates
+EMRT hardware.</p>
+<p>The sealed source schematics, source map, simulation results, and
+evidence binding remain unchanged. This AI-assisted successor edition
+was authorized by the author for publication after review. No external
+research, hardware run, calibration, corpus identity merger, or
+implementation authorization occurred during conversion.</p>
+<hr />
+<p>Corpus source and companion formats:<br />
+<a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a><br />
+DOI: <a
+href="https://doi.org/10.5281/zenodo.23933291">https://doi.org/10.5281/zenodo.23933291</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23933291">10.5281/zenodo.23933291</a></p>

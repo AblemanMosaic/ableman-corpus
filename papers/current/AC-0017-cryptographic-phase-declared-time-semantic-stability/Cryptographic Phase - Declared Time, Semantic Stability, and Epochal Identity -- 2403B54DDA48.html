@@ -1,0 +1,483 @@
+<h1
+id="cryptographic-phase-declared-time-semantic-stability-and-epochal-identity">Cryptographic
+Phase: Declared Time, Semantic Stability, and Epochal Identity</h1>
+<h2 id="from-nonce-based-freshness-to-epoch-scoped-meaning">From
+Nonce-Based Freshness to Epoch-Scoped Meaning</h2>
+<h3
+id="these-mechanisms-successfully-prevent-replay-and-impose-order-but-they-remain-procedural-they-certify-recency-without-asserting-belonging.">These
+mechanisms successfully prevent replay and impose order, but they remain
+procedural: they certify recency without asserting belonging.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern cryptography treats time as a hygiene property - managed
+through nonces, timestamps, counters, or synchronized clocks. These
+mechanisms successfully prevent replay and impose order, but they remain
+<strong>procedural</strong>: they certify <em>recency</em> without
+asserting <em>belonging</em>. They say something happened once or
+lately, but never <em>which regime of admissible meaning it
+inhabits</em>.</p>
+<p>This paper introduces <strong>Cryptographic Phase</strong>: a
+reframing of cryptographic freshness as a <strong>declared semantic
+coordinate</strong> rather than expendable entropy. A phase is not a
+value consumed by use, but a <strong>stable, addressable semantic
+scope</strong> that binds artifacts, actions, and identities to an
+explicitly stated regime of admissible interpretation. When phase
+transitions are cryptographically governed and auditable, phase becomes
+<strong>epoch</strong> - a notion of time that encodes semantic
+stability rather than physical chronology.</p>
+<p><strong>Central claim.</strong> Treating phase as a first-class
+cryptographic primitive - referential, mechanically enforced, and
+refusal-first - enables distributed systems to prevent <strong>silent
+semantic drift</strong>, enforce epistemic boundaries, and coordinate
+trust across layers (source, IR, binary, policy, execution) without
+relying on synchronized clocks, narrative authority, or implicit
+consensus.</p>
+<hr />
+<h2 id="the-limits-of-time-as-freshness">1. The Limits of
+Time-as-Freshness</h2>
+<p>Cryptographic systems rarely confront time directly.</p>
+<p>Instead, freshness is approximated by:</p>
+<ul>
+<li>nonces (“used once”),</li>
+<li>timestamps (“used recently”),</li>
+<li>counters (“used in order”),</li>
+<li>liveness-bound challenge–response protocols.</li>
+</ul>
+<p>These tools answer operational questions:</p>
+<ul>
+<li><em>Has this message been replayed?</em></li>
+<li><em>Is it recent enough?</em></li>
+<li><em>Did it occur after something else?</em></li>
+</ul>
+<p>They avoid a deeper one:</p>
+<p><strong>What semantic regime does this artifact belong
+to?</strong></p>
+<p>This omission is not benign. In modern systems, cryptographic
+validity increasingly outlives the semantic assumptions under which it
+was created. Artifacts remain verifiable while their <strong>admissible
+meaning shifts</strong> - across policy changes, compiler upgrades,
+governance transitions, or evaluation lenses.</p>
+<p>This failure mode can be summarized simply:</p>
+<blockquote>
+<p><strong>Silent semantic reuse across regimes where cryptographic
+validity holds but meaning has changed.</strong></p>
+</blockquote>
+<p>Existing freshness mechanisms are blind to this class of error.</p>
+<hr />
+<h2 id="what-a-phase-is-and-is-not">2. What a Phase Is (and Is Not)</h2>
+<p>Before proceeding, the ontological status of <em>phase</em> must be
+made explicit.</p>
+<p>A cryptographic phase is <strong>not</strong> merely:</p>
+<ul>
+<li>a human-readable label,</li>
+<li>a schema or version tag,</li>
+<li>a policy annotation,</li>
+<li>or a social convention.</li>
+</ul>
+<p>Nor is it a metaphor for “era.”</p>
+<p>A <strong>phase is a cryptographically referenced semantic scope
+whose enforcement is mechanical</strong>.</p>
+<p>More precisely:</p>
+<ul>
+<li>Phase is <strong>referential</strong>: artifacts explicitly bind to
+a phase identifier.</li>
+<li>Phase is <strong>authoritative</strong>: interpretation depends on
+cryptographic authority.</li>
+<li>Phase is <strong>enforced</strong>: phase mismatch results in
+refusal, not reinterpretation.</li>
+</ul>
+<p><em>Semantic</em>, in this context, refers exclusively to
+<strong>mechanically enforced interpretive rules</strong> - not human
+intent, narrative meaning, or natural-language understanding.</p>
+<p>Phase is therefore neither pure metadata nor pure governance. It is a
+<strong>cryptographic primitive that scopes admissible
+interpretation</strong>.</p>
+<hr />
+<h2 id="from-disposable-nonce-to-held-phase">3. From Disposable Nonce to
+Held Phase</h2>
+<p>A nonce is defined by negation: it must not repeat. Its content is
+irrelevant; its destiny is erasure.</p>
+<p><strong>Cryptographic Phase inverts this logic.</strong></p>
+<p>A phase is:</p>
+<ul>
+<li>intentionally <strong>repeatable</strong>,</li>
+<li>intentionally <strong>stable</strong>,</li>
+<li>intentionally <strong>named</strong>.</li>
+</ul>
+<p>Where a nonce is forgotten by design, a phase is
+<strong>retained</strong>. Where a nonce enforces freshness by
+disappearance, a phase enforces placement by persistence.</p>
+<p>A phase identifier is not consumed. It is <em>referenced</em>. It
+names a semantic region within which equivalence, admissibility, and
+legitimacy are evaluated.</p>
+<p>Freshness becomes <strong>semantic location</strong>, not
+ephemerality.</p>
+<hr />
+<h2 id="phase-as-declared-semantic-space">4. Phase as Declared Semantic
+Space</h2>
+<p>A cryptographic phase functions as a namespace that scopes admissible
+meaning.</p>
+<p>Within a phase:</p>
+<ul>
+<li>equivalence claims are coherent,</li>
+<li>admissibility rules apply,</li>
+<li>semantic hashes are interpretable,</li>
+<li>provenance retains force.</li>
+</ul>
+<p>Across phases:</p>
+<ul>
+<li>sameness is not presumed,</li>
+<li>continuity must be explicitly bridged,</li>
+<li><strong>silent semantic drift</strong> is surfaced rather than
+absorbed.</li>
+</ul>
+<p>Phase is not inferred from timestamps or observed behavior. It is
+<strong>declared</strong>.</p>
+<p>A phase-aware system does not ask, <em>“Is this recent?”</em> It
+asks, <em>“Which phase does this belong to?”</em></p>
+<hr />
+<h2 id="epoch-phase-under-cryptographic-authority">5. Epoch: Phase Under
+Cryptographic Authority</h2>
+<p>An <em>epoch</em> is not a stronger phase. It is a <strong>phase
+whose authority surface is cryptographically enumerable</strong>.</p>
+<p>An <strong>epoch</strong> is a cryptographic phase with:</p>
+<ul>
+<li>explicit declaration,</li>
+<li>cryptographically enforced authority,</li>
+<li>governed, auditable transitions.</li>
+</ul>
+<p>Each epoch is associated with one or more <strong>epoch public
+keys</strong> defining its cryptographic authority surface. Artifacts,
+equivalence claims, and transitions are considered admissible <em>only
+if signed by recognized epoch keys</em>.</p>
+<p>Epochs do not require:</p>
+<ul>
+<li>global clocks,</li>
+<li>synchronized consensus,</li>
+<li>continuous connectivity.</li>
+</ul>
+<p>They require only verifiable signatures and explicit phase
+identifiers.</p>
+<hr />
+<h2 id="a-minimal-phase-aware-verification-model">6. A Minimal
+Phase-Aware Verification Model</h2>
+<p>To ground the framework operationally, consider the following minimal
+model.</p>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>P</em></span> be a phase
+identifier,</li>
+<li><span class="math inline"><em>K</em><sub><em>P</em></sub></span> be
+the accepted public keys for phase <span
+class="math inline"><em>P</em></span>,</li>
+<li><span class="math inline"><em>A</em></span> be an artifact,</li>
+<li><span
+class="math inline"><em>S</em><em>i</em><em>g</em>(<em>A</em>)</span> be
+the signatures attached to <span
+class="math inline"><em>A</em></span>.</li>
+</ul>
+<h3 id="phase-acceptance-predicate">Phase Acceptance Predicate</h3>
+<p><span
+class="math display"><em>A</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em><em>P</em><em>h</em><em>a</em><em>s</em><em>e</em>(<em>P</em>) := ∃<em>k</em> ∈ <em>K</em><sub><em>P</em></sub>
+such that <em>k</em> is trusted</span></p>
+<h3 id="artifact-validity">Artifact Validity</h3>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Valid(A, P) := A.\text{phase} == P \\
+&amp;\land AcceptPhase(P) \\
+&amp;\land \exists s \in Sig(A) \text{ verifiable under some } k \in K_P
+\end{aligned}
+$$</span></p>
+<h3 id="default-rule">Default Rule</h3>
+<p>Artifacts that fail <span
+class="math inline"><em>V</em><em>a</em><em>l</em><em>i</em><em>d</em>(<em>A</em>, <em>P</em>)</span>
+are <strong>refused</strong>, not reinterpreted.</p>
+<p>Phase-aware systems explicitly reject fallback interpretation,
+compatibility shims, and heuristic coercion as <strong>semantic
+vulnerabilities</strong>, not conveniences.</p>
+<hr />
+<h2 id="phase-boundaries-and-transition-semantics">7. Phase Boundaries
+and Transition Semantics</h2>
+<p>Phase boundaries are enforced mechanically, not socially.</p>
+<p>An epoch transition is a signed artifact that:</p>
+<ol type="1">
+<li>identifies a successor epoch,</li>
+<li>declares continuity or refusal semantics,</li>
+<li>optionally specifies constraints on what may cross the
+boundary,</li>
+<li>is authorized under the prior epoch’s authority rules.</li>
+</ol>
+<p>A minimal transition structure:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Epoch\_Transition = \{&amp;\text{From\_Epoch\_ID}, \text{To\_Epoch\_ID},
+\\
+&amp;\text{Authority\_Rule}, \\
+&amp;\text{Optional\_Bridge\_Constraints}, \text{Signatures}\}
+\end{aligned}
+$$</span></p>
+<p>Multiple transitions may coexist. Acceptance is local and explicit;
+no global coordination is assumed or required.</p>
+<hr />
+<h2 id="optional-bridge-constraints-and-controlled-continuity">8.
+Optional Bridge Constraints and Controlled Continuity</h2>
+<p>The <span
+class="math inline"><em>O</em><em>p</em><em>t</em><em>i</em><em>o</em><em>n</em><em>a</em><em>l</em>_<em>B</em><em>r</em><em>i</em><em>d</em><em>g</em><em>e</em>_<em>C</em><em>o</em><em>n</em><em>s</em><em>t</em><em>r</em><em>a</em><em>i</em><em>n</em><em>t</em><em>s</em></span>
+field enables <strong>controlled semantic evolution</strong>.</p>
+<p>Examples include:</p>
+<ul>
+<li>conditional continuity based on lens or invariant checks,</li>
+<li>transformative bridging via declared rewrites,</li>
+<li>selective carry-forward of enumerated semantic hashes,</li>
+<li>total refusal of continuity.</li>
+</ul>
+<p>Evolution is therefore explicit, auditable, and bounded.</p>
+<hr />
+<h2 id="threat-model-a-concrete-failure-case">9. Threat Model: A
+Concrete Failure Case</h2>
+<p>Consider a CI pipeline artifact compiled under <strong>Policy Epoch
+A</strong>, where dynamic linking is permitted.</p>
+<p>A later <strong>Policy Epoch B</strong> forbids that behavior, but
+the source code remains textually identical.</p>
+<p>In conventional systems, the artifact may still be reused -
+cryptographically valid, semantically misaligned.</p>
+<p>Under Cryptographic Phase:</p>
+<ul>
+<li>the artifact is bound to Epoch A,</li>
+<li>evaluation under Epoch B triggers phase mismatch,</li>
+<li>the attacker cannot relabel the artifact without Epoch A’s
+authority,</li>
+<li>continuity requires an explicit, signed bridge.</li>
+</ul>
+<p>The system fails closed. Silent reuse is impossible.</p>
+<hr />
+<h2 id="identity-authority-and-a-concrete-anchor">10. Identity,
+Authority, and a Concrete Anchor</h2>
+<p>Identity under Cryptographic Phase is <strong>epoch-scoped</strong>,
+while authority is <strong>key-scoped</strong>.</p>
+<p>For example, a CI signing service may operate across multiple
+epochs:</p>
+<ul>
+<li>In Epoch A, it signs build artifacts under one policy regime.</li>
+<li>In Epoch B, it may continue operating - but under a new epoch key,
+reflecting changed admissibility rules.</li>
+</ul>
+<p>The service remains “the same” operationally, but its outputs are no
+longer interchangeable across epochs without explicit bridging. Identity
+continuity is therefore <strong>declared</strong>, not assumed.</p>
+<hr />
+<h2 id="phase-and-semantic-hashing">11. Phase and Semantic Hashing</h2>
+<p>Semantic Hashing defines what counts as the same admissible meaning
+under a declared lens. Cryptographic Phase defines <strong>when and
+under whose cryptographic authority</strong> that declaration holds.</p>
+<p>Operationally:</p>
+<p><span
+class="math display"><em>H</em>(Phase_ID, Epoch_Public_Key, Lens_ID, Lens_Version, Canonical_Form)</span></p>
+<p>If a semantic lens fails, the failure is contained within its epoch.
+Phase prevents silent propagation of flawed equivalence.</p>
+<hr />
+<h2 id="why-phase-is-not-versioning-or-hard-forking">12. Why Phase Is
+Not Versioning or Hard Forking</h2>
+<p>Schema versioning assumes permissive continuity.</p>
+<p>Hard forks require global coordination and social consensus.</p>
+<p>Cryptographic Phase differs fundamentally:</p>
+<ul>
+<li>continuity is explicit, not assumed,</li>
+<li>refusal is local, not catastrophic,</li>
+<li>adoption need not be universal.</li>
+</ul>
+<p>Phase scopes admissible meaning without demanding agreement.</p>
+<hr />
+<h2 id="incremental-adoption">13. Incremental Adoption</h2>
+<p>Cryptographic Phase can be adopted incrementally:</p>
+<ul>
+<li>at build artifact boundaries,</li>
+<li>across compiler and IR stages,</li>
+<li>within execution runtimes,</li>
+<li>later in policy and governance layers.</li>
+</ul>
+<p>Partial adoption still yields immediate benefit by surfacing semantic
+boundaries.</p>
+<hr />
+<h2 id="fragmentation-forking-and-governance-risk">14. Fragmentation,
+Forking, and Governance Risk</h2>
+<p>Fragmentation already exists - silently - through reinterpretation
+and drift.</p>
+<p>Cryptographic Phase makes fragmentation explicit, auditable, and
+reversible. Governance capture is possible, but visible. Authority can
+be rejected. Refusal is always available.</p>
+<p>These are surfaced problems, not hidden ones.</p>
+<hr />
+<h2 id="explicit-non-goal">15. Explicit Non-Goal</h2>
+<p>Cryptographic Phase does <strong>not</strong> attempt to resolve
+disagreement.</p>
+<p>It prevents <strong>silent agreement</strong>.</p>
+<p>It governs admissible semantic continuity, not correctness or
+truth.</p>
+<hr />
+<h2 id="conclusion">16. Conclusion</h2>
+<p>Nonce-based cryptography prevents replay. Cryptographic Phase
+prevents drift.</p>
+<p>By treating time as a declared, cryptographically enforced semantic
+coordinate, Cryptographic Phase allows systems to carry commitments
+forward without pretending continuity where none exists. It reframes
+epochs from implementation artifacts into explicit semantic regimes,
+enforced by cryptographic authority and refusal.</p>
+<p>This work does not solve disagreement. It ensures that disagreement
+cannot hide.</p>
+<p>The phase is declared.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern cryptography treats time as a hygiene
+property - managed through nonces, timestamps, counters, or synchronized
+clocks. Its nearest external comparison fields are crypto, time,
+semantic. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are
+cited as predecessor literature, adjacent standards, or counterpressure
+- not as evidence that they caused the Ableman framework or that they
+validate its novel claims. The comparison isolates where established
+work already supplies provenance, formal assurance, institutional
+constraint, empirical method, or engineering practice, and where this
+paper adds a distinct claim about admissibility, authority, semantic
+custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself. A
+precise representation of time or epoch does not resolve clock drift,
+jurisdictional calendar rules, synchronization failure, or the semantics
+of retroactive change. Formal vocabularies and graph links make
+commitments explicit but cannot by themselves establish correct
+identity, shared interpretation, or lossless translation between
+contexts. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> International Organization for Standardization.
+<em>ISO 8601-1:2019, Date and time - Representations for information
+interchange - Part 1: Basic rules</em>. 2019.
+https://www.iso.org/standard/70907.html <strong>Relationship:</strong>
+Adjacent civil-time representation standard; comparison separates
+notation from governance of calendars and epochs.</p>
+<p><strong>[E6]</strong> Leslie Lamport. “Time, Clocks, and the Ordering
+of Events in a Distributed System.” <em>Communications of the ACM</em>
+21(7), 1978, pp. 558-565. DOI: 10.1145/359545.359563.
+https://lamport.azurewebsites.net/pubs/time-clocks.pdf
+<strong>Relationship:</strong> Foundational predecessor for partial
+order, causality, and distributed event ordering.</p>
+<p><strong>[E7]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Leap 42 Calendar</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20400858</code>;<br />
+source SHA-256<br />
+<code>A5F65F821777F7776CE0E8A33A3FD5B927E246EBF49A42A6FAAB29BDFC6DE98D</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional
+Synchronization</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-012675C952D76CD2</code>;<br />
+source SHA-256<br />
+<code>A2147B7E6431FF6EEC1C6CE6D7A1EB644B04E37402E9514495C83909565F93C1</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18503394">10.5281/zenodo.18503394</a></p>

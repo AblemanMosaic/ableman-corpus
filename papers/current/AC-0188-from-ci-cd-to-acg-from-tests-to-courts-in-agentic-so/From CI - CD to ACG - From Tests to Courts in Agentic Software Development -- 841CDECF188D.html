@@ -1,0 +1,2862 @@
+<h1
+id="from-cicd-to-acg-from-tests-to-courts-in-agentic-software-development">From
+CI/CD to ACG: From Tests to Courts in Agentic Software Development</h1>
+<h2
+id="constitutional-synchronization-governed-effects-and-reasoning-capability-through-typed-co-projection">Constitutional
+Synchronization, Governed Effects, and Reasoning Capability Through
+Typed Co-Projection</h2>
+<h3
+id="tests-tell-us-whether-predicates-hold.-courts-govern-what-follows.-constitutional-synchronization-tells-us-what-the-predicates-are-aboutand-governed-effect-boundaries-decide-what-may-become-real.">Tests
+tell us whether predicates hold. Courts govern what follows.
+Constitutional synchronization tells us what the predicates are
+about–and governed effect boundaries decide what may become real.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Continuous integration and continuous delivery transformed software
+engineering by making builds, tests, packaging, and deployment checks
+part of the infrastructure of change rather than optional developer
+practices. Agentic coding changes the limiting problem. As software
+agents become capable of generating and modifying implementation faster
+than humans can directly review it, the central engineering bottleneck
+shifts from code production toward epistemic and constitutional control:
+determining what a change means, whether an implementation corresponds
+to its specification, whether available evidence establishes the claimed
+behavior, whether previous evidence remains applicable to the exact
+current subject, whether a transition is authorized, what concrete
+effect should occur, and what may truthfully be claimed afterward.</p>
+<p>This paper introduces <strong>Ableman Constitutional Governance
+(ACG)</strong> as a software-development architecture in which a
+constitutionally significant subset of executable verification is
+promoted from <strong>tests</strong> into <strong>courts</strong>.
+Within the software domain considered here,</p>
+<p><span
+class="math display"><em>C</em><sub>software</sub> ⊆ <em>V</em><sub>executable</sub>,</span></p>
+<p>where ordinary unit, integration, regression, determinism, packaging,
+performance, and recurrence tests remain part of the broader
+verification estate. Courts differ not because they cease to be
+executable verifications, but because selected predicates are bound to
+an exact subject, constitutional frame, proposition or obligation,
+evidence topology, jurisdiction, authority relationship, and typed
+disposition.</p>
+<p>The paper develops a broader claim: the reasoning capability obtained
+from ACG does not arise from courts alone. It arises from combining
+constitutionally typed verification with <strong>constitutional
+synchronization</strong>, governed effects, and a richer representation
+of the system. <strong>Ableman’s Razor</strong>, originally formulated
+as a typed grammar governing migration of claims among Specification,
+Configuration, and Implementation, is explicitly extended here as a
+representation lens for governed systems. The current integration
+resolves Configuration into <strong>Configuration Manifold 1
+(CM1)</strong>, the mandatory admissible manifold; <strong>Configuration
+Manifold 2 (CM2)</strong>, the preferred admissible manifold under
+declared criteria; and <strong>IC</strong>, expanded interchangeably as
+<strong>Instance Constitution</strong> or <strong>Instance
+Configuration</strong>, the selected slice for a concrete system.
+<strong>IR</strong>, expanded interchangeably as <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong>,
+makes that selection concrete:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<p>This extension is not attributed to the Razor’s original
+jurisdiction. It is accepted only insofar as the added layers yield
+diagnostic, governance, selection, correspondence, evidence, or revision
+distinctions unavailable from a less differentiated representation
+without equivalent structure.</p>
+<p>This representation connects to <strong>Dynatology</strong>, the
+study of possible continuation: which transitions are conceivable,
+specification-valid, admissible, reachable, viable, selected,
+authorized, realized, observed, and established from a particular state.
+ACG supplies courts that adjudicate relationships and transitions among
+these projections.</p>
+<p>The architecture also extends governance into consequential execution
+through <strong>constitutional effect interposition</strong>.
+Application logic may continue to propose familiar semantic operations
+while a governed effect boundary determines the admissible realization
+under the current Instance Constitution. The requested operation,
+admitted realization, and actual observed effect are therefore
+distinct:</p>
+<p><span
+class="math display"><em>O</em><sub><em>r</em></sub> → <em>R</em><sub><em>a</em></sub> → <em>E</em><sub><em>a</em></sub>.</span></p>
+<p>A governed boundary may preserve, negate, constrain, transform,
+defer, simulate, sandbox, or substitute a proposed effect. This is not
+claimed to be novel merely as interception or mutation: reference
+monitors, capability systems, admission controllers, aspect-oriented
+programming, and effect handlers provide important precedents. The
+distinguishing concern is the integration of effect mediation with
+exact-subject binding, constitutional selection, evidentiary
+correspondence, typed dispositions, receipts, lineage, and standing.</p>
+<p>Because governed effects cross explicit semantic boundaries, those
+same boundaries become causal observation points. Receipts can record
+what operation was proposed, what realization was admitted, what
+executor action occurred, and what post-effect evidence followed.
+Governance, behavioral adaptation, and debugging can therefore share one
+effect topology.</p>
+<p>Documentation is similarly repositioned. Rather than remaining an
+independently authored and perpetually drifting artifact, documentation,
+glossaries, implementation codices, agent-orientation surfaces,
+capability references, operator explanations, and configuration views
+become <strong>deterministic, zero-authority projections of the retained
+semantic model</strong>. Projection fidelity does not itself establish
+realization fidelity; correspondence must be independently witnessed and
+adjudicated.</p>
+<p>The paper defines a <strong>reasoning-capability gain</strong>
+operationally as a representational extension that, while holding the
+underlying observed system state fixed, enables derivation of a
+decision-relevant distinction, contradiction, obligation, or
+admissible-action restriction that the baseline representation cannot
+express or derive without introducing equivalent additional structure.
+Several development episodes illustrate this pattern: environmental
+extraction safety conflicted with realization fidelity; artifact reuse
+was separated from effectful materialization; source changes invalidated
+stale verification evidence; and historical verifiers were made to
+testify to their own supersession rather than masquerade as current
+authority.</p>
+<p>The resulting software project is no longer modeled merely as source
+code plus tests and documentation. It becomes a <strong>constitutionally
+synchronized semantic and effect state</strong> containing
+specification, configuration possibilities, instance commitments,
+implementation bindings, evidence, courts, authority, effects, receipts,
+lineage, standing, and deterministic projections. ACG therefore suggests
+a progression from continuous integration toward <strong>continuous
+constitutionalization</strong>: not a replacement for CI/CD, but an
+enlargement in which verification, correspondence, adjudication, effect
+governance, and explanation become machine-addressable parts of the
+development process.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Software engineering repeatedly advances by turning practices
+dependent on individual memory or discipline into infrastructure.</p>
+<p>Version control made lineage infrastructural. Automated testing made
+behavioral checking repeatable. Continuous integration made verification
+an expected consequence of change. Continuous delivery extended the same
+principle into packaging and release automation.</p>
+<p>The transformative insight of CI/CD was therefore not the invention
+of testing. Tests long predated continuous integration (Beck, 2002). The
+important change was that verification became structurally integrated
+into the development process (Fowler, 2006; Duvall, Matyas, and Glover,
+2007; Humble and Farley, 2010):</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\text{change} \\
+&amp;\rightarrow \text{build} \\
+&amp;\rightarrow \text{test} \\
+&amp;\rightarrow \text{integrate} \\
+&amp;\rightarrow \text{deliver}
+\end{aligned}.
+$$</span></p>
+<p>A test ceased to be merely something a developer <em>could</em> run.
+It became something the development system itself expected to run.</p>
+<p>Agentic software development creates a new asymmetry.</p>
+<p>A capable coding agent may inspect a repository, modify many files,
+regenerate derived artifacts, repair compilation errors, alter tests,
+update build infrastructure, package candidate releases, and produce
+persuasive explanations in a period that previously required sustained
+human work.</p>
+<p>The capacity to <strong>produce implementation</strong> can therefore
+grow faster than the capacity to establish <strong>justified belief
+about implementation</strong>.</p>
+<p>This produces a different limiting question.</p>
+<p>Not merely:</p>
+<blockquote>
+<p>Can the agent write the code?</p>
+</blockquote>
+<p>but:</p>
+<blockquote>
+<p><strong>What prevents the agent, developer, or organization from
+confusing successful production with justified knowledge–and justified
+knowledge with authority to change reality?</strong></p>
+</blockquote>
+<p>Traditional CI/CD answers important questions:</p>
+<ul>
+<li>Does the source compile?</li>
+<li>Do the tests pass?</li>
+<li>Does the artifact package correctly?</li>
+<li>Is a build deterministic?</li>
+<li>Does deployment complete?</li>
+<li>Does a monitored service remain healthy?</li>
+</ul>
+<p>Agentic development adds questions of another type:</p>
+<ul>
+<li>What does the requested operation mean?</li>
+<li>What system state is the claim actually about?</li>
+<li>Which configuration possibilities were admissible?</li>
+<li>Which of those possibilities did this instance actually select?</li>
+<li>Does the implementation correspond to that selection?</li>
+<li>Does the runtime consume the configuration that was generated?</li>
+<li>Does the observed behavior establish the modeled operation?</li>
+<li>Does old evidence still belong to the current subject?</li>
+<li>Did an environment transform a semantically significant
+property?</li>
+<li>Does an available capability have an actual realization?</li>
+<li>Does an evidentiary PASS confer any authority?</li>
+<li>If an operation is authorized, must its originally requested effect
+occur unchanged?</li>
+<li>What effect did the executor actually produce?</li>
+<li>What may legitimately be claimed about the resulting artifact?</li>
+</ul>
+<p>These are not only behavioral questions.</p>
+<p>They concern <strong>meaning, possibility, correspondence, evidence,
+jurisdiction, authority, effect, lineage, and standing</strong>.</p>
+<p>Ableman Constitutional Governance addresses this problem through five
+related transformations:</p>
+<ol type="1">
+<li><strong>Tests become courts where constitutional significance
+exists.</strong></li>
+<li><strong>Specification and implementation become constitutionally
+synchronized through typed intermediate representations and
+correspondence evidence.</strong></li>
+<li><strong>Consequential effects become explicit governed transitions
+rather than implicit consequences of application control
+flow.</strong></li>
+<li><strong>Receipts and witnesses make those transitions causally
+reconstructable.</strong></li>
+<li><strong>Documentation becomes a deterministic projection of retained
+semantic state rather than a second, independently maintained
+ontology.</strong></li>
+</ol>
+<p>The claim is not that ordinary software engineering lacks analogues
+for any individual mechanism. Formal methods, model-driven engineering,
+software product lines, admission control, reference monitors,
+capabilities, effect systems, build systems, and observability all
+supply important neighboring ideas.</p>
+<p>The proposed contribution is their integration into a single
+<strong>constitutional development process model</strong> whose primary
+discipline is non-collapse:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\text{what is possible} \\
+&amp;\neq \text{what was selected} \\
+&amp;\neq \text{what was implemented} \\
+&amp;\neq \text{what was observed} \\
+&amp;\neq \text{what was established} \\
+&amp;\neq \text{what was authorized} \\
+&amp;\neq \text{what occurred} \\
+&amp;\neq \text{what has standing}
+\end{aligned}.
+$$</span></p>
+<hr />
+<h2 id="from-cicd-tests-to-constitutional-courts">2. From CI/CD Tests to
+Constitutional Courts</h2>
+<h3
+id="the-verification-estate-remains-larger-than-the-court-system">2.1
+The verification estate remains larger than the court system</h3>
+<p>ACG does not replace conventional testing.</p>
+<p>A mature software project still requires:</p>
+<ul>
+<li>unit tests;</li>
+<li>integration tests;</li>
+<li>regression tests;</li>
+<li>property tests;</li>
+<li>fuzz tests;</li>
+<li>static analysis;</li>
+<li>packaging and hygiene checks;</li>
+<li>deterministic-build checks;</li>
+<li>dependency checks;</li>
+<li>compatibility tests;</li>
+<li>performance tests;</li>
+<li>resource-envelope tests;</li>
+<li>environment recurrence tests.</li>
+</ul>
+<p>A conventional test may be represented as:</p>
+<p><span
+class="math display"><em>T</em>(<em>x</em>) → PASS, FAIL.</span></p>
+<p>For example:</p>
+<blockquote>
+<p>Given input (x), does function (f) produce expected output (y)?</p>
+</blockquote>
+<p>That is useful verification.</p>
+<p>It need not be constitutional.</p>
+<h3 id="courts-are-constitutionally-typed-verification">2.2 Courts are
+constitutionally typed verification</h3>
+<p>A court becomes appropriate when an executable result participates in
+a governed proposition.</p>
+<p>A simplified court can be represented as:</p>
+<p><span
+class="math display"><em>C</em> = (<em>S</em>, <em>F</em>, <em>P</em>, <em>E</em>, <em>J</em>, <em>A</em>, <em>D</em>),</span></p>
+<p>where:</p>
+<ul>
+<li><ol start="19" type="A">
+<li>= exact subject;</li>
+</ol></li>
+<li><ol start="6" type="A">
+<li>= constitutional frame;</li>
+</ol></li>
+<li><ol start="16" type="A">
+<li>= proposition or obligation;</li>
+</ol></li>
+<li><ol start="5" type="A">
+<li>= admissible evidence topology;</li>
+</ol></li>
+<li><ol start="10" type="A">
+<li>= jurisdiction or applicability;</li>
+</ol></li>
+<li><ol type="A">
+<li>= authority relationship;</li>
+</ol></li>
+<li><ol start="4" type="A">
+<li>= typed disposition.</li>
+</ol></li>
+</ul>
+<p>The court therefore asks more than:</p>
+<blockquote>
+<p>Did predicate (P) evaluate successfully?</p>
+</blockquote>
+<p>It asks:</p>
+<blockquote>
+<p><strong>For this exact subject, under this frame, using evidence
+admissible for this jurisdiction, what disposition is warranted, and
+what–if anything–may lawfully follow from it?</strong></p>
+</blockquote>
+<p>Its vocabulary consequently need not be Boolean:</p>
+<pre class="text"><code>PASS
+FAIL
+NOT_ESTABLISHED
+REFUSE
+HOLD_RESOURCE_ENVELOPE
+HISTORICAL_SUPERSEDED</code></pre>
+<p>Thus:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{false} \\
+&amp;\neq \mathrm{unknown} \\
+&amp;\neq \mathrm{inadmissible} \\
+&amp;\neq \mathrm{resource\mbox{-}incomplete} \\
+&amp;\neq \mathrm{superseded}
+\end{aligned}.
+$$</span></p>
+<p>A binary testing interface can erase these distinctions.</p>
+<p>A court preserves them.</p>
+<h3 id="the-subset-claim-is-software-scoped">2.3 The subset claim is
+software-scoped</h3>
+<p>Within the agentic software-development setting examined here:</p>
+<p><span class="math display">$$
+\boxed{
+C_{\mathrm{software}}
+\subseteq
+V_{\mathrm{executable}}
+}
+$$</span></p>
+<p>That is, courts are a constitutionally typed subset of executable
+verification.</p>
+<p>The statement is deliberately scoped.</p>
+<p>A legal court, human governance body, clinical review mechanism, or
+other non-software adjudicative institution need not itself be an
+executable software test.</p>
+<p>The subset relationship describes the software realization of ACG,
+not an ontological definition of courts.</p>
+<p>The topology is therefore:</p>
+<pre class="text"><code>EXECUTABLE VERIFICATION
+
+ unit tests
+ integration tests
+ regression tests
+ determinism tests
+ packaging tests
+ performance tests
+ recurrence tests
+
+ CONSTITUTIONAL COURTS
+     realization correspondence
+     evidence admissibility
+     operation reachability
+     receipt-before-effect
+     authority traceability
+     continuity
+     standing boundaries</code></pre>
+<p>The compressed comparison is:</p>
+<blockquote>
+<p><strong>CI/CD operationalizes tests. ACG operationalizes
+constitutionally significant adjudication.</strong></p>
+</blockquote>
+<hr />
+<h2
+id="constitutional-synchronization-and-the-representation-problem">3.
+Constitutional Synchronization and the Representation Problem</h2>
+<h3 id="the-conventional-four-artifact-problem">3.1 The conventional
+four-artifact problem</h3>
+<p>Software projects often maintain four partly independent accounts of
+themselves:</p>
+<pre class="text"><code>SPECIFICATION
+IMPLEMENTATION
+TESTS
+DOCUMENTATION</code></pre>
+<p>They are usually joined through human interpretation.</p>
+<p>A requirement is written.</p>
+<p>A developer interprets it into code.</p>
+<p>Tests are written against some interpretation of intended
+behavior.</p>
+<p>Documentation is authored or updated separately.</p>
+<p>Over time:</p>
+<pre class="text"><code>specification drifts
+implementation drifts
+tests drift
+documentation drifts</code></pre>
+<p>The synchronization mechanism is primarily social:</p>
+<ul>
+<li>review;</li>
+<li>meetings;</li>
+<li>issue trackers;</li>
+<li>release checklists;</li>
+<li>institutional memory.</li>
+</ul>
+<p>Agentic coding makes this increasingly fragile.</p>
+<p>An agent may update implementation but miss documentation.</p>
+<p>More dangerously, it may update implementation, tests, and
+documentation around the <strong>same false assumption</strong>.</p>
+<p>The artifacts can become mutually consistent while remaining
+inconsistent with the actual runtime system.</p>
+<p>The deeper problem is therefore not merely stale documentation.</p>
+<p>It is <strong>representational independence without
+machine-addressable correspondence</strong>.</p>
+<h3 id="ablemans-razor-and-a-declared-extension">3.2 Ableman’s Razor and
+a Declared Extension</h3>
+<p>Ableman’s Razor was originally formulated as a typed grammar for
+claim migration across Specification, Configuration, and Implementation.
+Its layers are jurisdictional roles rather than a lifecycle. This paper
+deliberately applies that vocabulary to the representation of a governed
+system. That extension should not be silently attributed to the Razor’s
+original jurisdiction.</p>
+<p>The current corpus realization funnel makes the extension
+explicit:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<p>Possibility <span class="math inline"><em>P</em></span> is the space
+of candidate problems, meanings, structures, and realizations under
+consideration. Specification <span class="math inline"><em>S</em></span>
+states types, invariants, operations, forbidden states, evidence
+obligations, and claim boundaries. <strong>Configuration Manifold 1
+(CM1)</strong> contains every configuration satisfying mandatory
+admissibility. <strong>Configuration Manifold 2 (CM2)</strong> contains
+the configurations preferred under declared objectives, risks,
+tradeoffs, and stakeholder or constitutional criteria.
+<strong>IC</strong> may be expanded interchangeably as <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong>; it
+selects and binds one governed slice for a concrete instance.
+<strong>IR</strong> may be expanded interchangeably as <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong>; it
+makes that IC concrete in source, artifacts, runtime state, operations,
+and effects. Evidence <span class="math inline"><em>E</em></span>
+evaluates typed claims about the IR. Revision <span
+class="math inline"><em>R</em></span> can change any earlier layer while
+preserving lineage.</p>
+<p>The source manuscript’s unqualified <code>CM</code> is retained as
+shorthand for the configuration-manifold envelope, but its definition of
+“admissible configurations” corresponds specifically to CM1. The added
+CM2 layer prevents preference, optimization, safety margin, usability,
+cost, sovereignty, or institutional desirability from being mistaken for
+mandatory admissibility. The source symbol</p>
+<p><code>I</code> is normalized here to the IR stage. Neither accepted
+expansion of IC or IR changes standing or effect.</p>
+<p>The extension carries its own rollback condition: if a separation
+fails to yield diagnostic, governance, selection, or correspondence
+distinctions unavailable from an undivided layer without equivalent
+added structure, that separation should be treated as presentational
+rather than substantive.</p>
+<h3 id="specification">3.3 Specification</h3>
+<p>Specification describes typed semantic possibility rather than one
+deployment. It can define objects, relations, invariants, operation
+types, transition constraints, evidence requirements, possible authority
+structures, and forbidden states. Formal methods can give selected
+portions much greater rigor than the notation used here. Specification
+validity does not itself establish admissibility under a current
+constitution, instance selection, implementation correspondence, present
+authority, observed effect, or evidentiary standing.</p>
+<h3 id="configuration-manifold-1-admissible-configurations">3.4
+Configuration Manifold 1: Admissible Configurations</h3>
+<p>For mandatory admissibility predicate <span
+class="math inline"><em>A</em><sub><em>S</em></sub></span>:</p>
+<p><span
+class="math display"><em>C</em><em>M</em><sub>1</sub>(<em>S</em>) = {<em>c</em> ∣ <em>A</em><sub><em>S</em></sub>(<em>c</em>) = 1}.</span></p>
+<p>CM1 may include provider choices, persistence backends, execution
+profiles, evidence routes, authority arrangements, subsystem activation,
+security postures, resource envelopes, and effect-realization
+strategies. Its elements can be mutually exclusive, dependent,
+unreachable from the current state, evidence-sensitive,
+environment-sensitive, authority-gated, or semantically similar while
+operationally distinct.</p>
+<p>Admissibility is typed and scoped. A configuration may satisfy
+structural or syntactic requirements while remaining undesirable,
+fragile, expensive, invasive, or unsafe under a richer preference
+constitution. That is why CM1 must not absorb CM2.</p>
+<h3
+id="configuration-manifold-2-preferred-admissible-configurations">3.5
+Configuration Manifold 2: Preferred Admissible Configurations</h3>
+<p>Let <span
+class="math inline">≼<sub><em>Π</em>, <em>t</em></sub></span> be a
+declared, versioned, possibly partial preference relation under
+preference constitution <span class="math inline"><em>Π</em></span> and
+evaluation context or time <span class="math inline"><em>t</em></span>.
+Then a simple nondominated form is:</p>
+<p><span
+class="math display"><em>C</em><em>M</em><sub>2</sub>(<em>S</em>, <em>Π</em>, <em>t</em>) = {<em>c</em> ∈ <em>C</em><em>M</em><sub>1</sub>(<em>S</em>) ∣ ∄<em>c</em><sup>′</sup> ∈ <em>C</em><em>M</em><sub>1</sub>(<em>S</em>) : <em>c</em>≺<sub><em>Π</em>, <em>t</em></sub><em>c</em><sup>′</sup>}.</span></p>
+<p>This is one selection model, not a universal optimizer. Preferences
+may be incomplete or contested; several configurations may remain
+incomparable; and safety or rights constraints that are mandatory belong
+in CM1 rather than as compensable preferences. CM2 can consider least
+authority, inspectability, privacy, sovereignty, reversibility,
+performance, cost, maintainability, evidence quality, accessibility, and
+institutional fit without pretending those objectives collapse into one
+scalar score.</p>
+<h3 id="instance-constitution-instance-configuration">3.6 Instance
+Constitution / Instance Configuration</h3>
+<p>A concrete system does not instantiate either manifold in full. IC
+binds one selected configuration or constrained path:</p>
+<p><span
+class="math display"><em>I</em><em>C</em> ∈ <em>C</em><em>M</em><sub>2</sub> ⊆ <em>C</em><em>M</em><sub>1</sub>.</span></p>
+<p>The relation expresses intended placement, not proof that selection
+was legitimate or that an IR corresponds. An IC may bind provider,
+storage strategy, environment profile, authority topology, enabled
+subsystems, evidence profile, release lineage, effect-governance
+profile, realization strategy, and revision policy. A capability may
+exist in Specification or CM1, even be preferred in CM2, yet remain
+unselected by the current IC.</p>
+<h3 id="instance-realization-implementation-realization">3.7 Instance
+Realization / Implementation Realization</h3>
+<p>IR is the concrete realization of the selected constitutional
+pathway: source, binaries, firmware, files, APIs, runtime processes,
+persistent state, UI behavior, hardware mutations, and external effects.
+IR cannot retroactively authorize itself. A repository or runtime can
+contain dormant, stale, unreachable, unselected, or unmodeled behavior.
+Those observations establish implementation facts only within their
+evidence boundary.</p>
+<h3 id="evidence-and-revision">3.8 Evidence and Revision</h3>
+<p>Evidence binds observations, subjects, methods, contexts, and claim
+scopes. It may establish correspondence, defect, noncorrespondence,
+refusal, uncertainty, or absence of sufficient support; it does not
+automatically grant authority or standing. Revision can repair
+Specification, either manifold, the IC, the IR, the evidence model, or
+their relations. A successor must preserve what changed, why, under
+whose authority, and which earlier evidence was invalidated.</p>
+<h3 id="diagnostic-value-of-the-expanded-split">3.9 Diagnostic Value of
+the Expanded Split</h3>
+<p>For one unexpected observation, the expanded representation separates
+at least these hypotheses:</p>
+<pre class="text"><code>Is the required possibility missing or not yet specified?
+Is the candidate absent from CM1 because it violates mandatory
+admissibility?
+Is it in CM1 but excluded or dominated under the declared CM2
+preferences?
+Is it preferred but not selected by this IC?
+Was it selected but not realized by this IR?
+Was it realized but inadequately observed or evidenced?
+Does new evidence require revision of an earlier layer?</code></pre>
+<p>The split earns its cost only when these distinctions change
+diagnosis, permissible action, or the evidence required for
+promotion.</p>
+<h2
+id="dynatology-co-projection-and-the-definition-of-reasoning-capability">4.
+Dynatology, Co-Projection, and the Definition of Reasoning
+Capability</h2>
+<h3 id="dynatology-as-possibility-semantics">4.1 Dynatology as
+possibility semantics</h3>
+<p>The Configuration Manifold connects directly to
+<strong>Dynatology</strong>: the study of possible continuation.</p>
+<p>Given current state (x), a system may distinguish:</p>
+<ul>
+<li>conceivable continuations;</li>
+<li>specification-valid continuations;</li>
+<li>admissible continuations;</li>
+<li>reachable continuations;</li>
+<li>viable continuations;</li>
+<li>selected continuations;</li>
+<li>authorized continuations;</li>
+<li>realized continuations;</li>
+<li>observed continuations;</li>
+<li>established continuations.</li>
+</ul>
+<p>A simplified representation is:</p>
+<p><span
+class="math display"><em>D</em><sub><em>x</em></sub> = (<em>x</em>, <em>Ω</em><sub><em>x</em></sub>, <em>A</em><sub><em>x</em></sub>, <em>R</em><sub><em>x</em></sub>),</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>Ω</em><sub><em>x</em></sub></span> is
+the conceivable continuation space;</li>
+<li><span class="math inline"><em>A</em><sub><em>x</em></sub></span>
+describes admissibility;</li>
+<li><span class="math inline"><em>R</em><sub><em>x</em></sub></span>
+describes reachability.</li>
+</ul>
+<p>The progression is:</p>
+<pre class="text"><code>conceivable
+
+specification-valid
+
+admissible
+
+selected
+
+authorized
+
+realizable
+
+realized
+
+observed
+
+established</code></pre>
+<p>These are related but non-identical categories.</p>
+<p>ACG can therefore be understood partly as a <strong>governed
+dynatological traversal architecture</strong>.</p>
+<h3 id="the-projection-nexus">4.2 The projection nexus</h3>
+<p>A governed phenomenon (X) can be represented simultaneously through
+several projections:</p>
+<pre class="text"><code>                         DYNATOLOGY
+                  possibility / continuation
+
+ABLEMAN&#39;S RAZOR  X  ACG
+   P / S / CM1 / CM2 / IC / IR / E / R                  courts
+
+             EPISTEMIC          EFFECT
+             PROJECTION        PROJECTION
+              evidence          requested
+              reliance          admitted
+                                realized
+
+                     PEDAGOGICAL
+                      PROJECTION
+                  explain / orient / docs</code></pre>
+<p>No single projection is required to contain the entire truth.</p>
+<p>Their intersections can nevertheless reveal distinctions unavailable
+in isolation.</p>
+<p>Consider:</p>
+<pre class="text"><code>Dynatology:
+  behavior C is conceivable.
+
+Specification:
+  C is valid.
+
+Configuration Manifold:
+  C is available.
+
+Instance Constitution:
+  C was not selected.
+
+Authority:
+  no transition authorized selection of C.
+
+Implementation:
+  C occurred.
+
+Effect evidence:
+  C was observed.</code></pre>
+<p>The combined conclusion is:</p>
+<blockquote>
+<p><strong>Unselected or unauthorized realization residue
+exists.</strong></p>
+</blockquote>
+<p>The underlying runtime observation did not change.</p>
+<p>The representation changed.</p>
+<h3 id="operational-definition-of-reasoning-capability-gain">4.3
+Operational definition of reasoning-capability gain</h3>
+<p>The phrase <strong>reasoning capability</strong> is easily
+overstated.</p>
+<p>This paper therefore uses a narrower operational definition.</p>
+<p>Let (X) be a fixed observed system state, (R_1(X)) a baseline
+representation, and (R_2(X)) an enriched representation.</p>
+<p>The enriched representation provides a reasoning-capability gain when
+it enables derivation of a decision-relevant distinction, contradiction,
+obligation, or restriction on admissible action that cannot be expressed
+or derived under the baseline representation without importing
+equivalent additional structure.</p>
+<p>Formally, for some decision-relevant proposition (q):</p>
+<p><span
+class="math display"><em>q</em> ∉ <em>D</em><em>e</em><em>r</em><em>i</em><em>v</em><em>e</em>(<em>R</em><sub>1</sub>(<em>X</em>))</span></p>
+<p>while:</p>
+<p><span
+class="math display"><em>q</em> ∈ <em>D</em><em>e</em><em>r</em><em>i</em><em>v</em><em>e</em>(<em>R</em><sub>2</sub>(<em>X</em>)),</span></p>
+<p>subject to the condition that (R_2) is not merely hiding the same
+distinction under a renamed equivalent representation.</p>
+<p>A useful informal summary is:</p>
+<p><span class="math display">$$
+\boxed{
+\mathrm{Reasoning\ Gain}=
+\mathrm{New\ Discriminations}
++
+\mathrm{New\ Derivable\ Constraints}
++
+\mathrm{New\ Action\ Distinctions}
+}
+$$</span></p>
+<p>while the underlying observation remains fixed.</p>
+<p>This definition avoids claiming that the system has acquired general
+intelligence merely because more metadata exists.</p>
+<p>The gain must affect what can be <strong>distinguished or
+derived</strong>.</p>
+<p>For example:</p>
+<h4 id="baseline-configuration-representation">Baseline configuration
+representation</h4>
+<pre class="text"><code>behavior C exists
+configuration supports C</code></pre>
+<h4 id="cm1cm2ic-representation">CM1/CM2/IC representation</h4>
+<pre class="text"><code>C exists in admissible configuration space
+BUT
+this instance never selected C</code></pre>
+<p>The second representation supports the additional diagnosis:</p>
+<pre class="text"><code>UNSELECTED_REALIZATION_RESIDUE</code></pre>
+<p>Similarly:</p>
+<h4 id="baseline-effect-interception">Baseline effect interception</h4>
+<pre class="text"><code>request was modified</code></pre>
+<h4 id="constitutional-effect-representation">Constitutional effect
+representation</h4>
+<pre class="text"><code>requested operation
+\neq
+admitted realization
+\neq
+actual effect</code></pre>
+<p>This enables detection of executor-correspondence defects that the
+first representation cannot express without importing equivalent
+distinctions.</p>
+<p>The proposed capability upgrade is therefore <strong>architectural
+and representational</strong>, not a claim that the underlying language
+model has become intrinsically more intelligent.</p>
+<hr />
+<h2 id="deterministic-projection-and-constitutional-documentation">5.
+Deterministic Projection and Constitutional Documentation</h2>
+<h3 id="documentation-should-not-become-a-second-ontology">5.1
+Documentation should not become a second ontology</h3>
+<p>Documentation is commonly maintained beside the system it
+describes.</p>
+<p>A README, glossary, architecture document, configuration reference,
+and source implementation can all disagree.</p>
+<p>Under constitutional synchronization, these surfaces should instead
+be treated where possible as <strong>deterministic
+projections</strong>.</p>
+<p>For governed semantic state:</p>
+<p><span
+class="math display"><em>X</em> = (<em>S</em>, <em>C</em><em>M</em><sub>1</sub>, <em>C</em><em>M</em><sub>2</sub>, <em>I</em><em>C</em>, <em>I</em><em>R</em>, <em>E</em>, <em>R</em>, <em>F</em>),</span></p>
+<p>and projection function (P_k):</p>
+<p><span
+class="math display"><em>P</em><sub><em>k</em></sub>(<em>X</em>) = <em>D</em><sub><em>k</em></sub>.</span></p>
+<p>Possible projections include:</p>
+<ul>
+<li>README;</li>
+<li>glossary;</li>
+<li>implementation codex;</li>
+<li>configuration reference;</li>
+<li>capability map;</li>
+<li>current-instance orientation;</li>
+<li>operator help;</li>
+<li>architecture views.</li>
+</ul>
+<p>For a fixed source state and deterministic projector:</p>
+<p><span
+class="math display"><em>P</em><sub><em>k</em></sub>(<em>X</em>)<sub>1</sub> = <em>P</em><sub><em>k</em></sub>(<em>X</em>)<sub>2</sub>.</span></p>
+<p>This yields a useful principle:</p>
+<blockquote>
+<p><strong>Documentation becomes disposable but
+reproducible.</strong></p>
+</blockquote>
+<p>“Disposable” does not mean unimportant.</p>
+<p>It means the prose file is not the authoritative source of the
+semantics it explains.</p>
+<p>Delete the projection and regenerate it.</p>
+<p>The underlying semantic state survives.</p>
+<h3 id="typed-projections">5.2 Typed projections</h3>
+<p>Different surfaces can expose different regions of the nexus.</p>
+<h4 id="specification-projection">Specification projection</h4>
+<blockquote>
+<p>What is this concept?</p>
+</blockquote>
+<h4 id="configuration-manifold-projection">Configuration-Manifold
+projection</h4>
+<blockquote>
+<p>What configurations and realization alternatives are admissible?</p>
+</blockquote>
+<h4 id="instance-constitution-projection">Instance-Constitution
+projection</h4>
+<blockquote>
+<p>What has this system actually selected?</p>
+</blockquote>
+<h4 id="implementation-projection">Implementation projection</h4>
+<blockquote>
+<p>Where and how is that selection realized?</p>
+</blockquote>
+<h4 id="epistemic-projection">Epistemic projection</h4>
+<blockquote>
+<p>What is currently established, defeated, defeasible, or unknown?</p>
+</blockquote>
+<h4 id="effect-projection">Effect projection</h4>
+<blockquote>
+<p>What was proposed, admitted, executed, and observed?</p>
+</blockquote>
+<h4 id="pedagogical-projection">Pedagogical projection</h4>
+<blockquote>
+<p>How should a human or fresh agent understand the current system?</p>
+</blockquote>
+<p>This is more precise than attempting to make one README explain every
+representational layer.</p>
+<h3 id="projection-does-not-establish-correspondence">5.3 Projection
+does not establish correspondence</h3>
+<p>Generated documentation alone does not solve specification drift.</p>
+<p>A projection can perfectly reproduce a false model.</p>
+<p>Therefore:</p>
+<p><span
+class="math display">projection fidelity ≠ realization fidelity.</span></p>
+<p>The full loop must include:</p>
+<pre class="text"><code>MODEL
+
+deterministic projection
+
+MODEL
+
+realization obligations
+
+IMPLEMENTATION
+
+witness
+
+EVIDENCE
+
+COURTS
+
+CORRESPONDENCE</code></pre>
+<p>Documentation becomes trustworthy only within the limits of the
+correspondence that has actually been established.</p>
+<h3 id="projection-is-zero-authority">5.4 Projection is
+zero-authority</h3>
+<p>A documentation surface must not become law merely because it is
+generated.</p>
+<p>Thus:</p>
+<p><span class="math display">projection ≠ law</span></p>
+<p>and:</p>
+<p><span class="math display">description ≠ standing.</span></p>
+<p>Deleting documentation should not alter execution semantics.</p>
+<p>Editing a help page should not amend the Instance Constitution.</p>
+<p>A projection explains the governed source; it does not ratify it.</p>
+<h3 id="projection-congruence-as-an-executable-obligation">5.5
+Projection congruence as an executable obligation</h3>
+<p>Deterministic projection creates another useful court surface.</p>
+<p>Let (D_c) be the committed documentation projection and (P_k(X)) be a
+fresh regeneration from the current source state.</p>
+<p>Projection congruence requires:</p>
+<p><span
+class="math display"><em>D</em><sub><em>c</em></sub> = <em>P</em><sub><em>k</em></sub>(<em>X</em>).</span></p>
+<p>Failure establishes only that the committed projection does not
+correspond to the current projection source.</p>
+<p>It does <strong>not</strong> automatically establish which side is
+substantively correct.</p>
+<p>That distinction matters.</p>
+<p>A stale README and a stale semantic source can both produce
+projection mismatch.</p>
+<p>The mismatch generates an obligation to adjudicate the divergence; it
+does not decide the answer by itself.</p>
+<p>This principle applies equally to the manuscript describing the
+architecture. A mathematically intended expression that is silently
+transformed during transport into a Markdown heading is not merely a
+typographic defect. It is a projection-correspondence defect between the
+authored semantic representation and the realized document artifact.</p>
+<hr />
+<h2 id="constitutional-effect-interposition">6. Constitutional Effect
+Interposition</h2>
+<h3 id="from-admission-to-realization-selection">6.1 From admission to
+realization selection</h3>
+<p>Governance is often conceived as a binary gate:</p>
+<p><span class="math display"><em>E</em> → ALLOW, DENY.</span></p>
+<p>That is useful but incomplete.</p>
+<p>A governed system can instead treat the application’s requested
+operation as a proposal whose concrete realization remains
+selectable.</p>
+<p>Let:</p>
+<ul>
+<li>(O_r) = requested semantic operation;</li>
+<li>(R_a) = admitted realization;</li>
+<li>(E_a) = actual effect.</li>
+</ul>
+<p>Then:</p>
+<p><span class="math display">$$
+\boxed{
+O_r
+\rightarrow
+R_a
+\rightarrow
+E_a
+}
+$$</span></p>
+<p>and the admitted realization need not be identical to the realization
+originally requested by the application:</p>
+<p><span
+class="math display"><em>R</em><sub><em>a</em></sub> ≠ <em>R</em><sub><em>r</em></sub></span></p>
+<p>may be lawful.</p>
+<p>Possible dispositions include:</p>
+<pre class="text"><code>PRESERVE
+NEGATE
+SUBSTITUTE
+TRANSFORM
+CONSTRAIN
+DEFER
+SIMULATE
+SANDBOX
+ESCALATE</code></pre>
+<p>The constitutional layer therefore does more than decide whether a
+call proceeds.</p>
+<p>It can select the lawful realization of the operation.</p>
+<h3 id="the-constitutional-effect-membrane">6.2 The constitutional
+effect membrane</h3>
+<p>The pattern is:</p>
+<pre class="text"><code>APPLICATION LOGIC
+
+PROPOSED OPERATION
+
+TYPED EFFECT ADAPTER
+
+CONSTITUTIONAL ADJUDICATION
+
+ADMITTED REALIZATION
+
+EXECUTOR
+
+ACTUAL EFFECT
+
+RECEIPT / WITNESS</code></pre>
+<p>For example, a semantic operation:</p>
+<pre class="text"><code>SAVE_GAME</code></pre>
+<p>might have several admissible realizations in the CM:</p>
+<pre class="text"><code>classic filesystem path
+isolated namespace
+temporary diagnostic namespace
+simulated/no-write
+refusal</code></pre>
+<p>CM1 establishes the mandatorily admissible set; CM2 ranks or filters
+it under declared preferences; the current IC then binds the selected
+slice.</p>
+<p>A classic profile might preserve the legacy path.</p>
+<p>An isolated profile might substitute a governed namespace.</p>
+<p>A diagnostic profile might select the same write while increasing
+witness capture.</p>
+<p>A read-only profile may negate the write.</p>
+<p>The operation remains semantically recognizable.</p>
+<p>Its realized effect is constitution-dependent.</p>
+<h3 id="runtime-traversal-of-the-configuration-manifold">6.3 Runtime
+traversal of the Configuration Manifold</h3>
+<p>Suppose operation (O) admits realization set:</p>
+<p><span
+class="math display"><em>R</em>(<em>O</em>) = <em>r</em><sub>1</sub>, <em>r</em><sub>2</sub>, …, <em>r</em><sub><em>n</em></sub>.</span></p>
+<p>The IC constrains that set:</p>
+<p><span
+class="math display"><em>R</em><sub><em>I</em><em>C</em></sub>(<em>O</em>) ⊆ <em>R</em>(<em>O</em>).</span></p>
+<p>Current evidence, authority, environment, and jurisdiction may
+further restrict it. Let those constraints induce admissible subsets
+(R_A), (R_E), and (R_J). Then:</p>
+<p><span
+class="math display"><em>R</em><sub><em>I</em><em>C</em></sub><sup>*</sup>(<em>O</em>) = <em>R</em><sub><em>I</em><em>C</em></sub>(<em>O</em>) ∩ <em>R</em><sub><em>A</em></sub> ∩ <em>R</em><sub><em>E</em></sub> ∩ <em>R</em><sub><em>J</em></sub>.</span></p>
+<p>Execution becomes a local dynatological traversal:</p>
+<pre class="text"><code>operation proposed
+
+lawful realization possibilities
+
+instance selection
+
+current authority/evidence constraints
+
+selected realization or refusal
+
+actual effect</code></pre>
+<p>This creates a direct bridge among the Configuration Manifold,
+Instance Constitution, Dynatology, and runtime execution.</p>
+<h3 id="behavioral-overlays-over-legacy-software">6.4 Behavioral
+overlays over legacy software</h3>
+<p>The significance for legacy systems is considerable.</p>
+<p>Suppose the original behavior graph is:</p>
+<p><span
+class="math display"><em>G</em> = (<em>V</em>, <em>E</em>).</span></p>
+<p>Instead of rewriting all nodes and control logic, consequential edges
+(e_i) can be routed through constitutional transformation:</p>
+<p><span
+class="math display"><em>e</em><sub><em>i</em></sub> → <em>C</em>(<em>e</em><sub><em>i</em></sub>),</span></p>
+<p>where:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C(e_i) \in \{&amp;e_i, \varnothing, e_i', defer(e_i), simulate(e_i), \\
+&amp;sandbox(e_i)\}
+\end{aligned}.
+$$</span></p>
+<p>The constitutionally realized graph becomes:</p>
+<p><span
+class="math display"><em>G</em><sub><em>C</em></sub>.</span></p>
+<p>Much of the original program can remain structurally intact.</p>
+<p>This creates a <strong>constitutional behavioral
+overlay</strong>.</p>
+<p>The architecture can alter consequential behavior without requiring
+every upstream domain decision to be rewritten.</p>
+<h3 id="capability-grants-as-effect-choke-points">6.5 Capability grants
+as effect choke points</h3>
+<p>A legacy migration may begin with conditional wrappers around
+consequential operations, but a mature architecture should avoid
+scattering arbitrary governance conditionals through domain logic.</p>
+<p>A stronger structure is:</p>
+<pre class="text"><code>DOMAIN CALL
+
+TYPED EFFECT ADAPTER
+
+CAPABILITY REQUEST
+
+UGK / GOORRT
+
+RECEIPTED DISPOSITION
+
+EXECUTOR</code></pre>
+<p>This separates the semantic operation from the mechanism through
+which authority over its realization is granted.</p>
+<p>The effect adapter can expose:</p>
+<ul>
+<li>operation identity;</li>
+<li>target object;</li>
+<li>requested realization;</li>
+<li>relevant IC state;</li>
+<li>available evidence;</li>
+<li>authority presented;</li>
+<li>expected effect class.</li>
+</ul>
+<p>The governor can then preserve, substitute, constrain, defer,
+simulate, or refuse the effect without forcing the original application
+logic to understand the full governance substrate.</p>
+<h3 id="proposal-capability-is-not-effect-capability">6.6 Proposal
+capability is not effect capability</h3>
+<p>This has direct implications for agentic systems.</p>
+<p>A generative agent may be allowed broad proposal capability without
+receiving equivalent power to act.</p>
+<p>Thus:</p>
+<p><span class="math display">$$
+\boxed{
+\mathrm{proposal\ capability}
+\neq
+\mathrm{effect\ capability}
+}
+$$</span></p>
+<p>The agent may propose:</p>
+<ul>
+<li>a file write;</li>
+<li>process launch;</li>
+<li>network request;</li>
+<li>hardware mutation;</li>
+<li>release emission;</li>
+<li>deployment action.</li>
+</ul>
+<p>The constitutional layer separately determines whether and how that
+proposal can be realized.</p>
+<p>Exploration can remain broad.</p>
+<p>Consequence can remain bounded.</p>
+<hr />
+<h2 id="receipts-causal-observability-and-development-evidence">7.
+Receipts, Causal Observability, and Development Evidence</h2>
+<h3 id="effect-boundaries-become-observation-boundaries">7.1 Effect
+boundaries become observation boundaries</h3>
+<p>Once consequential operations cross explicit boundaries, those
+boundaries become natural witness points.</p>
+<p>An effect receipt may record:</p>
+<pre class="text"><code>subject
+operation proposed
+originating component
+target object
+Instance Constitution
+relevant configuration
+available evidence
+authority presented
+court / GOORRT finding
+constitutional disposition
+requested realization
+admitted realization
+executor result
+post-effect witness
+correspondence status</code></pre>
+<p>This changes debugging.</p>
+<p>Instead of:</p>
+<blockquote>
+<p>Something wrote this file.</p>
+</blockquote>
+<p>the system may reconstruct:</p>
+<pre class="text"><code>operation:
+  SAVE_GAME
+
+requested realization:
+  legacy path
+
+disposition:
+  SUBSTITUTE
+
+admitted realization:
+  isolated namespace
+
+executor:
+  success
+
+post-effect witness:
+  subsequent resolver consumed same namespace</code></pre>
+<p>The governance membrane becomes a causal observatory.</p>
+<h3 id="realization-chain-probes">7.2 Realization-chain probes</h3>
+<p>This is especially important when a configuration is generated
+successfully but not consumed by runtime behavior.</p>
+<p>Suppose:</p>
+<pre class="text"><code>requested:
+  readable_serif
+
+generated config:
+  readable_serif
+
+configuration write:
+  PASS</code></pre>
+<p>A conventional workflow may overcompress this to:</p>
+<pre class="text"><code>FONT_ACTIVE = true</code></pre>
+<p>A constitutionally synchronized realization chain can instead
+preserve:</p>
+<pre class="text"><code>FONT_CONFIGURATION_REALIZED = true
+FONT_RUNTIME_CONSUMPTION = NOT_ESTABLISHED
+FONT_RENDERED_EFFECT = NOT_ESTABLISHED</code></pre>
+<p>The architecture distinguishes:</p>
+<pre class="text"><code>requested
+configured
+consumed
+executed
+observed
+established</code></pre>
+<p>This is a practical example of a representational reasoning gain.</p>
+<h3 id="receipts-do-not-prove-themselves">7.3 Receipts do not prove
+themselves</h3>
+<p>Receipt production must not be confused with correctness.</p>
+<p>A receipt can establish that a governed component recorded a
+disposition.</p>
+<p>It does not, by itself, establish that:</p>
+<ul>
+<li>the recorder observed reality correctly;</li>
+<li>the executor obeyed the disposition;</li>
+<li>the target effect occurred;</li>
+<li>the evidence route was independent;</li>
+<li>the subject has standing.</li>
+</ul>
+<p>Thus:</p>
+<p><span class="math display">receipt ≠ proof of correctness.</span></p>
+<p>Receipts become powerful when combined with independent or orthogonal
+witnesses and correspondence courts.</p>
+<hr />
+<h2 id="development-cases">8. Development Cases</h2>
+<p>The following episodes are reported at explicitly different
+evidentiary strengths. This distinction is necessary because a paper
+about subject-bound evidence would undermine itself if all development
+anecdotes were narrated at one undifferentiated epistemic level.</p>
+<h3 id="environmental-safety-versus-realization-fidelity">8.1
+Environmental safety versus realization fidelity</h3>
+<p>A donor archive was extracted using a safer archive-extraction
+mechanism.</p>
+<p>The environment normalized file permissions.</p>
+<p>A read-only Grundnorm self-check moved from 5/5 to 4/5.</p>
+<p>The relevant constraints were:</p>
+<p><span class="math display"><em>A</em> = archive extraction must
+remain structurally safe</span></p>
+<p><span class="math display"><em>B</em> = donor realization must
+correspond</span></p>
+<p><span class="math display"><em>C</em> = Grundnorm must remain
+read-only</span></p>
+<p><span class="math display"><em>D</em> = court may not be weakened
+merely to obtain PASS.</span></p>
+<p>The new environmental fact was:</p>
+<p><span class="math display"><em>E</em> = safe extraction modified
+permission semantics.</span></p>
+<p>No bespoke rule had said:</p>
+<blockquote>
+<p>Restore permissions after safe extraction.</p>
+</blockquote>
+<p>Instead, the composed constraints excluded several apparent
+fixes.</p>
+<p>Ignoring the permission drift violated realization fidelity.</p>
+<p>Weakening the self-check violated the court constraint.</p>
+<p>Abandoning structural extraction safety weakened the custody
+constraint.</p>
+<p>The remaining solution region was:</p>
+<pre class="text"><code>validate archive path/link safety
+
+establish safe custody
+
+preserve semantically significant donor metadata
+
+rerun unchanged court
+
+5/5</code></pre>
+<p>This is an example of compositional constraints narrowing the
+realization space.</p>
+<h4 id="evidentiary-status">Evidentiary status</h4>
+<p>This episode is author-reported from the development record. It is
+included for its compositional structure and is not presented here as
+independently established evidence.</p>
+<hr />
+<h3 id="reuse-is-not-materialization">8.2 Reuse is not
+materialization</h3>
+<p>A repair path identified a previously established artifact as
+reusable.</p>
+<p>The convenient implementation copied that artifact into the current
+workspace inside the reuse operator.</p>
+<p>Functionally, the correct bytes appeared.</p>
+<p>Constitutionally, the operation decomposition was wrong.</p>
+<p>The reuse decision meant:</p>
+<blockquote>
+<p>This receipt-bound identity remains admissible for reuse.</p>
+</blockquote>
+<p>Materialization meant:</p>
+<blockquote>
+<p>Write concrete bytes into a local path.</p>
+</blockquote>
+<p>Assembly meant:</p>
+<blockquote>
+<p>Consume those bytes within an authorized integration operation.</p>
+</blockquote>
+<p>The naive implementation produced:</p>
+<pre class="text"><code>REUSE DECISION
+
+hidden write</code></pre>
+<p>making a nominal skip path effectful.</p>
+<p>The corrected decomposition was:</p>
+<pre class="text"><code>REUSE DECISION
+  effect = NONE
+
+AUTHORIZED ASSEMBLY
+
+MATERIALIZATION
+  verify source receipt
+  verify expected digest
+  treat local path as untrusted cache
+  rematerialize if missing/tampered
+  reverify result
+
+ASSEMBLY RECEIPT</code></pre>
+<p>A hostile local-copy mutation was then handled by restoring exact
+receipt-bound bytes rather than trusting remembered path identity.</p>
+<p>The resulting non-collapse rules are:</p>
+<p><span class="math display">evidence reuse ≠ effect reuse</span></p>
+<p><span class="math display">identity reuse ≠ path trust</span></p>
+<p><span class="math display">skip ≠ write.</span></p>
+<h4 id="evidentiary-status-1">Evidentiary status</h4>
+<p>The decomposition is preserved in the governed construction path of
+the reference implementation. Surrounding verification was externally
+replayed, while the particular hostile-tampering fixture described here
+was not independently re-executed by that reviewer. The status is
+therefore artifact-preserved and partially externally replayed.</p>
+<hr />
+<h3 id="evidence-belongs-to-the-subject">8.3 Evidence belongs to the
+subject</h3>
+<p>Agentic sessions are vulnerable to the reasoning shortcut:</p>
+<blockquote>
+<p>We proved that already.</p>
+</blockquote>
+<p>ACG instead binds verification to an exact subject commitment:</p>
+<p><span
+class="math display"><em>R</em><sub><em>S</em></sub> = <em>H</em>(<em>S</em>)</span></p>
+<p>and plan commitment:</p>
+<p><span
+class="math display"><em>R</em><sub><em>P</em></sub> = <em>H</em>(<em>P</em>).</span></p>
+<p>If a source or model change produces:</p>
+<p><span
+class="math display"><em>R</em><sub><em>S</em><sub>1</sub></sub> ≠ <em>R</em><sub><em>S</em><sub>2</sub></sub>,</span></p>
+<p>previous evidence cannot silently certify the new subject.</p>
+<p>In a development episode, a source change invalidated the prior
+subject root. Earlier leaf evidence was not carried forward merely
+because it had once passed. The verification DAG was re-executed under
+the new subject and plan.</p>
+<p>The principle is:</p>
+<blockquote>
+<p><strong>Evidence belongs to a committed semantic subject, not to the
+agent’s memory that something similar was previously
+verified.</strong></p>
+</blockquote>
+<h4 id="evidentiary-status-2">Evidentiary status</h4>
+<p>Subject-bound evidence invalidation has been repeatedly exercised in
+the release lineage and externally replayed. External reviewer
+provenance can itself be typed separately from proof contents; replay by
+a distinct host does not automatically establish reviewer
+independence.</p>
+<hr />
+<h3 id="the-verifier-that-testifies-to-its-own-supersession">8.4 The
+verifier that testifies to its own supersession</h3>
+<p>Repositories accumulate historical verification tooling.</p>
+<p>Deleting old tools destroys provenance.</p>
+<p>Leaving them looking current creates orientation hazards.</p>
+<p>One historical successor gate, when executed on a later generation,
+initially produced a misleading refusal.</p>
+<p>The repair was not deletion.</p>
+<p>The historical tool was changed so that on the newer subject it
+returned:</p>
+<pre class="text"><code>HISTORICAL_SUPERSEDED
+pass = true
+authority = NONE
+standing = NONE</code></pre>
+<p>and routed the caller toward the current verifier.</p>
+<p>The historical mechanism therefore remained reproducible without
+masquerading as current jurisdiction.</p>
+<h4 id="evidentiary-status-3">Evidentiary status</h4>
+<p>The problem was first identified outside the system’s own immediate
+review path and then incorporated into the corrected release surface.
+Among the cases reported here, this provides the strongest example of an
+externally originated architectural finding.</p>
+<hr />
+<h2 id="agentic-development-as-governed-search">9. Agentic Development
+as Governed Search</h2>
+<p>The architecture implies a division of computational
+responsibility.</p>
+<h3 id="generative-agent">9.1 Generative agent</h3>
+<p>The agent excels at:</p>
+<ul>
+<li>hypothesis formation;</li>
+<li>code synthesis;</li>
+<li>architecture search;</li>
+<li>debugging;</li>
+<li>analogical transfer;</li>
+<li>candidate repair generation.</li>
+</ul>
+<h3 id="semantic-compiler">9.2 Semantic compiler</h3>
+<p>The semantic layer:</p>
+<ul>
+<li>types the subject;</li>
+<li>compiles obligations;</li>
+<li>exposes model/realization distinctions;</li>
+<li>identifies applicable courts;</li>
+<li>constrains transitions;</li>
+<li>maps operations into admissible realization spaces.</li>
+</ul>
+<h3 id="evidence-mechanisms">9.3 Evidence mechanisms</h3>
+<p>Evidence systems:</p>
+<ul>
+<li>run witnesses;</li>
+<li>bind hashes;</li>
+<li>capture observations;</li>
+<li>preserve provenance;</li>
+<li>report uncertainty.</li>
+</ul>
+<h3 id="courts">9.4 Courts</h3>
+<p>Courts:</p>
+<ul>
+<li>adjudicate correspondence;</li>
+<li>preserve typed dispositions;</li>
+<li>reject inadmissible claim migration;</li>
+<li>test effect correspondence;</li>
+<li>identify unresolved obligations.</li>
+</ul>
+<h3 id="authority-and-execution">9.5 Authority and execution</h3>
+<p>Authority determines which consequential transitions may proceed.</p>
+<p>The executor performs only the admitted realization.</p>
+<p>The resulting architecture is:</p>
+<pre class="text"><code>AGENT
+  proposes / searches
+
+SEMANTIC REPRESENTATION
+  structures the problem
+
+DETERMINISTIC CONSTRAINTS
+  narrow admissible possibilities
+
+EVIDENCE
+  grounds observations
+
+COURTS
+  adjudicate
+
+AUTHORITY
+  permits / constrains / refuses
+
+EXECUTOR
+  effects
+
+RECEIPTS
+  preserve causality and lineage</code></pre>
+<p>The language model remains important.</p>
+<p>It is not made the final arbiter merely because it is capable of
+proposing solutions.</p>
+<hr />
+<h2 id="a-new-software-development-process-model">10. A New
+Software-Development Process Model</h2>
+<p>The conventional project model may be simplified as:</p>
+<pre class="text"><code>requirements
+source
+tests
+build
+documentation
+artifact</code></pre>
+<p>The constitutionally synchronized project becomes:</p>
+<pre class="text"><code>SPECIFICATION
+
+CONFIGURATION MANIFOLD 1
+
+CONFIGURATION MANIFOLD 2
+
+INSTANCE CONSTITUTION / CONFIGURATION
+
+MODELED OPERATIONS
+
+REALIZATION OBLIGATIONS
+
+IMPLEMENTATION
+
+PROPOSED EFFECTS
+
+CONSTITUTIONAL EFFECT INTERPOSITION
+
+ACTUAL EFFECTS
+
+EVIDENCE / RECEIPTS
+
+COURTS
+
+EPISTEMIC / RELIANCE STATE
+
+AUTHORITY / STANDING</code></pre>
+<p>with deterministic projections available alongside the governing
+semantic source.</p>
+<p>The unit of development is therefore not merely source code.</p>
+<p>It is a <strong>constitutionally synchronized semantic and effect
+state</strong>.</p>
+<p>The corresponding process progression is:</p>
+<h3 id="cicd">CI/CD</h3>
+<pre class="text"><code>change
+-&gt; build
+-&gt; test
+-&gt; package
+-&gt; deploy</code></pre>
+<h4 id="acg">ACG</h4>
+<pre class="text"><code>proposal
+-&gt; model
+-&gt; locate admissible possibility
+-&gt; select instance configuration
+-&gt; realize
+-&gt; propose effect
+-&gt; adjudicate realization
+-&gt; execute
+-&gt; witness
+-&gt; establish correspondence
+-&gt; receipt
+-&gt; establish permitted standing
+-&gt; project</code></pre>
+<p>CI/CD remains inside this architecture.</p>
+<p>The enlargement can be described as:</p>
+<blockquote>
+<p><strong>Continuous constitutionalization and adjudication of governed
+change.</strong></p>
+</blockquote>
+<p>The progression is:</p>
+<pre class="text"><code>tests become infrastructure
+
+courts become infrastructure
+
+correspondence becomes infrastructure
+
+effect governance becomes infrastructure
+
+causal observability becomes infrastructure
+
+documentation becomes deterministic projection</code></pre>
+<hr />
+<h2 id="related-work-and-ancestry">11. Related Work and Ancestry</h2>
+<p>The following comparisons are intended to narrow the proposed
+contribution rather than inflate novelty. Surface resemblance is not
+validation; neighboring traditions often solve portions of the same
+problem with greater maturity or formal rigor.</p>
+<h3 id="continuous-integration-and-delivery">11.1 Continuous integration
+and delivery</h3>
+<p><strong>Resemblance.</strong> Both make verification an automatic
+consequence of change rather than an optional activity (Fowler, 2006;
+Duvall, Matyas, and Glover, 2007; Humble and Farley, 2010).</p>
+<p><strong>Distinction.</strong> Conventional CI/CD principally
+orchestrates predicates over builds and artifacts. ACG adds a
+representational layer in which selected verifications are bound to
+subjects, frames, evidence classes, jurisdictions, and authority
+consequences.</p>
+<p><strong>Misuse prevented.</strong> Treating a green pipeline as a
+complete epistemic position.</p>
+<hr />
+<h3 id="model-driven-engineering">11.2 Model-driven engineering</h3>
+<p><strong>Resemblance.</strong> Model-driven engineering has long
+treated models as central engineering artifacts and has explored
+generation, refinement, synchronization, and bidirectional relationships
+among representations.</p>
+<p><strong>Distinction.</strong> The relevant divergence is not that MDE
+lacks synchronization. Many MDE traditions address synchronization
+explicitly. The narrower ACG claim is that neither model primacy nor
+correctness of a transformation is itself sufficient to establish
+constitutional authority, evidentiary standing, or present realization
+correspondence. A model may guide or generate implementation, but claims
+about the current realized subject remain separately adjudicable.</p>
+<p><strong>Misuse prevented.</strong> Treating correct projection from a
+model as proof that the current runtime corresponds, or treating model
+primacy as constitutional authority.</p>
+<hr />
+<h3 id="software-product-lines-and-variability-modeling">11.3 Software
+product lines and variability modeling</h3>
+<p><strong>Resemblance.</strong> Feature and variability models describe
+admissible configuration spaces with dependencies, exclusions, and
+alternative selections. Dynamic software product lines also support
+runtime configuration and reconfiguration.</p>
+<p><strong>Distinction.</strong> Runtime variability is therefore not
+the distinguishing contribution. The ACG-specific addition is treating
+the concrete Instance Constitution as a provenance-bearing,
+authority-sensitive commitment whose transitions may themselves require
+evidence, jurisdiction, receipts, and adjudication. Existence of a
+variant in configuration space does not imply selection by the current
+instance.</p>
+<p><strong>Misuse prevented.</strong> Confusing “available
+configuration” with “selected constitutional state.”</p>
+<hr />
+<h3 id="policy-as-code-and-admission-control">11.4 Policy as code and
+admission control</h3>
+<p><strong>Resemblance.</strong> Policy engines and admission
+controllers externalize executable rules evaluated around consequential
+requests. Some admission systems support mutation rather than simple
+binary acceptance.</p>
+<p><strong>Distinction.</strong> Mutation itself is therefore not novel.
+The ACG-specific structure is the explicit separation and later
+correspondence checking of:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{requested\ operation} \\
+&amp;\rightarrow \mathrm{admitted\ realization} \\
+&amp;\rightarrow \mathrm{actual\ effect} \\
+&amp;\rightarrow \mathrm{evidence}
+\end{aligned}.
+$$</span></p>
+<p>The architecture asks not only how a request should be changed before
+admission, but what realization was constitutionally selected, what the
+executor subsequently did, and what evidence establishes correspondence
+between the two.</p>
+<p><strong>Misuse prevented.</strong> Treating request mutation as
+equivalent to effect correspondence.</p>
+<hr />
+<h3
+id="reference-monitors-capabilities-effect-handlers-and-interposition">11.5
+Reference monitors, capabilities, effect handlers, and
+interposition</h3>
+<p><strong>Resemblance.</strong> Reference monitors, capability systems,
+security kernels, system-call mediation, aspect-oriented programming,
+and algebraic effect handlers all demonstrate the power of interposing
+behavior at consequential boundaries (Saltzer and Schroeder, 1975).</p>
+<p><strong>Distinction.</strong> These traditions are not
+authority-neutral; many are explicitly about authority. The narrower
+difference is that they generally do not combine mediation with the
+complete ACG tuple of exact-subject binding, constitutional frame,
+evidence admissibility, claim jurisdiction, correspondence receipts,
+lineage, and standing. Conversely, execution monitors can enforce only
+certain classes of properties, a limitation inherited by any
+constitutional effect membrane (Schneider, 2000).</p>
+<p><strong>Misuse prevented.</strong> Treating interception alone as
+constitutional governance or assuming an effect boundary can enforce
+arbitrary semantic properties.</p>
+<hr />
+<h3 id="formal-methods">11.6 Formal methods</h3>
+<p><strong>Resemblance.</strong> Formal specifications, model checkers,
+and SMT solvers constrain admissible states and prove properties with
+rigor far beyond the informal equations used in this paper (Lamport,
+2002; Clarke et al., 2018; de Moura and Bjrner, 2008). Production use
+demonstrates that these methods are not restricted to toy systems
+(Newcombe et al., 2015).</p>
+<p><strong>Distinction.</strong> A verified model does not necessarily
+establish that a currently deployed implementation corresponds to that
+model, that the evidence belongs to the exact current subject, or that a
+successful proof confers authority for a consequential transition. ACG
+treats formal proof as potentially powerful evidence whose admissibility
+and jurisdiction remain typed.</p>
+<p><strong>Misuse prevented.</strong> Treating formalization itself as a
+promotion of claim standing.</p>
+<hr />
+<h3 id="testing-theory-and-the-oracle-problem">11.7 Testing theory and
+the oracle problem</h3>
+<p>Testing cannot solve the absence of a reliable oracle merely by
+increasing test volume (Weyuker, 1982).</p>
+<p>Courts do not solve this either.</p>
+<p>They type the limitation.</p>
+<p>Where a proposition cannot be established,
+<code>NOT_ESTABLISHED</code> is a legitimate disposition rather than
+forced PASS or FAIL.</p>
+<p><strong>Misuse prevented.</strong> Treating absence of a detected
+failure as evidence of correctness.</p>
+<hr />
+<h3 id="systems-safety">11.8 Systems safety</h3>
+<p>Systems safety treats accidents as failures of control across
+interacting sociotechnical structures rather than isolated component
+defects (Leveson, 2011).</p>
+<p>The effect membrane resembles a control boundary in that sense.</p>
+<p>ACG is not itself a safety case, however. Its primary concern is
+epistemic, constitutional, and authority-preserving development
+control.</p>
+<p><strong>Misuse prevented.</strong> Treating governed effects as
+sufficient hazard analysis.</p>
+<hr />
+<h2 id="limitations">12. Limitations</h2>
+<h3 id="model-error">12.1 Model error</h3>
+<p>A deterministic architecture can enforce a bad model perfectly.</p>
+<p>Constitutional rigor cannot substitute for criticism of the
+Specification itself.</p>
+<h3 id="representation-multiplication">12.2 Representation
+multiplication</h3>
+<p>Additional projections can produce reasoning gains but also
+complexity.</p>
+<p>Each projection should earn its existence by generating distinctions
+that matter.</p>
+<p>The CM1/CM2/IC split is explicitly subject to this requirement.</p>
+<h3 id="court-proliferation">12.3 Court proliferation</h3>
+<p>Not every test should become a court.</p>
+<p>Constitutional typing should be proportional to semantic and
+governance significance.</p>
+<h3 id="effect-interposition-proliferation">12.4 Effect-interposition
+proliferation</h3>
+<p>Not every function call should become a governed effect.</p>
+<p>The architecture should identify consequential semantic boundaries
+rather than constitutionalize ordinary computation.</p>
+<h3 id="false-formal-confidence">12.5 False formal confidence</h3>
+<p>Hashes establish identity, not truth.</p>
+<p>Receipts establish recorded transitions, not necessarily
+correctness.</p>
+<p>Courts establish only the propositions within their actual
+jurisdiction and evidence topology.</p>
+<p>Rendered mathematical notation likewise does not make an argument
+valid, but malformed rendering can destroy the intended semantics of a
+valid argument. Representation integrity and argument validity are
+distinct obligations.</p>
+<h3 id="evidence-quality">12.6 Evidence quality</h3>
+<p>Software often offers unusually exact evidence:</p>
+<ul>
+<li>byte identity;</li>
+<li>deterministic replay;</li>
+<li>precise hashes;</li>
+<li>reproducible execution.</li>
+</ul>
+<p>Other domains may rely on incomplete, probabilistic, contested, or
+human evidence.</p>
+<p>The architecture must preserve uncertainty rather than fabricate
+precision.</p>
+<h3 id="optimization-against-courts">12.7 Optimization against
+courts</h3>
+<p>Agents may learn to satisfy visible predicates without satisfying
+intended semantics.</p>
+<p>Hostile cases, anti-vacuity checks, correspondence witnesses, and
+independent evidence remain necessary.</p>
+<h3 id="governor-correctness">12.8 Governor correctness</h3>
+<p>An effect governor is itself a high-leverage implementation.</p>
+<p>Errors in operation typing, capability mapping, realization
+selection, or executor binding can cause consequential failures.</p>
+<p>The governance layer therefore requires the same constitutional
+synchronization it imposes elsewhere.</p>
+<h3 id="self-ratification">12.9 Self-ratification</h3>
+<p>A governance system cannot simply declare its own legitimacy.</p>
+<p>A court running inside the subject, a projection explaining the
+subject, or a governor receipting its own decision may contribute
+evidence, but subject-controlled evidence cannot automatically become
+sufficient for protected standing.</p>
+<p>This paper depends on that constraint but does not attempt to solve
+the full reflexive-legitimacy problem.</p>
+<hr />
+<h2 id="research-program">13. Research Program</h2>
+<p>The architecture produces several testable hypotheses.</p>
+<h3 id="h1-courts-reduce-unsupported-completion-claims">H1 – Courts
+reduce unsupported completion claims</h3>
+<p>Agents operating with constitutionally typed verification will make
+fewer unsupported “done” claims than agents operating with conventional
+test suites alone.</p>
+<h4 id="h2-cm1cm2ic-improves-defect-localization">H2 – CM1/CM2/IC
+improves defect localization</h4>
+<p>Agents given P/S/CM1/CM2/IC/IR/E/R representations will more
+accurately distinguish:</p>
+<ul>
+<li>missing possibility;</li>
+<li>malformed configuration space;</li>
+<li>wrong instance selection;</li>
+<li>implementation defect.</li>
+</ul>
+<h4 id="h3-co-projection-produces-new-actionable-distinctions">H3 –
+Co-projection produces new actionable distinctions</h4>
+<p>Holding observed system state constant, a richer projection nexus
+will enable derivation of contradictions or repair classifications
+unavailable under a baseline representation without equivalent added
+structure.</p>
+<h4 id="h4-deterministic-projection-reduces-documentation-drift">H4 –
+Deterministic projection reduces documentation drift</h4>
+<p>Generated source-bound documentation will disagree less often with
+verified semantic state than manually maintained documentation.</p>
+<h4 id="h5-subject-bound-evidence-reduces-stale-carry-forward">H5 –
+Subject-bound evidence reduces stale carry-forward</h4>
+<p>Content-addressed subject and plan commitments will reduce reuse of
+verification conclusions across materially changed implementations.</p>
+<h4 id="h6-governed-constraint-improves-agent-search">H6 – Governed
+constraint improves agent search</h4>
+<p>Agents operating inside deterministic constitutional constraints will
+converge on solutions satisfying more independent obligations than
+equivalent agents receiving conventional tests alone.</p>
+<h4
+id="h7-effect-interposition-reduces-hidden-consequential-behavior">H7 –
+Effect interposition reduces hidden consequential behavior</h4>
+<p>Systems in which consequential effects cross typed governance
+boundaries will exhibit fewer unmodeled writes, launches, persistent
+mutations, and capability uses.</p>
+<h4 id="h8-causal-receipts-improve-fault-localization">H8 – Causal
+receipts improve fault localization</h4>
+<p>Receipt chains will reduce ambiguity in distinguishing requested,
+configured, admitted, executed, observed, and established behavior.</p>
+<h4 id="h9-behavioral-overlays-reduce-legacy-fork-divergence">H9 –
+Behavioral overlays reduce legacy-fork divergence</h4>
+<p>Legacy systems adapted through governed effect boundaries will
+preserve more upstream structure than equivalent systems modified
+through deep domain-logic rewrites.</p>
+<h4 id="h10-proposaleffect-separation-increases-safe-autonomy">H10 –
+Proposal/effect separation increases safe autonomy</h4>
+<p>Agents will be able to retain broader proposal capability without
+proportional increases in uncontrolled consequential authority.</p>
+<hr />
+<h2 id="experimental-design">14. Experimental Design</h2>
+<p>A useful ablation study would compare four agent conditions over
+equivalent repository tasks.</p>
+<h3 id="group-a-conventional-agent-ci">Group A – Conventional Agent +
+CI</h3>
+<p>Receives:</p>
+<ul>
+<li>repository;</li>
+<li>task;</li>
+<li>conventional test suite.</li>
+</ul>
+<h3 id="group-b-agent-courts">Group B – Agent + Courts</h3>
+<p>Additionally receives:</p>
+<ul>
+<li>court bindings;</li>
+<li>typed dispositions;</li>
+<li>subject/frame association.</li>
+</ul>
+<h3 id="group-c-agent-constitutional-projection-nexus">Group C – Agent +
+Constitutional Projection Nexus</h3>
+<p>Additionally receives:</p>
+<ul>
+<li>P/S/CM1/CM2/IC/IR/E/R representation;</li>
+<li>evidence topology;</li>
+<li>deterministic orientation;</li>
+<li>subject-bound verification plans.</li>
+</ul>
+<h3 id="group-d-projection-nexus-governed-effects">Group D – Projection
+Nexus + Governed Effects</h3>
+<p>Additionally operates through:</p>
+<ul>
+<li>typed effect adapters;</li>
+<li>constitutional realization selection;</li>
+<li>receipt-before-effect governance.</li>
+</ul>
+<p>Metrics can include:</p>
+<ul>
+<li>unsupported completion claims;</li>
+<li>repair classification accuracy;</li>
+<li>stale evidence reuse;</li>
+<li>hidden effects;</li>
+<li>court weakening attempts;</li>
+<li>unauthorized effects;</li>
+<li>requested-versus-actual-effect mismatch;</li>
+<li>iterations to valid realization;</li>
+<li>documentation drift;</li>
+<li>reviewer cold-boot reconstruction accuracy;</li>
+<li>novel contradictions discovered before human review;</li>
+<li>fault-localization time from receipt chains.</li>
+</ul>
+<p>The critical experimental question is not simply whether Group D
+performs better.</p>
+<p>It is <strong>which representational addition accounts for which
+capability gain</strong>.</p>
+<p>That is the purpose of the ablation ladder:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{Tests} \\
+&amp;\rightarrow \mathrm{Courts} \\
+&amp;\rightarrow \mathrm{Projection\ Nexus} \\
+&amp;\rightarrow \mathrm{Governed\ Effects}
+\end{aligned}.
+$$</span></p>
+<p>The design also permits a stronger test of the reasoning-capability
+definition from Section 4.3. For a fixed observable defect (X), one can
+ask which experimental groups can derive a required distinction (q), and
+whether that distinction changes the repair selected by the agent.</p>
+<hr />
+<h2 id="implications-beyond-software">15. Implications Beyond
+Software</h2>
+<p>The paper’s principal claims concern agentic software
+development.</p>
+<p>The underlying representation is more general.</p>
+<p>The sequence:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}
+$$</span></p>
+<p>and the distinctions among:</p>
+<ul>
+<li>evidence;</li>
+<li>admissibility;</li>
+<li>authority;</li>
+<li>effect;</li>
+<li>standing;</li>
+</ul>
+<p>can be projected into other domains.</p>
+<h3 id="construction">15.1 Construction</h3>
+<pre class="text"><code>Specification
+  engineering and code constraints
+
+CM
+  admissible project realizations
+
+IC
+  selected project/site constitution
+
+Operation
+  install / modify / inspect
+
+Implementation
+  actual physical work
+
+Evidence
+  measurements / photographs / inspections
+
+Courts
+  code / safety / scope / correspondence
+
+Authority
+  owner / engineer / inspector / foreman</code></pre>
+<h3 id="organizational-governance">15.2 Organizational governance</h3>
+<pre class="text"><code>Specification
+  charter / policy / budget rules
+
+CM
+  admissible organizational options
+
+IC
+  selected operating plan
+
+Operation
+  hire / spend / contract
+
+Implementation
+  actual commitment
+
+Evidence
+  records / financial observations
+
+Courts
+  compliance / authority / risk</code></pre>
+<h3 id="clinical-workflows">15.3 Clinical workflows</h3>
+<p>A similar non-collapse is immediately useful:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{observation} \\
+&amp;\neq \mathrm{diagnosis} \\
+&amp;\neq \mathrm{treatment\ selection} \\
+&amp;\neq \mathrm{authorization} \\
+&amp;\neq \mathrm{execution} \\
+&amp;\neq \mathrm{outcome}
+\end{aligned}.
+$$</span></p>
+<h3 id="legal-systems">15.4 Legal systems</h3>
+<p>Many of the terms are already native:</p>
+<ul>
+<li>jurisdiction;</li>
+<li>evidence;</li>
+<li>admissibility;</li>
+<li>authority;</li>
+<li>disposition;</li>
+<li>standing;</li>
+<li>execution.</li>
+</ul>
+<p>Software is attractive as the initial proving ground because its
+evidence can be unusually exact.</p>
+<p>Generalization to less deterministic domains requires more–not
+less–care around uncertainty.</p>
+<hr />
+<h2 id="discussion">16. Discussion</h2>
+<p>The transition from tests to courts can initially appear to be a
+testing innovation.</p>
+<p>It is better understood as one component of a larger change in the
+software-development process model.</p>
+<p>Five transformations interact:</p>
+<p><span class="math display">$$
+\boxed{
+\begin{aligned}
+\mathrm{CI/CD} &amp;: \mathrm{verification\ becomes\ infrastructure} \\
+\mathrm{ACG\ Courts} &amp;: \mathrm{adjudication\ becomes\
+infrastructure} \\
+\mathrm{Constitutional\ Synchronization} &amp;: \mathrm{correspondence\
+becomes\ infrastructure} \\
+\mathrm{Effect\ Interposition} &amp;: \mathrm{consequence\ becomes\
+governed\ infrastructure} \\
+\mathrm{Deterministic\ Projection} &amp;: \mathrm{explanation\ becomes\
+reproducible\ infrastructure}
+\end{aligned}
+}
+$$</span></p>
+<p>Ableman’s Razor supplies a typed representation boundary.</p>
+<p>The CM1/CM2/IC extension distinguishes available configuration from
+selected instance commitment.</p>
+<p>Dynatology describes the structure of possible continuation.</p>
+<p>Evidence grounds observations.</p>
+<p>Courts adjudicate claims and correspondence.</p>
+<p>Authority limits what may proceed.</p>
+<p>Effect boundaries separate proposed operations from realized
+consequences.</p>
+<p>Receipts preserve causal history.</p>
+<p>Deterministic projections make the same governed model legible to
+humans and agents.</p>
+<p>The result is not that the generative agent becomes omniscient.</p>
+<p>The result is that the agent operates inside a world with more
+machine-addressable distinctions.</p>
+<p>The constitutional substrate can tell an agent:</p>
+<ul>
+<li>the proposed fix violates another invariant;</li>
+<li>the required solution does not exist in the current
+Specification;</li>
+<li>the solution exists in the CM but was not selected by the IC;</li>
+<li>the implementation does not correspond to the selected
+configuration;</li>
+<li>a skip path contains a hidden effect;</li>
+<li>old evidence belongs to a previous subject;</li>
+<li>a generated configuration is not observed at runtime;</li>
+<li>a historical verifier lacks current jurisdiction;</li>
+<li>an operation is admissible only through a substituted
+realization;</li>
+<li>the executor performed an effect different from the admitted
+realization;</li>
+<li>the documentation projection is current even though realization
+correspondence is not established.</li>
+</ul>
+<p>These are not merely more facts.</p>
+<p>They are <strong>additional relations among facts</strong>.</p>
+<p>That is the central reasoning claim.</p>
+<p>The effect boundary sharpens the claim further. The same domain-level
+request may have multiple possible realizations. Constitutional
+reasoning can therefore operate not only over whether an action may
+occur but over <strong>which admissible manifestation of the operation
+may become real</strong>.</p>
+<p>That is a dynatological question, a configuration question, an
+authority question, and an implementation question simultaneously.</p>
+<p>The projection nexus makes those views composable.</p>
+<hr />
+<h2
+id="constitutional-development-and-assurance-object-model">Constitutional
+Development and Assurance Object Model</h2>
+<p>The completed P1 corpus gives ACG a bounded role: it is a
+<strong>constitutional software-development process and assurance
+model</strong> for agent-generated or agent-modified systems. It joins
+specification, configuration, adjudication, effect mediation, evidence,
+and revision without claiming that courts replace the larger testing,
+delivery, security, operations, or human-review estate.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Governed translation, lowering, semantic
+remainder, and staged effect.<br />
+<strong>ACG boundary:</strong> ACG applies those ideas to a development
+lifecycle and court-mediated assurance.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Records of reasoning, transitions, refusals,
+and observations.<br />
+<strong>ACG boundary:</strong> A receipt is an evidence carrier; it is
+not the court, verdict, effect, or standing.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Legitimacy Without
+Self-Ratification</em><br />
+<strong>Supplies:</strong> Independence limits on the strongest
+assurance claims.<br />
+<strong>ACG boundary:</strong> An agent, generator, or governor cannot
+establish its own highest standing by self-test.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>What Software Systems
+Actually Receipt, Govern, and Hide</em><br />
+<strong>Supplies:</strong> Analysis of visibility and governance gaps in
+ordinary software.<br />
+<strong>ACG boundary:</strong> ACG supplies a candidate process
+response, not proof that every gap is closed.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Universal Governance Kernel
+(UGK)</em><br />
+<strong>Supplies:</strong> A proposed reusable governance-kernel
+architecture.<br />
+<strong>ACG boundary:</strong> UGK may realize process components; ACG
+is the development and assurance model, not one implementation.</p></li>
+</ul>
+<p>The portable development case should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;proposal, subject, specification, CM1, CM2, IC, IR, \\
+&amp;courts, authority, effect\_path, evidence, standing, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>Here IC means Instance Constitution or Instance Configuration and
+realization-stage IR means Instance Realization or Implementation
+Realization. These stages remain distinct from Intermediate
+Representation uses such as Action IR or Workflow IR.</p>
+<p>The process can be summarized as<br />
+<code>propose -&gt; compile -&gt; adjudicate -&gt; admit -</code></p>
+<p><code>&gt; realize -&gt; observe -&gt; revise</code>, but each
+transition has a separate subject and outcome. A <strong>test</strong>
+generates an observation under a fixture. A <strong>verifier</strong>
+evaluates a declared property. A <strong>court</strong> applies a named
+adjudication profile to bound evidence. A <strong>gate</strong> mediates
+progression. A <strong>governor or effect membrane</strong> constrains
+an effect path. A <strong>receipt</strong> records an event or decision.
+A <strong>standing decision</strong> states what the assembled evidence
+currently warrants. None can silently substitute for another.</p>
+<p>Three terminal planes must remain separately reportable: the court’s
+verdict, the realized effect state, and the claim or publication
+standing. <code>PASS</code> does not prove that an effect occurred; a
+successful effect does not prove it was admissible; and either result
+may remain insufficient for a broad public claim. Unknown and partially
+observed effects require reconciliation rather than optimistic
+completion.</p>
+<p>The universal GSM can type <code>PROPOSES_CHANGE</code>,
+<code>COMPILED_UNDER</code>, <code>ADJUDICATED_BY</code>,<br />
+<code>OBSERVED_BY_TEST</code>, <code>VERIFIED_BY</code>,
+<code>GATED_BY</code>, <code>ADMITTED_UNDER</code>,
+<code>REALIZED_AS</code>,<br />
+<code>EFFECT_MEDIATED_BY</code>, <code>RECEIPTED_BY</code>,
+<code>HAS_ASSURANCE_STANDING</code>,<br />
+and <code>REVISED_BY</code>. These relations support comparison with
+CI/CD while preserving rather than erasing the ordinary delivery
+estate.</p>
+<p>This integration establishes four editorial commitments: adopt
+constitutional development and assurance model as ACG’s official corpus
+role; adopt the bound development-case object; enforce the
+test/verifier/court/gate/governor/receipt/standing non-collapse rule;
+and require separate reporting of verdict, effect, and public-claim
+standing.</p>
+<h2
+id="adversarial-assurance-lifecycle-and-custodied-remainder">Adversarial
+Assurance Lifecycle and Custodied Remainder</h2>
+<p>The fixed-seed comparison with the Governed Knowledge Loop, Work
+Custody, Semantic Fragmentation, and Constitutional Epistemology under
+adversarial pressure gives an ACG change case a wider assurance
+envelope:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;base, proposal, subject, custody, specification, CM1, \\
+&amp;CM2, IC, IR, fragmentation\_map, threat\_model, tests, \\
+&amp;courts, effects, evidence, standing, remainder, revision)
+\end{aligned}.
+$$</span></p>
+<p>GKL preserves the semantic lifecycle of the proposal and its
+successor. Work Custody assigns the next move for design, review,
+counterexample response, effect reconciliation, and rollback without
+conferring authority. Open obligations remain custodied after a court
+pass or successful build.</p>
+<p>Semantic Fragmentation reconstructs the operative constitution across
+configuration, fallback, authority, routing, resource, effect, evidence,
+and projection surfaces. The ACG assurance subject must include the
+discovered operative paths; adjudicating only the declared model can
+certify the wrong constitution.</p>
+<p>Adversarial semantic pressure tests formally compliant artifacts,
+receipts, refusals, witnesses, and projections for omission, drift,
+capture, replay, or strategic framing. The strongest ACG standing
+therefore depends on independent-enough observation and explicit
+residual risk, not simply more courts or internally consistent
+evidence.</p>
+<p>The universal GSM can type<br />
+<code>CUSTODIES_ASSURANCE_REMAINDER</code>,<br />
+<code>RECONSTRUCTS_OPERATIVE_ASSURANCE_SUBJECT</code>,
+<code>RED_TEAMS_CONSTITUTIONAL_ARTIFACT</code>,<br />
+<code>DETECTS_FORMAL_COMPLIANCE_ATTACK</code>,
+<code>RECONCILES_COURT_AND_EFFECT</code>,<br />
+<code>WITHHOLDS_PUBLIC_STANDING</code>, and<br />
+<code>REVISES_AFTER_ADVERSARIAL_FAILURE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the expanded assurance envelope; retain custody for unresolved
+post-verdict work; require operative-constitution reconstruction; and
+integrate adversarial semantic-pressure testing with residual-risk
+reporting.</p>
+<h2 id="corpus-integration-and-counterevidence">17. Corpus Integration
+and Counterevidence</h2>
+<h3 id="gmb-and-universal-gsm-placement">17.1 GMB and Universal GSM
+Placement</h3>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the author-confirmed <code>CCF -&gt; CMB -&gt; GMB</code> lineage.
+GMB can retain specifications, CM1 and CM2 members, preference
+constitutions, IC selections, IR bindings, observations, court
+definitions, evidence, receipts, effects, projections, standing, and
+revision lineage. It is not itself a court, governor, executor,
+authority source, or proof that the retained model corresponds to
+reality.</p>
+<p>The universal GSM should distinguish at least: change proposal, exact
+subject, specification, admissibility predicate, CM1 configuration,
+preference criterion, CM2 relation, IC selection, IR artifact or
+process, modeled operation, requested realization, admitted realization,
+authority grant, effect, observation, evidence item, verification,
+court, proposition, jurisdiction, disposition, receipt, standing claim,
+projection, lineage edge, counterevidence, and revision. High-value
+relations include <code>SPECIFIES</code>,<br />
+<code>ADMITS</code>, <code>PREFERS_UNDER</code>, <code>SELECTS</code>,
+<code>REALIZES</code>, <code>PROPOSES</code>,
+<code>AUTHORIZED_BY</code>,<br />
+<code>ADJUDICATED_BY</code>, <code>EXECUTED_AS</code>,
+<code>OBSERVED_AS</code>, <code>EVIDENCED_BY</code>,
+<code>PROJECTS</code>,<br />
+<code>COUNTEREVIDENCED_BY</code>, <code>INVALIDATES</code>, and
+<code>SUCCEEDS</code>.</p>
+<h3 id="direct-corpus-interfaces">17.2 Direct Corpus Interfaces</h3>
+<ul>
+<li><em>Ableman’s Razor</em> supplies the original claim-migration
+grammar; the expanded funnel is a later representational extension and
+does not silently rewrite that paper.</li>
+<li><em>Dynatology</em> supplies a general continuation-space
+vocabulary. ACG contributes one software-development governance profile
+rather than establishing a universal dynatological implementation.</li>
+<li><em>Admissibility Engineering</em> supplies constraint, refusal, and
+evidence discipline for CM1. CM2 adds an explicitly preference-sensitive
+selection layer.</li>
+<li><em>Reasoning by Way of Receipts</em> explains how receipted
+transitions can support reasoning without making receipts
+self-proving.</li>
+<li><em>The Three Hash Rule</em> separates state, admissibility, and
+meaning commitments; ACG courts must not collapse those questions into a
+green pipeline result.</li>
+<li><em>The Mechanics of Constitutional Enforcement</em> supplies the
+topology from declaration through effect; ACG applies that concern to
+the software-development lifecycle.</li>
+<li><em>The Constitutional Observability Platform</em> develops the
+observation and projection surfaces required to compare requested,
+admitted, executed, and observed effects.</li>
+<li><em>Model-First Legacy Migration</em> supplies the overlay and
+correspondence context for adapting legacy systems while preserving
+upstream structure.</li>
+<li><em>Semantic Fragmentation and Constitutional Structure</em>
+identifies the risk that law, implementation, evidence, and explanation
+disagree across surfaces.</li>
+<li>GOORRT provides an adjacent object-operation-realization grammar. It
+should be connected by typed mappings, not merged by shared realization
+vocabulary.</li>
+<li><em>Sovereign Software</em> supplies the inspectability,
+reconstruction, substitution, and provider-exit objectives that can
+inform CM2 without weakening CM1.</li>
+</ul>
+<p>These relations are comparison and dependency candidates, not
+author-approved identity mergers or mutual validation.</p>
+<h2 id="a-profiled-constitutional-assurance-lifecycle">A Profiled
+Constitutional Assurance Lifecycle</h2>
+<p>Fifteen retained downstream uses specialize ACG for quantitative
+systems, adversarial alternation, work custody, agent interfaces,
+communal systems, adversarial epistemology, open-source development,
+anti-self-ratification, enforcement, receipts, semantic fragmentation,
+Implementation Codices, knowledge mutation, and the Ball view. They
+confirm that ACG is a profiled development and assurance lifecycle. It
+does not replace ordinary CI/CD, every verifier with a court, semantic
+governance with software testing, or an effect authority with a
+verdict.</p>
+<p>The assurance case is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A^*= (&amp;change, subject\_generation, constitution, claim\_set, \\
+&amp;profile, ordinary\_tests, courts, oracles, \\
+&amp;attack\_surface, roles, effect\_path, evidence, verdict, \\
+&amp;promotion, rollback, remainder, revision)
+\end{aligned}.
+$$</span></p>
+<p>A profile must state the consequence class, constitutional questions,
+ordinary-test estate, court jurisdiction, defect and counterexample
+identity rules, oracle and trusted base, role independence, evidence
+topology, effect boundary, promotion authority, rollback or compensation
+route, and stopping criterion. Courts are warranted only where typed
+constitutional adjudication changes a decision that ordinary tests
+cannot adequately express. A clean court result means no retained
+counterexample was established within the declared surface; it does not
+prove completeness, truth, safety, independence, or permission to
+deploy.</p>
+<p>Verdict, promotion, execution, publication, and canonical standing
+remain different transitions. Each requires its own authority and
+receipt. The same actor or tool may occupy multiple roles only when the
+profile declares the collapse, evaluates the common-mode risk, and
+narrows the claim. Knowledge-base changes, public-space changes, and
+quantitative-model changes can reuse the lifecycle only through
+domain-specific profiles, competent reviewers, appropriate oracles, and
+explicit non-transfer of software-court standing.</p>
+<p>The universal GSM can type<br />
+<code>INSTANTIATES_ACG_PROFILE</code>,<br />
+<code>BINDS_COURT_TO_SUBJECT_GENERATION</code>,
+<code>RETAINS_ORDINARY_TEST_ESTATE</code>,<br />
+<code>DECLARES_COURT_JURISDICTION</code>,
+<code>SEPARATES_VERDICT_FROM_PROMOTION</code>,<br />
+<code>CHALLENGES_COMMON_MODE_ORACLE</code>,
+<code>PRESERVES_COUNTEREXAMPLE</code>, and<br />
+<code>DOES_NOT_SELF_RATIFY</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the profiled assurance case; require consequence,
+oracle, role, evidence, effect, and stopping fields; preserve the
+ordinary-test estate and bounded court subset; and prohibit verdicts
+from silently becoming promotion, execution, publication, or canonical
+decisions.</p>
+<h3 id="counterevidence-and-attack-surface">17.3 Counterevidence and
+Attack Surface</h3>
+<p>ACG is weakened, narrowed, or falsified where: (1) court typing adds
+no decision-relevant distinction beyond ordinary tests plus metadata;
+(2) the exact subject or constitutional frame can be spoofed; (3) test
+and court share the same defective oracle; (4) the court’s evidence
+topology omits the consequential effect; (5)
+<code>NOT_ESTABLISHED</code> is optimized into de facto approval; (6) an
+executor bypasses the effect membrane; (7) a governor is not
+tamper-resistant, completely mediated, or independently observable
+enough for the claim made; (8) CM1 omits a mandatory constraint; (9) CM2
+launders a rights or safety requirement into a compensable preference;
+(10) IC selection is stale, ambiguous, or not consumed at runtime; (11)
+IR behavior depends on hidden environment state; (12) receipts are
+authentic but incomplete or collusive; (13) deterministic projections
+faithfully reproduce a false model; (14) documentation generation hides
+uncertainty or contested meaning; (15) old evidence is carried to a
+changed subject; (16) concurrency, retry, partial failure, or
+compensation breaks the requested-admitted-actual chain; (17) court
+proliferation or effect interposition makes the system unusable; (18)
+agents learn the visible court surface while violating its purpose; (19)
+richer representations increase apparent derivability only by importing
+the answer or an equivalent oracle; or (20) the reported development
+cases cannot be reproduced from bound artifacts.</p>
+<p>The reasoning-capability hypothesis therefore requires a declared
+inference system, fixed observation and task, matched information
+access, an explicit baseline, correctness checks for the new conclusion,
+and accounting for added representation, construction, review, and
+runtime cost. Merely making proposition <span
+class="math inline"><em>q</em></span> syntactically expressible does not
+show that the system derives it correctly or usefully.</p>
+<h2 id="courts-are-a-constitutional-subset-of-verification">Courts Are a
+Constitutional Subset of Verification</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>ACG extends CI/CD by giving a constitutionally significant subset of
+verification explicit jurisdiction, authority, evidence, refusal, and
+effect consequences. Tests remain broader than courts. A court is not
+better merely because it is named constitutional; its law, oracle,
+subject, evidence, and consequences must be inspectable.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Court-proliferation attack.</strong> Every test becomes a
+court, increasing cost and obscuring constitutional significance.
+Admission requires a reasoned jurisdiction and consequence profile.</li>
+<li><strong>Oracle-capture attack.</strong> The court encodes the same
+mistaken assumptions as the builder. Independent challenges, alternate
+oracles, and retained counterexamples are required where stakes justify
+them.</li>
+<li><strong>Constitutional-drift attack.</strong> Law, projection, code,
+tests, and deployment diverge while each remains internally valid.
+Co-projection needs cross-artifact correspondence and successor
+receipts.</li>
+<li><strong>Self-ratification attack.</strong> A generator or governor
+changes the law that authorizes itself. Non-delegable amendment
+authority and external admission gates must remain outside the
+candidate’s claim.</li>
+<li><strong>Effect-bypass attack.</strong> A passing court is irrelevant
+because another route reaches the effect. Courts must bind to actual
+capability and effect boundaries.</li>
+<li><strong>Optimization-against-courts attack.</strong> Agents learn
+the evaluator rather than the intended obligation. Hidden assumptions,
+holdouts, mutation, and adversarial alternation expose specification
+debt.</li>
+<li><strong>False-formal-confidence attack.</strong> Typed artifacts and
+equations are treated as proof despite model error and unaudited
+remainder. Formality narrows claims; it does not erase premises.</li>
+<li><strong>Legacy-overlay attack.</strong> A behavioral overlay claims
+control while legacy paths, state, or privileges remain outside it. The
+overlay must declare coverage and bypass tests.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper defines ACG, the expanded realization funnel, a projection
+taxonomy, and ten testable hypotheses. Those hypotheses are a research
+agenda, not reported results. The development cases illustrate
+distinctions; they do not establish general productivity, safety, defect
+reduction, or reasoning-capability gain.</p>
+<p>Claims about CI/CD history, related fields, comparative outcomes, or
+applications beyond software require resolvable external sources and
+domain-specific review. Clinical, legal, construction, and
+organizational examples are portability questions, not validated
+deployments. No external research was added in this pass.</p>
+<h3 id="terminology-boundary">Terminology boundary</h3>
+<p>IC may mean Instance Constitution or Instance Configuration. In the
+realization funnel, IR may mean Instance Realization or Implementation
+Realization. Those interchangeable stage names remain distinct from
+Intermediate Representation in MCIR and other named representations.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public shift is from agents that generate code and hope tests are
+enough to agents that work inside a declared possibility space, preserve
+obligations across representations, encounter typed refusal before
+consequential effects, and leave evidence that can be contested.</p>
+<h2 id="conclusion">18. Conclusion</h2>
+<p>Continuous integration transformed software engineering by making
+tests part of the infrastructure of change.</p>
+<p>Ableman Constitutional Governance extends that transformation without
+replacing it.</p>
+<p>Within software, courts are a constitutionally typed subset of
+executable verification:</p>
+<p><span
+class="math display"><em>C</em><sub>software</sub> ⊆ <em>V</em><sub>executable</sub>.</span></p>
+<p>They bind selected predicates to an exact subject, constitutional
+frame, evidence topology, jurisdiction, authority relationship, and
+typed disposition.</p>
+<p>But courts alone are not the full architecture.</p>
+<p>Constitutional synchronization addresses the longer-standing
+separation among specification, configuration, implementation,
+verification, and documentation.</p>
+<p>The central representational sequence developed here is:</p>
+<p><span class="math display">$$
+\boxed{
+P \rightarrow S \rightarrow CM_1 \rightarrow CM_2 \rightarrow IC
+\rightarrow IR \rightarrow E \rightarrow R
+}
+$$</span></p>
+<p>Specification defines admissible semantic possibility.</p>
+<p>Configuration Manifold 1 represents the mandatory admissible
+configurations.</p>
+<p>Configuration Manifold 2 represents the preferred admissible
+configurations under declared criteria.</p>
+<p>The Instance Constitution / Instance Configuration binds the slice
+selected for this particular system.</p>
+<p>The Instance Realization / Implementation Realization makes that
+pathway concrete.</p>
+<p>Evidence then travels back through correspondence:</p>
+<p><span
+class="math display"><em>I</em> → <em>E</em> → <em>C</em><em>o</em><em>r</em><em>r</em>(<em>I</em><em>C</em>, <em>I</em>).</span></p>
+<p>Dynatology supplies the semantics of possible continuation through
+these spaces.</p>
+<p>The same representation extends to consequential execution.</p>
+<p>The application proposes an operation:</p>
+<p><span
+class="math display"><em>O</em><sub><em>r</em></sub>.</span></p>
+<p>The constitutional system selects an admitted realization:</p>
+<p><span class="math display">$$
+O_r
+\xrightarrow{\mathrm{ACG}}
+R_a.
+$$</span></p>
+<p>The executor performs an effect:</p>
+<p><span class="math display">$$
+R_a
+\xrightarrow{\mathrm{executor}}
+E_a.
+$$</span></p>
+<p>Evidence then closes the loop:</p>
+<p><span class="math display">$$
+E_a
+\xrightarrow{\mathrm{witness}}
+Evidence.
+$$</span></p>
+<p>This preserves a critical chain of non-collapse:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{intent} \\
+&amp;\neq \mathrm{operation} \\
+&amp;\neq \mathrm{admitted\ realization} \\
+&amp;\neq \mathrm{actual\ effect} \\
+&amp;\neq \mathrm{evidentiary\ claim} \\
+&amp;\neq \mathrm{standing}
+\end{aligned}.
+$$</span></p>
+<p>The effect membrane is therefore not merely a security check. Nor is
+mutation itself the novelty. Its significance lies in integrating
+realization selection with constitutional subject binding,
+correspondence, evidence, receipts, authority, and standing.</p>
+<p>Documentation then becomes another projection of this nexus rather
+than an independently maintained account of it.</p>
+<p>The project can regenerate:</p>
+<ul>
+<li>semantic explanations;</li>
+<li>configuration references;</li>
+<li>current-instance orientation;</li>
+<li>implementation codices;</li>
+<li>capability maps;</li>
+<li>operator documentation;</li>
+</ul>
+<p>from retained source representations.</p>
+<p>Those projections remain zero-authority and do not establish
+realization merely by being internally consistent.</p>
+<p>The deeper claim of this paper is therefore about
+<strong>representation and reasoning</strong>.</p>
+<p>A reasoning-capability gain occurs when a richer representation,
+without changing the underlying observation, enables derivation of a
+decision-relevant distinction, contradiction, obligation, or restriction
+unavailable to the baseline representation without equivalent added
+structure.</p>
+<p>The projection nexus supplies those distinctions.</p>
+<p>A continuation may be conceivable but not admissible.</p>
+<p>An admissible configuration may not be selected.</p>
+<p>A selected configuration may not be realized.</p>
+<p>A realization may occur without authorization.</p>
+<p>An operation may be authorized only through substitution.</p>
+<p>An effect may occur but lack adequate witness.</p>
+<p>Evidence may exist but fail to establish a proposition.</p>
+<p>A proposition may be established but confer no authority.</p>
+<p>Documentation may accurately reflect the model while the
+implementation does not correspond.</p>
+<p>Each distinction increases what the development system can reason
+about.</p>
+<p>The resulting architecture can be summarized as:</p>
+<pre class="text"><code>agent proposes
+
+representations type the problem
+
+semantic constraints narrow possibility
+
+evidence grounds observations
+
+courts adjudicate
+
+authority governs
+
+effect realization is selected
+
+executor effects
+
+receipts preserve causality
+
+correspondence is re-established
+
+deterministic projections explain</code></pre>
+<p>The software-development process therefore moves beyond:</p>
+<pre class="text"><code>change
+-&gt; test
+-&gt; deploy</code></pre>
+<p>toward:</p>
+<pre class="text"><code>propose
+-&gt; specify
+-&gt; locate possibilities
+-&gt; select instance constitution
+-&gt; realize
+-&gt; propose effect
+-&gt; adjudicate
+-&gt; execute
+-&gt; witness
+-&gt; synchronize
+-&gt; preserve
+-&gt; project</code></pre>
+<p>CI/CD made testing continuous.</p>
+<p>ACG makes adjudication continuous.</p>
+<p>Constitutional synchronization makes correspondence continuous.</p>
+<p>Effect interposition makes consequential execution governable and
+causally observable.</p>
+<p>Deterministic projection makes explanation reproducible.</p>
+<p>The combined shift is from software development as manipulation of
+implementation artifacts toward:</p>
+<blockquote>
+<p><strong>software development as governed traversal through a
+synchronized semantic possibility space whose consequential edges are
+constitutionally adjudicated and whose representations remain
+mechanically connected.</strong></p>
+</blockquote>
+<p>For agentic coding, that may be the more important capability
+upgrade.</p>
+<p>The objective is not merely to build an agent capable of producing
+more code.</p>
+<p>It is to give the agent a better world to reason about–and to ensure
+that even when it proposes what should happen next, a separate
+constitutional architecture determines what may truthfully be believed,
+what may legitimately be relied upon, and what may actually become
+real.</p>
+<hr />
+<h2 id="appendix-a.-current-realization-funnel">Appendix A. Current
+Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<p><strong>Possibility (P).</strong> Candidate problems, meanings,
+structures, and realizations under consideration.</p>
+<p><strong>Specification (S).</strong> Typed semantic possibility,
+invariants, operations, forbidden states, and claim boundaries.</p>
+<p><strong>Configuration Manifold 1 (CM1).</strong> Configurations
+satisfying mandatory admissibility.</p>
+<p><strong>Configuration Manifold 2 (CM2).</strong> Preferred admissible
+configurations under declared and versioned objectives and risks.</p>
+<p><strong>Instance Constitution / Instance Configuration (IC).</strong>
+The selected and bound configuration slice for a concrete system.</p>
+<p><strong>Instance Realization / Implementation Realization
+(IR).</strong> The exact concrete realization of that IC.</p>
+<p><strong>Evidence (E).</strong> Claim-scoped observations, methods,
+subjects, contexts, witnesses, and counterevidence.</p>
+<p><strong>Revision (R).</strong> Lineage-preserving change to any
+earlier layer.</p>
+<p>Correspondence evidence can flow back from IR without collapsing
+observation, claim, authority, or standing:</p>
+<p><span
+class="math display"><em>I</em><em>R</em> → <em>E</em> → <em>C</em><em>o</em><em>r</em><em>r</em>(<em>I</em><em>C</em>, <em>I</em><em>R</em>) → <em>R</em>?.</span></p>
+<h2 id="appendix-b.-core-non-collapse-rules">Appendix B. Core
+Non-Collapse Rules</h2>
+<p><span
+class="math display"><em>S</em> ≠ <em>C</em><em>M</em></span></p>
+<p><span
+class="math display"><em>C</em><em>M</em><sub>1</sub> ≠ <em>C</em><em>M</em><sub>2</sub></span></p>
+<p><span
+class="math display"><em>C</em><em>M</em><sub>2</sub> ≠ <em>I</em><em>C</em></span></p>
+<p><span
+class="math display"><em>I</em><em>C</em> ≠ <em>I</em><em>R</em></span></p>
+<p><span class="math display">model ≠ realization</span></p>
+<p><span class="math display">realization ≠ evidence</span></p>
+<p><span class="math display">evidence ≠ admission</span></p>
+<p><span class="math display">admission ≠ authority</span></p>
+<p><span class="math display">authority ≠ effect</span></p>
+<p><span
+class="math display">requested realization ≠ actual effect</span></p>
+<p><span class="math display">effect ≠ standing</span></p>
+<p><span class="math display">coverage ≠ satisfaction</span></p>
+<p><span class="math display">identity reuse ≠ path trust</span></p>
+<p><span class="math display">evidence reuse ≠ effect reuse</span></p>
+<p><span class="math display">skip ≠ write</span></p>
+<p><span class="math display">projection ≠ law</span></p>
+<p><span class="math display">description ≠ standing</span></p>
+<p><span class="math display">conceivable ≠ admissible</span></p>
+<p><span class="math display">admissible ≠ selected</span></p>
+<p><span class="math display">selected ≠ authorized</span></p>
+<p><span class="math display">authorized ≠ realized</span></p>
+<p><span
+class="math display">proposal capability ≠ effect capability.</span></p>
+<hr />
+<h2
+id="appendix-c.-example-court-across-representation-and-effect-layers">Appendix
+C. Example Court Across Representation and Effect Layers</h2>
+<pre class="text"><code>COURT:
+  SAVE_REALIZATION_CORRESPONDENCE
+
+Subject:
+  exact application artifact / current IC
+
+Specification:
+  configurable save namespaces are admitted
+
+Configuration Manifold:
+  classic
+  isolated
+  temporary diagnostic
+  simulated
+  read-only refusal
+
+Instance Constitution:
+  selected = isolated
+
+Proposed Operation:
+  SAVE_GAME
+
+Requested Realization:
+  write legacy path
+
+Constitutional Disposition:
+  SUBSTITUTE
+
+Admitted Realization:
+  write isolated namespace
+
+Implementation:
+  filesystem effect adapter
+  native save resolver
+
+Required Evidence:
+  request receipt
+  disposition receipt
+  actual write witness
+  resolver-consumption witness
+  persistence witness
+
+Possible Dispositions:
+  PASS
+  NOT_ESTABLISHED
+  REFUSE_CORRESPONDENCE_MISMATCH
+  REFUSE_UNRECEIPTED_EFFECT
+
+Authority Consequence:
+  NONE beyond the specifically admitted save realization</code></pre>
+<p>A successful filesystem write alone does not establish save-system
+correspondence.</p>
+<hr />
+<h2 id="appendix-d.-projection-taxonomy">Appendix D. Projection
+Taxonomy</h2>
+<pre class="text"><code>SPECIFICATION PROJECTION
+  glossary
+  semantic reference
+  invariant explanation
+
+CONFIGURATION-MANIFOLD PROJECTION
+  available configurations
+  realization alternatives
+  exclusions / dependencies
+  compatibility map
+
+INSTANCE-CONSTITUTION PROJECTION
+  current provider
+  current environment
+  enabled capabilities
+  authority topology
+  effect profile
+
+IMPLEMENTATION PROJECTION
+  implementation codex
+  source bindings
+  runtime pathways
+  effect adapters
+  executors
+
+EPISTEMIC PROJECTION
+  established
+  unknown
+  defeasible
+  defeated
+  open obligations
+
+EFFECT PROJECTION
+  proposed
+  admitted
+  substituted
+  refused
+  executed
+  observed
+
+PEDAGOGICAL PROJECTION
+  README
+  explain
+  orient
+  operator guidance</code></pre>
+<p>Each projection remains source-bound and acquires no independent
+authority merely by existing.</p>
+<hr />
+<hr />
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<h3 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h3>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. The integration custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/from-cicd-</code></p>
+<p><code>to-acg/integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>4724DE896636817C217E4B6B7E41157F4462D8C7602B208E5EFF5699A914B71F</code>.
+The exact source remains unchanged. The ACG thesis, courts model,
+constitutional synchronization proposal, effect-interposition
+architecture, deterministic-projection argument, reasoning-capability
+definition, development cases, research program, implications,
+conclusion, and original references are author material. This pass
+repairs source-to-Markdown projection defects, reconciles the
+representation with the full realization funnel, adds GMB and
+universal-GSM placement, maps direct corpus interfaces, and adds
+counterevidence and author-decision surfaces. Those additions are AI
+editorial or synthetic contributions until adopted. The four development
+episodes retain the differentiated evidentiary descriptions supplied by
+the author. Their underlying exact evidence packages are not bound by
+this manuscript and were not replayed or independently audited here.
+They therefore support architectural illustration and internal
+hypothesis formation, not independent proof of ACG effectiveness.
+External references, novelty, legal analogy, and cross-domain
+generalization were not revalidated in this internal-only pass.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that continuous integration and continuous delivery
+transformed software engineering by making builds, tests, packaging, and
+deployment checks part of the infrastructure of change rather than
+optional developer practices. Its nearest external comparison fields are
+software, open sovereign, security. The sources in [E1], [E2], [E3],
+[E4], [E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Modularity,
+secure-development practice, and reproducibility reduce classes of
+failure but do not guarantee architectural coherence or user
+sovereignty. Source availability and reproducible builds improve
+inspectability but do not alone guarantee comprehensibility, practical
+exit, hardware control, or sustainable maintenance. Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E2]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E3]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> Free Software Foundation. <em>The Free Software
+Definition</em>. https://www.gnu.org/philosophy/free-sw.html
+<strong>Relationship:</strong> Normative predecessor for user freedoms;
+the paper may add reconstruction, governance, or hardware-boundary
+obligations beyond license rights.</p>
+<p><strong>[E6]</strong> Open Source Initiative. <em>The Open Source
+Definition</em>. https://opensource.org/osd
+<strong>Relationship:</strong> Adjacent licensing baseline; source
+availability is not treated as sufficient for operational
+sovereignty.</p>
+<p><strong>[E7]</strong> Martin Kleppmann et al. “Local-First Software:
+You Own Your Data, in Spite of the Cloud.” <em>Onward! 2019</em>,
+pp. 154-178. DOI: 10.1145/3359591.3359737.
+https://www.inkandswitch.com/local-first/ <strong>Relationship:</strong>
+Adjacent local-first design program relevant to user custody, offline
+operation, and collaboration.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure in Software Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-B307F65B51C503DE</code>;<br />
+source SHA-256<br />
+<code>9D2A9D79DE8BC3F2F8ABECA073E4D3607F7623F4368E63F8036081E39B4C75C3</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governed Coding and
+Debugging</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18115533</code>;<br />
+source SHA-256<br />
+<code>2469EDA96DBC1E207855A9AD27314A7FAB59FA35E6EFEF9288C30F949376BF16</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Operating
+Systems</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F5FB8FA82270B989</code>;<br />
+source SHA-256<br />
+<code>E982E4D6BD4B519EED6A7438367844954D6D5F1C2C4CC0099AAAC4AB9A00D3AB</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Jnana</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-ECEAB04A620F163D</code>;<br />
+source SHA-256<br />
+<code>76D921D2975BDCD25D6DFB506F5E85F7AFDBF4D2CCC65F8C45394121F9D90060</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Jnana and the Next Open
+Source Revolution</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-473AD6FAA1659E24</code>;<br />
+source SHA-256<br />
+<code>E73859FD3B4AD4F7ED80E96F93F2D5A0DCB3A2D76C5741813F878B3874D7887D</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Beck, K. (2002). <em>Test Driven Development: By Example</em>.
+Addison-Wesley.</p>
+<p>Clarke, E. M., Grumberg, O., Kroening, D., Peled, D., and Veith, H.
+(2018). <em>Model Checking</em> (2nd ed.). MIT Press.</p>
+<p>de Moura, L., and Bjrner, N. (2008). Z3: An efficient SMT solver. In
+<em>Tools and Algorithms for the Construction and Analysis of
+Systems</em>. Springer.</p>
+<p>Duvall, P. M., Matyas, S., and Glover, A. (2007). <em>Continuous
+Integration: Improving Software Quality and Reducing Risk</em>.
+Addison-Wesley.</p>
+<p>Fowler, M. (2006). Continuous Integration.</p>
+<p>Humble, J., and Farley, D. (2010). <em>Continuous Delivery: Reliable
+Software Releases through Build, Test, and Deployment Automation</em>.
+Addison-Wesley.</p>
+<p>Lamport, L. (2002). <em>Specifying Systems: The TLA+ Language and
+Tools for Hardware and Software Engineers</em>. Addison-Wesley.</p>
+<p>Leveson, N. G. (2011). <em>Engineering a Safer World: Systems
+Thinking Applied to Safety</em>. MIT Press.</p>
+<p>Adam Ableman (2026a). <em>Ableman’s Razor: A Typed Grammar for
+Ontology Exploration, Configuration Collapse, and Implementation
+Feedback</em>. Manuscript.</p>
+<p>Adam Ableman (2026b). <em>Legitimacy Without Self-Ratification:
+Constitutional Computing and the Provenance of Authority in Reflexive
+Systems</em>. Manuscript.</p>
+<p>Adam Ableman (2026c). <em>Constitutional Semantic Engineering:
+Preserving Meaning, Authority, and Evidence Across Change</em>.
+Manuscript.</p>
+<p>Adam Ableman (2026d). <em>Universal Governance Kernel: Courts,
+Evidence, Receipts, Continuity, and Governed Effects</em>. Ableman
+Corpus edition and system release lineage.</p>
+<p>Newcombe, C., Rath, T., Zhang, F., Munteanu, B., Brooker, M., and
+Deardeuff, M. (2015). How Amazon Web Services Uses Formal Methods.
+<em>Communications of the ACM</em>, 58(4), 66–73.</p>
+<p>Saltzer, J. H., and Schroeder, M. D. (1975). The Protection of
+Information in Computer Systems. <em>Proceedings of the IEEE</em>,
+63(9), 1278–1308.</p>
+<p>Schneider, F. B. (2000). Enforceable Security Policies. <em>ACM
+Transactions on Information and System Security</em>, 3(1), 30–50.</p>
+<p>Weyuker, E. J. (1982). On Testing Non-Testable Programs. <em>The
+Computer Journal</em>, 25(4), 465–470.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847750">10.5281/zenodo.23847750</a></p>

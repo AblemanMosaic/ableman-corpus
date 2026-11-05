@@ -1,0 +1,111 @@
+{
+  "accession_id": "AC-0024",
+  "accession_number": 24,
+  "accession_frozen": true,
+  "work_id": "PAPER.PUB.18627087",
+  "title": "Governance-Aware Optimization (GAO)",
+  "authors": [
+    "Adam Ableman"
+  ],
+  "description_html": "<p><strong>Governance-Aware Optimization (GAO)</strong> introduces a geometric framework for integrating explicit governance constraints directly into gradient-based training dynamics. Conventional optimizers such as SGD, Adam, and AdamW regulate convergence and stability but do not encode authority over parameter evolution. As a result, deployment-time governance may exist while optimization itself remains unconstrained in update space.</p>\n<p>GAO reframes optimization as <strong>geometric shaping of update admissibility</strong>. Rather than modifying the objective function, GAO inserts a governance transform between optimizer proposal and parameter commitment. Proposed updates are projected, bounded, or scaled according to a declared Training-Law artifact specifying protected parameter subspaces, invariant preservation constraints, and drift monitoring policies.</p>\n<p>The framework cleanly separates:</p>\n<ul>\n<li>\n<p><strong>Numeric descent</strong> (optimizer dynamics)</p>\n</li>\n<li>\n<p><strong>Admissible motion</strong> (law-constrained update geometry)</p>\n</li>\n<li>\n<p><strong>State commitment</strong> (external governance or checkpoint promotion)</p>\n</li>\n</ul>\n<p>GAO composes with existing optimizers and preserves their internal mechanics while constraining the set of admissible update vectors. It supports protected subspace masking, tangent-space invariant projection, and drift-aware authority scaling. When combined with Governed Training Regimes (GTR), GAO provides fine-grained inner-loop governance compatible with episode-level checkpoint admissibility.</p>\n<p>The paper formalizes admissible update regions, analyzes projection behavior under convex and non-convex constraints, discusses optimizer interaction and computational overhead, and compares GAO to continual learning approaches such as Elastic Weight Consolidation (EWC). It further examines failure modes including overconstraint, metric gaming, and composability limits.</p>\n<p>GAO introduces a distinct design axis in training system architecture: separating optimization dynamics from update admissibility control. By embedding governance into the geometry of gradient descent, GAO enables structured exploration while preserving declared invariants.</p>",
+  "abstract_text": "Governance-Aware Optimization (GAO) introduces a geometric framework for integrating explicit governance constraints directly into gradient-based training dynamics. Conventional optimizers such as SGD, Adam, and AdamW regulate convergence and stability but do not encode authority over parameter evolution. As a result, deployment-time governance may exist while optimization itself remains unconstrained in update space.\n\n\nGAO reframes optimization as geometric shaping of update admissibility. Rather than modifying the objective function, GAO inserts a governance transform between optimizer proposal and parameter commitment. Proposed updates are projected, bounded, or scaled according to a declared Training-Law artifact specifying protected parameter subspaces, invariant preservation constraints, and drift monitoring policies.\n\n\nThe framework cleanly separates:\n\n\n\n\nNumeric descent (optimizer dynamics)\n\n\n\n\nAdmissible motion (law-constrained update geometry)\n\n\n\n\nState commitment (external governance or checkpoint promotion)\n\n\n\n\nGAO composes with existing optimizers and preserves their internal mechanics while constraining the set of admissible update vectors. It supports protected subspace masking, tangent-space invariant projection, and drift-aware authority scaling. When combined with Governed Training Regimes (GTR), GAO provides fine-grained inner-loop governance compatible with episode-level checkpoint admissibility.\n\n\nThe paper formalizes admissible update regions, analyzes projection behavior under convex and non-convex constraints, discusses optimizer interaction and computational overhead, and compares GAO to continual learning approaches such as Elastic Weight Consolidation (EWC). It further examines failure modes including overconstraint, metric gaming, and composability limits.\n\n\nGAO introduces a distinct design axis in training system architecture: separating optimization dynamics from update admissibility control. By embedding governance into the geometry of gradient descent, GAO enables structured exploration while preserving declared invariants.",
+  "keywords": [
+    "Governance-Aware Optimization",
+    "Gradient Descent",
+    "Projected Gradient Methods",
+    "Constrained Optimization",
+    "Machine Learning Safety",
+    "Continual Learning",
+    "Elastic Weight Consolidation",
+    "Optimization Geometry",
+    "Invariant Preservation",
+    "Training Governance",
+    "Admissibility Constraints",
+    "Safe Machine Learning",
+    "Optimization Theory",
+    "Law-Constrained Learning",
+    "Structured Parameter Updates"
+  ],
+  "license": "cc-by-nd-4.0",
+  "resource_type": "publication",
+  "version": "1.0",
+  "language": "eng",
+  "publication_date": "2026-02-13",
+  "earliest_documented_date": "2026-02-13",
+  "earliest_documented_timestamp": "2026-02-13T03:33:48.640867+00:00",
+  "chronology_basis": "FIRST_PUBLICATION_TIMESTAMP",
+  "chronology_confidence": "HIGH",
+  "first_publication_date": "2026-02-13",
+  "first_complete_draft_date": null,
+  "work_origin_date": null,
+  "corpus_admission_date": "2026-10-25",
+  "chronology_evidence": {
+    "kind": "ZENODO_PUBLICATION_RECORD",
+    "provider": "zenodo",
+    "record_id": "18627087",
+    "doi": "https://doi.org/10.5281/zenodo.18627087",
+    "provider_url": "https://zenodo.org/records/18627087",
+    "uploaded": "2026-02-13T03:33:48.640867+00:00"
+  },
+  "doi": "https://doi.org/10.5281/zenodo.18627087",
+  "provider_url": "https://doi.org/10.5281/zenodo.18627087",
+  "provider": "ZENODO",
+  "provider_record_id": "18627087",
+  "publication_association": "VERIFIED_PROVIDER_RECORD",
+  "publication_readiness": "GITHUB_CORPUS_RELEASE_AUTHORIZED",
+  "profiles": [
+    "governance",
+    "markets",
+    "formal"
+  ],
+  "territories": [
+    "Computation",
+    "Coordination",
+    "Possibility"
+  ],
+  "external_source_ids": [
+    "OSTROM",
+    "CONSTITUTIONALISM",
+    "LESSIG-CODE",
+    "OECD-AI",
+    "MARKOWITZ",
+    "TREASURY-TAX",
+    "PCC"
+  ],
+  "internal_work_ids": [
+    "AMCS-LOCAL-WORK-79353AF163A4B0F1",
+    "AMCS-LOCAL-WORK-D2D97C4042FD281F",
+    "PAPER.PUB.18749870",
+    "AMCS-LOCAL-WORK-1F9BFB2BF8370226",
+    "AMCS-LOCAL-WORK-EF2382F9397335AC",
+    "AMCS-LOCAL-WORK-1D49CCBB6E47B403",
+    "AMCS-LOCAL-WORK-8A19CB4C1BD55BCA"
+  ],
+  "reference_count": 0,
+  "external_reference_count": 0,
+  "internal_reference_count": 0,
+  "has_related_work_section": false,
+  "standing": "AI_PREPARED_AUTHOR_REVIEW_SUCCESSOR",
+  "publication_effect": "GITHUB_CORPUS_PUBLICATION_AUTHORIZED",
+  "provider_effect": "NONE",
+  "release_root_sha256": "8409C9FEBEA33F1316B38058FABC66626CAF70B04550C29CCC85F5B3DA99288A",
+  "formats": {
+    "markdown": {
+      "path": "papers/current/AC-0024-governance-aware-optimization-gao/Governance-Aware Optimization (GAO) -- 8409C9FEBEA3.md",
+      "sha256": "ED0C47CBA3FB46BAE449EC9998ED07BAE6FF13A1C9649C19186BC8DB0E8E336A",
+      "bytes": 21177
+    },
+    "pdf": {
+      "path": "papers/current/AC-0024-governance-aware-optimization-gao/Governance-Aware Optimization (GAO) -- 8409C9FEBEA3.pdf",
+      "sha256": "B6A9E0CC622A121DDB810B34ABEA5B515199AD6F7D27CD0D4741DDA000B41B58",
+      "bytes": 289936
+    },
+    "html": {
+      "path": "papers/current/AC-0024-governance-aware-optimization-gao/Governance-Aware Optimization (GAO) -- 8409C9FEBEA3.html",
+      "sha256": "3977EA78F1508C1453CEA2A46CBC385E0C97A603F89CFF396CB6555DBC3F25C7",
+      "bytes": 30059
+    }
+  },
+  "receipt_path": "papers/current/AC-0024-governance-aware-optimization-gao/Governance-Aware Optimization (GAO) -- 8409C9FEBEA3.receipt.json",
+  "metadata_path": "papers/current/AC-0024-governance-aware-optimization-gao/metadata.json"
+}

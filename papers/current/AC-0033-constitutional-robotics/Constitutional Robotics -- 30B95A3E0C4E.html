@@ -1,0 +1,461 @@
+<h1 id="constitutional-robotics">Constitutional Robotics</h1>
+<h2
+id="system-calls-as-the-programming-model-for-actuation-sensing-and-epistemic-world-interaction">System
+Calls as the Programming Model for Actuation, Sensing, and Epistemic
+World Interaction</h2>
+<h3
+id="the-computational-core-remains-effect-pure-world-interaction-becomes-a-governed-boundary-crossing.">The
+computational core remains effect-pure; world interaction becomes a
+governed boundary crossing.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Robotics software stacks typically expose physical interaction
+through driver APIs, middleware message passing, or framework-level
+abstractions. Actuation and sensing are treated as function calls or
+topic publications whose authority is implied by runtime position. This
+conflates control computation with jurisdiction over physical impact and
+obscures the boundary between internal reasoning and external
+consequence.</p>
+<p>This paper proposes a programming model reform: all reality-touching
+operations in robotics systems - actuation, sensing, persistence,
+communication, and time - should be expressed as constitutional system
+calls. Under this model, interaction with the physical world is mediated
+by an explicit admissibility function producing structured outcomes:
+execute, simulate, defer, or refuse. The computational core remains
+effect-pure; world interaction becomes a governed boundary crossing.</p>
+<p>We formalize a minimal robotics syscall interface, define
+compositional multi-authority chains, introduce legitimacy-state
+feedback as a first-class signal, and describe a constitutional logging
+substrate enabling deterministic replay and forensic auditability.
+Compared to prevalent middleware-based architectures, constitutional
+robotics centralizes authority evaluation, unifies hardware and
+simulation pathways, and transforms refusal from an implicit override
+into a structured, inspectable outcome.</p>
+<p>Constitutional robotics reframes robots not as unilateral actors, but
+as petitioners to influence physical reality under contract.</p>
+<hr />
+<h2 id="the-implicit-authority-of-robotics-software">1. The Implicit
+Authority of Robotics Software</h2>
+<p>Most robotics systems share a common architectural assumption:</p>
+<ul>
+<li>Controllers compute control signals</li>
+<li>Drivers or middleware deliver those signals to actuators</li>
+<li>Actuators execute</li>
+</ul>
+<p>In code, this appears as:</p>
+<pre><code>motor.set_velocity(0.8)</code></pre>
+<p>or:</p>
+<pre><code>publish(&quot;/cmd_vel&quot;, velocity_msg)</code></pre>
+<p>Authority is positional. If code executes within the control stack,
+its commands are presumed legitimate.</p>
+<p>Safety mechanisms - limiters, watchdogs, supervisors - are typically
+layered on top of this assumption. They clamp or override signals but do
+not reframe the ontology of actuation. The system still treats actuation
+as a direct extension of computation.</p>
+<p>As autonomy increases, this assumption becomes fragile. Controllers
+may be learned, adaptive, distributed, or economically consequential.
+The boundary between reasoning and world impact can no longer remain
+implicit.</p>
+<hr />
+<h2 id="from-driver-call-to-constitutional-system-call">2. From Driver
+Call to Constitutional System Call</h2>
+<p>We propose replacing direct world-touching invocation with a
+syscall-shaped interface:</p>
+<pre><code>syscall(ACTUATE_MOTOR, speed=0.8)</code></pre>
+<p>or</p>
+<pre><code>syscall(READ_SENSOR, sensor_id=IMU)</code></pre>
+<p>Under this model:</p>
+<ul>
+<li>The controller produces a proposal</li>
+<li>The syscall boundary evaluates admissibility</li>
+<li>The outcome is structured and typed</li>
+</ul>
+<p>Execution is one possible result. It is not the default.</p>
+<p>The syscall becomes the canonical interface to physical reality. It
+is not merely a wrapper around drivers, but a redefinition of the
+programming primitive for world interaction.</p>
+<hr />
+<h2 id="a-minimal-robotics-syscall-interface">3. A Minimal Robotics
+Syscall Interface</h2>
+<p>Let:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\text{SyscallID} \in \{&amp;\text{ACTUATE}, \text{SENSE},
+\text{PERSIST}, \\
+&amp;\text{COMMUNICATE}, \text{TIME}\}
+\end{aligned}
+$$</span></p>
+<p>Each syscall is a typed request:</p>
+<pre><code>Syscall {
+    id: SyscallID,
+    payload: EffectParameters,
+    required_authority: Level,
+    contract_id: ContractID
+}</code></pre>
+<p>Admissibility is defined as:</p>
+<p><span
+class="math display">Admissibility : Syscall × Authority → Outcome × Reason</span></p>
+<p>Where:</p>
+<ul>
+<li><span
+class="math inline">Outcome ∈ {execute, simulate, defer, refuse}</span></li>
+<li><span class="math inline">Reason</span> is structured metadata</li>
+<li><span class="math inline">Authority</span> encodes capability sets,
+safety envelopes, and policy constraints</li>
+</ul>
+<p>This function is the sole mediator between computational proposals
+and physical execution.</p>
+<hr />
+<h2 id="multi-authority-composition">4. Multi-Authority Composition</h2>
+<p>Robotics systems frequently involve layered authority:</p>
+<p>Controller -&gt; Safety Supervisor -&gt; Regulatory Module -&gt;
+Hardware Interface</p>
+<p>In constitutional robotics, this layering is explicit and
+compositional.</p>
+<p>Given authorities <span
+class="math inline"><em>A</em><sub>1</sub>, <em>A</em><sub>2</sub>, …, <em>A</em><sub><em>n</em></sub></span>:</p>
+<p><span class="math display">$$
+\text{Outcome}_1 = A_1(\text{syscall}) \\
+\text{Outcome}_2 = A_2(\text{syscall}) \\
+\vdots \\
+\text{FinalOutcome} = A_n(\text{syscall})
+$$</span></p>
+<p>Refusal at any stage terminates the chain with structured reason
+propagation.</p>
+<p>Composition may be sequential, conjunctive, or delegated, depending
+on authority topology. What matters is that authority evaluation is
+explicit and auditable.</p>
+<hr />
+<h2 id="comparison-to-middleware-architectures">5. Comparison to
+Middleware Architectures</h2>
+<p>In ROS-style publish/subscribe systems:</p>
+<ul>
+<li>Nodes broadcast commands</li>
+<li>Subscribers interpret them</li>
+<li>Authority is distributed implicitly across nodes</li>
+</ul>
+<p>Safety logic is typically implemented in separate supervisory nodes
+or embedded within controllers.</p>
+<p>Constitutional robotics differs in three key respects:</p>
+<ol type="1">
+<li>Authority evaluation is centralized at defined syscall
+boundaries</li>
+<li>Every world-touching operation is typed and logged</li>
+<li>Refusal semantics are structured rather than emergent</li>
+</ol>
+<p>This shift transforms world interaction from network topology into
+jurisdictional adjudication.</p>
+<hr />
+<h2 id="deterministic-replay-and-simulation-parity">6. Deterministic
+Replay and Simulation Parity</h2>
+<p>Simulation is central to robotics development, yet hardware and
+simulation often diverge due to differences in execution pathways.</p>
+<p>Under constitutional robotics:</p>
+<ul>
+<li>Hardware and simulation share the same syscall interface</li>
+<li>Replay engines intercept syscalls and simulate outcomes</li>
+<li>All admissibility decisions are logged</li>
+</ul>
+<p>A constitutional log entry may be defined as:</p>
+<pre><code>ConstitutionalLogEntry = {
+    syscall,
+    outcome,
+    reason,
+    authority_id,
+    contract_id,
+    timestamp
+}</code></pre>
+<p>This log enables:</p>
+<ul>
+<li>Deterministic replay of control sessions</li>
+<li>Audit of refusal and deferral events</li>
+<li>Cross-environment equivalence between hardware and digital twin</li>
+</ul>
+<p>Simulation is not a parallel implementation. It is an alternative
+adjudication of the same boundary.</p>
+<hr />
+<h2 id="legitimacy-state-as-first-class-signal">7. Legitimacy-State as
+First-Class Signal</h2>
+<p>Constitutional actuation introduces a new observable:</p>
+<p><strong>Legitimacy state over time.</strong></p>
+<p>Each syscall returns not only execution data but jurisdictional
+feedback:</p>
+<ul>
+<li>Was the action permitted?</li>
+<li>Under what authority level?</li>
+<li>Why was it refused or deferred?</li>
+</ul>
+<p>This feedback becomes a structured signal available to the
+controller.</p>
+<p>Rather than binary success/failure, controllers receive graded
+epistemic information about admissibility. This enables:</p>
+<ul>
+<li>Adaptive planning under constraint</li>
+<li>Anticipation of refusal patterns</li>
+<li>Authority-sensitive trajectory optimization</li>
+</ul>
+<p>The robot gains awareness not only of the physical state of the
+world, but of the legitimacy state of its own actions.</p>
+<hr />
+<h2 id="functional-improvements">8. Functional Improvements</h2>
+<h3 id="structured-refusal">8.1 Structured Refusal</h3>
+<p>Traditional safety layers silently clamp or override commands.
+Controllers may not know why.</p>
+<p>Under constitutional robotics:</p>
+<pre><code>Outcome = refuse
+Reason = {zone_limit_exceeded}</code></pre>
+<p>The controller can respond intelligently:</p>
+<ul>
+<li>Reduce velocity</li>
+<li>Re-plan path</li>
+<li>Enter compliance mode</li>
+</ul>
+<p>Refusal becomes actionable information.</p>
+<hr />
+<h3 id="authority-aware-adaptation">8.2 Authority-Aware Adaptation</h3>
+<p>If:</p>
+<pre><code>Outcome = defer
+Reason = {human_confirmation_required}</code></pre>
+<p>The system can:</p>
+<ul>
+<li>Switch to safe holding behavior</li>
+<li>Request confirmation</li>
+<li>Adjust proposal to fall within autonomous authority</li>
+</ul>
+<p>Adaptation is grounded in explicit jurisdiction feedback.</p>
+<hr />
+<h3 id="clear-separation-of-concerns">8.3 Clear Separation of
+Concerns</h3>
+<p>Control algorithms operate over physical state and objective
+functions.</p>
+<p>Authority boundaries operate over admissibility contracts.</p>
+<p>This separation enables:</p>
+<ul>
+<li>Formal reasoning about control independent of governance</li>
+<li>Static analysis of admissibility constraints</li>
+<li>Clean modularization of safety logic</li>
+</ul>
+<p>The controller computes; the boundary adjudicates.</p>
+<hr />
+<h2 id="real-time-feasibility">9. Real-Time Feasibility</h2>
+<p>Introducing syscall mediation must not violate real-time
+guarantees.</p>
+<p>Admissibility checks can be:</p>
+<ul>
+<li>Precompiled into constant-time capability checks</li>
+<li>Cached for stable authority states</li>
+<li>Partitioned into fast-path and slow-path logic</li>
+</ul>
+<p>Capability systems and verified microkernels demonstrate that
+boundary checks can be both explicit and performant.</p>
+<p>The overhead is architectural, not prohibitive.</p>
+<hr />
+<h2 id="toward-a-robotics-syscall-abi">10. Toward a Robotics Syscall
+ABI</h2>
+<p>A concrete robotics syscall ABI would define:</p>
+<ul>
+<li>Canonical identifiers for actuation and sensing</li>
+<li>Structured refusal codes</li>
+<li>Authority level annotations</li>
+<li>Contract versioning semantics</li>
+<li>Logging schemas</li>
+</ul>
+<p>Such an ABI could unify:</p>
+<ul>
+<li>Hardware abstraction layers</li>
+<li>Simulation engines</li>
+<li>Replay tools</li>
+<li>Certification artifacts</li>
+</ul>
+<p>Control code becomes portable across hardware, simulation, and audit
+contexts without modification.</p>
+<hr />
+<h2 id="governance-as-structural-backing">11. Governance as Structural
+Backing</h2>
+<p>This programming model is not aesthetic minimalism.</p>
+<p>Physical actuation:</p>
+<ul>
+<li>Alters shared reality</li>
+<li>Carries liability</li>
+<li>May be safety-critical</li>
+<li>Interacts with regulatory regimes</li>
+</ul>
+<p>Embedding actuation as a constitutional syscall ensures that:</p>
+<ul>
+<li>No world-touching operation bypasses authority evaluation</li>
+<li>Undefined behavior at the physical boundary becomes structured
+refusal</li>
+<li>Authority escalation is constrained by explicit contracts</li>
+</ul>
+<p>Governance descends into substrate enforcement.</p>
+<hr />
+<h2 id="appendix-a---epistemic-implications-and-learning">12. Appendix A
+- Epistemic Implications and Learning</h2>
+<p>Constitutional robotics generates a structured dataset:</p>
+<pre><code>(Proposal, Outcome, Reason, AuthorityLevel, Timestamp)</code></pre>
+<p>This dataset enables:</p>
+<ul>
+<li>Learning models that predict admissibility envelopes</li>
+<li>Detection of authority drift over time</li>
+<li>Optimization within refusal likelihood distributions</li>
+<li>Meta-reasoning about policy compliance</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that robotics software stacks typically expose
+physical interaction through driver APIs, middleware message passing, or
+framework-level abstractions. Its nearest external comparison fields are
+cps, governance, security. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Runtime monitors and
+fallback controllers only protect modeled safety envelopes and can fail
+through sensor error, timing assumptions, unsafe recovery, or omitted
+hazards. A written constitution can legitimate domination as easily as
+constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. Unforgeable capabilities can constrain
+exercise of authority while still leaving allocation, delegation,
+revocation, and social legitimacy incorrectly specified. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Edward R. Griffor et al. <em>Framework for
+Cyber-Physical Systems: Volume 1, Overview</em>. NIST SP 1500-201, 2017.
+DOI: 10.6028/NIST.SP.1500-201. https://doi.org/10.6028/NIST.SP.1500-201
+<strong>Relationship:</strong> Adjacent cyber-physical systems framework
+for trustworthiness, timing, data, and lifecycle concerns.</p>
+<p><strong>[E2]</strong> J. Tanner Slagel et al. “A Formal Verification
+Framework for Runtime Assurance.” <em>NASA Formal Methods</em>, 2024.
+NASA NTRS 20230017350. https://ntrs.nasa.gov/citations/20230017350
+<strong>Relationship:</strong> Adjacent runtime-assurance formalization,
+useful for comparing failover safety with constitutional admission and
+effect recognition.</p>
+<p><strong>[E3]</strong> Nancy G. Leveson and John P. Thomas. <em>STPA
+Handbook</em>. MIT, 2018.
+https://psas.scripts.mit.edu/home/books-and-handbooks/
+<strong>Relationship:</strong> Adjacent systems-theoretic hazard
+analysis method; used to test treatment of unsafe control and
+system-level constraints.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>A Constitutional Syscall
+Architecture for Cyber-Physical Control Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F46D86D479F89BAC</code>;<br />
+source SHA-256<br />
+<code>5E696B753A10BD3C3D36B675A84B95CCF2234F024A6B277BF121E76BFCBCBD18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutionally Governed
+Infrastructure</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-EF5747107D56F516</code>;<br />
+source SHA-256<br />
+<code>9C708BA381108EEA252404DF33F7B3B1648EC9CF5F2ACF00BAB88C6A15540926</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18750683">10.5281/zenodo.18750683</a></p>

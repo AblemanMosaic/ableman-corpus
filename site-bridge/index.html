@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Ableman Corpus · Constitutional Computing</title>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css?v=0.19.1">
+  <link rel="stylesheet" href="styles.css?v=20261105-math1">
+</head>
+<body>
+  <a class="skip" href="#view">Skip to content</a>
+  <header class="topbar">
+    <button class="brand" type="button" data-about-open aria-haspopup="dialog" aria-controls="about-dialog" aria-label="About the Ableman Corpus">
+      <img src="../site/assets/mosaic-logo-1024.png" alt="">
+      <span><strong>Ableman Corpus</strong><small>Constitutional Computing</small></span>
+    </button>
+    <nav aria-label="Main">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#papers" data-nav="papers">All papers</a>
+      <a href="#about" data-nav="about">How this works</a>
+    </nav>
+  </header>
+
+  <dialog class="welcome-dialog" id="welcome-dialog" aria-labelledby="welcome-title" tabindex="-1">
+    <div class="welcome-shell">
+      <h1 id="welcome-title">Welcome</h1>
+      <img class="welcome-mark" src="../site/assets/mosaic-logo-1024.png" alt="Mosaic sun">
+      <div class="welcome-actions" aria-label="Choose how to enter the Atlas">
+        <button class="btn" type="button" data-welcome-tour>Tour</button>
+        <button class="btn" type="button" data-welcome-explore>Explore</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="about-dialog" id="about-dialog" aria-labelledby="about-title">
+    <form method="dialog" class="about-shell">
+      <button class="about-close" value="close" aria-label="Close About the Ableman Corpus">×</button>
+      <div class="about-heading">
+        <img data-about-logo alt="">
+        <div>
+          <p class="eyebrow">Constitutional Computing</p>
+          <h1 id="about-title">About the Ableman Corpus</h1>
+        </div>
+      </div>
+      <div class="about-copy">
+        <p>The Ableman Corpus is a growing body of research by Adam Ableman on constitutional computing: how intelligent and computational systems can make meaning, authority, evidence, and effects inspectable and governable.</p>
+        <p>This Atlas is a map of the papers rather than a single linear book. Begin with a guided tour or a question, explore relationships among papers, or open any work directly. Individual papers can stand alone, but many are designed to carry context for one another.</p>
+        <details class="about-disclosure">
+          <summary><span><b>AI disclosure</b><small>Authorship, review maturity, and novelty</small></span><i aria-hidden="true">+</i></summary>
+          <div class="about-disclosure-copy">
+            <p>The Ableman Corpus was developed with substantial assistance from artificial intelligence. AI systems have contributed to research discovery, comparison, synthesis, formalization, drafting, cross-linking, and revision. Adam Ableman directs the conceptual program, adjudicates its architecture, and assumes authorial responsibility for the published works.</p>
+            <p>These papers function as evolving context artifacts. Some have undergone extensive internal review and integration; others are less mature, and they will benefit from revisions or deeper explication.</p>
+            <p>Many of the papers began as attempts to make complex ideas or syntheses explicit where no sufficiently precise concept was available to the AI systems being used. They are intended to make those ideas inspectable, criticizable, reusable, and open to further development.</p>
+            <p>Novelty most often arises through constitutional meta-mapping of conceptual space: bringing existing and emerging ideas into a governed relational architecture. Some entries may also contain stronger candidate novelty claims, but those claims must be evaluated paper by paper.</p>
+            <p>This disclosure is intentional. Readers should not be asked to accept an argument because it appears authoritative, nor to dismiss it merely because AI helped produce it. The corpus asks to be evaluated through its reasoning, sources, evidence, provenance, limitations, and capacity to survive criticism.</p>
+          </div>
+        </details>
+      </div>
+      <div class="about-actions">
+        <button class="btn primary" value="close">Enter the corpus</button>
+      </div>
+    </form>
+  </dialog>
+
+  <main id="view" tabindex="-1">
+    <p class="loading">Loading the corpus…</p>
+    <noscript><p class="loading">This site needs JavaScript to read the corpus index. The papers themselves are plain Markdown files under <code>papers/current/</code>.</p></noscript>
+  </main>
+
+  <footer>
+    <div><strong>Ableman Corpus</strong><span>Adam Ableman · Constitutional Computing</span></div>
+    <div><a href="https://github.com/AblemanMosaic/ableman-corpus">GitHub repository</a><span>Papers: CC BY-ND 4.0</span><span>Software: Apache 2.0</span></div>
+  </footer>
+  <script src="vendor/katex/katex.min.js?v=0.19.1"></script>
+  <script src="vendor/katex/auto-render.min.js?v=0.19.1"></script>
+  <script src="app.js?v=20261105-math1"></script>
+</body>
+</html>

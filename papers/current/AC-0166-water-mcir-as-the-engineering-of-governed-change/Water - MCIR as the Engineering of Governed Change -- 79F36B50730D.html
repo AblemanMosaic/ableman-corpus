@@ -1,0 +1,983 @@
+<h1 id="water-mcir-as-the-engineering-of-governed-change">Water: MCIR as
+the Engineering of Governed Change</h1>
+<h2
+id="a-pedagogical-flow-profile-for-canonical-governed-transformation">A
+Pedagogical Flow Profile for Canonical Governed Transformation</h2>
+<h3
+id="the-metaphor-is-useful-only-when-its-limits-remain-explicit.">The
+metaphor is useful only when its limits remain explicit.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>A groove cut into wet soil does not create water, define the plant,
+or guarantee a harvest. It changes which continuations are easy,
+visible, blocked, or destructive. This paper develops that image as
+<strong>Water</strong>, a pedagogical profile for understanding MCIR as
+an intermediate representation for governed transformation.</p>
+<p>Water is not a new expansion, identity, or definition of MCIR. The
+verified corpus describes MCIR as a Meta Constitutional/Compilation
+Intermediate Representation and, in a source-family title, as a
+Meta-Compilation Intermediate Representation. This paper does not
+adjudicate or merge those naming surfaces. It explains one aspect shared
+by them: a representation of possible transitions can expose paths,
+gates, obligations, effects, evidence, and refusal before change is
+allowed to bind.</p>
+<p>The metaphor is useful only when its limits remain explicit. Meaning,
+authority, computation, memory, evidence, obligation, and risk are not
+one substance. Authority does not flow merely because a path exists. A
+receipt is not proof that a claim is true. Equal hashes show byte
+equality only under a declared canonicalization and hashing regime; they
+do not establish semantic equivalence or independent verification.
+Representation influences continuation only through an interpreter,
+verifier, gate, institution, or implementation that gives the
+representation operational force.</p>
+<p>The paper therefore formalizes Water as a typed flow projection over
+MCIR, supplies primitives and invariants, distinguishes pedagogical
+mappings from identity claims, operationalizes the failure vocabulary,
+connects the profile to the Governed Meaning Base (GMB), GSOL,
+composability, receipts, semantic manifolds, and jurisdiction, and
+places the work in the full realization funnel. It remains a
+Specification-stage explanatory profile. No implementation, conformance
+test, external research, or publication effect is claimed.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/water-mcir-</code></p>
+<p><code>as-the-engineering-of-governed-change/</code><br />
+<code>integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>45D315483992AAB43D37C16E456A77113FE337BEBA630D637EE1F309E969B1D0</code>.
+The exact source remains unchanged.</p>
+<p>The Water name, garden and aqueduct imagery, flow vocabulary,
+MCIR/GMB/UGK applications, receipt and confluence discussion, failure
+metaphors, and final thesis are author material. The identity
+correction, formal graph, anti-mappings, operational indicators, corpus
+links, countertests, and decisions are AI editorial or synthetic
+additions until adopted.</p>
+<p>The source contains an AOK/CARA application. That passage remains
+preserved in exact custody but is excluded from Ableman semantic
+synthesis under the established AOK/AOK-G boundary. Nothing here grants
+author, canonical, implementation, conformance, or publication
+standing.</p>
+<h2 id="the-simple-image">1. The Simple Image</h2>
+<p>Imagine a garden after rain. Water falls across slope, soil, roots,
+obstruction, absorption, and chance. Some reaches the intended plants.
+Some pools. Some escapes. Some cuts a path that changes the next
+rainfall.</p>
+<p>A gardener can alter that future with a small act: carve a groove.
+The groove does not create the water, command it by force, define the
+garden, or guarantee nourishment. It changes the topology of likely
+flow.</p>
+<p>That is the central intuition of Water:</p>
+<blockquote>
+<p>A representation of possible change can make admissible continuation
+visible and governable, but it becomes operational only through a
+mechanism that interprets and enforces it.</p>
+</blockquote>
+<p>The qualification matters. A diagram does not operate a gate. A
+schema does not supply authority. A policy does not produce evidence
+merely by being written. Water explains how structure can organize
+transformation; MCIR and its realized interpreters must specify how that
+structure becomes binding.</p>
+<h2 id="water-is-a-profile-of-mcir-not-its-identity">2. Water Is a
+Profile of MCIR, Not Its Identity</h2>
+<p>The source calls MCIR an “irreducible representation of systems of
+governed change.” That phrase is too strong as an identity claim. The
+broader corpus gives MCIR a more specific role: a canonical
+machine-legible intermediate representation that carries governance and
+compilation commitments between higher-level semantic forms and
+lower-level realizations.</p>
+<p>Water should therefore be classified as an <strong>explanatory
+profile</strong>. It foregrounds paths, gates, basins, branching,
+convergence, jurisdiction, and failure. It does not replace MCIR’s type
+system, canonicalization rules, authority model, identity semantics,
+evaluators, lowering contracts, or evidence semantics.</p>
+<p>This separation avoids three errors:</p>
+<ol type="1">
+<li><strong>metaphor capture:</strong> treating a useful image as the
+full architecture;</li>
+<li><strong>identity drift:</strong> using a new description as an
+alternate MCIR definition; and</li>
+<li><strong>implementation implication:</strong> assuming that a
+represented path already exists or is enforced.</li>
+</ol>
+<p>The strongest thesis is accordingly bounded:</p>
+<blockquote>
+<p>Water is a pedagogical projection of MCIR that makes the topology of
+governed transition easier to see.</p>
+</blockquote>
+<h2 id="a-typed-flow-projection">3. A Typed Flow Projection</h2>
+<p>Let a governed change surface be a directed typed graph:</p>
+<p><span
+class="math display"><em>G</em> = (<em>V</em>, <em>E</em>).</span></p>
+<p>A node <span class="math inline"><em>v</em> ∈ <em>V</em></span>
+represents a typed state, artifact, claim, semantic identity, or
+governed condition. A transition edge may be represented as:</p>
+<p><span
+class="math display"><em>e</em> = (<em>v</em><sub><em>s</em></sub>, <em>o</em>, <em>g</em>, <em>j</em>, <em>a</em>, <em>w</em>, <em>q</em>, <em>x</em>, <em>r</em>, <em>v</em><sub><em>t</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>v</em><sub><em>s</em></sub></span> is the source
+state, <span class="math inline"><em>o</em></span> the proposed
+operation, <span class="math inline"><em>g</em></span> a guard, <span
+class="math inline"><em>j</em></span> the applicable jurisdiction, <span
+class="math inline"><em>a</em></span> the asserted authority, <span
+class="math inline"><em>w</em></span> the warrant or supporting basis,
+<span class="math inline"><em>q</em></span> the obligations that must be
+carried, <span class="math inline"><em>x</em></span> the proposed
+effect, <span class="math inline"><em>r</em></span> the required receipt
+or evidence contract, and <span
+class="math inline"><em>v</em><sub><em>t</em></sub></span> the target
+state.</p>
+<p>An admissibility function evaluates an edge in context <span
+class="math inline"><em>c</em></span>:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A(e,c) \in \{&amp;\mathrm{ADMIT}, \mathrm{REFUSE}, \mathrm{DEFER}, \\
+&amp;\mathrm{ESCALATE}\}
+\end{aligned}.
+$$</span></p>
+<p>A path <span
+class="math inline"><em>π</em> = (<em>e</em><sub>1</sub>, …, <em>e</em><sub><em>n</em></sub>)</span>
+is not admissible merely because every edge is syntactically connected.
+It is admissible only when every transition is admitted under the
+applicable context and all carried obligations remain satisfied:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{Admissible}(\pi,c) \\
+&amp;\Rightarrow \bigwedge_{i=1}^{n} A(e_i,c_i)=\mathrm{ADMIT} \\
+&amp;\land \mathrm{Preserved}(q_i,e_i)
+\end{aligned}.
+$$</span></p>
+<p>This is the formal difference between a dry line on a map and a
+lawful channel. Connectivity describes reachability. Governance
+restricts which reachable continuations may bind.</p>
+<h2 id="primitives-and-invariants">4. Primitives and Invariants</h2>
+<p>Water becomes technically useful when its imagery is grounded in
+explicit primitives:</p>
+<ul>
+<li><strong>identity:</strong> what persists, changes, or is
+reidentified;</li>
+<li><strong>state:</strong> the typed condition from which change
+begins;</li>
+<li><strong>operation:</strong> the proposed transformation;</li>
+<li><strong>guard:</strong> the condition tested before transition;</li>
+<li><strong>jurisdiction:</strong> the regime under which the transition
+is interpreted;</li>
+<li><strong>authority:</strong> the bounded right to propose, admit, or
+produce an effect;</li>
+<li><strong>warrant:</strong> the basis offered for a claim or
+decision;</li>
+<li><strong>obligation:</strong> what must survive composition and
+lowering;</li>
+<li><strong>effect:</strong> the consequential change outside mere
+proposal;</li>
+<li><strong>evidence:</strong> material relevant to a declared
+claim;</li>
+<li><strong>refusal:</strong> a first-class nontransition with reason
+and scope; and</li>
+<li><strong>receipt:</strong> a record of a specified event, decision,
+or observation.</li>
+</ul>
+<p>The corresponding invariant candidates are:</p>
+<ol type="1">
+<li>identity is preserved or explicitly transformed;</li>
+<li>connectivity never implies authority;</li>
+<li>admissibility precedes governed effect;</li>
+<li>obligations survive composition or produce explicit failure;</li>
+<li>refusal is preserved rather than erased as missing data;</li>
+<li>jurisdiction is explicit at every boundary where interpretation
+changes;</li>
+<li>receipts state what they record and do not inherit truth by
+existence;</li>
+<li>canonicalization precedes hash-based comparison;</li>
+<li>convergence claims name the paths, observations, and independence
+assumptions involved; and</li>
+<li>revision preserves lineage rather than silently replacing prior
+state.</li>
+</ol>
+<p>These are integration candidates, not a claim that the original
+metaphor already specified an executable MCIR contract.</p>
+<h2 id="the-water-vocabulary-and-its-limits">5. The Water Vocabulary and
+Its Limits</h2>
+<ul>
+<li><p><strong>Water image:</strong> terrain<br />
+<strong>Governed reading:</strong> possibility or configuration
+surface<br />
+<strong>Required limit:</strong> not MCIR itself and not necessarily a
+manifold with proven structure</p></li>
+<li><p><strong>Water image:</strong> channel<br />
+<strong>Governed reading:</strong> typed transition path<br />
+<strong>Required limit:</strong> not admissible until guards, authority,
+obligations, and evidence rules are satisfied</p></li>
+<li><p><strong>Water image:</strong> groove<br />
+<strong>Governed reading:</strong> minimal explicit pathway<br />
+<strong>Required limit:</strong> a representation does not cause or
+enforce the transition by itself</p></li>
+<li><p><strong>Water image:</strong> sluice<br />
+<strong>Governed reading:</strong> admission gate<br />
+<strong>Required limit:</strong> must identify evaluator, policy,
+result, and failure behavior</p></li>
+<li><p><strong>Water image:</strong> reservoir<br />
+<strong>Governed reading:</strong> retained state or memory<br />
+<strong>Required limit:</strong> storage does not establish identity,
+integrity, standing, or authority</p></li>
+<li><p><strong>Water image:</strong> watershed<br />
+<strong>Governed reading:</strong> jurisdictional boundary<br />
+<strong>Required limit:</strong> jurisdiction selects applicable law; it
+does not make authority a fluid substance</p></li>
+<li><p><strong>Water image:</strong> confluence<br />
+<strong>Governed reading:</strong> observed convergence of declared
+paths<br />
+<strong>Required limit:</strong> convergence requires common observation
+and does not prove truth</p></li>
+<li><p><strong>Water image:</strong> aqueduct<br />
+<strong>Governed reading:</strong> governed transfer across a
+boundary<br />
+<strong>Required limit:</strong> needs adapters, custody, carried
+obligations, and receiving jurisdiction</p></li>
+<li><p><strong>Water image:</strong> flood<br />
+<strong>Governed reading:</strong> effects exceeding admission or
+handling capacity<br />
+<strong>Required limit:</strong> high volume alone is not necessarily
+ungoverned</p></li>
+<li><p><strong>Water image:</strong> erosion<br />
+<strong>Governed reading:</strong> accumulated semantic or structural
+drift<br />
+<strong>Required limit:</strong> must be measured against an identified
+baseline and tolerance</p></li>
+<li><p><strong>Water image:</strong> silt<br />
+<strong>Governed reading:</strong> unresolved ambiguity, debt, or stale
+assumptions<br />
+<strong>Required limit:</strong> age or complexity alone is not semantic
+debt</p></li>
+<li><p><strong>Water image:</strong> overflow<br />
+<strong>Governed reading:</strong> declared alternate or failure
+route<br />
+<strong>Required limit:</strong> escalation is a typed decision, not
+whatever happens after capacity is exceeded</p></li>
+<li><p><strong>Water image:</strong> irrigation<br />
+<strong>Governed reading:</strong> beneficial governed propagation<br />
+<strong>Required limit:</strong> usefulness does not substitute for
+authority or evidence</p></li>
+<li><p><strong>Water image:</strong> dam<br />
+<strong>Governed reading:</strong> constraint or containment<br />
+<strong>Required limit:</strong> constraints may also create hidden
+pressure, bypass, or fragility</p></li>
+</ul>
+<p>The word “flow” is therefore analogical. Meaning traverses relations;
+authority is granted and scoped; evidence is produced and interpreted;
+computation changes machine state; memory stores representations. The
+profile can compare their transition structures without declaring them
+ontologically identical.</p>
+<h2 id="representation-shapes-continuation-through-realization">6.
+Representation Shapes Continuation Through Realization</h2>
+<p>The source’s strongest insight is that representation is not always
+passive. A path encoded in a language, schema, policy, interface, or
+intermediate form can shape which actions a system can propose, verify,
+lower, or execute.</p>
+<p>But the causal chain must be stated:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{representation} \\
+&amp;\rightarrow \mathrm{interpreter/verifier} \\
+&amp;\rightarrow \mathrm{admission} \\
+&amp;\rightarrow \mathrm{effect} \\
+&amp;\rightarrow \mathrm{evidence}
+\end{aligned}.
+$$</span></p>
+<p>If the interpreter ignores the representation, if the gate can be
+bypassed, if authority is forged, or if the effect surface is outside
+the governed boundary, the represented channel is not operational. This
+is why the garden groove is a primitive analogy rather than a complete
+MCIR: gravity and soil give the groove physical force, while a semantic
+or computational representation needs an explicit realization
+mechanism.</p>
+<h2 id="from-groove-to-aqueduct">7. From Groove to Aqueduct</h2>
+<p>The groove scales into an aqueduct when governed transfer must cross
+distance, time, components, or jurisdictions. Several corpus pipelines
+illustrate the pattern:</p>
+<pre class="text"><code>high-level semantic source
+  -&gt; declared lowering regime
+  -&gt; canonical MCIR artifact
+  -&gt; verifier and admission decision
+  -&gt; lower representation or effect
+  -&gt; typed receipt and evidence</code></pre>
+<pre class="text"><code>claim
+  -&gt; evidence binding
+  -&gt; warrant evaluation
+  -&gt; admission, refusal, defer, or escalation
+  -&gt; standing-qualified use</code></pre>
+<pre class="text"><code>semantic identity
+  -&gt; typed relation
+  -&gt; governed context
+  -&gt; proposed continuation
+  -&gt; receipted decision</code></pre>
+<p>The first is primarily a compilation surface, the second an epistemic
+surface, and the third a meaning/navigation surface. Water makes their
+shared topology legible while preserving their different types.</p>
+<h2 id="gmb-as-a-governed-semantic-terrain">8. GMB as a Governed
+Semantic Terrain</h2>
+<p>The current name is <strong>Governed Meaning Base (GMB)</strong> in
+the author-confirmed <code>CCF -&gt; CMB -&gt; GMB</code> lineage. GMB
+is not “semantic water.” It is a governed substrate in which semantic
+identities, typed relations, provenance, standing, conflicts, gaps, and
+revision can be represented and traversed.</p>
+<p>Water helps explain one GMB question: when an agent moves from one
+semantic object to another, what makes the traversal legitimate? A
+useful traversal should name:</p>
+<ul>
+<li>the identity entered and the identity left;</li>
+<li>the typed relation used;</li>
+<li>the context and jurisdiction governing interpretation;</li>
+<li>the provenance and standing of each object;</li>
+<li>the warrant for any resulting claim;</li>
+<li>preserved refusals, conflicts, and gaps;</li>
+<li>the continuation opened or closed; and</li>
+<li>the evidence or receipt appropriate to that event.</li>
+</ul>
+<p>The universal GSM provides the semantic coordinates. GMB provides a
+governed meaning architecture. Water provides a didactic view of
+traversal. None is identical to the others.</p>
+<h2 id="receipts-are-records-not-watermarks-of-truth">9. Receipts Are
+Records, Not Watermarks of Truth</h2>
+<p>The source calls a receipt a watermark showing that flow occurred.
+That image is helpful only after receipt types are separated:</p>
+<ul>
+<li>a <strong>proposal receipt</strong> records what was proposed;</li>
+<li>an <strong>admission receipt</strong> records a gate’s decision
+under a named policy;</li>
+<li>an <strong>effect receipt</strong> records an asserted or observed
+consequential change;</li>
+<li>a <strong>verification receipt</strong> records the verifier,
+inputs, method, and result; and</li>
+<li>a <strong>publication receipt</strong> would record a publication
+event, not the truth of the publication.</li>
+</ul>
+<p>A receipt can be incomplete, false, forged, mis-scoped, produced by a
+defective verifier, or detached from the effect it purports to record.
+Its value comes from its typed claim, custody, integrity, authority, and
+relation to independently inspectable evidence.</p>
+<p>Reasoning by way of receipts is therefore not reasoning by document
+existence. It is reasoning through explicit, challengeable transitions
+whose claims remain bounded by what the records and evidence can
+support.</p>
+<h2 id="confluence-without-overclaim">10. Confluence Without
+Overclaim</h2>
+<p>Confluence is one of the best parts of the Water profile. Independent
+paths may be evaluated against a common observation:</p>
+<pre class="text"><code>implementation A -&gt; canonical bytes -&gt; hash H
+implementation B -&gt; canonical bytes -&gt; hash H
+external witness -&gt; observed bytes -&gt; hash H</code></pre>
+<p>The useful claim is conditional. If all paths use the same declared
+input, canonicalization regime, hash algorithm, and observation
+boundary, equal hashes establish equality of the hashed bytes with
+overwhelming algorithm-relative confidence. They do not by themselves
+establish:</p>
+<ul>
+<li>semantic equivalence beyond the canonicalization contract;</li>
+<li>correctness of the source meaning;</li>
+<li>truth of a claim represented by the bytes;</li>
+<li>absence of shared implementation error;</li>
+<li>independence of the paths; or</li>
+<li>legitimacy of the authority that selected the regime.</li>
+</ul>
+<p>A confluence receipt should bind path identities, tool versions,
+inputs, canonicalization, observations, results, divergence handling,
+and independence assumptions. Divergence is not a failed story to hide;
+it is evidence that the paths do not yet support the proposed
+equivalence.</p>
+<h2 id="watersheds-jurisdiction-and-authority">11. Watersheds,
+Jurisdiction, and Authority</h2>
+<p>A watershed determines how physical water drains. A jurisdiction
+determines which interpretive, constitutional, organizational, runtime,
+semantic, or publication regime applies. The analogy stops there.</p>
+<p>Authority does not naturally flow downstream. It is granted,
+delegated, attenuated, constrained, revoked, and checked. Crossing a
+boundary may require an adapter, translation, fresh admission,
+transformed disclosure, or total refusal. A valid source-side decision
+does not automatically authorize a target-side effect.</p>
+<p>Fractal Governance Architecture helps explain why similar transition
+grammar can recur at several scales while the applicable jurisdiction
+changes. Constraint-Bearing Composability asks whether obligations
+survive composition. Water provides the visual question: what must
+travel with the transfer, what must be recomputed at the boundary, and
+what cannot cross at all?</p>
+<h2 id="operational-failure-vocabulary">12. Operational Failure
+Vocabulary</h2>
+<p>The source’s failure images become useful when paired with observable
+conditions.</p>
+<ul>
+<li><p><strong>Failure image:</strong> flood<br />
+<strong>Operational candidate:</strong> effects occur faster or wider
+than the declared admission/effect boundary permits<br />
+<strong>Evidence question:</strong> which unadmitted effects occurred,
+and through what bypass?</p></li>
+<li><p><strong>Failure image:</strong> erosion<br />
+<strong>Operational candidate:</strong> semantic identity, constraint,
+or interface changes cumulatively beyond tolerance<br />
+<strong>Evidence question:</strong> what baseline, diff, and threshold
+demonstrate drift?</p></li>
+<li><p><strong>Failure image:</strong> silt<br />
+<strong>Operational candidate:</strong> unresolved ambiguity or stale
+assumptions obstruct declared operations<br />
+<strong>Evidence question:</strong> which decisions are blocked or
+misrouted, and by which unresolved terms?</p></li>
+<li><p><strong>Failure image:</strong> leak<br />
+<strong>Operational candidate:</strong> capability, information,
+authority, or effect crosses an undeclared path<br />
+<strong>Evidence question:</strong> what boundary was crossed without an
+authorized transition and record?</p></li>
+<li><p><strong>Failure image:</strong> stagnation<br />
+<strong>Operational candidate:</strong> retained state no longer
+participates in required retrieval, revision, or effect<br />
+<strong>Evidence question:</strong> which required continuation is
+unavailable, and is inactivity actually a defect?</p></li>
+<li><p><strong>Failure image:</strong> dry bed<br />
+<strong>Operational candidate:</strong> a declared dependency or
+evidence path produces no usable result<br />
+<strong>Evidence question:</strong> was the path required, correctly
+invoked, and observable?</p></li>
+<li><p><strong>Failure image:</strong> broken aqueduct<br />
+<strong>Operational candidate:</strong> transfer fails to preserve
+schema, custody, obligations, or target admission<br />
+<strong>Evidence question:</strong> where did the carriage contract
+fail?</p></li>
+<li><p><strong>Failure image:</strong> turbulent confluence<br />
+<strong>Operational candidate:</strong> paths disagree under a
+purportedly common comparison regime<br />
+<strong>Evidence question:</strong> are inputs, canonicalization,
+observations, and semantics actually aligned?</p></li>
+<li><p><strong>Failure image:</strong> uncontrolled overflow<br />
+<strong>Operational candidate:</strong> fallback produces an undeclared
+effect or widening<br />
+<strong>Evidence question:</strong> was escalation explicitly
+authorized, typed, and bounded?</p></li>
+</ul>
+<p>These are diagnostic profiles, not automatic findings. Each needs a
+declared baseline, observation, threshold, and remedy.</p>
+<h2 id="corpus-integration">13. Corpus Integration</h2>
+<p>The canonical MCIR paper supplies the identity and representation
+contract to which Water is subordinate. <strong>GSOL</strong> supplies a
+specification-layer language for declaring governed operations before
+lowering. <strong>Constraint-Bearing Composability</strong> asks whether
+obligations survive interfaces and composition. <strong>Meaning as
+Binding</strong> explains why a usable semantic relation requires more
+than co-occurrence or similarity. <strong>Semantic Manifold
+Topology</strong> supplies coordinates, projections, and governed
+traversal without equating a picture of terrain with the terrain
+itself.</p>
+<p><strong>Reasoning by Way of Receipts</strong> distinguishes explicit
+transition records from unsupported narrative continuity.
+<strong>Warrant by Structure</strong> asks when the structure of a
+process supplies limited warrant and when effect evidence is still
+missing. <strong>Fractal Governance Architecture</strong> locates
+recurring grammar across scales while preserving jurisdictional
+differences. The <strong>GMB</strong> can retain these identities,
+relations, standing, conflicts, and revision histories.</p>
+<p>The dependencies are directional. Water explains MCIR; it does not
+define MCIR. GMB can carry the Water profile; Water does not define GMB.
+Receipts can record transitions; Water does not establish receipt
+validity. No corpus link here is an identity merge or implementation
+claim.</p>
+<h2 id="realization-funnel">14. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> consider flow, terrain, path,
+boundary, convergence, and failure as explanatory images for governed
+change.</li>
+<li><strong>Specification:</strong> define Water as an explanatory
+profile, its typed graph, mappings, limits, primitives, invariants, and
+claim ceiling.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> enumerate
+admissible didactic profiles, schemas, visualization forms, and
+integration surfaces that preserve MCIR identity and governance
+distinctions.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer profiles by
+clarity, compression, fidelity, accessibility, inspectability, and
+resistance to category error.</li>
+<li><strong>IC:</strong> select an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for one
+exact Water profile, audience, schema, and verification contract. The
+names are interchangeable.</li>
+<li><strong>IR:</strong> produce an <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong>,
+such as an executable MCIR viewer, validator, or interactive atlas. The
+names are interchangeable.</li>
+<li><strong>Evidence:</strong> retain user comprehension studies,
+conformance tests, path traces, receipts, failure injections, and
+implementation results.</li>
+<li><strong>Revision:</strong> update mappings, schemas, interfaces, or
+standing while preserving lineage.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 criteria. It
+does not select a complete IC, produce an IR, prove pedagogical
+effectiveness, or certify MCIR conformance.</p>
+<h2 id="mcir-flow-projection-and-diagnostic-vocabulary">MCIR Flow
+Projection and Diagnostic Vocabulary</h2>
+<p>The completed P1 corpus positions Water as the <strong>flow
+projection and diagnostic vocabulary for MCIR-governed change</strong>.
+It renders sources, channels, gates, confluences, losses, residues,
+jurisdictions, and receipts in an intuitive model. It is a profile of
+MCIR, not a separate intermediate representation, ontology, proof
+system, or law of semantic dynamics.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Representational Topology in
+MCIR: AST, DAG, and Emergent Governance Capabilities</em><br />
+<strong>Supplies:</strong> The three-graph representation contract and
+topology tradeoffs.<br />
+<strong>Water-profile boundary:</strong> Water projects movement through
+those structures without replacing them.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Parsing, transformation, admission, lowering,
+remainder, and effect.<br />
+<strong>Water-profile boundary:</strong> The flow vocabulary makes
+stages and loss legible; the compiler architecture remains
+authoritative.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meta-Binding as Operational
+Invariant</em><br />
+<strong>Supplies:</strong> Obligations that transformations must
+carry.<br />
+<strong>Water-profile boundary:</strong> Water visualizes carriage,
+leakage, and residue; meta-binding states the preservation
+contract.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional/Crystallized
+Meaning Base (CMB)</em><br />
+<strong>Supplies:</strong> The historical meaning-base work in the
+current GMB lineage.<br />
+<strong>Water-profile boundary:</strong> Current GMB is the governed
+terrain/state substrate; Water is one view over change within
+it.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meaning Crystals</em><br />
+<strong>Supplies:</strong> Portable bounded semantic state.<br />
+<strong>Water-profile boundary:</strong> A crystal is a transport
+package; Water describes flows among states and boundaries.</p></li>
+</ul>
+<p>A Water projection should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+W= (&amp;source, flow, channels, gates, transformations, \\
+&amp;confluences, losses, residuals, jurisdictions, sinks, \\
+&amp;receipts, underlying\_MCIR)
+\end{aligned}.
+$$</span></p>
+<p>Every metaphor term maps to an exact typed object or relation, or
+remains explicitly pedagogical. Flow direction is not causation by
+itself. Confluence is not equivalence or consensus. A dam or gate is not
+legitimate merely because it constrains movement. A receipt records an
+observation or decision; it is not a watermark of truth.</p>
+<p>The profile earns technical standing only if it improves design,
+detection, explanation, or testing relative to direct MCIR notation. It
+should be compressed to a teaching surface if its terms add no distinct
+obligations or if different users map the metaphor inconsistently.</p>
+<p>The universal GSM can type<br />
+<code>PROJECTED_AS_WATER_FLOW</code>, <code>FLOWS_FROM</code>,
+<code>CHANNELLED_BY</code>,<br />
+<code>GATED_BY</code>, <code>CONFLUENT_WITH</code>,
+<code>LEAKS_OBLIGATION</code>, <code>DEPOSITS_RESIDUAL</code>,<br />
+<code>CROSSES_JURISDICTION</code>,
+<code>TERMINATES_AT_SINK</code>,<br />
+and<br />
+<code>BACKED_BY_MCIR_OBJECT</code>. These relations preserve the
+underlying formal subject.</p>
+<p>This integration establishes four editorial commitments: adopt MCIR
+flow projection as Water’s official corpus role; adopt the
+Water-envelope mapping; require every technical metaphor term to bind to
+exact MCIR/GSM structure; and demote the profile to pedagogy if it adds
+no reproducible diagnostic value.</p>
+<h2 id="metaphor-mapping-and-non-transfer-ledger">Metaphor Mapping and
+Non-Transfer Ledger</h2>
+<p>The fixed-seed comparison with GTK, Terminability, MDSP, and <em>The
+Locus of Qualia</em> makes the Water profile’s claim discipline more
+exact. Each use should bind both the metaphor and its typed target:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M= (&amp;water\_term, GTK\_sense, MCIR\_object, diagnostic\_claim, \\
+&amp;evidence, remainder, nontransfer\_domains)
+\end{aligned}.
+$$</span></p>
+<p>GTK can resolve source, channel, gate, confluence, leak, residue,
+watershed, and sink under the Water profile. That resolution identifies
+the intended term; it does not prove that the target MCIR structure has
+the asserted dynamics or that the metaphor improves diagnosis.</p>
+<p>MDSP could publish Water as a pedagogical or diagnostic profile with
+conformance examples, but the profile would remain subordinate to the
+exact MCIR objects and obligations it projects. Standardization of
+labels cannot repair inconsistent mappings or turn the metaphor into a
+separate representation system.</p>
+<p>The adjacencies to Terminability and <em>The Locus of Qualia</em>
+produce<br />
+<code>NO_MATERIAL_RELATION</code>. A sink is not an ending subject, and
+semantic flow is not phenomenal flow. Water language must not transfer
+evidence, mechanism, moral status, continuity, or experiential content
+into either domain.</p>
+<p>The universal GSM can type<br />
+<code>RESOLVES_WATER_TERM_WITH_GTK</code>,<br />
+<code>MAPS_METAPHOR_TO_MCIR_OBJECT</code>,
+<code>TESTS_DIAGNOSTIC_BENEFIT</code>,<br />
+<code>STANDARDIZES_PEDAGOGICAL_PROFILE</code>,
+<code>BLOCKS_ENDING_METAPHOR_TRANSFER</code>,<br />
+and<br />
+<code>BLOCKS_EXPERIENTIAL_METAPHOR_TRANSFER</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the metaphor-mapping record; bind every technical Water term to GTK and
+MCIR/GSM targets; allow standards packaging only as a subordinate
+profile; and record Terminability and experiential qualia as explicit
+non-transfer domains.</p>
+<h2 id="from-metaphor-to-a-governed-change-trace">From Metaphor to a
+Governed Change Trace</h2>
+<p>Two downstream uses confirm Water’s bounded role. Jnana II uses it
+for transformation-carriage detail across proposal, lowering,
+capability, effect, receipt, and recovery. <em>Representational Topology
+in MCIR</em> treats its three-graph contract as one representation
+profile within Water’s wider engineering account. Neither use makes
+Water the identity of MCIR or a runtime mechanism.</p>
+<p>A technical Water projection should compile into a change trace:</p>
+<p><span class="math display">$$
+\begin{aligned}
+F^*= (&amp;source\_state, proposal, channel, gates, \\
+&amp;carried\_obligations, transformations, authorized\_loss, \\
+&amp;leakage, residue, confluences, jurisdictions, sinks, \\
+&amp;effects, receipts, evidence, recovery, successor)
+\end{aligned}.
+$$</span></p>
+<p>Every metaphor term must resolve to a typed subject and an observable
+or inspectable operation. “Flow” names a state transition or transport
+relation; “channel” names constrained reachability; “gate” names an
+admissibility or authority decision; “leak” names an unauthorized or
+undisclosed path; “residue” names unresolved or intentionally retained
+material. If the mapping cannot be stated, the term remains pedagogical
+language rather than a technical claim.</p>
+<p>The trace supports diagnostics that ordinary pipeline language often
+hides: obligation loss at a boundary, residue excluded from a sink,
+confluence that merges distinct authority, and a recovery route that
+does not restore the prior state. It does not prove fluid dynamics,
+physical conservation, semantic conservation, or correctness merely
+because the visualization is coherent.</p>
+<p>The universal GSM can type<br />
+<code>PROJECTS_CHANGE_AS_FLOW</code>,
+<code>RESOLVES_METAPHOR_TO_OPERATION</code>,<br />
+<code>CARRIES_OBLIGATION_THROUGH_CHANNEL</code>,
+<code>LEAKS_OUTSIDE_DECLARED_ROUTE</code>,<br />
+<code>RETAINS_RESIDUE_AT_SINK</code>,
+<code>MERGES_AT_CONFLUENCE_UNDER_AUTHORITY</code>,<br />
+and<br />
+<code>REMAINS_PEDAGOGICAL_WHEN_UNMAPPED</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the governed change trace; require term-to-operation
+mappings; retain leakage, residue, confluence, and recovery as the
+differential diagnostic contribution; and demote any unmapped or
+nonfalsifiable use to pedagogy.</p>
+<h2 id="counterevidence-and-failure-modes">15. Counterevidence and
+Failure Modes</h2>
+<p>Water should be narrowed or rejected where: (1) readers treat it as
+the definition of MCIR; (2) the metaphor erases the difference among
+meaning, authority, evidence, computation, and memory; (3) connectivity
+is mistaken for admissibility; (4) representation is assumed to cause
+effects without an interpreter; (5) a gate lacks a named policy or
+evaluator; (6) authority is treated as a transferable substance; (7)
+jurisdiction and authority are conflated; (8) a valid source decision is
+presumed valid in a target jurisdiction; (9) an adapter drops
+obligations; (10) refusal disappears as missing data; (11) a receipt is
+treated as proof of truth; (12) proposal, admission, effect, and
+verification receipts are conflated; (13) equal hashes are treated as
+semantic equivalence; (14) canonicalization regimes differ; (15)
+supposedly independent verifiers share code, assumptions, or defects;
+(16) a reservoir metaphor hides stale, corrupted, or unauthorized
+memory; (17) escalation is modeled as automatic overflow rather than a
+typed decision; (18) high volume is mislabeled as flood despite valid
+admission; (19) age or complexity is mislabeled as silt without
+operational impact; (20) drift is asserted without a baseline or
+threshold; (21) the GMB is reduced to a flow graph and loses standing or
+provenance; (22) Water silently reintroduces historical CCF/CMB
+terminology as current; (23) AOK/AOK-G material enters Ableman synthesis
+despite the exclusion; (24) the profile is presented as an
+implementation; (25) no exact MCIR source binds the explanation; (26)
+user study shows the metaphor increases rather than reduces confusion;
+or (27) external research reveals that a material technical or
+pedagogical claim needs correction.</p>
+<h2 id="a-flow-metaphor-must-expose-the-mechanism-that-gives-it-force">A
+Flow Metaphor Must Expose the Mechanism That Gives It Force</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Water is a pedagogical profile of MCIR. Paths, gates, basins,
+branches, confluences, watersheds, erosion, blockage, and overflow help
+explain governed change. The metaphor becomes responsible only when
+every mapped term points to a typed representational role and every
+operational effect points to an actual interpreter, verifier,
+institution, or implementation.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Metaphor-identity attack.</strong> Water becomes a new MCIR
+expansion, foundational identity, or substitute for exact schemas and
+semantics.</li>
+<li><strong>Flow-authority attack.</strong> An available path, gradient,
+or confluence is treated as permission, legitimacy, or decision
+authority.</li>
+<li><strong>Substance-collapse attack.</strong> Meaning, evidence,
+authority, obligation, computation, memory, risk, and effect are
+described as if they were one conserved material.</li>
+<li><strong>Gravity-determinism attack.</strong> A preferred or
+represented continuation is treated as inevitable despite agents,
+institutions, friction, refusal, and failure.</li>
+<li><strong>Receipt-watermark attack.</strong> A receipt or hash is
+treated as truth, semantic equivalence, provenance completeness, or
+independent verification.</li>
+<li><strong>Confluence-consensus attack.</strong> Agreement, merge,
+shared output, or downstream combination is treated as resolution of
+conflict and jurisdiction.</li>
+<li><strong>Watershed-sovereignty attack.</strong> A modeled boundary is
+assumed to define the real jurisdiction, affected population, or
+authority surface.</li>
+<li><strong>Failure-metaphor attack.</strong> Erosion, stagnation,
+leakage, flooding, and contamination remain evocative labels without
+operational indicators or counterexamples.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper offers a typed pedagogical projection and diagnostic
+vocabulary. It does not define MCIR identity, establish semantic
+hydraulics, prove conservation laws, make authority flow, guarantee
+governed change, or provide an implementation or conformance result.
+MCIR naming surfaces remain unadjudicated, and excluded AOK material
+remains custody-only.</p>
+<p>Every pedagogical mapping must declare source and target types,
+preserved and forbidden inferences, operative mechanism, failure
+indicators, and an exit to exact technical definitions. No conformance
+test, implementation, or external research was performed in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>Water earns its place when it makes governed transformation intuitive
+while repeatedly showing where the analogy stops: the groove proposes a
+path, but a separate mechanism and authority determine whether anything
+is allowed to move.</p>
+<h2 id="conclusion">17. Conclusion</h2>
+<p>Water succeeds when it makes governed transition visible without
+pretending that every governed object is the same kind of fluid. A
+groove is the primitive image. An aqueduct is the scaled image. A typed,
+canonical, authority-aware intermediate representation is the technical
+architecture to which the image points.</p>
+<p>MCIR does not invent change. It provides a form in which proposed
+change, carried obligations, authority, admissibility, refusal, effect,
+and evidence can be made explicit before and after realization. Water is
+the didactic profile that helps a reader see those relationships.</p>
+<p>The final lesson is not merely that change will flow. It is:</p>
+<blockquote>
+<p>Change may be possible along many paths. Governed continuation
+requires a typed, warranted, authority-bounded, obligation-preserving,
+and inspectable path.</p>
+</blockquote>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>This revision binds exact corpus sources through its custody
+manifest. It adds no external bibliography because no external research
+was authorized or performed. For a future evidence-qualified revision,
+any claims about intermediate representations, workflow systems,
+pedagogy, graph semantics, cryptographic hashes, or institutional
+jurisdiction should receive an authorized primary-source review. Corpus
+integration here is a reversible editorial candidate, not proof of
+novelty, correctness, conformance, or implementation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that a groove cut into wet soil does not create
+water, define the plant, or guarantee a harvest. Its nearest external
+comparison fields are formal, earth, provenance. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. Material classes are sampling- and
+method-dependent; heterogeneous sites, contaminant transport, and
+regulatory thresholds can defeat a neat classification-to-action
+mapping. A complete provenance graph can faithfully record a false or
+unauthorized process; provenance is evidence about lineage, not
+automatic truth or legitimacy. These limits are not generic disclaimers:
+they identify the assumptions that a later empirical, formal, or
+implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> U.S. Army Corps of Engineers. <em>Sediment
+Investigations</em>, Engineer Manual EM 1110-2-4000. 14 February 2025.
+<a
+href="https://www.publications.usace.army.mil/Portals/76/Publications/EngineerManuals/EM%201110-2-4000_FINAL_14Feb2025.pdf">publications.usace.army.mil
+source</a> <strong>Relationship:</strong> Primary engineering guidance
+for material characterization and classification; included to ground
+classification claims in field and laboratory practice.</p>
+<p><strong>[E6]</strong> U.S. Environmental Protection Agency.
+<em>Guidance for Cleaning Up Groundwater, Soil and Air at Hazardous
+Waste Cleanup Facilities</em>. <a
+href="https://www.epa.gov/hw/guidance-cleaning-groundwater-soil-and-air-hazardous-waste-cleanup-facilities">epa.gov
+source</a> <strong>Relationship:</strong> Primary remediation guidance
+emphasizing media transfer, exposure, and site-specific cleanup
+decisions.</p>
+<p><strong>[E7]</strong> Edward R. Griffor et al. <em>Framework for
+Cyber-Physical Systems: Volume 1, Overview</em>. NIST SP 1500-201, 2017.
+DOI: 10.6028/NIST.SP.1500-201. https://doi.org/10.6028/NIST.SP.1500-201
+<strong>Relationship:</strong> Adjacent cyber-physical systems framework
+for trustworthiness, timing, data, and lifecycle concerns.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Classified Earthworks</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-8D3F34F396D7760E</code>;<br />
+source SHA-256<br />
+<code>9011C1800E2294A0F0E72BFBA871B071C8C4590C2A7E83FEBFF2BAE5D29E533A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Technical Brief: Classified
+Earthworks System</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-F4D74EA1DCD91309</code>;<br />
+source SHA-256<br />
+<code>3DCF2DFF9430B987F1D4BD8785D9A6ABB6309037FFC65ADA46F58AFD606DFFD8</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>Semantic Manifold Topology.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20257244</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848562">10.5281/zenodo.23848562</a></p>

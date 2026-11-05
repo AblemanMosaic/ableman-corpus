@@ -1,0 +1,1250 @@
+<h1 id="semantic-coordinate-identity-tokenization-scit">Semantic
+Coordinate Identity Tokenization (SCIT)</h1>
+<h2
+id="semantic-coordinates-identity-native-representation-and-the-reorganization-of-machine-cognition-around-governed-meaning-address-spaces">Semantic
+Coordinates, Identity-Native Representation, and the Reorganization of
+Machine Cognition Around Governed Meaning Address Spaces</h2>
+<h3 id="where-language-names-meaning-coordinates-locate-it">Where
+Language Names Meaning, Coordinates Locate It</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Large language models currently operate over tokenization systems
+optimized around lexical recurrence, statistical compression, and
+surface-level representational efficiency. While such tokenization
+schemes achieve remarkable practical performance, they remain
+fundamentally organized around linguistic artifacts rather than semantic
+identities.</p>
+<p>As a result, reasoning systems repeatedly reconstruct semantic
+distinctions that are conceptually stable yet lexically ambiguous. A
+single token may correspond to multiple word senses, conceptual regimes,
+or epistemic jurisdictions. Semantic disambiguation therefore becomes an
+ongoing computational burden repeatedly paid throughout inference.</p>
+<p>This paper introduces Semantic Coordinate Identity Tokenization
+(SCIT), a representation framework in which machine cognition operates
+over semantic coordinates rather than lexical surfaces. SCIT extends the
+Semantic Crystallization (SemCrys) program by proposing that stabilized
+semantic structures should not merely become tokenizer-native symbols,
+but should be assigned governed semantic coordinates that simultaneously
+function as identity, address, and topological location within a
+semantic substrate.</p>
+<p>SCIT distinguishes between semantic identity and semantic surface. A
+semantic coordinate is not merely a label attached to meaning. Rather,
+it is a position within a governed semantic topology whose
+relationships, exclusions, adjacencies, and disambiguation pathways are
+explicitly represented.</p>
+<p>The framework introduces the Semantic Coordinate Identity Layer
+(CSIL), Global Term Key (GTK), semantic coordinate spaces,
+coordinate-indexed representation, semantic addressability, and
+topology-aware tokenization. It argues that future reasoning systems may
+benefit from operating over governed semantic coordinates rather than
+repeatedly reconstructing meaning from lexical fragments.</p>
+<p>SCIT does not propose the replacement of natural language. Rather, it
+proposes a semantic substrate beneath language through which concepts
+become directly addressable cognitive objects.</p>
+<p>Importantly, SCIT does not primarily seek token-count reduction. Its
+objective is reduction of amortized semantic reconstruction cost through
+the stabilization of recurring semantic identities within governed
+semantic infrastructure.</p>
+<p>The central claim of SCIT is simple:</p>
+<blockquote>
+<p>Meaning may become computationally more efficient when concepts are
+represented by governed semantic coordinates rather than reconstructed
+repeatedly from lexical ambiguity.</p>
+</blockquote>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Modern language models operate through a remarkable sequence of
+transformations.</p>
+<ul>
+<li>Natural language surfaces are converted into token sequences.</li>
+<li>Token sequences are converted into embeddings.</li>
+<li>Embeddings are transformed through attention operations.</li>
+<li>Reasoning emerges through interactions among these representational
+objects.</li>
+</ul>
+<p>Yet despite the sophistication of contemporary architectures, an
+important representational asymmetry remains:</p>
+<ul>
+<li>Language is organized around words.</li>
+<li>Thought is not.</li>
+</ul>
+<p>Many recurring conceptual structures possess stable semantic
+identities while remaining lexically ambiguous. Consider:</p>
+<ul>
+<li>authority</li>
+<li>governance</li>
+<li>legitimacy</li>
+<li>control</li>
+<li>responsibility</li>
+</ul>
+<p>Each term admits multiple distinct meanings depending upon context.
+The token may remain stable. The semantic identity does not. Reasoning
+systems therefore repeatedly spend computational effort reconstructing
+which meaning is active.</p>
+<p>SCIT proposes a different approach.</p>
+<p>Rather than treating lexical surfaces as primary and semantic
+identities as inferred, SCIT treats semantic coordinates as primary and
+lexical surfaces as projections. More specifically, SCIT shifts a
+substantial portion of ambiguity resolution from runtime inference
+toward semantic infrastructure, coordinate assignment, topology
+maintenance, and governance.</p>
+<p>SCIT externalizes semantic disambiguation into a persistent, governed
+substrate, converting repeated inference-time ambiguity resolution into
+amortized infrastructure cost. This redistribution of semantic work
+constitutes one of the framework’s central claims.</p>
+<hr />
+<h2 id="the-coordinate-principle">2. The Coordinate Principle</h2>
+<p>The foundational insight of SCIT is that semantic identity and
+semantic location are inseparable.</p>
+<p>Traditional identifiers function primarily as labels. For
+example,<br />
+<code>c_auth:legit_binding</code> may be assigned a unique coordinate.
+However, the identifier alone contains no information about its semantic
+neighborhood. Its relationship to adjacent concepts remains
+external.</p>
+<p>SCIT proposes a different model. A semantic coordinate exists within
+a governed semantic topology. The coordinate simultaneously functions
+as:</p>
+<ul>
+<li>identity</li>
+<li>address</li>
+<li>location</li>
+<li>reference point</li>
+</ul>
+<p>The coordinate is therefore not merely attached to meaning. The
+coordinate is a topologically grounded identity function over semantic
+space.</p>
+<hr />
+<h3 id="formal-definition-of-semantic-coordinates">2.1 Formal Definition
+of Semantic Coordinates</h3>
+<p>Let semantic space be defined as</p>
+<p><span
+class="math display"><em>S</em> = (<em>V</em>, <em>E</em>, <em>τ</em>, <em>γ</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>V</em></span> is the set of semantic
+coordinates.</li>
+<li><span
+class="math inline"><em>E</em> ⊆ <em>V</em> × <em>V</em></span> is the
+set of semantic relations.</li>
+<li><span
+class="math inline"><em>τ</em> : <em>E</em> → <em>T</em></span> assigns
+relation types.</li>
+<li><span class="math inline"><em>γ</em> : <em>V</em> → ℳ</span> maps
+coordinates to governance metadata.</li>
+</ul>
+<p>The graph <span class="math inline"><em>E</em></span> may be
+directed. Some relation types may additionally declare symmetry, but
+symmetry is relation-typed rather than globally assumed.</p>
+<p>Optional edge weighting may be defined as</p>
+<p><span class="math display"><em>w</em> : <em>E</em> → ℝ</span></p>
+<p>and relation-type weighting may be defined as</p>
+<p><span
+class="math display"><em>w</em><sub><em>τ</em></sub> : <em>T</em> → ℝ</span></p>
+<p>with</p>
+<p><span
+class="math display"><em>w</em>(<em>c</em>, <em>c</em><sup>′</sup>) = <em>w</em>(<em>e</em>)  where  <em>e</em> = (<em>c</em>, <em>c</em><sup>′</sup>)</span></p>
+<p>A semantic coordinate <span
+class="math inline"><em>c</em> ∈ <em>V</em></span> is not merely a
+unique identifier. It is a node embedded within a governed semantic
+topology. Identity therefore emerges from structure.</p>
+<hr />
+<h3 id="neighborhood-definition">2.2 Neighborhood Definition</h3>
+<p>Neighborhoods must be explicitly defined. A typed neighborhood is</p>
+<p><span
+class="math display">𝒩(<em>c</em>) = {(<em>c</em><sup>′</sup>, <em>τ</em>(<em>e</em>)) ∣ <em>e</em> = (<em>c</em>, <em>c</em><sup>′</sup>) ∈ <em>E</em>}</span></p>
+<p>A <span class="math inline"><em>k</em></span>-hop neighborhood is</p>
+<p><span
+class="math display">𝒩<sub><em>k</em></sub>(<em>c</em>)</span></p>
+<p>representing all reachable coordinates within <span
+class="math inline"><em>k</em></span> typed traversals. Neighborhoods
+may additionally incorporate weighted edge contributions through <span
+class="math inline"><em>w</em>(<em>e</em>)</span>.</p>
+<p>For tractability, coordinate degree may be bounded</p>
+<p><span
+class="math display">|𝒩(<em>c</em>)| ≤ <em>d</em><sub><em>m</em><em>a</em><em>x</em></sub></span></p>
+<p>This prevents topology explosion and stabilizes complexity.</p>
+<p>All SCIT inference operates under bounded locality in semantic
+topology:</p>
+<p><span
+class="math display"><em>k</em> ≤ <em>k</em><sub><em>m</em><em>a</em><em>x</em></sub>,  <em>h</em> ≤ <em>h</em><sub><em>m</em><em>a</em><em>x</em></sub></span></p>
+<p>This locality assumption prevents implicit global graph traversal and
+makes coordinate resolution computationally tractable.</p>
+<hr />
+<h3 id="topological-distance">2.3 Topological Distance</h3>
+<p>SCIT relies on a topological distance function. One minimal
+formulation is</p>
+<p><span
+class="math display"><em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>) = <em>α</em> ⋅ <em>d</em><sub><em>p</em><em>a</em><em>t</em><em>h</em></sub>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>) + <em>β</em> ⋅ <em>d</em><sub><em>n</em><em>e</em><em>i</em><em>g</em><em>h</em></sub>(𝒩<sub><em>k</em></sub>(<em>c</em><sub><em>i</em></sub>), 𝒩<sub><em>k</em></sub>(<em>c</em><sub><em>j</em></sub>))</span></p>
+<p>where <span
+class="math inline"><em>d</em><sub><em>p</em><em>a</em><em>t</em><em>h</em></sub></span>
+is shortest-path distance over typed edges, <span
+class="math inline"><em>d</em><sub><em>n</em><em>e</em><em>i</em><em>g</em><em>h</em></sub></span>
+is distributional divergence over neighborhood types, and <span
+class="math inline"><em>α</em>, <em>β</em></span> are weighting
+coefficients.</p>
+<p>In the unweighted case, <span
+class="math inline"><em>d</em><sub><em>p</em><em>a</em><em>t</em><em>h</em></sub></span>
+may be implemented as shortest hop count. In the typed case,</p>
+<p><span
+class="math display"><em>d</em><sub><em>p</em><em>a</em><em>t</em><em>h</em></sub>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>) = ∑<sub><em>e</em> ∈ <em>p</em><em>a</em><em>t</em><em>h</em>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>)</sub><em>w</em><sub><em>τ</em>(<em>e</em>)</sub></span></p>
+<p>where <span
+class="math inline"><em>w</em><sub><em>τ</em>(<em>e</em>)</sub></span>
+is a relation-type cost.</p>
+<p>Neighborhood type distribution may be defined as</p>
+<p><span class="math display">$$
+P_{\mathcal{N}_k(c)}(t) =
+\frac{
+\left| \{ e \in \mathcal{N}_k(c) : \tau(e)=t \} \right|
+}{
+|\mathcal{N}_k(c)|
+}
+$$</span></p>
+<p>with normalization</p>
+<p><span
+class="math display">∑<sub><em>t</em></sub><em>P</em><sub>𝒩<sub><em>k</em></sub>(<em>c</em>)</sub>(<em>t</em>) = 1</span></p>
+<p>If</p>
+<p><span
+class="math display">|𝒩<sub><em>k</em></sub>(<em>c</em>)| = 0</span></p>
+<p>the system may use a uniform prior, skip <span
+class="math inline"><em>d</em><sub><em>n</em><em>e</em><em>i</em><em>g</em><em>h</em></sub></span>,
+or fall back to embedding-only distance.</p>
+<p>Neighborhood divergence may be instantiated as</p>
+<p><span
+class="math display"><em>d</em><sub><em>n</em><em>e</em><em>i</em><em>g</em><em>h</em></sub> = <em>J</em><em>S</em>(<em>P</em><sub>𝒩<sub><em>k</em></sub>(<em>c</em><sub><em>i</em></sub>)</sub>, <em>P</em><sub>𝒩<sub><em>k</em></sub>(<em>c</em><sub><em>j</em></sub>)</sub>)</span></p>
+<p>where <span class="math inline"><em>J</em><em>S</em></span> denotes
+Jensen-Shannon divergence.</p>
+<p>This makes identity stability, admissibility, and topology-aware
+retrieval computable rather than merely descriptive.</p>
+<hr />
+<h3 id="identity-stability">2.4 Identity Stability</h3>
+<p>Exact neighborhood equivalence is unrealistic in evolving semantic
+systems. SCIT therefore defines identity through stability under bounded
+perturbation.</p>
+<p>Define</p>
+<p><span
+class="math display"><em>c</em><sub><em>i</em></sub> ∼ <em>c</em><sub><em>j</em></sub> ⇔ <em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>) &lt; <em>ϵ</em></span></p>
+<p>Identity persistence therefore depends upon topological continuity
+rather than exact graph invariance. When many coordinates satisfy this
+relation, they may be collected into an equivalence class</p>
+<p><span
+class="math display">[<em>c</em>] = {<em>c</em><sup>′</sup> ∣ <em>c</em><sup>′</sup> ∼ <em>c</em>}</span></p>
+<p>Governance may then choose to merge, preserve, fork, or
+namespace-distinguish the cluster depending on jurisdictional
+requirements.</p>
+<p>For any coordinate under admissible updates, long-term identity
+persistence should satisfy</p>
+<p><span
+class="math display">𝔼[<em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sup>(<em>t</em>)</sup>, <em>c</em><sup>(<em>t</em> + 1)</sup>)] &lt; <em>δ</em></span></p>
+<hr />
+<h2 id="three-representational-spaces">3. Three Representational
+Spaces</h2>
+<p>SCIT distinguishes three distinct representational domains.</p>
+<ul>
+<li>Lexical space <span class="math inline"><em>L</em></span>:
+natural-language expressions and symbolic surfaces.</li>
+<li>Semantic coordinate space <span
+class="math inline"><em>V</em></span>: governed semantic
+identities.</li>
+<li>Embedding space <span
+class="math inline">ℝ<sup><em>n</em></sup></span>: continuous learned
+representations.</li>
+</ul>
+<p>Mappings are</p>
+<p><span
+class="math display"><em>L</em> → <em>V</em> → ℝ<sup><em>n</em></sup></span></p>
+<p>with optional inverse projection</p>
+<p><span
+class="math display">ℝ<sup><em>n</em></sup> → <em>V</em></span></p>
+<p>for coordinate recovery and semantic decoding. Maintaining separation
+among these spaces prevents conceptual collapse between symbolic,
+lexical, and continuous representations.</p>
+<hr />
+<h3 id="cross-lingual-projection">3.1 Cross-Lingual Projection</h3>
+<p>SCIT treats language as projection over coordinate identity. Let</p>
+<p><span
+class="math display"><em>π</em> : <em>L</em> → <em>V</em></span></p>
+<p>map lexical expressions into semantic coordinates. For semantically
+equivalent expressions across languages,</p>
+<p><span
+class="math display">∀<em>l</em><sub>1</sub>, <em>l</em><sub>2</sub> ∈ <em>L</em>,  <em>π</em>(<em>l</em><sub>1</sub>) = <em>π</em>(<em>l</em><sub>2</sub>) = <em>c</em></span></p>
+<p>when <span class="math inline"><em>l</em><sub>1</sub></span> and
+<span class="math inline"><em>l</em><sub>2</sub></span> express the same
+governed semantic identity. Cross-lingual invariance therefore attaches
+to the coordinate, not to surface form.</p>
+<hr />
+<h2 id="from-tokens-to-coordinates">4. From Tokens to Coordinates</h2>
+<h3 id="lexical-tokenization">4.1 Lexical Tokenization</h3>
+<p>Contemporary tokenizers operate over:</p>
+<ul>
+<li>character sequences</li>
+<li>lexical recurrence</li>
+<li>byte-pair compression</li>
+<li>unigram statistics</li>
+</ul>
+<p>These systems optimize representational efficiency at the surface
+layer. The resulting token may already be highly compressed. For
+example, <code>authority</code> may exist as a single token. From the
+tokenizer’s perspective, no additional compression opportunity exists.
+Yet the semantic burden remains.</p>
+<p>The model must still determine:</p>
+<ul>
+<li>authority as expertise</li>
+<li>authority as institutional office</li>
+<li>authority as legitimate binding power</li>
+<li>authority as source citation</li>
+<li>authority as coercive domination</li>
+</ul>
+<p>The lexical token remains singular. The instantiated semantic
+identity does not.</p>
+<hr />
+<h3 id="coordinate-indexed-tokenization-interface">4.2
+Coordinate-Indexed Tokenization Interface</h3>
+<p>SCIT proposes that tokenization may instead occur over semantic
+coordinates through a coordinate-indexed tokenization interface.</p>
+<p>Conceptually:</p>
+<ul>
+<li>Natural Language</li>
+<li><span class="math inline">↓</span> GTK Resolution</li>
+<li><span class="math inline">↓</span> CSIL Coordinate</li>
+<li><span class="math inline">↓</span> SCIT</li>
+<li><span class="math inline">↓</span> Embedding</li>
+<li><span class="math inline">↓</span> Model</li>
+</ul>
+<p>The tokenizer no longer receives lexical surfaces as its primary
+object. Instead, it receives semantic coordinates whose identities have
+already been resolved. The objective is not character compression. The
+objective is semantic stabilization.</p>
+<hr />
+<h3 id="example-resolution-walkthrough">4.3 Example Resolution
+Walkthrough</h3>
+<p>Input:</p>
+<blockquote>
+<p>The authority of the court was challenged.</p>
+</blockquote>
+<p>GTK generates candidate coordinates:</p>
+<ul>
+<li><code>c_auth:expertise</code></li>
+<li><code>c_auth:institutional_office</code></li>
+<li><code>c_auth:institutional_legitimacy</code></li>
+</ul>
+<p>Context activates:</p>
+<ul>
+<li>court</li>
+<li>challenge</li>
+<li>legitimacy</li>
+<li>jurisdiction</li>
+</ul>
+<p>GTK evaluates neighborhood compatibility. The selected coordinate
+becomes:</p>
+<ul>
+<li><code>c_auth:institutional_legitimacy</code><br />
+Attention subsequently operates over semantically resolved concepts
+rather than ambiguous lexical surfaces.</li>
+</ul>
+<hr />
+<h3 id="end-to-end-execution-trace">4.4 End-to-End Execution Trace</h3>
+<p>The minimal execution trace is</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;x \\
+&amp;\rightarrow C_x \\
+&amp;\rightarrow C_{context} \\
+&amp;\rightarrow c^* \\
+&amp;\rightarrow \phi(c^*)
+\end{aligned}
+$$</span></p>
+<p>Instantiated:</p>
+<p><span
+class="math display"><em>C</em><sub><em>x</em></sub> = Gen(<em>x</em>, <em>L</em>, <em>V</em>)</span></p>
+<p><span
+class="math display"><em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub> = Context(<em>x</em>)</span></p>
+<p><span
+class="math display"><em>c</em><sup>*</sup> = arg max<sub><em>c</em> ∈ <em>C</em><sub><em>x</em></sub></sub><em>P</em>(<em>c</em> ∣ <em>x</em>, 𝒩(<em>c</em>), <em>G</em>, <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub>)</span></p>
+<p><span
+class="math display"><em>ϕ</em>(<em>c</em><sup>*</sup>) ∈ ℝ<sup><em>n</em></sup></span></p>
+<p>This trace is the operational core of SCIT: lexical input is
+candidate-generated, contextualized, topology-scored,
+governance-filtered, resolved to coordinate identity, and realized as an
+embedding. The execution trace defines a closed computational pathway
+from lexical input to coordinate-resolved embedding, ensuring that all
+intermediate transformations are explicitly governed, bounded, and
+composable.</p>
+<hr />
+<h2 id="the-semantic-coordinate-identity-layer">5. The Semantic
+Coordinate Identity Layer</h2>
+<h3 id="csil">5.1 CSIL</h3>
+<p>The Semantic Coordinate Identity Layer (CSIL) functions as the
+coordinate registry layer of the architecture. Each coordinate
+represents a disambiguated semantic identity. The coordinate remains
+invariant across:</p>
+<ul>
+<li>languages</li>
+<li>symbol systems</li>
+<li>tokenizers</li>
+<li>projections</li>
+<li>representational surfaces</li>
+</ul>
+<p>The coordinate therefore functions as a semantic anchor independent
+of expression.</p>
+<hr />
+<h3 id="registry-and-runtime-graph">5.2 Registry and Runtime Graph</h3>
+<p>CSIL is the canonical coordinate registry. Runtime reasoning does not
+require loading the entire registry. Instead, systems may operate over
+an active semantic view</p>
+<p><span
+class="math display"><em>S</em><sub><em>a</em><em>c</em><em>t</em><em>i</em><em>v</em><em>e</em></sub> ⊆ <em>S</em></span></p>
+<p>where <span
+class="math inline"><em>S</em><sub><em>a</em><em>c</em><em>t</em><em>i</em><em>v</em><em>e</em></sub></span>
+is scoped by:</p>
+<ul>
+<li>domain</li>
+<li>jurisdiction</li>
+<li>task</li>
+<li>model capacity</li>
+<li>governance policy</li>
+<li>retrieval context</li>
+</ul>
+<p>More explicitly,</p>
+<p><span
+class="math display"><em>S</em><sub><em>a</em><em>c</em><em>t</em><em>i</em><em>v</em><em>e</em></sub> = {<em>c</em> ∈ <em>V</em> ∣ <em>G</em>(<em>c</em>) &gt; 0 ∧ <em>S</em><em>c</em><em>o</em><em>p</em><em>e</em>(<em>c</em>)}</span></p>
+<p>This separates canonical identity storage from runtime semantic
+computation.</p>
+<hr />
+<h3 id="namespaces-and-collision-constraints">5.3 Namespaces and
+Collision Constraints</h3>
+<p>Coordinates must operate across domains, jurisdictions, and semantic
+traditions. Define namespace function</p>
+<p><span
+class="math display"><em>ν</em> : <em>V</em> → <em>N</em><em>a</em><em>m</em><em>e</em><em>s</em><em>p</em><em>a</em><em>c</em><em>e</em></span></p>
+<p>Coordinate uniqueness is enforced within namespace:</p>
+<p><span
+class="math display"><em>ν</em>(<em>c</em><sub><em>i</em></sub>) = <em>ν</em>(<em>c</em><sub><em>j</em></sub>) ∧ <em>i</em><em>d</em>(<em>c</em><sub><em>i</em></sub>) = <em>i</em><em>d</em>(<em>c</em><sub><em>j</em></sub>) ⇒ <em>c</em><sub><em>i</em></sub> = <em>c</em><sub><em>j</em></sub></span></p>
+<p>This allows multiple governed semantic domains to coexist without
+requiring premature global ontology closure.</p>
+<hr />
+<h3 id="coordinate-admissibility">5.4 Coordinate Admissibility</h3>
+<p>Not every semantic structure should receive a coordinate. A candidate
+instantiated semantic identity <span
+class="math inline"><em>s</em></span> may be assigned coordinate <span
+class="math inline"><em>c</em></span> iff:</p>
+<ul>
+<li>Persistence: <span class="math inline"><em>s</em></span> remains
+invariant across contexts above threshold <span
+class="math inline"><em>θ</em><sub><em>p</em></sub></span>.</li>
+<li>Distinguishability: there exists coordinate <span
+class="math inline"><em>c</em><sup>′</sup></span> such that <span
+class="math inline"><em>d</em>(<em>c</em>, <em>c</em><sup>′</sup>) &gt; <em>θ</em><sub><em>d</em></sub></span>.</li>
+<li>Topological integration: <span
+class="math inline">|𝒩(<em>c</em>)| ≥ <em>k</em><sub><em>m</em><em>i</em><em>n</em></sub></span></li>
+<li>Governance admissibility: the candidate passes <span
+class="math inline"><em>G</em><sub><em>p</em><em>o</em><em>l</em><em>i</em><em>c</em><em>y</em></sub></span>.</li>
+</ul>
+<p>These constraints prevent semantic fragmentation and establish a
+promotion pathway from SemCrys crystallization into SCIT
+coordinates.</p>
+<hr />
+<h3 id="coordinate-growth-bound">5.5 Coordinate Growth Bound</h3>
+<p>Coordinate proliferation is a structural risk. SCIT therefore
+requires either an explicit coordinate budget</p>
+<p><span class="math display">|<em>V</em>| ≤ <em>B</em></span></p>
+<p>or a maintenance penalty</p>
+<p><span
+class="math display"><em>C</em><sub><em>m</em><em>a</em><em>i</em><em>n</em><em>t</em><em>e</em><em>n</em><em>a</em><em>n</em><em>c</em><em>e</em></sub> ∝ |<em>V</em>|</span></p>
+<p>Coordinate promotion should be tied to reuse frequency, stability,
+distinguishability, and governance admissibility. A coordinate should
+exist only when its expected amortized reuse exceeds its expected
+maintenance cost.</p>
+<hr />
+<h3 id="revision-and-fork-semantics">5.6 Revision and Fork
+Semantics</h3>
+<p>Semantic systems evolve. Coordinates therefore require governed
+update mechanisms.</p>
+<p>Topology itself is time-indexed</p>
+<p><span
+class="math display"><em>S</em><sup>(<em>t</em>)</sup> = (<em>V</em><sup>(<em>t</em>)</sup>, <em>E</em><sup>(<em>t</em>)</sup>, <em>τ</em><sup>(<em>t</em>)</sup>, <em>γ</em><sup>(<em>t</em>)</sup>)</span></p>
+<p>Define coordinate update</p>
+<p><span
+class="math display"><em>c</em><sup>(<em>t</em> + 1)</sup> = update(<em>c</em><sup>(<em>t</em>)</sup>, <em>Δ</em><em>G</em>, <em>Δ</em><em>E</em>)</span></p>
+<p>Identity persists iff</p>
+<p><span
+class="math display"><em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sup>(<em>t</em>)</sup>, <em>c</em><sup>(<em>t</em> + 1)</sup>) &lt; <em>δ</em></span></p>
+<p>If this threshold is exceeded, mutation becomes inadmissible and a
+coordinate fork is required</p>
+<p><span
+class="math display"><em>c</em><sup>′</sup> ← <em>f</em><em>o</em><em>r</em><em>k</em>(<em>c</em>)</span></p>
+<p>This preserves semantic lineage while preventing identity drift.</p>
+<hr />
+<h2 id="semantic-topology">6. Semantic Topology</h2>
+<p>Semantic topology becomes a first-class object within SCIT. These
+metrics parameterize the scoring functions defined in Section 7.</p>
+<hr />
+<h3 id="local-density">6.1 Local Density</h3>
+<p><span class="math display">$$
+\rho(c) = \frac{|\mathcal{N}(c)|}{|V|}
+$$</span></p>
+<hr />
+<h3 id="path-distance">6.2 Path Distance</h3>
+<p><span
+class="math display"><em>d</em>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>)</span></p>
+<p>computed through typed shortest paths.</p>
+<hr />
+<h3 id="neighborhood-entropy">6.3 Neighborhood Entropy</h3>
+<p><span
+class="math display"><em>H</em>(<em>c</em>) = −∑<sub><em>t</em> ∈ <em>T</em></sub><em>P</em>(<em>t</em> ∣ 𝒩(<em>c</em>))log <em>P</em>(<em>t</em> ∣ 𝒩(<em>c</em>))</span></p>
+<hr />
+<h3 id="semantic-curvature">6.4 Semantic Curvature</h3>
+<p>Semantic curvature is defined as deviation of local connectivity from
+expected connectivity under a selected null model. Future
+implementations may additionally employ graph-Ricci formulations.</p>
+<hr />
+<h2 id="global-term-key">7. Global Term Key</h2>
+<p>Coordinates alone are insufficient. A coordinate without topology
+becomes merely another identifier system. SCIT therefore depends upon
+Global Term Key (GTK).</p>
+<p>GTK supplies:</p>
+<ul>
+<li>disambiguation pathways</li>
+<li>semantic neighborhoods</li>
+<li>synonym structures</li>
+<li>exclusion sets</li>
+<li>adjacency relationships</li>
+<li>semantic governance constraints</li>
+</ul>
+<p>Meaning is inferred via constrained traversal under
+governance-weighted topology.</p>
+<hr />
+<h3 id="governance-functions">7.1 Governance Functions</h3>
+<p>Governance must be operational rather than philosophical. Define</p>
+<p><span
+class="math display"><em>G</em> : <em>V</em> ∪ <em>E</em> → [0, 1]</span></p>
+<p>Governance may function as:</p>
+<ul>
+<li>admissibility filter</li>
+<li>ranking prior</li>
+<li>mutation gate</li>
+<li>promotion criterion</li>
+<li>topology constraint</li>
+</ul>
+<p>Governance therefore participates directly in semantic resolution.
+Governance may also prune topology itself</p>
+<p><span
+class="math display"><em>E</em><sup>′</sup> = {<em>e</em> ∈ <em>E</em> ∣ <em>G</em>(<em>e</em>) &gt; 0}</span></p>
+<p>so that inadmissible relations are removed from the active reasoning
+graph rather than merely downweighted.</p>
+<p>A hard admissibility rule may be defined as</p>
+<p><span
+class="math display"><em>P</em>(<em>c</em> ∣ <em>x</em>, …) = 0  if  <em>G</em>(<em>c</em>) = 0</span></p>
+<p>A soft governance contribution may be defined as</p>
+<p><span
+class="math display"><em>s</em><sub><em>G</em></sub>(<em>c</em>) = log <em>G</em>(<em>c</em>) + ∑<sub><em>e</em> ∈ 𝒩(<em>c</em>)</sub>log <em>G</em>(<em>e</em>)</span></p>
+<p>when <span class="math inline"><em>G</em>(<em>c</em>) &gt; 0</span>
+and edge governance values are nonzero. This prevents governance from
+remaining merely advisory and ensures edge-level governance participates
+in inference.</p>
+<hr />
+<h3 id="candidate-generation">7.2 Candidate Generation</h3>
+<p>SCIT separates candidate generation from coordinate selection. Given
+input <span class="math inline"><em>x</em></span>, candidate coordinates
+are generated by</p>
+<p><span
+class="math display"><em>C</em><sub><em>x</em></sub> = Gen(<em>x</em>, <em>L</em>, <em>V</em>)</span></p>
+<p>with bound</p>
+<p><span
+class="math display">|<em>C</em><sub><em>x</em></sub>| ≤ <em>k</em><sub><em>m</em><em>a</em><em>x</em></sub></span></p>
+<p>Candidate generation may use:</p>
+<ul>
+<li>lexical priors</li>
+<li>string-to-coordinate maps</li>
+<li>embedding nearest neighbors</li>
+<li>coordinate description retrieval</li>
+<li>multilingual projection tables</li>
+</ul>
+<p>The resolver then selects or weights candidates using topology and
+governance.</p>
+<p>If</p>
+<p><span
+class="math display"><em>C</em><sub><em>x</em></sub> = ⌀</span></p>
+<p>the system may either revert to the lexical token pathway or assign a
+provisional frontier distribution</p>
+<p><span
+class="math display"><em>c</em> ∼ <em>P</em>(<em>V</em><sub><em>p</em><em>r</em><em>o</em><em>t</em><em>o</em></sub>)</span></p>
+<hr />
+<h3 id="context-construction">7.3 Context Construction</h3>
+<p>Resolution depends on context coordinates. Define</p>
+<p><span
+class="math display"><em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub> = Context(<em>x</em>)</span></p>
+<p>where <span
+class="math inline"><em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub></span>
+may be constructed from:</p>
+<ul>
+<li>neighboring resolved coordinates</li>
+<li>sliding-window lexical projections</li>
+<li>prior disambiguations</li>
+<li>retrieved coordinate neighborhoods</li>
+<li>multimodal context signals</li>
+</ul>
+<p>Context must be bounded</p>
+<p><span
+class="math display">|<em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub>| ≤ <em>k</em><sub><em>c</em><em>t</em><em>x</em></sub></span></p>
+<p>or decay-weighted by distance</p>
+<p><span
+class="math display"><em>w</em>(<em>c</em>, <em>c</em><sup>′</sup>) ∝ <em>e</em><sup>−<em>λ</em> ⋅ <em>Δ</em><em>p</em><em>o</em><em>s</em><em>i</em><em>t</em><em>i</em><em>o</em><em>n</em></sup></span></p>
+<p>This prevents unbounded context accumulation.</p>
+<hr />
+<h3 id="iterative-context-refinement">7.4 Iterative Context
+Refinement</h3>
+<p>Resolution may be iterative rather than single-pass. Define</p>
+<p><span
+class="math display"><em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub><sup>(<em>t</em> + 1)</sup> = Update(<em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub><sup>(<em>t</em>)</sup>, <em>C</em><sub><em>x</em></sub>)</span></p>
+<p>Iteration terminates when</p>
+<p><span
+class="math display"><em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub><sup>(<em>t</em> + 1)</sup> = <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub><sup>(<em>t</em>)</sup></span></p>
+<p>or when a fixed maximum iteration count <span
+class="math inline"><em>T</em></span> is reached. This allows earlier
+candidate resolutions to inform later disambiguation, and later
+constraints to revise earlier uncertain assignments without permitting
+unbounded oscillation. Such refinement is especially important for
+compositional sentences where meaning emerges across phrase
+boundaries.</p>
+<hr />
+<h3 id="disambiguation-as-topology-constrained-inference">7.5
+Disambiguation as Topology-Constrained Inference</h3>
+<p>Given input <span class="math inline"><em>x</em></span>, candidate
+coordinates <span
+class="math inline"><em>C</em><sub><em>x</em></sub></span>, and context
+<span
+class="math inline"><em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub></span>,</p>
+<p><span
+class="math display"><em>C</em><sub><em>x</em></sub><sup><em>v</em><em>a</em><em>l</em><em>i</em><em>d</em></sup> = {<em>c</em> ∈ <em>C</em><sub><em>x</em></sub> ∣ <em>G</em>(<em>c</em>) &gt; 0}</span></p>
+<p><span
+class="math display"><em>c</em><sup>*</sup> = arg max<sub><em>c</em> ∈ <em>C</em><sub><em>x</em></sub><sup><em>v</em><em>a</em><em>l</em><em>i</em><em>d</em></sup></sub><em>P</em>(<em>c</em> ∣ <em>x</em>, 𝒩(<em>c</em>), <em>G</em>, <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>x</em></span> is lexical, symbolic, or
+multimodal input.</li>
+<li><span class="math inline">𝒩(<em>c</em>)</span> is local semantic
+topology.</li>
+<li><span class="math inline"><em>G</em></span> represents governance
+constraints.</li>
+<li><span
+class="math inline"><em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub></span>
+represents resolved or projected contextual coordinates.</li>
+</ul>
+<p>Disambiguation therefore becomes an optimization process operating
+over semantic neighborhoods rather than a dictionary lookup
+procedure.</p>
+<p>A modular scoring formulation is</p>
+<p><span
+class="math display"><em>s</em>(<em>c</em>) = <em>s</em>(<em>x</em>, <em>c</em>) + <em>s</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em>, <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub>) + <em>s</em><sub><em>G</em></sub>(<em>c</em>)</span></p>
+<p><span class="math display">$$
+P(c \mid x,\mathcal{N}(c),G,C_{context}) =
+\frac{\exp(s(c))}{\sum_{c' \in C_x^{valid}} \exp(s(c'))}
+$$</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>s</em>(<em>x</em>, <em>c</em>)</span>
+captures lexical or multimodal fit.</li>
+<li><span
+class="math inline"><em>s</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em>, <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub>)</span>
+captures neighborhood coherence.</li>
+<li><span
+class="math inline"><em>s</em><sub><em>G</em></sub>(<em>c</em>)</span>
+captures governance weighting.</li>
+</ul>
+<p>A context-aggregated topological distance may be defined as</p>
+<p><span class="math display">$$
+d_{topo}(c,C_{context}) =
+\frac{1}{|C_{context}|}
+\sum_{c' \in C_{context}} d_{topo}(c,c')
+$$</span></p>
+<p>A unified topology score may then be defined as</p>
+<p><span
+class="math display"><em>s</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em>, <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub>) = −<em>λ</em><sub><em>d</em></sub> ⋅ <em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em>, <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub>) + <em>λ</em><sub><em>a</em></sub> ⋅ ∑<sub><em>c</em><sup>′</sup> ∈ <em>C</em><sub><em>c</em><em>o</em><em>n</em><em>t</em><em>e</em><em>x</em><em>t</em></sub></sub><em>w</em>(<em>c</em>, <em>c</em><sup>′</sup>)</span></p>
+<p>where <span
+class="math inline"><em>w</em>(<em>c</em>, <em>c</em><sup>′</sup>)</span>
+reflects typed adjacency strength.</p>
+<hr />
+<h3 id="uncertainty-representation">7.6 Uncertainty Representation</h3>
+<p>SCIT does not require hard assignment. Coordinate activation may
+remain probabilistic:</p>
+<p><span
+class="math display"><em>P</em>(<em>c</em> ∣ <em>x</em>)</span></p>
+<p>Resolution uncertainty becomes:</p>
+<p><span
+class="math display"><em>H</em>(<em>C</em><sub><em>x</em></sub>)</span></p>
+<p>Multiple coordinates may remain simultaneously active when ambiguity
+remains unresolved. SCIT therefore does not eliminate probabilistic
+reasoning. It externalizes part of the semantic disambiguation burden
+into a persistent governed substrate while preserving uncertainty where
+required.</p>
+<p>Under stable coordinate regimes, the ambiguity-reduction invariant
+is</p>
+<p><span
+class="math display">∑<sub><em>i</em></sub><em>H</em>(<em>C</em><sub><em>x</em><sub><em>i</em></sub></sub>)<sub><em>S</em><em>C</em><em>I</em><em>T</em></sub> ≤ ∑<sub><em>i</em></sub><em>H</em>(<em>C</em><sub><em>x</em><sub><em>i</em></sub></sub>)<sub><em>l</em><em>e</em><em>x</em><em>i</em><em>c</em><em>a</em><em>l</em></sub></span></p>
+<p>for resolved sequence <span
+class="math inline"><em>x</em><sub>1</sub>, …, <em>x</em><sub><em>n</em></sub></span>.
+This is an evaluable claim rather than a guaranteed universal
+result.</p>
+<hr />
+<h3 id="sparse-region-handling">7.7 Sparse Region Handling</h3>
+<p>Sparse semantic regions require backoff mechanisms. A hybrid
+resolution rule may be</p>
+<p><span
+class="math display"><em>P</em>(<em>c</em> ∣ <em>x</em>) = <em>λ</em><em>P</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em> ∣ <em>x</em>) + (1 − <em>λ</em>)<em>P</em><sub><em>e</em><em>m</em><em>b</em><em>e</em><em>d</em></sub>(<em>c</em> ∣ <em>x</em>)</span></p>
+<p>When <span class="math inline"><em>ρ</em>(<em>c</em>)</span> is low,
+systems may reduce <span class="math inline"><em>λ</em></span>, expand
+neighborhood radius <span class="math inline"><em>k</em></span>, or
+retain multi-coordinate uncertainty rather than forcing premature
+resolution.</p>
+<hr />
+<h3 id="complexity-considerations">7.8 Complexity Considerations</h3>
+<p>Let</p>
+<p><span
+class="math display">|<em>C</em><sub><em>x</em></sub>| = <em>k</em></span></p>
+<p>and average neighborhood size <span
+class="math inline"><em>m</em></span>.</p>
+<p>Naive resolution cost:</p>
+<p><span
+class="math display"><em>O</em>(<em>k</em><em>m</em>)</span></p>
+<p><span class="math inline"><em>h</em></span>-hop traversal cost:</p>
+<p><span
+class="math display"><em>O</em>(<em>k</em><em>m</em><sup><em>h</em></sup>)</span></p>
+<p>Practical systems therefore require locality bounds, such as <span
+class="math inline"><em>h</em> ≤ 2</span>, degree bounds, such as <span
+class="math inline">|𝒩(<em>c</em>)| ≤ <em>d</em><sub><em>m</em><em>a</em><em>x</em></sub></span>,
+candidate pruning, lexical priors, approximate retrieval, and cached
+resolutions to maintain tractability.</p>
+<p>SCIT introduces a shift from stateless semantic reconstruction to
+stateful semantic infrastructure. Coordinates accumulate disambiguation
+decisions over time, allowing future inference to operate over
+previously stabilized semantic identities rather than re-solving
+equivalent ambiguity. This converts semantic interpretation into a
+partially persistent computational resource.</p>
+<hr />
+<h2 id="embeddings-and-coordinate-realization">8. Embeddings and
+Coordinate Realization</h2>
+<p>SCIT is not a symbolic replacement for neural representations.
+Coordinates remain compatible with vector-space learning.</p>
+<p>Define</p>
+<p><span
+class="math display"><em>ϕ</em> : <em>V</em> → ℝ<sup><em>n</em></sup></span></p>
+<p>mapping coordinates into embedding space. The desired constraint
+is</p>
+<p><span
+class="math display"><em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>) ≈ <em>d</em><sub><em>e</em><em>m</em><em>b</em><em>e</em><em>d</em></sub>(<em>ϕ</em>(<em>c</em><sub><em>i</em></sub>), <em>ϕ</em>(<em>c</em><sub><em>j</em></sub>))</span></p>
+<p>Topological proximity should therefore correspond approximately to
+embedding proximity.</p>
+<p>Because topological and embedding distances may operate on different
+scales, distance normalization or learned scale alignment is required.
+For example</p>
+<p><span class="math display">$$
+\tilde{d}_{topo} = \frac{d_{topo} - \mu}{\sigma}
+$$</span></p>
+<p>A topology-preservation loss may be defined as</p>
+<p><span
+class="math display">ℒ<sub><em>t</em><em>o</em><em>p</em><em>o</em></sub> = ∑<sub><em>i</em>, <em>j</em></sub>|<em>d̃</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>)−∥<em>ϕ</em>(<em>c</em><sub><em>i</em></sub>) − <em>ϕ</em>(<em>c</em><sub><em>j</em></sub>)∥|</span></p>
+<p>Potential implementation approaches include graph-Laplacian
+initialization, spectral embeddings, topology-aware contrastive
+learning, adjacency-biased attention, and topology regularization during
+training. SCIT therefore augments embedding systems rather than
+replacing them.</p>
+<hr />
+<h3 id="coordinate-aware-attention">8.1 Coordinate-Aware Attention</h3>
+<p>Coordinate-aware attention may incorporate typed relation bias. For
+coordinates <span
+class="math inline"><em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub></span>,</p>
+<p><span
+class="math display"><em>A</em><em>t</em><em>t</em><em>n</em>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>) = softmax<sub><em>j</em></sub>(<em>q</em><sub><em>i</em></sub><sup>⊤</sup><em>k</em><sub><em>j</em></sub> + <em>b</em><sub><em>τ</em>(<em>e</em><sub><em>i</em><em>j</em></sub>)</sub>)</span></p>
+<p>where <span
+class="math inline"><em>b</em><sub><em>τ</em>(<em>e</em><sub><em>i</em><em>j</em></sub>)</sub></span>
+is an attention bias derived from relation type. This allows topology to
+influence transformer computation without replacing learned
+attention.</p>
+<hr />
+<h2 id="retrieval-and-addressability">9. Retrieval and
+Addressability</h2>
+<p>A semantic coordinate system must support sublinear-time
+retrieval.</p>
+<p>First define neighborhood embedding aggregation</p>
+<p><span class="math display">$$
+\phi(\mathcal{N}(c)) =
+\frac{1}{|\mathcal{N}(c)|}
+\sum_{c' \in \mathcal{N}(c)} \phi(c')
+$$</span></p>
+<p>Given query <span class="math inline"><em>q</em></span>, retrieval
+may be defined as</p>
+<p><span
+class="math display">arg max<sub><em>c</em> ∈ <em>V</em></sub>(<em>s</em><em>i</em><em>m</em>(<em>q</em>, <em>ϕ</em>(<em>c</em>)) + <em>λ</em> ⋅ <em>s</em><em>i</em><em>m</em>(<em>q</em>, <em>ϕ</em>(𝒩(<em>c</em>))))</span></p>
+<p>This ensures topology participates in retrieval rather than merely
+embedding similarity. Practical implementations require ANN or
+equivalent approximate indexing for scalability. The base ANN index key
+is</p>
+<p><span class="math display"><em>ϕ</em>(<em>c</em>)</span></p>
+<p>An augmented index key may be</p>
+<p><span
+class="math display"><em>ϕ</em>(<em>c</em>) ⊕ <em>ϕ</em>(𝒩(<em>c</em>))</span></p>
+<p>where <span class="math inline">⊕</span> denotes vector concatenation
+or another governed fusion operator. This connects SCIT naturally to
+retrieval systems while preserving semantic addressability.</p>
+<hr />
+<h2 id="composition-and-structured-semantics">10. Composition and
+Structured Semantics</h2>
+<p>Not all meaning reduces to atomic coordinates. SCIT therefore
+introduces composition</p>
+<p><span
+class="math display">⊕ : <em>V</em><sup><em>n</em></sup> → <em>V</em> ∪ 𝒢</span></p>
+<p>where <span class="math inline">𝒢</span> is the space of structured
+semantic graphs. Thus</p>
+<p><span
+class="math display"><em>c</em><sub><em>c</em><em>o</em><em>m</em><em>p</em></sub> ⊕ (<em>c</em><sub>1</sub>, <em>c</em><sub>2</sub>, …, <em>c</em><sub><em>n</em></sub>)</span></p>
+<p>The resulting structure may:</p>
+<ul>
+<li>map to an existing coordinate</li>
+<li>remain a structured semantic expression</li>
+<li>enter SemCrys evaluation for future crystallization</li>
+</ul>
+<p>Composition should satisfy associativity where the represented
+semantic operation permits</p>
+<p><span
+class="math display">(<em>c</em><sub>1</sub> ⊕ <em>c</em><sub>2</sub>) ⊕ <em>c</em><sub>3</sub> = <em>c</em><sub>1</sub> ⊕ (<em>c</em><sub>2</sub> ⊕ <em>c</em><sub>3</sub>)</span></p>
+<p>The composed structure must satisfy governance validity</p>
+<p><span
+class="math display"><em>G</em>(<em>c</em><sub><em>c</em><em>o</em><em>m</em><em>p</em></sub>) &gt; 0</span></p>
+<p>When <span
+class="math inline"><em>c</em><sub><em>c</em><em>o</em><em>m</em><em>p</em></sub> ∈ 𝒢</span>,
+collapse requires graph-to-coordinate projection</p>
+<p><span class="math display"><em>ψ</em> : 𝒢 → <em>V</em></span></p>
+<p>If there exists coordinate <span
+class="math inline"><em>c</em><sup>*</sup></span> such that</p>
+<p><span
+class="math display"><em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>ψ</em>(<em>c</em><sub><em>c</em><em>o</em><em>m</em><em>p</em></sub>), <em>c</em><sup>*</sup>) &lt; <em>ϵ</em></span></p>
+<p>then the composition may collapse to existing coordinate <span
+class="math inline"><em>c</em><sup>*</sup></span>.</p>
+<p>Composition must also be cost-controlled</p>
+<p><span
+class="math display"><em>C</em><sub><em>c</em><em>o</em><em>m</em><em>p</em></sub> ∝ <em>n</em></span></p>
+<p>with practical systems bounding</p>
+<p><span
+class="math display"><em>n</em> ≤ <em>n</em><sub><em>m</em><em>a</em><em>x</em></sub></span></p>
+<p>For example, legitimate authority under crisis may remain a
+structured semantic subgraph rather than collapsing into a single
+coordinate. This preserves generative flexibility while retaining
+coordinate identity.</p>
+<hr />
+<h2 id="coordinate-compression-economics">11. Coordinate Compression
+Economics</h2>
+<p>SCIT introduces a different notion of compression. The relevant
+question is not whether fewer characters are transmitted. The relevant
+question is whether semantic reconstruction overhead is reduced.</p>
+<p>Define</p>
+<p><span
+class="math display"><em>C</em><sub><em>t</em><em>o</em><em>t</em><em>a</em><em>l</em></sub> = <em>C</em><sub><em>r</em><em>e</em><em>s</em><em>o</em><em>l</em><em>u</em><em>t</em><em>i</em><em>o</em><em>n</em></sub> + <em>C</em><sub><em>m</em><em>a</em><em>i</em><em>n</em><em>t</em><em>e</em><em>n</em><em>a</em><em>n</em><em>c</em><em>e</em></sub> − <em>C</em><sub><em>r</em><em>e</em><em>u</em><em>s</em><em>e</em></sub></span></p>
+<p>SCIT is beneficial iff amortized semantic reuse exceeds the cost of
+maintaining coordinate infrastructure. This converts semantic
+compression into a measurable engineering tradeoff.</p>
+<p>A caching layer may be defined as</p>
+<p><span class="math display">𝒞(<em>x</em>) → <em>c</em></span></p>
+<p>with reuse contribution</p>
+<p><span
+class="math display"><em>C</em><sub><em>r</em><em>e</em><em>u</em><em>s</em><em>e</em></sub> ∝ |𝒞|</span></p>
+<p>Cache scope may be local to a model, shared across a deployment, or
+maintained as infrastructure. A cache entry is invalidated when
+coordinate identity drift exceeds the persistence threshold</p>
+<p><span
+class="math display"><em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sup>(<em>t</em>)</sup>, <em>c</em><sup>(<em>t</em> + 1)</sup>) &gt; <em>δ</em></span></p>
+<p>Indirect drift also matters. A cache entry should be invalidated
+when</p>
+<p><span class="math display">∃<em>c</em><sup>′</sup> ∈ 𝒩(<em>c</em>)
+such that
+<em>d</em><sub><em>t</em><em>o</em><em>p</em><em>o</em></sub>(<em>c</em><sup>′</sup><sup>(<em>t</em>)</sup>, <em>c</em><sup>′</sup><sup>(<em>t</em> + 1)</sup>) &gt; <em>δ</em></span></p>
+<p>This prevents cached meanings from drifting through neighborhood
+mutation.</p>
+<p>More generally, if semantic reuse frequency <span
+class="math inline"><em>f</em>(<em>c</em>)</span> exceeds maintenance
+cost over time, then the SCIT asymptotic hypothesis is</p>
+<p><span
+class="math display">lim<sub><em>t</em> → ∞</sub><em>C</em><sub><em>t</em><em>o</em><em>t</em><em>a</em><em>l</em></sub><sup><em>S</em><em>C</em><em>I</em><em>T</em></sup> &lt; <em>C</em><sub><em>t</em><em>o</em><em>t</em><em>a</em><em>l</em></sub><sup><em>l</em><em>e</em><em>x</em><em>i</em><em>c</em><em>a</em><em>l</em></sup></span></p>
+<p>This is not asserted as universally true. It is a testable hypothesis
+for high-reuse semantic regimes.</p>
+<hr />
+<h2 id="incremental-deployment-path">12. Incremental Deployment
+Path</h2>
+<p>SCIT does not require immediate replacement of existing tokenizers. A
+practical deployment path may proceed through:</p>
+<ul>
+<li>Phase 1: Post-hoc coordinate tagging.</li>
+<li>Phase 2: Hybrid lexical-coordinate streams.</li>
+<li>Phase 3: Coordinate-aware attention.</li>
+<li>Phase 4: Fully coordinate-native pretraining.</li>
+</ul>
+<p>This progression enables gradual adoption while preserving
+compatibility with contemporary language models.</p>
+<hr />
+<h2 id="relationship-to-existing-systems">13. Relationship to Existing
+Systems</h2>
+<p>Knowledge graphs provide semantic relations but do not define
+identity through topological stability. WordNet and BabelNet remain
+lexically anchored rather than coordinate-native. Embedding spaces
+provide continuity but lack explicit addressability and governance
+constraints. Wikidata provides identifiers but does not require
+topological identity semantics.</p>
+<p>SCIT may therefore be characterized as:</p>
+<blockquote>
+<p>addressable, topologically constrained, governance-bound semantic
+identity.</p>
+</blockquote>
+<hr />
+<h2 id="semantic-frontier-regions">14. Semantic Frontier Regions</h2>
+<p>Define frontier set</p>
+<p><span
+class="math display"><em>F</em> ⊆ <em>V</em> ∪ <em>V</em><sub><em>p</em><em>r</em><em>o</em><em>t</em><em>o</em></sub></span></p>
+<p>representing provisional semantic structures characterized by:</p>
+<ul>
+<li>low stability</li>
+<li>incomplete topology</li>
+<li>unresolved governance consensus</li>
+<li>active semantic evolution</li>
+</ul>
+<p>Coordinates within frontier regions may remain probabilistic</p>
+<p><span
+class="math display"><em>c</em> ∼ <em>P</em>(<em>V</em><sub><em>p</em><em>r</em><em>o</em><em>t</em><em>o</em></sub>)</span></p>
+<p>allowing semantic exploration without premature canonicalization.</p>
+<hr />
+<h2 id="non-goals">15. Non-Goals</h2>
+<p>SCIT does not attempt:</p>
+<ul>
+<li>complete ontology closure</li>
+<li>elimination of all ambiguity</li>
+<li>replacement of probabilistic reasoning</li>
+<li>suppression of linguistic plurality</li>
+<li>universal semantic centralization</li>
+</ul>
+<p>The framework instead proposes governed coordinate infrastructure for
+semantic identities that are sufficiently stable, reusable, and
+topologically integrated to justify representation.</p>
+<hr />
+<h2 id="threat-model-and-failure-modes">16. Threat Model and Failure
+Modes</h2>
+<p>Assume adversaries may:</p>
+<ul>
+<li>propose coordinates</li>
+<li>modify topology</li>
+<li>bias governance weights</li>
+</ul>
+<p>Attack surfaces include:</p>
+<ul>
+<li>semantic drift injection</li>
+<li>coordinate shadowing</li>
+<li>topology poisoning</li>
+</ul>
+<p>Robustness objective:</p>
+<p><span
+class="math display">min  <em>i</em><em>m</em><em>p</em><em>a</em><em>c</em><em>t</em><sub><em>a</em><em>d</em><em>v</em></sub>(<em>V</em>, <em>E</em>)</span></p>
+<p>Additional risks include:</p>
+<ul>
+<li>semantic aliasing</li>
+<li>sparse-region instability</li>
+<li>governance capture</li>
+<li>topology maintenance cost</li>
+<li>coordinate proliferation</li>
+<li>semantic ossification</li>
+</ul>
+<hr />
+<h2 id="minimal-implementation-substrate">17. Minimal Implementation
+Substrate</h2>
+<p>A minimal SCIT implementation may consist of:</p>
+<ul>
+<li>Coordinate Registry: coordinate identifiers, namespaces, governance
+metadata, lineage tracking.</li>
+<li>Topology Store: adjacency lists, typed edges, weighted
+relations.</li>
+<li>Resolver: candidate generator, topology-conditioned scoring
+function, governance filter.</li>
+<li>Embedding Layer: topology-regularized embeddings, coordinate-aware
+attention.</li>
+</ul>
+<p>This architecture is sufficient to construct an experimental SCIT
+prototype.</p>
+<hr />
+<h2 id="empirical-evaluation-program">18. Empirical Evaluation
+Program</h2>
+<p>SCIT should be evaluated empirically rather than accepted
+conceptually.</p>
+<p>Tasks:</p>
+<ul>
+<li>word-sense disambiguation</li>
+<li>multi-hop reasoning</li>
+<li>cross-lingual semantic alignment</li>
+</ul>
+<p>Metrics:</p>
+<ul>
+<li>resolution consistency</li>
+<li>attention entropy reduction</li>
+<li>compute per resolved concept</li>
+<li>topology coherence</li>
+<li>embedding-topology correlation</li>
+</ul>
+<p>Importantly, negative outcomes remain possible. SCIT may underperform
+in highly creative language, rapidly evolving domains, or low-redundancy
+semantic environments. Such results would represent meaningful evidence
+rather than failure of the scientific process.</p>
+<hr />
+<h2 id="discussion">19. Discussion</h2>
+<p>The dominant assumption of language modeling has been that lexical
+tokenization is the natural interface between language and cognition.
+SCIT challenges this assumption.</p>
+<p>The framework suggests that the true computational object may not be
+the token, nor the word, nor even the phrase. Instead, the fundamental
+cognitive object may be the semantic coordinate.</p>
+<p>If so, current tokenization systems may represent an intermediate
+historical stage rather than an endpoint. Future systems may
+increasingly organize themselves around governed semantic address spaces
+whose coordinates are directly consumable by reasoning
+architectures.</p>
+<hr />
+<h2 id="conclusion">20. Conclusion</h2>
+<p>SCIT proposes a shift from lexical tokenization toward semantic
+coordinate tokenization. Rather than repeatedly reconstructing meaning
+from ambiguous lexical surfaces, reasoning systems may operate over
+governed semantic coordinates that function simultaneously as identity,
+address, and topological location.</p>
+<p>The framework extends semantic crystallization into semantic
+addressability. Its central proposition is simple:</p>
+<blockquote>
+<p>Meaning becomes more computationally tractable when concepts possess
+stable semantic coordinates.</p>
+</blockquote>
+<p>The future of machine cognition may therefore depend not only upon
+larger models or larger context windows, but upon the emergence of
+governed semantic coordinate systems capable of organizing cognition
+around meaning itself.</p>
+<hr />
+<h2 id="appendix-a-scit-stack">Appendix A – SCIT Stack</h2>
+<ul>
+<li>Lexical Space (L)</li>
+<li><span class="math inline">↓</span> GTK Resolution</li>
+<li><span class="math inline">↓</span> Semantic Coordinate Space
+(V)</li>
+<li><span class="math inline">↓</span> SCIT</li>
+<li><span class="math inline">↓</span> Embedding Space (<span
+class="math inline">ℝ<sup><em>n</em></sup></span>)</li>
+<li><span class="math inline">↓</span> Reasoning System</li>
+</ul>
+<hr />
+<h2 id="appendix-b-coordinate-properties">Appendix B – Coordinate
+Properties</h2>
+<p>Every coordinate should possess:</p>
+<ul>
+<li>uniqueness</li>
+<li>topological location</li>
+<li>adjacency structure</li>
+<li>contrastive boundaries</li>
+<li>governance metadata</li>
+<li>revision lineage</li>
+<li>jurisdictional scope</li>
+<li>retrieval addressability</li>
+</ul>
+<hr />
+<h2 id="appendix-c-future-research-directions">Appendix C – Future
+Research Directions</h2>
+<ul>
+<li>coordinate allocation algorithms</li>
+<li>topology-aware embedding initialization</li>
+<li>coordinate-native transformers</li>
+<li>semantic routing systems</li>
+<li>coordinate compression economics</li>
+<li>multilingual coordinate projections</li>
+<li>semantic governance protocols</li>
+<li>topology-aware reasoning benchmarks</li>
+</ul>
+<hr />
+<h2 id="related-works">Related Works</h2>
+<ul>
+<li>semantic coordinate tokenization</li>
+<li>topological identity</li>
+<li>governed semantic knowledge</li>
+<li>semantic disambiguation</li>
+<li>coordinate-native representation</li>
+<li>semantic addressability</li>
+<li>semantic crystallization</li>
+<li>topology-aware attention</li>
+<li>semantic governance</li>
+<li>cross-lingual coordinate projection</li>
+<li>semantic compression economics</li>
+<li>coordinate-indexed tokenization</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that large language models currently operate over
+tokenization systems optimized around lexical recurrence, statistical
+compression, and surface-level representational efficiency. Its nearest
+external comparison fields are semantic, token, crypto. The sources in
+[E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. Statistical compression can improve
+efficiency while destroying distinctions needed for interpretation;
+semantic labels can conversely overstate stability that usage does not
+support. A valid hash, signature, or inclusion proof establishes a
+bounded cryptographic relation, not meaning, authority, safety, or
+jurisdiction by itself. These limits are not generic disclaimers: they
+identify the assumptions that a later empirical, formal, or
+implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> Rico Sennrich, Barry Haddow, and Alexandra
+Birch. “Neural Machine Translation of Rare Words with Subword Units.”
+<em>ACL 2016</em>, pp. 1715-1725. DOI: 10.18653/v1/P16-1162.
+https://doi.org/10.18653/v1/P16-1162 <strong>Relationship:</strong>
+Predecessor subword tokenization method used as a contrast to
+semantically governed token boundaries.</p>
+<p><strong>[E7]</strong> Taku Kudo and John Richardson. “SentencePiece:
+A Simple and Language Independent Subword Tokenizer and Detokenizer for
+Neural Text Processing.” <em>EMNLP 2018: System Demonstrations</em>.
+DOI: 10.18653/v1/D18-2012. https://doi.org/10.18653/v1/D18-2012
+<strong>Relationship:</strong> Predecessor tokenizer implementation used
+to separate statistical segmentation from semantic admissibility.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Semantic Tokens:
+Tokenization as an Admissibility Boundary</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18469507</code>;<br />
+source SHA-256<br />
+<code>5C44175B87C514892A0DC9743E09D03893E970AF5419F2E6D9171651BE2A9A54</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Token Parsimony</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.20382825</code>;<br />
+source SHA-256<br />
+<code>EC3AA22D32E2BBA21CFCB6D1FA2AE6EA8AC11B7781D19C51530A2F6D924B2E91</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Ableman, Adam. <em>SemCrys: Toward a Tokenizer-Native Semantic
+Substrate for Machine Cognition.</em></p>
+<p>Ableman, Adam. <em>Global Term Key (GTK).</em></p>
+<p>Bengio, Yoshua et al. “Representation Learning.”</p>
+<p>LeCun, Yann. “Path Towards Autonomous Machine Intelligence.”</p>
+<p>Leibniz, Gottfried Wilhelm. <em>Characteristica Universalis.</em></p>
+<p>Mikolov, Tomas et al. “Distributed Representations of Words and
+Phrases and their Compositionality.”</p>
+<p>Tenenbaum, Joshua et al. “How to Grow a Mind.”</p>
+<p>Wilkins, John. <em>An Essay Towards a Real Character and a
+Philosophical Language.</em></p>
+<p>WordNet Project.</p>
+<p>Wikidata Knowledge Graph.</p>
+<p>BabelNet.</p>
+<hr />
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20532070">10.5281/zenodo.20532070</a></p>

@@ -1,0 +1,605 @@
+<h1 id="governed-semantic-kernel-layer">Governed Semantic Kernel
+Layer</h1>
+<h2
+id="semantic-domain-kernels-phase-space-computation-and-legible-lowering-into-runtime-effects">Semantic
+Domain Kernels, Phase-Space Computation, and Legible Lowering into
+Runtime Effects</h2>
+<h3
+id="these-kernels-do-not-mediate-hardware-instead-they-define-semantic-phase-spaces-consisting-of-entities-relations-invariants-and-admissible-transitions.">These
+kernels do not mediate hardware; instead, they define semantic phase
+spaces consisting of entities, relations, invariants, and admissible
+transitions.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern software systems encode semantic domains inside applications
+while reserving kernel architecture for hardware arbitration. This
+separation produces a structural blind spot: the laws governing
+knowledge, orchestration, authority, and domain transitions remain
+implicit and difficult to inspect. Applications become the de facto
+location where domain invariants are enforced, producing systems that
+are difficult to reason about, audit, or safely evolve–especially under
+AI-assisted development.</p>
+<p>This paper introduces the <strong>Governed Semantic Kernel Layer
+(GSKL)</strong>, an architectural framework in which semantic domains
+themselves are elevated into kernel-level structures. These kernels do
+not mediate hardware; instead, they define <strong>semantic phase
+spaces</strong> consisting of entities, relations, invariants, and
+admissible transitions. Applications instantiate trajectories within
+these phase spaces rather than embedding domain semantics
+internally.</p>
+<p>The Governed Semantic Kernel Layer separates semantic governance from
+runtime execution through a structured lowering pipeline consisting of
+canonical semantic representation, transition grammars, and minimal
+runtime effect adapters. This architecture preserves domain legibility
+for both human operators and AI systems while maintaining compatibility
+with conventional operating systems.</p>
+<p>The result is a kernel constellation architecture in which semantic
+domains remain explicit, transitions remain auditable, and runtime
+execution becomes a thin lowering layer rather than the locus of domain
+authority.</p>
+<hr />
+<h2 id="the-problem-kernels-govern-hardware-not-meaning">1. The Problem:
+Kernels Govern Hardware, Not Meaning</h2>
+<p>Operating system kernels are designed to arbitrate scarce physical
+resources. They manage:</p>
+<ul>
+<li><p>memory allocation</p></li>
+<li><p>process scheduling</p></li>
+<li><p>device interaction</p></li>
+<li><p>privilege boundaries</p></li>
+<li><p>hardware interrupts</p></li>
+</ul>
+<p>Applications, meanwhile, encode domain semantics: business rules,
+collaboration structures, identity regimes, knowledge artifacts, and
+orchestration logic.</p>
+<p>This separation works adequately for resource arbitration but fails
+to address the governance of semantic domains. The laws governing domain
+behavior–who may act, what transitions are lawful, which invariants must
+hold–are typically embedded in application logic or distributed across
+service layers.</p>
+<p>Consequently:</p>
+<ul>
+<li><p>domain invariants become implicit</p></li>
+<li><p>authority boundaries drift over time</p></li>
+<li><p>system evolution becomes difficult to audit</p></li>
+<li><p>AI-assisted development introduces ungoverned transformation
+risk</p></li>
+</ul>
+<p>Traditional kernels enforce physical constraints. They do not enforce
+semantic constraints.</p>
+<p>The result is a structural asymmetry: hardware transitions are
+mediated by kernels, while semantic transitions remain embedded in
+mutable application code.</p>
+<p>The <strong>Governed Semantic Kernel Layer</strong> addresses this
+asymmetry by elevating semantic domains into kernel-level governance
+structures.</p>
+<hr />
+<h2 id="from-execution-centric-to-domain-governed-computation">2. From
+Execution-Centric to Domain-Governed Computation</h2>
+<p>Traditional system architecture asks:</p>
+<blockquote>
+<p>Can this program run?</p>
+</blockquote>
+<p>The Governed Semantic Kernel Layer instead asks:</p>
+<blockquote>
+<p>Is this transition lawful within the domain?</p>
+</blockquote>
+<p>Execution becomes secondary to admissibility.</p>
+<p>A semantic kernel defines the lawful <strong>phase space</strong> of
+a domain:</p>
+<ul>
+<li><p>which entities may exist</p></li>
+<li><p>which relations may connect them</p></li>
+<li><p>which invariants must remain true</p></li>
+<li><p>which transitions are admissible</p></li>
+</ul>
+<p>Applications do not define these laws. They instantiate trajectories
+within the kernel-defined space.</p>
+<p>This architectural shift mirrors developments in compiler theory,
+where programs are transformed through explicit intermediate
+representations rather than directly compiled to machine
+instructions.</p>
+<p>Similarly, GSKL introduces a semantic intermediate layer governing
+domain transitions before they are lowered into runtime effects.</p>
+<hr />
+<h2 id="semantic-kernels-as-phase-space-generators">3. Semantic Kernels
+as Phase-Space Generators</h2>
+<p>A semantic kernel defines a domain phase space consisting of:</p>
+<p>1. <strong>Entities</strong> – canonical object types within the
+domain</p>
+<p>2. <strong>Relations</strong> – permitted associations between
+entities</p>
+<p>3. <strong>Invariants</strong> – constraints that must remain
+true</p>
+<p>4. <strong>Transitions</strong> – lawful state transformations</p>
+<p>5. <strong>Effect projections</strong> – mappings from semantic
+transitions into runtime operations</p>
+<p>This model resembles phase-space formulations in physics, where a
+system’s possible states are defined before trajectories through that
+space are considered.</p>
+<p>Semantic kernels function as <strong>phase-space
+enablers</strong>.</p>
+<p>Applications then instantiate particular operating regimes within
+those spaces.</p>
+<p>For example, an orchestration kernel might define entities such
+as:</p>
+<ul>
+<li><p>Agent</p></li>
+<li><p>Role</p></li>
+<li><p>Claim</p></li>
+<li><p>Handoff</p></li>
+</ul>
+<p>Transitions such as:</p>
+<ul>
+<li><p>claim_assignment</p></li>
+<li><p>claim_release</p></li>
+<li><p>claim_handoff</p></li>
+</ul>
+<p>Invariants such as:</p>
+<ul>
+<li><p>a claim cannot be simultaneously owned by two exclusive
+agents</p></li>
+<li><p>handoffs must preserve authority continuity</p></li>
+</ul>
+<p>Applications then orchestrate agents within this space rather than
+redefining orchestration logic internally.</p>
+<hr />
+<h2 id="canonical-semantic-representation">4. Canonical Semantic
+Representation</h2>
+<p>The first layer of the Governed Semantic Kernel architecture defines
+domain geometry through a canonical representation system.</p>
+<p>A canonical representation must provide:</p>
+<ul>
+<li><p>stable identity for domain artifacts</p></li>
+<li><p>explicit relation graphs</p></li>
+<li><p>deterministic structural hashing</p></li>
+<li><p>immutable historical records</p></li>
+</ul>
+<p>In practical implementations this may take the form of a structured
+artifact store where domain objects are represented as canonical graph
+artifacts.</p>
+<p>Each artifact includes:</p>
+<ul>
+<li><p>unique identity</p></li>
+<li><p>schema reference</p></li>
+<li><p>relation edges</p></li>
+<li><p>structural hash</p></li>
+<li><p>lineage reference</p></li>
+</ul>
+<p>Artifacts are append-only once committed, enabling deterministic
+reconstruction of domain history.</p>
+<p>This representation layer serves as the <strong>semantic
+geometry</strong> of the kernel phase space.</p>
+<hr />
+<h2 id="transition-grammars">5. Transition Grammars</h2>
+<p>While canonical representation defines the structure of the domain,
+transitions define how the system moves within that space.</p>
+<p>Transition grammars specify:</p>
+<ul>
+<li><p>preconditions</p></li>
+<li><p>state mutations</p></li>
+<li><p>invariant validation</p></li>
+<li><p>receipt emission</p></li>
+<li><p>effect projection</p></li>
+</ul>
+<p>Each transition operates as an explicit machine with deterministic
+inputs and outputs.</p>
+<p>Example transition definition:</p>
+<pre><code>
+transition: claim\_handoff
+
+preconditions:
+
+&amp;#x20; claim.owner == source\_agent
+
+&amp;#x20; target\_agent.has\_role(required\_role)
+
+effects:
+
+&amp;#x20; claim.owner = target\_agent
+
+&amp;#x20; emit\_receipt(&quot;handoff&quot;, claim.id, source\_agent, target\_agent)</code></pre>
+<p>Transitions must execute atomically and produce structured receipts
+describing:</p>
+<ul>
+<li><p>transition type</p></li>
+<li><p>input entities</p></li>
+<li><p>resulting state changes</p></li>
+<li><p>effect projections</p></li>
+</ul>
+<p>No state mutation may occur outside declared transitions.</p>
+<p>This guarantees invariant preservation.</p>
+<hr />
+<h2 id="runtime-effect-adapters">6. Runtime Effect Adapters</h2>
+<p>Semantic kernels do not interact directly with hardware or operating
+system primitives.</p>
+<p>Instead they emit <strong>effect intents</strong>.</p>
+<p>Effect intents are processed by runtime adapters responsible for
+lowering semantic actions into host system operations.</p>
+<p>Examples include:</p>
+<ul>
+<li><p>filesystem persistence adapter</p></li>
+<li><p>process execution adapter</p></li>
+<li><p>network transport adapter</p></li>
+<li><p>cryptographic verification adapter</p></li>
+</ul>
+<p>Each adapter exposes a minimal interface mapping effect intents to
+system calls.</p>
+<p>Example lowering pipeline:</p>
+<pre><code>
+semantic transition
+
+&amp;#x20;     v
+
+effect intent
+
+&amp;#x20;     v
+
+runtime adapter
+
+&amp;#x20;     v
+
+host syscall
+
+&amp;#x20;     v
+
+machine instruction</code></pre>
+<p>This design isolates machine-specific logic from semantic
+governance.</p>
+<p>The semantic kernel layer remains portable and legible.</p>
+<hr />
+<h2 id="minimizing-syscall-coupling">7. Minimizing Syscall Coupling</h2>
+<p>Traditional kernel APIs expose system calls as primary
+primitives:</p>
+<ul>
+<li><p>read</p></li>
+<li><p>write</p></li>
+<li><p>fork</p></li>
+<li><p>exec</p></li>
+</ul>
+<p>In GSKL architecture, system calls become terminal operations rather
+than architectural centers.</p>
+<p>Semantic kernels instead expose <strong>domain
+transitions</strong>:</p>
+<ul>
+<li><p>assign_claim</p></li>
+<li><p>publish_artifact</p></li>
+<li><p>schedule_event</p></li>
+<li><p>record_lineage</p></li>
+</ul>
+<p>System calls are used only within runtime adapters.</p>
+<p>This dramatically improves legibility for both humans and AI systems,
+since semantic transitions remain explicit and inspectable.</p>
+<hr />
+<h2 id="kernel-constellations">8. Kernel Constellations</h2>
+<p>Complex systems rarely operate within a single semantic domain.</p>
+<p>Instead they involve multiple domains interacting simultaneously.</p>
+<p>Examples include:</p>
+<ul>
+<li><p>artifact storage</p></li>
+<li><p>lineage and provenance</p></li>
+<li><p>orchestration</p></li>
+<li><p>identity and trust</p></li>
+<li><p>scheduling and time</p></li>
+<li><p>collaboration</p></li>
+<li><p>publication and distribution</p></li>
+</ul>
+<p>Each domain may be governed by its own semantic kernel.</p>
+<p>Together these kernels form a <strong>kernel
+constellation</strong>.</p>
+<p>Applications instantiate trajectories across multiple kernels
+simultaneously.</p>
+<p>For example, a collaborative task system may combine:</p>
+<ul>
+<li><p>orchestration kernel</p></li>
+<li><p>scheduling kernel</p></li>
+<li><p>identity kernel</p></li>
+<li><p>artifact kernel</p></li>
+</ul>
+<p>Kernel constellations allow systems to grow without monolithic
+semantic entanglement.</p>
+<hr />
+<h2 id="application-instantiation">9. Application Instantiation</h2>
+<p>Within the GSKL architecture, applications are no longer the primary
+carriers of domain logic.</p>
+<p>Instead they function as orchestration layers that:</p>
+<ul>
+<li><p>create domain artifacts</p></li>
+<li><p>initiate kernel transitions</p></li>
+<li><p>present user interfaces</p></li>
+<li><p>coordinate cross-kernel workflows</p></li>
+</ul>
+<p>Application code does not directly mutate kernel state
+structures.</p>
+<p>All modifications occur through declared transitions.</p>
+<p>This separation reduces technical debt and ensures that domain
+invariants remain enforceable across all applications using the
+kernel.</p>
+<hr />
+<h2 id="governance-and-observability">10. Governance and
+Observability</h2>
+<p>Because all transitions are explicit, the system produces a
+structured stream of transition receipts.</p>
+<p>Receipts record:</p>
+<ul>
+<li><p>transition identity</p></li>
+<li><p>involved artifacts</p></li>
+<li><p>invariant verification results</p></li>
+<li><p>emitted effects</p></li>
+</ul>
+<p>These receipts enable deterministic reconstruction of system state
+trajectories.</p>
+<p>Observability systems can replay transition histories, detect
+invariant violations, and audit system evolution.</p>
+<p>AI-assisted debugging also becomes possible, since the system’s
+operational semantics remain visible.</p>
+<hr />
+<h2 id="implementation-strategy">11. Implementation Strategy</h2>
+<p>A practical implementation of the Governed Semantic Kernel Layer may
+include the following components:</p>
+<p>Semantic Artifact Store</p>
+<p>Maintains canonical artifact structures and relation graphs.</p>
+<p>Transition Engine</p>
+<p>Executes transition machines with invariant validation.</p>
+<p>Receipt Ledger</p>
+<p>Records transition receipts for lineage reconstruction.</p>
+<p>Effect Adapter Layer</p>
+<p>Provides minimal lowering interfaces to host operating systems.</p>
+<p>Operator Interfaces</p>
+<p>Expose CLI and RPC interfaces for invoking kernel transitions.</p>
+<p>Concurrency control should be implemented through transactional
+transition execution to prevent invariant violations under parallel
+workloads.</p>
+<hr />
+<h2 id="migration-path">12. Migration Path</h2>
+<p>Existing systems can adopt GSKL incrementally.</p>
+<p>A staged migration path includes:</p>
+<p>1. Represent domain artifacts canonically.</p>
+<p>2. Wrap existing operations as explicit transitions.</p>
+<p>3. Introduce receipt logging for domain actions.</p>
+<p>4. Route side effects through adapter interfaces.</p>
+<p>5. Gradually eliminate implicit domain logic in application code.</p>
+<p>This allows existing systems to evolve toward semantic kernel
+governance without immediate architectural replacement.</p>
+<hr />
+<h2 id="failure-modes-without-semantic-kernels">13. Failure Modes
+Without Semantic Kernels</h2>
+<p>Without kernelized domain governance:</p>
+<ul>
+<li><p>domain invariants drift across application layers</p></li>
+<li><p>authority boundaries expand implicitly</p></li>
+<li><p>system evolution becomes opaque</p></li>
+<li><p>AI-assisted development amplifies hidden errors</p></li>
+</ul>
+<p>Programs may remain syntactically correct while semantic regimes
+silently degrade.</p>
+<p>Semantic kernels make those regimes explicit.</p>
+<hr />
+<h2 id="conclusion">14. Conclusion</h2>
+<p>The Governed Semantic Kernel Layer introduces a new architectural
+principle: kernels need not govern hardware alone; they may govern
+semantic domains.</p>
+<p>By defining domain phase spaces through canonical representation and
+explicit transition grammars, semantic kernels preserve invariant
+integrity while enabling applications to operate as orchestrations
+rather than semantic authorities.</p>
+<p>Runtime execution remains a thin lowering layer, mediated by minimal
+effect adapters.</p>
+<p>This architecture supports the emergence of kernel constellations in
+which semantic domains remain legible, auditable, and composable.</p>
+<p>As AI systems increasingly participate in software development and
+system operation, architectures that preserve semantic transparency will
+become essential.</p>
+<p>The Governed Semantic Kernel Layer offers one path toward such
+systems by relocating the center of architectural authority from
+hardware mediation to domain meaning.</p>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm2.</strong> The present paper does not claim a complete
+cm2 treatment. That stage remains successor work and cannot be inferred
+from the architecture described here.</li>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Publication form.</strong> This work is retained as a
+standalone technical companion because its concrete migration method is
+useful independently; it remains subordinate to the architecture it
+explains.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern software systems encode semantic
+domains inside applications while reserving kernel architecture for
+hardware arbitration. Its nearest external comparison fields are
+semantic, security, software. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. Unforgeable capabilities can constrain
+exercise of authority while still leaving allocation, delegation,
+revocation, and social legitimacy incorrectly specified. Modularity,
+secure-development practice, and reproducibility reduce classes of
+failure but do not guarantee architectural coherence or user
+sovereignty. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E7]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848764">10.5281/zenodo.23848764</a></p>

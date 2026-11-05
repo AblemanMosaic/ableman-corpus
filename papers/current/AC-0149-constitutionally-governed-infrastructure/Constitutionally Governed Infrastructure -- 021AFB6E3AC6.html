@@ -1,0 +1,939 @@
+<h1 id="constitutionally-governed-infrastructure">Constitutionally
+Governed Infrastructure</h1>
+<h2
+id="from-software-schedulers-to-institution-scale-continuation-control">From
+Software Schedulers to Institution-Scale Continuation Control</h2>
+<h3
+id="terrain-weather-component-failure-and-passive-physical-constraints-can-shape-possibility-without-possessing-discretion-or-legitimate-power.">Terrain,
+weather, component failure, and passive physical constraints can shape
+possibility without possessing discretion or legitimate power.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Infrastructure determines more than throughput. Queues, schedulers,
+routers, allocation rules, eligibility checks, administrative pipelines,
+and communication channels shape which continuations are available,
+timely, affordable, visible, or practically unreachable before an
+explicit decision is made. This paper develops <strong>Constitutionally
+Governed Infrastructure (CGI)</strong> as a framework for bringing
+materially consequential continuation-control machinery inside
+constitutional review.</p>
+<p>The claim requires an important distinction. Not every causal
+influence exercises authority. Terrain, weather, component failure, and
+passive physical constraints can shape possibility without possessing
+discretion or legitimate power. Infrastructure becomes constitutionally
+relevant when a mechanism materially and persistently controls access,
+order, timing, allocation, disclosure, or effect under rules or
+configurations that can be selected, delegated, contested, captured, or
+changed. Such control may express legitimate authority, delegated
+authority, de facto power, or unauthorized authority migration. Those
+categories must not be collapsed.</p>
+<p>CGI therefore requires more than receipts. A governed infrastructure
+surface must bind mechanism identity, jurisdiction, authority, policy,
+configuration, inputs, outputs, affected subjects, reasons, evidence,
+challenge, remedy, liveness, emergency behavior, privacy, security,
+revision, and measurable outcomes. Reconstructability is necessary but
+does not itself establish fairness, legitimacy, correctness, or
+accountability.</p>
+<p>The source’s Universal Governance Kernel (UGK) scheduler is retained
+as an internal architectural example rather than an empirical
+demonstration. Its concepts of earned independence, constitutional
+scheduling, and infrastructure receipts generate testable obligations,
+but the supplied paper contains no implementation evidence, performance
+benchmark, scheduler trace, or deployment comparison. The paper also
+limits its extension from software to institutions and civilizational
+systems: a common constitutional grammar may travel, while domain law,
+rights, evidence, remedies, and failure costs do not automatically
+transfer.</p>
+<p>This revision formalizes effective continuation structure, defines
+constitutional coverage, integrates CGI with Dynatology, Constitutional
+Computation, Governance Coverage Gaps, receipts, work custody,
+constraint-bearing composition, GMB, and the universal GSM, and locates
+the framework in the full realization funnel. It remains a proposal and
+specification, not a proven institutional or technical system.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/</code></p>
+<p><code>constitutionally-governed-infrastructure/</code><br />
+<code>integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>4FA496B64F2E2BBD0C2EE8AE2E933EE91DE181B60E915F73F2DB2833F0322FA1</code>.
+The exact source remains unchanged.</p>
+<p>The CGI proposal, continuation-control thesis, authority-migration
+framing, UGK scheduling example, earned independence, constitutional
+scheduling, infrastructure receipts, Dynatology relationship, and
+civilizational extension are author material. The formal model,
+categorical distinctions, coverage contract, evidentiary correction,
+measurement obligations, countertests, and decision surface are AI
+editorial or synthetic additions until adopted.</p>
+<p>No external research was conducted. The source-supplied bibliography
+is preserved later as unverified author material. No legal, political,
+institutional, implementation, conformance, canonical, or publication
+standing is granted.</p>
+<h2 id="infrastructure-precedes-many-decisions">1. Infrastructure
+Precedes Many Decisions</h2>
+<p>Political and administrative analysis often begins with explicit
+decisions: who decides, under what authority, by what procedure, and
+with what avenue of challenge. Yet explicit decisions occur inside
+constructed environments.</p>
+<p>Applications enter queues. Cases enter calendars. Goods enter routes.
+Computation enters schedulers. Information enters ranking and
+distribution systems. Each environment shapes the set, cost, latency,
+reliability, and visibility of later choices. A permit that never
+reaches review, a case scheduled after its practical value expires, or a
+task starved of resources can be functionally decisive without a formal
+denial.</p>
+<p>CGI begins with a bounded thesis:</p>
+<blockquote>
+<p>Infrastructure that materially controls consequential continuations
+should be treated as a constitutional subject rather than dismissed as a
+neutral implementation detail.</p>
+</blockquote>
+<p>This does not mean all infrastructure is malicious, that all delay
+equals denial, or that every physical constraint exercises authority. It
+means the mechanisms through which governing rules become practical
+access and effect belong inside the scope of governance.</p>
+<h2 id="influence-control-power-and-authority">2. Influence, Control,
+Power, and Authority</h2>
+<p>Four concepts must remain distinct:</p>
+<ul>
+<li><strong>causal influence:</strong> any condition that changes an
+outcome or possibility;</li>
+<li><strong>infrastructural control:</strong> a mechanism’s capacity to
+alter availability, order, timing, cost, allocation, disclosure, or
+effect;</li>
+<li><strong>de facto power:</strong> control that materially shapes
+subjects’ options whether or not it is authorized; and</li>
+<li><strong>authority:</strong> a normatively or constitutionally
+recognized power to make a specified decision or produce a specified
+effect.</li>
+</ul>
+<p>An algorithm may exercise delegated authority. A private platform may
+possess de facto power without public authority. A misconfigured queue
+may create consequential control without anyone intentionally exercising
+discretion. A storm may restrict access without exercising either power
+or authority.</p>
+<p>The original statement that any mechanism influencing continuation
+“exercises authority” is therefore too broad. A stronger constitutional
+principle is:</p>
+<blockquote>
+<p>Any configurable or governable mechanism that materially,
+persistently, and consequentially controls continuations creates an
+authority-relevant surface. Its legitimate powers, de facto powers,
+delegated powers, failures, and unauthorized effects must be classified
+and governed.</p>
+</blockquote>
+<p>This formulation preserves the paper’s central concern without
+turning causation into authority by definition.</p>
+<h2 id="formal-model-of-effective-continuation">3. Formal Model of
+Effective Continuation</h2>
+<p>Let <span class="math inline"><em>P</em>(<em>s</em>)</span> be the
+raw set of transitions physically or logically possible from state <span
+class="math inline"><em>s</em></span>. Let <span
+class="math inline"><em>A</em><sub><em>J</em></sub>(<em>s</em>) ⊆ <em>P</em>(<em>s</em>)</span>
+be the transitions admitted under jurisdiction <span
+class="math inline"><em>J</em></span>. Let <span
+class="math inline"><em>E</em><sub><em>I</em></sub>(<em>s</em>) ⊆ <em>P</em>(<em>s</em>)</span>
+be the transitions enabled by infrastructure configuration <span
+class="math inline"><em>I</em></span>.</p>
+<p>The effective continuation set is:</p>
+<p><span
+class="math display"><em>C</em><sub><em>I</em>, <em>J</em></sub>(<em>s</em>) = <em>P</em>(<em>s</em>) ∩ <em>A</em><sub><em>J</em></sub>(<em>s</em>) ∩ <em>E</em><sub><em>I</em></sub>(<em>s</em>).</span></p>
+<p>Membership alone is insufficient. Infrastructure also changes the
+practical accessibility of a transition. For <span
+class="math inline"><em>t</em> ∈ <em>C</em><sub><em>I</em>, <em>J</em></sub>(<em>s</em>)</span>
+define an access vector:</p>
+<p><span
+class="math display"><em>k</em><sub><em>I</em></sub>(<em>s</em>, <em>t</em>) = (<em>ℓ</em>, <em>c</em>, <em>r</em>, <em>d</em>, <em>p</em>),</span></p>
+<p>where <span class="math inline"><em>ℓ</em></span> is latency, <span
+class="math inline"><em>c</em></span> cost, <span
+class="math inline"><em>r</em></span> reliability, <span
+class="math inline"><em>d</em></span> discoverability, and <span
+class="math inline"><em>p</em></span> allocation or completion
+probability under the declared model. Additional domain dimensions may
+include safety, privacy, legal exposure, energy, capacity, or human
+burden.</p>
+<p>Infrastructure <span class="math inline"><em>I</em></span> has
+<strong>material continuation control</strong> over transition <span
+class="math inline"><em>t</em></span> when an available change in its
+rules or configuration alters membership in <span
+class="math inline"><em>C</em><sub><em>I</em>, <em>J</em></sub>(<em>s</em>)</span>
+or changes a declared component of <span
+class="math inline"><em>k</em><sub><em>I</em></sub>(<em>s</em>, <em>t</em>)</span>
+beyond a materiality threshold relevant to affected rights, obligations,
+services, risks, or outcomes.</p>
+<p>The threshold is not universal. A millisecond may be material in a
+safety controller and immaterial in a permit queue. A small ranking
+change may be material when it systematically suppresses access. CGI
+therefore requires domain-specific materiality, not merely mathematical
+sensitivity.</p>
+<h2 id="authority-migration">4. Authority Migration</h2>
+<p><strong>Authority migration</strong> occurs when a consequential
+decision surface moves from an explicitly governed role into a
+mechanism, configuration, optimization objective, data pipeline,
+exception path, or operational convention that lacks equivalent
+constitutional coverage.</p>
+<p>Migration can be intentional or accidental. Examples include:</p>
+<ul>
+<li>a legislature declares eligibility while an undocumented data
+transform decides who appears eligible;</li>
+<li>a policy grants equal access while a scheduler repeatedly starves
+one class of request;</li>
+<li>an institution publishes appeal rights while routing prevents
+affected people from reaching the appeal channel;</li>
+<li>a human retains nominal approval while defaults, ranking, time
+pressure, and interface design determine nearly every result; or</li>
+<li>an emergency path becomes the ordinary path without amendment.</li>
+</ul>
+<p>The diagnostic question is not simply “who made the final decision?”
+It is:</p>
+<blockquote>
+<p>Which mechanisms materially determined the effective continuation set
+and access vector, under whose authority, with which evidence, and with
+what path to challenge and remedy?</p>
+</blockquote>
+<h2 id="constitutional-infrastructure-contract">5. Constitutional
+Infrastructure Contract</h2>
+<p>A CGI profile should cover at least the following surfaces:</p>
+<ol type="1">
+<li><strong>mechanism identity:</strong> exact scheduler, queue, model,
+rule set, version, and operator;</li>
+<li><strong>jurisdiction:</strong> the regime that governs each decision
+and boundary crossing;</li>
+<li><strong>authority:</strong> who may configure, invoke, override,
+inspect, and amend the mechanism;</li>
+<li><strong>policy/configuration separation:</strong> which constraints
+are invariant and which are chosen parameters;</li>
+<li><strong>input custody:</strong> provenance, admissibility, privacy,
+integrity, and temporal validity of inputs;</li>
+<li><strong>decision semantics:</strong> the possible outcomes and their
+exact meanings;</li>
+<li><strong>reason and evidence:</strong> why a transition was enabled,
+delayed, prioritized, refused, or escalated;</li>
+<li><strong>effect boundary:</strong> which consequential actions can
+follow and through which gate;</li>
+<li><strong>receipts:</strong> typed records for proposal, admission,
+scheduling, effect, verification, and override;</li>
+<li><strong>challenge and remedy:</strong> who can contest, correct,
+reverse, compensate, or amend an outcome;</li>
+<li><strong>liveness and availability:</strong> deadlines, starvation
+prevention, bounded deferral, capacity failure, and continuity;</li>
+<li><strong>rights and distribution:</strong> disparate burden,
+exclusion, accessibility, and protected interests;</li>
+<li><strong>privacy and security:</strong> disclosure limits,
+observability boundaries, abuse resistance, and incident response;</li>
+<li><strong>emergency behavior:</strong> declared powers, duration,
+review, rollback, and anti-normalization controls;</li>
+<li><strong>revision:</strong> lineage, amendment authority, migration,
+compatibility, and retirement; and</li>
+<li><strong>measurement:</strong> outcomes, error rates, latency,
+throughput, burden, overrides, appeals, reversals, and unknowns.</li>
+</ol>
+<p>Visibility, attribution, and reconstructability support this
+contract. They are not substitutes for it.</p>
+<h2 id="constitutional-scheduling">6. Constitutional Scheduling</h2>
+<p>A conventional scheduler maps queued work and resource state into an
+execution order. A constitutional scheduler additionally exposes the law
+and evidence of that mapping.</p>
+<p>For queue state <span class="math inline"><em>Q</em></span>, resource
+state <span class="math inline"><em>R</em></span>, policy <span
+class="math inline"><em>L</em></span>, and configuration <span
+class="math inline"><em>I</em></span>, let:</p>
+<p><span
+class="math display"><em>σ</em>(<em>Q</em>, <em>R</em>, <em>L</em>, <em>I</em>) → (<em>D</em>, <em>ρ</em>),</span></p>
+<p>where <span class="math inline"><em>D</em></span> is a typed decision
+such as admit, schedule, defer, refuse, preempt, escalate, or override,
+and <span class="math inline"><em>ρ</em></span> is the associated
+receipt contract.</p>
+<p>Constitutional scheduling requires more than determinism. A
+deterministic policy can still be unjust, captured, unavailable, or
+incorrectly scoped. The scheduler must bind its authority, admissible
+inputs, priorities, tie-breaking, resource claims, deadlines, failure
+behavior, affected obligations, and challenge path.</p>
+<p>Priority is not merely a number. It may encode rights, safety, age,
+urgency, contractual promise, fairness, dependency, cost, or political
+choice. CGI requires those semantics to remain explicit rather than
+disappearing inside an optimization function.</p>
+<h2 id="earned-independence-and-its-limits">7. Earned Independence and
+Its Limits</h2>
+<p>The source proposes that operations execute independently only when
+independence is demonstrated through chain-verifiable evidence;
+otherwise they serialize. This is a valuable anti-race principle but not
+a universal safety theorem.</p>
+<p>Let <span
+class="math inline"><em>o</em><sub><em>i</em></sub> ⟂ <em>o</em><sub><em>j</em></sub></span>
+mean that the declared reads, writes, authorities, obligations, effects,
+and failure domains of operations <span
+class="math inline"><em>o</em><sub><em>i</em></sub></span> and <span
+class="math inline"><em>o</em><sub><em>j</em></sub></span> do not
+conflict under a named independence model. Parallel execution is
+admissible only if the model and evidence support that relation.</p>
+<p>However, serialization can also be harmful. It may cause deadline
+failure, starvation, priority inversion, capacity collapse, or denial of
+service. When independence is unknown, the lawful fallback may be
+serialize, defer, refuse, isolate, acquire stronger evidence, or
+escalate. The choice depends on declared safety and liveness
+obligations.</p>
+<p>Thus “uncertainty collapses toward safety” should be replaced
+with:</p>
+<blockquote>
+<p>Uncertainty selects the least-authorized continuation that satisfies
+the applicable safety, liveness, rights, and continuity constraints;
+when no such continuation is established, the system refuses or
+escalates explicitly.</p>
+</blockquote>
+<h2 id="infrastructure-receipts">8. Infrastructure Receipts</h2>
+<p>An infrastructure receipt can help answer why one operation proceeded
+before another, but receipt existence does not establish accountability.
+A useful scheduling receipt should bind:</p>
+<ul>
+<li>queue and request identities;</li>
+<li>relevant input and policy versions;</li>
+<li>scheduler and configuration identity;</li>
+<li>authority and jurisdiction;</li>
+<li>priority and tie-break semantics;</li>
+<li>resource and dependency observations;</li>
+<li>decision, reason, and confidence or unknowns;</li>
+<li>deadline and liveness state;</li>
+<li>effect identity or explicit absence of effect;</li>
+<li>disclosure and privacy posture;</li>
+<li>challenge, remedy, and replay references; and</li>
+<li>verifier identity and result where applicable.</li>
+</ul>
+<p>Receipts must be usable by affected parties or legitimate reviewers
+within appropriate privacy and security boundaries. A perfectly
+reconstructable abuse remains abuse. A log that no one can challenge
+does not constitutionalize the system.</p>
+<h2 id="ugk-as-a-bounded-internal-case">9. UGK as a Bounded Internal
+Case</h2>
+<p>The source describes a UGK scaling architecture in which scheduling,
+priority, backpressure, deferral, and refusal become governed
+operations. This is an important design case. The paper does not,
+however, provide the artifacts necessary to claim that a scheduler
+“survived constitutionalization” operationally or that governance
+introduced no unacceptable cost.</p>
+<p>A demonstrated result would require at minimum:</p>
+<ul>
+<li>an exact scheduler and policy implementation;</li>
+<li>threat and capability models;</li>
+<li>test workloads and baselines;</li>
+<li>receipt examples and replay;</li>
+<li>safety and liveness properties;</li>
+<li>throughput, latency, capacity, and failure measurements;</li>
+<li>starvation, priority inversion, and overload tests;</li>
+<li>bypass and privilege-escalation attacks;</li>
+<li>audit, challenge, correction, and rollback trials; and</li>
+<li>evidence that the constitutional surface covers every material
+effect path.</li>
+</ul>
+<p>Until then, the UGK section is a specification-level architectural
+example and source of obligations, not empirical evidence of operational
+viability.</p>
+<h2 id="institutions-and-civilizational-systems">10. Institutions and
+Civilizational Systems</h2>
+<p>The institutional analogy is plausible but must remain typed. A
+permit office, court calendar, logistics network, energy system,
+financial market, and communication network have different authority
+sources, rights, hazards, time constants, stakeholders, confidentiality
+rules, and remedies.</p>
+<p>What may generalize is a constitutional grammar:</p>
+<ol type="1">
+<li>identify continuation-control mechanisms;</li>
+<li>classify their causal influence, de facto power, and authority;</li>
+<li>bind jurisdiction and legitimate configuration powers;</li>
+<li>expose rules, evidence, outcomes, and unknowns;</li>
+<li>preserve challenge, remedy, liveness, privacy, and revision;
+and</li>
+<li>test whether governance covers every material effect route.</li>
+</ol>
+<p>What does not automatically generalize is the exact scheduler,
+receipt schema, admissibility predicate, priority rule, or remedy.
+Civilization-scale claims require institutional and empirical research
+beyond the evidence supplied here.</p>
+<h2 id="relationship-to-dynatology">11. Relationship to Dynatology</h2>
+<p>Dynatology studies structured potentiality: what could exist, what
+conditions enable it, and how possibilities are organized and selected.
+CGI is an applied constitutional projection over one part of that
+terrain.</p>
+<p>Dynatology asks which continuations exist and how the possibility
+space is structured. CGI asks which infrastructure materially shapes
+effective continuation, who may configure it, under what law, with what
+evidence, and how subjects can contest its effects.</p>
+<p>The relationship is complementary, not hierarchical identity.
+Dynatology does not by itself establish authority. CGI does not exhaust
+the study of possibility. Together they connect possibility geometry to
+constitutional responsibility.</p>
+<h2 id="corpus-integration">12. Corpus Integration</h2>
+<p><strong>Constitutional Computation</strong> supplies the general
+claim that computation can carry inspectable constitutional structure
+rather than treating governance as an external policy layer.
+<strong>Ableman Constitutional Governance</strong> supplies an adjacent
+governance framework, but its publication identity remains on review
+hold; this paper neither resolves nor promotes that identity.</p>
+<p><strong>UGK</strong> supplies the bounded kernel and scheduling
+example. <strong>Governance Coverage Gaps</strong> converts the CGI
+concern into a coverage question: does governance participate across
+every material capability and effect path? <strong>Reasoning by Way of
+Receipts</strong> supplies typed reconstruction without equating records
+with truth. <strong>A Formal Theory of Work Custody</strong> clarifies
+which actor or process is responsible for work through time.
+<strong>Constraint-Bearing Composability</strong> asks whether
+constitutional obligations survive infrastructure boundaries and
+component composition.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong>, current in the
+<code>CCF -&gt; CMB -&gt; GMB</code> lineage, can retain infrastructure
+identities, policy and configuration versions, authority bindings,
+decisions, receipts, challenges, remedies, evidence, and revisions. The
+universal GSM can represent the primitives, invariants, dimensions, and
+adjacencies of those records. Inclusion in GMB or GSM is not proof that
+the infrastructure is legitimate or conformant.</p>
+<h2 id="realization-funnel">13. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate infrastructure domains,
+continuation-control mechanisms, constitutional grammars, affected
+subjects, and possible remedies.</li>
+<li><strong>Specification:</strong> define control, materiality,
+jurisdiction, authority, rights, coverage, receipt, challenge, liveness,
+privacy, security, and revision obligations.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> retain
+architectures satisfying the minimum constitutional contract and domain
+constraints.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer admissible
+architectures by coverage, fairness, contestability, liveness,
+legibility, security, cost, performance, repairability, and public
+value.</li>
+<li><strong>IC:</strong> select an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for one
+infrastructure domain, mechanism, policy, jurisdiction, and evidence
+contract. The names are interchangeable.</li>
+<li><strong>IR:</strong> build an <strong>Instance Realization</strong>
+or <strong>Implementation Realization</strong> with exact components,
+roles, rules, interfaces, and effect paths. The names are
+interchangeable.</li>
+<li><strong>Evidence:</strong> retain measurements, receipts, audits,
+attacks, appeals, reversals, burdens, failures, and affected-party
+observations.</li>
+<li><strong>Revision:</strong> amend rules or realization while
+preserving lineage, rights, evidence, and rollback.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 evaluation
+criteria. It does not establish a complete IC, a conforming IR, a
+deployed scheduler, an institutionally valid constitution, or evidence
+of civilizational feasibility.</p>
+<h2 id="evaluation-program">14. Evaluation Program</h2>
+<p>CGI should be evaluated through both structural and outcome
+evidence:</p>
+<ol type="1">
+<li>inventory every material capability and effect path;</li>
+<li>identify which paths lack authority, policy, observation, challenge,
+or remedy;</li>
+<li>replay representative decisions from exact inputs and rules;</li>
+<li>measure throughput, latency, deadline misses, starvation, overload,
+and recovery;</li>
+<li>test priority inversion, manipulation, bypass, hidden defaults, and
+unauthorized override;</li>
+<li>compare burdens and outcomes across affected groups and cases;</li>
+<li>test disclosure minimization and legitimate review access;</li>
+<li>exercise appeal, correction, rollback, compensation, and
+amendment;</li>
+<li>inject incomplete, conflicting, stale, and adversarial
+evidence;</li>
+<li>test cross-jurisdiction transfer and obligation carriage; and</li>
+<li>publish claim-bounded results, including unknowns and failed
+coverage.</li>
+</ol>
+<p>No single metric proves constitutional governance. High throughput
+can coexist with arbitrary exclusion; perfect replay can coexist with
+unjust rules; complete receipts can coexist with an ungoverned
+bypass.</p>
+<h2 id="constitutional-continuation-control-profile">Constitutional
+Continuation-Control Profile</h2>
+<p>Across the completed P1 corpus, Constitutionally Governed
+Infrastructure is the <strong>constitutional continuation-control
+profile for mechanisms that shape practical access before or around an
+explicit decision</strong>. It locates scheduling, routing, eligibility,
+allocation, backpressure, disclosure, and administrative reachability
+inside the governed effect surface without calling every causal
+condition an authority.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Dynatology</em><br />
+<strong>Supplies:</strong> Structured possibility and realization
+conditions.<br />
+<strong>CGI boundary:</strong> CGI governs configurable mechanisms that
+materially shape which possibilities remain practically
+reachable.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Universal Governance Kernel
+(UGK)</em><br />
+<strong>Supplies:</strong> A kernel-scale example of admission,
+scheduling, refusal, and evidence.<br />
+<strong>CGI boundary:</strong> UGK is one realization family; CGI is the
+domain-independent infrastructure profile.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Detection of consequential capabilities or
+effects outside governance scope.<br />
+<strong>CGI boundary:</strong> CGI specializes the search to
+continuation-control machinery and practical access.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Non-bypassable mediation, effect gates,
+courts, and receipts.<br />
+<strong>CGI boundary:</strong> CGI adds liveness, priority, burden,
+challenge, and remedy obligations to infrastructure control.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Role-aware projection of state, standing,
+effects, and evidence.<br />
+<strong>CGI boundary:</strong> Observability exposes the control surface
+but does not establish legitimate scheduling or allocation.</p></li>
+</ul>
+<p>The paper’s integrative object is not a queue alone but a
+constitutionalized continuation surface:</p>
+<p><span
+class="math display"><em>K</em> = (<em>P</em>, <em>A</em>, <em>E</em>, <em>U</em>, <em>J</em>, <em>W</em>, <em>L</em>, <em>C</em>, <em>R</em>, <em>X</em>),</span></p>
+<p>where <span class="math inline"><em>P</em></span> is physical or
+logical possibility, <span class="math inline"><em>A</em></span>
+authorized continuation, <span class="math inline"><em>E</em></span>
+enabled continuation, <span class="math inline"><em>U</em></span>
+practically usable continuation, <span
+class="math inline"><em>J</em></span> jurisdiction, <span
+class="math inline"><em>W</em></span> warrant, <span
+class="math inline"><em>L</em></span> liveness, <span
+class="math inline"><em>C</em></span> contestability, <span
+class="math inline"><em>R</em></span> remedy, and <span
+class="math inline"><em>X</em></span> exact evidence. A system may have
+a nonempty authorized set while making every useful member too late,
+costly, undiscoverable, or unreliable to exercise.</p>
+<p>The main new corpus connection is therefore between possibility
+geometry and institutional effect. Constitutional computation governs
+more than the final ALLOW or REFUSE event when earlier infrastructure
+can starve, rank, price, hide, defer, or redirect a continuation.
+Conversely, infrastructure governance must not imply that a weather
+event, hardware limit, or passive terrain feature possesses authority.
+The relevant threshold is persistent, material, and governable control
+under a selectable or contestable rule or configuration.</p>
+<p>The universal GSM can type<br />
+<code>SHAPES_EFFECTIVE_CONTINUATION</code>,
+<code>NARROWS_PRACTICAL_ACCESS</code>,<br />
+<code>EXERCISES_DE_FACTO_CONTROL</code>,
+<code>OPERATES_UNDER_DELEGATED_AUTHORITY</code>,<br />
+<code>MIGRATES_AUTHORITY_TO_CONFIGURATION</code>,
+<code>RISKS_STARVATION</code>, <code>PRESERVES_LIVENESS</code>,<br />
+<code>SUPPORTS_CHALLENGE</code>, <code>PROVIDES_REMEDY</code>,<br />
+and<br />
+<code>REMAINS_DISTINCT_FROM_PASSIVE_CAUSE</code>. These relations
+prevent both authority inflation and infrastructure invisibility.</p>
+<p>This integration establishes four editorial commitments: retain CGI
+as the constitutional continuation-control profile; adopt the <span
+class="math inline"><em>P</em>/<em>A</em>/<em>E</em>/<em>U</em></span>
+separation and full constitutionalized-continuation envelope; require
+liveness, contestability, remedy, and affected-party evidence alongside
+receipts; and keep UGK, Dynatology, observability, enforcement, and CGI
+as typed neighbors rather than merged identities.</p>
+<h2
+id="human-domain-firewall-migration-continuity-commitment-limits-and-governed-resolution">Human-Domain
+Firewall, Migration Continuity, Commitment Limits, and Governed
+Resolution</h2>
+<p>The fixed-seed comparison with The Well-Governed Mind, model-first
+legacy migration, CHC, and Constitutional Binding Theory tests
+continuation control across human, technical, cryptographic, and
+semantic boundaries:</p>
+<p><span class="math display">$$
+\begin{aligned}
+K^*= (&amp;possibility, authorization, enablement, usability, \\
+&amp;jurisdiction, warrant, liveness, accessibility, \\
+&amp;binding\_rule, commitments, contest, remedy, migration, \\
+&amp;exact\_evidence)
+\end{aligned}.
+$$</span></p>
+<p>The Well-Governed Mind does not supply institutional evidence for
+CGI. It instead enforces a cross-domain firewall: infrastructure that
+affects care, cognition, education, or participation requires domain
+law, accessibility analysis, qualified review, and affected-party
+evidence before architectural vocabulary supports a claim.</p>
+<p>Model-first legacy migration exposes how infrastructure authority and
+de facto control can move during replacement. A successor may preserve
+nominal policy while dropping routing, fallback, accessibility, notice,
+remedy, or provider-exit capabilities. Operational continuity and
+changed burdens must therefore be evaluated, not inferred from
+successful cutover.</p>
+<p>CHC can commit to exact configurations, claim envelopes, policies,
+and epoch-relative decisions, but a hash or signature cannot prove
+liveness, legitimacy, usability, or remedy. Constitutional Binding
+Theory describes how an identity, request, entitlement, route, or policy
+anchor resolves to a target under context and law; deterministic
+resolution can still enact defective rules.</p>
+<p>The universal GSM can type<br />
+<code>SHAPES_HUMAN_ACCESS_UNDER_FIREWALL</code>,<br />
+<code>MIGRATES_CONTINUATION_CONTROL</code>,
+<code>COMMITS_TO_INFRASTRUCTURE_CONFIGURATION</code>,<br />
+<code>DOES_NOT_PROVE_LIVENESS_BY_HASH</code>,
+<code>RESOLVES_ACCESS_ANCHOR_UNDER_LAW</code>,<br />
+<code>CONTESTS_BINDING_RULE</code>, and<br />
+<code>PROVIDES_PRACTICAL_REMEDY</code>.</p>
+<p>This randomized review establishes four editorial commitments: add a
+human-domain evidence firewall; require migration-specific continuation
+and burden tests; separate cryptographic commitment from live
+constitutional performance; and model infrastructure routing as governed
+resolution without equating deterministic output with legitimate
+authority.</p>
+<h2 id="a-nested-continuation-control-plane">A Nested
+Continuation-Control Plane</h2>
+<p>Three downstream uses confirm Constitutionally Governed
+Infrastructure as a continuation-control profile with nested technical
+realizations. Jnana II uses it to extend transformation governance into
+runtime and institutional effect paths. Governance Coverage Gaps tests
+whether configuration and consequences escape the declared
+infrastructure surface. The Direct-Coupled Dynamic Torque Reactor
+specializes scheduling, allocation, liveness, and control obligations to
+safety-critical physical energy distribution without transferring
+empirical findings across domains.</p>
+<p>The downstream interface is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+I^*= (&amp;domain, mechanisms, resources, requests, subjects, \\
+&amp;authority, power, jurisdiction, policy, scheduling, \\
+&amp;allocation, routes, deadlines, liveness, accessibility, \\
+&amp;safety, privacy, effects, coverage, challenge, remedy, \\
+&amp;evidence, revision)
+\end{aligned}.
+$$</span></p>
+<p>Infrastructure is nested: a governed application may depend on an
+ungoverned scheduler, credential plane, network, provider, firmware
+controller, emergency route, or human administrative process. Each layer
+may shape effective continuation and may carry different authority,
+evidence, and remedy. A parent contract cannot claim closure merely
+because one child component is governed; the dependency and bypass
+surface must be enumerated or left explicitly unknown.</p>
+<p>Physical and institutional projections require domain law and
+evidence. A scheduling grammar can travel; safety thresholds, rights,
+materiality, deadlines, failure costs, and remedies do not travel
+automatically. The DCDTR relation is therefore a specialization
+interface, not proof that CGI has been implemented or validated in a
+physical plant.</p>
+<p>The universal GSM can type<br />
+<code>CONTROLS_CONTINUATION_AT_LAYER</code>,<br />
+<code>DEPENDS_ON_INFRASTRUCTURE_LAYER</code>,
+<code>BYPASSES_GOVERNED_CONTINUATION_ROUTE</code>,<br />
+<code>SPECIALIZES_SCHEDULING_FOR_PHYSICAL_DOMAIN</code>,
+<code>PRESERVES_DOMAIN_FIREWALL</code>,<br />
+<code>TESTS_NESTED_INFRASTRUCTURE_COVERAGE</code>, and<br />
+<code>RETAINS_UNGOVERNED_DEPENDENCY_UNKNOWN</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the nested continuation-control plane; require
+dependency and bypass coverage at every layer; preserve domain-specific
+law and evidence for physical or institutional profiles; and prevent a
+governed component from promoting the whole infrastructure to
+constitutional standing.</p>
+<h2 id="counterevidence-and-failure-modes">15. Counterevidence and
+Failure Modes</h2>
+<p>CGI should be narrowed or rejected where: (1) passive causation is
+mislabeled as authority; (2) de facto power and legitimate authority are
+collapsed; (3) materiality has no domain-specific threshold; (4) the
+possible, admissible, enabled, and practically accessible sets are
+conflated; (5) a queue delay is called denial without a declared
+deadline or harm model; (6) constitutionalization covers logs but not
+effect paths; (7) the governing policy is itself outside review; (8)
+configuration changes silently alter rights or obligations; (9) receipts
+cannot be connected to actual effects; (10) affected subjects cannot
+access a meaningful explanation; (11) challenge exists without
+correction or remedy; (12) privacy is sacrificed for auditability; (13)
+secrecy prevents legitimate review with no compensating mechanism; (14)
+deterministic operation is mistaken for legitimacy; (15) serialization
+causes starvation, deadline failure, or denial of service; (16) claimed
+independence omits shared resources or failure domains; (17) emergency
+powers become ordinary operation; (18) overrides lack expiry, review, or
+rollback; (19) governance machinery becomes a new capture point; (20)
+the verifier, auditor, or receipt store is outside constitutional
+coverage; (21) optimization proxies displace declared policy; (22) the
+system is formally fair but inaccessible in practice; (23)
+cross-jurisdiction transfer drops obligations; (24) an unobserved
+fallback bypasses the governed path; (25) implementation overhead makes
+critical services unavailable; (26) the UGK case lacks exact artifacts
+or measurements; (27) software grammar is transferred to institutions
+without domain law or empirical validation; (28) the source-supplied
+bibliography does not support the claims attributed to it; (29) CGI
+duplicates another corpus identity without a differentiated capability;
+or (30) external evidence shows that a proposed institutional or
+technical generalization is false.</p>
+<h2
+id="infrastructure-controls-access-without-automatically-possessing-authority">Infrastructure
+Controls Access Without Automatically Possessing Authority</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Constitutionally Governed Infrastructure studies queues, schedulers,
+routers, allocation rules, administrative pipelines, and other
+mechanisms that shape which continuations are available, timely,
+affordable, visible, or practically unreachable. These mechanisms can
+exercise delegated authority, de facto power, or unauthorized control.
+Passive causation and physical constraint are not themselves
+authority.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Causation-authority attack.</strong> Any condition affecting
+an outcome is labeled an authority surface, erasing the difference among
+weather, failure, configuration, power, and legitimate delegation.</li>
+<li><strong>Nested-closure attack.</strong> A governed application
+promotes its scheduler, provider, network, credentials, firmware,
+emergency route, and human administration to governed status without
+evidence.</li>
+<li><strong>Delay-denial attack.</strong> Latency is classified as
+constitutional denial without a domain deadline, materiality threshold,
+affected right, or harm model.</li>
+<li><strong>Formal-fairness attack.</strong> Equal rules produce
+inaccessible, systematically delayed, unaffordable, or practically
+unreachable continuations for some subjects.</li>
+<li><strong>Receipt-accountability attack.</strong> A trace exists but
+affected subjects cannot obtain explanation, challenge, correction,
+remedy, or proof of actual effect.</li>
+<li><strong>Optimization-migration attack.</strong> A ranking,
+scheduling, or allocation proxy acquires decisive power while the
+declared policy remains nominally unchanged.</li>
+<li><strong>Emergency-capture attack.</strong> Overrides and break-glass
+routes lack expiry, review, rollback, and independent evidence, then
+become ordinary infrastructure.</li>
+<li><strong>Institutional-transfer attack.</strong> A software
+scheduling grammar is applied to civic, legal, economic, or physical
+systems without domain rights, law, expertise, evidence, and
+remedies.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper offers a continuation-control profile and nested
+infrastructure contract. It does not establish that every causal
+influence has authority, that one component governs its dependencies,
+that observed scheduling is legitimate or fair, or that the UGK example
+is implemented. Technical, institutional, physical, and civilizational
+projections remain hypotheses.</p>
+<p>Claims about infrastructure governance, public administration, law,
+rights, algorithms, scheduling, institutions, safety, fairness, or
+social outcomes require current external research, exact
+implementations, affected-party evidence, and qualified domain review.
+No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public question is who or what practically controls access,
+timing, allocation, visibility, and remedy - including every hidden
+dependency - and whether that control is authorized, challengeable, and
+materially fair in the relevant domain.</p>
+<h2 id="conclusion">17. Conclusion</h2>
+<p>Infrastructure often governs practical possibility before an
+institution issues a visible decision. That observation is
+constitutionally important, but it does not make every causal influence
+an authority. CGI is strongest when it identifies the narrower surface
+where configurable, consequential continuation control carries delegated
+authority, de facto power, or the risk of authority migration.</p>
+<p>Constitutionalizing that surface requires more than a log. It
+requires authority, jurisdiction, policy, configuration, effect,
+evidence, challenge, remedy, liveness, rights, privacy, security, and
+revision to remain connected. A scheduler, queue, router, or
+administrative pipeline is governed only when every material route
+through which it shapes consequential continuations is inside that
+contract.</p>
+<p>The research contribution is therefore a specification and evaluation
+program: govern not only explicit decisions, but also the machinery that
+determines which decisions can be reached, when, at what cost, and with
+what possibility of correction.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that infrastructure determines more than
+throughput. Its nearest external comparison fields are cps, governance,
+open sovereign. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7]
+are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Runtime monitors and
+fallback controllers only protect modeled safety envelopes and can fail
+through sensor error, timing assumptions, unsafe recovery, or omitted
+hazards. A written constitution can legitimate domination as easily as
+constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. Source availability and reproducible
+builds improve inspectability but do not alone guarantee
+comprehensibility, practical exit, hardware control, or sustainable
+maintenance. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Edward R. Griffor et al. <em>Framework for
+Cyber-Physical Systems: Volume 1, Overview</em>. NIST SP 1500-201, 2017.
+DOI: 10.6028/NIST.SP.1500-201. https://doi.org/10.6028/NIST.SP.1500-201
+<strong>Relationship:</strong> Adjacent cyber-physical systems framework
+for trustworthiness, timing, data, and lifecycle concerns.</p>
+<p><strong>[E2]</strong> J. Tanner Slagel et al. “A Formal Verification
+Framework for Runtime Assurance.” <em>NASA Formal Methods</em>, 2024.
+NASA NTRS 20230017350. https://ntrs.nasa.gov/citations/20230017350
+<strong>Relationship:</strong> Adjacent runtime-assurance formalization,
+useful for comparing failover safety with constitutional admission and
+effect recognition.</p>
+<p><strong>[E3]</strong> Nancy G. Leveson and John P. Thomas. <em>STPA
+Handbook</em>. MIT, 2018.
+https://psas.scripts.mit.edu/home/books-and-handbooks/
+<strong>Relationship:</strong> Adjacent systems-theoretic hazard
+analysis method; used to test treatment of unsafe control and
+system-level constraints.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Robotics</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18750683</code>;<br />
+source SHA-256<br />
+<code>D10DF9B6B7F742D9EEABF01BC5DFC3755BB4EBF548E8CB5F215BB9D94678F514</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitutional Syscall
+Architecture for Cyber-Physical Control Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F46D86D479F89BAC</code>;<br />
+source SHA-256<br />
+<code>5E696B753A10BD3C3D36B675A84B95CCF2234F024A6B277BF121E76BFCBCBD18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The source manuscript names works by Adam Ableman concerning
+Constitutional Governance, Constitutional Computation, UGK, Dynatology,
+Constitutional Collective with Optional Overmind, Cryptographic
+Admissibility and Jurisdiction, and CARA, together with works attributed
+to Douglass North, Elinor Ostrom, Langdon Winner, Lawrence Lessig,
+Herbert Simon, Stafford Beer, and W. Ross Ashby. No external citation,
+edition, quotation, or claim-to-source binding was verified in this
+pass. The CARA reference is preserved only as source bibliography and
+was not used for Ableman semantic integration. Further evidentiary
+strengthening requires an authorized primary-source bibliography
+audit.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Cryptographic Admissibility and Jurisdiction.</em>
+Zenodo, 2026. doi:10.5281/zenodo.20602448</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847621">10.5281/zenodo.23847621</a></p>

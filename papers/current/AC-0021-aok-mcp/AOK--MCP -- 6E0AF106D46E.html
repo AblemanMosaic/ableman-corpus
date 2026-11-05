@@ -1,0 +1,540 @@
+<h1 id="aokmcp">AOK–MCP</h1>
+<h2
+id="admissibility-governed-tool-protocols-over-open-model-interfaces">Admissibility-Governed
+Tool Protocols Over Open Model Interfaces</h2>
+<h3
+id="the-proposal-is-evaluated-under-explicit-admissibility-law-executed-only-through-a-typed-effect-membrane-and-sealed-with-a-receipt-that-binds-execution-to-lineage.">The
+proposal is evaluated under explicit admissibility law, executed only
+through a typed effect membrane, and sealed with a receipt that binds
+execution to lineage.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Open tool protocols such as Model Context Protocol (MCP) standardize
+how models request external actions. They define schemas, transport
+formats, and invocation patterns. They do not define under what law a
+tool call may count as having legitimately occurred. Protocol governs
+syntax and routing; it does not govern admissibility, refusal, replay,
+or proof.</p>
+<p>This paper introduces <strong>AOK–MCP</strong>, a
+sovereignty-preserving interpretation of open tool protocols. Within
+AOK–MCP, a tool call is not an instruction but a <strong>proposed
+semantic mutation</strong>. The proposal is evaluated under explicit
+admissibility law, executed only through a typed effect membrane, and
+sealed with a receipt that binds execution to lineage. Refusal is
+first-class and receipted. Absence of a conforming receipt collapses the
+action to an epistemic non-event.</p>
+<p>We formalize AOK–MCP as a state transition discipline over
+content-addressed law, schema, and receipt artifacts, define an explicit
+Trusted Computing Base (TCB), parameterize cryptographic assumptions,
+and state and prove uniqueness and replay determinism properties. We
+clarify receipt schema evolution, specify determinism obligations and
+enforcement mechanisms, scope idempotency guarantees to semantic state
+advancement, and demonstrate a concrete policy-drift failure in naïve
+MCP that AOK–MCP structurally prevents. Performance measurements are
+reported with explicit methodology. AOK–MCP leaves protocol wire formats
+unchanged while relocating authority upstream of execution.</p>
+<hr />
+<h2 id="motivation-the-admissibility-gap">1. Motivation: The
+Admissibility Gap</h2>
+<p>Modern tool-calling ecosystems increasingly mediate:</p>
+<ul>
+<li>financial transactions,</li>
+<li>infrastructure orchestration,</li>
+<li>data modification across compliance-bound systems,</li>
+<li>safety-critical actions triggered by model outputs.</li>
+</ul>
+<p>Observed failure modes include:</p>
+<ul>
+<li>silent double execution under retries,</li>
+<li>audit reinterpretation after policy updates (policy drift),</li>
+<li>logging without cryptographic binding to execution context,</li>
+<li>backend heterogeneity leading to ambiguous replay,</li>
+<li>ambiguous refusal semantics (policy denial vs substrate
+failure).</li>
+</ul>
+<p>Open tool protocols (including MCP) specify transport and invocation.
+They do not bind execution to versioned admissibility law, nor do they
+require receipt-bound state advancement.</p>
+<p>AOK–MCP addresses this gap by binding admissibility, execution,
+refusal, and proof into a single state transition discipline.</p>
+<hr />
+<h2 id="cryptographic-and-computational-assumptions">2. Cryptographic
+and Computational Assumptions</h2>
+<p>We assume probabilistic polynomial-time adversaries.</p>
+<p><strong>C1 (Collision Resistance).</strong> <span
+class="math inline"><em>H</em></span> is collision-resistant against
+polynomial-time adversaries.</p>
+<p><strong>C2 (Second-Preimage Resistance).</strong> Given <span
+class="math inline"><em>x</em></span>, it is infeasible for a
+polynomial-time adversary to find <span
+class="math inline"><em>x</em><sup>′</sup> ≠ <em>x</em></span> such that
+<span
+class="math inline"><em>H</em>(<em>x</em><sup>′</sup>) = <em>H</em>(<em>x</em>)</span>.</p>
+<p>Guarantees are conditional on C1–C2 and integrity of the Trusted
+Computing Base.</p>
+<hr />
+<h2 id="content-addressed-artifacts">3. Content-Addressed Artifacts</h2>
+<p>AOK–MCP treats laws, schemas, and receipts as
+<strong>content-addressed artifacts</strong>.</p>
+<p>Content-addressing means artifacts are identified by their
+cryptographic hash:</p>
+<p><span
+class="math display"><em>a</em><em>r</em><em>t</em><em>i</em><em>f</em><em>a</em><em>c</em><em>t</em><sub><em>i</em></sub><em>d</em> = <em>h</em>(<em>a</em><em>r</em><em>t</em><em>i</em><em>f</em><em>a</em><em>c</em><em>t</em>)</span></p>
+<p>Any change to the artifact (law, schema, or receipt) produces a
+different hash, detectable during validation. Content-addressing ensures
+immutability by identity and verifiability by recomputation of the
+hash.</p>
+<hr />
+<h2 id="formal-model">4. Formal Model</h2>
+<h3 id="state-space">4.1 State Space</h3>
+<p>Define:</p>
+<p><span
+class="math display"><em>S</em> = (<em>L</em><em>i</em><em>n</em><em>e</em><em>a</em><em>g</em><em>e</em>, <em>L</em><em>a</em><em>w</em><em>S</em><em>t</em><em>o</em><em>r</em><em>e</em>, <em>S</em><em>c</em><em>h</em><em>e</em><em>m</em><em>a</em><em>S</em><em>t</em><em>o</em><em>r</em><em>e</em>, <em>R</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em><em>S</em><em>t</em><em>o</em><em>r</em><em>e</em>)</span></p>
+<p>Where:</p>
+<ul>
+<li><code>Lineage</code> is an append-only ordered sequence of receipt
+hashes.</li>
+<li><code>LawStore : Hash \rightarrow LawArtifact</code>.</li>
+<li><code>SchemaStore : Hash \rightarrow SchemaArtifact</code>.</li>
+<li><code>ReceiptStore : Hash \</code><br />
+<code>rightarrow ReceiptArtifact</code>.</li>
+</ul>
+<p>This specification assumes a <strong>single-host lineage
+authority</strong> for ordering. Distributed consensus for multi-host
+deployments is out of scope.</p>
+<hr />
+<h2 id="canonicalization-and-step-identity">5. Canonicalization and Step
+Identity</h2>
+<p>Let:</p>
+<ul>
+<li><code>canon(x)</code> be injective canonical serialization.</li>
+<li><span
+class="math inline"><em>h</em>(<em>x</em>) = <em>H</em>(<em>c</em><em>a</em><em>n</em><em>o</em><em>n</em>(<em>x</em>))</span>.</li>
+</ul>
+<p>A Step is:</p>
+<p><span
+class="math display"><em>S</em><em>t</em><em>e</em><em>p</em> = (<em>t</em><em>y</em><em>p</em><em>e</em>, <em>t</em><em>a</em><em>r</em><em>g</em><em>e</em><em>t</em>, <em>p</em><em>a</em><em>y</em><em>l</em><em>o</em><em>a</em><em>d</em>, <em>e</em><em>f</em><em>f</em><em>e</em><em>c</em><em>t</em><sub><em>c</em></sub><em>l</em><em>a</em><em>s</em><em>s</em>, <em>l</em><em>a</em><em>w</em><sub><em>h</em></sub><em>a</em><em>s</em><em>h</em>)</span></p>
+<p>with identity:</p>
+<p><span
+class="math display"><em>s</em><em>t</em><em>e</em><em>p</em><sub><em>h</em></sub><em>a</em><em>s</em><em>h</em> = <em>h</em>(<em>S</em><em>t</em><em>e</em><em>p</em>)</span></p>
+<p><strong>Lemma (Step Hash Uniqueness).</strong> Under injective
+canonicalization and C1–C2, distinct canonical Steps produce distinct
+<code>step_hash</code> values with overwhelming probability.</p>
+<hr />
+<h2 id="admissibility-law">6. Admissibility Law</h2>
+<p>Each law artifact defines a pure function:</p>
+<p><span
+class="math display"><em>L</em> : <em>S</em><em>t</em><em>e</em><em>p</em> → {<em>A</em><em>L</em><em>L</em><em>O</em><em>W</em>, <em>D</em><em>E</em><em>N</em><em>Y</em>}</span></p>
+<p><strong>Law Determinism Constraint.</strong></p>
+<p>Law artifacts must:</p>
+<ul>
+<li>be referentially transparent,</li>
+<li>depend only on canonical Step and law artifact content,</li>
+<li>terminate within declared bounds.</li>
+</ul>
+<p>Steps bind the specific <code>law_hash</code> under which
+admissibility is evaluated.</p>
+<hr />
+<h2 id="trusted-computing-base">7. Trusted Computing Base</h2>
+<h3 id="adversarial-components">7.1 Adversarial Components</h3>
+<ul>
+<li>Model output</li>
+<li>Transport layer</li>
+<li>Backend services</li>
+<li>Network</li>
+</ul>
+<h3 id="trusted-components">7.2 Trusted Components</h3>
+<ul>
+<li>Canonicalization implementation</li>
+<li>Hash implementation</li>
+<li>Law evaluation engine</li>
+<li>Receipt validation logic</li>
+<li>DomainEffects implementation</li>
+<li>Lineage append operation (<code>apply</code>)</li>
+</ul>
+<h3 id="tcb-minimization">7.3 TCB Minimization</h3>
+<p>The TCB can be minimized by:</p>
+<ul>
+<li>isolating DomainEffects as a narrowly scoped module,</li>
+<li>implementing canonicalization and hashing via well-audited
+libraries,</li>
+<li>treating LawStore and SchemaStore as immutable artifact
+registries,</li>
+<li>using formal interfaces for effect_class lowering.</li>
+</ul>
+<p>AOK–MCP does not claim formal verification of the TCB; implementation
+correctness is assumed.</p>
+<hr />
+<h2 id="domaineffects-and-backend-transcript">8. DomainEffects and
+Backend Transcript</h2>
+<p>DomainEffects is the execution membrane and part of the TCB.</p>
+<h3 id="backend-response-transcript">8.1 Backend Response
+Transcript</h3>
+<p>A <strong>backend response transcript</strong> consists of:</p>
+<ul>
+<li>canonicalized request payload,</li>
+<li>HTTP or protocol status code,</li>
+<li>canonicalized response body,</li>
+<li>backend-generated identifiers (if any),</li>
+<li>headers required for semantic interpretation.</li>
+</ul>
+<p>Timing data, transport-level nondeterminism, and non-semantic
+metadata are excluded.</p>
+<p>Determinism is defined over canonical Step plus backend response
+transcript.</p>
+<h3 id="determinism-obligation">8.2 Determinism Obligation</h3>
+<p>Given identical canonical Step and identical backend response
+transcript, DomainEffects must produce:</p>
+<ul>
+<li>identical canonical Receipt, or</li>
+<li>refusal.</li>
+</ul>
+<p>Nondeterministic behavior violates TCB assumptions.</p>
+<p>Enforcement occurs via specification obligations and replay-based
+regression testing.</p>
+<hr />
+<h2 id="receipt-structure-and-schema-evolution">9. Receipt Structure and
+Schema Evolution</h2>
+<p>Receipt: Receipt( step_hash, law_hash, tool_id, effect_class,
+backend_id, outcome, payload_digest, receipt_schema_hash,
+sequence_coordinate )</p>
+<p>Receipt hash:</p>
+<p><span
+class="math display"><em>r</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em><sub><em>h</em></sub><em>a</em><em>s</em><em>h</em> = <em>h</em>(<em>R</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em>)</span></p>
+<p>Receipt hashes commit to the entire canonical receipt object.</p>
+<h3 id="schema-evolution">9.1 Schema Evolution</h3>
+<p>When receipt schema evolves:</p>
+<ul>
+<li>new receipts bind
+<code>receipt_schema_hash = h(Schema_v2)</code>,</li>
+<li>historical receipts remain valid under their original schema,</li>
+<li>replay validates each receipt using its bound schema artifact.</li>
+</ul>
+<hr />
+<h2 id="state-evolution">10. State Evolution</h2>
+<p>Define:</p>
+<p><span
+class="math display"><em>a</em><em>p</em><em>p</em><em>l</em><em>y</em>(<em>L</em><em>i</em><em>n</em><em>e</em><em>a</em><em>g</em><em>e</em>, <em>R</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em>) = <em>L</em><em>i</em><em>n</em><em>e</em><em>a</em><em>g</em><em>e</em> | [<em>r</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em><sub><em>h</em></sub><em>a</em><em>s</em><em>h</em>]</span></p>
+<p>The only admissible state mutation is via <code>apply</code>. Lineage
+is append-only.</p>
+<hr />
+<h2 id="theorem-1-unique-step-to-receipt-binding">11. Theorem 1: Unique
+Step-to-Receipt Binding</h2>
+<p>Under injective canonicalization, C1–C2, and full receipt
+commitment:</p>
+<p>No two distinct Steps can produce lineage-equivalent receipts.</p>
+<p>Proof follows from:</p>
+<ul>
+<li>Step hash uniqueness,</li>
+<li>receipt hash commitment to full receipt,</li>
+<li>binding of <code>step_hash</code>, <code>law_hash</code>, and
+<code>receipt_schema_hash</code>.</li>
+</ul>
+<p><span class="math inline">▫</span></p>
+<hr />
+<h2 id="proposition-1-replay-determinism">12. Proposition 1: Replay
+Determinism</h2>
+<p>Given:</p>
+<ul>
+<li>identical ordered receipt hashes in Lineage,</li>
+<li>availability and integrity of content-addressed artifacts referenced
+by those hashes,</li>
+<li>deterministic law evaluation and receipt validation,</li>
+</ul>
+<p>replay produces identical lineage state.</p>
+<p>Replay depends on retrievability and integrity of the artifacts
+addressed by receipt-bound hashes, not on identical store layouts.</p>
+<p><span class="math inline">▫</span></p>
+<hr />
+<h2 id="idempotent-effect-classes">13. Idempotent Effect Classes</h2>
+<p>For declared idempotent classes:</p>
+<ul>
+<li>idempotency key derived from <code>step_hash</code>,</li>
+<li>backend identifier bound in receipt.</li>
+</ul>
+<p>AOK–MCP prevents silent semantic duplication without distinct
+receipts. Physical duplicate execution may occur without backend
+cooperation but does not advance lineage state.</p>
+<hr />
+<h2 id="policy-drift-and-non-retroactivity">14. Policy Drift and
+Non-Retroactivity</h2>
+<p>Policy v1 allows transfer &lt;= $10k. Step binds
+<code>law_hash = h(L_v1)</code>. Transfer executes. Policy v2 reduces
+limit to $5k.</p>
+<p>In naïve MCP, historical admissibility may be reinterpreted.</p>
+<p>In AOK–MCP:</p>
+<ul>
+<li>Receipt binds <code>law_hash</code>.</li>
+<li>Replay retrieves historical law artifact.</li>
+<li>Admissibility is evaluated under original law.</li>
+</ul>
+<p><strong>AOK–MCP does not allow retroactive policy changes to affect
+historical admissibility.</strong> Once a law artifact is bound to a
+Step, it cannot be reinterpreted under newer policy without breaking
+cryptographic assumptions or compromising the TCB.</p>
+<hr />
+<h2 id="performance-evaluation">15. Performance Evaluation</h2>
+<p>Prototype:</p>
+<ul>
+<li>Rust 1.74</li>
+<li>8-core CPU, 32GB RAM</li>
+<li>SHA-256</li>
+<li>Deterministic JSON</li>
+<li>10,000 Steps, 512-byte payload</li>
+</ul>
+<p>Baseline:</p>
+<ul>
+<li>Mean: 1.83 ms</li>
+<li>standard deviation: 0.14 ms</li>
+</ul>
+<p>AOK–MCP:</p>
+<ul>
+<li>Mean: 2.02 ms</li>
+<li>standard deviation: 0.16 ms</li>
+</ul>
+<p>Overhead approximately 10.4%.</p>
+<p>Replay validation:</p>
+<ul>
+<li>10,000 receipts validated in 18.7 ms.</li>
+</ul>
+<hr />
+<h2 id="comparison">16. Comparison</h2>
+<ul>
+<li><p><strong>Property:</strong> Admissibility Gate<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> No<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Law Hash Binding<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> No<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Schema Hash Binding<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> No<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Receipt-bound State<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> Partial<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Refusal as Artifact<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> Partial<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Deterministic Replay<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> Partial<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Idempotent Effect Support<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> No<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Policy Evolution Safety<br />
+<strong>Naïve MCP:</strong> No<br />
+<strong>Event Sourcing:</strong> No<br />
+<strong>AOK–MCP:</strong> Yes</p></li>
+</ul>
+<hr />
+<h2 id="related-work">17. Related Work</h2>
+<p>Open tool protocols (e.g., MCP specification) standardize invocation
+but do not cryptographically bind admissibility decisions to execution
+artifacts.</p>
+<p>Event sourcing records events but does not bind them to versioned
+admissibility law or require receipts as a condition of state
+advancement.</p>
+<p>Capability systems constrain authority but do not require receipt
+production for semantic lineage evolution.</p>
+<p>Zero-trust and policy engines focus on access control, not replay
+determinism or version-bound law receipts.</p>
+<p>AOK–MCP contributes a content-addressed admissibility layer over open
+tool protocols.</p>
+<hr />
+<h2 id="future-work">18. Future Work</h2>
+<p>Future directions include:</p>
+<ul>
+<li>distributed lineage consensus,</li>
+<li>formal verification of DomainEffects,</li>
+<li>minimization and isolation of the TCB,</li>
+<li>integration with AI safety frameworks (constitutional AI, debate
+systems),</li>
+<li>hardware-backed artifact integrity guarantees.</li>
+</ul>
+<hr />
+<h2 id="summary">19. Summary</h2>
+<p>Open tool protocols define how models call tools but leave
+admissibility ungoverned. This creates an admissibility gap: execution
+can occur without version-bound law, refusal artifacts, or replay
+guarantees.</p>
+<p>AOK–MCP closes this gap by combining:</p>
+<ul>
+<li>content-addressed law artifacts,</li>
+<li>deterministic admissibility evaluation,</li>
+<li>a typed execution membrane,</li>
+<li>receipt-bound state advancement.</li>
+</ul>
+<p>The key innovation is binding tool execution to versioned
+admissibility law via cryptographic receipts. This prevents retroactive
+reinterpretation, enforces semantic determinism, and enables
+auditability across policy evolution.</p>
+<p>AOK–MCP does not replace existing protocols; it reorders authority
+within them.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that open tool protocols such as Model Context
+Protocol (MCP) standardize how models request external actions. Its
+nearest external comparison fields are ai, formal, security. The sources
+in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. Formal assurance remains relative to the
+encoded model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E7]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18617635">10.5281/zenodo.18617635</a></p>

@@ -1,0 +1,441 @@
+<h1
+id="receipt-bound-capabilities-membrane-tokens-for-governed-interaction-with-reality">Receipt-Bound
+Capabilities: Membrane Tokens for Governed Interaction with Reality</h1>
+<h2 id="membrane-tokens-for-governed-interaction-with-reality">Membrane
+Tokens for Governed Interaction with Reality</h2>
+<h3
+id="tokens-that-do-not-produce-receipts-are-treated-as-epistemic-non-events.">Tokens
+that do not produce receipts are treated as epistemic non-events.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern computational systems rely heavily on tokens: authentication
+tokens, capability grants, API keys, session identifiers, and
+permissions. These tokens typically answer a narrow question—<em>may
+this action be attempted?</em>—while remaining silent on a more
+consequential one: <em>what evidence must exist that the action actually
+occurred, and under what constraints?</em> As a result, systems
+accumulate side effects without lineage, authority leaks through
+implicit trust, and execution is permitted to masquerade as fact.</p>
+<p>This paper introduces <strong>Receipt-Bound Capabilities
+(RBCs)</strong>: a token discipline in which the validity of a
+capability is inseparable from the production of a corresponding
+receipt. An RBC does not merely authorize an action; it obligates
+evidence. Redemption of the token is complete only if it yields a
+verifiable, structured record of effect. Tokens that do not produce
+receipts are treated as <strong>epistemic non-events</strong>.</p>
+<p>RBCs reframe tokens as <strong>membrane primitives</strong> rather
+than permissions: bounded interfaces through which a governed system may
+touch reality without surrendering authority or losing memory. By
+binding permission to proof at the point of interaction, RBCs neutralize
+untrusted backends, preserve replayability, and relocate legitimacy
+upstream of execution. This paper formalizes RBCs as a distinct,
+paper-worthy capability technique and situates them within a broader
+architecture of admissibility, refusal, and receipted memory.</p>
+<hr />
+<h2 id="tokens-without-memory">1. Tokens Without Memory</h2>
+<p>Tokens are everywhere, but memory is not.</p>
+<p>Most systems treat tokens as bearer objects: possession implies
+permission. Once redeemed, execution proceeds, and the system may
+optionally log success or failure. But the token itself does not bind
+the effect to an admissible epistemic artifact. Effects may occur
+without proof; claims substitute for evidence; and execution quietly
+accrues authority by default.</p>
+<p>This produces familiar pathologies:</p>
+<ul>
+<li>effects occur without receipts,</li>
+<li>logs narrate rather than attest,</li>
+<li>backends are trusted rather than constrained,</li>
+<li>replay requires re-running the world,</li>
+<li>disputes collapse into interpretation rather than verification.</li>
+</ul>
+<p>These failures intensify at system boundaries: operating systems,
+cloud APIs, blockchains, sensors, LLM tool calls, and foreign runtimes.
+Tokens open doors, but they do not enforce what must be brought back
+through the door.</p>
+<p>The result is a porous membrane between governed logic and ungoverned
+reality.</p>
+<hr />
+<h2 id="from-permission-to-obligation">2. From Permission to
+Obligation</h2>
+<p>Capability-based security correctly observes that <em>who</em> may
+act matters less than <em>what</em> may be done. Receipt-Bound
+Capabilities extend this insight further:</p>
+<blockquote>
+<p>In governed systems, what matters is not only what may be done, but
+what must be proven afterward.</p>
+</blockquote>
+<p>A <strong>Receipt-Bound Capability</strong> is defined by two
+inseparable properties:</p>
+<ol type="1">
+<li><strong>Authorization</strong> - the token permits a specific class
+of effect.</li>
+<li><strong>Obligation</strong> - the token requires production of a
+receipt describing that effect.</li>
+</ol>
+<p>Redemption without a receipt is invalid. Receipt without a valid
+token is invalid. The two are co-defined.</p>
+<p>An action is not complete when it is attempted, nor even when it is
+claimed to have succeeded, but when it returns admissible evidence of
+what occurred. RBCs therefore transform tokens from passive permissions
+into <strong>epistemic contracts</strong>.</p>
+<p>RBCs are <em>membrane capabilities</em>: tokens that cannot be fully
+redeemed without generating a bound receipt.</p>
+<hr />
+<h2 id="the-membrane-not-the-nerve">3. The Membrane, Not the Nerve</h2>
+<p>Biologically, RBCs correspond not to nerves—which transmit intent—but
+to <strong>cell membranes</strong>:</p>
+<ul>
+<li>the membrane defines what may pass,</li>
+<li>passage is coupled to structural change,</li>
+<li>interaction with the environment is constrained and observable,</li>
+<li>unrecorded interaction is indistinguishable from
+non-interaction.</li>
+</ul>
+<p>In architectural terms:</p>
+<ul>
+<li>admissibility governs what meanings may exist,</li>
+<li>expression governs what meanings may act,</li>
+<li><strong>RBCs govern what actions may count as having
+occurred</strong>.</li>
+</ul>
+<p>Without a membrane, an organism cannot maintain integrity. Without
+RBCs, a governed system cannot maintain epistemic closure.</p>
+<hr />
+<h2 id="formal-sketch-receipt-bound-redemption">4. Formal Sketch:
+Receipt-Bound Redemption</h2>
+<p>An RBC can be defined as a triple <span
+class="math inline">(<em>C</em>, <em>E</em>, <em>R</em>)</span>,
+where:</p>
+<ul>
+<li><span class="math inline"><em>C</em></span> is a capability
+identifier,</li>
+<li><span class="math inline"><em>E</em></span> is a <em>typed effect
+family</em> (including parameters and result types),</li>
+<li><span class="math inline"><em>R</em></span> is a receipt schema
+binding evidence of execution.</li>
+</ul>
+<p>Each receipt schema minimally binds:</p>
+<ul>
+<li>the capability identifier <span
+class="math inline"><em>C</em></span>,</li>
+<li>a concrete effect instance <span
+class="math inline"><em>e</em> ∈ <em>E</em></span> or a deterministic
+summary thereof,</li>
+<li>the execution boundary (backend or substrate),</li>
+<li>a timestamp or sequence coordinate,</li>
+<li>an outcome classification,</li>
+<li>a hash-stable payload describing results.</li>
+</ul>
+<p><strong>RBC Law.</strong> An effect attempt <span
+class="math inline">(<em>C</em>, <em>e</em>)</span> is epistemically
+admissible <em>if and only if</em> it produces a receipt <span
+class="math inline"><em>r</em></span> such that:</p>
+<ul>
+<li><span class="math inline"><em>r</em> ∈ <em>R</em></span>,</li>
+<li><span
+class="math inline"><em>r</em>.<em>C</em> = <em>C</em></span>,</li>
+<li><span class="math inline"><em>r</em></span> binds <span
+class="math inline"><em>e</em></span> (or a deterministic projection of
+<span class="math inline"><em>e</em></span>).</li>
+</ul>
+<p>If no such receipt is produced, the attempt is an <strong>epistemic
+non-event</strong>. The system state machine does not advance.
+Downstream reasoning must proceed <em>as if the effect never
+occurred</em>, except to register a fault or refusal against the
+backend.</p>
+<p><em>Example:</em> Consider an effect class such as persisting an
+object to storage. An RBC authorizes the attempt and requires a receipt
+binding the object identity, persistence boundary, and resulting content
+hash. If the backend produces no conforming receipt, the system does not
+advance its internal state; the persistence attempt has no epistemic
+standing. Execution may have occurred physically, but without a receipt
+it does not count within the governed system.</p>
+<p>Receipts are not logs. They are semantic artifacts eligible for
+lineage.</p>
+<hr />
+<h2 id="backend-neutralization">5. Backend Neutralization</h2>
+<p>RBCs treat backends as untrusted substrates to be
+<strong>contained</strong>, not trusted.</p>
+<p>When a governed system interfaces with a backend—filesystem, network,
+OS call, cloud API, LLM tool, or foreign runtime—the backend never
+receives ambient authority. It receives an RBC.</p>
+<p>The backend may:</p>
+<ul>
+<li>succeed and produce a receipt,</li>
+<li>fail and produce a receipt,</li>
+<li>or produce nothing.</li>
+</ul>
+<p>Only the first two outcomes exist epistemically.</p>
+<p>This yields three immediate effects:</p>
+<ol type="1">
+<li><p><strong>Silent escalation is impossible.</strong> Absence of a
+receipt collapses the interaction to non-existence.</p></li>
+<li><p><strong>Claims without evidence are inert.</strong> Assertion
+alone cannot advance system state.</p></li>
+<li><p><strong>Backend heterogeneity is neutralized.</strong> Diverse
+substrates are unified under a single membrane semantics.</p></li>
+</ol>
+<p>The token does not encode trust. It encodes
+<strong>containment</strong>.</p>
+<hr />
+<h2 id="replay-without-re-execution">6. Replay Without Re-Execution</h2>
+<p>Because RBC redemption is receipt-producing by definition, every
+reality-touching action becomes replay-addressable.</p>
+<p>Replay does not require re-running the backend. It requires replaying
+the <em>receipt logic</em>:</p>
+<ul>
+<li>which capability was minted,</li>
+<li>under what admissibility conditions,</li>
+<li>what receipt was returned,</li>
+<li>how that receipt influenced subsequent state.</li>
+</ul>
+<p>Effects become nodes in lineage graphs, not opaque side effects. RBCs
+therefore integrate directly with receipted memory systems: systems that
+reason over what has been proven to have occurred, rather than what was
+claimed or inferred.</p>
+<hr />
+<h2 id="adversarial-pressure-and-immune-response">7. Adversarial
+Pressure and Immune Response</h2>
+<p>RBCs provide a native immune response to semantic attack:</p>
+<ul>
+<li><strong>Flooding attacks</strong> - token minting is governed
+upstream; redemption without receipts is inert.</li>
+<li><strong>Malicious but admissible actions</strong> - effects are
+visible, typed, and contestable.</li>
+<li><strong>Backend deception</strong> - lying requires forging
+receipts, which produces detectable artifacts.</li>
+<li><strong>Gap exploitation</strong> - mismatches surface as refusal or
+explicit receipt mismatch, not silent drift.</li>
+</ul>
+<p>RBCs do not eliminate deception. They eliminate
+<strong>unaccountable</strong> deception.</p>
+<p>As with biological immune systems, the goal is not to prevent all
+harm, but to preserve system identity under pressure.</p>
+<hr />
+<h2 id="distinction-from-prior-work">8. Distinction from Prior Work</h2>
+<p>RBCs are related to, but distinct from, existing techniques:</p>
+<ul>
+<li><strong>Capability-based security</strong> decides who may do what;
+RBCs decide what <em>evidence is mandatory</em> for an action to
+count.</li>
+<li><strong>Audit logs and event sourcing</strong> allow events to be
+omitted or fabricated; RBCs make the proof artifact structurally
+necessary for state transition.</li>
+<li><strong>Proof-carrying code</strong> binds proofs to programs; RBCs
+bind proofs to <em>effects</em>.</li>
+<li><strong>Zero-trust architectures</strong> remove trust in identity
+and perimeter; RBCs add <strong>obligated attestations</strong> tied to
+specific actions.</li>
+</ul>
+<p>The novelty lies in binding <em>permission</em> and <em>evidence</em>
+at the token level.</p>
+<hr />
+<h2 id="what-rbcs-are-not">9. What RBCs Are Not</h2>
+<p>Receipt-Bound Capabilities are not:</p>
+<ul>
+<li>authentication tokens,</li>
+<li>identity credentials,</li>
+<li>access control lists,</li>
+<li>logging frameworks,</li>
+<li>monitoring tools.</li>
+</ul>
+<p>They do not decide policy. They do not infer intent. They do not
+interpret meaning.</p>
+<p>They ensure that <strong>nothing touches reality without leaving a
+scar</strong>.</p>
+<hr />
+<h2 id="ingressegress-symmetry">10. Ingress–Egress Symmetry</h2>
+<p>Receipt-Bound Capabilities operate at the <strong>egress
+boundary</strong> of governed systems. Their conceptual counterpart,
+<strong>Governed Semantic Tokens (GST)</strong>, operates at the
+<strong>ingress boundary</strong>.</p>
+<p>GST governs what is allowed to count as meaning. RBCs govern what is
+allowed to count as having occurred.</p>
+<p>Together, they form a closed epistemic membrane: meaning does not
+enter the system without governance, and reality is not touched without
+evidence. Authority is denied both to raw signals and to raw
+execution.</p>
+<hr />
+<h2 id="implications">11. Implications</h2>
+<p>Within governed architectures, RBCs:</p>
+<ul>
+<li>operationalize the execution membrane,</li>
+<li>neutralize heterogeneous backends,</li>
+<li>preserve replayability without re-execution,</li>
+<li>make refusal first-class,</li>
+<li>bind execution to lineage.</li>
+</ul>
+<p>Beyond any single system, RBCs suggest a general pattern for
+interacting with reality without surrendering epistemic control: in AI
+agents, financial systems, infrastructure orchestration, and civic
+technology.</p>
+<hr />
+<h2 id="conclusion">12. Conclusion</h2>
+<p>Execution is cheap. Evidence is not.</p>
+<p>Receipt-Bound Capabilities redefine tokens from permissions into
+obligations. By binding authority to proof, RBCs relocate legitimacy
+upstream of runtime and restore the boundary between acting and
+<em>having acted</em>.</p>
+<p>In systems that act autonomously and persist beyond direct human
+oversight, the decisive question is no longer whether an action was
+allowed, but whether it can be <em>shown</em>.</p>
+<p>RBCs answer that question mechanically.</p>
+<p>A system that cannot demand receipts cannot distinguish action from
+assertion.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern computational systems rely heavily on
+tokens: authentication tokens, capability grants, API keys, session
+identifiers, and permissions. Its nearest external comparison fields are
+security, provenance, storage. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. A complete provenance graph can faithfully record a false or
+unauthorized process; provenance is evidence about lineage, not
+automatic truth or legitimacy. Fixity and preservation can keep bytes
+stable while representation dependencies, executability, interpretation,
+and institutional custody decay. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E2]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E3]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18601631">10.5281/zenodo.18601631</a></p>

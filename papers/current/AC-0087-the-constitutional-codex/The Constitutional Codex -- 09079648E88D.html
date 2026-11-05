@@ -1,0 +1,634 @@
+<h1 id="the-constitutional-codex">The Constitutional Codex</h1>
+<h2
+id="three-layer-agent-executable-specification-for-complete-system-realization">Three-Layer
+Agent-Executable Specification for Complete System Realization</h2>
+<h3
+id="but-implementation-correctness-is-only-one-layer-of-a-complete-system-specification.">But
+implementation correctness is only one layer of a complete system
+specification.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>The Implementation Codex (CX-I) demonstrated that software
+construction can be made deterministic through phase-gated,
+AI-executable specification. But implementation correctness is only one
+layer of a complete system specification. The Implementation Codex tells
+an agent <em>how to build</em> a system – it does not explain <em>why
+this configuration was chosen</em>, what alternatives exist, or what
+would need to change if requirements shifted.</p>
+<p>This paper introduces the <strong>Constitutional Codex</strong>
+(CX:AES): a three-layer specification framework that extends the
+Implementation Codex with two additional layers – the Constitutional
+Specification (CX-S), which defines the field of possibility and domain
+constraints, and the Constitutional Configuration (CX-C), which
+documents the selected design, its rationale, and the topology of
+alternative configurations.</p>
+<p>Together, the three layers form a complete, corrigible,
+agent-executable specification: the CX-S declares what <em>could</em> be
+built, the CX-C declares what <em>was chosen</em> and why, and the CX-I
+declares <em>how to build it</em>. All three layers are updateable
+through observation and insight, using the same journal-driven
+refinement cycle that proved effective for the Implementation Codex.</p>
+<p>The central claim is: <em>a system is fully specified only when its
+possibility space, configuration rationale, and construction plan are
+all explicit, all corrigible, and all agent-executable.</em></p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>The Implementation Codex solved a specific problem: given a settled
+architecture, how do you specify it precisely enough that an AI agent
+can build it correctly on first pass? The Implementation Codex source
+reports eight builds across two models and two languages as evidence for
+phase-gated construction with journal-driven refinement. This paper does
+not independently reproduce that evidence; it treats the reported result
+as a motivating predecessor claim.</p>
+<p>But the Implementation Codex is deliberately silent on a deeper
+question: <em>why was this architecture chosen?</em></p>
+<p>When the Implementation Codex encounters a genuine design ambiguity –
+receipts could be append-only or versioned, the observer actor could be
+empty string or a named system identity, hash deserialization could use
+approach A or approach B – it escalates to the Governor. The Governor
+makes a decision. The decision is recorded in the version history. But
+the <em>reasoning space</em> – why this choice was correct, what other
+choices were possible, what conditions would make a different choice
+better – is not captured.</p>
+<p>This means three things are lost:</p>
+<p>First, the design rationale. A new Governor inheriting the Codex sees
+<em>what</em> was decided but not <em>why</em>. The decision appears
+arbitrary because the alternatives and their tradeoffs are not
+documented.</p>
+<p>Second, the configuration topology. The Codex specifies one point in
+a space of valid configurations. It does not map the space. An agent
+encountering a new requirement cannot determine whether the requirement
+is satisfiable within the current configuration, requires a
+reconfiguration, or is inadmissible under fundamental domain
+constraints.</p>
+<p>Third, the corrigibility structure. The Implementation Codex is
+updateable through observation – but only at the implementation level.
+Observations that challenge the <em>architecture itself</em> (not just
+its specification) have no formal mechanism for propagation. They become
+Governor judgment calls rather than systematic specification
+refinement.</p>
+<p>The Constitutional Codex addresses these gaps by adding two layers
+above the Implementation Codex.</p>
+<hr />
+<h2 id="the-sci-framework">2. The SCI Framework</h2>
+<p>The Constitutional Codex is structured according to the
+Specification-Configuration-Implementation (SCI) framework, which treats
+every engineered system as existing at three distinct levels.</p>
+<h3 id="specification-cx-s">2.1 Specification (CX-S)</h3>
+<p>The specification layer defines the <strong>field of
+possibility</strong>. It answers: what are the fundamental constraints
+of this domain? What could be built? What is admissible and what is
+inadmissible regardless of configuration?</p>
+<p>For a governance system, CX-S might state: “Every mutation must have
+a traceable cause. This is a domain invariant – no valid governance
+system omits it. The cause may be a receipt, a log entry, an audit
+record, or any other mechanism that provides traceability. The choice of
+mechanism is a configuration decision, not a specification
+constraint.”</p>
+<p>CX-S distinguishes between:</p>
+<p><strong>Domain invariants</strong> – properties that hold in every
+valid configuration of this system type. These are the physics of the
+domain. Violating them produces a system that is not a member of the
+class.</p>
+<p><strong>Configuration parameters</strong> – dimensions along which
+valid configurations vary. Each parameter has a range of admissible
+values. The CX-C selects a specific value.</p>
+<p><strong>Inadmissible regions</strong> – combinations of parameter
+values that violate domain invariants. These are the configurations that
+<em>cannot</em> work, regardless of how well they are implemented.</p>
+<h3 id="configuration-cx-c">2.2 Configuration (CX-C)</h3>
+<p>The configuration layer documents the <strong>selected
+design</strong>. It answers: within the field of possibility, which
+specific configuration was chosen and why?</p>
+<p>For a governance system, CX-C might state: “Traceability is achieved
+via append-only receipts (not log entries or audit records). This was
+chosen because append-only receipts provide independent verifiability –
+any party can recompute the hash and confirm the receipt chain without
+trusting the system that produced it. Log entries were rejected because
+they are mutable. Audit records were rejected because they require a
+trusted auditor.”</p>
+<p>CX-C documents:</p>
+<p><strong>Selected configuration</strong> – the specific parameter
+values chosen from the CX-S possibility space.</p>
+<p><strong>Rationale</strong> – why each selection was made, referencing
+the tradeoffs involved.</p>
+<p><strong>Alternatives considered</strong> – what other configurations
+were evaluated, and why they were rejected or deferred.</p>
+<p><strong>Reconfiguration triggers</strong> – what observations or
+requirement changes would cause this configuration to be reconsidered.
+These are the conditions under which the CC should be reopened.</p>
+<p><strong>Configuration topology</strong> – the map of optimal,
+suboptimal, and inadmissible configurations in the possibility space.
+Not every configuration needs to be enumerated, but the topology should
+be described well enough that an agent can classify a new configuration
+as admissible or inadmissible.</p>
+<h3 id="implementation-cx-i">2.3 Implementation (CX-I)</h3>
+<p>The implementation layer is the <strong>build plan</strong>. It
+answers: given this specific configuration, how do you construct the
+system deterministically?</p>
+<p>This is the Implementation Codex as previously described: dependency
+graph, phase linearization, phase specifications with exact types and
+pseudocode, patterns library, validation protocol with gate tests, and
+language binding guides. The CX-I is the layer that agents execute
+directly.</p>
+<p>The key property of the CX-I is that it treats the architecture as
+settled. The CX-I does not explain <em>why</em> receipts are append-only
+– it specifies <em>how</em> to implement append-only receipts with SQL
+triggers. The explanation belongs in the CX-C. The domain constraint
+that makes traceability necessary belongs in the CX-S.</p>
+<hr />
+<h2 id="corrigibility-across-layers">3. Corrigibility Across Layers</h2>
+<p>A constitutional system is one that specifies how it can be changed.
+The Constitutional Codex applies this principle to itself: all three
+layers are corrigible through a governed process.</p>
+<h3 id="implementation-corrigibility">3.1 Implementation
+Corrigibility</h3>
+<p>The CX-I is corrected through the journal-driven refinement cycle
+demonstrated in the Implementation Codex paper. Build observations are
+classified (GAP, FRICTION, AMBIGUITY), integrated into the
+specification, and validated through cross-model builds. This cycle
+operates within a fixed configuration – the architecture doesn’t change,
+only its specification.</p>
+<h3 id="configuration-corrigibility">3.2 Configuration
+Corrigibility</h3>
+<p>The CX-C is corrected when implementation experience reveals that the
+selected configuration is suboptimal or inadequate. An observation at
+the CX-I level – “this invariant is structurally harder to enforce than
+expected” – may propagate upward to the CX-C level: “should we use a
+different enforcement mechanism?”</p>
+<p>Configuration changes are more consequential than implementation
+changes. A CX-I change (adding a deserialization mechanism to a phase
+spec) affects one build step. A CX-C change (switching from append-only
+receipts to versioned receipts) may invalidate multiple phases,
+patterns, and gate tests. The CX-C should document the blast radius of
+each configuration choice – which parts of the CX-I would need to change
+if this configuration parameter were modified.</p>
+<h3 id="specification-corrigibility">3.3 Specification
+Corrigibility</h3>
+<p>The CX-S is corrected when new theoretical insights change the field
+of possibility. A domain invariant previously thought fundamental may be
+revealed as a configuration choice. A previously admissible region of
+the configuration space may be shown to be inadmissible under a newly
+discovered constraint.</p>
+<p>Specification changes are the most consequential. A CX-S change may
+invalidate the current configuration (CX-C), which invalidates the
+current implementation (CX-I). The CX-S should document which domain
+invariants are empirically validated versus theoretically assumed.</p>
+<h3 id="upward-and-downward-propagation">3.4 Upward and Downward
+Propagation</h3>
+<p>Observations propagate upward: a build failure (CX-I) may reveal a
+configuration limitation (CX-C), which may reveal a specification gap
+(CX-S).</p>
+<p>Constraints propagate downward: a new domain invariant (CX-S)
+constrains the admissible configurations (CX-C), which constrains the
+implementation (CX-I).</p>
+<p>The journal mechanism extends across all three layers. An observation
+recorded during a build may be classified as:</p>
+<ul>
+<li><strong>CX-I observation</strong>: specification gap at the
+implementation level (fix the phase spec)</li>
+<li><strong>CX-C observation</strong>: the selected configuration
+doesn’t handle this case (consider reconfiguration)</li>
+<li><strong>CX-S observation</strong>: the domain has a constraint we
+didn’t account for (update the possibility space)</li>
+</ul>
+<p>Each classification determines where the correction is applied and
+how far its effects propagate.</p>
+<hr />
+<h2 id="the-configuration-topology">4. The Configuration Topology</h2>
+<p>One of the CX-C’s most important functions is mapping the
+configuration topology – the space of possible configurations and their
+properties.</p>
+<h3 id="optimal-configurations">4.1 Optimal Configurations</h3>
+<p>A configuration is optimal when it satisfies all domain invariants
+(CX-S) and minimizes tradeoffs for the stated requirements. There may be
+multiple optimal configurations for different requirement sets.</p>
+<h3 id="suboptimal-configurations">4.2 Suboptimal Configurations</h3>
+<p>A configuration is suboptimal when it satisfies all domain invariants
+but accepts unnecessary tradeoffs. Suboptimal configurations are valid –
+they work – but a better configuration exists for the same
+requirements.</p>
+<h3 id="inadmissible-configurations">4.3 Inadmissible
+Configurations</h3>
+<p>A configuration is inadmissible when it violates a domain invariant.
+No implementation of an inadmissible configuration can produce a correct
+system. The CX-S defines the boundary between admissible and
+inadmissible; the CX-C maps specific configurations relative to that
+boundary.</p>
+<h3 id="why-topology-matters">4.4 Why Topology Matters</h3>
+<p>Without topology, every configuration decision is a point decision –
+“we chose A, not B.” With topology, configuration decisions become
+navigational – “we are at point P in the space, alternatives Q and R are
+nearby, the inadmissible region is in direction D, and moving toward S
+would improve property X at the cost of property Y.”</p>
+<p>This enables agents to reason about configuration changes without
+Governor intervention for simple cases. An agent encountering a new
+requirement can consult the CX-C topology: if the requirement is
+satisfiable within the current configuration’s neighborhood, the agent
+can propose a specific modification. If the requirement requires
+crossing an inadmissible boundary, the agent knows to escalate.</p>
+<hr />
+<h2 id="relationship-to-the-implementation-codex">5. Relationship to the
+Implementation Codex</h2>
+<p>The Constitutional Codex does not replace the Implementation Codex.
+It contextualizes it.</p>
+<p>The CX-I remains the artifact that agents execute directly. Its
+structure (six document classes, phase-gated construction, gate tests,
+journal-driven refinement) is unchanged. The CX-S and CX-C are authored
+by the Governor and consulted by agents when they encounter design-level
+questions that the CX-I cannot answer.</p>
+<p>The practical workflow:</p>
+<p><strong>System design</strong> – the Governor, aided by
+governor-coder skill sessions, develops the CX-S (domain analysis) and
+CX-C (configuration selection). This produces the architectural
+decisions that the CX-I will specify.</p>
+<p><strong>Implementation specification</strong> – the Governor, using
+the codex-author skill, produces the CX-I from the CX-C. The CX-I
+specifies the selected configuration with enough precision for
+deterministic construction.</p>
+<p><strong>Construction</strong> – an agent, using the
+codex-governed-session skill, builds from the CX-I. The CX-S and CX-C
+are available for reference but the agent builds from the CX-I.</p>
+<p><strong>Refinement</strong> – build observations are classified by
+layer (CX-I, CX-C, or CX-S) and corrections are applied at the
+appropriate level. Most observations are CX-I level. Configuration and
+specification observations are rarer but more consequential.</p>
+<hr />
+<h2 id="empirical-grounding">6. Empirical Grounding</h2>
+<p>The Constitutional Codex framework is grounded in the empirical
+results of the Implementation Codex, which demonstrated the CX-I layer
+across eight builds.</p>
+<p>Several observations from those builds were, in retrospect, CX-C
+level observations rather than CX-I level:</p>
+<p><strong>The C4 observer exemption.</strong> The Phase 1 validator
+rule “authority_present must equal (actor is non-empty)” conflicted with
+the Phase 3 observer convention “actor is ‘observer:system’ but
+authority_present is false.” This is a configuration decision –
+observers are a structurally different category from governed actors.
+The CX-I recorded it as a validator fix. The CX-C would record it as a
+design decision: “Observer receipts name a system identity for
+traceability without claiming governance authority. The validation rule
+has an observer exemption because observers occupy a different position
+in the authority model than actors.”</p>
+<p><strong>The sql.js vs better-sqlite3 choice.</strong> The CX-I
+documented this as a binding guide fallback. The CX-C would document it
+as a configuration parameter: “The receipt store requires a SQLite
+engine with trigger support. The specific binding is a deployment
+configuration, not an architectural choice. Any SQLite binding
+satisfying INV-6 is admissible.”</p>
+<p><strong>The vocabulary classification.</strong> The misclassification
+of <code>app_launch</code> as NATIVE_OPS instead of BOUNDARY_OPS caused
+49 test failures. The CX-I fix was a cross-reference table. The CX-C
+would explain <em>why</em> app_launch is a boundary operation: “Process
+launch crosses the boundary between MosaicOS and the external operating
+system. It is governed at level B because MosaicOS mediates the boundary
+but does not own the external process.”</p>
+<p>In each case, the CX-C explanation provides context that the CX-I fix
+lacks. An agent reading only the CX-I knows <em>what</em> to do. An
+agent reading the CX-C knows <em>why</em>.</p>
+<hr />
+<h2 id="what-the-cx-s-contains">7. What the CX-S Contains</h2>
+<p>The Specification layer is the most abstract and the most stable. It
+changes only when fundamental understanding of the domain changes.</p>
+<p>For a governance system, the CX-S would contain:</p>
+<p><strong>Domain invariants.</strong> Properties that every valid
+governance system must have. “Every mutation has a traceable cause” is a
+domain invariant. “Causes are recorded as append-only receipts” is not –
+that’s a configuration choice.</p>
+<p><strong>System taxonomy.</strong> What kinds of governance systems
+exist. A CX-S for computational governance might distinguish between
+advisory systems (governance produces recommendations), enforcement
+systems (governance prevents violations), and audit systems (governance
+records actions for later review). Each type has different
+invariants.</p>
+<p><strong>Configuration dimensions.</strong> The parameters along which
+valid configurations vary. For governance: traceability mechanism
+(receipts, logs, audit records), enforcement timing (pre-execution,
+post-execution, concurrent), authority model (hierarchical, delegated,
+capability-based), scope declaration (explicit, implicit,
+discovered).</p>
+<p><strong>Admissibility boundaries.</strong> Which combinations of
+configuration parameters are inadmissible. “Pre-execution enforcement
+with implicit scope” may be inadmissible because you can’t enforce
+boundaries you haven’t declared.</p>
+<p><strong>Theoretical foundations.</strong> References to the formal
+frameworks that underpin the domain. For Constitutional Computing: the
+relationship between governance and computation, the meaning of
+“constitutional” in the context of software systems, the epistemological
+status of receipts as evidence.</p>
+<p>The CX-S educates agents about the domain. An agent that has read the
+CX-S understands not just the system it is building, but the class of
+systems to which it belongs.</p>
+<hr />
+<h2 id="what-the-cx-c-contains">8. What the CX-C Contains</h2>
+<p>The Configuration layer documents the specific architecture selected
+from the CX-S possibility space.</p>
+<p>For the Constitutional Computing system, the CX-C would contain:</p>
+<p><strong>Configuration selections with rationale.</strong>
+“Traceability: append-only receipts. Rationale: independent
+verifiability without trusted third party. Alternative considered:
+structured logs. Rejected because: mutable, requires trust in log
+infrastructure.”</p>
+<p><strong>Configuration topology map.</strong> A description (not
+necessarily exhaustive enumeration) of the configuration space
+neighborhood. “Adjacent configurations include: versioned receipts
+(relaxes append-only, gains amendment capability, loses simplicity),
+capability-based authority (replaces hierarchical delegation, gains
+composability, loses auditability of delegation chains).”</p>
+<p><strong>Blast radius declarations.</strong> For each configuration
+parameter: “If this parameter changed, the following CX-I phases would
+need modification.” This enables impact analysis before
+reconfiguration.</p>
+<p><strong>Reconfiguration triggers.</strong> “If the following
+conditions are observed, this configuration should be reconsidered: (1)
+receipt store exceeds 10M entries and query performance degrades –
+consider indexed receipts with materialized views. (2) Multi-machine
+deployment required – consider replacing in-process authority with
+distributed capability tokens.”</p>
+<p><strong>Design decision log.</strong> Every significant design
+decision, with date, alternatives considered, and the Governor’s
+rationale. This is the institutional memory that currently lives in
+conversation transcripts and session histories.</p>
+<hr />
+<h2 id="the-naming-stack">9. The Naming Stack</h2>
+<p>The Constitutional Codex integrates with the broader system
+naming:</p>
+<p><strong>CX:AES</strong> – Constitutional Codex: Agent-Executable
+Specification. The complete three-layer methodology.</p>
+<p><strong>CX-S</strong> – Constitutional Specification. The domain
+possibility space.</p>
+<p><strong>CX-C</strong> – Constitutional Configuration. The selected
+design with rationale.</p>
+<p><strong>CX-I</strong> – Constitutional Implementation. The
+phase-gated build plan (formerly the Implementation Codex).</p>
+<p><strong>Meta-CX:AES</strong> – The meta-specification governing the
+structure of all Constitutional Codices.</p>
+<p><strong>UGA</strong> – Universal Governance Architecture. The
+theoretical framework.</p>
+<p><strong>UGK</strong> – Universal Governance Kernel. The runtime
+library implementing UGA.</p>
+<p><strong>BUGA</strong> – Bootstrapped UGA. Any system built on
+UGK.</p>
+<p>A BUGA system has a CX. The CX has three layers. Agents build from
+the CX-I, consult the CX-C for design rationale, and reference the CX-S
+for domain understanding. Governors author and refine all three layers
+through observation-driven corrigibility.</p>
+<hr />
+<h2 id="distinguishing-from-existing-frameworks">10. Distinguishing from
+Existing Frameworks</h2>
+<h3 id="versus-formal-methods">10.1 Versus Formal Methods</h3>
+<p>Formal specification languages (TLA+, Alloy) operate at the CX-S
+level – they define what is possible and prove properties about
+configurations. But they do not produce implementation, and they do not
+capture configuration rationale. The Constitutional Codex spans all
+three SCI layers and produces constructible artifacts at each level.</p>
+<h3 id="versus-architecture-decision-records">10.2 Versus Architecture
+Decision Records</h3>
+<p>ADRs document configuration decisions with rationale – a partial
+CX-C. But ADRs are typically narrative documents without formal
+structure, they don’t map the configuration topology, they don’t declare
+blast radii, and they don’t connect to implementation specifications.
+The CX-C formalizes what ADRs attempt informally.</p>
+<h3 id="versus-domain-driven-design">10.3 Versus Domain-Driven
+Design</h3>
+<p>DDD’s bounded contexts and ubiquitous language overlap with CX-S’s
+domain analysis. But DDD is primarily a design methodology, not a
+specification framework. It produces design principles, not
+agent-executable artifacts.</p>
+<h3 id="versus-the-implementation-codex">10.4 Versus the Implementation
+Codex</h3>
+<p>The CX-I is the Implementation Codex. The Constitutional Codex adds
+context above it. The key advance is not replacing the CX-I but making
+explicit the layers of reasoning that the CX-I depends on but does not
+capture.</p>
+<hr />
+<h2 id="limits">11. Limits</h2>
+<p>The Constitutional Codex does not claim that all domains have
+discoverable invariants, that all configuration topologies can be
+mapped, or that all design rationale can be formalized. It does claim
+that making these layers explicit – even partially – improves system
+understanding, enables more autonomous agent reasoning about design
+questions, and preserves institutional knowledge that would otherwise be
+lost in conversation transcripts.</p>
+<p>The CX-S and CX-C are harder to validate empirically than the CX-I.
+The CX-I has a clear success criterion: cross-model convergence to zero
+observations. The CX-S and CX-C success criteria are less crisp – they
+are “complete” when agents can answer configuration-level questions
+without Governor intervention, but this is harder to measure than gate
+test pass rates.</p>
+<p>The framework is most applicable to systems with well-defined domain
+structure – governance systems, protocol implementations, security
+architectures. Systems with emergent or discovery-driven requirements
+may benefit from the CX-I layer but may not have stable enough domain
+understanding for meaningful CX-S and CX-C layers.</p>
+<hr />
+<h2 id="conclusion">12. Conclusion</h2>
+<p>The Constitutional Codex extends the Implementation Codex from a
+single-layer build plan to a three-layer specification framework that
+captures the full reasoning stack from domain constraints through design
+decisions to construction procedures.</p>
+<p>The defining property is corrigibility across all three layers.
+Observations at any layer propagate appropriately – implementation
+observations refine the build plan, configuration observations trigger
+design reconsideration, and specification observations update the domain
+model. The journal mechanism that proved effective for implementation
+refinement extends naturally to configuration and specification
+refinement.</p>
+<p>The practical consequence is that a system specified under CX:AES
+carries its own explanation. An agent building from the CX-I knows
+<em>how</em>. An agent consulting the CX-C knows <em>why</em>. An agent
+reading the CX-S knows <em>what else could have been</em>. Together, the
+three layers constitute a complete, self-contained, corrigible
+specification – a constitutional codex from which a system can be
+realized.</p>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the Implementation Codex (CX-I) demonstrated
+that software construction can be made deterministic through
+phase-gated, AI-executable specification. Its nearest external
+comparison fields are governance, formal, software. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Formal assurance remains relative to the encoded model, trusted base,
+and refinement chain; proof does not remove specification error or
+unmodeled environmental behavior. Modularity, secure-development
+practice, and reproducibility reduce classes of failure but do not
+guarantee architectural coherence or user sovereignty. These limits are
+not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E6]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E7]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848774">10.5281/zenodo.23848774</a></p>

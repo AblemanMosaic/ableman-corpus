@@ -1,0 +1,998 @@
+<h1 id="adversarial-alternation-under-human-governance">Adversarial
+Alternation Under Human Governance</h1>
+<h2
+id="a-case-study-in-ai-built-ai-audited-verification-infrastructure">A
+Case Study in AI-Built, AI-Audited Verification Infrastructure</h2>
+<h3
+id="those-observations-do-not-establish-that-alternation-outperforms-one-careful-agent.">Those
+observations do not establish that alternation outperforms one careful
+agent.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper reports a two-day case study in which two AI sessions
+alternated between builder and auditor roles while one human Governor
+retained scope, disposition, and ratification authority. The subject was
+a small verification and evidence-recovery system whose claims could be
+quarantined when a dependency failed and restored only after
+re-derivation and human ratification.</p>
+<p>The case suggests a practical hardening loop: freeze the candidate,
+replay it cold, attack beyond packaged tests, reproduce every accepted
+finding before repair, convert each counterexample into a permanent
+regression, and prevent artifacts from conferring standing on
+themselves. The source reports that later builder errors were caught by
+earlier auditor tests and that the last ledger round had no findings
+under its probe set.</p>
+<p>Those observations do not establish that alternation outperforms one
+careful agent. The sessions were role-separated but not shown to be
+epistemically independent; they were probably from the same model
+family. There was no baseline, the program was small, the author
+participated, probe sets changed, and findings were counted in
+inconsistent units. The frozen archives and full reports were not rerun
+in this review. The defensible contribution is therefore an
+evidence-bounded method specification and a set of hypotheses for
+controlled evaluation, not a causal effect claim.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/adversarial-</code></p>
+<p><code>alternation-human-governance/integration-</code><br />
+<code>custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>505545448B44404FFAFB834396A2AFEDCED2A1E2FE4AD39286D47E14937AD242</code>.
+The source remains unchanged.</p>
+<p>The case record, SIER architecture, round descriptions, reported
+defect classes, evidence tiers, limitations, and future-work proposals
+are author material. Formalization, corpus integration, the universal
+GSM decomposition, the realization funnel, expanded countertests, and
+editorial alternatives are AI-assisted contributions explicitly
+distinguished from the original author material.</p>
+<p>No external research was conducted. The implementation archives,
+audit reports, full artifact digests, permanent tests, and ratification
+conversation records described by the manuscript were not present in
+this review package. This paper therefore says
+<strong>source-reported</strong> where direct replay or artifact
+authentication would be required. A SHA-256 prefix identifies a possible
+artifact; it does not authenticate its origin, completeness, or
+standing.</p>
+<h2 id="the-problem">1. The Problem</h2>
+<p>A proof can be valid for the wrong statement. A receipt can be
+well-formed but refer to the wrong subject. A test can pass because it
+never reaches the intended gate. A later defect in a tool can invalidate
+claims that depended on earlier results. These are not merely
+implementation mistakes; they are failures to preserve the relation
+among a claim, its dependencies, its evidence, and the authority that
+may grant or restore standing.</p>
+<p>The source begins with MUXFIX: Python’s treatment of
+<code>True == 1</code> caused an encoder to confuse a constant true bit
+with propositional variable 1. The proof checker accepted a valid proof,
+but the encoded formula was not the formula the system claimed to prove.
+The source reports this as the event that motivated revocable
+verification claims.</p>
+<p>Two questions follow:</p>
+<ol type="1">
+<li>What must a claim record so a later defect can quarantine every
+dependent claim without erasing history?</li>
+<li>Can role-separated AI sessions, alternating under retained human
+authority, find and permanently encode failures that builder
+self-testing misses?</li>
+</ol>
+<p>The first is an architecture question. The second is an empirical
+question. This case provides a worked protocol and observations; it does
+not resolve the comparative question.</p>
+<h2 id="the-system-under-study">2. The System Under Study</h2>
+<p>The source describes three layers:</p>
+<ul>
+<li><p><strong>Layer:</strong> UCM Agent Kit<br />
+<strong>Function:</strong> Checks equivalence and properties for small
+i32 dataflow programs using packaged proof and search machinery.<br />
+<strong>Intended protection:</strong> Wrong program claims.</p></li>
+<li><p><strong>Layer:</strong> Material admission gate<br />
+<strong>Function:</strong> Re-derives a claim from original programs,
+formula, and proof instead of trusting a receipt alone.<br />
+<strong>Intended protection:</strong> Receipt-shaped forgery and
+evidence substitution.</p></li>
+<li><p><strong>Layer:</strong> SIER ledger<br />
+<strong>Function:</strong> Records claims with typed edges to the exact
+implementations on which they depend and propagates declared
+defects.<br />
+<strong>Intended protection:</strong> Stale evidence surviving a broken
+dependency.</p></li>
+</ul>
+<p>The ledger states reported by the source are <code>QUALIFIED</code>,
+<code>SUSPECT</code>,<br />
+<code>REQUALIFICATION_PROPOSED</code>, <code>REQUALIFIED</code>,
+<code>WITHDRAWN</code>,<br />
+and <code>RETROFIT_UNVERIFIED</code>. A release layer adds closed-world
+manifests, deterministic archives, replay, and evidence-admission
+gates.</p>
+<p>The scale is intentionally narrow. The source reports a sovereign
+solver near 75 search nodes per second, a 144-case meaning check, and a
+4,681-sequence state-machine court. These figures describe the case
+system; they do not establish performance, general soundness, or
+deployment readiness.</p>
+<h2 id="claims-dependencies-defects-and-standing">3. Claims,
+Dependencies, Defects, and Standing</h2>
+<p>Let a claim record be:</p>
+<p><span
+class="math display"><em>c</em> = (<em>p</em>, <em>s</em>, <em>D</em>, <em>E</em>, <em>v</em>, <em>l</em>),</span></p>
+<p>where <span class="math inline"><em>p</em></span> is the proposition,
+<span class="math inline"><em>s</em></span> the exact subject, <span
+class="math inline"><em>D</em></span> the dependency set, <span
+class="math inline"><em>E</em></span> the evidence set, <span
+class="math inline"><em>v</em></span> the validator and policy versions,
+and <span class="math inline"><em>l</em></span> the current standing
+label.</p>
+<p>Let <span
+class="math inline"><em>D</em><sup>*</sup>(<em>c</em>)</span> be the
+transitive dependency closure of <span
+class="math inline"><em>c</em></span>. A declared unresolved defect
+<span class="math inline"><em>d</em></span> affecting dependency <span
+class="math inline"><em>x</em></span> requires quarantine when:</p>
+<p><span
+class="math display"><em>x</em> ∈ <em>D</em><sup>*</sup>(<em>c</em>).</span></p>
+<p>This rule should be monotone in the conservative direction: newly
+discovered dependence or defect may lower standing automatically, but
+absence of a known defect cannot silently prove qualification.</p>
+<p>Restoration requires more than settlement of the defect record. In
+the source architecture:</p>
+<p><span
+class="math display"><em>R</em><em>e</em><em>s</em><em>t</em><em>o</em><em>r</em><em>e</em>(<em>c</em>) = <em>R</em><em>e</em><em>d</em><em>e</em><em>r</em><em>i</em><em>v</em><em>e</em>(<em>c</em>, <em>E</em><sup>′</sup>, <em>v</em><sup>′</sup>) ∧ <em>D</em><em>e</em><em>p</em><em>e</em><em>n</em><em>d</em><em>e</em><em>n</em><em>c</em><em>i</em><em>e</em><em>s</em><em>C</em><em>l</em><em>e</em><em>a</em><em>r</em>(<em>c</em>) ∧ <em>R</em><em>a</em><em>t</em><em>i</em><em>f</em><em>y</em><sub><em>h</em></sub>(<em>c</em>),</span></p>
+<p>where <span class="math inline"><em>h</em></span> is the authorized
+human role. A validator can propose restoration; it cannot ratify its
+own conclusion. Here, <strong>standing</strong> means the program’s
+human-adjudicated status under its declared process. It is not identical
+to truth, social legitimacy, legal authority, or external
+certification.</p>
+<h2 id="the-alternation-protocol">4. The Alternation Protocol</h2>
+<p>The roles were:</p>
+<ul>
+<li><strong>Governor:</strong> retained scope, custody transfer,
+disposition, and ratification authority;</li>
+<li><strong>builder:</strong> produced a candidate and declared its
+claim ceiling;</li>
+<li><strong>auditor:</strong> replayed and attacked the frozen candidate
+from a fresh extraction.</li>
+</ul>
+<p>The source reports that the Governor ferried frozen, hashed archives
+between sessions and that the sessions did not communicate directly.
+This provides artifact and communication separation. It does not by
+itself provide model-family diversity, epistemic independence, or
+independent custody.</p>
+<p>The reusable loop is:</p>
+<pre class="text"><code>Candidate
+  -&gt; frozen handoff
+  -&gt; cold replay of packaged tests
+  -&gt; attacks through real entry points
+  -&gt; reproducible findings and gate dispositions
+  -&gt; builder reproduction on the shipped subject
+  -&gt; repair
+  -&gt; permanent regression
+  -&gt; human disposition
+  -&gt; next frozen candidate</code></pre>
+<p>Four rules organize the method:</p>
+<ol type="1">
+<li><strong>Reproduce before repair.</strong> Confirm an accepted
+finding on the exact shipped version before changing it.</li>
+<li><strong>Retain counterexamples.</strong> Every accepted
+counterexample becomes a permanent test or explicit unresolved
+case.</li>
+<li><strong>Count refusal as an outcome.</strong> Missing evidence
+should yield a typed refusal or incomplete verdict rather than false
+progress.</li>
+<li><strong>No self-standing.</strong> Builder, auditor, artifact,
+receipt, and test count cannot confer their own authority.</li>
+</ol>
+<p>These rules are valuable only when their execution is evidenced. A
+written instruction does not prove that a particular round followed
+it.</p>
+<h2 id="what-the-source-reports">5. What the Source Reports</h2>
+<p>The manuscript reports the following round-level observations. Counts
+are preserved in their original units because some rows count findings,
+some classes, some blocking items, and some gates.</p>
+<ul>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Pre-SIER<br />
+<strong>Source-reported result:</strong> 3 findings, including MUXFIX,
+forged-tier admission, and correlated pair failures.</p></li>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Q2 prototype<br />
+<strong>Source-reported result:</strong> 3 findings.</p></li>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Q2.1<br />
+<strong>Source-reported result:</strong> 8 findings.</p></li>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Q2.2<br />
+<strong>Source-reported result:</strong> 9 findings plus 1 design
+question.</p></li>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Q2.3<br />
+<strong>Source-reported result:</strong> 7 findings in 4
+classes.</p></li>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Q2.4<br />
+<strong>Source-reported result:</strong> 3 blocking findings plus 2
+gates.</p></li>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Q2.5<br />
+<strong>Source-reported result:</strong> 2 findings.</p></li>
+<li><p><strong>Lineage:</strong> Ledger<br />
+<strong>Round:</strong> Q2.6<br />
+<strong>Source-reported result:</strong> 0 findings under 38 reported
+adversarial checks.</p></li>
+<li><p><strong>Lineage:</strong> Release<br />
+<strong>Round:</strong> RC1<br />
+<strong>Source-reported result:</strong> 4 findings.</p></li>
+<li><p><strong>Lineage:</strong> Release<br />
+<strong>Round:</strong> RC2<br />
+<strong>Source-reported result:</strong> 1 class.</p></li>
+<li><p><strong>Lineage:</strong> Release<br />
+<strong>Round:</strong> RC3-c2<br />
+<strong>Source-reported result:</strong> 2 minor findings.</p></li>
+<li><p><strong>Lineage:</strong> Release<br />
+<strong>Round:</strong> RC3 Turn A<br />
+<strong>Source-reported result:</strong> 0 blocking findings; 2
+documented limits.</p></li>
+<li><p><strong>Lineage:</strong> Later work<br />
+<strong>Round:</strong> Policy overlay<br />
+<strong>Source-reported result:</strong> 0 blocking findings under 15
+reported challenges.</p></li>
+<li><p><strong>Lineage:</strong> Later work<br />
+<strong>Round:</strong> Six-horizon build<br />
+<strong>Source-reported result:</strong> 0 blocking findings; 3 horizons
+remained <code>PARTIAL</code>.</p></li>
+<li><p><strong>Lineage:</strong> Later work<br />
+<strong>Round:</strong> S2 authority pilot<br />
+<strong>Source-reported result:</strong> 2 medium findings.</p></li>
+</ul>
+<p>These rows should not be summed. They overlap lineages, use different
+units, change probe sets, and mix defects, classes, gates, design
+questions, and documented limits. The source abstract, analysis, and
+conclusion also contain incompatible aggregate numbers and starting
+counts. This candidate therefore removes the aggregate claim that a
+particular total number of defects was found or permanently encoded.
+Further evidentiary strengthening requires a third-party recount from
+the exact reports under one declared counting policy.</p>
+<p>Likewise, movement from a higher number to zero is not yet an effect
+measurement. A zero means no finding under a particular round’s
+available probes, scope, and budget. It does not mean no defect
+exists.</p>
+<h2 id="recurring-failure-families">6. Recurring Failure Families</h2>
+<p>The manuscript’s most useful synthesis is not the count but the
+recurrence of six families:</p>
+<ul>
+<li><p><strong>Failure family:</strong> Reachable mutable state<br />
+<strong>General form:</strong> A caller, returned object, or nested
+field can launder a quarantined state.<br />
+<strong>Required design response:</strong> Deep ownership boundaries,
+immutable records, post-condition checks, and mutation attacks.</p></li>
+<li><p><strong>Failure family:</strong> Collapsed identity<br />
+<strong>General form:</strong> Multiple defects, incidents, subjects, or
+obligations share one key.<br />
+<strong>Required design response:</strong> Composite identity with
+explicit namespace, generation, subject, and incident.</p></li>
+<li><p><strong>Failure family:</strong> Presence mistaken for
+qualification<br />
+<strong>General form:</strong> A shaped object, signed receipt, or
+printed <code>PASS</code> is accepted without semantic validation.<br />
+<strong>Required design response:</strong> Bind evidence to subject,
+method, environment, result, and claim ceiling.</p></li>
+<li><p><strong>Failure family:</strong> Filesystem custody<br />
+<strong>General form:</strong> Extra files, paths, links, caches, or
+traversal escape the manifest’s intended world.<br />
+<strong>Required design response:</strong> Closed-world enumeration,
+containment, link policy, path normalization, and cold
+extraction.</p></li>
+<li><p><strong>Failure family:</strong> Self-derived checks<br />
+<strong>General form:</strong> Both sides of a comparison share the same
+defect or the independent anchor is derived from the
+implementation.<br />
+<strong>Required design response:</strong> Separately authored anchors,
+heterogeneous checks, seeded faults, and negative controls.</p></li>
+<li><p><strong>Failure family:</strong> Missing history<br />
+<strong>General form:</strong> Rollback, truncation, or late insertion
+makes invalid state appear current.<br />
+<strong>Required design response:</strong> Append-only lineage, external
+heads or high-water marks, policy versioning, and witnessed
+termination.</p></li>
+</ul>
+<p>A finding should therefore be generalized into a family hypothesis.
+The permanent test must retain the original counterexample, while the
+next audit searches for sibling routes rather than assuming the class is
+closed.</p>
+<h2 id="permanent-counterexamples-as-institutional-memory">7. Permanent
+Counterexamples as Institutional Memory</h2>
+<p>The source reports several occasions on which tests written in an
+earlier audit caught a later builder error. If the underlying records
+verify those episodes, they illustrate a larger point: an audit creates
+durable value when its counterexample becomes part of the system’s
+future recognition surface.</p>
+<p>For accepted finding <span
+class="math inline"><em>f</em><sub><em>i</em></sub></span>, let <span
+class="math inline"><em>t</em><sub><em>i</em></sub></span> be a
+regression that fails on the shipped defective subject and passes only
+when the relevant behavior is repaired. The retained court is:</p>
+<p><span
+class="math display"><em>T</em><sub><em>n</em> + 1</sub> = <em>T</em><sub><em>n</em></sub> ∪ {<em>t</em><sub><em>i</em></sub>}.</span></p>
+<p>The union is necessary but insufficient. A test may stop reaching its
+target, become vacuous, share a defect with the implementation, or be
+bypassed by an outer gate. Each permanent test therefore needs a target
+declaration, a known-fail fixture or mutation, an observed reachability
+signal, and a claim ceiling.</p>
+<p>This connects the case to Agentic Interface Surfaces: the builder
+earns recognized progress only through effect-bound evidence, while
+typed refusals preserve useful state without pretending the effect
+occurred. It connects to Reasoning by Way of Receipts because each
+transition should carry a bounded reason artifact rather than narrative
+assurance alone.</p>
+<h2 id="independence-is-multidimensional">8. Independence Is
+Multidimensional</h2>
+<p>Calling the auditor <strong>independent</strong> compresses several
+different properties:</p>
+<ul>
+<li>role separation;</li>
+<li>session separation;</li>
+<li>communication separation;</li>
+<li>frozen artifact separation;</li>
+<li>key or custody separation;</li>
+<li>model-family diversity;</li>
+<li>prompt and training diversity;</li>
+<li>evidence independence;</li>
+<li>disposition independence;</li>
+<li>organizational independence.</li>
+</ul>
+<p>The source establishes or reports some of the first four and reserves
+final disposition to the human Governor. It does not establish the
+remaining forms. The accurate term for this case is
+<strong>role-separated adversarial audit</strong>. Epistemic
+independence remains an experimental variable.</p>
+<p>This distinction matters because correlated agents can share
+omissions, assumptions, favored abstractions, and failure modes.
+Alternation can deepen a shared blind spot as easily as it can expose a
+local one.</p>
+<h2 id="evidence-tiers-and-claim-ceilings">9. Evidence Tiers and Claim
+Ceilings</h2>
+<p>The source proposes four useful evidence tiers:</p>
+<ol type="1">
+<li>hash-pinned material independently reproduced by a second role;</li>
+<li>reproducible but narrow evidence, or evidence checked by only one
+party;</li>
+<li>organizational assertions, conversational authority, or key custody
+accepted without external verification;</li>
+<li>unestablished claims.</li>
+</ol>
+<p>This hierarchy should be applied at the level of each claim, not
+assigned once to an entire system. A release can have tier-1 byte
+reproduction, tier-2 behavior, tier-3 authority, and tier-4 general
+soundness simultaneously.</p>
+<p>In this review, even the source’s tier-1 claims remain
+source-reported because the exact archives and full digests were not
+available for replay. That does not negate the case record; it limits
+what this candidate can independently assert.</p>
+<h2 id="primitives-invariants-dimensions-and-adjacencies">10.
+Primitives, Invariants, Dimensions, and Adjacencies</h2>
+<h3 id="primitives">10.1 Primitives</h3>
+<p>Candidate primitives are candidate archive, subject root, role,
+authority grant, claim, dependency edge, defect, incident, obligation,
+evidence item, validator, policy version, audit probe, finding,
+disposition, regression, ratification, refusal, and lineage event.</p>
+<h3 id="invariants">10.2 Invariants</h3>
+<p>The method should preserve:</p>
+<ul>
+<li>exact subject identity across report, replay, finding, repair, and
+regression;</li>
+<li>non-self-ratification;</li>
+<li>automatic conservative demotion on unresolved dependencies;</li>
+<li>restoration only after re-derivation and authorized
+ratification;</li>
+<li>one identity per distinct defect incident and obligation;</li>
+<li>immutable history of findings and dispositions;</li>
+<li>closed-world custody for release claims;</li>
+<li>explicit distinction among no finding, no probe, refusal, partial
+evidence, and pass;</li>
+<li>evidence that a regression reaches its intended target;</li>
+<li>preservation of source and author/AI boundaries.</li>
+</ul>
+<h3 id="dimensions">10.3 Dimensions</h3>
+<p>Relevant experimental dimensions include builder and auditor model
+families, role permanence versus alternation, information asymmetry,
+archive size, system complexity, attack budget, probe novelty,
+regression retention, identity design, authority mechanism, artifact
+isolation, evidence tier, human review effort, repair latency,
+false-positive rate, missed-defect rate, and transfer to new
+domains.</p>
+<h3 id="adjacencies">10.4 Adjacencies</h3>
+<p>The paper has typed interfaces with:</p>
+<ul>
+<li><strong>Reasoning by Way of Receipts:</strong> a decision and
+transition should expose its bounded evidentiary basis;</li>
+<li><strong>The Three Hash Rule:</strong> custody separates artifact
+bytes, claimed subject, and governing context instead of treating one
+digest as sufficient;</li>
+<li><strong>Constraint-Bearing Composability:</strong> a repaired
+component cannot silently discard inherited obligations when
+recomposed;</li>
+<li><strong>Agentic Interface Surfaces:</strong> a builder’s progress is
+recognized only through admissible effect evidence and typed
+refusal;</li>
+<li><strong>Governed Meaning Base:</strong> claims, dependencies,
+findings, disputes, evidence levels, and revisions can be stored as
+source-bound semantic objects.</li>
+</ul>
+<p>These connections improve interpretation. They do not prove identity,
+derivation, interoperability, or implementation conformance.</p>
+<h2 id="universal-gsm-representation">11. Universal GSM
+Representation</h2>
+<p>The case can be represented as a graph whose central objects are
+claims, artifacts, actors, findings, dependencies, evidence, and
+dispositions. Typed edges include <code>DEPENDS_ON</code>,<br />
+<code>PRODUCED_BY</code>, <code>AUDITED_BY</code>,
+<code>FOUND_IN</code>, <code>REPRODUCED_ON</code>,
+<code>REPAIRED_BY</code>, <code>ENCODED_AS_TEST</code>,<br />
+<code>RATIFIED_BY</code>, <code>QUARANTINES</code>,
+<code>SUPERSEDES</code>, and <code>CONTRADICTS</code>.</p>
+<p>Every edge should retain source coordinates, exact artifact identity
+where available, author/AI status, evidence tier, confidence, scope, and
+revision history. A zero-finding audit remains an event with scope and
+probe set; it must not become a timeless property of the subject.</p>
+<p>The GMB can expose two projections from the same fabric:</p>
+<ul>
+<li>a human case narrative explaining what failed, why it mattered, and
+what changed;</li>
+<li>an agent surface that retrieves obligations, open attacks, known
+counterexamples, authority limits, and admissible next actions.</li>
+</ul>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate builder-auditor
+arrangements, attack strategies, custody models, authority structures,
+failure modes, and both beneficial and harmful outcomes.</li>
+<li><strong>Specification:</strong> define roles, subjects, claim
+semantics, dependency propagation, findings, evidence tiers, gates, and
+restoration rules.</li>
+<li><strong>CM1:</strong> retain every admissible configuration,
+including weakly separated, correlated, expensive, gameable, or
+operationally brittle forms.</li>
+<li><strong>CM2:</strong> select preferable forms under defect
+discovery, false refusal, cost, authority legibility, diversity,
+privacy, custody, and recovery criteria.</li>
+<li><strong>IC:</strong> bind an Instance Constitution or Instance
+Configuration selecting exact roles, models, keys, archives, probes,
+gates, policies, budgets, and human authorities.</li>
+<li><strong>IR:</strong> construct an Instance Realization or
+Implementation Realization of that configuration as an exact runnable
+alternation and evidence system.</li>
+<li><strong>Evidence:</strong> retain frozen candidates, replay results,
+attack traces, findings, reproductions, repairs, regressions, refusals,
+dispositions, and ratifications.</li>
+<li><strong>Revision:</strong> update the specification and selected
+configuration without rewriting the prior lineage.</li>
+</ul>
+<p>This paper contributes a Specification, a case-informed CM1/CM2
+analysis, and source-reported evidence about one realization. It does
+not independently certify the IC or realization-stage IR. If a source
+artifact uses <code>IR</code> to mean <strong>Intermediate
+Representation</strong>, that remains a separate, context-resolved
+sense; it is not renamed by this funnel.</p>
+<h2 id="evaluation-program">13. Evaluation Program</h2>
+<p>The primary comparative experiment should freeze one specification
+and allocate matched budgets to at least:</p>
+<ol type="1">
+<li>one builder with self-review;</li>
+<li>one builder plus a separate same-family auditor;</li>
+<li>one builder plus a different-family auditor;</li>
+<li>alternating builder and auditor roles;</li>
+<li>a human or mixed human-AI audit condition;</li>
+<li>alternation without permanent regressions;</li>
+<li>alternation without reproduce-before-repair;</li>
+<li>alternation without retained human disposition.</li>
+</ol>
+<p>Seed known defects but also score unseeded findings. Blind the
+adjudicator to condition where feasible. Measure distinct confirmed
+defect families, time to reproduction, false findings, repair
+regressions, surviving seeded defects, new-defect injection, coverage of
+declared horizons, human labor, compute cost, and claim calibration.
+Report exact subjects and counting rules.</p>
+<p>The result may show that alternation helps, hurts, changes defect
+types, or is useful only under particular separations and budgets. A
+negative or conditional result would still improve the architecture.</p>
+<h2
+id="builder-auditor-alternation-protocol-and-case-study">Builder-Auditor
+Alternation Protocol and Case Study</h2>
+<p>Across the completed P1 corpus, Adversarial Alternation Under Human
+Governance is the <strong>case study and reusable protocol for
+alternating AI builders and auditors while human authority retains
+claim, escalation, and stopping control</strong>. It is not evidence
+that alternating models are independent, that defects converge to zero,
+or that human involvement automatically prevents self-ratification.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Human Validation Layer:
+Constitutional Coherence Through Human-Governed Refinement</em><br />
+<strong>Supplies:</strong> Human adjudication and promotion
+workflow.<br />
+<strong>Alternation boundary:</strong> HVL governs review standing;
+alternation supplies a repeated build-audit pattern.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Legitimacy Without
+Self-Ratification</em><br />
+<strong>Supplies:</strong> Threat-model-relative independence and
+standing ceilings.<br />
+<strong>Alternation boundary:</strong> Alternation must demonstrate
+control independence rather than infer it from role labels.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>From CI/CD to ACG: From Tests
+to Courts in Agentic Software Development</em><br />
+<strong>Supplies:</strong> Constitutional development, courts, effects,
+evidence, and revision.<br />
+<strong>Alternation boundary:</strong> Alternation is one ACG workflow
+profile.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed evidence carriers and evaluation
+envelopes.<br />
+<strong>Alternation boundary:</strong> Audits emit witnesses; witness
+existence does not prove defect coverage.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Durable transition, refusal, verification,
+and revision records.<br />
+<strong>Alternation boundary:</strong> Receipts preserve the sequence
+and open findings without certifying the infrastructure.</p></li>
+</ul>
+<p>An alternation campaign should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;subject, baseline, builder, reviewer, roles, models, \\
+&amp;contexts, rounds, findings, repairs, regressions, \\
+&amp;permanent\_tests, human\_decisions, standing)
+\end{aligned}.
+$$</span></p>
+<p>Independence is multidimensional: model, prompt, context, evidence
+source, toolchain, organization, operator, and control domain. Changing
+only a role prompt does not create an independent reviewer. Human
+approval is meaningful only when the human has adequate evidence,
+competence, time, and authority and can refuse or stop the campaign.</p>
+<p>Every accepted defect should become a permanent counterexample or
+explicitly justified non-regression obligation. Repeated clean rounds
+are evidence only over the exercised attack surface. Saturation requires
+measured marginal yield and stable coverage, not fatigue or absence of
+newly imagined attacks.</p>
+<p>The universal GSM can type <code>BUILT_IN_ROUND</code>,
+<code>AUDITED_IN_ROUND</code>, <code>FOUND_DEFECT</code>,<br />
+<code>REPAIRED_BY_SUCCESSOR</code>,
+<code>REGRESSED_ON_COUNTEREXAMPLE</code>,
+<code>PERMANENTLY_TESTED_BY</code>,<br />
+<code>INDEPENDENT_UNDER_DIMENSION</code>,
+<code>HUMAN_ADJUDICATED_BY</code>,
+<code>STOPPED_UNDER_RULE</code>,<br />
+and<br />
+<code>HAS_CAMPAIGN_STANDING</code>. These relations preserve the
+case-study boundary.</p>
+<p>This integration establishes four editorial commitments: adopt
+builder-auditor alternation protocol as the official corpus role; adopt
+the campaign envelope; require multidimensional independence reporting;
+and define saturation by coverage and marginal yield rather than
+clean-round count alone.</p>
+<h2
+id="exact-audit-subjects-semantic-findings-domain-firewalls-and-migration-challenge">Exact
+Audit Subjects, Semantic Findings, Domain Firewalls, and Migration
+Challenge</h2>
+<p>The fixed-seed comparison with governed project-state lineage, The
+Locus of Meaning, The Well-Governed Mind, and model-first legacy
+migration strengthens adversarial alternation by specifying what an
+audit finding is about and where its method must not be transferred:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;campaign, subject\_generation, claim\_binding, builder, \\
+&amp;auditor, independence, findings, reproductions, repairs, \\
+&amp;counterexamples, human\_decisions, domain\_limits, \\
+&amp;migration\_use, standing, remainder)
+\end{aligned}.
+$$</span></p>
+<p>Project-state lineage binds every round to an exact subject,
+toolchain, configuration, probe set, and predecessor. The Locus of
+Meaning requires each finding to identify the claim, jurisdiction,
+interpretation, consequence, and evidence it challenges; matching words
+or test identifiers do not establish that two findings are the same
+defect.</p>
+<p>The Well-Governed Mind has no direct methodological transfer from
+software alternation. Alternating agents must not be presented as
+clinical assessors, therapeutic reviewers, or evidence for a cognitive
+mapping. At most, the comparison warns that role labels, repeated
+agreement, and apparent independence do not create domain competence or
+authority.</p>
+<p>Model-first legacy migration can use alternation to challenge
+descriptive models, normative classifications, successor realizations,
+correspondence envelopes, rollback, and residual risk. The audit still
+cannot infer original intent from behavior or establish equivalence
+outside the tested envelope.</p>
+<p>The universal GSM can type<br />
+<code>AUDITS_EXACT_SUBJECT_GENERATION</code>,
+<code>CHALLENGES_CLAIM_BINDING</code>,<br />
+<code>DISTINGUISHES_DEFECT_IDENTITY</code>,
+<code>PRESERVES_DOMAIN_FIREWALL</code>,<br />
+<code>COUNTERTESTS_MIGRATION_MODEL</code>,
+<code>REPRODUCES_BEFORE_REPAIR</code>,
+<code>RETAINS_RESIDUAL_UNCERTAINTY</code>,<br />
+and<br />
+<code>STOPS_UNDER_HUMAN_RULE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the exact subject-and-claim campaign envelope; bind defect identity to
+semantic jurisdiction and consequence; record an explicit non-transfer
+firewall for clinical and cognitive domains; and use alternation as a
+bounded migration challenge without general equivalence standing.</p>
+<h2 id="audit-protocol-reuse-without-methodological-overreach">Audit
+Protocol Reuse Without Methodological Overreach</h2>
+<p>The frozen P3 field contains four material downstream uses of
+adversarial alternation. Governed project-state lineage binds exact
+campaign subjects, findings, repairs, and retained failures. Model-first
+migration uses alternation to challenge descriptive models, normative
+classifications, successor realizations, correspondence, rollback, and
+residual risk. The Locus of Meaning uses it as a bounded countertest for
+reidentification and binding overextension. The Well-Governed Mind uses
+it only as a research-review analogy under a clinical jurisdictional
+firewall.</p>
+<p>These uses refine the campaign object:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;campaign, subject\_generation, claim\_binding, builder, \\
+&amp;auditor, independence, attack\_surface, findings, \\
+&amp;reproductions, repairs, counterexamples, \\
+&amp;human\_decisions, domain\_limits, standing, remainder)
+\end{aligned}.
+$$</span></p>
+<p>The reusable core is reproduce-before-repair, exact subject custody,
+permanent counterexamples, dimension-specific independence, human
+stopping authority, and marginal-yield reporting over a declared attack
+surface. The method does not establish semantic truth, program
+equivalence, clinical validity, or domain competence merely because
+roles alternate.</p>
+<p>Reverse dependency adds a portability condition: every new domain
+must declare the auditable subject, defect identity rule, oracle,
+evidence source, reviewer competence, common-mode dependencies,
+prohibited inferences, and stopping criterion. Where those cannot be
+specified, the relation remains an analogy or research question rather
+than a protocol instance.</p>
+<p>The universal GSM can type<br />
+<code>INSTANTIATES_ALTERNATION_PROFILE</code>,<br />
+<code>BINDS_EXACT_AUDIT_SUBJECT</code>,
+<code>CHALLENGES_DOMAIN_CLAIM</code>,
+<code>DECLARES_REVIEWER_COMPETENCE</code>,<br />
+<code>PRESERVES_METHOD_DOMAIN_FIREWALL</code>, and<br />
+<code>RETAINS_UNAUDITED_REMAINDER</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: retain the bounded audit-protocol role; add claim binding,
+attack surface, domain limits, and remainder to the campaign record;
+require a portability contract for every downstream application; and
+prohibit clean rounds or role alternation from acquiring truth,
+equivalence, clinical, or independence standing.</p>
+<h2 id="counterevidence-and-failure-tests">14. Counterevidence and
+Failure Tests</h2>
+<p>The method must narrow, revise, or fail if: (1) matched self-review
+performs as well; (2) alternation adds latency without confirmed
+defects; (3) auditor findings have high false-positive rates; (4) the
+builder learns to optimize the known audit surface; (5) role switching
+leaks assumptions; (6) same-family and different-family audits do not
+differ; (7) both roles miss seeded faults; (8) a finding cannot be
+reproduced on the shipped subject; (9) a repair changes the subject
+before reproduction; (10) a regression does not fail on the original
+defect; (11) a regression is vacuous; (12) an outer gate prevents the
+test from reaching its target; (13) a test and implementation share the
+same oracle; (14) a receipt is accepted for another version; (15) a
+printed <code>PASS</code> substitutes for semantic evidence; (16) an
+unqualified actor mints standing; (17) an artifact ratifies itself; (18)
+settlement restores standing without re-derivation; (19) upstream
+restoration silently restores downstream claims; (20) a new claim
+ignores an older defect; (21) dependency closure is incomplete; (22) two
+obligations collapse under one identifier; (23) duplicate roots
+overwrite quarantined state; (24) caller-owned mutation changes admitted
+state; (25) returned-object mutation changes admitted state; (26) nested
+metadata bypasses the seal; (27) extra files escape a manifest; (28)
+path traversal escapes the archive root; (29) links escape custody; (30)
+empty directories or caches change behavior; (31) replay writes into
+source custody; (32) rollback restores revoked policy; (33) journal
+truncation permits replay; (34) an absent attack is reported as a pass;
+(35)</p>
+<p><code>PARTIAL</code> is promoted to complete; (36) zero findings
+becomes a general soundness claim; (37) changing probe sets are compared
+as one metric; (38) incompatible counting units are summed; (39)
+artifact prefixes are treated as authentication; (40) conversational
+authority is described as cryptographic fact; (41) role separation is
+called epistemic independence; (42) a participant-written catalog is
+treated as independently complete; (43) the audit package omits the
+audit runner; (44) the strongest replay needs an absent file; (45) the
+paper claims scale from toy programs; (46) independent meaning is
+derived from builder code; (47) private material crosses the handoff
+boundary; (48) permanent tests grow without minimization or retirement
+rules; (49) human ratification becomes a rubber stamp; or (50)
+publication proceeds before exact recount and primary-source
+verification.</p>
+<h2
+id="alternating-roles-are-not-independent-evidence-by-default">Alternating
+Roles Are Not Independent Evidence by Default</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>This case study describes an AI builder, an AI auditor, and a human
+Governor hardening a small verification system through frozen
+candidates, cold replay, adversarial probes, reproduced findings,
+permanent regressions, quarantine, re-derivation, and human
+ratification. The method is a promising governance pattern. One case
+cannot establish that alternation is better than careful self-review or
+genuinely independent audit.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Independence-theater attack.</strong> Builder and auditor
+share model family, prompts, libraries, fixtures, assumptions, training,
+or operator framing while being counted as independent.</li>
+<li><strong>Moving-probe attack.</strong> Later rounds use different
+attack surfaces, making lower finding counts look like convergence.</li>
+<li><strong>Test-memorization attack.</strong> A repair passes
+accumulated regressions while the underlying invariant remains wrong or
+adjacent cases remain untested.</li>
+<li><strong>Artifact-substitution attack.</strong> The reviewed archive,
+replay subject, manifest, evidence, and claimed release are not the same
+exact object.</li>
+<li><strong>Receipt-standing attack.</strong> A validly shaped receipt,
+passing report, or ledger state grants standing without re-derivation
+and authorized ratification.</li>
+<li><strong>Governor-bottleneck attack.</strong> Human review becomes
+ceremonial, overloaded, underspecified, or dependent on the same AI
+summaries.</li>
+<li><strong>Survivorship attack.</strong> Successful rounds and accepted
+findings are retained while abandoned paths, false positives, costs, and
+missed defects disappear.</li>
+<li><strong>Scale-transfer attack.</strong> Results from a small
+verification subject are generalized to large, stateful, concurrent,
+physical, social, or high-stakes systems.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The supplied manuscript supports a source-reported case and an
+evidence-bounded protocol. It does not establish comparative defect
+reduction, independence, convergence, general soundness, human control,
+scalability, cost advantage, or successful cold replay of the cited
+archives. Finding counts with changing units and probes are descriptive,
+not a learning curve.</p>
+<p>Publication-grade empirical claims require exact archives and
+reports, authenticated lineage, replay, fixed and adaptive probe sets,
+explicit independence dimensions, baselines, blind allocation where
+feasible, cost accounting, missed-defect analysis, and replication. No
+archive replay or external research occurred in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public lesson is a disciplined contest between roles: freeze what
+is being judged, require reproducible findings, turn counterexamples
+into durable tests, keep claims revocable, and reserve standing for an
+authorized human decision supported by exact evidence.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The case’s strongest idea is not that two AI sessions are
+automatically independent or that a falling finding count proves
+convergence. It is that verification infrastructure should remember how
+it was wrong. A finding becomes institutionally useful when it is
+reproduced on an exact subject, generalized into a failure family,
+retained as a reachable counterexample, and connected to a
+human-governed disposition without erasing prior state.</p>
+<p>Adversarial alternation is therefore a candidate process
+architecture: a way to produce durable counterevidence, not a guarantee
+of correctness. The source reports promising episodes in which earlier
+auditor tests caught later builder errors. Controlled comparisons, exact
+recounting, heterogeneous audit, and independently replayable custody
+are required before stronger claims can be made.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<h3 id="author-corpus-interfaces-inspected-under-exact-custody">Author
+corpus interfaces inspected under exact custody</h3>
+<p>Ableman Adam Ableman <em>Reasoning by Way of Receipts.</em></p>
+<p>Ableman Adam Ableman <em>The Three Hash Rule.</em></p>
+<p>Ableman Adam Ableman <em>Constraint-Bearing Composability.</em></p>
+<p>Ableman Adam Ableman <em>Agentic Interface Surfaces.</em></p>
+<h3 id="external-verification-required">External verification
+required</h3>
+<p>No external literature was consulted. The source names work on
+truth-maintenance systems, correlated multiversion failure, Goal
+Structuring Notation, The Update Framework, Certificate Transparency,
+in-toto, LRAT checking, and AI debate. Those are unverified research
+leads, unverified research leads in this edition. Further evidentiary
+strengthening requires primary-source verification, exact bibliographic
+reconstruction, and comparison against the actual claims made here.</p>
+<h2 id="appendix-source-reported-artifact-prefixes">Appendix:
+Source-Reported Artifact Prefixes</h2>
+<p>The source lists the following SHA-256 prefixes: canonical core
+<code>d8d7235d</code>; canonical evidence</p>
+<p><code>320b22eb</code>; SIER Q2.1 <code>3d3890c2</code>; Q2.2
+<code>de6d0cd6</code>; Q2.3 <code>3bcafc3c</code>; Q2.4
+<code>190a5019</code>; Q2.5 <code>c9373a8a</code>; Q2.6
+<code>01b9ca71</code>; Q2.7 <code>cde66ad7</code>; release RC1
+<code>9a1b9c3a</code>; RC2 <code>031e9d6d</code>; RC3
+<code>960a4586</code>; RC3-c2 <code>cdfecf1a</code>; RC3 Turn A
+<code>ec5fa7df</code>; RC4 <code>a47ef3ca</code>; closure receipt
+<code>5d53c341</code>; Governor disposition packet
+<code>422d5af2</code>; MATGATE kit <code>51980b71</code>; prefix kit
+<code>bc9f8254</code>; S2 source <code>9407ed19</code>; and review
+ingress <code>ca8c19e2</code>.</p>
+<p>These prefixes are preserved as source-reported locators only. Full
+digests and original manifests are required for verification.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that this paper reports a two-day case study in
+which two AI sessions alternated between builder and auditor roles while
+one human Governor retained scope, disposition, and ratification
+authority. Its nearest external comparison fields are provenance, open
+sovereign, governance. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy. Source
+availability and reproducible builds improve inspectability but do not
+alone guarantee comprehensibility, practical exit, hardware control, or
+sustainable maintenance. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. These limits are
+not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E2]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E3]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<p><strong>[E4]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E5]</strong> Free Software Foundation. <em>The Free Software
+Definition</em>. https://www.gnu.org/philosophy/free-sw.html
+<strong>Relationship:</strong> Normative predecessor for user freedoms;
+the paper may add reconstruction, governance, or hardware-boundary
+obligations beyond license rights.</p>
+<p><strong>[E6]</strong> Open Source Initiative. <em>The Open Source
+Definition</em>. https://opensource.org/osd
+<strong>Relationship:</strong> Adjacent licensing baseline; source
+availability is not treated as sufficient for operational
+sovereignty.</p>
+<p><strong>[E7]</strong> Martin Kleppmann et al. “Local-First Software:
+You Own Your Data, in Spite of the Cloud.” <em>Onward! 2019</em>,
+pp. 154-178. DOI: 10.1145/3359591.3359737.
+https://www.inkandswitch.com/local-first/ <strong>Relationship:</strong>
+Adjacent local-first design program relevant to user custody, offline
+operation, and collaboration.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-C8F2F9BF38C45E29</code>;<br />
+source SHA-256<br />
+<code>A80657E21BA277ADF1C229A2AAE221963B97A62EA2AF3EBC36434A916A8EEA44</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Governance Witnesses</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-9E8DA0EFE860DE5D</code>;<br />
+source SHA-256<br />
+<code>8BF8C3646040F6E1F5222A8AA92C1106AA1F841E8A2C65402F468C83D59D06E5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Jnana</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-ECEAB04A620F163D</code>;<br />
+source SHA-256<br />
+<code>76D921D2975BDCD25D6DFB506F5E85F7AFDBF4D2CCC65F8C45394121F9D90060</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847376">10.5281/zenodo.23847376</a></p>

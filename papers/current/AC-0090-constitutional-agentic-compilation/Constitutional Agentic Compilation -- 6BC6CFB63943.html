@@ -1,0 +1,571 @@
+<h1 id="constitutional-agentic-compilation">Constitutional Agentic
+Compilation</h1>
+<h2
+id="bounded-discretion-realization-from-constitutional-specifications">Bounded-Discretion
+Realization from Constitutional Specifications</h2>
+<h3
+id="the-result-is-a-compilation-process-in-which-agentshuman-or-artificialexercise-controlled-discretion-within-a-constitutionally-defined-envelope.">The
+result is a compilation process in which agents–human or
+artificial–exercise controlled discretion within a constitutionally
+defined envelope.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Contemporary software production remains dominated by imperative
+implementation, where human-authored code is the primary artifact and
+specifications are secondary, informal, or lossy. This paper introduces
+<strong>Constitutional Agentic Compilation (CAC)</strong>, a paradigm in
+which the primary artifact is a constitutional specification–a Codex
+encoding invariants, configuration space, and admissibility
+conditions–and executable systems are derived through bounded-discretion
+transformation.</p>
+<p>CAC departs from both classical compilation and unconstrained program
+synthesis. Unlike traditional compilers, which perform deterministic
+transformations over fully formalized inputs, CAC operates on
+semantically structured specifications that deliberately preserve
+degrees of freedom. Unlike open-ended synthesis, CAC constrains the
+realization space through explicit invariants, ablation-tested
+boundaries, and embedded reasoning scaffolds. The result is a
+compilation process in which agents–human or artificial–exercise
+controlled discretion within a constitutionally defined envelope.</p>
+<p>Correctness in CAC is defined not by output identity but by
+<strong>invariant preservation and gate-test satisfaction</strong>,
+yielding equivalence classes of realizations rather than singular
+outputs. This enables multiple independent agents to produce
+structurally distinct yet constitutionally equivalent systems from the
+same specification.</p>
+<p>We formalize CAC as a layered transformation pipeline–Human Intent
+-&gt; Constitutional Codex -&gt; Canonical MCIR -&gt; Agentic
+Realization -&gt; Executable System–and argue that it represents a new
+intermediate computational layer between intent and execution. We
+further show that CAC aligns with governance-oriented frameworks such as
+semantic hashing, invariant-based verification, and epistemic constraint
+systems, including Governed Context &amp; Memory (GCM) .</p>
+<hr />
+<h2 id="from-instruction-to-constitution">1. From Instruction to
+Constitution</h2>
+<p>Traditional software systems treat code as the authoritative
+artifact. Specifications, where present, are advisory: they guide
+implementation but do not bind it. CAC inverts this relationship.</p>
+<p>A <strong>Constitutional Codex</strong> is not a program description
+in the procedural sense. It does not instruct an executor to “perform
+operation X.” Instead, it defines:</p>
+<ul>
+<li><strong>Invariants</strong> – properties that must hold across all
+valid realizations</li>
+<li><strong>Configuration space</strong> – permissible variation within
+the system</li>
+<li><strong>Enforcement structures</strong> – how invariant violations
+are detected</li>
+<li><strong>Ablation boundaries</strong> – what the system becomes if a
+property is removed</li>
+<li><strong>Verification surfaces</strong> – how satisfaction is
+externally checkable</li>
+</ul>
+<p>The Codex is therefore a <strong>governance artifact</strong>, not a
+procedural one. It defines the admissible space of systems rather than a
+single system.</p>
+<p>This aligns with domain-level specifications such as the Deployable
+Software Systems Codex, where invariants define what a system
+<em>is</em>, and ablation defines what it <em>becomes</em> when those
+invariants are removed .</p>
+<hr />
+<h2 id="compilation-reinterpreted">2. Compilation Reinterpreted</h2>
+<p>Classical compilation is defined by three properties:</p>
+<ol type="1">
+<li>Deterministic transformation</li>
+<li>No discretion</li>
+<li>Identical output for identical input</li>
+</ol>
+<p>CAC preserves only the first property in a weakened form. The
+transformation is <strong>deterministic in intent</strong>, but not in
+representation.</p>
+<h3 id="bounded-discretion">2.1 Bounded Discretion</h3>
+<p>CAC introduces <strong>bounded discretion</strong>:</p>
+<ul>
+<li>The Codex intentionally leaves implementation space open</li>
+<li>The agent selects within that space</li>
+<li>Choices do not affect invariant satisfaction</li>
+</ul>
+<p>Discretion exists in:</p>
+<ul>
+<li>data structures</li>
+<li>algorithm selection</li>
+<li>naming and organization</li>
+<li>internal decomposition</li>
+</ul>
+<p>This is not an error surface–it is a designed degree of freedom.</p>
+<hr />
+<h3 id="equivalence-under-invariants">2.2 Equivalence Under
+Invariants</h3>
+<p>CAC replaces output identity with <strong>equivalence under
+invariants</strong>:</p>
+<blockquote>
+<p>Two realizations are equivalent if they satisfy the same invariant
+set and pass the same gate tests.</p>
+</blockquote>
+<p>This property–formalized as convergence under independent
+realization–means:</p>
+<ul>
+<li>Different agents can produce different code</li>
+<li>All valid outputs are members of the same equivalence class</li>
+<li>Structural divergence is defined only by invariant violation</li>
+</ul>
+<p>This is consistent with the principle that correctness is externally
+verifiable via declared properties, not inferred from implementation
+identity.</p>
+<hr />
+<h2 id="the-agent-as-compiler">3. The Agent as Compiler</h2>
+<p>In CAC, the compiler is redefined as an <strong>agent</strong>.</p>
+<p>This agent may be:</p>
+<ul>
+<li>a human developer</li>
+<li>an AI coding system</li>
+<li>a hybrid orchestration system</li>
+<li>a future deterministic lowering engine</li>
+</ul>
+<p>What defines the agent is not its implementation, but its role:</p>
+<blockquote>
+<p><strong>To produce a realization that satisfies the constitutional
+constraints of the Codex.</strong></p>
+</blockquote>
+<p>This aligns with split-authority systems where semantic authority
+(Governor) and execution authority (Coder) are separated and mediated
+through a shared artifact.</p>
+<hr />
+<h3 id="agentic-vs-deterministic-compilation">3.1 Agentic vs
+Deterministic Compilation</h3>
+<ul>
+<li><p><strong>Property:</strong> Input<br />
+<strong>Traditional Compilation:</strong> Fully formal program<br />
+<strong>CAC:</strong> Constitutional specification</p></li>
+<li><p><strong>Property:</strong> Transformation<br />
+<strong>Traditional Compilation:</strong> Deterministic<br />
+<strong>CAC:</strong> Bounded-discretion</p></li>
+<li><p><strong>Property:</strong> Output<br />
+<strong>Traditional Compilation:</strong> Identical<br />
+<strong>CAC:</strong> Functionally equivalent</p></li>
+<li><p><strong>Property:</strong> Compiler<br />
+<strong>Traditional Compilation:</strong> Mechanism<br />
+<strong>CAC:</strong> Agent</p></li>
+<li><p><strong>Property:</strong> Correctness<br />
+<strong>Traditional Compilation:</strong> Semantic equivalence<br />
+<strong>CAC:</strong> Invariant satisfaction</p></li>
+</ul>
+<hr />
+<h3 id="human-and-ai-equivalence">3.2 Human and AI Equivalence</h3>
+<p>CAC treats humans and AI as interchangeable realizers:</p>
+<ul>
+<li>both interpret invariants</li>
+<li>both select implementations</li>
+<li>both are verified by the same gate tests</li>
+</ul>
+<p>However, AI agents expose constraint gaps more reliably, as they do
+not implicitly repair underspecification.</p>
+<hr />
+<h2 id="the-cac-transformation-pipeline">4. The CAC Transformation
+Pipeline</h2>
+<p>CAC introduces a multi-stage transformation model:</p>
+<pre><code>Human Intent
+  v (Crystallization)
+Constitutional Codex (HLIR)
+  v (Canonicalization)
+MCIR (Canonical, hash-stable representation)
+  v (Agentic Compilation)
+Executable Realization (source code or IR)
+  v
+Runtime Execution
+  v
+Effects + Verification Receipts</code></pre>
+<hr />
+<h3 id="hlir---mcir">4.1 HLIR -&gt; MCIR</h3>
+<p>The Codex is transformed into a canonical intermediate
+representation:</p>
+<ul>
+<li>governance-relevant structure preserved</li>
+<li>representation normalized</li>
+<li>identity becomes hash-stable</li>
+</ul>
+<p>This parallels semantic hashing systems, where canonicalization
+defines equivalence classes of meaning .</p>
+<hr />
+<h3 id="mcir---realization">4.2 MCIR -&gt; Realization</h3>
+<p>This is the <strong>agentic compilation step</strong>:</p>
+<ul>
+<li>constraints enforced</li>
+<li>configuration respected</li>
+<li>implementation space filled</li>
+</ul>
+<p>Today, this step is performed by AI agents. In the future, it may
+become deterministic.</p>
+<hr />
+<h3 id="toward-ceir">4.3 Toward CEIR</h3>
+<p>The long-term trajectory introduces a lower-level intermediate
+representation:</p>
+<ul>
+<li>CEIR (Constitutional Execution IR)</li>
+<li>directly executable</li>
+<li>derived deterministically from MCIR</li>
+</ul>
+<p>At this point, CAC converges with classical compilation.</p>
+<hr />
+<h2 id="verification-as-first-class-structure">5. Verification as
+First-Class Structure</h2>
+<p>CAC externalizes correctness.</p>
+<p>Rather than relying on compiler guarantees, the Codex defines:</p>
+<ul>
+<li><strong>gate tests</strong></li>
+<li><strong>violation conditions</strong></li>
+<li><strong>observable properties</strong></li>
+</ul>
+<p>This aligns with the requirement that valid systems must expose a
+<strong>verification surface</strong>–a structural link between declared
+behavior and observable reality .</p>
+<p>Verification is therefore:</p>
+<ul>
+<li>explicit</li>
+<li>testable</li>
+<li>independent of implementation</li>
+</ul>
+<hr />
+<h2 id="relation-to-existing-paradigms">6. Relation to Existing
+Paradigms</h2>
+<p>CAC intersects with several known paradigms but is not reducible to
+any:</p>
+<ul>
+<li><p><strong>Paradigm:</strong> Program synthesis<br />
+<strong>Overlap:</strong> Generates code from constraints<br />
+<strong>Limitation:</strong> Lacks structured invariants</p></li>
+<li><p><strong>Paradigm:</strong> Model-driven engineering<br />
+<strong>Overlap:</strong> Models -&gt; code<br />
+<strong>Limitation:</strong> Models lack ablation and
+governance</p></li>
+<li><p><strong>Paradigm:</strong> Declarative systems<br />
+<strong>Overlap:</strong> Specify “what” not “how”<br />
+<strong>Limitation:</strong> Limited reasoning scaffolds</p></li>
+<li><p><strong>Paradigm:</strong> Formal methods<br />
+<strong>Overlap:</strong> Verifiable correctness<br />
+<strong>Limitation:</strong> Often impractical at scale</p></li>
+</ul>
+<p>CAC combines:</p>
+<ul>
+<li>declarative constraint definition</li>
+<li>structural reasoning scaffolds</li>
+<li>verifiable realization</li>
+<li>bounded synthesis</li>
+</ul>
+<hr />
+<h2 id="governance-and-epistemic-integrity">7. Governance and Epistemic
+Integrity</h2>
+<p>CAC is not only a computational model–it is a governance model.</p>
+<p>It shares structural alignment with systems such as GCM, where:</p>
+<ul>
+<li>meaning is externalized</li>
+<li>invariants are enforced</li>
+<li>drift is detectable</li>
+<li>ignorance is admissible</li>
+</ul>
+<p>In such systems:</p>
+<blockquote>
+<p>Unknown &gt; Speculation &gt; Fabrication</p>
+</blockquote>
+<p>Similarly, CAC enforces:</p>
+<ul>
+<li>no silent ambiguity</li>
+<li>no implicit reinterpretation</li>
+<li>no unverifiable claims</li>
+</ul>
+<p>Failures become explicit and diagnosable.</p>
+<hr />
+<h2 id="properties-and-advantages">8. Properties and Advantages</h2>
+<h3 id="reduced-search">8.1 Reduced Search</h3>
+<p>Agents operate in a constrained space:</p>
+<ul>
+<li>fewer retries</li>
+<li>lower compute cost</li>
+<li>minimal thrash</li>
+</ul>
+<hr />
+<h3 id="executor-independence">8.2 Executor Independence</h3>
+<p>Multiple agents can:</p>
+<ul>
+<li>produce valid realizations</li>
+<li>without coordination</li>
+<li>from the same Codex</li>
+</ul>
+<hr />
+<h3 id="regenerability">8.3 Regenerability</h3>
+<p>Systems can be:</p>
+<ul>
+<li>rebuilt from specification</li>
+<li>transformed across targets</li>
+<li>audited at the semantic level</li>
+</ul>
+<hr />
+<h3 id="cold-start-capability">8.4 Cold-Start Capability</h3>
+<p>Because reasoning is embedded:</p>
+<ul>
+<li>agents require no prior context</li>
+<li>Codex acts as a complete reasoning scaffold</li>
+</ul>
+<hr />
+<h2 id="failure-modes">9. Failure Modes</h2>
+<p>CAC introduces distinct failure modes:</p>
+<h3 id="underspecified-codex">9.1 Underspecified Codex</h3>
+<ul>
+<li>agent fills gaps incorrectly</li>
+<li>system remains internally consistent</li>
+</ul>
+<h3 id="incorrect-invariants">9.2 Incorrect Invariants</h3>
+<ul>
+<li>system is valid but misaligned with reality</li>
+</ul>
+<h3 id="boundary-leakage">9.3 Boundary Leakage</h3>
+<ul>
+<li>S/C separation violated</li>
+<li>configuration mistaken for invariant</li>
+</ul>
+<p>These failures are structural and must be surfaced through:</p>
+<ul>
+<li>ablation testing</li>
+<li>cross-validation</li>
+<li>independent realization</li>
+</ul>
+<hr />
+<h2 id="toward-deterministic-constitutional-compilation">10. Toward
+Deterministic Constitutional Compilation</h2>
+<p>The ultimate form of CAC removes agentic discretion from the
+execution phase:</p>
+<pre><code>MCIR -&gt; CEIR -&gt; Execution</code></pre>
+<p>At this point:</p>
+<ul>
+<li>compilation becomes deterministic</li>
+<li>reproducibility becomes exact</li>
+<li>CAC becomes a new class of declarative programming</li>
+</ul>
+<p>The Codex becomes the program.</p>
+<hr />
+<h2 id="conclusion">11. Conclusion</h2>
+<p>Constitutional Agentic Compilation defines a new computational layer
+in which:</p>
+<ul>
+<li>systems are governed before they are implemented</li>
+<li>reasoning is encoded before execution</li>
+<li>correctness is defined structurally rather than procedurally</li>
+</ul>
+<p>It replaces:</p>
+<blockquote>
+<p>instruction -&gt; execution</p>
+</blockquote>
+<p>with:</p>
+<blockquote>
+<p>constitution -&gt; admissible realization</p>
+</blockquote>
+<p>In CAC, the compiler is no longer a passive translator. It is an
+agent operating within a governed semantic field.</p>
+<p>And the program is no longer code.</p>
+<p>It is the structure that makes code inevitable.</p>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that contemporary software production remains
+dominated by imperative implementation, where human-authored code is the
+primary artifact and specifications are secondary, informal, or lossy.
+Its nearest external comparison fields are formal, governance, open
+sovereign. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are
+cited as predecessor literature, adjacent standards, or counterpressure
+- not as evidence that they caused the Ableman framework or that they
+validate its novel claims. The comparison isolates where established
+work already supplies provenance, formal assurance, institutional
+constraint, empirical method, or engineering practice, and where this
+paper adds a distinct claim about admissibility, authority, semantic
+custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. A written constitution can legitimate domination
+as easily as constrain it unless amendment, participation, enforcement,
+and appeal remain effective in practice. Source availability and
+reproducible builds improve inspectability but do not alone guarantee
+comprehensibility, practical exit, hardware control, or sustainable
+maintenance. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848574">10.5281/zenodo.23848574</a></p>

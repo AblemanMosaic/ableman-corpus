@@ -1,0 +1,581 @@
+<h1 id="semantic-atoms">Semantic Atoms</h1>
+<h2 id="identity-primitives-in-governed-knowledge-systems">Identity
+Primitives in Governed Knowledge Systems</h2>
+<h3
+id="when-similarity-replaces-identity-conceptual-boundaries-blur-and-the-topology-of-the-knowledge-graph-becomes-distorted.">When
+similarity replaces identity, conceptual boundaries blur and the
+topology of the knowledge graph becomes distorted.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Knowledge systems attempt to represent meaning through networks of
+relationships between concepts. In practice, however, these systems
+frequently collapse semantic identity into approximate similarity. When
+similarity replaces identity, conceptual boundaries blur and the
+topology of the knowledge graph becomes distorted.</p>
+<p>This produces several well-known pathologies: concept drift, hub
+gravity distortion, semantic smearing, and uncontrolled polysemy. As a
+result, large knowledge systems often accumulate unstable meaning
+structures that undermine reliable reasoning and governance.</p>
+<p>This paper introduces <strong>Semantic Atoms</strong> as identity
+primitives within governed knowledge systems. Semantic atoms represent
+the smallest stable units of semantic identity–conceptual commitments
+that are small, auditable, collision-resistant, and slow to change.</p>
+<p>Within the Concept Crystallization Framework (CCF), semantic atoms
+are implemented through <strong>Global Term Keys (GTK)</strong>. A GTK
+declares that multiple local term nodes across a corpus represent the
+same semantic primitive. This mechanism enables identity declaration,
+membership verification, collision prevention, and polysemy
+detection.</p>
+<p>By introducing a kernel layer of semantic atoms, knowledge systems
+can transition from similarity-driven graphs to governed semantic
+architectures capable of deterministic reasoning, auditable structure,
+and execution authorization.</p>
+<hr />
+<h2 id="the-problem-of-semantic-smearing">1. The Problem of Semantic
+Smearing</h2>
+<p>Knowledge graphs typically represent concepts as nodes connected by
+relationships. While this structure captures associations between ideas,
+it rarely distinguishes clearly between <strong>similarity</strong> and
+<strong>identity</strong>.</p>
+<p>Two concepts may appear related because they:</p>
+<ul>
+<li>share linguistic overlap</li>
+<li>occur in similar contexts</li>
+<li>belong to the same conceptual family</li>
+</ul>
+<p>Yet similarity does not guarantee that the concepts represent the
+same semantic primitive.</p>
+<p>When systems rely on similarity rather than identity, several
+structural distortions emerge:</p>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr>
+<th>Distortion</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Concept Drift</strong></td>
+<td>Meaning gradually shifts as related but distinct terms become
+conflated.</td>
+</tr>
+<tr>
+<td><strong>Hub Gravity</strong></td>
+<td>Highly connected nodes attract unrelated concepts, creating
+artificial centrality.</td>
+</tr>
+<tr>
+<td><strong>Semantic Smearing</strong></td>
+<td>Concept boundaries blur as paraphrase and analogy accumulate.</td>
+</tr>
+<tr>
+<td><strong>Polysemy Amplification</strong></td>
+<td>A single term begins to represent multiple incompatible
+meanings.</td>
+</tr>
+</tbody>
+</table>
+<p>These effects grow with corpus size. As a system expands,
+similarity-based reasoning increasingly aggregates unrelated semantic
+structures.</p>
+<p>The result is a topology that appears coherent but lacks stable
+conceptual identity.</p>
+<hr />
+<h2 id="identity-as-a-structural-requirement">2. Identity as a
+Structural Requirement</h2>
+<p>For a knowledge system to support reliable reasoning or governance,
+it must distinguish between three fundamentally different
+relationships:</p>
+<table>
+<thead>
+<tr>
+<th>Relationship</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identity</strong></td>
+<td>two references denote the same semantic primitive</td>
+</tr>
+<tr>
+<td><strong>Association</strong></td>
+<td>concepts are related but distinct</td>
+</tr>
+<tr>
+<td><strong>Similarity</strong></td>
+<td>concepts resemble each other in some dimension</td>
+</tr>
+</tbody>
+</table>
+<p>Many knowledge graphs collapse these distinctions into a single edge
+type.</p>
+<p>However, systems that produce binding outcomes–legal systems,
+compilers, and governed execution architectures–require stronger
+guarantees. They must know whether two references denote the same
+conceptual object.</p>
+<p>Without identity primitives, semantic systems cannot reliably
+enforce:</p>
+<ul>
+<li>admissibility checks</li>
+<li>authority boundaries</li>
+<li>deterministic execution</li>
+<li>auditable reasoning</li>
+</ul>
+<p>Identity therefore becomes a foundational requirement rather than a
+convenience.</p>
+<hr />
+<h2 id="semantic-atoms-1">3. Semantic Atoms</h2>
+<p>A <strong>Semantic Atom</strong> is a governed identity primitive
+within a knowledge system.</p>
+<p>Semantic atoms possess several defining properties:</p>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Small</strong></td>
+<td>atoms represent minimal semantic commitments</td>
+</tr>
+<tr>
+<td><strong>Stable</strong></td>
+<td>atom identity changes rarely</td>
+</tr>
+<tr>
+<td><strong>Auditable</strong></td>
+<td>membership can be verified explicitly</td>
+</tr>
+<tr>
+<td><strong>Collision-resistant</strong></td>
+<td>atoms cannot overlap with incompatible concepts</td>
+</tr>
+<tr>
+<td><strong>Identity-only</strong></td>
+<td>membership indicates equivalence, not similarity</td>
+</tr>
+</tbody>
+</table>
+<p>These properties distinguish semantic atoms from traditional ontology
+classes or similarity clusters.</p>
+<p>An ontology class may contain many loosely related concepts. A
+semantic atom, by contrast, represents a precise conceptual
+commitment.</p>
+<p>Atoms therefore function as the <strong>identity kernel</strong> of a
+semantic architecture.</p>
+<hr />
+<h2 id="global-term-keys-gtk">4. Global Term Keys (GTK)</h2>
+<p>Within the Concept Crystallization Framework, semantic atoms are
+implemented through <strong>Global Term Keys (GTK)</strong>.</p>
+<p>A GTK provides a corpus-wide identity handle that links multiple
+local term nodes.</p>
+<p>Local terms originate within individual artifacts:</p>
+<pre><code>PCM-063 :: TERM-004
+PCM-071 :: TERM-002
+PCM-089 :: TERM-006</code></pre>
+<p>Each term exists within the scope of its source artifact. Without
+additional structure, identical labels across documents remain
+independent nodes.</p>
+<p>A GTK declares that these nodes represent the same semantic
+primitive:</p>
+<pre><code>GTK-0033
+Label: Admissibility
+
+Members:
+  PCM-063::TERM-004
+  PCM-071::TERM-002
+  PCM-089::TERM-006</code></pre>
+<p>The GTK therefore establishes identity across the corpus.</p>
+<hr />
+<h2 id="identity-governance">5. Identity Governance</h2>
+<p>GTK membership is governed by strict rules designed to prevent
+semantic corruption.</p>
+<h3 id="identity-declaration">Identity Declaration</h3>
+<p>A GTK declares that multiple term nodes represent the same concept.
+This declaration must be evidence-based rather than inferred from
+similarity.</p>
+<h3 id="membership-verification">Membership Verification</h3>
+<p>Each member must satisfy definitional equivalence with the GTK
+concept. If definitions diverge, the node must remain separate.</p>
+<h3 id="collision-prevention">Collision Prevention</h3>
+<p>A term node cannot belong to multiple GTKs. This rule prevents
+overlapping identity assignments that would produce semantic
+ambiguity.</p>
+<h3 id="polysemy-detection">Polysemy Detection</h3>
+<p>If a term label appears across artifacts but definitions differ, the
+system detects polysemy rather than merging the nodes.</p>
+<p>This mechanism converts what would normally become semantic smear
+into an explicit signal of conceptual divergence.</p>
+<hr />
+<h2 id="emergent-identity">6. Emergent Identity</h2>
+<p>A critical feature of semantic atoms within CCF is that they are
+<strong>not declared in advance</strong>.</p>
+<p>Instead, identity candidates emerge from corpus topology.</p>
+<p>During exploration, the system repeatedly encounters concept nodes
+that:</p>
+<ul>
+<li>appear across multiple artifacts</li>
+<li>maintain consistent definitions</li>
+<li>occupy similar structural roles within reasoning chains</li>
+</ul>
+<p>When such patterns appear, the system recognizes them as
+<strong>identity candidates</strong>.</p>
+<p>This emergence-based approach provides two advantages.</p>
+<p>First, it prevents premature ontology design. If atoms were defined
+before corpus exploration, they would reflect speculative guesses rather
+than empirical structure.</p>
+<p>Second, it allows the corpus itself to reveal the most fundamental
+semantic primitives.</p>
+<p>In this sense, semantic atoms are discovered rather than imposed.</p>
+<hr />
+<h2 id="the-semantic-kernel">7. The Semantic Kernel</h2>
+<p>As semantic atoms accumulate, they form the <strong>kernel
+layer</strong> of the knowledge system.</p>
+<p>This layer sits beneath higher-order reasoning structures.</p>
+<pre><code>Semantic Atoms
+       v
+Concept Compositions
+       v
+Governed Reasoning
+       v
+Execution Authorization</code></pre>
+<p>Atoms serve as stable anchors around which more complex conceptual
+structures can be constructed.</p>
+<p>Concept compositions combine atoms into structured claims.</p>
+<p>Governed reasoning evaluates these structures within admissibility
+and authority constraints.</p>
+<p>Execution authorization determines whether the resulting artifacts
+may produce real-world effects.</p>
+<p>Without semantic atoms, higher layers lack stable identity
+references.</p>
+<hr />
+<h2 id="constitutional-clusters">8. Constitutional Clusters</h2>
+<p>When atoms are mapped across a corpus, they often form recognizable
+clusters representing core conceptual domains.</p>
+<p>In governed semantic systems, one such cluster frequently emerges
+around <strong>constitutional primitives</strong>–concepts that regulate
+admissibility, authority, and execution boundaries.</p>
+<p>Examples include:</p>
+<table>
+<thead>
+<tr>
+<th>Atom Family</th>
+<th>Primitive Concepts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commitment</td>
+<td>Claim, Scope</td>
+</tr>
+<tr>
+<td>Authority</td>
+<td>Binding, Authorization</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Evidence sufficiency</td>
+</tr>
+<tr>
+<td>Admissibility</td>
+<td>Admissibility conditions</td>
+</tr>
+</tbody>
+</table>
+<p>These primitives define the front gate of the system.</p>
+<p>They determine what counts as a valid contribution to the knowledge
+architecture.</p>
+<p>Such clusters often become the <strong>constitutional kernel</strong>
+of a governed semantic system.</p>
+<hr />
+<h2 id="failure-modes">9. Failure Modes</h2>
+<p>If semantic atoms are poorly governed, the system may suffer several
+failure modes.</p>
+<h3 id="hub-gravity-expansion">Hub Gravity Expansion</h3>
+<p>Highly connected atoms may attract unrelated concepts simply because
+they appear structurally central.</p>
+<h3 id="inferred-matching">Inferred Matching</h3>
+<p>Similarity between definitions may tempt the system to merge nodes
+prematurely.</p>
+<h3 id="authority-leakage">Authority Leakage</h3>
+<p>Users may begin treating GTK membership as evidence that a concept is
+correct rather than merely identical.</p>
+<h3 id="identity-drift">Identity Drift</h3>
+<p>Changes in term definitions may silently corrupt existing GTK
+membership.</p>
+<p>Preventing these failures requires conservative governance and slow
+atom expansion.</p>
+<hr />
+<h2 id="operational-protocol">10. Operational Protocol</h2>
+<p>Safe expansion of the semantic atom kernel follows several
+principles.</p>
+<p><strong>Evidence-first membership</strong></p>
+<p>Membership decisions must rely on explicit definitional equivalence
+rather than similarity or contextual association.</p>
+<p><strong>Slow growth</strong></p>
+<p>Atoms should be rare and deliberate. Over-expansion reduces identity
+precision.</p>
+<p><strong>Collision audits</strong></p>
+<p>Regular validation ensures that no term node belongs to multiple
+GTKs.</p>
+<p><strong>Polysemy isolation</strong></p>
+<p>Near-identical labels that carry different meanings must remain
+separate atoms.</p>
+<p>These procedures ensure that the semantic kernel remains precise and
+trustworthy.</p>
+<hr />
+<h2 id="relationship-to-the-crystallization-gradient">11. Relationship
+to the Crystallization Gradient</h2>
+<p>Semantic atoms occupy a specific location within the broader
+architecture of meaning stabilization described by the
+<strong>Crystallization Gradient</strong>.</p>
+<p>Within that gradient, meaning transitions from fluid interpretation
+to deterministic execution through successive stabilization layers.</p>
+<p>Semantic atoms operate within the canonical representation layer of
+this process.</p>
+<p>They provide stable identity anchors that prevent conceptual drift as
+meaning progresses toward admissibility evaluation and execution
+authorization.</p>
+<p>Without identity primitives, the gradient cannot reliably stabilize
+meaning because semantic boundaries remain ambiguous.</p>
+<p>Atoms therefore function as crystallization points within the
+semantic structure of governed knowledge systems.</p>
+<hr />
+<h2 id="why-semantic-atoms-matter">12. Why Semantic Atoms Matter</h2>
+<p>Introducing semantic atoms transforms knowledge systems in several
+ways.</p>
+<p>First, it replaces similarity-driven graphs with identity-governed
+structures.</p>
+<p>Second, it allows reasoning processes to operate on stable conceptual
+primitives rather than ambiguous clusters.</p>
+<p>Third, it enables auditable governance of semantic identity across
+large corpora.</p>
+<p>These capabilities are essential for architectures in which knowledge
+directly influences executable systems.</p>
+<p>Within the Jnana architecture, semantic atoms provide the identity
+kernel that supports the transition from meaning to lawful computational
+effect.</p>
+<hr />
+<h2 id="conclusion">13. Conclusion</h2>
+<p>Large knowledge systems often struggle with semantic drift because
+they lack explicit identity primitives. Similarity-based structures
+gradually smear conceptual boundaries until reliable reasoning becomes
+difficult.</p>
+<p>Semantic atoms provide a structural remedy.</p>
+<p>By defining small, stable identity primitives and governing their
+membership through Global Term Keys, knowledge systems can preserve
+conceptual integrity across large corpora.</p>
+<p>Within the Concept Crystallization Framework, these atoms form the
+kernel layer of a governed semantic architecture.</p>
+<p>They anchor meaning before higher-order reasoning occurs and ensure
+that semantic identity remains auditable and collision-resistant.</p>
+<p>In doing so, they enable knowledge systems to transition from loosely
+connected graphs into governed structures capable of deterministic
+reasoning and lawful execution.</p>
+<p>Meaning does not become reliable merely through accumulation.</p>
+<p>It becomes reliable when its identity is stabilized.</p>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Revision.</strong> This stage is outside the present paper’s
+asserted contribution and evidentiary scope.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that knowledge systems attempt to represent meaning
+through networks of relationships between concepts. Its nearest external
+comparison fields are semantic, crypto, provenance. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. A valid hash, signature, or inclusion
+proof establishes a bounded cryptographic relation, not meaning,
+authority, safety, or jurisdiction by itself. A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy. These
+limits are not generic disclaimers: they identify the assumptions that a
+later empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E7]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848766">10.5281/zenodo.23848766</a></p>

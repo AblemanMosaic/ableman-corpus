@@ -1,0 +1,1463 @@
+<h1 id="the-three-hash-rule">The Three Hash Rule</h1>
+<h2
+id="governance-completeness-through-independent-cryptographic-commitments">Governance
+Completeness Through Independent Cryptographic Commitments</h2>
+<h3
+id="a-state-may-verify-and-still-be-inadmissible.-a-signature-may-verify-and-still-fail-standing.-a-text-may-persist-and-still-change-meaning.">A
+state may verify and still be inadmissible. A signature may verify and
+still fail standing. A text may persist and still change meaning.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper introduces the Three Hash Rule: a governance-completeness
+model in which object state, admissibility, and meaning are committed
+independently as <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>, <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span>, and <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>. A fourth
+commitment, <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span>, supplies
+optional jurisdictional locality for cross-phase systems. The minimal
+complete set is <span
+class="math inline">{<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>}</span>:
+<span class="math inline"><em>H</em><sub><em>s</em></sub></span> decides
+state, <span class="math inline"><em>H</em><sub><em>c</em></sub></span>
+decides admissibility, and <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> decides
+meaning. <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> does not
+enlarge single-phase completeness, but adds locality queries over
+phase-bound namespaces. The novelty is the separation: governance
+completeness is not produced by a stronger signature or a richer content
+hash, but by independent commitments whose decision procedures cannot
+safely collapse into one another.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>Content hashes decide object identity; signatures decide key
+possession or authorship evidence; neither alone decides admissibility,
+semantic interpretation, or jurisdictional locality. Governance failures
+are therefore state failures, admissibility failures, semantic failures,
+locality failures, or binding/context failures. The Three Hash Rule
+states that these domains must be separately committed, separately
+witnessed, and separately decided.</p>
+<p>The Three Hash Rule does not specify what facts must enter each
+commitment; it specifies that the four governance questions are
+independent and must be answered independently. The
+<em>constitution</em> decides what facts enter <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> (state), what
+conditions enter <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span>
+(admissibility), what semantics enter <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> (meaning),
+and what jurisdictional structure enters <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> (locality).
+Identities, authorities, evidentiary requirements, evaluator
+qualifications, and procedural prerequisites enter the architecture only
+when the constitution elevates them into a specific layer’s commitment.
+The framework is therefore substrate-neutral with respect to
+<em>what</em> governance evaluates while being strict about <em>how</em>
+governance commits to its evaluations.</p>
+<h2 id="the-constitutional-legend-frame">1.5 The Constitutional Legend
+Frame</h2>
+<p>The Three Hash Rule commitments and the receipt binding modes are
+projections of a single object: a Constitutional Legend <span
+class="math inline"><em>L</em> = (<em>J</em><sub><em>L</em></sub>, <em>B</em><sub><em>L</em></sub>, <em>R</em><sub><em>L</em></sub>, <em>T</em><sub><em>L</em></sub>, <em>C</em><sub><em>L</em></sub>, <em>A</em><sub><em>L</em></sub>)</span>.
+Each component is an independently governable layer of the governance
+architecture, and each Three Hash Rule construct projects onto one of
+them. (The legend components are subscripted to disambiguate them from
+the semantic regime tuple introduced in Section 8, which uses some of
+the same letters with different meanings.)</p>
+<ul>
+<li><p><strong>Legend component:</strong> <span
+class="math inline"><em>J</em><sub><em>L</em></sub></span>
+jurisdiction<br />
+<strong>What it governs:</strong> admissible semantic scope (domain,
+language, participation boundary)<br />
+<strong>Three Hash Rule projection:</strong> <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span>
+(locality)</p></li>
+<li><p><strong>Legend component:</strong> <span
+class="math inline"><em>B</em><sub><em>L</em></sub></span>
+bindings<br />
+<strong>What it governs:</strong> authorized canonical sense <span
+class="math inline">↔︎</span> lexical mappings<br />
+<strong>Three Hash Rule projection:</strong> binding layer of <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>
+(meaning)</p></li>
+<li><p><strong>Legend component:</strong> <span
+class="math inline"><em>R</em><sub><em>L</em></sub></span> render
+surfaces<br />
+<strong>What it governs:</strong> permitted representational forms<br />
+<strong>Three Hash Rule projection:</strong> surface layer of <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span></p></li>
+<li><p><strong>Legend component:</strong> <span
+class="math inline"><em>T</em><sub><em>L</em></sub></span>
+transport<br />
+<strong>What it governs:</strong> encoding, serialization, transmission
+admissibility<br />
+<strong>Three Hash Rule projection:</strong> receipt binding mode
+(Section 4) – the configuration manifold</p></li>
+<li><p><strong>Legend component:</strong> <span
+class="math inline"><em>C</em><sub><em>L</em></sub></span>
+continuity<br />
+<strong>What it governs:</strong> identity, interpretive, projection
+continuity invariants<br />
+<strong>Three Hash Rule projection:</strong> recoverability invariant
+(Section 4.5), Specification-tier</p></li>
+<li><p><strong>Legend component:</strong> <span
+class="math inline"><em>A</em><sub><em>L</em></sub></span>
+authority<br />
+<strong>What it governs:</strong> certifies admissibility under the
+legend<br />
+<strong>Three Hash Rule projection:</strong> <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span>
+(admissibility)</p></li>
+</ul>
+<p>Two consequences of this framing carry argumentative weight in later
+sections. First, the separation thesis of the Three Hash Rule is the
+legend’s own thesis: <span
+class="math inline"><em>J</em><sub><em>L</em></sub></span>, <span
+class="math inline"><em>B</em><sub><em>L</em></sub></span>, <span
+class="math inline"><em>R</em><sub><em>L</em></sub></span>, <span
+class="math inline"><em>T</em><sub><em>L</em></sub></span>, <span
+class="math inline"><em>C</em><sub><em>L</em></sub></span>, and <span
+class="math inline"><em>A</em><sub><em>L</em></sub></span> are
+independently governable layers, and the cryptographic commitments
+inherit that separation rather than asserting it bare. Second, the
+receipt binding mode and the question of where law is committed are the
+legend’s <span
+class="math inline"><em>T</em><sub><em>L</em></sub></span> and <span
+class="math inline"><em>J</em><sub><em>L</em></sub>/<em>A</em><sub><em>L</em></sub></span>
+components, respectively; both resolve by separation, not by folding
+additional content into <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>.</p>
+<h2 id="assumptions">2. Assumptions</h2>
+<p>The framework assumes collision resistance, second-preimage
+resistance, preimage resistance, domain separation, canonicalization
+correctness, byte-stability across conforming implementations, pure and
+versioned <span
+class="math inline">(<em>P</em>, <em>Σ</em>, <em>Φ</em>)</span>,
+explicit evaluation time <span class="math inline"><em>t</em></span>,
+and no unstated external I/O during verification. All security,
+independence, and completeness claims are conditional on these
+assumptions.</p>
+<h2 id="receipts-and-decision-procedures">3. Receipts and Decision
+Procedures</h2>
+<p>A governance receipt is:</p>
+<p><span
+class="math display"><em>R</em> := (<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>H</em><sub><em>j</em></sub>?, <em>H</em><sub><em>r</em></sub>, <em>π</em>)</span></p>
+<p>where:</p>
+<p><span
+class="math display"><em>π</em> := (<em>π</em><sub><em>s</em></sub>, <em>π</em><sub><em>c</em></sub>, <em>π</em><sub><em>m</em></sub>, <em>π</em><sub><em>j</em></sub>?)</span></p>
+<p>is the witness family.</p>
+<p>A validity context is:</p>
+<p><span
+class="math display">𝒞 := (<em>P</em>, <em>Σ</em>, <em>Φ</em>, <em>t</em>)</span></p>
+<p>where <span class="math inline"><em>P</em></span> is admissibility
+policy, <span class="math inline"><em>Σ</em></span> is semantic regime,
+<span class="math inline"><em>Φ</em></span> is governance phase, and
+<span class="math inline"><em>t</em></span> is evaluation time.</p>
+<p>Define:</p>
+<p><span
+class="math display"><em>i</em><em>d</em>(𝒞) := <em>H</em>(<em>i</em><em>d</em>(<em>P</em>) ∥ <em>i</em><em>d</em>(<em>Σ</em>) ∥ <em>i</em><em>d</em>(<em>Φ</em>) ∥ <em>t</em>)</span></p>
+<p>The receipt supports decision procedures:</p>
+<p><span
+class="math display"><em>D</em><sub><em>s</em></sub>(<em>R</em>, 𝒞, <em>π</em><sub><em>s</em></sub>, <em>t</em>) ∈ {0, 1}</span></p>
+<p><span
+class="math display"><em>D</em><sub><em>c</em></sub>(<em>R</em>, 𝒞, <em>π</em><sub><em>c</em></sub>, <em>t</em>) ∈ {0, 1}</span></p>
+<p><span
+class="math display"><em>D</em><sub><em>m</em></sub>(<em>R</em>, 𝒞, <em>π</em><sub><em>m</em></sub>, <em>t</em>) ∈ {0, 1}</span></p>
+<p><span
+class="math display"><em>D</em><sub><em>j</em></sub>(<em>R</em>, 𝒞, <em>π</em><sub><em>j</em></sub>, <em>t</em>) ∈ {0, 1, NA}</span></p>
+<ul>
+<li><p><strong>Commitment:</strong> <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span><br />
+<strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>s</em></sub></span><br />
+<strong>Question:</strong> state</p></li>
+<li><p><strong>Commitment:</strong> <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span><br />
+<strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span><br />
+<strong>Question:</strong> admissibility</p></li>
+<li><p><strong>Commitment:</strong> <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span><br />
+<strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>m</em></sub></span><br />
+<strong>Question:</strong> meaning</p></li>
+<li><p><strong>Commitment:</strong> <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span><br />
+<strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>j</em></sub></span><br />
+<strong>Question:</strong> locality</p></li>
+</ul>
+<p>A receipt is governance-complete iff:</p>
+<p><span
+class="math display"><em>D</em><sub><em>s</em></sub> = 1 ∧ <em>D</em><sub><em>c</em></sub> = 1 ∧ <em>D</em><sub><em>m</em></sub> = 1</span></p>
+<p>and binding verification (Section 4.5) succeeds. The core decisions
+establish governance-completeness over the three core questions; binding
+verification establishes that the receipt identity itself satisfies the
+recoverability invariant. A receipt that passes all four core decisions
+but fails binding verification is rejected as inadmissible.</p>
+<p><span class="math inline"><em>H</em><sub><em>j</em></sub></span> is
+required only for locality queries across phase-bound namespaces. For
+single-phase governance, <span
+class="math inline">(<em>D</em><sub><em>j</em></sub> = NA)</span> does
+not defeat completeness.</p>
+<h3
+id="constitutional-roles-receipt-authority-and-evidence">Constitutional
+Roles: Receipt, Authority, and Evidence</h3>
+<p>A subtle but important distinction is required before discussing how
+receipts participate in subsequent governance. <em>Receipt-ness,
+authority-ness, and evidence-ness are not properties of artifacts; they
+are constitutional roles that artifacts may play.</em> The framework
+therefore distinguishes three constitutional roles whose validity
+criteria differ, rather than three classes of artifact whose ontologies
+differ:</p>
+<ul>
+<li><p><strong>Receipt role.</strong> Validity established by
+<em>integrity, provenance, availability, and auditability</em>. The
+receipt role asks whether the artifact authentically and durably
+establishes that a governed transition occurred. An artifact in the
+receipt role is <em>historically immutable</em> in its constitutional
+standing: the act it attests cannot be undone, only superseded. The role
+is <em>non-authoritative with respect to current capability</em>:
+passing the receipt test does not, by itself, grant power, permission,
+or capability. It establishes that an event occurred; it does not
+perform the event afresh.</p></li>
+<li><p><strong>Authority role.</strong> Validity established by
+<em>integrity, currency (not expired, not revoked), scope, and
+participation in admissibility</em>. The authority role asks whether the
+artifact constitutes valid present capability under policy. An artifact
+in the authority role is subject to revocation, expiration, suspension,
+and transfer: the present authority it carries can change while the
+historical fact of its issuance remains fixed.</p></li>
+<li><p><strong>Evidence role.</strong> Validity established by
+<em>freshness, attestation chain, and re-evaluability under the
+consuming policy</em>. The evidence role asks whether the artifact
+establishes a constitutional fact that policy may consult. Evidence
+artifacts may be re-evaluated under different policies, and their
+constitutional weight depends on the consuming evaluation.</p></li>
+</ul>
+<p>These are roles, not artifact types. A single artifact may
+simultaneously satisfy multiple role contracts. A passport is both a
+receipt of identity verification and an authority artifact granting
+border crossing. A board resolution is both a receipt of the vote tally
+and an authority granting designated spending. A namespace certificate
+is both a receipt of allocation and an authority over namespace control.
+The constitution determines which roles a given artifact is admitted to
+play, and which validity criteria apply in each role; the artifact
+itself implements whichever role contracts it satisfies.</p>
+<p>The same artifact may pass one role test and fail another. An expired
+JWT may remain a perfectly valid receipt of past issuance — its
+integrity, provenance, and auditability are unchanged by the passage of
+time — while ceasing to be valid authority because the currency
+criterion fails. The constitutional question is therefore not <em>“is
+this artifact a receipt or an authority artifact?”</em> but <em>“is this
+artifact being evaluated under the receipt role or the authority role,
+and does it satisfy the validity criteria for that role?”</em></p>
+<p>A governed transition may produce evidence in multiple roles. The act
+of issuing a JWT produces a receipt of issuance (under the receipt role:
+durable, auditable) and an authority artifact (under the authority role:
+present, revocable). These may be realized as a single artifact carrying
+both role contracts, or as separate artifacts each carrying one. In
+practice they are often realized separately, because the role contracts
+point in opposite directions: the receipt role wants durability,
+inspectability, and long-term retention; the authority role often wants
+confidentiality, short lifespan, and tight control over distribution.
+The framework does not require role separation but recognizes that
+distinct security requirements typically motivate it.</p>
+<p>Receipts in the receipt role may still be <em>constitutionally
+relevant</em> to subsequent admissibility decisions even though the role
+is non-authoritative. Policy at <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span> may consult
+prior receipts to answer questions such as <em>“was authority
+delegated?”</em>, <em>“was namespace allocated?”</em>, or <em>“was
+amendment ratified?”</em>. The receipt does not grant the delegation,
+allocation, or ratification by being consulted; it attests that the
+delegating, allocating, or ratifying transition occurred, and the
+present-time admissibility decision derives authority by treating that
+attestation as evidence under policy. This preserves the independence of
+the four hash layers: each commits independently to its own question,
+while the facts that policy considers when answering any one question
+may include prior receipts whose persistence is itself a constitutional
+fact.</p>
+<p>The role-based formulation sharpens revocation semantics. Revocation,
+expiration, and transfer operate on the authority role: they change
+which artifacts pass the authority test going forward. They do not
+operate on the receipt role: an artifact’s receipt-role validity is
+determined by integrity, provenance, availability, and auditability,
+none of which is affected by the artifact’s present authority status.
+After revocation, an artifact may pass the receipt test (it still
+attests that issuance occurred) while failing the authority test (its
+present capability is gone). The constitutional record is therefore
+append-only history; current authority is derived state computed from
+that history. What gets revoked is the artifact’s authority-role
+validity, not the historical fact the receipt-role attests.</p>
+<h3 id="storage-compliance-and-escalation">Storage, Compliance, and
+Escalation</h3>
+<p>Three architectural commitments follow from the role-based
+formulation.</p>
+<p><strong>Storage neutrality.</strong> A constitution need not require
+centralized receipt storage. It may require only that receipts
+satisfying the receipt role be <em>producible</em>, <em>available</em>,
+and <em>verifiable</em> when invoked. Receipt custody may be
+centralized, distributed, counterparty-held, participant-managed,
+archival, or any combination thereof, depending on the jurisdiction’s
+availability and audit requirements. A driver’s license is
+participant-managed because the holder’s incentives align with
+retention; board-approval receipts are typically dual-retained by board
+and project owner; constitutional amendments often require public
+archival. The framework expresses all of these patterns under the same
+grammar: the constitutional question is whether the receipt can be
+produced and verified when needed, not where it is stored. (FGA Section
+13 develops the cross-constitutional implications of storage neutrality:
+when constitutions are mutually independent, participant-held receipts
+cross constitutional boundaries through receipt-recognition policies
+rather than through shared storage infrastructure.)</p>
+<p><strong>Compliance, not enforcement.</strong> Receipts do not
+mechanically enforce compliance. They make compliance, noncompliance,
+discharge, supersession, and escalation <em>decidable under policy</em>.
+A receipt of an admitted decision creates a durable basis against which
+future conduct can be evaluated; it does not physically prevent
+deviation. The constitutional question after a binding decision is not
+“will the decided action occur?” but “did the actual conduct conform to
+the decided action, and what remedies are available if it did not?” The
+framework’s commitment is to make compliance and its absence
+<em>legible</em>, not to make compliance <em>mechanical</em>.</p>
+<p><strong>Escalation as evidence-use.</strong> A receipt may be used in
+escalation, appeal, repair, or remediation proceedings when a receiving
+constitution recognizes it as evidence of a prior governed transition.
+Escalation is recourse pursued by parties with constitutionally
+recognized standing and incentive; it is not automatic. The framework
+supports escalation through the same evidence-role machinery that
+supports ordinary admissibility evaluation: the receiving constitution’s
+recognition policy admits the prior receipt as a fact, and its own
+admissibility predicate determines what consequences follow. Escalation
+paths therefore need not be defined by the originating constitution: a
+receiving constitution may independently recognize prior receipts as
+admissible evidence, which is essential for governance designs in which
+no global root governs all constitutions involved.</p>
+<h2 id="receipt-binding">4. Receipt Binding</h2>
+<p>The receipt binding mode is the projection of the legend’s <span
+class="math inline"><em>T</em><sub><em>L</em></sub></span> (transport)
+component. It is a configuration choice within an admissible space, not
+a single binary fork. Two modes are defined here; the configuration
+manifold (Section 4.6) lists the admissible instance configurations and
+their selection rule.</p>
+<p><strong>Context-external mode</strong> (portable identity,
+witness-pinned verification):</p>
+<p><span
+class="math display"><em>H</em><sub><em>r</em></sub> := <em>H</em>(<em>D</em><em>S</em><sub><em>r</em></sub> ∥ <em>r</em><em>o</em><em>o</em><em>t</em>(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>H</em><sub><em>j</em></sub>?))</span></p>
+<p><strong>Strict mode</strong> (self-describing identity):</p>
+<p><span
+class="math display"><em>H</em><sub><em>r</em></sub> := <em>H</em>(<em>D</em><em>S</em><sub><em>r</em></sub> ∥ <em>r</em><em>o</em><em>o</em><em>t</em>(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>H</em><sub><em>j</em></sub>?, <em>i</em><em>d</em>(<em>P</em>), <em>i</em><em>d</em>(<em>Σ</em>), <em>i</em><em>d</em>(<em>Φ</em>)))</span></p>
+<p>where <span
+class="math inline"><em>r</em><em>o</em><em>o</em><em>t</em>(⋅)</span>
+is a deterministic domain-separated hash tree over length-prefixed typed
+leaves.</p>
+<p>In context-external and strict modes, every <span
+class="math inline"><em>π</em><sub><em>i</em></sub></span> MUST bind
+<span class="math inline"><em>H</em><sub><em>r</em></sub></span>, <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>, and <span
+class="math inline"><em>i</em><em>d</em>(𝒞)</span>. A verifier rejects
+if any <span class="math inline"><em>π</em><sub><em>i</em></sub></span>
+opens to a different <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span>, <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>, or <span
+class="math inline"><em>i</em><em>d</em>(𝒞)</span>, or if any object
+reference inside <span
+class="math inline"><em>π</em><sub><em>i</em></sub></span> disagrees
+with <span class="math inline"><em>H</em><sub><em>s</em></sub></span>.
+The re-evaluable instance configuration (Section 4.6) is the documented
+exception: its witnesses do not pin <span
+class="math inline"><em>i</em><em>d</em>(𝒞)</span> by design, so a
+verifier may evaluate the receipt under a context it supplies.
+Re-evaluable is opt-in and must be explicitly declared by the
+deployment; the default <span
+class="math inline"><em>π</em><sub><em>i</em></sub></span>-binding
+requirement above applies to all receipts that have not opted in.</p>
+<p>The modes differ in what the <em>receipt identity</em> itself folds
+in. Strict mode produces self-describing identities: chain links,
+caches, and aggregations carrying only <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span> remain
+context-determinate without consulting the witnesses. Context-external
+mode produces portable identities that may stably refer across contexts
+at the cost of requiring the witnesses for full context
+determination.</p>
+<h2 id="binding-verification-and-recoverability">4.5 Binding
+Verification and Recoverability</h2>
+<p>Binding verification is not a governance decision procedure; it is a
+receipt well-formedness gate that runs alongside the four core
+decisions. It checks that whatever context dimensions are excluded from
+<span class="math inline"><em>H</em><sub><em>r</em></sub></span> under
+the active binding mode are either recoverable from witnesses or
+explicitly recorded by a disambiguating collapse witness. A receipt may
+satisfy <span
+class="math inline"><em>D</em><sub><em>s</em></sub> = <em>D</em><sub><em>c</em></sub> = <em>D</em><sub><em>m</em></sub> = <em>D</em><sub><em>j</em></sub> = 1</span>
+and still be rejected as malformed if binding verification fails, with
+error code <span
+class="math inline"><code>U</code><code>n</code><code>d</code><code>e</code><code>r</code><code>R</code><code>e</code><code>c</code><code>o</code><code>r</code><code>d</code><code>e</code><code>d</code><code>C</code><code>o</code><code>l</code><code>l</code><code>a</code><code>p</code><code>s</code><code>e</code></span>
+(Appendix B).</p>
+<p>In practice the check is structural: for each context dimension
+excluded from <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span> (e.g. <span
+class="math inline"><em>i</em><em>d</em>(<em>P</em>)</span> when <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span> omits it;
+<span class="math inline"><em>i</em><em>d</em>(<em>Φ</em>)</span> when
+<span class="math inline"><em>H</em><sub><em>j</em></sub></span> is
+absent), the verifier confirms that a disambiguating witness records the
+conflation. This makes the check operationally decidable from <span
+class="math inline">(<em>R</em>, 𝒞)</span> alone, without comparison
+between receipts.</p>
+<p>The governing invariant is <em>lineage continuity</em>: the past must
+be preserved in, or recoverable from, current state.
+Receipt-the-collapse applies the same pattern the paper uses elsewhere
+(hashed placeholders in Section 8, explicit failure witnesses in Section
+9): silent collapse is inadmissible; receipted collapse with a
+disambiguating witness is admissible if non-ideal.</p>
+<p>In strict mode the identity is self-describing; context-external mode
+produces a portable identity at the cost of requiring witnesses for full
+context determination. A third configuration (re-evaluable) opts out of
+context pinning entirely; see Appendix F for the three admissible
+configurations and their selection rule.</p>
+<h2 id="canonicalization-axiom">5. Canonicalization Axiom</h2>
+<p>For <span
+class="math inline"><em>i</em> ∈ {<em>s</em>, <em>c</em>, <em>m</em>, <em>j</em>}</span>,
+each commitment has a versioned canonicalization function:</p>
+<p><span
+class="math display"><em>c</em><sub><em>i</em></sub> : <em>X</em> → <em>B</em><sub><em>i</em></sub> ∪ {⊥}</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>H</em><sub><em>i</em></sub> := <em>H</em>(<em>D</em><em>S</em><sub><em>i</em></sub> ∥ <em>i</em><em>d</em>(<em>c</em><sub><em>i</em></sub>) ∥ <em>c</em><sub><em>i</em></sub>(⋅))</span></p>
+<p>If <span
+class="math inline">(<em>c</em><sub><em>i</em></sub>(<em>x</em>) = ⊥)</span>,
+then <span
+class="math inline">(<em>D</em><sub><em>i</em></sub> = 0)</span>.
+Canonicalization functions MUST be deterministic, byte-stable,
+versioned, total on declared domains, explicitly rejecting outside them,
+and accompanied by conformance test vectors. Structured encodings must
+define ordering, whitespace, Unicode normalization, numeric
+representation, duplicate-field handling, byte order, length prefixing,
+and partial decoding behavior. Semantic parsers must define grammar
+ambiguity handling and deterministic tie-breaking.</p>
+<h2 id="hs-state">6. <span
+class="math inline"><em>H</em><em>s</em></span>: State</h2>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub> := <em>H</em>(<em>D</em><em>S</em><sub><em>s</em></sub> ∥ <em>i</em><em>d</em>(<em>c</em><sub><em>s</em></sub>) ∥ <em>c</em><sub><em>s</em></sub>(<em>x</em>))</span></p>
+<p><span class="math inline"><em>D</em><sub><em>s</em></sub></span>
+decides whether <span
+class="math inline"><em>π</em><sub><em>s</em></sub></span> opens <span
+class="math inline"><em>x</em></span> to <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> under <span
+class="math inline"><em>c</em><sub><em>s</em></sub></span>. <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> provides
+object identity and integrity only.</p>
+<h2 id="hc-admissibility">7. <span
+class="math inline"><em>H</em><em>c</em></span>: Admissibility</h2>
+<p><span class="math inline"><em>H</em><sub><em>c</em></sub></span> is
+the commitment over admissibility under the policy and authority
+structure. Together with <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> (Section 9),
+it carries the components of the “rulebook” that distinguish receipts
+across jurisdictions and policy regimes; the meaning commitment <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> deliberately
+does not.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>G</em><sub><em>c</em></sub> = (<em>V</em>, <em>E</em>, <em>ℓ</em>)</span></p>
+<p>be a Merkleized labeled DAG. Vertices represent principals, roots,
+keys, credentials, services, or roles. Edges represent delegations,
+claims, capabilities, revocations, or endorsements. Labels satisfy <span
+class="math inline">(<em>ℓ</em>(<em>e</em>) ∈ ℒ)</span>, where <span
+class="math inline">(ℒ)</span> is a decidable constraint algebra closed
+under conjunction.</p>
+<p><span
+class="math display"><em>H</em><sub><em>c</em></sub> := <em>H</em>(<em>D</em><em>S</em><sub><em>c</em></sub> ∥ <em>i</em><em>d</em>(<em>c</em><sub><em>c</em></sub>) ∥ <em>r</em><em>o</em><em>o</em><em>t</em>(<em>G</em><sub><em>c</em></sub>) ∥ <em>i</em><em>d</em>(<em>P</em>)?)</span></p>
+<p>where <span
+class="math inline">(<em>i</em><em>d</em>(<em>P</em>)?)</span> is
+included when policy shadowing must be prevented.</p>
+<h3 id="admissibility-definition">Admissibility Definition</h3>
+<p>For receipt <span class="math inline"><em>R</em></span>, context
+<span class="math inline">(𝒞)</span>, and witness <span
+class="math inline"><em>π</em><sub><em>c</em></sub></span>, <span
+class="math inline">(<em>D</em><sub><em>c</em></sub> = 1)</span> iff
+<span class="math inline"><em>π</em><sub><em>c</em></sub></span> proves
+a canonical path in <span
+class="math inline"><em>G</em><sub><em>c</em></sub></span> from a
+trusted root to <span
+class="math inline">(<em>s</em><em>i</em><em>g</em><em>n</em><em>e</em><em>r</em>(<em>x</em>, <em>π</em><sub><em>s</em></sub>))</span>,
+the path is included in <span
+class="math inline">(<em>r</em><em>o</em><em>o</em><em>t</em>(<em>G</em><sub><em>c</em></sub>))</span>,
+and:</p>
+<p><span
+class="math display">[ [<em>ℓ</em>(<em>p</em>)] ]<sub><em>P</em></sub>(<em>t</em>) = ⊤</span></p>
+<p>under deterministic policy evaluation.</p>
+<p>The canonical path must satisfy capability attenuation:</p>
+<p><span
+class="math display"><em>c</em><em>a</em><em>p</em>(<em>e</em><sub><em>r</em> + 1</sub>) ⊆ <em>c</em><em>a</em><em>p</em>(<em>e</em><sub><em>r</em></sub>)</span></p>
+<p>for all consecutive edges. <span
+class="math inline"><em>G</em><sub><em>c</em></sub><sup>*</sup></span>,
+the proof subgraph carried by <span
+class="math inline"><em>π</em><sub><em>c</em></sub></span>, must be
+acyclic or include a cycle-breaking proof. Freshness is enforced by
+epoch or nonce binding. Root updates require threshold approval over
+epoch-scoped roots. Revocation is hard or soft; precedence is
+ordered:</p>
+<p><span
+class="math display"><em>h</em><em>a</em><em>r</em><em>d</em><sub><em>r</em></sub><em>e</em><em>v</em><em>o</em><em>c</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em> &gt; <em>s</em><em>o</em><em>f</em><em>t</em><sub><em>r</em></sub><em>e</em><em>v</em><em>o</em><em>c</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em> &gt; <em>d</em><em>e</em><em>l</em><em>e</em><em>g</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em> &gt; <em>c</em><em>l</em><em>a</em><em>i</em><em>m</em></span></p>
+<p>No revoked path may resurrect without a later valid delegation. If
+multiple satisfying paths exist, <span
+class="math inline">(<em>c</em><em>a</em><em>n</em><em>o</em><em>n</em><sub><em>p</em></sub><em>a</em><em>t</em><em>h</em>(<em>G</em><sub><em>c</em></sub>, <em>P</em>, <em>t</em>))</span>
+selects one; if no canonical path is derivable, <span
+class="math inline">(<em>D</em><sub><em>c</em></sub> = 0)</span>.</p>
+<p>Revocation in this precedence ordering operates on the current
+authority state derivable from <span
+class="math inline"><em>G</em><sub><em>c</em></sub></span>, not on the
+historical receipts that recorded prior delegations. A revocation entry
+is itself a governed transition with its own receipt; it changes the
+derived authority state by appending a new fact to the constitutional
+history rather than by modifying or erasing earlier facts. The receipt
+of the original delegation remains immutable; the authority it conferred
+does not, once revoked.</p>
+<h3 id="evaluator-as-implementation">Evaluator as Implementation</h3>
+<p>The decision procedure <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span> is the
+constitutionally specified function that produces the admissibility
+verdict. An <em>evaluator</em> is an implementation of <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span> rather than a
+parameter of admissibility itself. Two evaluators executing the same
+constitutional <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span> on the same
+inputs <span
+class="math inline">(<em>R</em>, 𝒞, <em>π</em><sub><em>c</em></sub>, <em>t</em>)</span>
+should reach the same admissibility conclusion; if they do not, this is
+diagnostic of either constitutional incompleteness (a hidden dependency
+the policy has not declared), evaluator malfunction, or an unauthorized
+evaluator producing a non-canonical decision.</p>
+<p>The evaluator’s identity is therefore a <em>provenance</em> fact
+recorded in the receipt’s witness family <span
+class="math inline"><em>π</em></span> rather than a semantic
+<em>input</em> to <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span>. Evaluator
+authorization enters the architecture as a constitutional concern — and
+contributes to <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span> via the
+authority graph <span
+class="math inline"><em>G</em><sub><em>c</em></sub></span> — only when
+the constitution explicitly requires that admissibility depend on
+evaluation by an authorized evaluator class. In that case, the
+authorization claim travels as evidence in <span
+class="math inline"><em>π</em><sub><em>c</em></sub></span> rather than
+as a separate parameter of the decision procedure.</p>
+<p>This distinction matters for the independence claim and for the
+threat model (Section 13). A malicious or unauthorized evaluator that
+produces a receipt under a constitution that does not authorize it is
+not a <span class="math inline"><em>D</em><sub><em>c</em></sub></span>
+failure but an authority-graph failure: <span
+class="math inline"><em>π</em><sub><em>c</em></sub></span> does not
+establish a canonical path from a trusted root to the purported signer,
+and the receipt is rejected regardless of whether the evaluator’s
+<em>computation</em> of <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span> was
+internally correct. The framework supports both deterministic
+constitutions (in which any qualified evaluator computes the same <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span>) and
+discretionary constitutions (in which the constitution explicitly
+delegates judgment to an evaluator class such that different qualified
+evaluators may legitimately reach different conclusions) through the
+same authority-graph machinery; the discretionary case is expressed by
+allowing <span
+class="math inline"><em>G</em><sub><em>c</em></sub></span> to authorize
+evaluator classes whose internal disagreement is constitutionally
+permitted.</p>
+<h2 id="hm-meaning">8. <span
+class="math inline"><em>H</em><em>m</em></span>: Meaning</h2>
+<p>The construction in this section applies only to semantic regimes
+admitting deterministic parsing and bounded canonical normalization.
+Examples include typed configuration languages, Datalog-class policy
+systems, proof objects, restricted rewriting systems, and other
+explicitly specified formal languages. The framework does not claim
+canonical semantic normalization for unrestricted natural language or
+arbitrary expressive logics.</p>
+<p>A semantic regime is:</p>
+<p><span
+class="math display"><em>Σ</em> := (<em>L</em>, <em>T</em>, <em>R</em>, <em>v</em>, <em>r</em><sup>*</sup>, <em>B</em>, <em>i</em><em>m</em><em>p</em><em>o</em><em>r</em><em>t</em><em>s</em>)</span></p>
+<p>where <span class="math inline"><em>L</em></span> is language, <span
+class="math inline"><em>T</em></span> is theory, <span
+class="math inline"><em>R</em></span> is rule set, <span
+class="math inline"><em>v</em></span> is version, <span
+class="math inline"><em>r</em><sup>*</sup></span> is canonical reduction
+strategy, <span class="math inline"><em>B</em></span> is normalization
+bound, and <span
+class="math inline"><em>i</em><em>m</em><em>p</em><em>o</em><em>r</em><em>t</em><em>s</em></span>
+specifies treatment of external resources.</p>
+<p><span
+class="math display"><em>c</em><sub><em>m</em></sub>(<em>x</em>) = <em>e</em><em>n</em><em>c</em><em>o</em><em>d</em><em>e</em>(<em>r</em><sup>*</sup>(<em>p</em><em>a</em><em>r</em><em>s</em><em>e</em><sub><em>L</em></sub>(<em>x</em>)))</span></p>
+<p><span
+class="math display"><em>H</em><sub><em>m</em></sub> := <em>H</em>(<em>D</em><em>S</em><sub><em>m</em></sub> ∥ <em>i</em><em>d</em>(<em>c</em><sub><em>m</em></sub>) ∥ <em>c</em><sub><em>m</em></sub>(<em>x</em>) ∥ <em>i</em><em>d</em>(<em>Σ</em>) ∥ <em>l</em><em>i</em><em>n</em><em>e</em><em>a</em><em>g</em><em>e</em>)</span></p>
+<p>Here <span
+class="math inline"><em>i</em><em>d</em>(<em>Σ</em>)</span> commits the
+<em>identity-determining</em> components of the semantic regime:
+language <span class="math inline"><em>L</em></span>, theory <span
+class="math inline"><em>T</em></span>, rule set <span
+class="math inline"><em>R</em></span>, version <span
+class="math inline"><em>v</em></span>, canonical reduction strategy
+<span class="math inline"><em>r</em><sup>*</sup></span>, normalization
+bound <span class="math inline"><em>B</em></span>, and import policy. It
+explicitly <em>excludes</em> jurisdiction: the canonical semantic
+identity is jurisdiction-stable by design. Jurisdiction is committed in
+<span class="math inline"><em>H</em><sub><em>j</em></sub></span>
+(Section 9) and authority is committed in <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span> (Section 7);
+these are the de-collapsers of receipt identity across legal or policy
+contexts, not <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>. The same
+canonical sense under different jurisdictions therefore hashes to the
+same <span class="math inline"><em>H</em><sub><em>m</em></sub></span>
+and is distinguished at the receipt level by <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> and <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span>.</p>
+<h3 id="semantic-verification-definition">Semantic Verification
+Definition</h3>
+<p>For receipt <span class="math inline"><em>R</em></span>, context
+<span class="math inline">(𝒞)</span>, and witness <span
+class="math inline"><em>π</em><sub><em>m</em></sub></span>, <span
+class="math inline">(<em>D</em><sub><em>m</em></sub> = 1)</span> iff
+<span class="math inline"><em>π</em><sub><em>m</em></sub></span> proves
+deterministic parsing, regime-bound normalization under <span
+class="math inline"><em>Σ</em></span>, satisfaction of resource bounds,
+and authenticated semantic lineage for <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>.</p>
+<p>Semantic lineage is distinct from admissibility lineage. Authority
+lineage in <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span> traces the
+chain of delegations and capability attenuations from a trusted root to
+the signer (<span
+class="math inline">Root → Org → Service → Key</span>). Semantic lineage
+in <span class="math inline"><em>H</em><sub><em>m</em></sub></span>
+traces the canonical transformation history of the meaning itself (<span
+class="math inline">Parse → Normalize → Lift → Normalize</span>). The
+two graphs answer different governance questions and must not be
+conflated.</p>
+<p>If <span class="math inline"><em>Σ</em></span> is non-confluent,
+<span class="math inline"><em>r</em><sup>*</sup></span> is mandatory and
+included in <span
+class="math inline">(<em>i</em><em>d</em>(<em>Σ</em>))</span>. External
+resources are either content-addressed into <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> or explicitly
+excluded by hash. Uninterpreted regions are represented as hashed
+placeholders. Normalization must satisfy <span
+class="math inline">(<em>T</em><sub><em>Σ</em></sub>(|<em>x</em>|) ≤ <em>B</em>)</span>,
+or <span
+class="math inline">(<em>D</em><sub><em>m</em></sub> = 0)</span>.</p>
+<p>Define byte equivalence <span
+class="math inline"><em>x</em>≡<sub><em>b</em></sub><em>y</em></span>
+and semantic equivalence <span
+class="math inline"><em>x</em>≡<sub><em>m</em></sub><em>y</em></span>.</p>
+<h3 id="semantic-soundness-theorem">Semantic Soundness Theorem</h3>
+<p>Under the regime assumptions of Section 8 (deterministic parsing;
+canonical reduction strategy <span
+class="math inline"><em>r</em><sup>*</sup></span>; bounded normalization
+under <span class="math inline"><em>Σ</em></span>):</p>
+<p><span
+class="math display"><em>H</em><sub><em>m</em></sub>(<em>x</em>) = <em>H</em><sub><em>m</em></sub>(<em>y</em>) ⇒ <em>x</em>≡<sub><em>m</em></sub><em>y</em></span></p>
+<p>The proof burden is that the canonicalization <span
+class="math inline"><em>c</em><sub><em>m</em></sub></span> is injective
+up to semantic equivalence within <span
+class="math inline"><em>Σ</em></span>: if <span
+class="math inline"><em>c</em><sub><em>m</em></sub>(<em>x</em>) = <em>c</em><sub><em>m</em></sub>(<em>y</em>)</span>
+then <span class="math inline"><em>x</em></span> and <span
+class="math inline"><em>y</em></span> reduce to the same canonical form
+under <span class="math inline"><em>r</em><sup>*</sup></span>, which by
+the regime’s semantic interpretation entails <span
+class="math inline"><em>x</em>≡<sub><em>m</em></sub><em>y</em></span>.
+This is one of the two statements in this paper that earns the “theorem”
+label (the other being Order-Independence in Section 12), because it is
+a meaningful consequence of the regime assumptions rather than an
+unfolding of definitions.</p>
+<p>Bounded completeness holds only inside the normalization class of
+<span class="math inline"><em>Σ</em></span>:</p>
+<p><span
+class="math display"><em>x</em>≡<sub><em>m</em></sub><em>y</em> ⇒ <em>H</em><sub><em>m</em></sub>(<em>x</em>) = <em>H</em><sub><em>m</em></sub>(<em>y</em>)</span></p>
+<p><span class="math inline"><em>H</em><sub><em>m</em></sub></span> is
+not injective over byte representations. Cross-regime lifting from <span
+class="math inline"><em>Σ</em><sub><em>i</em></sub></span> to <span
+class="math inline"><em>Σ</em><sub><em>j</em></sub></span> is permitted
+only with <span
+class="math inline">(<em>V</em><sub><em>l</em><em>i</em><em>f</em><em>t</em></sub>(<em>f</em>, <em>π</em><sub><em>l</em><em>i</em><em>f</em><em>t</em></sub>) = 1)</span>,
+where <span
+class="math inline">(<em>f</em> : <em>Σ</em><sub><em>i</em></sub> ≼ <em>Σ</em><sub><em>j</em></sub>)</span>
+is total over its declared domain. Semantic diffs <span
+class="math inline">(<em>δ</em><sub><em>Σ</em></sub>(<em>x</em>))</span>
+record added, removed, changed, and unchanged judgments.</p>
+<h2 id="hj-locality">9. <span
+class="math inline"><em>H</em><em>j</em></span>: Locality</h2>
+<p><span class="math inline"><em>H</em><sub><em>j</em></sub></span>
+commits jurisdiction and locality. When present, it is the de-collapser
+of receipt identity across distinct jurisdictions: the same canonical
+meaning under <span
+class="math inline"><em>Φ</em><sub><em>i</em></sub></span> versus <span
+class="math inline"><em>Φ</em><sub><em>j</em></sub></span> produces
+distinct <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> and therefore
+distinct <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span>. <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> does not
+duplicate the role of <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> or <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span>; it answers a
+separate governance question about namespace and locality.</p>
+<p><span
+class="math display"><em>Φ</em> := (<em>P</em>, <em>Σ</em>, <em>r</em><em>o</em><em>o</em><em>t</em><em>s</em>, <em>p</em><em>a</em><em>r</em><em>a</em><em>m</em><em>s</em>, <em>v</em><em>e</em><em>r</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>m</em><em>a</em><em>p</em><sub><em>r</em></sub><em>o</em><em>o</em><em>t</em>?)</span></p>
+<p><span
+class="math display"><em>i</em><em>d</em>(<em>Φ</em>) := <em>H</em>(<em>D</em><em>S</em><sub><em>Φ</em></sub> ∥ <em>i</em><em>d</em>(<em>P</em>) ∥ <em>i</em><em>d</em>(<em>Σ</em>) ∥ <em>H</em>(<em>r</em><em>o</em><em>o</em><em>t</em><em>s</em>) ∥ <em>p</em><em>a</em><em>r</em><em>a</em><em>m</em><em>s</em> ∥ <em>v</em><em>e</em><em>r</em><em>s</em><em>i</em><em>o</em><em>n</em> ∥ <em>m</em><em>a</em><em>p</em><sub><em>r</em></sub><em>o</em><em>o</em><em>t</em>?)</span></p>
+<p><span
+class="math display"><em>H</em><sub><em>j</em></sub> := <em>H</em>(<em>D</em><em>S</em><sub><em>j</em></sub> ∥ <em>i</em><em>d</em>(<em>c</em><sub><em>j</em></sub>) ∥ <em>i</em><em>d</em>(<em>Φ</em>) ∥ <em>a</em><em>u</em><em>t</em><em>h</em><em>o</em><em>r</em><em>i</em><em>t</em><em>y</em><sub><em>k</em></sub><em>e</em><em>y</em>)</span></p>
+<p>Names are canonicalized by <span
+class="math inline"><em>c</em><sub><em>n</em><em>a</em><em>m</em><em>e</em></sub></span>,
+with map key:</p>
+<p><span
+class="math display"><em>n</em><em>a</em><em>m</em><em>e</em><sub><em>k</em></sub><em>e</em><em>y</em> := <em>H</em>(<em>D</em><em>S</em><sub><em>n</em><em>a</em><em>m</em><em>e</em></sub> ∥ <em>c</em><sub><em>n</em><em>a</em><em>m</em><em>e</em></sub>(<em>n</em><em>a</em><em>m</em><em>e</em>))</span></p>
+<p>A namespace map is:</p>
+<p><span
+class="math display"><em>M</em><sub><em>Φ</em></sub> : <em>n</em><em>a</em><em>m</em><em>e</em><sub><em>k</em></sub><em>e</em><em>y</em> ↦ <em>H</em><sub><em>s</em></sub></span></p>
+<p>and <span
+class="math inline">(<em>D</em><sub><em>j</em></sub> = 1)</span> iff
+<span class="math inline"><em>π</em><sub><em>j</em></sub></span> proves
+membership of <span
+class="math inline">(<em>n</em><em>a</em><em>m</em><em>e</em><sub><em>k</em></sub><em>e</em><em>y</em> ↦ <em>H</em><sub><em>s</em></sub>)</span>
+in <span class="math inline">(<em>M</em><sub><em>Φ</em></sub>)</span>
+under <span class="math inline"><em>H</em><sub><em>j</em></sub></span>.
+Non-membership proofs return <span
+class="math inline">(<em>D</em><sub><em>j</em></sub> = 0)</span>. If
+<span class="math inline"><em>H</em><sub><em>j</em></sub></span> is
+absent and no locality query is required, <span
+class="math inline">(<em>D</em><sub><em>j</em></sub> = NA)</span>.</p>
+<p>Namespace updates require admissibility under <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span>. Cross-phase
+morphisms <span
+class="math inline">(<em>f</em> : <em>Φ</em><sub><em>i</em></sub> → <em>Φ</em><sub><em>j</em></sub>)</span>
+must preserve <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span> and <span
+class="math inline"><em>D</em><sub><em>m</em></sub></span> over declared
+domains or emit explicit failure witnesses.</p>
+<h2 id="necessity-and-sufficiency">10. Necessity and Sufficiency</h2>
+<p>This section makes two scoped claims. Each is supported by a specific
+argumentative device, and neither is claimed to exceed its scope.</p>
+<h3 id="necessity-of-each-axis-ablation-argument">Necessity of Each Axis
+(Ablation Argument)</h3>
+<p>For each <span
+class="math inline"><em>i</em> ∈ {<em>s</em>, <em>c</em>, <em>m</em>}</span>,
+removing <span
+class="math inline"><em>H</em><sub><em>i</em></sub></span> from the
+receipt eliminates a distinct class of governance decision:</p>
+<ul>
+<li>Removing <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> destroys
+state determination.</li>
+<li>Removing <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span> destroys
+admissibility determination.</li>
+<li>Removing <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> destroys
+semantic determination.</li>
+</ul>
+<p>The ablation table in Section 15 makes this concrete: each row
+records the decidability class lost when one axis is removed. Each of
+the three commitments is therefore necessary for governance-complete
+decision making.</p>
+<h3 id="joint-sufficiency-for-the-modeled-threats">Joint Sufficiency for
+the Modeled Threats</h3>
+<p>The set <span
+class="math inline">{<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>}</span>
+is <em>jointly sufficient</em> for the three core threat classes
+enumerated in Section 13: state failures are caught by <span
+class="math inline"><em>D</em><sub><em>s</em></sub></span>,
+admissibility failures by <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span>, and semantic
+failures by <span
+class="math inline"><em>D</em><sub><em>m</em></sub></span>. The threat
+model contains two additional rows that the core three do not catch and
+are not meant to catch: <strong>binding/context</strong> failures are
+addressed by <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span> and the
+binding-verification layer (Section 4.5), and
+<strong>namespace/locality</strong> failures by <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> and <span
+class="math inline"><em>D</em><sub><em>j</em></sub></span> when
+phase-bound namespaces are in scope. The full architecture therefore
+comprises five mechanisms for five failure classes, with <span
+class="math inline">{<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>}</span>
+the minimal <em>decision core</em> and <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span>, <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> providing the
+binding and locality layers. The framework does not assert exhaustive
+coverage of all conceivable governance failures; sufficiency is relative
+to the threat classes catalogued in this paper. A proposed sixth
+mechanism would be warranted only if it catches a threat the five
+miss.</p>
+<h3 id="ablation-corollary">Ablation Corollary</h3>
+<p>No strict subset of <span
+class="math inline">{<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>}</span>
+retains the necessity property above: removing any one axis collapses
+one governance question, as established by the ablation argument.</p>
+<h2 id="independence">11. Independence</h2>
+<p>Two independence claims are made: a decisional claim (the headline)
+and a cryptographic claim (the hygiene property).</p>
+<h3 id="decisional-independence-proposition">Decisional Independence
+Proposition</h3>
+<p>For every ordered pair <span
+class="math inline"><em>i</em> ≠ <em>j</em></span> with <span
+class="math inline"><em>i</em>, <em>j</em> ∈ {<em>s</em>, <em>c</em>, <em>m</em>}</span>,
+there exist receipts for which <span
+class="math inline"><em>D</em><sub><em>i</em></sub> = 1</span> and <span
+class="math inline"><em>D</em><sub><em>j</em></sub> = 0</span>. The six
+statements together establish that no decision procedure is implied by
+any other.</p>
+<p>Witness sketches:</p>
+<ul>
+<li><span
+class="math inline"><em>D</em><sub><em>s</em></sub> = 1, <em>D</em><sub><em>c</em></sub> = 0</span>:
+a valid object with revoked or expired authority.</li>
+<li><span
+class="math inline"><em>D</em><sub><em>s</em></sub> = 1, <em>D</em><sub><em>m</em></sub> = 0</span>:
+a valid object whose canonical encoding fails normalization under <span
+class="math inline"><em>Σ</em></span>.</li>
+<li><span
+class="math inline"><em>D</em><sub><em>c</em></sub> = 1, <em>D</em><sub><em>s</em></sub> = 0</span>:
+an admissible petition referring to an object whose state hash does not
+open under <span
+class="math inline"><em>π</em><sub><em>s</em></sub></span>.</li>
+<li><span
+class="math inline"><em>D</em><sub><em>c</em></sub> = 1, <em>D</em><sub><em>m</em></sub> = 0</span>:
+an authorized actor submitting content that does not parse under the
+declared regime.</li>
+<li><span
+class="math inline"><em>D</em><sub><em>m</em></sub> = 1, <em>D</em><sub><em>s</em></sub> = 0</span>:
+a semantically valid text bound to the wrong state hash.</li>
+<li><span
+class="math inline"><em>D</em><sub><em>m</em></sub> = 1, <em>D</em><sub><em>c</em></sub> = 0</span>:
+a well-formed semantic object presented without admissible
+authority.</li>
+</ul>
+<p>These six counterexamples are the substantive content of the
+independence thesis: the three decision procedures cannot be safely
+collapsed into one another.</p>
+<h3 id="cryptographic-independence-hygiene">Cryptographic Independence
+(Hygiene)</h3>
+<p>As a separate non-derivability hygiene property: for <span
+class="math inline"><em>i</em> ≠ <em>j</em></span>, <span
+class="math inline"><em>H</em><sub><em>i</em></sub></span> is
+non-derivable from <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> under the
+assumptions of Section 2. For any PPT adversary <span
+class="math inline"><em>A</em></span>:</p>
+<p><span
+class="math display"><em>A</em><em>d</em><em>v</em><sub><em>i</em> → <em>j</em></sub><sup><em>p</em><em>r</em><em>e</em><em>d</em></sup>(<em>A</em>) ≤ <em>ϵ</em>(<em>λ</em>)</span></p>
+<p>unless <span class="math inline"><em>A</em></span> is given the
+missing canonical domain information required to compute <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span>. Domain
+separation prevents cross-domain reconstruction because the <span
+class="math inline"><em>D</em><em>S</em><sub><em>i</em></sub></span>-domain
+digest reveals neither the <span
+class="math inline"><em>D</em><em>S</em><sub><em>j</em></sub></span>-domain
+input nor <span
+class="math inline"><em>c</em><sub><em>j</em></sub>(⋅)</span> without
+violating the stated hash assumptions. This is a standard
+domain-separation observation; the decisional independence above is the
+architecturally substantive claim.</p>
+<h2 id="composition">12. Composition</h2>
+<h3 id="order-independence-theorem">Order-Independence Theorem</h3>
+<p>The evaluation order of <span
+class="math inline">(<em>D</em><sub><em>s</em></sub>, <em>D</em><sub><em>c</em></sub>, <em>D</em><sub><em>m</em></sub>, <em>D</em><sub><em>j</em></sub>)</span>
+is irrelevant iff each procedure is pure, side-effect free, and
+evaluated over the same <span class="math inline"><em>R</em></span>,
+<span class="math inline"><em>H</em><sub><em>r</em></sub></span>, <span
+class="math inline">(𝒞)</span>, <span
+class="math inline"><em>t</em></span>, and receipt-bound <span
+class="math inline"><em>π</em><sub><em>i</em></sub></span>.</p>
+<p>If <span class="math inline"><em>P</em></span> reads wall-clock time
+instead of <span class="math inline"><em>t</em></span>, then <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span> may vary by
+evaluation order. Therefore time is part of <span
+class="math inline">(𝒞)</span>, not ambient verifier state.</p>
+<h2 id="threat-model">13. Threat Model</h2>
+<ul>
+<li><p><strong>Attack class:</strong> Binding/context<br />
+<strong>Examples:</strong> (failures defined in Section 4)<br />
+<strong>Mitigations:</strong> <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span>, <span
+class="math inline"><em>i</em><em>d</em>(𝒞)</span>, shared <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>, strict mode;
+recoverability gate (Section 4.5)</p></li>
+<li><p><strong>Attack class:</strong> Admissibility<br />
+<strong>Examples:</strong> authority laundering, capability escalation,
+stale delegation, path ambiguity<br />
+<strong>Mitigations:</strong> Merkle proofs, attenuation, revocation
+precedence, <span
+class="math inline"><em>c</em><em>a</em><em>n</em><em>o</em><em>n</em><sub><em>p</em></sub><em>a</em><em>t</em><em>h</em></span>,
+root governance</p></li>
+<li><p><strong>Attack class:</strong> Semantic<br />
+<strong>Examples:</strong> equivocation, downgrade, normalization bombs,
+resource substitution<br />
+<strong>Mitigations:</strong> <span
+class="math inline">(<em>i</em><em>d</em>(<em>Σ</em>))</span>, <span
+class="math inline"><em>r</em><sup>*</sup></span>, bounds, resource
+commitments, lineage, <span
+class="math inline"><em>V</em><sub><em>l</em><em>i</em><em>f</em><em>t</em></sub></span></p></li>
+<li><p><strong>Attack class:</strong> Namespace<br />
+<strong>Examples:</strong> squatting, aliasing, phase confusion,
+front-running<br />
+<strong>Mitigations:</strong> <span
+class="math inline">(<em>i</em><em>d</em>(<em>Φ</em>))</span>, <span
+class="math inline"><em>c</em><sub><em>n</em><em>a</em><em>m</em><em>e</em></sub></span>,
+membership proofs, admissibility-gated updates, batching</p></li>
+</ul>
+<h2 id="complexity">14. Complexity</h2>
+<ul>
+<li><p><strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>s</em></sub></span><br />
+<strong>Construction:</strong> <span
+class="math inline"><em>O</em>(|<em>x</em>|)</span><br />
+<strong>Verification:</strong> <span
+class="math inline"><em>O</em>(1)</span> after hash
+availability</p></li>
+<li><p><strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span><br />
+<strong>Construction:</strong> <span
+class="math inline"><em>O</em>(|<em>E</em>|)</span><br />
+<strong>Verification:</strong> <span
+class="math inline"><em>O</em>(|<em>p</em><em>a</em><em>t</em><em>h</em>| ⋅ log <em>n</em>)</span></p></li>
+<li><p><strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>m</em></sub></span><br />
+<strong>Construction:</strong> <span
+class="math inline"><em>T</em><sub><em>Σ</em></sub>(|<em>x</em>|) ≤ <em>B</em></span><br />
+<strong>Verification:</strong> <span
+class="math inline"><em>O</em>(|<em>π</em><sub><em>m</em></sub>|)</span>,
+or <span class="math inline"><em>O</em>(<em>k</em>)</span> trace
+steps</p></li>
+<li><p><strong>Procedure:</strong> <span
+class="math inline"><em>D</em><sub><em>j</em></sub></span><br />
+<strong>Construction:</strong> <span
+class="math inline"><em>O</em>(1)</span> plus map update<br />
+<strong>Verification:</strong> <span
+class="math inline"><em>O</em>(log <em>N</em>)</span></p></li>
+</ul>
+<p>Update costs are <span
+class="math inline">(<em>O</em>(log <em>n</em>))</span> for Merkleized
+<span class="math inline"><em>G</em><sub><em>c</em></sub></span> edge
+updates and <span
+class="math inline">(<em>O</em>(log <em>N</em>))</span> for namespace
+updates. Typical targets are receipts below 10 KB, admissibility paths
+of 3–12 edges, logarithmic namespace proofs, and batchable signature and
+Merkle verification.</p>
+<h2 id="ablation">15. Ablation</h2>
+<ul>
+<li><p><strong>Available commitments:</strong> <span
+class="math inline"><em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>H</em><sub><em>j</em></sub></span><br />
+<strong>Lost decidability:</strong> state<br />
+<strong>System class:</strong> ungrounded governance evidence</p></li>
+<li><p><strong>Available commitments:</strong> <span
+class="math inline"><em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>H</em><sub><em>j</em></sub></span><br />
+<strong>Lost decidability:</strong> admissibility<br />
+<strong>System class:</strong> semantic content-addressing without
+standing</p></li>
+<li><p><strong>Available commitments:</strong> <span
+class="math inline"><em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>j</em></sub></span><br />
+<strong>Lost decidability:</strong> meaning<br />
+<strong>System class:</strong> admissible state without regime-bound
+meaning</p></li>
+<li><p><strong>Available commitments:</strong> <span
+class="math inline"><em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub></span><br />
+<strong>Lost decidability:</strong> locality<br />
+<strong>System class:</strong> complete single-phase governance</p></li>
+<li><p><strong>Available commitments:</strong> <span
+class="math inline"><em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub></span><br />
+<strong>Lost decidability:</strong> admissibility, locality<br />
+<strong>System class:</strong> semantic archive</p></li>
+</ul>
+<h2 id="primary-test-vector">16. Primary Test Vector</h2>
+<p>Input:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">&quot;rule&quot;</span><span class="fu">:</span><span class="st">&quot;allow&quot;</span><span class="fu">,</span><span class="dt">&quot;limit&quot;</span><span class="fu">:</span><span class="dv">5</span><span class="fu">}</span></span></code></pre></div>
+<p>Context:</p>
+<pre class="text"><code>P=P_7
+Sigma=Sigma_3
+Phi=Phi_2
+t=1700000000
+id(\mathcal{C})=b3:77aa9011</code></pre>
+<p>Commitments, truncated:</p>
+<pre class="text"><code>H_s=b3:4f91a2c8
+H_c=b3:5180bb73
+H_m=b3:8c02ef19
+H_j=b3:220f19ca
+H_r=b3:aa09c441</code></pre>
+<p>Witnesses:</p>
+<pre class="text"><code>pi_s=state canonicalization proof
+pi_c=Root-&gt;Org-&gt;Service-&gt;Key with Merkle siblings
+[b3:a101,b3:9f22,b3:44de]
+pi_m=parse/reduction trace under Sigma_3
+pi_j=membership proof name_key|-&gt;H_s in M_Phi</code></pre>
+<p>Expected:</p>
+<pre class="text"><code>verify(R,C)=(D_s=1,D_c=1,D_m=1,D_j=1)</code></pre>
+<p>Failure cases are given in Appendix C.</p>
+<h2 id="unified-governance-kernel">17. Unified Governance Kernel</h2>
+<p>The Unified Governance Kernel (UGK) instantiates the Three Hash Rule
+as a receipt discipline: a UGK receipt is a structured proof over
+independent governance questions rather than a signed object with
+metadata attached. The four commitments map directly onto UGK’s
+verification surfaces, with <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> activated
+only when phase-bound namespaces are in scope.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Three Hash Rule makes governance completeness a property of
+independent commitments and explicit decision procedures: state,
+admissibility, and meaning are separately committed, separately
+witnessed, and separately decided. <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span> extends the
+model to locality without enlarging the minimal complete core.</p>
+<p>The resulting architecture is austere: object, evidence, meaning,
+and—when needed—phase. Each can fail independently. Each can be verified
+independently. Together they make governed systems inspectable,
+reproducible, and falsifiable.</p>
+<h2 id="appendix-a-receipt-schema">Appendix A: Receipt Schema</h2>
+<pre class="text"><code>Receipt {
+  version: uint32
+  mode: enum { ContextExternal, ContextBound, ReEvaluable }
+  H_s: Hash
+  H_c: Hash
+  H_m: Hash
+  H_j: Optional&lt;Hash&gt;
+  H_r: Hash
+  pi: WitnessFamily
+}
+
+WitnessFamily {
+  pi_s: Witness
+  pi_c: Witness
+  pi_m: Witness
+  pi_j: Optional&lt;Witness&gt;
+}
+
+Context {
+  P: PolicyID
+  Sigma: SemanticRegimeID
+  Phi: PhaseID
+  t: Time
+}</code></pre>
+<h2 id="appendix-b-error-taxonomy">Appendix B: Error Taxonomy</h2>
+<pre class="text"><code>OK
+NotApplicable
+NonCanonical
+ContextMismatch
+ReceiptBindingFailure
+ExpiredEdge
+RevokedEdge
+NoCanonicalPath
+CapabilityEscalation
+NormalizationFailure
+ResourceBoundExceeded
+LiftFailure
+NamespaceNonMember
+PhaseMismatch
+InvalidMerkleProof
+UnderRecordedCollapse
+InvalidTransformProof
+UnsupportedVersion
+DomainTagCollision
+ExternalResourceMissing</code></pre>
+<h2 id="appendix-c-negative-test-cases">Appendix C: Negative Test
+Cases</h2>
+<p>Expired edge:</p>
+<pre class="text"><code>t=1800000000
+Service-&gt;Key expired before t
+verify(R,C)=(D_s=1,D_c=0,D_m=1,D_j=1)
+reason_c=ExpiredEdge</code></pre>
+<p>Namespace non-member:</p>
+<pre class="text"><code>pi_j proves absence of name_key in M_Phi
+verify(R,C)=(D_s=1,D_c=1,D_m=1,D_j=0)
+reason_j=NamespaceNonMember</code></pre>
+<p>Context mismatch:</p>
+<pre class="text"><code>P=P_8
+id(\mathcal{C}&#39;)!=id(\mathcal{C})
+verify(R,C&#39;)=(D_s=1,D_c=0,D_m=0,D_j=0)
+reason=ContextMismatch</code></pre>
+<p>Under-recorded collapse:</p>
+<pre class="text"><code>Two receipts with distinct (id(P), id(Sigma)) but identical H_r
+(context-external mode), no disambiguating collapse witness present.
+core=(D_s=1, D_c=1, D_m=1, D_j=1)
+binding=0
+verify=reject
+reason=UnderRecordedCollapse</code></pre>
+<p>The collapse itself does not defeat any individual core decision
+procedure: <span
+class="math inline"><em>D</em><sub><em>s</em></sub></span>, <span
+class="math inline"><em>D</em><sub><em>c</em></sub></span>, <span
+class="math inline"><em>D</em><sub><em>m</em></sub></span>, and <span
+class="math inline"><em>D</em><sub><em>j</em></sub></span> all pass.
+Binding verification fails at the recoverability check (Section 4.5)
+because the receipt does not carry sufficient information to recover the
+distinguished governance facts. The receipt is inadmissible because
+binding verification is a required gate alongside the core decisions,
+not because admissibility (<span
+class="math inline"><em>D</em><sub><em>c</em></sub></span>) itself
+fails.</p>
+<h2 id="appendix-d-encoding-and-apis">Appendix D: Encoding and APIs</h2>
+<p>Receipts use a typed canonical schema equivalent to CBOR, SSZ, or
+another byte-stable typed encoding. Every field is length-prefixed,
+tagged, byte-order specified, and versioned. <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span> is always
+computed as a domain-separated hash tree over typed leaves. Algorithm
+agility uses multihash or multicodec-style identifiers.</p>
+<pre class="text"><code>verify(R, C) -&gt; [(Domain, Result, ErrorCode)]
+prove_admissibility(G_c, path, C) -&gt; pi_c
+normalize(x, Sigma) -&gt; (c_m(x), pi_m)
+resolve(H_j, name, pi_j) -&gt; H_s | NonMember
+lift(H_m, Sigma_i, Sigma_j, pi_lift) -&gt; H_m&#39;</code></pre>
+<h2 id="appendix-e-benchmarks">Appendix E: Benchmarks</h2>
+<pre class="text"><code>G_c path depth vs D_c verification time
+graph size vs Merkle proof size
+normalization cost across Sigma classes
+namespace size vs D_j cost
+batch verification savings
+adversarial graph inflation
+normalization bombs
+context mismatch attempts
+witness splicing attempts</code></pre>
+<p>Reports should include construction cost, verification cost, witness
+size, receipt size, p50/p90/p99 latency, and memory footprint.</p>
+<h2 id="appendix-f-binding-configurations">Appendix F: Binding
+Configurations</h2>
+<p>The receipt binding mode is one degree of freedom in receipt design,
+with three admissible configurations:</p>
+<ul>
+<li><strong>Strict identity (preferential default).</strong> Context
+folded into the identity; identities are self-describing;
+cross-references that carry only <span
+class="math inline"><em>H</em><sub><em>r</em></sub></span> remain
+context-determinate.</li>
+<li><strong>Re-evaluable (opt-in exception).</strong> Witnesses do not
+pin <span class="math inline"><em>i</em><em>d</em>(𝒞)</span>; a verifier
+may evaluate the receipt under a context it supplies. This shifts trust
+onto whoever supplies the context and must be labeled opt-in, never
+default.</li>
+<li><strong>Context-external with disambiguating collapse witness
+(admissible when warranted).</strong> A stable cross-context bundle
+identity, with the conflation recorded so lineage stays recoverable.
+Selected only when a real situation needs a context-portable bundle
+handle.</li>
+</ul>
+<p>When multiple configurations are admissible for a deployment, the
+selection rule is: enable the configurations the situation warrants;
+default to the preferential configuration (strict identity). The
+admissible space is not collapsed to a single point; the preferential
+point is the default.</p>
+<h2 id="appendix-g-references">Appendix G: References</h2>
+<h3 id="g.1-authors-related-work">G.1 Author’s Related Work</h3>
+<p>Ableman Adam Ableman <em>Self-Certifying Proof-Carrying
+Identity</em>. Zenodo. https://doi.org/10.5281/zenodo.20114887</p>
+<p>Ableman Adam Ableman <em>Cryptographic Admissibility and
+Jurisdiction</em>. Zenodo. https://doi.org/10.5281/zenodo.20602447</p>
+<p>Ableman Adam Ableman <em>Constitutional Semantic Hashing</em>.
+Zenodo. https://doi.org/10.5281/zenodo.20248733</p>
+<p>Ableman Adam Ableman <em>Cryptographic Phase</em>. Zenodo.
+https://doi.org/10.5281/zenodo.18503393</p>
+<p>This paper (The Three Hash Rule):
+https://doi.org/10.5281/zenodo.20788617</p>
+<hr />
+<h3 id="g.2-self-certifying-names-keys-and-identity-infrastructure">G.2
+Self-Certifying Names, Keys, and Identity Infrastructure</h3>
+<p>Mazières, D. <em>Self-Certifying File System</em>.
+Ph.D. dissertation, Massachusetts Institute of Technology, 2000.</p>
+<p>Mazières, D., Kaminsky, M., Kaashoek, M. F., and Witchel, E.
+“Separating Key Management from File System Security.” <em>Proceedings
+of the 17th ACM Symposium on Operating Systems Principles</em> (SOSP
+’99), 1999, pp. 124–139. https://doi.org/10.1145/319151.319162</p>
+<p>Fu, K., Kaashoek, M. F., and Mazières, D. “Fast and Secure
+Distributed Read-Only File System.” <em>Proceedings of the 4th USENIX
+Symposium on Operating Systems Design and Implementation</em> (OSDI
+2000), 2000, pp. 181–196.</p>
+<p>Benet, J. “IPFS — Content Addressed, Versioned, P2P File System.”
+arXiv:1407.3561, 2014. https://arxiv.org/abs/1407.3561</p>
+<p>Smith, S. M. “Key Event Receipt Infrastructure (KERI).”
+arXiv:1907.02143, 2019. https://arxiv.org/abs/1907.02143</p>
+<hr />
+<h3 id="g.3-authorization-trust-management-and-capability-security">G.3
+Authorization, Trust Management, and Capability Security</h3>
+<p>Ellison, C., Frantz, B., Lampson, B., Rivest, R., Thomas, B., and
+Ylonen, T. “SPKI Certificate Theory.” RFC 2693, IETF, 1999.
+https://datatracker.ietf.org/doc/rfc2693/</p>
+<p>Blaze, M., Feigenbaum, J., and Lacy, J. “Decentralized Trust
+Management.” <em>Proceedings of the 17th IEEE Symposium on Security and
+Privacy</em>, 1996, pp. 164–173.
+https://doi.org/10.1109/SECPRI.1996.502679</p>
+<p>Lampson, B. W. “A Note on the Confinement Problem.”
+<em>Communications of the ACM</em>, vol. 16, no. 10, 1973, pp. 613–615.
+https://doi.org/10.1145/362375.362389</p>
+<p>Levy, H. M. <em>Capability-Based Computer Systems</em>. Digital
+Press, 1984. ISBN 9780932376220.</p>
+<p>Miller, M. S., Yee, K.-P., and Shapiro, J. S. “Capability Myths
+Demolished.” Technical Report SRL2003-02, Systems Research Laboratory,
+Johns Hopkins University, 2003.</p>
+<hr />
+<h3
+id="g.4-proof-carrying-code-proof-systems-and-verified-computation">G.4
+Proof-Carrying Code, Proof Systems, and Verified Computation</h3>
+<p>Necula, G. C. “Proof-Carrying Code.” <em>Proceedings of the 24th ACM
+SIGPLAN-SIGACT Symposium on Principles of Programming Languages</em>
+(POPL ’97), 1997, pp. 106–119. https://doi.org/10.1145/263699.263712</p>
+<p>Parno, B., Howell, J., Gentry, C., and Raykova, M. “Pinocchio: Nearly
+Practical Verifiable Computation.” <em>Proceedings of the 2013 IEEE
+Symposium on Security and Privacy</em>, 2013, pp. 238–252.
+https://doi.org/10.1109/SP.2013.47</p>
+<p>Ben-Sasson, E., Chiesa, A., Genkin, D., Tromer, E., and Virza, M.
+“SNARKs for C: Verifying Program Executions Succinctly and in Zero
+Knowledge.” <em>Advances in Cryptology — CRYPTO 2013</em>, Lecture Notes
+in Computer Science, vol. 8043, 2013, pp. 90–108.
+https://doi.org/10.1007/978-3-642-40084-1_6</p>
+<p>Ben-Sasson, E., Bentov, I., Horesh, Y., and Riabzev, M. “Scalable,
+Transparent, and Post-Quantum Secure Computational Integrity.”
+Cryptology ePrint Archive, Report 2018/046, 2018.
+https://eprint.iacr.org/2018/046</p>
+<p>Ben-Sasson, E., Bentov, I., Horesh, Y., and Riabzev, M. “Fast
+Reed-Solomon Interactive Oracle Proofs of Proximity.” <em>45th
+International Colloquium on Automata, Languages, and Programming</em>
+(ICALP 2018), LIPIcs vol. 107, article 14.
+https://doi.org/10.4230/LIPIcs.ICALP.2018.14</p>
+<hr />
+<h3 id="g.5-term-rewriting-semantics-and-logic-based-policy">G.5 Term
+Rewriting, Semantics, and Logic-Based Policy</h3>
+<p>Baader, F., and Nipkow, T. <em>Term Rewriting and All That</em>.
+Cambridge University Press, 1998.
+https://doi.org/10.1017/CBO9781139172752</p>
+<p>Ceri, S., Gottlob, G., and Tanca, L. “What You Always Wanted to Know
+About Datalog (And Never Dared to Ask).” <em>IEEE Transactions on
+Knowledge and Data Engineering</em>, vol. 1, no. 1, 1989, pp. 146–166.
+https://doi.org/10.1109/69.43410</p>
+<p>Codd, E. F. “A Relational Model of Data for Large Shared Data Banks.”
+<em>Communications of the ACM</em>, vol. 13, no. 6, 1970, pp. 377–387.
+https://doi.org/10.1145/362384.362685</p>
+<p>Halpern, J. Y., and van der Meyden, R. “A Logic for SDSI’s Linked
+Local Name Spaces.” arXiv:cs/0001026, 2000.
+https://arxiv.org/abs/cs/0001026</p>
+<p>Halpern, J. Y., and van der Meyden, R. “A Logical Reconstruction of
+SPKI.” arXiv:cs/0208028, 2002. https://arxiv.org/abs/cs/0208028</p>
+<hr />
+<h3
+id="g.6-verifiable-credentials-content-addressing-and-supply-chain-attestation">G.6
+Verifiable Credentials, Content Addressing, and Supply-Chain
+Attestation</h3>
+<p>Sporny, M., Thibodeau, T. Jr., Herman, I., Cohen, G., and Jones, M.
+B., eds. <em>Verifiable Credentials Data Model v2.0</em>. W3C
+Recommendation, 15 May 2025.
+https://www.w3.org/TR/vc-data-model-2.0/</p>
+<p>Multiformats Project. <em>CID: Self-Describing Content-Addressed
+Identifiers for Distributed Systems</em>.
+https://github.com/multiformats/cid</p>
+<p>IPLD Project. <em>InterPlanetary Linked Data Specifications</em>.
+https://ipld.io/specs/</p>
+<p>Torres-Arias, S., Afzali, H., Kuppusamy, T. K., Curtmola, R., and
+Cappos, J. “in-toto: Providing Farm-to-Table Guarantees for Bits and
+Bytes.” <em>Proceedings of the 28th USENIX Security Symposium</em>,
+2019, pp. 1393–1410.</p>
+<p>in-toto Project. <em>in-toto Attestation Framework</em>.
+https://github.com/in-toto/attestation</p>
+<p>Supply-chain Levels for Software Artifacts (SLSA). <em>SLSA
+Specification</em>. https://slsa.dev/spec/</p>
+<p>Supply-chain Levels for Software Artifacts (SLSA). <em>SLSA
+Provenance</em>. https://slsa.dev/spec/v1.0/provenance</p>
+<hr />
+<h3
+id="g.7-cryptographic-commitments-and-authenticated-data-structures">G.7
+Cryptographic Commitments and Authenticated Data Structures</h3>
+<p>Merkle, R. C. “Protocols for Public Key Cryptosystems.”
+<em>Proceedings of the 1980 IEEE Symposium on Security and Privacy</em>,
+1980, p. 122. https://doi.org/10.1109/SP.1980.10006</p>
+<p>Merkle, R. C. “A Digital Signature Based on a Conventional Encryption
+Function.” <em>Advances in Cryptology — CRYPTO ’87</em>, Lecture Notes
+in Computer Science, vol. 293, 1988, pp. 369–378.
+https://doi.org/10.1007/3-540-48184-2_32</p>
+<p>Goodrich, M. T., Tamassia, R., and Triandopoulos, N. “Efficient
+Authenticated Data Structures for Graph Connectivity and Geometric
+Search Problems.” arXiv:0908.4116, 2009.
+https://arxiv.org/abs/0908.4116</p>
+<p>Papamanthou, C., Tamassia, R., and Triandopoulos, N. “Authenticated
+Hash Tables.” <em>Proceedings of the 15th ACM Conference on Computer and
+Communications Security</em> (CCS ’08), 2008.</p>
+<hr />
+<h3 id="g.8-dense-hashing-and-compact-indexing-context">G.8 Dense
+Hashing and Compact Indexing Context</h3>
+<p>Yao, A. C. “Uniform Hashing Is Optimal.” <em>Journal of the ACM</em>,
+vol. 32, no. 3, 1985, pp. 687–693. https://doi.org/10.1145/3828.3836</p>
+<p>Farach-Colton, M., Krapivin, A., and Kuszmaul, W. “Optimal Bounds for
+Open Addressing Without Reordering.” <em>Proceedings of the 65th IEEE
+Symposium on Foundations of Computer Science</em> (FOCS 2024), 2024,
+pp. 594–605. https://doi.org/10.1109/FOCS61266.2024.00045</p>
+<p>Bender, M. A., Kuszmaul, W., and Zhou, R. “Tight Bounds for Classical
+Open Addressing.” <em>Proceedings of the 65th IEEE Symposium on
+Foundations of Computer Science</em> (FOCS 2024), 2024, pp. 636–657.
+https://doi.org/10.1109/FOCS61266.2024.00047</p>
+<p>Bender, M. A., Conway, A., Farach-Colton, M., Kuszmaul, W., and
+Tagliavini, G. “Tiny Pointers.” arXiv:2111.12800, 2021.
+https://arxiv.org/abs/2111.12800</p>
+<p>Bender, M. A., Farach-Colton, M., Kuszmaul, J., Kuszmaul, W., and
+Liu, M. “On the Optimal Time/Space Tradeoff for Hash Tables.”
+<em>Proceedings of the 54th Annual ACM SIGACT Symposium on Theory of
+Computing</em> (STOC 2022), 2022, pp. 1284–1297.
+https://doi.org/10.1145/3519935.3519969</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the Three Hash Rule: a governance-completeness
+model in which object state, admissibility, and meaning are committed
+independently as <span class="math inline"><em>H</em><em>s</em></span>,
+<span class="math inline"><em>H</em><em>c</em></span>, and <span
+class="math inline"><em>H</em><em>m</em></span>. Its nearest external
+comparison fields are crypto, governance, semantic. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself. A
+written constitution can legitimate domination as easily as constrain it
+unless amendment, participation, enforcement, and appeal remain
+effective in practice. Formal vocabularies and graph links make
+commitments explicit but cannot by themselves establish correct
+identity, shared interpretation, or lossless translation between
+contexts. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20788617">10.5281/zenodo.20788617</a></p>

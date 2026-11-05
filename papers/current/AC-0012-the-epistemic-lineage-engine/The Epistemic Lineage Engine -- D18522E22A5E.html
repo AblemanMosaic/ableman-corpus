@@ -1,0 +1,787 @@
+<h1 id="the-epistemic-lineage-engine">The Epistemic Lineage Engine</h1>
+<h2
+id="a-substrate-for-reconstructable-branching-and-governed-knowledge-change">A
+Substrate for Reconstructable, Branching, and Governed Knowledge
+Change</h2>
+<h3
+id="the-epistemic-lineage-engine-ele-is-proposed-as-a-substrate-for-making-those-changes-reconstructable.">The
+Epistemic Lineage Engine (ELE) is proposed as a substrate for making
+those changes reconstructable.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Knowledge systems usually preserve selected artifacts and outcomes
+more reliably than the transformations, alternatives, environments,
+observations, and authority conditions that produced them. The Epistemic
+Lineage Engine (ELE) is proposed as a substrate for making those changes
+reconstructable. Its central unit is a lineage episode binding
+predecessor state, transformation, successor state, observation, result,
+branch relations, and evidence.</p>
+<p>The source correctly distinguishes lineage from judgment, but several
+claims require qualification. A snapshot graph can be part of lineage;
+replay is not always deterministic; observations can have effects; undo
+does not erase external consequences; alternatives cannot always be
+retained indefinitely; and no engine can prove that every causally
+relevant influence was captured. ELE should therefore govern declared
+lineage closure and its limits rather than claim complete causality.</p>
+<p>This paper formalizes an episode envelope, separates exact replay,
+deterministic replay, equivalence-class replay, procedural reenactment,
+and historical reconstruction, and adds privacy, retention, redaction,
+authority, environment, and irreversible-effect requirements. It
+integrates governed semantic project lineage, Reasoning by Way of
+Receipts, the Three Hash Rule, Semantic Debt, Governance Coverage Gaps,
+GMB, and the universal GSM.</p>
+<p>ELE does not decide truth, approval, legitimacy, or authorship. It
+can preserve the materials from which such decisions are inspected. This
+paper reaches Specification and proposes configuration criteria; it does
+not establish a running engine, complete lineage capture, or
+deterministic replay.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. The custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/epistemic-</code></p>
+<p><code>lineage-engine/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>F70D0ED3A30B4E590C2E0E1CDC81F0897E39868212EBFD5EC5338BB98B5F068D</code>.
+The source remains unchanged.</p>
+<p>The ELE thesis, epistemic artifacts, lineage episode, operation
+algebra, branch and decision account, replay aspiration, governance
+layering, and application domains are author material. Formal
+extensions, claim qualifications, corpus integration, tests,
+counterevidence, and decisions added here are AI editorial or synthetic
+candidates until adopted. No external research was conducted.</p>
+<h2 id="the-missing-structure">1. The Missing Structure</h2>
+<p>A file snapshot answers “what bytes were retained?” A decision record
+may answer “what conclusion was announced?” A test log may answer “what
+one runner observed?” None alone necessarily binds:</p>
+<ul>
+<li>the exact predecessor used;</li>
+<li>the transformation actually applied;</li>
+<li>the environment and dependencies;</li>
+<li>the successor and external effects;</li>
+<li>the alternatives considered or generated;</li>
+<li>the authority under which commitment occurred;</li>
+<li>the observation procedure and result; and</li>
+<li>the limits of reconstruction.</li>
+</ul>
+<p>ELE treats these relations as first-class. The problem is not that
+snapshots are useless. It is that a snapshot without transformation and
+evidence context cannot support the lineage claims users may infer from
+it.</p>
+<h2 id="epistemic-artifacts-and-state">2. Epistemic Artifacts and
+State</h2>
+<p>An <strong>epistemic artifact</strong> is a bounded object that
+represents a claim, belief, interpretation, intention, model, policy,
+constraint, or knowledge-bearing configuration. Source code, prompts,
+schemas, hypotheses, experiments, decisions, and ontologies may qualify
+under an explicit domain profile.</p>
+<p>An <strong>epistemic state</strong> is a declared configuration of
+such artifacts plus the identity relations needed to interpret them. It
+is not the entire causal state of the world. State closure must identify
+included objects, excluded objects, unresolved dependencies, and
+observation limits.</p>
+<p>Two byte-identical artifacts may occupy different epistemic states if
+authority, standing, context, dependencies, or interpretation differ.
+Conversely, two byte-different artifacts may be equivalent under a
+declared profile. ELE must preserve exact identity and profile-relative
+equivalence without conflating them.</p>
+<h2 id="the-lineage-episode">3. The Lineage Episode</h2>
+<p>Define a lineage episode as:</p>
+<p><span
+class="math display"><em>e</em> = (<em>i</em><em>d</em>, <em>P</em>, <em>S</em><sub>0</sub>, <em>τ</em>, <em>Γ</em>, <em>A</em>, <em>S</em><sub>1</sub>, <em>X</em>, <em>O</em>, <em>Y</em>, <em>B</em>, <em>W</em>),</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>i</em><em>d</em></span> is episode
+identity;</li>
+<li><span class="math inline"><em>P</em></span> is one or more parent
+episodes;</li>
+<li><span class="math inline"><em>S</em><sub>0</sub></span> is the
+declared pre-state;</li>
+<li><span class="math inline"><em>τ</em></span> is the transformation
+description and executable reference where available;</li>
+<li><span class="math inline"><em>Γ</em></span> is environment,
+dependency, time, randomness, and tool context;</li>
+<li><span class="math inline"><em>A</em></span> is authority and
+requested effect scope;</li>
+<li><span class="math inline"><em>S</em><sub>1</sub></span> is the
+post-state;</li>
+<li><span class="math inline"><em>X</em></span> is external, partial,
+irreversible, or unknown effects;</li>
+<li><span class="math inline"><em>O</em></span> is the observation
+procedure;</li>
+<li><span class="math inline"><em>Y</em></span> is the result and
+interpretation boundary;</li>
+<li><span class="math inline"><em>B</em></span> records alternatives,
+branches, and selection status; and</li>
+<li><span class="math inline"><em>W</em></span> is custody, receipt, and
+witness material.</li>
+</ul>
+<p>An episode can record failure, refusal, partial execution, or an
+observation-only event. A complete record of declared fields does not
+establish that all causal influences were captured.</p>
+<h2 id="core-invariants">4. Core Invariants</h2>
+<p>ELE should preserve at least:</p>
+<ol type="1">
+<li><strong>Predecessor binding:</strong> every non-root episode names
+its parent state or records why none exists.</li>
+<li><strong>Transformation identity:</strong> the operation, version,
+and parameters are bound or explicitly unavailable.</li>
+<li><strong>State/effect separation:</strong> retained artifact state is
+distinguished from external effects.</li>
+<li><strong>Observation separation:</strong> the procedure and its
+result are distinct from the interpretation placed on it.</li>
+<li><strong>Branch persistence:</strong> known alternatives have
+explicit dispositions rather than silent disappearance.</li>
+<li><strong>Standing neutrality:</strong> lineage custody does not grant
+truth, approval, authorship, or authority.</li>
+<li><strong>Claim-bounded replay:</strong> every replay result states
+its closure and equivalence class.</li>
+<li><strong>Revision lineage:</strong> corrections create successor
+records rather than silently rewriting prior evidence.</li>
+</ol>
+<p>These are specification obligations, not claims that an
+implementation currently enforces them.</p>
+<h2 id="an-expanded-operation-algebra">5. An Expanded Operation
+Algebra</h2>
+<p>The source proposes <code>transform</code>, <code>untransform</code>,
+<code>retransform</code>, <code>observe</code>,<br />
+and <code>reobserve</code>. Retain the names with bounded semantics.</p>
+<ul>
+<li><strong>transform:</strong> attempt a declared change and record
+state plus effects.</li>
+<li><strong>untransform:</strong> create a compensating or restoring
+transition; it does not erase history or guarantee reversal of external
+effects.</li>
+<li><strong>retransform:</strong> execute a declared transformation
+again under a newly bound environment and episode identity.</li>
+<li><strong>observe:</strong> perform a declared observation and record
+whether it may affect the subject or environment.</li>
+<li><strong>reobserve:</strong> repeat an observation with a new time,
+environment, and result.</li>
+</ul>
+<p>Additional operations may be profiles rather than primitives: branch,
+merge, redact, expire, export, challenge, and repair. “If something is
+known, it must arise from observation” is too strong: knowledge claims
+may also depend on inference, testimony, proof, inherited records, or
+definition. ELE should record the warrant type rather than collapse all
+warrant into observation.</p>
+<h2 id="replay-taxonomy">6. Replay Taxonomy</h2>
+<p>Replay has several materially different meanings.</p>
+<ul>
+<li><p><strong>Class:</strong> Exact artifact replay<br />
+<strong>Requirement:</strong> reproduce exact retained bytes<br />
+<strong>Permitted claim:</strong> artifact equality only</p></li>
+<li><p><strong>Class:</strong> Deterministic execution replay<br />
+<strong>Requirement:</strong> same closed inputs and deterministic
+regime produce exact result<br />
+<strong>Permitted claim:</strong> exact result under declared
+closure</p></li>
+<li><p><strong>Class:</strong> Equivalence-class replay<br />
+<strong>Requirement:</strong> result differs but satisfies a declared
+equivalence relation<br />
+<strong>Permitted claim:</strong> profile-relative
+correspondence</p></li>
+<li><p><strong>Class:</strong> Procedural reenactment<br />
+<strong>Requirement:</strong> repeat the method in a new environment or
+time<br />
+<strong>Permitted claim:</strong> comparability, not identity</p></li>
+<li><p><strong>Class:</strong> Historical reconstruction<br />
+<strong>Requirement:</strong> assemble evidence about a past path that
+cannot be rerun<br />
+<strong>Permitted claim:</strong> bounded reconstruction</p></li>
+</ul>
+<p>Many scientific, social, ML, legal, and institutional processes
+cannot be exactly replayed. Participants change, data disappears,
+services evolve, stochastic systems diverge, and physical effects are
+irreversible. ELE remains useful if it reports the strongest supported
+class rather than calling all reconstruction replay.</p>
+<h2 id="branches-alternatives-and-decisions">7. Branches, Alternatives,
+and Decisions</h2>
+<p>Branches can record explored alternatives, generated candidates,
+failed paths, counterfactuals, and successor lines. An alternative that
+was never instantiated is not a predecessor state merely because it was
+discussed.</p>
+<p>A decision is more than collapse of a frontier. It may select, defer,
+authorize, refuse, delegate, or preserve plural paths. Unchosen
+alternatives may remain feasible, become inadmissible, expire, or lose
+support. Record:</p>
+<ul>
+<li>the option set actually available;</li>
+<li>how each option entered the set;</li>
+<li>decision authority and applicable law;</li>
+<li>evidence and values used;</li>
+<li>selected and unselected dispositions;</li>
+<li>external effects of commitment; and</li>
+<li>appeal, revision, or reopening conditions.</li>
+</ul>
+<p>Preserving every alternative forever is neither possible nor always
+lawful. Retention, summarization, deletion, and redaction should be
+governed and receipted.</p>
+<h2 id="observation-is-not-necessarily-effect-free">8. Observation Is
+Not Necessarily Effect-Free</h2>
+<p>Tests can mutate caches, consume resources, expose secrets, change
+human behavior, alter a measured system, or create legal and privacy
+consequences. <code>observe</code> should mean that the intended
+semantic state is not transformed, not that no effect occurs.</p>
+<p>Every observation should declare its subject, instrument,
+environment, expected side effects, permissions, result type,
+uncertainty, and interpretation boundary. A pass result is evidence from
+one observation regime, not timeless validation.</p>
+<h2 id="custody-and-the-three-hash-rule">9. Custody and the Three Hash
+Rule</h2>
+<p>ELE can use the Three Hash Rule to distinguish law or governing
+input, operation or judgment, and resulting artifact or effect. Hashes
+support exact identity; they do not establish semantics, completeness,
+behavior, or legitimacy.</p>
+<p>Receipts should bind episode identity, parents, pre-state,
+transformation, environment, authority, result, effects, observations,
+branches, and claim ceiling. Signatures can attest a key’s statement but
+require governed key identity, authority, revocation, and compromise
+handling.</p>
+<h2 id="privacy-secrecy-and-retention">10. Privacy, Secrecy, and
+Retention</h2>
+<p>Lineage can expose personal data, security-sensitive configuration,
+confidential deliberation, protected research subjects, trade secrets,
+or legally restricted records. “Persistent visibility of alternatives”
+must therefore be qualified.</p>
+<p>A domain profile should define collection minimization, access,
+encryption, separation of public metadata from protected payloads,
+retention, expiration, lawful deletion, redaction proofs, source
+protection, and emergency access. A tombstone may preserve that a
+governed deletion occurred without retaining prohibited content.</p>
+<p>No lineage system should convert the goal of accountability into
+universal surveillance.</p>
+<h2 id="relationship-to-governance">11. Relationship to Governance</h2>
+<p>ELE preserves declared transition history. A governance kernel can
+ask whether a transformation was authorized, admissible, constitutional,
+or binding. An evidence system can evaluate observations. A court can
+adjudicate a bounded dispute. None of these roles is supplied by lineage
+alone.</p>
+<p>Conversely, governance without exact lineage may rely on incomplete
+or retrospective narratives. The relationship is reciprocal but not
+identity: lineage supplies traceable material; governance supplies law
+and decision authority.</p>
+<h2 id="corpus-integration">12. Corpus Integration</h2>
+<p><strong>Governed Semantic Project Lineage</strong> extends content
+addressing toward semantic identity, obligations, and project evolution.
+ELE supplies a general episode substrate and should not duplicate that
+work’s entire project-level architecture. <strong>Reasoning by Way of
+Receipts</strong> supplies claim-bounded inference. <strong>The Three
+Hash Rule</strong> supplies a compact binding among authority,
+operation, and result.</p>
+<p><strong>Semantic Debt</strong> explains obligations lost or deferred
+across transitions. <strong>Governance Coverage Gaps</strong> tests
+which transformations and effects escape capture. The <strong>Governed
+Meaning Base (GMB)</strong> can retain episodes, identities, standing,
+conflicts, alternatives, evidence, and revision. The universal
+<strong>GSM</strong> can type <code>PRECEDES</code>,<br />
+<code>TRANSFORMS</code>, <code>OBSERVED_BY</code>,
+<code>AUTHORIZED_BY</code>, <code>BRANCHES_FROM</code>,
+<code>COMPENSATES_FOR</code>,<br />
+<code>EQUIVALENT_UNDER</code>, <code>CONTESTED_BY</code>, and
+<code>REVISES</code> without turning chronology into causation.</p>
+<h2 id="realization-funnel">13. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate event-sourced, snapshot,
+proof-carrying, distributed, private, and hybrid lineage systems.</li>
+<li><strong>Specification:</strong> define episode fields, invariants,
+replay classes, retention, access, and claim ceilings.</li>
+<li><strong>CM1:</strong> retain admissible configurations, including
+incomplete, centralized, expensive, or low-retention forms.</li>
+<li><strong>CM2:</strong> prefer configurations by reconstruction value,
+privacy, security, accessibility, interoperability, and cost.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for a bounded domain.</li>
+<li><strong>IR:</strong> produce an Instance Realization or
+Implementation Realization of storage, capture, replay, query, receipt,
+and access components.</li>
+<li><strong>Evidence:</strong> test closure, replay, branching, partial
+failure, privacy, redaction, deletion, scale, and human use.</li>
+<li><strong>Revision:</strong> migrate schemas and policies while
+preserving predecessor identity and known loss.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 criteria. It
+does not select an IC, produce an IR, or establish replay
+performance.</p>
+<p>In this funnel, IR denotes the realization stage and remains distinct
+from Intermediate Representation in compiler-oriented corpus terms.</p>
+<h2 id="verification-program">14. Verification Program</h2>
+<p>A reference candidate should be tested on software change,
+experimental reasoning, model or prompt revision, and institutional
+policy cases. Tests should include root creation, branches, merges,
+failed and partial transformations, observation side effects, missing
+dependencies, stochastic divergence, compromised witnesses, concurrent
+updates, schema migration, protected data, authorized deletion, export,
+provider exit, and reconstruction after component loss.</p>
+<p>Measures should include captured versus declared dependencies,
+unknown-effect rate, replay class achieved, exact and profile-relative
+divergence, branch recovery, false lineage links, receipt verification,
+privacy leakage, deletion completeness, storage and compute cost, query
+latency, and user reconstruction accuracy.</p>
+<h2 id="epistemic-transition-lineage-substrate">Epistemic Transition
+Lineage Substrate</h2>
+<p>Across the completed P1 corpus, the Epistemic Lineage Engine is the
+<strong>domain-general transition-lineage substrate for claims, models,
+policies, interpretations, experiments, prompts, and other epistemic
+artifacts</strong>. It binds predecessors, transformations,
+environments, branches, observations, effects, authority references, and
+reconstruction limits. It preserves what was declared to have happened
+without deciding truth, causal completeness, governance validity, or
+promotion.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em><br />
+<strong>Supplies:</strong> Project-scale heads, obligations,
+projections, reconstruction, and successor structure.<br />
+<strong>ELE boundary:</strong> ELE provides a reusable episode model
+rather than the full project architecture.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Claim-bounded reasoning and evidentiary
+transitions.<br />
+<strong>ELE boundary:</strong> ELE can carry reasoning episodes without
+making lineage itself a warrant.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Who or what holds live responsibility for
+work through time.<br />
+<strong>ELE boundary:</strong> Custody may travel along lineage but is
+not inferred from parentage alone.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Detection of relevant transformations or
+effects outside the governed surface.<br />
+<strong>ELE boundary:</strong> ELE records declared closure and
+unknowns; it cannot prove that no episode was omitted.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Debt</em><br />
+<strong>Supplies:</strong> Obligations and unresolved meaning carried or
+lost across change.<br />
+<strong>ELE boundary:</strong> Debt is a typed payload or remainder of
+lineage, not identical to lineage.</p></li>
+</ul>
+<p>An episode should separate five graphs that are often collapsed:
+artifact ancestry, transformation execution, authority and custody,
+observation and evidence, and external effects. Chronological adjacency
+in one graph does not establish a relation in another. A successor file
+may not be an authorized successor; an observation can affect the
+subject; a compensating action can leave an irreversible external
+residue.</p>
+<p>The episode contract should therefore bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+E= (&amp;parents, prestate, operation, environment, authority, \\
+&amp;custody, poststate, effects, observations, \\
+&amp;interpretations, alternatives, standing, replay\_class, \\
+&amp;privacy, retention, revision)
+\end{aligned}.
+$$</span></p>
+<p>Replay classes must be declared before result comparison. Exact
+artifact replay, deterministic execution replay, profile-equivalent
+replay, observational reproduction, and narrative reconstruction support
+different claims. Redaction or deletion may intentionally prevent a
+replay class and must leave an authorized, privacy-preserving break in
+the evidentiary story rather than a fabricated continuous chain.</p>
+<p>The universal GSM can type<br />
+<code>DESCENDS_FROM_EPISODE</code>,
+<code>TRANSFORMS_EPISTEMIC_STATE</code>,<br />
+<code>EXECUTES_UNDER_ENVIRONMENT</code>,
+<code>TRANSFERS_WORK_CUSTODY</code>,
+<code>OBSERVES_WITH_SIDE_EFFECT</code>,<br />
+<code>LEAVES_EXTERNAL_RESIDUE</code>,
+<code>RETAINS_UNSELECTED_BRANCH</code>,
+<code>REPLAYS_UNDER_DECLARED_CLASS</code>,<br />
+<code>REDACTS_UNDER_AUTHORITY</code>,<br />
+and<br />
+<code>REVISES_PRIOR_INTERPRETATION</code>. These relations turn lineage
+into a multidimensional substrate rather than a timeline.</p>
+<p>This integration establishes four editorial commitments: retain ELE
+as the epistemic transition-lineage substrate; adopt the five-graph
+separation and expanded episode contract; require ex ante replay classes
+and explicit authorized discontinuities for privacy or deletion; and
+keep lineage, causation, truth, governance, custody, and promotion as
+distinct relations.</p>
+<h2
+id="lineage-of-models-experiments-evidence-cases-and-reference-graphs">Lineage
+of Models, Experiments, Evidence Cases, and Reference Graphs</h2>
+<p>The fixed-seed comparison with Dynatology, CCOO, the seventeen-system
+software study, and the MCIR DAG theorem broadens the episode subject
+while preserving the boundary between history and warrant:</p>
+<p><span class="math display">$$
+\begin{aligned}
+E^*= (&amp;subject\_type, parents, prestate, operation, environment, \\
+&amp;authority, custody, poststate, effects, observations, \\
+&amp;interpretations, reference\_root, replay\_class, \\
+&amp;standing, remainder)
+\end{aligned}.
+$$</span></p>
+<p>Dynatological domain mappings and theorem candidates need lineage for
+changed state maps, preserved structure, discarded structure,
+counterexamples, and narrowed claims. CCOO experiments need exact
+configuration, seed, environment, artifacts, observations,
+interpretation, and replay class. The software study needs case and
+aggregate lineage when categories, denominators, or findings change.</p>
+<p>A version-ranked MCIR DAG may store a closed acyclic reference layer
+for episode artifacts. Epistemic ancestry, revision, compensation,
+authority, observation, and external-effect relations can be cyclic,
+cross-version, or open and therefore belong in typed layers rather than
+being forced into the canonical DAG.</p>
+<p>Lineage completeness remains defeasible. A valid reference root does
+not prove that every material predecessor, observation, effect, or
+alternative was captured. The universal GSM can type<br />
+<code>LINEAGES_DOMAIN_MORPHISM</code>,<br />
+<code>LINEAGES_EXPERIMENT_RUN</code>,
+<code>LINEAGES_EVIDENCE_CASE</code>,
+<code>REFERENCED_BY_CANONICAL_DAG</code>,<br />
+<code>REPRESENTS_CYCLIC_RELATION_OUTSIDE_DAG</code>,
+<code>OMITS_POSSIBLE_EPISODE</code>,<br />
+and<br />
+<code>DOES_NOT_WARRANT_BY_ANCESTRY</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+subject-typed lineage episodes; bind models, experiments, and evidence
+cases to exact revisions; keep non-DAG relations in explicit layers; and
+prohibit referential closure or ancestry from establishing epistemic
+completeness or warrant.</p>
+<h2 id="typed-epistemic-dependencies-and-correction-propagation">Typed
+Epistemic Dependencies and Correction Propagation</h2>
+<p>Ten downstream uses confirm the Epistemic Lineage Engine as a claim-
+and model-transition substrate rather than a general file history. CCOO
+uses it for experimental configurations and interpretations. Dynatology
+uses it for domain mappings and counterexamples. The MCIR DAG theorem
+uses it around structural witnesses. Receipt reasoning supplies events.
+Quant research requires point-in-time vintages. Governed retrieval binds
+sources and claims. Project lineage interoperates while retaining
+file-state subjects. GKL governs admission over the recorded history.
+TDSS uses lineage for reconstruction. The software evidence study binds
+cases, methods, findings, and aggregate eligibility.</p>
+<p>The typed dependency record is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+L= (&amp;subject, epistemic\_object, operation, inputs, output, \\
+&amp;claims, evidence, alternatives, decision, standing, \\
+&amp;validity\_epoch, dependents, replay\_class, revision, \\
+&amp;remainder)
+\end{aligned}.
+$$</span></p>
+<p>Operations such as observe, retrieve, transform, infer, aggregate,
+compare, adopt, reject, supersede, and retract require different
+evidence and do not share one replay meaning. Byte replay reconstructs
+an artifact. Computational replay repeats a declared operation.
+Evidentiary replay reconstructs the admissible basis available at a
+time. Decision replay reconstructs reasoning without pretending that the
+same authority or environment still exists.</p>
+<p>When an input is corrected, revoked, reclassified, or found
+ineligible, the engine should locate dependent claims, models,
+decisions, aggregates, and projections. Outcomes include
+<code>UNAFFECTED</code>,<br />
+<code>RECOMPUTE_REQUIRED</code>, <code>DOWNGRADED</code>,
+<code>CONFLICTED</code>, <code>HISTORICAL_ONLY</code>,<br />
+<code>RETRACTED_FOR_CURRENT_USE</code>,<br />
+and <code>UNRESOLVED</code>. The predecessor remains reconstructable;
+correction propagation does not rewrite history.</p>
+<p>The universal GSM can type<br />
+<code>PERFORMS_EPISTEMIC_OPERATION</code>,
+<code>DEPENDS_ON_EVIDENCE_EPOCH</code>,<br />
+<code>REPLAYS_COMPUTATIONALLY</code>,
+<code>RECONSTRUCTS_DECISION_BASIS</code>,
+<code>PROPAGATES_EPISTEMIC_CORRECTION</code>,<br />
+<code>DOWNGRADES_DEPENDENT_CLAIM</code>,
+<code>PRESERVES_ALTERNATIVE_BRANCH</code>,<br />
+and<br />
+<code>INTEROPERATES_WITHOUT_PROJECT_LINEAGE_MERGER</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt typed epistemic operations; separate artifact,
+computational, evidentiary, and decision replay; require correction
+propagation to dependents; and preserve project lineage, receipts,
+knowledge admission, and epistemic validity as distinct roles.</p>
+<h2 id="counterevidence-and-failure-modes">15. Counterevidence and
+Failure Modes</h2>
+<p>The proposal should be narrowed or rejected where: (1) snapshots are
+dismissed despite carrying adequate lineage; (2) narrative rationale is
+treated as worthless; (3) chronology is treated as causation; (4)
+declared closure is mistaken for complete causality; (5) transformation
+identity omits environment or dependencies; (6) external effects are
+omitted; (7) <code>untransform</code> is treated as true inversion; (8)
+observation is assumed effect-free; (9) deterministic replay is claimed
+for stochastic or open systems; (10) reenactment is mislabeled exact
+replay; (11) equivalence relations are chosen after results; (12)
+missing historical evidence is silently reconstructed; (13) alternatives
+never actually considered are added retrospectively; (14) all
+alternatives are retained without cost or legal analysis; (15) deletion
+is made impossible; (16) redaction silently breaks receipts; (17)
+privacy and source protection are ignored; (18) hashes are treated as
+semantic proof; (19) signatures are treated as authority; (20)
+compromised keys lack recovery; (21) lineage custody becomes truth or
+approval; (22) governance and lineage are merged; (23) GMB inclusion
+becomes standing; (24) chronology creates an identity merger; (25)
+coverage gaps remain unobserved; (26) storage or capture burden changes
+behavior materially; (27) schema migration loses predecessor meaning;
+(28) provider exit cannot reconstruct the system; (29) users cannot
+understand the lineage; (30) cross-domain claims exceed tested profiles;
+(31) existing provenance or event-sourcing systems already satisfy the
+bounded need; or (32) external research contradicts novelty or
+feasibility claims.</p>
+<h2 id="replayable-lineage-without-post-hoc-truth">Replayable Lineage
+Without Post Hoc Truth</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>The Epistemic Lineage Engine records meaning-bearing change as
+explicit branching transitions so ancestry, alternatives, verification,
+drift, correction, and commitment can be reconstructed. It supplies
+neutral mechanical lineage. Higher governance decides what the lineage
+means and which branches have standing.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>History-tampering attack.</strong> Earlier events are
+rewritten or removed without a successor or deletion receipt.
+Append-only claims require exact storage and verification evidence.</li>
+<li><strong>Branch-collapse attack.</strong> Alternatives are merged
+because they share content or names. Branch identity, rationale, and
+unresolved conflict must survive.</li>
+<li><strong>Replay-environment attack.</strong> Events replay
+differently because tools, dependencies, randomness, time, or external
+services changed. Reproducibility claims bind environment and
+remainder.</li>
+<li><strong>Hash-as-meaning attack.</strong> Byte identity is treated as
+semantic identity, or byte change as semantic change. Content,
+interpretation, and standing require separate relations.</li>
+<li><strong>Lineage-as-causality attack.</strong> An ancestor relation
+is treated as causal responsibility or evidentiary support. Derivation,
+influence, support, and authority are distinct edge types.</li>
+<li><strong>Correction-propagation failure.</strong> A source is
+corrected but dependent claims remain active. Dependency indexing and
+impact review are needed.</li>
+<li><strong>Privacy-retention attack.</strong> Permanent lineage
+preserves sensitive, revoked, or legally constrained material.
+Cryptographic commitment, access, deletion, and retained proof need
+policy.</li>
+<li><strong>Branch-explosion attack.</strong> Complete history becomes
+unusable or too expensive. Compaction must preserve identity, audit, and
+recoverability while declaring loss.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>ELE defines a transition-lineage substrate and verification program.
+It does not judge truth, correctness, value, approval, authority,
+policy, causal responsibility, or semantic equivalence. Replay proves
+only what the bound environment and observations support.</p>
+<p>Claims about version control, event sourcing, provenance,
+reproducible computation, privacy, storage scale, or distributed
+integrity require external comparison and exact realizations. No
+external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is that a claim or artifact can be corrected
+without erasing how it arose: people and agents can inspect prior
+branches, reproduce what is still reproducible, and see which downstream
+conclusions must be reconsidered.</p>
+<h2 id="conclusion">17. Conclusion</h2>
+<p>Durable knowledge requires more than retained outcomes. It requires a
+visible relation among predecessor, transformation, environment,
+authority, successor, effect, observation, alternative, and revision.
+ELE offers a compact substrate for that relation.</p>
+<p>Its value depends on bounded claims. It cannot recover influences
+never captured, make irreversible effects disappear, turn reenactment
+into exact replay, or convert custody into truth. It must also govern
+what should not be retained.</p>
+<p>With those limits, the Epistemic Lineage Engine becomes a strong
+foundation for reconstructable knowledge change: not an oracle and not a
+court, but a memory substrate capable of showing what the system says
+changed, what evidence accompanied the change, what alternatives remain
+visible, and where reconstruction ends.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires authorized primary-source review of version
+control, event sourcing, provenance standards, reproducible computation,
+scientific workflows, ML and data lineage, legal and policy records,
+records retention and deletion, privacy and security, distributed
+systems, deterministic replay, and existing lineage products and
+research.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that knowledge systems usually preserve selected
+artifacts and outcomes more reliably than the transformations,
+alternatives, environments, observations, and authority conditions that
+produced them. Its nearest external comparison fields are provenance,
+governance, semantic. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy. A written
+constitution can legitimate domination as easily as constrain it unless
+amendment, participation, enforcement, and appeal remain effective in
+practice. Formal vocabularies and graph links make commitments explicit
+but cannot by themselves establish correct identity, shared
+interpretation, or lossless translation between contexts. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E2]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E3]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<p><strong>[E4]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-C8F2F9BF38C45E29</code>;<br />
+source SHA-256<br />
+<code>A80657E21BA277ADF1C229A2AAE221963B97A62EA2AF3EBC36434A916A8EEA44</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governance Witnesses</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-9E8DA0EFE860DE5D</code>;<br />
+source SHA-256<br />
+<code>8BF8C3646040F6E1F5222A8AA92C1106AA1F841E8A2C65402F468C83D59D06E5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847643">10.5281/zenodo.23847643</a></p>

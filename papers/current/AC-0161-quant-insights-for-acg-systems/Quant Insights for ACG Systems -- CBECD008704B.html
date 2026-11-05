@@ -1,0 +1,1462 @@
+<h1 id="quant-insights-for-acg-systems">Quant Insights for ACG
+Systems</h1>
+<h2
+id="point-in-time-admissibility-identity-risk-and-decay-in-constitutional-computing">Point-in-Time
+Admissibility, Identity, Risk, and Decay in Constitutional
+Computing</h2>
+<h3
+id="a-governed-decision-must-preserve-not-only-what-is-known-but-what-was-admissibly-knowable-when-continuation-occurred.">A
+governed decision must preserve not only what is known, but what was
+admissibly knowable when continuation occurred.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Quantitative-finance infrastructure has developed under persistent
+pressure from unstable data, identity drift, time leakage, model decay,
+hidden constraints, implementation divergence, transaction costs, and
+adversarial conditions. This paper asks which of those operational
+disciplines transfer to Ableman Constitutional Governance (ACG): a
+family of systems in which continuation depends on explicit authority,
+admissibility, evidence, refusal, and revision.</p>
+<p>The transfer is architectural rather than financial. Its central
+object is <em>point-in-time admissibility</em>: a decision should be
+evaluated against the evidence, identity bindings, law, schemas,
+authorities, and refusal conditions valid at the time of decision,
+without silently importing later knowledge. From that premise the paper
+derives bitemporal state, jurisdictional identity bindings,
+admission-before-computation, production refusal, cross-substrate
+equivalence burdens, constraint attribution, governance backtesting,
+decay monitoring, and a layered constitutional data plane.</p>
+<p>The comparison has limits. Financial optimization does not supply
+moral legitimacy; governance harms cannot always be priced; historical
+replay is not causal proof; and metrics can make unmeasured people or
+values disappear. The paper therefore treats quant practice as a source
+of candidate mechanisms and failure tests, not as authority over
+constitutional design.</p>
+<p>The result is a specification and research agenda. It formalizes the
+temporal core, locates the proposal in the realization funnel, relates
+it to the wider Ableman corpus, and identifies the evidence required
+before any claimed transfer should be treated as validated.</p>
+<hr />
+<h2 id="purpose">1. Purpose</h2>
+<p>Quantitative finance offers Ableman Constitutional Governance a
+mature example of what happens when decisions depend on unstable data,
+shifting identities, noisy evidence, adversarial environments,
+time-sensitive action, and post-hoc accountability.</p>
+<p>The deepest lesson is not about trading.</p>
+<p>The deepest lesson is that every high-stakes reasoning system
+eventually becomes a point-in-time governance system.</p>
+<p>A quant stack must decide what was knowable, what was valid, what was
+tradable, what was constrained, what was too stale, what was too risky,
+what had changed, and what could still be relied upon. These are not
+merely financial questions. They are constitutional questions.</p>
+<p>ACG systems can learn from quant practice because quant
+infrastructure has already evolved under brutal pressure:</p>
+<ul>
+<li>bad data creates false signals</li>
+<li>stale data creates false history</li>
+<li>weak identifiers create wrong joins</li>
+<li>hidden assumptions create model failure</li>
+<li>research code drifts during productionization</li>
+<li>constraints silently shape outcomes</li>
+<li>execution changes theory into consequence</li>
+<li>attribution must separate cause from noise</li>
+<li>models decay even when they once worked</li>
+</ul>
+<p>ACG should absorb these lessons without becoming finance-shaped. The
+goal is not to imitate quant systems, but to generalize their hard-won
+architecture into constitutional computing.</p>
+<p>The core insight is this:</p>
+<p>A governed system must not merely preserve rules. It must preserve
+the state of admissible meaning at the moment continuation occurred.</p>
+<h3 id="terms-and-transfer-boundary">1.1 Terms and Transfer
+Boundary</h3>
+<p><strong>Ableman Constitutional Governance (ACG)</strong> denotes the
+corpus-level approach in which authority, jurisdiction, admissibility,
+evidence, refusal, effects, standing, and revision remain explicit
+rather than being collapsed into behavior or configuration. It is an
+architectural family, not one implementation.</p>
+<p><strong>Quant practice</strong> in this paper denotes operational
+patterns associated with point-in-time datasets, identifiers,
+research-to-production migration, constraints, attribution, backtesting,
+risk, transaction costs, and regime change. The paper does not claim
+that every quantitative-finance system implements every pattern
+well.</p>
+<p>The transfer relation is therefore:</p>
+<p><span class="math display">quant mechanism → ACG design
+hypothesis → bounded test,</span></p>
+<p>not</p>
+<p><span class="math display">quant convention → constitutional
+authority.</span></p>
+<p>Where the paper uses words such as <em>should</em> or <em>must</em>,
+they express a candidate ACG design obligation. They do not report that
+the obligation has already been implemented or empirically
+validated.</p>
+<h2 id="point-in-time-truth">2. Point-in-Time Truth</h2>
+<p>One of the most valuable quant insights is point-in-time
+discipline.</p>
+<p>A historical computation must not use what is known now. It must use
+what was admissibly known then.</p>
+<p>This principle generalizes directly into ACG.</p>
+<p>Any governed system that evaluates prior actions, prior claims, prior
+identities, or prior decisions must distinguish:</p>
+<ul>
+<li>current truth</li>
+<li>historical truth</li>
+<li>restated truth</li>
+<li>corrected truth</li>
+<li>known-at-the-time truth</li>
+<li>admissible-at-the-time truth</li>
+</ul>
+<p>These are not the same.</p>
+<p>A constitutional system must never silently replace historical
+admissibility with present knowledge. Doing so creates a form of
+governance leakage. It lets the future contaminate the past.</p>
+<p>In finance, this creates look-ahead bias. In ACG, it creates
+constitutional anachronism.</p>
+<p>For example, when reviewing an agent’s prior decision, the system
+must not ask only whether the decision looks correct now. It must
+ask:</p>
+<p>What evidence was admitted at that time?</p>
+<p>What law hash was active?</p>
+<p>What authority bindings existed?</p>
+<p>What schemas were valid?</p>
+<p>What identity mappings were in force?</p>
+<p>What refusal conditions were known?</p>
+<p>What downstream actions were permitted?</p>
+<p>A decision can be wrong in hindsight but admissible at the time. A
+decision can be profitable or convenient in hindsight but
+constitutionally invalid at the time.</p>
+<p>ACG should therefore make point-in-time admissibility a
+primitive.</p>
+<p>A receipt should not merely say what happened. It should say under
+what temporal jurisdiction the happening was evaluated.</p>
+<h3 id="bitemporal-admissibility">2.1 Bitemporal Admissibility</h3>
+<p>Let a governed record <span class="math inline"><em>x</em></span>
+carry two temporal dimensions:</p>
+<ul>
+<li>valid time <span
+class="math inline"><em>V</em>(<em>x</em>) = [<em>v</em><sub>0</sub>, <em>v</em><sub>1</sub>)</span>,
+the interval during which the record claims to describe the world;
+and</li>
+<li>transaction time <span
+class="math inline"><em>T</em>(<em>x</em>) = [<em>t</em><sub>0</sub>, <em>t</em><sub>1</sub>)</span>,
+the interval during which the governance system had admitted that
+record.</li>
+</ul>
+<p>The as-of corpus at decision time <span
+class="math inline"><em>t</em></span> is</p>
+<p><span
+class="math display"><em>K</em><sub><em>t</em></sub> = {<em>x</em> ∣ <em>t</em> ∈ <em>T</em>(<em>x</em>)}.</span></p>
+<p>For proposal <span class="math inline"><em>p</em></span>,
+jurisdiction <span class="math inline"><em>j</em></span>, and active
+constitutional state <span
+class="math inline"><em>C</em><sub><em>t</em></sub></span>,
+point-in-time admissibility is a typed decision</p>
+<p><span
+class="math display"><em>A</em>(<em>p</em>, <em>K</em><sub><em>t</em></sub>, <em>C</em><sub><em>t</em></sub>, <em>j</em>) ∈ {ALLOW , REFUSE , DEFER }.</span></p>
+<p><code>DEFER</code> is distinct from</p>
+<p><code>REFUSE</code>: it states that the current evidence or authority
+is insufficient for decision, not that the proposal is prohibited. A
+receipt for <span class="math inline"><em>A</em></span> must bind at
+least the proposal, decision time, valid-time assumptions, admitted
+evidence root, governing commitments, jurisdiction, decision, and proof
+boundary.</p>
+<p>Later correction produces a new transaction-time state; it does not
+rewrite <span
+class="math inline"><em>K</em><sub><em>t</em></sub></span>.
+Retrospective evaluation may compare the decision with later knowledge,
+but it must label the comparison as hindsight rather than silently
+altering the decision’s original epistemic boundary.</p>
+<h3 id="identity-as-a-jurisdictional-binding">2.2 Identity as a
+Jurisdictional Binding</h3>
+<p>An identity assertion is not a bare label but a tuple</p>
+<p><span
+class="math display"><em>I</em> = (<em>s</em>, <em>n</em>, <em>o</em>, <em>j</em>, <em>V</em>, <em>a</em>, <em>e</em>, <em>r</em>),</span></p>
+<p>where <span class="math inline"><em>s</em></span> is naming scheme,
+<span class="math inline"><em>n</em></span> is identifier value, <span
+class="math inline"><em>o</em></span> is the identified object, <span
+class="math inline"><em>j</em></span> is scope or jurisdiction, <span
+class="math inline"><em>V</em></span> is valid interval, <span
+class="math inline"><em>a</em></span> is asserting authority, <span
+class="math inline"><em>e</em></span> is evidence, and <span
+class="math inline"><em>r</em></span> is replacement/conflict policy.
+Two records sharing <span class="math inline"><em>n</em></span> need not
+share <span class="math inline"><em>o</em></span>; two identifiers
+naming <span class="math inline"><em>o</em></span> need not be
+interchangeable across <span class="math inline"><em>j</em></span> or
+<span class="math inline"><em>V</em></span>.</p>
+<p>This formalizes the paper’s identity rule and connects it to Semantic
+Custody: artifact identity, logical-work identity, version-family
+identity, publication identity, and concept identity remain separately
+governed even when a workflow links them.</p>
+<h2 id="identity-is-not-a-label">3. Identity Is Not a Label</h2>
+<p>Quant systems learn quickly that identifiers are treacherous.</p>
+<p>Tickers change. Companies merge. Securities split. Vendors disagree.
+Internal IDs drift. A single apparent object may refer to different
+entities across time. Multiple identifiers may refer to the same entity
+under different schemes. A naive join can poison the entire system.</p>
+<p>ACG should generalize this lesson:</p>
+<p>No identifier is self-authorizing.</p>
+<p>A label is not an identity. A name is not an authority. A reference
+is not a binding. A hash is not a full semantic claim unless its
+jurisdiction is declared.</p>
+<p>Every governed system needs identity receipts.</p>
+<p>For ACG, identity should be treated as a time-bound, authority-bound,
+scope-bound claim:</p>
+<ul>
+<li>what object is being identified</li>
+<li>by which naming scheme</li>
+<li>under which authority</li>
+<li>within which valid interval</li>
+<li>for which domain of use</li>
+<li>with which confidence or proof</li>
+<li>with which conflict policy</li>
+<li>with which replacement or retirement rule</li>
+</ul>
+<p>This applies far beyond finance.</p>
+<p>In MCIR, an artifact identity must not collapse source identity,
+build identity, semantic identity, runtime identity, and publication
+identity into one string.</p>
+<p>In Jnana, a knowledge object must not collapse citation, concept,
+claim, evidence bundle, and interpretive frame into one reference.</p>
+<p>In agent systems, a user instruction, system policy, memory item,
+tool result, and external claim must each carry distinct identity
+jurisdiction.</p>
+<p>The quant lesson is severe: bad identity does not stay local. It
+propagates downstream until it becomes false reasoning.</p>
+<h2 id="data-admission-before-computation">4. Data Admission Before
+Computation</h2>
+<p>Quant systems do not merely compute over data. They fight to
+determine whether the data deserves to be computed over.</p>
+<p>ACG should treat this as a central architectural rule:</p>
+<p>Computation must be downstream of admission.</p>
+<p>A system should not ask, “Can I process this input?” before asking,
+“Is this input authorized to participate in this process?”</p>
+<p>Data admission should include:</p>
+<ul>
+<li>source authority</li>
+<li>schema validity</li>
+<li>freshness</li>
+<li>completeness</li>
+<li>internal consistency</li>
+<li>conflict with prior state</li>
+<li>conflict with other sources</li>
+<li>scope of permitted use</li>
+<li>downstream dependency impact</li>
+<li>refusal conditions</li>
+</ul>
+<p>This matters for all ACG systems.</p>
+<p>A constitutional agent should not summarize a document unless the
+document’s identity, source, version, and relevance have been
+admitted.</p>
+<p>A governance engine should not evaluate a claim unless its evidence
+bundle is admissible.</p>
+<p>A build system should not compile an artifact unless its source,
+dependency graph, compiler, and policy state are admitted.</p>
+<p>A receipt system should not accept a receipt merely because the
+receipt is well-formed. It must ask whether the receipt is authorized,
+fresh, non-replayed, and jurisdictionally valid.</p>
+<p>The quant pattern is clear:</p>
+<p>Availability is not admissibility.</p>
+<p>In ACG, this becomes law.</p>
+<h2 id="refusal-as-a-production-feature">5. Refusal as a Production
+Feature</h2>
+<p>Quant systems often halt factors, quarantine data, block trades,
+suspend signals, or trigger human review when upstream conditions
+fail.</p>
+<p>This is directly aligned with ACG’s refusal discipline.</p>
+<p>The key insight from quant practice is that refusal must be
+operationally normal. It cannot be treated as an embarrassing exception.
+If a system only knows how to continue, it will eventually continue
+through poison.</p>
+<p>ACG should design refusal as a first-class production feature:</p>
+<ul>
+<li>refusal receipts</li>
+<li>refusal codes</li>
+<li>refusal propagation</li>
+<li>refusal dashboards</li>
+<li>refusal recovery paths</li>
+<li>refusal replay</li>
+<li>refusal attribution</li>
+<li>refusal retirement triggers</li>
+</ul>
+<p>A refusal should answer:</p>
+<p>What was refused?</p>
+<p>Why was it refused?</p>
+<p>Which predicate failed?</p>
+<p>Which authority made the refusal?</p>
+<p>Which downstream systems were blocked?</p>
+<p>What evidence would be required to admit later?</p>
+<p>Was this refusal protective, excessive, stale, or contested?</p>
+<p>This is where quant practice gives ACG a practical posture. In
+high-stakes domains, “no action” is not absence. It is often the most
+important action the system takes.</p>
+<p>A good constitutional system does not merely execute lawful
+continuations. It preserves the right to stop.</p>
+<h2 id="research-and-production-must-remain-distinct">6. Research and
+Production Must Remain Distinct</h2>
+<p>Quant teams often allow exploratory research to happen in flexible
+environments, then impose stricter gates before production
+deployment.</p>
+<p>ACG should preserve this distinction.</p>
+<p>Not every thought needs full constitutional ceremony. Not every
+sketch, hypothesis, draft, notebook, prototype, or local experiment
+should be treated as production law. Exploration requires looseness.
+Production requires admission.</p>
+<p>The danger is phase confusion.</p>
+<p>A research artifact may be suggestive but not admissible. A prototype
+may be useful but not authoritative. A local experiment may demonstrate
+possibility but not justify deployment. A passing test may support
+confidence but not prove semantic closure.</p>
+<p>ACG systems should therefore maintain clear phase boundaries:</p>
+<ul>
+<li>exploration</li>
+<li>hypothesis</li>
+<li>specification</li>
+<li>implementation</li>
+<li>validation</li>
+<li>admission</li>
+<li>production</li>
+<li>monitoring</li>
+<li>retirement</li>
+</ul>
+<p>Quant systems teach that the handoff between research and production
+is one of the most dangerous zones in the stack. Meaning can drift when
+a model moves from notebook to service, from small data to distributed
+computation, from one language to another, or from batch mode to live
+execution.</p>
+<p>ACG should treat every such migration as a constitutional event.</p>
+<h2 id="substrate-equivalence-as-a-general-requirement">7. Substrate
+Equivalence as a General Requirement</h2>
+<p>Quant practice often involves translating research logic across
+substrates: R, Python, Spark, KDB, C++, databases, streaming systems,
+and portfolio engines.</p>
+<p>The ACG generalization is powerful:</p>
+<p>Whenever meaning moves across substrate, equivalence must be
+witnessed.</p>
+<p>This applies to:</p>
+<ul>
+<li>Python to C</li>
+<li>notebook to production service</li>
+<li>natural language policy to machine-readable law</li>
+<li>semantic specification to executable gate</li>
+<li>receipt schema to database table</li>
+<li>local test to distributed runtime</li>
+<li>one model provider to another</li>
+<li>human review to automated admission</li>
+<li>old ontology to revised ontology</li>
+</ul>
+<p>The system must ask:</p>
+<p>What meaning is supposed to be preserved?</p>
+<p>What differences are tolerated?</p>
+<p>What edge cases were tested?</p>
+<p>What state was replayed?</p>
+<p>What output changed?</p>
+<p>What change is explainable?</p>
+<p>What change violates the semantic contract?</p>
+<p>This is not merely software testing. It is constitutional migration
+control.</p>
+<p>In MCIR terms, every substrate migration should produce an
+equivalence claim. In Jnana terms, every transformation of knowledge
+representation should preserve traceable semantic custody.</p>
+<p>Quant systems make this obvious because a tiny implementation
+difference can alter portfolio weights, trades, risk, and performance.
+ACG systems should assume the same danger anywhere executable meaning
+moves.</p>
+<h2 id="constraints-are-law-not-configuration">8. Constraints Are Law,
+Not Configuration</h2>
+<p>Quant optimizers reveal a crucial truth: constraints shape
+reality.</p>
+<p>A portfolio is not built from alpha alone. It is built from alpha
+filtered through risk, costs, liquidity, leverage, turnover, exposure,
+concentration, mandate, and operational constraints.</p>
+<p>ACG should generalize this insight:</p>
+<p>Constraints are not secondary settings. They are governing law.</p>
+<p>In many systems, constraints hide in configuration files, environment
+variables, prompts, tool wrappers, thresholds, schemas, validators,
+defaults, and informal procedures. But if a constraint determines what
+continuations are possible, it is part of the constitution whether or
+not anyone names it.</p>
+<p>ACG systems should therefore elevate constraints into explicit
+governance objects.</p>
+<p>Each constraint should have:</p>
+<ul>
+<li>identity</li>
+<li>scope</li>
+<li>authority</li>
+<li>rationale</li>
+<li>active interval</li>
+<li>enforcement mechanism</li>
+<li>override rule</li>
+<li>interaction with other constraints</li>
+<li>receipt obligations</li>
+<li>retirement condition</li>
+</ul>
+<p>This matters because hidden constraints produce hidden causality.</p>
+<p>If an agent refuses an action, did it refuse because of law, missing
+evidence, tool limitation, policy conflict, risk threshold, malformed
+input, stale memory, or implementation failure?</p>
+<p>If a system produces an output, did it do so freely, or because
+constraints silently narrowed the field?</p>
+<p>Quant attribution teaches ACG that downstream outcomes cannot be
+explained without knowing which constraints bound the decision.</p>
+<h2 id="attribution-as-governance-memory">9. Attribution as Governance
+Memory</h2>
+<p>Quant systems use attribution to explain performance: what worked,
+what failed, what exposure mattered, what cost intervened, what risk
+dominated, what signal decayed.</p>
+<p>ACG should treat attribution as governance memory.</p>
+<p>Every consequential outcome should be explainable through its
+admitted causes:</p>
+<ul>
+<li>what input was admitted</li>
+<li>what transformation occurred</li>
+<li>what constraints bound</li>
+<li>what refusal did or did not happen</li>
+<li>what authority permitted continuation</li>
+<li>what state changed</li>
+<li>what downstream effect followed</li>
+<li>what alternative was blocked</li>
+<li>what evidence supports the explanation</li>
+</ul>
+<p>The point is not to narrate after the fact. The point is to preserve
+causal reconstructability.</p>
+<p>A constitutional system without attribution becomes mythic. It may
+have receipts, but no living account of how those receipts produced
+consequence.</p>
+<p>Quant systems also warn against lazy attribution. A bad outcome may
+be blamed on a model when the real cause was data. A factor may be
+blamed for underperformance when constraints prevented expression. A
+trade may be blamed on execution when the optimizer generated an
+unstable target. A human may be blamed when the system gave them
+poisoned evidence.</p>
+<p>ACG should therefore make attribution jurisdictional.</p>
+<p>Each explanation must identify what kind of cause is being
+claimed:</p>
+<ul>
+<li>data cause</li>
+<li>identity cause</li>
+<li>semantic cause</li>
+<li>model cause</li>
+<li>constraint cause</li>
+<li>execution cause</li>
+<li>authority cause</li>
+<li>environment cause</li>
+<li>decay cause</li>
+<li>refusal cause</li>
+</ul>
+<p>This would make ACG systems not only auditable, but intelligible.</p>
+<h2 id="model-decay-and-constitutional-decay">10. Model Decay and
+Constitutional Decay</h2>
+<p>Quant systems understand that models decay.</p>
+<p>A strategy can work, then weaken. A factor can become crowded. A
+signal can disappear. A data source can degrade. A market regime can
+change. A cost model can become stale. A risk model can lose
+calibration.</p>
+<p>ACG should extend this into the idea of constitutional decay.</p>
+<p>A law, policy, schema, ontology, classifier, validator, prompt,
+memory rule, refusal predicate, or authority registry may be valid at
+one time and inadequate later.</p>
+<p>The system should not assume that once-admitted governance remains
+eternally sound.</p>
+<p>Constitutional artifacts need monitoring:</p>
+<ul>
+<li>Is the predicate still catching the intended failure mode?</li>
+<li>Is the schema still expressive enough?</li>
+<li>Has the environment changed?</li>
+<li>Are refusals increasing unexpectedly?</li>
+<li>Are overrides increasing?</li>
+<li>Are downstream systems routing around the rule?</li>
+<li>Are stale rules blocking legitimate continuations?</li>
+<li>Are new risks outside the current constitution?</li>
+<li>Has semantic drift accumulated?</li>
+</ul>
+<p>Quant practice suggests that every governance object should carry a
+decay profile or review condition.</p>
+<p>Some rules are stable. Some are experimental. Some are emergency
+patches. Some are domain-specific. Some depend on external law. Some
+depend on evolving model behavior. Some should expire unless
+renewed.</p>
+<p>ACG should therefore distinguish permanent constitutional commitments
+from provisional operating constraints.</p>
+<p>Not every rule deserves immortality.</p>
+<h2 id="backtesting-for-governance">11. Backtesting for Governance</h2>
+<p>Quant systems test strategies against historical data. ACG can adapt
+this idea into governance backtesting.</p>
+<p>A governance backtest asks:</p>
+<p>If this constitution had been active over prior events, what would it
+have admitted, refused, flagged, escalated, or misclassified?</p>
+<p>This can be applied to:</p>
+<ul>
+<li>refusal predicates</li>
+<li>evidence gates</li>
+<li>authority rules</li>
+<li>schema migrations</li>
+<li>identity matching policies</li>
+<li>agent tool-use policies</li>
+<li>receipt validation systems</li>
+<li>semantic equivalence checks</li>
+<li>memory admission rules</li>
+<li>publication rules</li>
+</ul>
+<p>Governance backtesting would reveal:</p>
+<ul>
+<li>false refusals</li>
+<li>missed violations</li>
+<li>fragile predicates</li>
+<li>overbroad gates</li>
+<li>under-specified authorities</li>
+<li>costly escalations</li>
+<li>hidden dependency failures</li>
+<li>brittle schemas</li>
+<li>replay gaps</li>
+<li>ungoverned edge cases</li>
+</ul>
+<p>This is especially important because a constitution that sounds good
+in prose may fail under event history.</p>
+<p>Quant systems teach that intuition is not enough. A rule must be
+tested against paths.</p>
+<p>ACG should therefore develop scenario libraries, adversarial event
+histories, replay packs, and constitutional stress tests.</p>
+<p>The goal is not to prove perfection. The goal is to discover how the
+constitution behaves under pressure before the world does.</p>
+<h2 id="risk-models-for-governance-systems">12. Risk Models for
+Governance Systems</h2>
+<p>Quant systems do not merely estimate return. They estimate risk:
+exposure, covariance, concentration, drawdown, leverage, liquidity, tail
+events, and unintended bets.</p>
+<p>ACG systems need analogous risk models.</p>
+<p>Governance risk is not only the risk that a rule is violated. It
+includes the risk that the system becomes unable to detect, explain,
+refuse, recover, or renegotiate.</p>
+<p>An ACG risk model might track:</p>
+<ul>
+<li>authority concentration</li>
+<li>schema fragility</li>
+<li>receipt coverage gaps</li>
+<li>semantic drift</li>
+<li>validator disagreement</li>
+<li>refusal-rate anomalies</li>
+<li>override frequency</li>
+<li>dependency opacity</li>
+<li>replay incompleteness</li>
+<li>source monoculture</li>
+<li>identity ambiguity</li>
+<li>policy conflict density</li>
+<li>substrate migration exposure</li>
+<li>stale memory reliance</li>
+<li>untested edge-case surface</li>
+</ul>
+<p>This is one of the richest quant-to-ACG transfers.</p>
+<p>A portfolio manager asks:</p>
+<p>Where are my hidden exposures?</p>
+<p>An ACG system should ask:</p>
+<p>Where are my hidden governance dependencies?</p>
+<p>A system may appear healthy while relying too heavily on one
+authority, one schema, one model, one database, one validator, one
+interpretation layer, or one unexamined assumption.</p>
+<p>Risk modeling turns governance from static rule compliance into
+dynamic exposure management.</p>
+<h2 id="transaction-costs-and-governance-costs">13. Transaction Costs
+and Governance Costs</h2>
+<p>Quant systems know that theoretical alpha can be destroyed by
+transaction costs.</p>
+<p>ACG systems need the parallel concept of governance costs.</p>
+<p>Every receipt, validation, refusal, replay, equivalence check, audit,
+and escalation has cost. Too little governance permits poison. Too much
+governance suffocates continuation.</p>
+<p>The problem is not to maximize governance indiscriminately. The
+problem is to allocate governance where it changes admissibility.</p>
+<p>ACG should therefore distinguish:</p>
+<ul>
+<li>cheap checks</li>
+<li>expensive checks</li>
+<li>hot-path checks</li>
+<li>cold-path checks</li>
+<li>precomputed checks</li>
+<li>sampled checks</li>
+<li>mandatory gates</li>
+<li>advisory warnings</li>
+<li>escalation triggers</li>
+<li>post-hoc reconciliation</li>
+</ul>
+<p>The quant lesson is that friction matters. A system with beautiful
+governance that cannot operate will be routed around. A system with no
+governance will act blindly. The mature design is layered.</p>
+<p>For example:</p>
+<ul>
+<li>hot path: minimal sufficient admission</li>
+<li>warm path: enriched validation</li>
+<li>cold path: full replay and audit</li>
+<li>exception path: human or higher-authority review</li>
+<li>retirement path: revoke stale rules or artifacts</li>
+</ul>
+<p>This allows ACG to remain practical without surrendering its
+constitutional discipline.</p>
+<h2 id="live-state-versus-historical-memory">14. Live State Versus
+Historical Memory</h2>
+<p>Quant architecture distinguishes live trading systems from historical
+research systems. Both matter, but they serve different temporal
+functions.</p>
+<p>ACG should make the same distinction.</p>
+<p>Live state answers:</p>
+<p>What is admissible now?</p>
+<p>Historical memory answers:</p>
+<p>What was admissible then?</p>
+<p>These require different substrates and different guarantees.</p>
+<p>A live governance system needs fast access to current authority,
+identity, policy, schema, and refusal state. A historical governance
+system needs durable replay, versioned evidence, time travel, and
+reconstructable lineage.</p>
+<p>The architectural implication is clear:</p>
+<ul>
+<li>hot state for current admissibility</li>
+<li>cold memory for replay and audit</li>
+<li>bridge layer for as-of reconstruction</li>
+<li>semantic layer for meaning preservation</li>
+<li>receipt layer for authority transitions</li>
+</ul>
+<p>This prevents a common error: treating the latest database state as
+if it were the whole truth.</p>
+<p>A constitutional system must remember not only what is true now, but
+what was authorized before the truth changed.</p>
+<h2 id="alternative-data-and-epistemic-contamination">15. Alternative
+Data and Epistemic Contamination</h2>
+<p>Quant systems ingest alternative data: web data, satellite data,
+credit card data, shipping data, sentiment data, employment data, and
+many other strange signals. These sources create immense epistemic
+risk.</p>
+<p>ACG should study this carefully because agentic systems face a
+similar problem.</p>
+<p>Modern AI systems ingest tool outputs, user memory, web results,
+retrieved documents, model-generated summaries, embeddings, logs,
+transcripts, and inferred preferences. These are all alternative data
+streams.</p>
+<p>The quant lesson is that exotic data can create hidden leakage, legal
+risk, identity ambiguity, survivorship bias, privacy risk, and false
+precision.</p>
+<p>ACG should therefore apply stricter admission to high-entropy data
+sources:</p>
+<ul>
+<li>Where did the data come from?</li>
+<li>What does it actually measure?</li>
+<li>What does it pretend to measure?</li>
+<li>What populations are missing?</li>
+<li>What time delay exists?</li>
+<li>What legal or ethical limits apply?</li>
+<li>What transformations occurred before arrival?</li>
+<li>What incentives shaped its production?</li>
+<li>What would make it invalid?</li>
+<li>What downstream claims may rely on it?</li>
+</ul>
+<p>This is especially relevant to Jnana. Knowledge systems must not
+confuse signal density with truth. A large corpus can still be
+jurisdictionally weak.</p>
+<h2 id="portfolio-thinking-for-constitutional-systems">16. Portfolio
+Thinking for Constitutional Systems</h2>
+<p>A quant portfolio is a collection of exposures. ACG can borrow
+portfolio thinking to manage constitutional architecture.</p>
+<p>A governance system should not rely on a single defense. It should
+maintain a diversified control portfolio:</p>
+<ul>
+<li>schema validation</li>
+<li>authority verification</li>
+<li>semantic hashing</li>
+<li>state hashing</li>
+<li>replay</li>
+<li>cross-substrate equivalence</li>
+<li>refusal receipts</li>
+<li>anomaly detection</li>
+<li>human review</li>
+<li>adversarial tests</li>
+<li>version pinning</li>
+<li>provenance checks</li>
+<li>lineage graphs</li>
+<li>decay monitoring</li>
+<li>independent rebuilds</li>
+</ul>
+<p>Each control has strengths, weaknesses, costs, and correlations. Some
+fail together. Some cover the same surface. Some create false
+confidence. Some are cheap but shallow. Some are deep but expensive.</p>
+<p>Portfolio thinking asks:</p>
+<p>Where is the system overexposed?</p>
+<p>Where is it under-hedged?</p>
+<p>Which controls are correlated?</p>
+<p>Which risks are unpriced?</p>
+<p>Which checks produce actual admissibility value?</p>
+<p>Which checks are theater?</p>
+<p>This is valuable for ACG because constitutional systems can become
+overconfident in a favorite mechanism. Hashing is powerful, but not
+enough. Receipts are powerful, but not enough. Human review is powerful,
+but not enough. Formal schemas are powerful, but not enough.</p>
+<p>A mature system needs a balanced governance portfolio.</p>
+<h2 id="stress-regime-change-and-constitutional-robustness">17. Stress,
+Regime Change, and Constitutional Robustness</h2>
+<p>Quant systems are judged not only in normal markets, but under
+stress: crashes, liquidity shocks, volatility spikes, correlations going
+to one, broken assumptions, missing data, and adversarial
+conditions.</p>
+<p>ACG systems need equivalent stress regimes.</p>
+<p>A constitution should be tested under:</p>
+<ul>
+<li>missing evidence</li>
+<li>conflicting authorities</li>
+<li>stale schemas</li>
+<li>malicious receipts</li>
+<li>replay attacks</li>
+<li>model disagreement</li>
+<li>tool failure</li>
+<li>partial outages</li>
+<li>overloaded validators</li>
+<li>ambiguous user instructions</li>
+<li>adversarial prompts</li>
+<li>corrupted memory</li>
+<li>dependency compromise</li>
+<li>high-speed decision pressure</li>
+<li>emergency override conditions</li>
+</ul>
+<p>The question is not whether the system behaves beautifully when all
+inputs are clean. The question is whether it preserves constitutional
+shape when continuation becomes difficult.</p>
+<p>Quant systems teach that many models die when assumptions synchronize
+against them. ACG systems should therefore test correlated failure:</p>
+<p>What happens when identity, freshness, and authority all become
+uncertain at once?</p>
+<p>What happens when the system must act quickly but evidence is
+incomplete?</p>
+<p>What happens when refusing everything causes harm, but admitting weak
+evidence causes different harm?</p>
+<p>These are not edge cases. They are constitutional weather.</p>
+<h3 id="limits-and-negative-transfer-tests">17.1 Limits and Negative
+Transfer Tests</h3>
+<p>Quant-to-governance transfer fails when a mechanism imports
+assumptions that constitutional systems must reject. The following are
+explicit negative tests:</p>
+<ul>
+<li><strong>Metric capture:</strong> a measurable proxy replaces an
+unmeasured right, person, or value.</li>
+<li><strong>Optimization legitimacy:</strong> improved aggregate
+performance is treated as authority to impose a distribution of
+harms.</li>
+<li><strong>Backtest certainty:</strong> historical fit is treated as
+causal proof or future reliability.</li>
+<li><strong>Stationarity assumption:</strong> a rule validated in one
+regime is carried into another without detecting the change.</li>
+<li><strong>Liquidity analogy:</strong> reversibility in a market is
+confused with reversibility of social, legal, or physical effects.</li>
+<li><strong>Risk commensuration:</strong> distinct harms are forced into
+one scalar risk score and thereby made substitutable.</li>
+<li><strong>Data entitlement:</strong> availability of a data stream is
+treated as permission to collect, retain, infer from, or act on it.</li>
+<li><strong>Survivorship governance:</strong> only successful
+continuations remain visible, while refusals, abandoned paths, and
+harmed populations disappear from evaluation.</li>
+<li><strong>Speed priority:</strong> latency pressure is allowed to
+erase non-bypassable authority or safety obligations.</li>
+<li><strong>Control correlation:</strong> several checks derived from
+the same model or source are counted as independent assurance.</li>
+</ul>
+<p>A proposed transfer is admissible only if its test can expose these
+failures and if its claim remains bounded to the configuration actually
+tested.</p>
+<h2 id="from-alpha-to-admissible-advantage">18. From Alpha to Admissible
+Advantage</h2>
+<p>Quant systems search for alpha: a signal that improves expected
+outcome.</p>
+<p>ACG systems should search for admissible advantage: a way to improve
+continuation without violating governance.</p>
+<p>This distinction matters.</p>
+<p>An AI agent may find a shortcut. A database may allow a faster write
+path. A model may infer missing data. A tool may produce a plausible
+answer. A user may request an action that would be convenient. None of
+these is automatically admissible.</p>
+<p>ACG should treat every advantage as suspect until governed.</p>
+<p>The quant discipline asks:</p>
+<p>Is this signal real, or is it leakage?</p>
+<p>ACG asks:</p>
+<p>Is this continuation lawful, or is it semantic leakage?</p>
+<p>This creates a powerful parallel:</p>
+<ul>
+<li>alpha can be fake because it uses future data</li>
+<li>governance can be fake because it uses future justification</li>
+<li>alpha can be fake because identifiers are wrong</li>
+<li>governance can be fake because authority is misbound</li>
+<li>alpha can be fake because transaction costs are ignored</li>
+<li>governance can be fake because enforcement costs are ignored</li>
+<li>alpha can decay</li>
+<li>governance can decay</li>
+<li>alpha requires attribution</li>
+<li>governance requires attribution</li>
+</ul>
+<p>The bridge is not metaphorical. It is structural.</p>
+<h2 id="practical-import-for-mcir-and-jnana">19. Practical Import for
+MCIR and Jnana</h2>
+<p>For MCIR, quant insights imply that every intermediate representation
+should carry temporal, identity, and authority context.</p>
+<p>An MCIR object should not only describe what it is. It should
+describe when it was admissible, under which law, with which
+dependencies, and through which transformation lineage.</p>
+<p>MCIR should therefore support:</p>
+<ul>
+<li>point-in-time replay</li>
+<li>substrate equivalence claims</li>
+<li>valid-time identity bindings</li>
+<li>transformation receipts</li>
+<li>refusal states</li>
+<li>semantic drift detection</li>
+<li>authority-scoped hashes</li>
+<li>decay and retirement metadata</li>
+</ul>
+<p>For Jnana, quant insights imply that knowledge must be treated like a
+live portfolio of claims, not a static library.</p>
+<p>A knowledge system should track:</p>
+<ul>
+<li>claim authority</li>
+<li>evidence freshness</li>
+<li>source disagreement</li>
+<li>identity ambiguity</li>
+<li>conceptual drift</li>
+<li>citation decay</li>
+<li>restatement events</li>
+<li>confidence changes</li>
+<li>downstream reliance</li>
+<li>retirement or supersession</li>
+</ul>
+<p>Jnana should be able to answer:</p>
+<p>What did this knowledge object mean when it was admitted?</p>
+<p>What does it mean now?</p>
+<p>What changed?</p>
+<p>Who or what had authority to change it?</p>
+<p>Which downstream claims relied on the old version?</p>
+<p>Should those claims be replayed?</p>
+<p>This is the quant point-in-time problem generalized into semantic
+memory.</p>
+<h3 id="connections-across-the-ableman-corpus">19.1 Connections Across
+the Ableman Corpus</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>This paper</th>
+<th>Corpus relation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Point-in-time admissibility</td>
+<td>Extends Constitutional Computation and Epistemic Situational
+Awareness with explicit temporal state.</td>
+</tr>
+<tr>
+<td>Time- and authority-bound identity</td>
+<td>Applies Semantic Custody’s separation of artifacts, works, versions,
+publications, and concepts.</td>
+</tr>
+<tr>
+<td>Admission before computation</td>
+<td>Operationalizes Governed Semantic Compilation and the CM1-to-CM2
+preference boundary.</td>
+</tr>
+<tr>
+<td>Typed refusal</td>
+<td>Connects refusal semantics to Reasoning by Way of Receipts and
+Receipt-Bound Capabilities.</td>
+</tr>
+<tr>
+<td>Cross-substrate equivalence</td>
+<td>Supplies a temporal and evidentiary profile for MCIR and
+constraint-bearing compilation.</td>
+</tr>
+<tr>
+<td>State/admissibility/meaning separation</td>
+<td>Uses the independent commitments of The Three Hash Rule.</td>
+</tr>
+<tr>
+<td>Live state and historical memory</td>
+<td>Profiles Governed Context and Memory plus the
+Hyperpedia/crystallized meaning-base architecture.</td>
+</tr>
+<tr>
+<td>Risk and decay</td>
+<td>Adds monitoring and revision triggers to constitutional governance
+rather than assuming permanent adequacy.</td>
+</tr>
+</tbody>
+</table>
+<p>These relations do not merge the named systems. They specify where
+the quant-derived discipline supplies a reusable profile or missing
+dimension.</p>
+<h2 id="design-pattern-the-constitutional-data-plane">20. Design
+Pattern: The Constitutional Data Plane</h2>
+<p>A quant-inspired ACG system can be organized around a constitutional
+data plane.</p>
+<p>The data plane should not merely move bytes. It should move admitted
+state.</p>
+<p>Core components:</p>
+<ol type="1">
+<li><p><strong>Ingress gate</strong> Validates source, schema,
+freshness, authority, and completeness.</p></li>
+<li><p><strong>Identity resolver</strong> Resolves entity bindings,
+valid intervals, conflicts, and scope.</p></li>
+<li><p><strong>Snapshot registry</strong> Preserves point-in-time
+admitted state.</p></li>
+<li><p><strong>Transformation ledger</strong> Records semantic
+transformations, implementation versions, and input-output
+hashes.</p></li>
+<li><p><strong>Equivalence harness</strong> Tests substrate migrations
+and semantic preservation.</p></li>
+<li><p><strong>Constraint engine</strong> Applies active law, policy,
+risk limits, and refusal predicates.</p></li>
+<li><p><strong>Hot-path state store</strong> Answers current and as-of
+admissibility questions quickly.</p></li>
+<li><p><strong>Cold-path receipt lake</strong> Preserves durable,
+replayable, versioned evidence.</p></li>
+<li><p><strong>Attribution engine</strong> Explains outcomes through
+admitted causes.</p></li>
+<li><p><strong>Decay monitor</strong> Detects when models, rules,
+schemas, identities, or authorities lose reliability.</p></li>
+</ol>
+<p>This is the infrastructure ACG needs if it is to govern real systems
+rather than only describe governance in principle.</p>
+<h3 id="realization-funnel-for-a-constitutional-data-plane">20.1
+Realization Funnel for a Constitutional Data Plane</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Required work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Consider quant-derived mechanisms without treating finance as
+constitutional authority.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define bitemporal records, identity bindings, typed admission,
+receipts, attribution classes, decay triggers, and risk surfaces.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate permissible designs, including strict, permissive,
+centralized, federated, cheap, expensive, safe, unsafe, and
+intentionally minimal realizations.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations that preserve non-substitution, privacy,
+point-in-time replay, explicit ignorance, independent assurance, and
+bounded costs.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Fix one domain, data schema, authority model, latency budget, threat
+model, tests, and stopping rules.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build the configured ingress, identity, state, transformation,
+constraint, receipt, attribution, and decay services.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Run historical replay, forward shadow operation, adversarial cases,
+cost measurement, and subgroup/harm analysis.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Update rules, models, identities, and confidence while preserving
+prior temporal state and dependent claims.</td>
+</tr>
+</tbody>
+</table>
+<p>This paper reaches Specification and supplies CM1/CM2 criteria. It
+does not define one complete Instance Configuration or validate a
+production realization.</p>
+<h2 id="temporal-evidence-and-risk-evaluation-profile">Temporal Evidence
+and Risk Evaluation Profile</h2>
+<p>The completed P1 corpus positions Quant Insights for ACG Systems as
+the <strong>temporal evidence, leakage-control, decay, stress, and
+governance-cost evaluation profile for constitutional agentic
+systems</strong>. It transfers selected point-in-time and backtesting
+disciplines from quantitative practice without asserting that
+constitutional governance is a financial portfolio or that financial
+success validates governance.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>From CI/CD to ACG: From Tests
+to Courts in Agentic Software Development</em><br />
+<strong>Supplies:</strong> The constitutional development, adjudication,
+effect, and evidence lifecycle.<br />
+<strong>Quant-profile boundary:</strong> This paper supplies temporal
+and risk evaluation methods for that lifecycle.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed evidence carriers and evaluation
+envelopes.<br />
+<strong>Quant-profile boundary:</strong> Point-in-time rules constrain
+which witnesses were available and admissible at decision time.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Epistemic Lineage
+Engine</em><br />
+<strong>Supplies:</strong> Source, transformation, decision, and
+revision lineage.<br />
+<strong>Quant-profile boundary:</strong> Lineage makes vintages and
+later corrections reconstructable; it does not remove leakage by
+itself.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Epistemology
+Under Adversarial Semantic Pressure</em><br />
+<strong>Supplies:</strong> Threats from omission, manipulation,
+correlated evidence, and valid-looking records.<br />
+<strong>Quant-profile boundary:</strong> The quant profile supplies
+temporal and stress tests for some adversarial pathways.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>What Software Systems
+Actually Receipt, Govern, and Hide</em><br />
+<strong>Supplies:</strong> Visibility and governance gaps in ordinary
+systems.<br />
+<strong>Quant-profile boundary:</strong> The data-plane profile exposes
+which live and historical surfaces were actually observed.</p></li>
+</ul>
+<p>A governance evaluation should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Q= (&amp;decision\_time, knowledge\_time, data\_vintage, \\
+&amp;identity\_regime, policy\_version, model\_version, costs, \\
+&amp;outcome, witnesses, revision)
+\end{aligned}.
+$$</span></p>
+<p>Event time, observation time, availability time, admission time,
+decision time, effect time, and later correction time are separate. A
+backtest may use only the identities, data, policies, costs, and
+capabilities admissibly available at the simulated decision time. Later
+knowledge belongs in revision analysis, not the original decision
+record.</p>
+<p>Financial analogies remain bounded. Alpha, portfolio, decay, regime,
+and transaction-cost language becomes useful only when translated into
+explicit governance variables and failure tests. A metric that predicts
+an outcome can still be inadmissible, manipulable, unjustified, or too
+costly. Risk aggregation cannot compensate for non-compensatory
+constitutional constraints.</p>
+<p>The universal GSM can type <code>OBSERVED_AT_TIME</code>,
+<code>AVAILABLE_AT_TIME</code>, <code>ADMITTED_AT_TIME</code>,<br />
+<code>DECIDED_AT_TIME</code>, <code>EFFECTED_AT_TIME</code>,
+<code>KNOWN_UNDER_VINTAGE</code>,
+<code>BACKTESTED_WITHOUT_LEAKAGE</code>,<br />
+<code>DECAYS_UNDER_REGIME</code>, <code>STRESSED_BY_SCENARIO</code>,
+<code>INCURS_GOVERNANCE_COST</code>,<br />
+and<br />
+<code>REVISED_AFTER_LATE_DATA</code>. These relations make temporal
+validity inspectable.</p>
+<p>This integration establishes four editorial commitments: adopt
+temporal evidence/risk evaluation profile as the official corpus role;
+adopt the bitemporal evaluation envelope; require leakage-free
+policy/model/identity/data vintages; and treat financial vocabulary as a
+translated heuristic rather than proof of general governance laws.</p>
+<h2
+id="point-in-time-analytics-orientation-and-conformance">Point-in-Time
+Analytics, Orientation, and Conformance</h2>
+<p>The fixed-seed comparison with Semantic Field Analysis, the GMB,
+Operational ESA, and AFS turns point-in-time discipline into a reusable
+evaluation chain:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Q^*= (&amp;GMB\_snapshot, AFS\_profile, data\_vintage, \\
+&amp;identity\_regime, policy\_version, analysis\_run, \\
+&amp;operational\_capsule, decision, effect, late\_evidence, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>SFA diagnostics must use the projection, identities, standing,
+parameters, and evidence admissibly available at the simulated decision
+time. GMB queries preserve the historical cut and distinguish later
+correction from original knowledge. Operational ESA records the live
+goal, custody, environment, conflicts, unknowns, and stop conditions
+without rewriting the historical decision basis.</p>
+<p>AFS may specify schemas and conformance obligations for temporal
+evidence, orientation capsules, and evaluation records. A conforming
+artifact does not prove that its timestamps are accurate, its identity
+regime is correct, its witnesses are independent, or its decision was
+justified.</p>
+<p>Late evidence produces a revision episode and possibly a new standing
+decision; it does not leak backward into the original backtest. The
+universal GSM can type<br />
+<code>CONFORMS_TO_TEMPORAL_EVIDENCE_PROFILE</code>,<br />
+<code>ANALYZED_AT_DECISION_CUT</code>,
+<code>QUERIED_FROM_HISTORICAL_GMB</code>,
+<code>ORIENTED_BY_LIVE_ESA</code>,<br />
+<code>RECEIVES_LATE_EVIDENCE</code>,
+<code>REVISES_WITHOUT_TEMPORAL_LEAKAGE</code>,<br />
+and<br />
+<code>WITHHOLDS_CONFORMANCE_AS_TRUTH</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the combined temporal chain; bind SFA and GMB views to decision-time
+knowledge; distinguish live ESA from historical state; and keep AFS
+conformance below evidentiary validity.</p>
+<h2
+id="a-temporal-evaluation-profile-not-a-financial-governance-model">A
+Temporal Evaluation Profile, Not a Financial Governance Model</h2>
+<p>One retained downstream use, ACG for Quants, applies the paper’s
+point-in-time discipline to a full quant lifecycle. The bounded search
+found no other material downstream dependency. The transferable
+contribution is therefore a temporal evidence, leakage-control, decay,
+stress, and governance-cost evaluation profile, not a claim that
+constitutional systems are portfolios or that financial success
+validates governance.</p>
+<p><span class="math display">$$
+\begin{aligned}
+Q^*= (&amp;subject, decision\_time, event\_time, observation\_time, \\
+&amp;availability\_time, admission\_time, effect\_time, \\
+&amp;correction\_time, data\_vintage, identity\_regime, \\
+&amp;policy\_version, model\_version, witnesses, costs, \\
+&amp;outcome, stress\_profile, decay, late\_evidence, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>Historical replay may use only the data, identities, authorities,
+policies, models, capabilities, costs, and witnesses admissibly
+available at the simulated decision time. Later correction produces
+revision and possibly changed standing; it does not leak backward into
+the original information set. A conforming timestamp schema does not
+prove clock accuracy, source availability, identity correctness, witness
+independence, or justified decision.</p>
+<p>Alpha, portfolio, regime, backtest, decay, attribution, and
+transaction-cost language is useful only after translation into explicit
+governance variables and negative-transfer tests. Risk aggregation
+cannot compensate for a noncompensatory constitutional floor. Live
+value, historical explanatory value, and authority to continue require
+different evidence.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_GOVERNANCE_DECISION_TIME</code>,
+<code>AVAILABLE_AT_TIME</code>,<br />
+<code>ADMITTED_AT_TIME</code>, <code>KNOWN_UNDER_VINTAGE</code>,
+<code>BACKTESTED_WITHOUT_LEAKAGE</code>,<br />
+<code>STRESSED_UNDER_REGIME</code>, <code>DECAYS_UNDER_PROFILE</code>,
+<code>INCURS_GOVERNANCE_COST</code>,<br />
+<code>RECEIVES_LATE_EVIDENCE</code>, and<br />
+<code>REVISES_WITHOUT_TEMPORAL_REWRITE</code>.</p>
+<p>This review establishes four editorial commitments: retain temporal
+evaluation-profile standing; adopt the complete multi-time record;
+prohibit late-data leakage and unqualified financial analogy; and
+require accuracy, identity, independence, cost, stress, decay, and
+noncompensatory-floor evidence separately.</p>
+<h2
+id="point-in-time-governance-without-finance-shaped-universality">Point-in-Time
+Governance Without Finance-Shaped Universality</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Quant Insights transfers selected disciplines from quantitative
+systems into high-stakes reasoning: point-in-time data, identity
+resolution, snapshots, transformation lineage, constraints, attribution,
+and decay. The general contribution is temporal evaluation. It is not a
+claim that governance should be modeled as finance or that financial
+methods transfer without loss.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Future-leakage attack.</strong> A later fact enters a
+reconstruction of what was knowable at decision time. Every source,
+transform, and constraint needs effective time and observation
+time.</li>
+<li><strong>Identity-revision attack.</strong> An entity is renamed,
+merged, split, or corrected after a decision. Point-in-time identity and
+later successor knowledge must coexist.</li>
+<li><strong>Snapshot-incompleteness attack.</strong> A snapshot omits
+unavailable, rejected, or off-platform information. Completeness remains
+source- and boundary-relative.</li>
+<li><strong>Attribution-as-causality attack.</strong> A decomposition is
+presented as why an outcome occurred. Attribution is model-relative
+unless causal methodology is justified.</li>
+<li><strong>Decay-metric attack.</strong> Age or performance change is
+treated as universal epistemic decay. Decay must be claim-, domain-, and
+evidence-specific.</li>
+<li><strong>Risk-translation attack.</strong> Financial risk language
+obscures ethical, legal, physical, or social consequence. Domain-native
+harms and authority must remain primary.</li>
+<li><strong>Storage-as-governance attack.</strong> Hot/cold tiers or
+databases are treated as policy. Storage location does not confer
+standing, retention authority, or relevance.</li>
+<li><strong>Negative-transfer attack.</strong> Competitive optimization,
+probabilistic assumptions, or market metaphors distort a non-financial
+domain. Every transfer needs explicit disanalogies and stopping
+rules.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper contributes a temporal evidence and risk-evaluation
+profile. It does not establish a financial governance model, trading
+insight, causal attribution, universal decay law, or suitability for a
+concrete high-stakes domain.</p>
+<p>Claims about quantitative finance, databases, temporal reasoning,
+risk, decisions, or cross-domain outcomes require external sources and
+domain evaluation. Internal corpus integration establishes architectural
+portability questions only. No external research was added in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The accessible result is that a consequential decision should
+preserve what was actually available, identifiable, constrained, and
+authorized at the time - not silently judge the past with future
+knowledge.</p>
+<h2 id="the-deeper-lesson">21. The Deeper Lesson</h2>
+<p>Quant systems live in a world where reality does not hold still.</p>
+<p>Data changes. Entities change. Markets change. Models change. Costs
+change. Constraints change. What worked yesterday may fail tomorrow.
+What looked true historically may have been unknowable at the time. What
+appears to be a clean signal may be leakage. What appears to be a bad
+model may be bad data. What appears to be discretion may be hidden
+constraint.</p>
+<p>ACG systems live in the same kind of world.</p>
+<p>The constitutional mistake is to imagine governance as a static
+rulebook standing above motion.</p>
+<p>The quant insight is that governance must itself be dynamic,
+temporal, testable, replayable, and humble before drift.</p>
+<p>A mature ACG system should therefore behave less like a static
+rulebook and more like a governed, replayable state machine:</p>
+<p>Every claim has a timestamp.</p>
+<p>Every identity has a jurisdiction.</p>
+<p>Every transformation has a receipt.</p>
+<p>Every constraint has authority.</p>
+<p>Every refusal has a reason.</p>
+<p>Every migration has an equivalence burden.</p>
+<p>Every model has a decay horizon.</p>
+<p>Every outcome deserves attribution.</p>
+<p>Every continuation must earn admission.</p>
+<p>That is the gift quant systems offer ACG: not a financial metaphor,
+but an operational discipline for governing meaning under pressure.</p>
+<p>ACG gives quant systems constitutional closure.</p>
+<p>Quant systems give ACG temporal realism.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm2.</strong> The present paper does not claim a complete
+cm2 treatment. That stage remains successor work and cannot be inferred
+from the architecture described here.</li>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that quantitative-finance infrastructure has
+developed under persistent pressure from unstable data, identity drift,
+time leakage, model decay, hidden constraints, implementation
+divergence, transaction costs, and adversarial conditions. Its nearest
+external comparison fields are markets, governance, formal. The sources
+in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Optimization can make
+a chosen objective efficient while preserving a bad objective, missing
+distributional harms, strategic behavior, or inadmissible states. A
+written constitution can legitimate domination as easily as constrain it
+unless amendment, participation, enforcement, and appeal remain
+effective in practice. Formal assurance remains relative to the encoded
+model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Harry Markowitz. “Portfolio Selection.” <em>The
+Journal of Finance</em> 7(1), 1952, pp. 77-91. DOI:
+10.1111/j.1540-6261.1952.tb01525.x.
+https://doi.org/10.1111/j.1540-6261.1952.tb01525.x
+<strong>Relationship:</strong> Predecessor risk-return optimization
+model; included to distinguish scalar optimization from governance-aware
+admissibility.</p>
+<p><strong>[E2]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E3]</strong> U.S. Department of the Treasury. <em>Tax
+Expenditures</em>. Office of Tax Analysis. <a
+href="https://home.treasury.gov/policy-issues/tax-policy/tax-expenditures">home.treasury.gov
+source</a> <strong>Relationship:</strong> Primary official baseline for
+the definition and estimation limits of U.S. federal tax
+expenditures.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E6]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E7]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Markets</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1D49CCBB6E47B403</code>;<br />
+source SHA-256<br />
+<code>BB97EAC6F1861C2ED17DC0E0B75D47B04716E7FF3E3AC2A9B2F6CABCC67A5250</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>ACG for Quants</em>. Ableman
+Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-8A19CB4C1BD55BCA</code>;<br />
+source SHA-256<br />
+<code>2FEA83087B8DA79472BBA449C9D5B252B6DBA67C2EAF0DF41C206B1B0EEEF254</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Incentive
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-294436DA22D85E3A</code>;<br />
+source SHA-256<br />
+<code>30B4151092AA9C1157214B00B695BD39A137C010DFE3BC631A64073F946ACD4A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Beneficiary-Resolved Tax
+Expenditure Governance</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.20602489</code>;<br />
+source SHA-256<br />
+<code>C9DFFC852939E257E3EA6CDE9C474707FA1BEE300360C6D402B5E91F2999C52A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Constitutional Computation</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20624488.</p>
+<p>Adam Ableman. <em>Epistemic Situational Awareness (ESA): A
+Phenomenological Control Property of Governed Reasoning Systems</em>.
+Zenodo, 2026. https://doi.org/10.5281/zenodo.18121270.</p>
+<p>Adam Ableman. <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models</em>. Zenodo, 2026. https://doi.org/10.5281/zenodo.18453681.</p>
+<p>Adam Ableman. <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18601631.</p>
+<p>Adam Ableman. <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18633797.</p>
+<p>Adam Ableman. <em>Semantic Custody</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20300952.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>This revision does not yet contain the external quantitative-finance,
+bitemporal-database, model-risk, backtesting, market-microstructure, or
+data-governance literature needed to support its transfer claims. A
+publication candidate requires a source-by-source external review. The
+internal corpus references establish the receiving architecture; they do
+not validate the quant analogies.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Epistemic Situational Awareness (ESA): A
+Phenomenological Control Property of Governed Reasoning Systems.</em>
+Zenodo, 2026. doi:10.5281/zenodo.18121270</p>
+<p>Adam Ableman <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI.</em> Zenodo, 2026. doi:10.5281/zenodo.18633797</p>
+<p>Adam Ableman <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality.</em> Zenodo, 2026.
+doi:10.5281/zenodo.18601631</p>
+<p>Adam Ableman <em>Semantic Custody.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20300952</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848108">10.5281/zenodo.23848108</a></p>

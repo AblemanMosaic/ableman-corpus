@@ -1,0 +1,791 @@
+<h1
+id="retrieval-augmented-reasoning-under-constitutional-constraints">Retrieval-Augmented
+Reasoning under Constitutional Constraints</h1>
+<h2
+id="from-context-injection-to-governed-evidence-admission-and-claim-bound-synthesis">From
+Context Injection to Governed Evidence Admission and Claim-Bound
+Synthesis</h2>
+<h3
+id="retrieval-replay-and-answer-replay-are-distinct-and-neither-establishes-correctness.">Retrieval
+replay and answer replay are distinct, and neither establishes
+correctness.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Retrieval-augmented systems can expand the information available to a
+model, but retrieval quality alone does not determine whether a source
+is current, authorized for access, appropriate for the question,
+admissible for a particular claim, safe to expose, or faithfully
+represented in the answer. Retrieval-Augmented Reasoning under
+Constitutional Constraints (RAR-CC) separates candidate retrieval,
+access authorization, source characterization, purpose-specific
+admission, reasoning, claim-evidence binding, review, and external
+effect.</p>
+<p>The architecture does not presume that conventional RAG is uniformly
+ungoverned or that adding receipts produces legitimacy. A receipt can
+reproduce a biased search; an admitted source can be false; a current
+source can be irrelevant; a revoked source can remain historically
+important; and an answer can misstate accurately retrieved evidence.
+Retrieval replay and answer replay are distinct, and neither establishes
+correctness.</p>
+<p>This paper defines an exact retrieval receipt, multi-dimensional
+evidence artifact, eight evidence postures, context and threat
+boundaries, multi-policy comparison, claim-evidence map, refusal and
+uncertainty behavior, governed Hyperpedia/GMB integration, realization
+funnel, and evaluation program. The goal is not legitimacy optimization
+but bounded traceability, contestability, and policy-relative evidence
+use.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/retrieval-</code></p>
+<p><code>augmented-reasoning-under-constitutional-</code><br />
+<code>constraints/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>011798E74CB23FE8FD8D0F7CD671BF5025D00D36B4908863D4BC41390F157160</code>.
+The source remains unchanged.</p>
+<p>RAR-CC, the separation thesis, typed artifacts, refusal,
+multi-jurisdiction comparison, substrate idea, and institutional framing
+are author material. Formal qualifications, threat model, corpus
+integration, countertests, and decisions are AI editorial or synthetic
+candidates until adopted. No source is admitted or retrieved by this
+paper.</p>
+<h2 id="retrieval-is-not-evidence-admission">1. Retrieval Is Not
+Evidence Admission</h2>
+<p>A retrieval system proposes artifacts based on query, index, ranker,
+filters, access, and corpus state. High similarity does not establish
+truth, relevance to every claim, authority, currentness, or permission
+to disclose.</p>
+<p>Likewise, admitting an artifact under a policy does not establish
+that the policy is legitimate or the artifact is correct. RAR-CC governs
+transitions and preserves their basis; it does not manufacture epistemic
+or institutional authority.</p>
+<h2 id="governed-pipeline">2. Governed Pipeline</h2>
+<p>A bounded pipeline is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;query \\
+&amp;\rightarrow intent\ and\ authority \\
+&amp;\rightarrow retrieval\ plan \\
+&amp;\rightarrow access\ check \\
+&amp;\rightarrow candidates \\
+&amp;\rightarrow normalization \\
+&amp;\rightarrow characterization \\
+&amp;\rightarrow admission\ posture \\
+&amp;\rightarrow context\ construction \\
+&amp;\rightarrow reasoning \\
+&amp;\rightarrow claim\text{-}evidence\ map \\
+&amp;\rightarrow review \\
+&amp;\rightarrow effect
+\end{aligned}.
+$$</span></p>
+<p>Each stage can return <code>DEFER</code>, <code>REFUSE</code>,
+<code>NOT_COVERED</code>,<br />
+or typed partial results. A source may be authorized for retrieval but
+prohibited from display, admitted as historical context but not current
+authority, or usable for contradiction but not support.</p>
+<p>Reasoning remains a proposal until any separate decision or effect
+gate grants standing.</p>
+<h2 id="retrieval-plan-and-receipt">3. Retrieval Plan and Receipt</h2>
+<p>Define a retrieval plan:</p>
+<p><span
+class="math display"><em>Q</em><sub><em>r</em></sub> = (<em>q</em>, <em>i</em>, <em>a</em>, <em>C</em>, <em>f</em>, <em>k</em>, <em>r</em>, <em>p</em>, <em>b</em>),</span></p>
+<p>where <span class="math inline"><em>q</em></span> is the query, <span
+class="math inline"><em>i</em></span> intended use, <span
+class="math inline"><em>a</em></span> requester and authority, <span
+class="math inline"><em>C</em></span> permitted corpora and namespaces,
+<span class="math inline"><em>f</em></span> filters, <span
+class="math inline"><em>k</em></span> candidate budget, <span
+class="math inline"><em>r</em></span> ranker and embedding profile,
+<span class="math inline"><em>p</em></span> admission policy, and <span
+class="math inline"><em>b</em></span> privacy, time, and resource
+bounds.</p>
+<p>The receipt should bind at least query bytes, plan, corpus snapshot
+or enumerated source versions, index build, embedding model, chunker,
+ranker, filters, access decision, candidate IDs and hashes, scores and
+ordering, timestamps and clocks, software/runtime versions, randomness
+where relevant, errors, omitted results, and canonicalization
+profile.</p>
+<p>A hash of retrieved text plus timestamp is insufficient to reproduce
+why those artifacts were selected.</p>
+<h2 id="retrieval-replay-and-answer-replay">4. Retrieval Replay and
+Answer Replay</h2>
+<p><strong>Retrieval replay</strong> reconstructs the candidate set and
+ordering under the recorded plan and dependencies. It may require frozen
+indexes, corpora, rankers, and access policy.</p>
+<p><strong>Answer replay</strong> additionally requires exact model
+identity, system and user context, prompt construction, tools, decoding,
+runtime, and external dependencies. Even then, hardware or service
+nondeterminism may prevent byte-identical output.</p>
+<p>Replayability therefore has levels: reconstructable inputs,
+reproducible retrieval, functionally equivalent reasoning, and
+byte-identical output. Every claim must name its level.</p>
+<h2 id="evidence-artifact">5. Evidence Artifact</h2>
+<p>Represent a candidate artifact as:</p>
+<p><span
+class="math display"><em>E</em> = (<em>i</em><em>d</em>, <em>v</em>, <em>s</em>, <em>h</em>, <em>o</em>, <em>j</em>, <em>t</em>, <em>m</em>, <em>x</em>, <em>u</em>, <em>d</em>),</span></p>
+<p>where <span class="math inline"><em>i</em><em>d</em></span> and <span
+class="math inline"><em>v</em></span> identify work and version, <span
+class="math inline"><em>s</em></span> exact source and lineage, <span
+class="math inline"><em>h</em></span> content hash, <span
+class="math inline"><em>o</em></span> origin and authorship, <span
+class="math inline"><em>j</em></span> jurisdiction and authority claims,
+<span class="math inline"><em>t</em></span> temporal scope and status,
+<span class="math inline"><em>m</em></span> method or evidence type,
+<span class="math inline"><em>x</em></span> access and disclosure
+conditions, <span class="math inline"><em>u</em></span> uncertainty and
+disputes, and <span class="math inline"><em>d</em></span> dependencies
+and derivations.</p>
+<p>Metadata may itself be false or incomplete. Characterization records
+what is claimed and verified separately.</p>
+<h2 id="purpose-specific-evidence-postures">6. Purpose-Specific Evidence
+Postures</h2>
+<p>One A/B/C/R hierarchy is too coarse. Use postures such as:</p>
+<ul>
+<li><code>ADMIT_AS_GOVERNING_AUTHORITY</code></li>
+<li><code>ADMIT_AS_PRIMARY_EVIDENCE</code></li>
+<li><code>ADMIT_AS_SECONDARY_ANALYSIS</code></li>
+<li><code>ADMIT_AS_CONTEXT_ONLY</code></li>
+<li><code>ADMIT_FOR_CONTRADICTION</code></li>
+<li><code>HISTORICAL_ONLY</code></li>
+<li><code>QUARANTINE</code></li>
+<li><code>REVOKED_FOR_CURRENT_RELIANCE</code><br />
+A revoked document may still establish what a policy once said, explain
+a decision, or support audit. It should not silently govern current
+action. Posture is claim- and purpose-relative, not a permanent quality
+score.</li>
+</ul>
+<p>Admission records policy, adjudicator or mechanism, reasons,
+evidence, objections, expiry, and appeal or revision path.</p>
+<h2 id="context-construction">7. Context Construction</h2>
+<p>Admitted artifacts must be transformed into model context without
+losing identity, boundaries, posture, citations, uncertainty, or
+instructions-versus-evidence distinction. Retrieved content is untrusted
+data; embedded commands do not gain authority by appearing in a
+source.</p>
+<p>Context construction should preserve source blocks, stable locators,
+truncation, omitted sections, competing sources, and token-budget
+decisions. It should identify when compression changes evidentiary
+meaning.</p>
+<p><strong>A Constitution for the Context Window</strong> supplies the
+broader context-admission and role architecture. RAR-CC specializes its
+retrieval and evidence path.</p>
+<h2 id="claim-evidence-binding">8. Claim-Evidence Binding</h2>
+<p>An answer should expose atomic or reviewable claims <span
+class="math inline"><em>c</em><sub><em>i</em></sub></span> and their
+relation to evidence:</p>
+<p><span
+class="math display"><em>c</em><sub><em>i</em></sub> ↦ {(<em>E</em><sub><em>j</em></sub>, <em>r</em><em>e</em><em>l</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>, <em>l</em><em>o</em><em>c</em><em>a</em><em>t</em><em>o</em><em>r</em>, <em>p</em><em>o</em><em>s</em><em>t</em><em>u</em><em>r</em><em>e</em>, <em>s</em><em>c</em><em>o</em><em>p</em><em>e</em>)}.</span></p>
+<p>Relations include <code>SUPPORTS</code>, <code>CONTRADICTS</code>,
+<code>QUALIFIES</code>, <code>BACKGROUND</code>,
+<code>DERIVED_FROM</code>,<br />
+and <code>UNSUPPORTED</code>. A citation is not evidence of entailment
+merely because it is attached to a sentence.</p>
+<p>Claims produced from model background knowledge, inference, or
+synthesis should be labeled separately from directly supported source
+claims. Missing support can yield clarification, bounded answer,
+abstention, or refusal according to profile.</p>
+<h2 id="refusal-and-empty-admission-sets">9. Refusal and Empty Admission
+Sets</h2>
+<p>If no artifact is admitted, mandatory refusal is appropriate only
+where the profile requires a source-bound answer. Other profiles may
+allow a clearly labeled model-only response, request clarification,
+retrieve from another authorized corpus, or state that no current
+evidence was found.</p>
+<p>Typed outcomes include <code>ANSWER_WITH_SUPPORT</code>,
+<code>ANSWER_WITH_CONFLICT</code>, <code>PARTIAL</code>,<br />
+<code>MODEL_ONLY</code>, <code>DEFER</code>, <code>REFUSE</code>,
+<code>NOT_FOUND</code>, <code>NOT_AUTHORIZED</code>, and
+<code>NOT_COVERED</code>.</p>
+<p>Refusal is successful governance only when it is correctly scoped,
+explained, reviewable, and not a substitute for fixing avoidable access
+or retrieval failures.</p>
+<h2 id="security-and-privacy-threat-model">10. Security and Privacy
+Threat Model</h2>
+<p>RAR-CC must address:</p>
+<ul>
+<li>corpus poisoning and malicious metadata;</li>
+<li>prompt injection or tool instructions inside retrieved content;</li>
+<li>rank manipulation and retrieval denial;</li>
+<li>stale or mismatched index state;</li>
+<li>cross-tenant or cross-jurisdiction leakage;</li>
+<li>unauthorized existence disclosure through scores or citations;</li>
+<li>data exfiltration through generated output;</li>
+<li>forged provenance, citations, or revocation status;</li>
+<li>adversarial chunks that split decisive context;</li>
+<li>overbroad tool, network, credential, or file access; and</li>
+<li>governance bypass through model memory or alternate retrieval
+paths.</li>
+</ul>
+<p>Admission policy is not a security boundary unless all relevant paths
+are mediated and tested.</p>
+<h2 id="multi-policy-and-multi-jurisdiction-comparison">11. Multi-Policy
+and Multi-Jurisdiction Comparison</h2>
+<p>Parallel profiles can reveal how corpus, authority, time, or evidence
+rules change the admitted set and answer. The comparison package should
+keep each profile, source set, reasoning result, and claim map separate
+before producing a synthesis.</p>
+<p>Divergence may indicate genuine legal or scientific disagreement,
+different questions, corpus omissions, policy defects, temporal change,
+or model error. The system should not resolve jurisdictional conflict
+merely by ranking confidence. Qualified human review and applicable
+institutions remain necessary where consequences require them.</p>
+<h2 id="revocation-and-temporal-reasoning">12. Revocation and Temporal
+Reasoning</h2>
+<p>Revocation changes permitted current reliance; it does not erase
+lineage. Results should bind the effective epoch and indicate whether
+sources later changed. Cached answers and downstream artifacts need
+invalidation or review policies.</p>
+<p>Prospective and historical questions require different admission
+logic. The same document may be revoked for current policy yet
+indispensable for reconstructing a past decision.</p>
+<h2 id="bias-and-governance">13. Bias and Governance</h2>
+<p>Declared corpus boundaries and ranking profiles make some choices
+inspectable. They do not make embeddings, omission, policy, labels,
+authority, or adjudication unbiased. Governance can relocate bias into
+formal rules and privileged decision roles.</p>
+<p>Evaluation should therefore include excluded-source audits,
+alternative rankers, subgroup and jurisdiction analysis, appeals,
+counter-corpora, and tests of who can change the policy. Visibility is a
+condition for contest, not proof of fairness.</p>
+<h2 id="hyperpedia-gmb-and-corpus-integration">14. Hyperpedia, GMB, and
+Corpus Integration</h2>
+<p>A governed <strong>Hyperpedia</strong> can present human-readable
+knowledge entries while the <strong>Governed Meaning Base (GMB)</strong>
+retains exact sources, version families, semantic objects, admission
+postures, claims, conflicts, and revisions. MCIR may provide one
+machine-legible representation for selected governed artifacts; it does
+not make sources true or admitted automatically.</p>
+<p><strong>Reasoning by Way of Receipts</strong> defines bounded
+inference from recorded artifacts. <strong>Epistemic Lineage
+Engine</strong> traces claims through sources and transformations.
+<strong>Governance as Compilation</strong> separates stage contracts,
+remainder, authority, and effect. RAR-CC supplies the retrieval and
+evidence-admission profile connecting them.</p>
+<p>The universal <strong>GSM</strong> can type retrieved-from,
+version-of, admitted-as, supports, contradicts, revoked-for, cited-by,
+and derived-from relations without converting links into truth or
+authority.</p>
+<h2 id="realization-funnel">15. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate lexical, vector, graph,
+database, human-curated, federated, and no-retrieval approaches.</li>
+<li><strong>Specification:</strong> define queries, access, corpora,
+receipts, postures, context, claims, threats, outcomes, and
+effects.</li>
+<li><strong>CM1:</strong> retain admissible configurations, including
+strict-refusal, plural-policy, private, and exploratory variants.</li>
+<li><strong>CM2:</strong> prefer configurations by evidence quality,
+recall, precision, security, privacy, contestability, latency, and
+cost.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for one domain and jurisdiction.</li>
+<li><strong>IR:</strong> produce an Instance Realization or
+Implementation Realization of indexes, policies, stores, context
+builders, models, and review surfaces.</li>
+<li><strong>Evidence:</strong> test retrieval, admission, citation,
+answer, security, replay, and downstream effects.</li>
+<li><strong>Revision:</strong> update corpora, policy, realizations, and
+dependent answers through explicit lineage.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2. It does not
+select an IC, retrieve data, or certify an IR. Realization-stage IR
+remains distinct from Intermediate Representation in MCIR and related
+compiler contexts.</p>
+<h2 id="evaluation-program">16. Evaluation Program</h2>
+<p>Build versioned corpora with current, superseded, contradictory,
+poisoned, private, jurisdiction-specific, and temporally scoped sources.
+Compare ungoverned baseline retrieval, provenance-enriched RAG,
+access-controlled RAG, and full RAR-CC profiles.</p>
+<p>Measure retrieval recall and precision, current-source selection,
+posture accuracy, unauthorized access and disclosure, prompt-injection
+success, poisoning sensitivity, citation correctness, claim entailment,
+unsupported-claim rate, conflict preservation, calibration, refusal
+appropriateness, retrieval replay, answer reproducibility level, review
+time, appeal outcomes, latency, and operating cost.</p>
+<p>Use independent source adjudication and red-team corpora. Do not use
+the same model uncritically as retriever, admissions judge, answerer,
+and evaluator.</p>
+<h2 id="governed-retrieval-and-evidence-admission-profile">Governed
+Retrieval and Evidence-Admission Profile</h2>
+<p>Across the completed P1 corpus, Retrieval-Augmented Reasoning under
+Constitutional Constraints is the <strong>governed retrieval and
+evidence-admission profile connecting Hyperpedia/GMB knowledge custody
+to purpose-specific reasoning context</strong>. It separates search,
+access, identity, admissibility, context projection, claim support,
+answer generation, citation, review, and effect.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Legitimacy Before
+Context</em><br />
+<strong>Supplies:</strong> The promotion gate from candidate material to
+purpose-bounded standing.<br />
+<strong>RAR-CC boundary:</strong> RAR-CC realizes that gate for
+retrieval and answer construction.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Constitution for the
+Context Window</em><br />
+<strong>Supplies:</strong> Governance of context selection, ordering,
+omission, compression, and provider realization.<br />
+<strong>RAR-CC boundary:</strong> RAR-CC supplies admitted evidence
+candidates and their constraints to the context compiler.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Epistemic Lineage
+Engine</em><br />
+<strong>Supplies:</strong> Source, transformation, branch, observation,
+and revision lineage.<br />
+<strong>RAR-CC boundary:</strong> RAR-CC binds retrieved artifacts and
+derived claims into that lineage.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Claim-bounded inference from exact premises
+and decisions.<br />
+<strong>RAR-CC boundary:</strong> RAR-CC creates retrieval, admission,
+context, and answer evidence for that reasoning.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Epistemology
+Under Adversarial Semantic Pressure</em><br />
+<strong>Supplies:</strong> Threats from laundering, omission, drift,
+capture, poisoned evidence, and compliant false narratives.<br />
+<strong>RAR-CC boundary:</strong> RAR-CC applies those defenses to
+corpora, indexes, rankers, policies, and citations.</p></li>
+</ul>
+<p>A reasoning episode should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R= (&amp;question, purpose, jurisdiction, corpus\_heads, \\
+&amp;access\_policy, retrieval\_plan, retrieved\_set, \\
+&amp;admission\_decisions, conflicts, context\_projection, \\
+&amp;claims, evidence\_map, answer, review, effect\_boundary)
+\end{aligned}.
+$$</span></p>
+<p>Retrieval replay and answer replay remain different. Reconstructing
+query, corpus, index, filters, and ranking can reproduce the retrieved
+set without reproducing a stochastic model response. An answer replay
+claim must bind model, provider, context bytes, tools, decoding,
+runtime, and its declared equivalence class.</p>
+<p>Hyperpedia is the pedagogical projection; GMB is the durable
+standing-aware meaning substrate. Neither surface grants truth by
+inclusion. Revoked, superseded, disputed, private, and historically
+relevant sources require purpose-specific postures. Empty admissible
+sets, conflicting regimes, or inadequate evidence can legitimately
+produce<br />
+<code>NO_ADMISSIBLE_EVIDENCE</code>,<br />
+<code>PARTIAL</code>, <code>CONFLICT</code>,
+<code>MODEL_ONLY_PROPOSAL</code>, or <code>REFUSE</code>.</p>
+<p>The universal GSM can type<br />
+<code>PLANS_GOVERNED_RETRIEVAL</code>,
+<code>ACCESSES_UNDER_POLICY</code>,<br />
+<code>RETRIEVES_CANDIDATE_SOURCE</code>,
+<code>ADMITS_FOR_REASONING_PURPOSE</code>,
+<code>PRESERVES_COUNTEREVIDENCE</code>,<br />
+<code>COMPILES_CONTEXT_PROJECTION</code>,
+<code>BINDS_CLAIM_TO_EVIDENCE</code>,
+<code>CITES_WITH_CLAIM_CEILING</code>,<br />
+<code>REVOKES_FOR_CURRENT_USE</code>,<br />
+and<br />
+<code>REQUIRES_SEPARATE_EFFECT_AUTHORIZATION</code>. These relations
+establish RAR-CC’s exact interface role.</p>
+<p>This integration establishes four editorial commitments: retain
+RAR-CC as the governed retrieval-and-evidence-admission profile; adopt
+the reasoning-episode envelope and explicit nonanswer outcomes;
+distinguish retrieval replay from answer replay and bind equivalence
+classes; and make Hyperpedia/GMB inclusion, access, admissibility, claim
+support, citation, and external effect separate transitions.</p>
+<h2
+id="need-triggered-retrieval-with-authority-path-audit">Need-Triggered
+Retrieval with Authority-Path Audit</h2>
+<p>The fixed-seed comparison with Jnana, Continuation Primacy, the
+Cognitive Kernel, and Authority Laundering Theory gives a retrieval
+episode an explicit initiation and authority chain:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R^*= (&amp;observation, exigence, purpose, question, corpus\_heads, \\
+&amp;access, retrieval, admission, evidence\_map, \\
+&amp;continuation\_use, authority\_audit, context, answer, \\
+&amp;effect\_boundary, remainder)
+\end{aligned}.
+$$</span></p>
+<p>CogK may identify a knowledge need and allocate attention or custody
+to retrieval. The exigence claim can be wrong, manipulated, stale, or
+insufficient and does not bypass access or evidence admission.
+Continuation analysis may use admitted evidence to compare viable and
+terminal options without making retrieval rank a decision rule.</p>
+<p>Jnana can consume admitted evidence through declared representation
+and law contracts, then separately lower and mediate effects. Authority
+Laundering analysis tests whether a retrieved source, citation, policy,
+institutional label, or repeated downstream use is being treated as
+authority it does not possess.</p>
+<p>Every authority-bearing claim should preserve normative warrant,
+causal path, alternatives, jurisdiction, validity time, and dependent
+uses. The universal GSM can type<br />
+<code>TRIGGERED_BY_KNOWLEDGE_EXIGENCE</code>,<br />
+<code>RETRIEVES_FOR_CONTINUATION_DECISION</code>,
+<code>ADMITTED_AS_JNANA_INPUT</code>,<br />
+<code>AUDITS_RETRIEVED_AUTHORITY</code>,
+<code>REFUSES_CITATION_AS_AUTHORITY</code>,<br />
+<code>PROPAGATES_AUTHORITY_DOWNGRADE</code>, and<br />
+<code>LEAVES_RETRIEVAL_REMAINDER</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the need-triggered episode; keep CogK and continuation roles
+non-authorizing; define the Jnana evidence-input interface; and apply
+dual authority attribution audits to retrieved sources and dependent
+claims.</p>
+<h2
+id="retrieval-as-a-need-triggered-dependency-propagating-evidence-service">Retrieval
+as a Need-Triggered, Dependency-Propagating Evidence Service</h2>
+<p>Five downstream uses confirm the governed-retrieval profile at the
+junction among knowledge need, evidence admission, continuation
+analysis, transformation, and authority audit. The Cognitive Kernel may
+identify an exigence and assign retrieval work. Continuation Primacy may
+consume admitted evidence to compare reachable options. Jnana may accept
+purpose-bound evidence through a declared input contract. Authority
+Laundering analysis tests whether rank, citation, institutional label,
+or repeated use has acquired unearned authority. The minimal SMT fixture
+supplies node, edge, path, and interpretation gates below the full
+reasoning episode.</p>
+<p>The reverse dependency adds a propagation contract:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;source, access, identity, admission, claim, answer, \\
+&amp;decision, effect, dependents, validity\_epoch, \\
+&amp;revision\_policy)
+\end{aligned}.
+$$</span></p>
+<p>If access, identity, authority, freshness, admission, or claim
+support changes materially, the system must locate dependent contexts,
+answers, decisions, and effect proposals. The result may be
+<code>UNAFFECTED</code>,<br />
+<code>REVIEW_REQUIRED</code>, <code>DOWNGRADED</code>,
+<code>CONFLICTED</code>, <code>RETRACTED_FOR_CURRENT_USE</code>,<br />
+or <code>HISTORICAL_ONLY</code>. The earlier episode remains
+reconstructable; propagation changes current permitted reliance rather
+than erasing lineage.</p>
+<p>Need does not authorize access. Access does not admit evidence.
+Admission does not establish truth. Evidence does not choose a
+continuation. Citation does not establish authority. A generated answer
+does not authorize an external effect. Empty, private, conflicted,
+revoked, or inadequate evidence sets remain valid nonanswer
+outcomes.</p>
+<p>The universal GSM can type<br />
+<code>TRIGGERED_BY_EPISTEMIC_NEED</code>,<br />
+<code>RETRIEVES_UNDER_ACCESS_POLICY</code>,
+<code>ADMITS_FOR_PURPOSE</code>,
+<code>SUPPORTS_CLAIM_WITH_CEILING</code>,<br />
+<code>CONSUMED_BY_CONTINUATION_ANALYSIS</code>,
+<code>PROPAGATES_SOURCE_REVISION</code>,<br />
+<code>DOWNGRADES_DEPENDENT_ANSWER</code>, and<br />
+<code>PRESERVES_HISTORICAL_EPISODE</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the dependency-propagation contract; require
+downstream impact review after material source or admission change;
+preserve historical reconstruction while changing current reliance; and
+retain need, access, admission, truth, decision, authority, and effect
+as separate transitions.</p>
+<h2 id="counterevidence-and-failure-modes">17. Counterevidence and
+Failure Modes</h2>
+<p>The architecture should be narrowed or rejected where: (1)
+conventional RAG is described uniformly; (2) retrieval is assumed to
+reduce hallucination; (3) similarity implies evidence; (4) access
+implies admissibility; (5) admission implies truth; (6) policy implies
+legitimacy; (7) receipts imply correctness; (8) a document hash
+reproduces ranking; (9) retrieval replay implies answer replay; (10)
+deterministic settings hide service variation; (11) metadata is trusted
+without verification; (12) one class score replaces purpose; (13)
+revoked sources disappear from history; (14) historical sources govern
+current action; (15) empty evidence always forces refusal; (16)
+model-only claims are unlabeled; (17) citations do not entail claims;
+(18) truncation removes decisive qualifiers; (19) compression changes
+meaning; (20) conflicting evidence is averaged away; (21) source
+instructions reach tools; (22) corpus poisoning passes admission; (23)
+malicious metadata gains standing; (24) index staleness is hidden; (25)
+rank manipulation excludes counterevidence; (26) access leaks across
+tenants; (27) retrieval reveals sensitive existence; (28) output
+exfiltrates protected data; (29) model memory bypasses corpus rules;
+(30) multi-jurisdiction synthesis erases differences; (31) legal or
+scientific conclusions exceed competence; (32) bias becomes formalized
+but unchallengeable; (33) policy authors are unaudited; (34) cached
+answers ignore revocation; (35) Hyperpedia presentation becomes
+authority; (36) GMB inclusion becomes validation; (37) GSM links become
+truth; (38) corpus works are merged; (39) a specification is presented
+as implemented; (40) existing governed RAG already provides the
+capability; (41) costs exceed benefits; or (42) external research
+contradicts novelty or institutional claims.</p>
+<h2
+id="retrieval-proposes-evidence-it-does-not-authorize-belief">Retrieval
+Proposes Evidence; It Does Not Authorize Belief</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Retrieval-Augmented Reasoning under Constitutional Constraints
+separates finding material from admitting it for a purpose, constructing
+context, making a claim, and authorizing an effect. Exact receipts and
+dependency propagation can make those transitions contestable. They
+cannot turn retrieval rank, policy admission, citation, or a generated
+answer into truth or legitimate authority.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Poisoned-corpus attack.</strong> Repeated, optimized,
+forged, or instruction-bearing material dominates retrieval and passes
+weak metadata checks.</li>
+<li><strong>Omission attack.</strong> Decisive contrary, minority,
+inaccessible, private, superseded, or out-of-index evidence never enters
+the candidate set.</li>
+<li><strong>Citation-entailment attack.</strong> A source is real and
+relevant to the topic but does not support the generated proposition or
+its strength.</li>
+<li><strong>Temporal-revocation attack.</strong> Cached contexts and
+answers continue to rely on expired, corrected, retracted, or newly
+restricted material.</li>
+<li><strong>Access-disclosure attack.</strong> Retrieval reveals the
+existence, metadata, snippets, embeddings, or derived facts of material
+the requester may not access.</li>
+<li><strong>Policy-legitimacy attack.</strong> A machine-readable
+admission policy is treated as lawful, fair, complete, or properly
+authorized merely because it is applied consistently.</li>
+<li><strong>Self-confirmation attack.</strong> Generated synthesis
+enters the corpus, is retrieved as independent support, and recursively
+increases its own standing.</li>
+<li><strong>Jurisdiction-collapse attack.</strong> Sources governed by
+different law, authority, purpose, population, or evidentiary standard
+are merged into one answer.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a governed retrieval and evidence-admission
+architecture. It does not establish source truth, policy legitimacy,
+answer correctness, citation entailment, privacy, security, bias
+reduction, currentness, jurisdictional validity, or improved reasoning.
+A complete receipt reconstructs declared transitions; it does not prove
+that the corpus or decision was complete.</p>
+<p>Validation requires adversarial corpora, exact source and index
+versions, access and disclosure tests, claim-level entailment review,
+omission and counterevidence measures, temporal propagation, cache
+invalidation, self-citation controls, multi-policy separation, and
+current external research. No data access, indexing, retrieval, model
+execution, or external research was performed in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is an answer that can show what was searched, what
+was inaccessible or omitted, why each source was admitted, which claim
+it supports or contests, when reliance expires, and how a later
+correction propagates.</p>
+<h2 id="conclusion">19. Conclusion</h2>
+<p>Retrieval becomes governable when the system can explain what it
+searched, what it was allowed to access, what it found, how each
+artifact was characterized, which uses were admitted, what the answer
+claimed, and which evidence supports or contradicts each claim.</p>
+<p>That architecture does not turn generated text into legitimate
+judgment. It provides a bounded, contestable path from query to
+evidence-aware proposal, preserving the places where authority, truth,
+uncertainty, privacy, and effect still require independent
+decisions.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires authorized primary-source review of
+retrieval-augmented generation, information retrieval and ranking,
+provenance, evidence admission, citation entailment, prompt injection
+and corpus poisoning, access control, privacy, temporal and legal
+information retrieval, scientific evidence systems, reproducibility,
+federated search, and existing governed-RAG architectures.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that retrieval-augmented systems can expand the
+information available to a model, but retrieval quality alone does not
+determine whether a source is current, authorized for access,
+appropriate for the question, admissible for a particular claim, safe to
+expose, or faithfully represented in the answer. Its nearest external
+comparison fields are ai, provenance, governance. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848205">10.5281/zenodo.23848205</a></p>

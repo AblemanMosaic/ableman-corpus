@@ -1,0 +1,3016 @@
+<h1 id="constraint-bearing-composability">Constraint-Bearing
+Composability</h1>
+<h2
+id="an-ontology-of-constraint-carriage-component-standing-and-architectural-admission">An
+Ontology of Constraint Carriage, Component Standing, and Architectural
+Admission</h2>
+<h3
+id="parts-become-a-structure-when-their-relations-can-bear-the-present-they-become-an-architecture-when-those-relations-can-bear-what-comes-next.">Parts
+become a structure when their relations can bear the present; they
+become an architecture when those relations can bear what comes
+next.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Composability is commonly treated as a binary property: components
+either can or cannot be combined. This framing obscures distinctions
+among aggregation, formation, compatibility, retention, realization,
+invariant preservation, component standing, recursive closure, and
+architectural admissibility.</p>
+<p>This paper introduces <strong>Constraint-Bearing
+Composability</strong>, a diagnostic ontology for analyzing
+compositional validity. Its central descriptive object is
+<strong>constraint carriage</strong>: the allocation of responsibility
+for preserving designated invariants among observers, environment,
+component-intrinsic structure, interfaces, mediators, internal
+organization, architecture, and constitutional rules. Carriage is
+decomposed along two independent axes, locus and granularity, and
+assessed for adequacy against a declared disturbance envelope.</p>
+<p>The framework begins with six primitives: components, relations,
+context, disturbance envelope, required invariants, and carriage
+allocation. It then separates four judgment layers routinely collapsed
+under the word <em>composition</em>. A relation may be proposed; a
+composite may form; the formed composite may or may not be valid; and a
+governing regime may or may not admit reliance upon it. Formation is
+ontic, so invalid and unadmitted composites remain representable objects
+of diagnosis. Standing—justified eligibility to be treated as a bounded
+component—is a cross-cutting status rather than a fifth layer, and
+exposure is distinguished from justified exposure.</p>
+<p>Composition is non-monotonic with respect to admissibility:
+pairwise-compatible parts may yield a globally inadmissible
+configuration through dependency cycles, authority amplification,
+privacy leakage, semantic contradiction, resource exhaustion, or
+correlated failure.</p>
+<p>The framework complements hierarchy theory, modularity, interface
+theory, contract-based design, and compositional reasoning without
+replacing their formalisms. It asks a prior question: what carries the
+constraints by which a composition remains valid, under which
+disturbances, and at what scale may the resulting whole justifiably be
+relied upon?</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>A pile, a stack, a joint, a component, and an architecture all
+contain more than one part.</p>
+<p>They are not the same kind of whole.</p>
+<p>A pile of irregular blocks is held together primarily by containment,
+proximity, or an observer’s decision to classify the objects as one
+collection. A vertical stack of regular cubes exhibits a constitutive
+relation: geometry permits alignment, while gravity and a level surface
+preserve the arrangement. Yet the stack separates when lifted, inverted,
+or disturbed laterally.</p>
+<p>Interlocking bricks exhibit another capability. Their interface
+actively resists separation and misalignment. Joined parts can be moved,
+rotated, and incorporated into larger assemblies. When such an assembly
+forms a stable wall panel with exposed attachment points, the wall may
+itself become a bounded component in a room or building.</p>
+<p>The difference is not adequately captured by saying that one
+arrangement is simply “more composable” than another. Several distinct
+questions are involved:</p>
+<ul>
+<li>Has a relation merely been proposed, or has a composite actually
+formed?</li>
+<li>Is the formed relation compatible with the participating
+components?</li>
+<li>What carries the constraint required to preserve the relation?</li>
+<li>Which disturbances can the relation survive?</li>
+<li>Which properties must remain invariant?</li>
+<li>Does the whole expose a boundary, and is that exposure
+justified?</li>
+<li>Can it participate in further composition?</li>
+<li>Does the complete configuration remain admissible?</li>
+<li>What evidence supports these claims?</li>
+<li>Has reliance upon the result been permitted?</li>
+</ul>
+<p>The framework developed here supplies a common vocabulary for
+answering those questions.</p>
+<blockquote>
+<p><strong>Constraint-Bearing Composability is the capability of bounded
+components to enter a relation whose constraint-carriage allocation
+supports the realization of a whole with designated invariants, the
+preservation of those invariants throughout a declared disturbance
+envelope, and, where applicable, the resulting whole’s justified use as
+a component in further composition.</strong></p>
+</blockquote>
+<p>This is the paper’s canonical definition.</p>
+<p>The framework is a <strong>diagnostic ontology of compositional
+validity</strong>, not a universal scalar ranking and not a substitute
+for domain-specific engineering, proof, testing, certification, or
+governance. Its purpose is to distinguish kinds of compositional claim,
+locate the mechanisms carrying those claims, expose residual
+assumptions, and reveal where local validity may fail under higher-order
+combination.</p>
+<p>The physical example provides an intuitive entry point, but the
+structure recurs elsewhere. A software function may accept another
+component’s output while misinterpreting its units. A protocol adapter
+may connect two systems while discarding failure semantics. An
+institutional office may receive a procedurally valid delegation that
+exceeds the delegator’s jurisdiction. A research summary may be inserted
+into a larger argument while losing the conditions that justified its
+claims. A financial instrument may be legally combined with another
+while creating nonlinear correlated exposure.</p>
+<p>In each case, connection or formation is possible.</p>
+<p>The deeper question is whether the resulting relation can bear the
+consequences of connection.</p>
+<p>Compact entity records appear in Appendix A.4 and a consolidated
+notation index in Appendix A.5.</p>
+<hr />
+<h2 id="primitive-model">2. Primitive Model</h2>
+<p>A compositional configuration is represented as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\Sigma = \langle &amp;\mathcal{N}, \mathcal{R}, \Gamma, \Lambda, K,
+\chi\rangle
+\end{aligned}
+$$</span></p>
+<p>where:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">𝒩</span></td>
+<td>Participating components</td>
+</tr>
+<tr>
+<td><span class="math inline">ℛ</span></td>
+<td>Relations among those components</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>Γ</em></span></td>
+<td>Environmental, architectural, and governance context</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>Λ</em></span></td>
+<td>Disturbance envelope</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>K</em></span></td>
+<td>Required invariants</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>χ</em></span></td>
+<td>Constraint-carriage allocation</td>
+</tr>
+</tbody>
+</table>
+<p>These six primitives are sufficient for the analyses developed here.
+They are not claimed to exhaust every possible ontology or formal theory
+of composition.</p>
+<h3 id="components">2.1 Components</h3>
+<p>A component is an entity treated as sufficiently bounded for the
+purpose of a proposed composition. Its boundary may be physical,
+computational, informational, semantic, contractual, organizational, or
+jurisdictional.</p>
+<p>A component need not be elementary. It may already be a complex
+composition. What matters is that it presents an identifiable exterior
+through which another relation may be proposed. A compact component
+record is given in Appendix A.4.</p>
+<h3 id="relations">2.2 Relations</h3>
+<p>A relation specifies how components interact or are intended to
+interact.</p>
+<p>The relation mode <span class="math inline"><em>μ</em></span> may
+designate attachment, alignment, containment, sequencing, invocation,
+exchange, delegation, inference, transformation, mediation, or
+aggregation.</p>
+<p>The same components may be validly composable under one relation and
+invalid under another. A beam may be safe in compression and unsafe in
+tension. A dataset may be admissible for aggregate analysis and
+inadmissible for individual identification. An office may possess
+authority to advise but not to command.</p>
+<p>Composition is relation-sensitive.</p>
+<h3 id="context-and-its-projections">2.3 Context and Its
+Projections</h3>
+<p>The context <span class="math inline"><em>Γ</em></span> contains
+conditions not reducible to any component considered alone. These may
+include gravity, temperature, material tolerances, operating-system
+services, available memory, network conditions, legal jurisdiction,
+architectural rules, identity systems, evidentiary standards, historical
+state, prior delegations, and resource ceilings.</p>
+<p>The context decomposes into four parts:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\Gamma = \langle &amp;E_{\Gamma}, K_{\Gamma}, P_{\Gamma},
+H_{\Gamma}\rangle
+\end{aligned}
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span
+class="math inline"><em>E</em><sub><em>Γ</em></sub></span></td>
+<td>Contextual guarantees supplied by the environment</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>K</em><sub><em>Γ</em></sub></span></td>
+<td>Architectural and constitutional invariants</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>P</em><sub><em>Γ</em></sub></span></td>
+<td>Admission rules of the governing regime</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>Γ</em></sub></span></td>
+<td>Relevant history and lineage</td>
+</tr>
+</tbody>
+</table>
+<p>Validity and admission must not be indexed by the same
+undifferentiated context, or the distinction between them collapses at
+the level of notation. The framework therefore uses two projections:</p>
+<p><span
+class="math display"><em>Γ</em><sub>val</sub> = ⟨<em>E</em><sub><em>Γ</em></sub>, <em>K</em><sub><em>Γ</em></sub>, <em>H</em><sub><em>Γ</em></sub>⟩   <em>Γ</em><sub>adm</sub> = ⟨<em>P</em><sub><em>Γ</em></sub>, <em>K</em><sub><em>Γ</em></sub>, <em>H</em><sub><em>Γ</em></sub>⟩</span></p>
+<p>Validity-class predicates—compatibility, retention, realization,
+preservation, validity, standing, and architectural admissibility—are
+indexed by <span class="math inline"><em>Γ</em><sub>val</sub></span>.
+Only the admission decision is indexed by <span
+class="math inline"><em>Γ</em><sub>adm</sub></span>.</p>
+<p>The two projections share <span
+class="math inline"><em>K</em><sub><em>Γ</em></sub></span> and <span
+class="math inline"><em>H</em><sub><em>Γ</em></sub></span>, so
+architectural invariants and history bear on both questions, while the
+regime’s admission rules <span
+class="math inline"><em>P</em><sub><em>Γ</em></sub></span> bear only on
+permission and the environment’s guarantees <span
+class="math inline"><em>E</em><sub><em>Γ</em></sub></span> bear only on
+what the composition actually achieves. Whether a composite preserves
+its invariants is thereby formally independent of whether any authority
+has permitted reliance upon it.</p>
+<p>Architectural admissibility, developed in Section 13, is a
+validity-class predicate evaluated at configuration scale under <span
+class="math inline"><em>Γ</em><sub>val</sub></span>. It asks whether a
+configuration satisfies architectural and constitutional invariants, not
+whether a regime has issued a permission.</p>
+<p>The projections also bound what may be designated an invariant.
+Because validity-class predicates are indexed by <span
+class="math inline"><em>Γ</em><sub>val</sub></span>, which does not
+contain <span
+class="math inline"><em>P</em><sub><em>Γ</em></sub></span>, an invariant
+whose truth depends upon the regime’s current admission rules cannot be
+evaluated by them: the information required is not in scope. Invariants
+referring to admission <em>history</em> remain evaluable, since <span
+class="math inline"><em>H</em><sub><em>Γ</em></sub></span> is shared by
+both projections. A composite may therefore be required to preserve the
+property that its authority was validly delegated at some past moment,
+but not the property that it is presently admitted. The restriction is
+enforced by the indexing rather than by stipulation, and it is what
+prevents the distinction between validity and admission from being
+reintroduced through the invariant set.</p>
+<p>A compositional judgment made without context is usually
+incomplete.</p>
+<h3 id="disturbance-envelope">2.4 Disturbance Envelope</h3>
+<p>The disturbance envelope <span class="math inline"><em>Λ</em></span>
+is the declared set of conditions throughout which a compositional claim
+is intended to hold. It may include force, motion, vibration, fatigue,
+temperature, latency, concurrency, partial failure, adversarial input,
+semantic ambiguity, uncertainty, authority pressure, version change, and
+evidentiary degradation.</p>
+<p>No relation bears every conceivable disturbance. Compositional claims
+are therefore envelope-relative, even when their envelope remains
+unstated.</p>
+<h3 id="properties-invariants-and-guarantees">2.5 Properties,
+Invariants, and Guarantees</h3>
+<p>A <strong>property</strong> is any describable feature of a
+component, relation, configuration, or history.</p>
+<p>An <strong>invariant</strong> is a property designated as required to
+remain true throughout the relevant disturbance envelope.</p>
+<p>A <strong>guarantee</strong> is an externally exposed commitment that
+designated properties will hold under declared assumptions.</p>
+<p>If <span class="math inline"><em>P</em></span> is the relevant
+property set, then:</p>
+<p><span class="math display"><em>K</em> ⊆ <em>P</em></span></p>
+<p>A guarantee exposed by component <span
+class="math inline"><em>C</em></span> may assert:</p>
+<p><span
+class="math display"><em>G</em>: <em>A</em> ⇒ Preserves<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em>, <em>K</em>, <em>Λ</em>)</span></p>
+<p>The distinction is structural. A component may possess many
+properties irrelevant to a particular composition. An invariant is
+selected because its loss would invalidate the compositional claim. A
+guarantee exposes a commitment concerning such preservation to an
+external actor.</p>
+<h3 id="constraint-carriage-allocation">2.6 Constraint-Carriage
+Allocation</h3>
+<p>The constraint-carriage allocation <span
+class="math inline"><em>χ</em></span> identifies where responsibility
+for preserving <span class="math inline"><em>K</em></span> throughout
+<span class="math inline"><em>Λ</em></span> resides.</p>
+<p>Carriage decomposes along two independent axes. The first is
+<strong>locus</strong>:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\chi = \langle &amp;\chi_O, \chi_E, \chi_G, \chi_I, \chi_M, \chi_U,
+\chi_A, \\
+&amp;\chi_Q\rangle
+\end{aligned}
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Carriage locus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>O</em></sub></span></td>
+<td>Observer, classification, or containment</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>E</em></sub></span></td>
+<td>Environmental conditions</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>G</em></sub></span></td>
+<td>Component-intrinsic geometry, material, or structure</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>I</em></sub></span></td>
+<td>Interfaces</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>M</em></sub></span></td>
+<td>Mediators</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>U</em></sub></span></td>
+<td>Internal organization of the resulting whole</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>A</em></sub></span></td>
+<td>Architecture</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>χ</em><sub><em>Q</em></sub></span></td>
+<td>Constitutional or highest-order admissibility rules</td>
+</tr>
+</tbody>
+</table>
+<p>The second axis is <strong>granularity</strong>—whether the
+allocation is recorded for a component, a relation, or a complete
+configuration—and is developed in Section 6.1. A locus allocation may be
+stated at any granularity, and the axes should not be confused: <span
+class="math inline"><em>χ</em><sub><em>G</em></sub></span> names a
+<em>locus</em> internal to a component, whereas <span
+class="math inline"><em>χ</em>(<em>C</em>)</span> names the allocation
+recorded <em>for</em> a component, which may itself distribute across
+several loci.</p>
+<p>Constraint carriage is an allocation, not a transition and not a
+judgment of adequacy. It describes the current distribution of
+preserving work.</p>
+<p>The central diagnostic question is:</p>
+<blockquote>
+<p><strong>What is doing the work required to keep this composition
+valid?</strong></p>
+</blockquote>
+<hr />
+<h2 id="aggregation-realization-and-constitutive-relation">3.
+Aggregation, Realization, and Constitutive Relation</h2>
+<p>The distinction between aggregation and composition depends upon
+whether relations among the participating components are constitutive of
+the relevant whole.</p>
+<h3 id="aggregation">3.1 Aggregation</h3>
+<p>Aggregation is common containment, proximity, or membership without a
+constitutive relation among the aggregated members. Examples include
+blocks in a bin, files in a directory, sources in a reading list, and
+employees on a roster.</p>
+<p>The aggregate may depend upon an external container, classification,
+or observer. If that container is itself modeled as a component, the
+larger arrangement containing the items and the container may constitute
+a composition. The items considered only as co-members remain an
+aggregate.</p>
+<h3 id="realization-and-preservation">3.2 Realization and
+Preservation</h3>
+<p>Constitutive relations typically do more than keep an existing whole
+intact. They bring the whole and its defining properties into being.</p>
+<p>A chemical reaction generates a compound. Joining structural parts
+creates a load path that did not previously exist. An inference produces
+a conclusion. A legal act creates an office or an obligation. In each
+case the relation is not maintaining a pre-existing property but
+establishing one.</p>
+<p>The framework therefore distinguishes:</p>
+<ul>
+<li><strong>realization:</strong> bringing the whole and its designated
+properties into being;</li>
+<li><strong>preservation:</strong> keeping those properties true under
+disturbance.</li>
+</ul>
+<p>The realization predicate is envelope-free:</p>
+<p><span
+class="math display">Realizes<sub><em>Γ</em><sub>val</sub></sub>(⟨𝒩, 𝒮⟩, <em>K</em>)</span></p>
+<p>It holds when the relation set <span class="math inline">𝒮</span>
+over participants <span class="math inline">𝒩</span> establishes a whole
+in which <span class="math inline"><em>K</em></span> initially holds.
+The envelope belongs to preservation alone:</p>
+<p><span
+class="math display">Preserves<sub><em>Γ</em><sub>val</sub></sub>(⟨𝒩, 𝒮⟩, <em>K</em>, <em>Λ</em>)</span></p>
+<p>Neither predicate entails the other, and the separation is not merely
+terminological. A composite may be correctly realized at formation and
+fail under the very first disturbance: a joint may be properly made and
+then creep, a delegation may be validly issued and then exceeded, an
+inference may be soundly drawn and then lose its warrant when a cited
+source is withdrawn. Conversely, a relation may contribute to preserving
+a whole it played no part in bringing into being, as when external
+bracing stabilizes a structure it did not create.</p>
+<p>The two capabilities may also be carried by different mechanisms.
+Realization is often carried by an act, a procedure, or a
+transformation, while preservation is carried by geometry, interfaces,
+custody, or governance that persists after the act is complete.
+Constraint carriage should therefore be recorded for both, and a
+composition whose realizing mechanism is well evidenced tells one little
+about whether its preserving mechanism is adequate.</p>
+<h3 id="the-constitutive-relation-criterion">3.3 The
+Constitutive-Relation Criterion</h3>
+<p>A relation is constitutive with respect to an invariant set <span
+class="math inline"><em>K</em></span> and disturbance envelope <span
+class="math inline"><em>Λ</em></span> when it belongs to at least one
+minimal relation set that both realizes <span
+class="math inline"><em>K</em></span> and preserves it throughout <span
+class="math inline"><em>Λ</em></span>.</p>
+<p>Writing <span class="math inline"><em>Θ</em>(𝒮)</span> for the
+conjunction:</p>
+<p><span
+class="math display"><em>Θ</em>(𝒮) ≡ Realizes<sub><em>Γ</em><sub>val</sub></sub>(⟨𝒩, 𝒮⟩, <em>K</em>) ∧ Preserves<sub><em>Γ</em><sub>val</sub></sub>(⟨𝒩, 𝒮⟩, <em>K</em>, <em>Λ</em>)</span></p>
+<p>a relation <span class="math inline"><em>R</em></span> is
+constitutive when:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\exists\,\mathcal{S} \subseteq \mathcal{R}:\quad R \in \mathcal{S}
+\; \\
+&amp;\land \; \Theta(\mathcal{S}) \; \\
+&amp;\land \; \forall\,\mathcal{S}' \subsetneq \mathcal{S}:\; \\
+&amp;\ne g\,\Theta(\mathcal{S}')
+\end{aligned}
+$$</span></p>
+<p>The final conjunct establishes minimality: no proper subset of <span
+class="math inline">𝒮</span> suffices.</p>
+<p>Minimality is taken with respect to the conjunction, not to either
+conjunct separately. Within a minimal <span
+class="math inline">𝒮</span>, the relations doing the realizing work and
+those doing the preserving work may be disjoint, so a relation may be
+constitutive by virtue of either contribution. Where an analysis needs
+to distinguish them, the two conjuncts may be minimized independently,
+yielding a minimal realizing set and a minimal preserving set that need
+not coincide; the bracing example above is exactly such a case.</p>
+<p>The criterion permits redundant systems. A relation may remain
+constitutive even when removing it does not immediately destroy the
+whole, provided it belongs to some minimal sufficient relation set.</p>
+<p>The distinction can therefore be stated as:</p>
+<p><span class="math display">Aggregation  ⇏ Composition </span></p>
+<p>Composition begins when one or more relations among participating
+components realize and preserve the properties by which the whole is
+identified or used.</p>
+<hr />
+<h2 id="four-layers-of-compositional-judgment">4. Four Layers of
+Compositional Judgment</h2>
+<p>The word <em>composition</em> often collapses several logically
+different events. The framework separates four layers.</p>
+<h3 id="proposal">4.1 Proposal</h3>
+<p>A relation may be proposed without being realized:</p>
+<p><span
+class="math display">Proposed<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>, <em>R</em>)</span></p>
+<p>A proposal identifies intended participants, relation mode,
+disturbance envelope, required invariants, and anticipated carriage.</p>
+<h3 id="formation">4.2 Formation</h3>
+<p>A composite forms when the proposed or accidental relation is
+actually instantiated:</p>
+<p><span
+class="math display">Forms (<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>, <em>R</em>, <em>C</em><sub>3</sub>)</span></p>
+<p>Formation is ontic. It says that a resulting object or configuration
+exists. It does not imply compatibility, invariant preservation,
+standing, or admission.</p>
+<p>Components may be forcibly, accidentally, or defectively joined.
+Invalid compositions remain real objects of analysis. The corresponding
+formation operator is given in Section 10.5.</p>
+<h3 id="validity">4.3 Validity</h3>
+<p>A formed composite is valid with respect to a context, its relations,
+envelope, and invariant set when it preserves the required
+invariants:</p>
+<p><span
+class="math display">Valid<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>3</sub> ∣ <em>𝜚</em>, <em>Λ</em>, <em>K</em>)</span></p>
+<p>The second argument <span class="math inline"><em>𝜚</em></span> is a
+relation or a relation set: a single relation when the claim concerns
+one connection, and the constitutive relation set of Section 10.6 when
+it concerns the composite as a whole. As with <span
+class="math inline">Preserves </span>, scope is carried by the argument
+rather than by predicate arity.</p>
+<p>Validity is claim-relative. The same formed object may be valid for
+one purpose or envelope and invalid for another. An unindexed assertion
+of validity is therefore incomplete.</p>
+<h3 id="admission">4.4 Admission</h3>
+<p>Admission is an authoritative judgment permitting use or reliance
+within a governing regime:</p>
+<p><span
+class="math display">Admitted<sub><em>Γ</em><sub>adm</sub></sub>(<em>C</em><sub>3</sub>, <em>p</em>, ℰ<sub><em>A</em></sub>)</span></p>
+<p>where <span class="math inline"><em>p</em></span> is the admitted
+purpose and <span class="math inline">ℰ<sub><em>A</em></sub></span> is
+the admission evidence object of Section 8.5.</p>
+<p>The dependency is therefore:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\text{proposal} \\
+&amp;\rightarrow \text{formation} \\
+&amp;\rightarrow \text{validity judgment} \\
+&amp;\rightarrow \text{admission judgment}
+\end{aligned}
+$$</span></p>
+<p>No arrow implies that the next stage necessarily succeeds. Because
+validity is evaluated under <span
+class="math inline"><em>Γ</em><sub>val</sub></span> and admission under
+<span class="math inline"><em>Γ</em><sub>adm</sub></span>, the two
+judgments are formally independent: neither entails the other, and each
+defective combination remains expressible.</p>
+<h3 id="standing-is-not-a-fifth-layer">4.5 Standing Is Not a Fifth
+Layer</h3>
+<p>The four layers above concern events and judgments about events: a
+relation is proposed, a composite forms, its invariant preservation is
+assessed, and a regime decides whether reliance is permitted.</p>
+<p><strong>Standing</strong>—the justified eligibility of a formed
+composite to be treated as a bounded component for a declared purpose—is
+not a fifth event in this sequence. It is a <strong>cross-cutting
+status</strong> concerning whether reliance upon a boundary is
+warranted. Standing is developed in Section 8.3, and the relationship a
+well-governed admission regime should maintain between standing and
+admission is stated in Section 8.6. Because standing is a status rather
+than a stage, it may be acquired, retained, narrowed, or lost
+independently of any particular admission decision.</p>
+<hr />
+<h2 id="compatibility-retention-and-invariant-preservation">5.
+Compatibility, Retention, and Invariant Preservation</h2>
+<h3 id="compatibility">5.1 Compatibility</h3>
+<p>Compatibility is a local predicate concerning whether a proposed
+relation satisfies the applicable requirements of its participants and
+context:</p>
+<p><span
+class="math display">Compatible<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>, <em>R</em>)</span></p>
+<p>Compatibility is predictive and normative. It indicates that the
+relation is expected to be establishable without immediate contradiction
+of local conditions.</p>
+<p>Compatibility is not required for formation. Incompatible parts can
+be forced together. Incompatible services can exchange malformed
+messages. Incompatible authorities can issue contradictory orders.
+Compatibility instead concerns whether the relation is locally
+well-formed for its intended use.</p>
+<h3 id="retention">5.2 Retention</h3>
+<p>A formed relation is retentive when it remains established throughout
+the disturbance envelope:</p>
+<p><span
+class="math display">Retains<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>3</sub>, <em>R</em>, <em>Λ</em>)</span></p>
+<p>Retention concerns persistence of relation. It does not imply
+preservation of every required invariant.</p>
+<h3 id="invariant-preservation">5.3 Invariant Preservation</h3>
+<p>A formed composition is invariant-bearing when it preserves the
+designated invariants throughout the disturbance envelope:</p>
+<p><span
+class="math display">Preserves<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>3</sub>, <em>K</em>, <em>Λ</em>)</span></p>
+<p>The preservation predicate takes a uniform three-place form in which
+the first argument is the <strong>subject</strong>: a component, a
+composite, a relation set with its participants, or a complete
+configuration. Scope is determined by the subject rather than by
+predicate arity.</p>
+<p>Retention is a special case in which continued attachment or
+correspondence is itself the principal invariant.</p>
+<p>A relation may persist while losing alignment, semantic meaning,
+privacy, authority, evidentiary support, performance, or failure
+containment. A pair of services may remain connected while corrupting
+shared state. A delegation may remain procedurally active while
+exceeding its authorized scope. A summary may remain linked to a source
+while misrepresenting its conclusion.</p>
+<p>Persistence is therefore weaker than invariant preservation.</p>
+<hr />
+<h2 id="constraint-carriage">6. Constraint Carriage</h2>
+<h3 id="carriage-as-allocation">6.1 Carriage as Allocation</h3>
+<p>Constraint carriage describes the present allocation of
+responsibility for preserving a composition.</p>
+<p>Section 2.6 decomposed carriage by locus. The second axis is
+<strong>granularity</strong>. An allocation may be recorded for a
+component, <span class="math inline"><em>χ</em>(<em>C</em>)</span>; for
+a relation, <span class="math inline"><em>χ</em>(<em>R</em>)</span>; or
+for a complete configuration, <span
+class="math inline"><em>χ</em>(<em>Σ</em>)</span>. Each is itself a
+locus allocation of the form given in Section 2.6. The axes are
+independent: granularity states <em>for what</em> the allocation is
+recorded, locus states <em>by what</em> the preserving work is done.</p>
+<p>Configuration-level carriage is derived from the components,
+relations, mediators, and context:</p>
+<p><span
+class="math display"><em>χ</em>(<em>Σ</em>) = AggregateCarriage<sub><em>Γ</em><sub>val</sub></sub>({<em>χ</em>(<em>C</em>)}, {<em>χ</em>(<em>R</em>)})</span></p>
+<p>The aggregation is not necessarily additive. Multiple mechanisms may
+jointly preserve one invariant, substitute for one another, or interact
+nonlinearly.</p>
+<h3 id="constraint-internalization">6.2 Constraint Internalization</h3>
+<p>Constraint internalization is a transition in which preserving
+responsibility moves inward, from an external context into
+component-intrinsic structure, an interface, a mediator, or the internal
+organization of a composite. Examples include a gravity-supported stack
+becoming an interlocking assembly, a manually supervised workflow
+becoming governed by explicit validation, an informal practice becoming
+a ratified procedure, and an uncited claim becoming bound to retrievable
+evidence.</p>
+<p>Internalization may improve durability, autonomy, or inspectability.
+It may also increase cost, rigidity, coupling, or concentration of
+failure.</p>
+<p>The design objective is not maximum internalization. It is
+appropriate carriage.</p>
+<h3 id="constraint-externalization">6.3 Constraint Externalization</h3>
+<p>Constraint externalization is a transition in which preserving
+responsibility moves outward or is exported to the environment. Examples
+include a service requiring clients to implement retries, a component
+relying upon external authentication, a summary requiring readers to
+recover omitted qualifications, and an institution relying upon informal
+oversight.</p>
+<p>Externalization is not inherently defective. Every component exports
+assumptions. Failure occurs when the exported burden is hidden,
+unsupported, or assigned to a context incapable of carrying it.</p>
+<h3 id="carriage-adequacy">6.4 Carriage Adequacy</h3>
+<p>Carriage adequacy is a judgment concerning whether the allocation
+<span class="math inline"><em>χ</em></span> can preserve <span
+class="math inline"><em>K</em></span> throughout <span
+class="math inline"><em>Λ</em></span>:</p>
+<p><span
+class="math display">AdequateCarriage<sub><em>Γ</em><sub>val</sub></sub>(<em>χ</em>, <em>K</em>, <em>Λ</em>)</span></p>
+<p>Carriage may be environmental, intrinsic, interfacial, mediated,
+organizational, architectural, or constitutional. Its adequacy depends
+upon the claimed use, not upon proximity to a component’s interior.</p>
+<p>Sometimes gravity should be allowed to carry gravity’s share.</p>
+<hr />
+<h2 id="paired-illustration-bricks-and-evidence">7. Paired Illustration:
+Bricks and Evidence</h2>
+<p>A comparison between interlocking bricks and evidence modules shows
+the ontology’s cross-domain structure.</p>
+<ul>
+<li><p><strong>Question:</strong> Components<br />
+<strong>Interlocking bricks:</strong> Bricks and subassemblies<br />
+<strong>Evidence module:</strong> Claims, observations, sources,
+warrants</p></li>
+<li><p><strong>Question:</strong> Relation<br />
+<strong>Interlocking bricks:</strong> Attachment and alignment<br />
+<strong>Evidence module:</strong> Evidentiary support and
+inference</p></li>
+<li><p><strong>Question:</strong> Context<br />
+<strong>Interlocking bricks:</strong> Gravity, material tolerances,
+temperature<br />
+<strong>Evidence module:</strong> Definitions, source access, analytical
+standards</p></li>
+<li><p><strong>Question:</strong> Disturbances<br />
+<strong>Interlocking bricks:</strong> Inversion, shear, vibration,
+wear<br />
+<strong>Evidence module:</strong> Copying, summarization, contradiction,
+scope drift</p></li>
+<li><p><strong>Question:</strong> Invariants<br />
+<strong>Interlocking bricks:</strong> Attachment, geometry, load
+path<br />
+<strong>Evidence module:</strong> Provenance, scope, uncertainty,
+warrant</p></li>
+<li><p><strong>Question:</strong> Constraint carriage<br />
+<strong>Interlocking bricks:</strong> Shape, material, friction, studs,
+tubes<br />
+<strong>Evidence module:</strong> Citations, custody, inference rules,
+review</p></li>
+<li><p><strong>Question:</strong> Candidate standing<br />
+<strong>Interlocking bricks:</strong> Stable subassembly with exposed
+interfaces<br />
+<strong>Evidence module:</strong> Bounded and inspectable evidence
+package</p></li>
+<li><p><strong>Question:</strong> Higher-order risk<br />
+<strong>Interlocking bricks:</strong> Hidden weak joints<br />
+<strong>Evidence module:</strong> Evidence laundering or unsupported
+inference</p></li>
+</ul>
+<p>The mechanisms differ. A brick connection bears physical forces; an
+evidence relation bears justificatory structure.</p>
+<p>The common pattern is nevertheless precise:</p>
+<ol type="1">
+<li>bounded components enter a relation;</li>
+<li>a resulting composite forms;</li>
+<li>the relation exists within a context;</li>
+<li>designated mechanisms carry the work of realizing and preserving
+required invariants;</li>
+<li>disturbances threaten those invariants;</li>
+<li>the resulting whole may or may not earn standing;</li>
+<li>higher-order composition may introduce new failure modes.</li>
+</ol>
+<p>The framework claims structural correspondence, not identity of
+mechanism.</p>
+<hr />
+<h2 id="capability-structure-and-standing">8. Capability, Structure, and
+Standing</h2>
+<p>Three questions are routinely conflated: what a relation can do,
+where an object sits in a larger organization, and whether reliance upon
+its boundary is warranted. This section separates them and specifies the
+records through which each is stated.</p>
+<h3 id="relational-capacity-as-a-profile">8.1 Relational Capacity as a
+Profile</h3>
+<p>Relational capacity should not be represented as a single universal
+score. It is modeled as a profile:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\operatorname{RC}(X) = \langle &amp;K_X, \Lambda_X, \rho_X,
+\delta_X\rangle
+\end{aligned}
+$$</span></p>
+<p>where <span
+class="math inline"><em>K</em><sub><em>X</em></sub></span> is the set of
+invariants preserved, <span
+class="math inline"><em>Λ</em><sub><em>X</em></sub></span> the supported
+disturbance envelope, <span
+class="math inline"><em>ρ</em><sub><em>X</em></sub></span> the
+preservation margin, and <span
+class="math inline"><em>δ</em><sub><em>X</em></sub></span> the
+degradation and failure-containment behavior.</p>
+<p>The profile records capability. Whether that capability has been
+shown is a separate matter, recorded through the evidence object of
+Section 8.5.</p>
+<p>Two relations may be incomparable. One may preserve a broad set of
+semantic invariants under low load; another a narrow mechanical
+invariant under extreme load. One may fail abruptly, another degrade
+gracefully. One may depend on environmental carriage, another on an
+interface.</p>
+<p>Carriage location is annotated separately through <span
+class="math inline"><em>χ</em></span>. An environmentally retained
+relation and an interface-retained relation may possess equivalent
+relational capacity within the same envelope. Their mechanisms differ;
+their capability need not.</p>
+<p>A partial comparison is possible when one profile preserves at least
+the same invariants, through at least the same envelope, with at least
+the same margin and no worse degradation behavior. Many real profiles
+remain only partially ordered.</p>
+<h3 id="structural-role-and-nesting-depth">8.2 Structural Role and
+Nesting Depth</h3>
+<p>Structural position also requires two independent measures, because
+the familiar vocabulary of roles does not form a single ordered scale. A
+primitive bolt may be a bounded component without ever having been an
+assembly. A subsystem may contain a complete architecture. An
+architecture may operate as a component within a federation.</p>
+<p>The first measure is <strong>structural role</strong>, which is
+set-valued and configuration-indexed, because one object may occupy
+several roles at once: an architecture acting as a component within a
+federation holds both roles simultaneously, and neither description is a
+mistake.</p>
+<p><span class="math display">$$
+\begin{aligned}
+\operatorname{Roles}_{\Sigma}(X) \subseteq \{&amp;\text{entity},
+\text{collection}, \text{assembly}, \\
+&amp;\text{component}, \text{subsystem}, \text{system}, \\
+&amp;\text{architecture}, \text{ecology}\}
+\end{aligned}
+$$</span></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Role</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entity</td>
+<td>A bounded thing considered without internal compositional
+analysis</td>
+</tr>
+<tr>
+<td>Collection</td>
+<td>Members sharing containment or classification without constitutive
+relations</td>
+</tr>
+<tr>
+<td>Assembly</td>
+<td>Members whose constitutive relations realize a whole</td>
+</tr>
+<tr>
+<td>Component</td>
+<td>An object presenting an identifiable exterior for use in further
+relations</td>
+</tr>
+<tr>
+<td>Subsystem</td>
+<td>An organized part fulfilling a delimited function within a larger
+whole</td>
+</tr>
+<tr>
+<td>System</td>
+<td>An organized whole pursuing its own purposes</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>A governed organization of components under shared rules</td>
+</tr>
+<tr>
+<td>Ecology</td>
+<td>Multiple architectures interacting across partially distinct
+standards, assumptions, or governance regimes, often through
+mediators</td>
+</tr>
+</tbody>
+</table>
+<p>The second measure is <strong>nesting depth</strong>, which is
+path-relative:</p>
+<p><span
+class="math display">Depth<sub><em>Σ</em></sub>(<em>X</em>, <em>w</em>) ∈ ℕ</span></p>
+<p>where <span class="math inline"><em>w</em></span> is a constitutive
+or containment path from the outermost boundary of <span
+class="math inline"><em>Σ</em></span> to <span
+class="math inline"><em>X</em></span>, and the value is the number of
+boundary crossings along <span
+class="math inline"><em>w</em></span>.</p>
+<p>Depth is stated per path rather than as a single number or a set of
+numbers. An object reachable through several constitutive paths has one
+depth for each, and retaining the path preserves the lineage that a bare
+set of integers would discard: knowing that a component sits at depths
+two and five is far less useful than knowing which two routes reach it,
+since those routes are what a failure analysis must follow. Depth is
+also configuration-relative, so the same object has different depths in
+different configurations.</p>
+<p>Roles, depth, capability, and standing are mutually independent. An
+object may hold the role of component, sit at depth four along one path
+and depth two along another, carry a relational-capacity profile
+specified separately, and possess no standing at all. An undocumented
+script may be structurally bounded and repeatedly embedded in workflows
+while lacking justified guarantees.</p>
+<p>Examples of ecologies include markets, federated software
+environments, multinational legal systems, and the public web.</p>
+<h3 id="standing">8.3 Standing</h3>
+<p>Standing is the justified eligibility of a composition to be treated
+as a bounded component for a declared purpose. It is
+purpose-indexed:</p>
+<p><span
+class="math display">Standing<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em>, <em>p</em>)</span></p>
+<p>A composition may possess standing for one purpose and not
+another.</p>
+<p>Standing is a derived predicate rather than a primitive one. It holds
+when some applicable diagnostic record establishes that the composite is
+valid for the claim that record states, that its evidence is adequate to
+the reliance intended, and that its boundary is adequate to the
+purpose:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Standing}_{\Gamma_{\mathrm{val}}}(C,p)
+\;\Longleftrightarrow\; \exists\,\mathcal{D}:\;
+\operatorname{Applies}(\mathcal{D},C,p) \; \\
+&amp;\land \; \operatorname{Valid}_{\Gamma_{\mathrm{val}}} \left( C \mid
+\operatorname{Constitution}(C), \Lambda_{\mathcal{D}}, K_{\mathcal{D}}
+\right) \; \\
+&amp;\land \;
+\operatorname{AdequateEvidence}(\mathcal{E}_{\mathcal{D}},p) \; \\
+&amp;\land \; \operatorname{AdequateBoundary}(C,p)
+\end{aligned}
+$$</span></p>
+<p>Here <span class="math inline">Constitution (<em>C</em>)</span> is
+the constitutive relation set retained with <span
+class="math inline"><em>C</em></span> by the formation update of Section
+10.6, and <span class="math inline"><em>Λ</em><sub>𝒟</sub></span>, <span
+class="math inline"><em>K</em><sub>𝒟</sub></span>, and <span
+class="math inline">ℰ<sub>𝒟</sub></span> are that record’s envelope,
+invariants, and evidence.</p>
+<p>Because <span class="math inline"><em>C</em></span> is not itself a
+field of <span class="math inline">𝒟</span>, applicability is checked
+through the record’s evidence object, whose subject field carries the
+entity under analysis:</p>
+<p><span
+class="math display">Applies (𝒟, <em>C</em>, <em>p</em>) ⇔ <em>s</em><sub>ℰ<sub>𝒟</sub></sub> = <em>C</em> ∧ Covers (<em>q</em><sub>𝒟</sub>, <em>p</em>)</span></p>
+<p>where <span
+class="math inline">Covers (<em>q</em>, <em>p</em>)</span> holds when
+the capability claim <span class="math inline"><em>q</em></span> extends
+to the purpose <span class="math inline"><em>p</em></span>.</p>
+<p>The existential binds every variable that would otherwise appear free
+on the right: standing asserts that an adequate justification exists,
+not that any particular document has been consulted. Boundary adequacy
+is fixed by <span class="math inline"><em>C</em></span>’s own exposed
+record and so takes no further argument.</p>
+<p>Standing is not confined to composites. For a component never formed
+from parts, such as a primitive fastener or an atomic service, <span
+class="math inline">Constitution (<em>C</em>) = ⌀</span> and the
+validity conjunct becomes a claim about the component itself rather than
+about any internal structure. The empty case is admissible, not
+excluded.</p>
+<p>The conjuncts correspond to the questions standing answers: does the
+composite do what is claimed, is that claim supported, and is the
+exterior through which it will be used sufficient for the intended
+reliance. Boundary adequacy requires controlled identity, defined
+interfaces, explicit assumptions, justified guarantees, a declared
+disturbance envelope, known failure conditions, and lifecycle state.</p>
+<p>The derivation makes plain why standing is justificatory rather than
+simply another validity predicate. Validity concerns what the composite
+preserves; standing concerns whether an external party is warranted in
+depending on it without reopening its interior. A composite may be valid
+and still lack standing, because no evidence has been assembled or
+because the boundary conceals what a user would need to know.</p>
+<p>Encapsulation alone does not establish standing:</p>
+<p><span class="math display">Encapsulation  ⇏ Standing </span></p>
+<h3 id="the-diagnostic-record">8.4 The Diagnostic Record</h3>
+<p>A capability claim is stated through a unified diagnostic record:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\mathcal{D} = \langle &amp;q, \Lambda, K, \chi, \mathcal{E},
+A_{\mathrm{res}}, \Phi, \\
+&amp;V\rangle
+\end{aligned}
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline"><em>q</em></span></td>
+<td>Capability claim</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>Λ</em></span></td>
+<td>Disturbance envelope</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>K</em></span></td>
+<td>Required invariants</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>χ</em></span></td>
+<td>Constraint-carriage allocation</td>
+</tr>
+<tr>
+<td><span class="math inline">ℰ</span></td>
+<td>Evidence object</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>A</em><sub>res</sub></span></td>
+<td>Residual assumptions</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>Φ</em></span></td>
+<td>Failure conditions</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>V</em></span></td>
+<td>Version and lifecycle state</td>
+</tr>
+</tbody>
+</table>
+<p>This record is used in the worked profiles of Section 15 and
+reproduced in full in Appendix C.</p>
+<h3 id="evidence-objects">8.5 Evidence Objects</h3>
+<p>Evidence appears at several scopes: supporting a component’s
+guarantees, a proposed or formed relation, or an admission decision.
+Rather than a separate symbol for each, the framework uses one scoped
+object:</p>
+<p><span
+class="math display">ℰ = ⟨<em>s</em>, <em>c</em>, <em>m</em>, <em>r</em>, <em>u</em>, <em>π</em>⟩</span></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline"><em>s</em></span></td>
+<td>Subject: the component, relation, composite, or configuration</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>c</em></span></td>
+<td>Claim the evidence bears upon</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>m</em></span></td>
+<td>Evaluation method</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>r</em></span></td>
+<td>Result obtained</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>u</em></span></td>
+<td>Uncertainty and known limits</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>π</em></span></td>
+<td>Provenance</td>
+</tr>
+</tbody>
+</table>
+<p>Methods may include measurement, mechanical testing, formal proof,
+simulation, conformance testing, fault injection, operational history,
+inspection, independent replication, and semantic review. The ontology
+standardizes the structure of the evidence claim; it does not prescribe
+one universal measurement method across domains.</p>
+<p>Scoped instances are written <span
+class="math inline">ℰ<sub><em>C</em></sub></span> for component
+evidence, <span class="math inline">ℰ<sub><em>R</em></sub></span> for
+relation evidence, and <span
+class="math inline">ℰ<sub><em>A</em></sub></span> for admission
+evidence. When <span class="math inline">ℰ</span> appears inside a
+diagnostic record <span class="math inline">𝒟</span>, its subject and
+claim fields are fixed by that context: the subject <span
+class="math inline"><em>s</em></span> is the entity under analysis and
+the claim <span class="math inline"><em>c</em></span> is the record’s
+capability claim <span class="math inline"><em>q</em></span>. These
+fields are bound rather than omitted, which is what allows Section 8.3
+to identify a record’s subject by reading <span
+class="math inline"><em>s</em></span>.</p>
+<h3 id="status-vocabularies">8.6 Status Vocabularies</h3>
+<p>Evidentiary support, justified boundary, and permitted reliance are
+three different questions and require three different state
+vocabularies. Collapsing them produces lists in which an evidentiary
+term and a governance term appear as alternatives to one another.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Status class</th>
+<th>States</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evidentiary status</td>
+<td>unsupported, preliminary, demonstrated, independently supported,
+contradicted, stale</td>
+</tr>
+<tr>
+<td>Standing status</td>
+<td>candidate, qualified, constrained, demoted, lost</td>
+</tr>
+<tr>
+<td>Admission status</td>
+<td>pending, admitted, active, suspended, revoked, expired, retired</td>
+</tr>
+</tbody>
+</table>
+<p>Admission does not create capability. Revoking admission does not
+necessarily destroy capability or standing; it removes permitted
+reliance within the admitting regime. Standing is lost only when the
+justification for bounded reliance is itself undermined. Evidence may
+become stale without any decision being taken at all.</p>
+<p>For admissions that rely upon an object as a bounded component, a
+well-governed regime should satisfy:</p>
+<p><span
+class="math display">Admitted<sub><em>Γ</em><sub>adm</sub></sub>(<em>C</em>, <em>p</em>, ℰ<sub><em>A</em></sub>) ⇒ Standing<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em>, <em>p</em>)</span></p>
+<p>The reverse does not follow:</p>
+<p><span
+class="math display">Standing<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em>, <em>p</em>) ⇏ ∃ ℰ<sub><em>A</em></sub>: Admitted<sub><em>Γ</em><sub>adm</sub></sub>(<em>C</em>, <em>p</em>, ℰ<sub><em>A</em></sub>)</span></p>
+<p>A capable and well-supported component may be denied admission
+because of policy, jurisdiction, timing, resource limits, or
+architectural conflict.</p>
+<p>Because the two predicates are indexed by different context
+projections, the implication above is a normative property of
+well-governed regimes rather than a theorem. Its failure is precisely
+the defect catalogued in Section 16.16.</p>
+<hr />
+<h2 id="an-illustrative-path-through-the-ontology">9. An Illustrative
+Path Through the Ontology</h2>
+<p>The following path is pedagogical. It is not a hierarchy of universal
+superiority, a necessary developmental sequence, or a claim that every
+system should maximize internal carriage.</p>
+<p><strong>Aggregation.</strong> Objects share containment or
+classification without a constitutive relation among the members.
+Constraint carriage resides mainly in the container, context, or
+observer.</p>
+<p><strong>Environment-supported composition.</strong> Regularity
+permits alignment while environmental conditions preserve the relation.
+A stack relies upon geometry, gravity, and orientation.</p>
+<p><strong>Interface-retained composition.</strong> An interface
+preserves the relation across disturbances that would dissolve the
+environmentally supported arrangement. Some preserving responsibility
+has been internalized.</p>
+<p><strong>Invariant-bearing composition.</strong> The formed relation
+preserves specified properties under intended operational disturbances.
+Persistence has become a broader capability.</p>
+<p><strong>Standing and architecture.</strong> A bounded assembly earns
+standing and may participate in higher-order structures governed by
+configuration-level rules.</p>
+<p>This is one possible trajectory. Systems may exhibit deep nesting
+with weak boundaries, strong local capacity without architectural
+closure, or extensive structural depth with poor evidentiary
+support.</p>
+<hr />
+<h2 id="mediation-formation-and-recursive-closure">10. Mediation,
+Formation, and Recursive Closure</h2>
+<p>This section treats how compositions are actually brought about:
+directly or through intermediaries, what the resulting configuration
+update does, what the composite may expose, and whether the result
+remains eligible for further composition.</p>
+<h3 id="direct-composition">10.1 Direct Composition</h3>
+<p>Direct composition occurs through the native interfaces of
+participating components. No translating intermediary is required,
+although the relation still depends upon context.</p>
+<h3 id="mediated-composition">10.2 Mediated Composition</h3>
+<p>When two components cannot establish the intended direct relation, a
+mediator may enable a larger composition. Let <span
+class="math inline"><em>M</em></span> be a mediator between <span
+class="math inline"><em>A</em></span> and <span
+class="math inline"><em>B</em></span>. The mediated path is:</p>
+<p><span class="math display">$$
+A
+\xrightarrow{\;R_1\;}
+M
+\xrightarrow{\;R_2\;}
+B
+$$</span></p>
+<p>Examples include physical adapters, voltage converters, protocol
+gateways, compilers, schema translators, interpreters, legal
+instruments, organizational liaisons, currency exchanges, and evidence
+summaries.</p>
+<p>The mediator does not erase incompatibility. It carries the work of
+transforming, translating, buffering, authenticating, or governing
+it.</p>
+<h3 id="mediation-burden">10.3 Mediation Burden</h3>
+<p>A mediator introduces assumptions, transformations, latency,
+authority, information loss, version dependencies, resource demands, and
+failure modes.</p>
+<p>A plug adapter may preserve geometry while failing to preserve
+voltage compatibility. A schema translator may preserve field structure
+while corrupting meaning. A summary may preserve a conclusion while
+losing uncertainty.</p>
+<p>Mediators are both engines of composability and concentrated sites of
+compositional risk.</p>
+<h3 id="mediator-paths">10.4 Mediator Paths</h3>
+<p>A composition may depend upon several mediators:</p>
+<p><span class="math display">$$
+A
+\xrightarrow{\;R_1\;}
+M_1
+\xrightarrow{\;R_2\;}
+M_2
+\xrightarrow{\;R_3\;}
+B
+$$</span></p>
+<p>Each step may accumulate semantic loss, latency, dependency,
+authority, ambiguity, and failure probability. The validity of the
+complete path cannot necessarily be inferred from the validity of each
+edge.</p>
+<h3 id="typed-formation">10.5 Typed Formation</h3>
+<p>Let <span class="math inline">𝒞<sub><em>σ</em></sub></span>, <span
+class="math inline">𝒞<sub><em>τ</em></sub></span>, and <span
+class="math inline">𝒞<sub><em>υ</em></sub></span> be component classes.
+A relation-sensitive formation operator is partial:</p>
+<p><span
+class="math display">form<sub><em>R</em></sub>: 𝒞<sub><em>σ</em></sub> × 𝒞<sub><em>τ</em></sub> ⇀ 𝒞<sub><em>υ</em></sub></span></p>
+<p>For <span
+class="math inline"><em>C</em><sub>1</sub> ∈ 𝒞<sub><em>σ</em></sub></span>
+and <span
+class="math inline"><em>C</em><sub>2</sub> ∈ 𝒞<sub><em>τ</em></sub></span>,
+the expression:</p>
+<p><span
+class="math display">form<sub><em>R</em></sub>(<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>) = <em>C</em><sub>3</sub></span></p>
+<p>means only that the formation succeeded and produced <span
+class="math inline"><em>C</em><sub>3</sub></span>. It does not assert
+that <span class="math inline"><em>C</em><sub>3</sub></span> is valid or
+admitted.</p>
+<p>The operator is partial because some formations cannot occur at all:
+no instantiation of the relation is physically, computationally, or
+institutionally possible for those participants. <strong>Partiality
+tracks realizational impossibility, not incompatibility, invalidity, or
+non-admission.</strong> Incompatible but joinable participants lie
+inside the operator’s domain, and their forced or defective composites
+are precisely the objects the framework must retain.</p>
+<p>The operator and the formation predicate of Section 4.2 describe the
+same event in two notations:</p>
+<p><span
+class="math display">Forms (<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>, <em>R</em>, <em>C</em><sub>3</sub>) ⇔ form<sub><em>R</em></sub>(<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>) = <em>C</em><sub>3</sub></span></p>
+<h3 id="formation-update">10.6 Formation Update</h3>
+<p>The formation update is written:</p>
+<p><span
+class="math display"><em>Σ</em><sub><em>F</em></sub> = <em>Σ</em>⊕<sub><em>F</em></sub>[(<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>, <em>R</em>) ↦ <em>C</em><sub>3</sub>]</span></p>
+<p>The update performs four conceptual operations:</p>
+<ol type="1">
+<li><span class="math inline"><em>C</em><sub>3</sub></span> is added to
+the configuration;</li>
+<li><span class="math inline"><em>C</em><sub>1</sub></span>, <span
+class="math inline"><em>C</em><sub>2</sub></span>, and <span
+class="math inline"><em>R</em></span> are retained as the constitutive
+subgraph of <span
+class="math inline"><em>C</em><sub>3</sub></span>;</li>
+<li>lineage is recorded in the historical context <span
+class="math inline"><em>H</em><sub><em>Γ</em></sub></span>;</li>
+<li>configuration-level carriage <span
+class="math inline"><em>χ</em>(<em>Σ</em>)</span> is recomputed.</li>
+</ol>
+<p>Formation does not erase the parts.</p>
+<h3 id="constitutive-and-exposed-views">10.7 Constitutive and Exposed
+Views</h3>
+<p>The framework distinguishes two views of the resulting
+configuration.</p>
+<p>The <strong>constitutive view</strong> retains internal components,
+internal relations, mediators, assumptions, evidence, and failure
+paths.</p>
+<p>The <strong>exposed view</strong> presents the boundary and
+interfaces of <span class="math inline"><em>C</em><sub>3</sub></span>.
+Writing <span class="math inline"><em>F</em><sub><em>i</em></sub></span>
+for the exposed interface set of component <span
+class="math inline"><em>C</em><sub><em>i</em></sub></span>, the
+composite interface set <span
+class="math inline"><em>F</em><sub>3</sub></span> may preserve
+interfaces inherited from <span
+class="math inline"><em>C</em><sub>1</sub></span> or <span
+class="math inline"><em>C</em><sub>2</sub></span>, hide internal
+interfaces, transform interfaces, generate new interfaces, or reserve
+interfaces for later use. Schematically:</p>
+<p><span
+class="math display"><em>F</em><sub>3</sub> ⊆ ProjectInterfaces<sub><em>Γ</em><sub>val</sub></sub>(<em>F</em><sub>1</sub>, <em>F</em><sub>2</sub>, <em>R</em>)</span></p>
+<h3 id="exposure-and-justified-exposure">10.8 Exposure and Justified
+Exposure</h3>
+<p>Exposure is an act, not an entitlement. Systems routinely publish,
+package, or advertise composites that have not earned standing, and the
+framework must be able to describe that situation rather than exclude it
+by construction.</p>
+<p>Actual exposure is written:</p>
+<p><span
+class="math display"><em>Σ</em><sub><em>S</em></sub> = Expose (<em>Σ</em><sub><em>F</em></sub>, <em>C</em><sub>3</sub>)</span></p>
+<p>and occurs whether or not it is warranted. Justified exposure is a
+separate predicate:</p>
+<p><span
+class="math display">JustifiedExposure<sub><em>Γ</em><sub>val</sub></sub>(<em>Σ</em><sub><em>F</em></sub>, <em>C</em><sub>3</sub>, <em>p</em>) ⇔ Standing<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>3</sub>, <em>p</em>)</span></p>
+<p>This parallels the framework’s central move. Three separations follow
+the same pattern:</p>
+<ul>
+<li>formation can occur without validity;</li>
+<li>exposure can occur without standing;</li>
+<li>reliance can occur without admission.</li>
+</ul>
+<p>Each defective state remains representable rather than being rendered
+impossible by the formalism. Section 16 catalogues the corresponding
+failures.</p>
+<p>When exposure is justified, the constitutive subgraph nevertheless
+remains recoverable for inspection, demotion, migration, and failure
+analysis. This is earned abstraction without destructive
+concealment.</p>
+<h3 id="residual-assumptions-and-composite-guarantees">10.9 Residual
+Assumptions and Composite Guarantees</h3>
+<p>Real compositions normally retain environmental assumptions.</p>
+<p>Let <span class="math inline"><em>C</em><sub>1</sub></span> and <span
+class="math inline"><em>C</em><sub>2</sub></span> expose assumptions
+<span
+class="math inline"><em>A</em><sub>1</sub>, <em>A</em><sub>2</sub></span>
+and guarantees <span
+class="math inline"><em>G</em><sub>1</sub>, <em>G</em><sub>2</sub></span>.
+Partner guarantees and the contextual guarantees <span
+class="math inline"><em>E</em><sub><em>Γ</em></sub></span> may discharge
+some assumptions. The remainder are exported to the composite:</p>
+<p><span
+class="math display"><em>A</em><sub>3</sub> = Residual<sub><em>Γ</em><sub>val</sub></sub>(<em>A</em><sub>1</sub>, <em>A</em><sub>2</sub>, <em>G</em><sub>1</sub>, <em>G</em><sub>2</sub>, <em>R</em>)</span></p>
+<p>Validity does not require:</p>
+<p><span class="math display"><em>A</em><sub>3</sub> = ⌀</span></p>
+<p>Residual assumptions must instead be explicit, internally consistent,
+supportable within the intended context, and proportionate to the
+guarantees exposed by the composite.</p>
+<p>The composite may expose only guarantees justified by the formed
+relation:</p>
+<p><span
+class="math display"><em>G</em><sub>3</sub> ⊆ Consequences<sub><em>Γ</em><sub>val</sub></sub>(<em>G</em><sub>1</sub>, <em>G</em><sub>2</sub>, <em>R</em>, <em>A</em><sub>3</sub>)</span></p>
+<p>A composition that hides its residual assumptions or overstates its
+consequences possesses an unreliable boundary, even when its internal
+mechanisms function.</p>
+<h3 id="recursive-closure">10.10 Recursive Closure</h3>
+<p>A formed composite exhibits recursive closure when it belongs to a
+recognized component class and may participate in another formation.</p>
+<p>Recursive closure is not necessary for standing. A sealed safety
+component, finalized legal instrument, or fixed evidentiary record may
+possess a justified boundary while intentionally terminating
+recursion.</p>
+<p>Recursive closure is not sufficient for standing. An undocumented
+script may be repeatedly embedded in workflows without exposing
+trustworthy assumptions or guarantees.</p>
+<p>Thus:</p>
+<blockquote>
+<p><strong>Standing concerns justified bounded reliance. Recursive
+closure concerns eligibility for further formation.</strong></p>
+</blockquote>
+<p>A recursively usable composite may preserve inherited interfaces,
+hide internal interfaces, expose transformed interfaces, generate new
+interfaces, or reserve capacity for later composition. Recursive systems
+are especially powerful when formation does not consume every future
+interface.</p>
+<h3 id="recursive-fragility">10.11 Recursive Fragility</h3>
+<p>Each layer may also lose performance margin, semantic precision,
+evidence, authority traceability, fault isolation, and
+reversibility.</p>
+<p>A system can become structurally deeper while becoming less
+trustworthy. Recursive composition should therefore track what each
+layer inherits, transforms, exports, conceals, and loses.</p>
+<hr />
+<h2 id="composability-and-compositionality">11. Composability and
+Compositionality</h2>
+<p><strong>Composability</strong> concerns whether components can enter
+a valid relation and form a usable whole.</p>
+<p><strong>Compositionality</strong> concerns whether relevant
+properties of that whole can be derived or bounded from the components,
+their relation, and the governing context.</p>
+<p>The distinction is established in the formal literature on
+component-based and contract-based design. It is restated here because
+the two terms remain routinely conflated in general architectural usage,
+and because later sections depend upon keeping them apart.</p>
+<p>A system may be readily composable while remaining weakly
+compositional. Plugins may install cleanly while interacting
+unpredictably. Financial instruments may be contractually combinable
+while producing opaque correlated risk. Evidence modules may be easy to
+concatenate while supporting conclusions that cannot be derived from
+their individual warrants.</p>
+<p>The stronger analytical objective is not merely to establish that a
+composite forms, but to determine whether its relevant properties follow
+from component properties, relation semantics, residual assumptions,
+constraint carriage, and architectural context.</p>
+<p>Contract-based design and interface theories provide formal machinery
+for portions of this task (de Alfaro &amp; Henzinger, 2001; Benveniste
+et al., 2018). Constraint-Bearing Composability places that machinery
+within a wider diagnostic account of formation, carriage, standing, and
+configuration-level admissibility.</p>
+<hr />
+<h2 id="diachronic-composability">12. Diachronic Composability</h2>
+<p>Composability is often evaluated as though components and contexts
+remain fixed. They do not.</p>
+<p><strong>Diachronic composability</strong> is the capability of a
+composition to preserve or validly transform its relations across
+time.</p>
+<p>A composition may decay because a component is revised, a protocol is
+deprecated, a dependency disappears, a material wears, authority
+expires, a legal regime changes, semantic definitions drift, evidence
+becomes stale, environmental guarantees fail, or mediators change
+behavior.</p>
+<p>A composition may survive change through substitution, state
+migration, interface revision, adaptation, narrowed guarantees, newly
+exported assumptions, renewed testing, reauthorization, and preservation
+of lineage.</p>
+<p>Change raises the question of identity continuity:</p>
+<blockquote>
+<p>When does a revised composition remain the same compositional
+object?</p>
+</blockquote>
+<p>Continuity may depend upon explicit lineage, controlled
+transformation, continuity of purpose, continuity of authority, bounded
+changes to guarantees, and retained historical custody.</p>
+<p>Diachronic composability therefore intersects with versioning,
+provenance, standing, and admission.</p>
+<hr />
+<h2 id="architectural-admissibility">13. Architectural
+Admissibility</h2>
+<h3 id="configurations-not-edges">13.1 Configurations, Not Edges</h3>
+<p>Architectural admissibility is evaluated over the complete
+configuration:</p>
+<p><span
+class="math display">Admissible<sub><em>Γ</em><sub>val</sub></sub>(<em>Σ</em>)</span></p>
+<p>It may depend upon topology, dependency cycles, mediator paths,
+aggregate resource demand, shared dependencies, authority accumulation,
+information flow, and historical sequence.</p>
+<p>Pairwise judgments alone cannot establish it. For binary relations,
+let <span class="math inline">src (<em>R</em>)</span> and <span
+class="math inline">dst (<em>R</em>)</span> identify the relation
+endpoints; for symmetric modes such as attachment or alignment the
+assignment is arbitrary and the predicate is order-insensitive.
+Then:</p>
+<p><span
+class="math display">(∀<em>R</em> ∈ ℛ: Compatible<sub><em>Γ</em><sub>val</sub></sub>(src (<em>R</em>), dst (<em>R</em>), <em>R</em>)) ⇏ Admissible<sub><em>Γ</em><sub>val</sub></sub>(<em>Σ</em>)</span></p>
+<p>Every edge may be locally compatible while the graph is globally
+inadmissible.</p>
+<h3 id="non-monotonic-admissibility">13.2 Non-Monotonic
+Admissibility</h3>
+<p>Let <span class="math inline"><em>Σ</em></span> be an admissible
+configuration, <span class="math inline"><em>C</em></span> a component
+valid for its own declared relation, envelope, and invariants, and <span
+class="math inline"><em>R</em></span> a locally compatible relation
+attaching it.</p>
+<p>The extension update adds a component and an edge without producing a
+composite:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\Sigma' = \Sigma \oplus (C,R) = \langle &amp;\mathcal{N}', \mathcal{R}',
+\Gamma, \Lambda', K', \chi'\rangle
+\end{aligned}
+$$</span></p>
+<p>where <span
+class="math inline">𝒩<sup>′</sup> = 𝒩 ∪ {<em>C</em>}</span> and <span
+class="math inline">ℛ<sup>′</sup> = ℛ ∪ {<em>R</em>}</span>.</p>
+<p>The envelope and invariant set are written <span
+class="math inline"><em>Λ</em><sup>′</sup></span> and <span
+class="math inline"><em>K</em><sup>′</sup></span> because extension may
+change which disturbances are claimed and which obligations apply: a new
+component may introduce a concurrency regime the configuration did not
+previously face, or bring an information-flow invariant into scope that
+was previously vacuous. Where an architecture fixes its envelope and
+invariants constitutionally, <span
+class="math inline"><em>Λ</em><sup>′</sup> = <em>Λ</em></span> and <span
+class="math inline"><em>K</em><sup>′</sup> = <em>K</em></span>; that
+identity is a property of the regime and should be stated rather than
+assumed. The carriage allocation <span
+class="math inline"><em>χ</em><sup>′</sup></span> is recomputed in every
+case.</p>
+<p>The extension update <span class="math inline">⊕</span> and the
+formation update <span class="math inline">⊕<sub><em>F</em></sub></span>
+of Section 10.6 are distinct: the former enlarges the configuration
+graph, the latter additionally introduces a composite and its
+constitutive subgraph.</p>
+<p>It does not follow that the extended configuration remains
+admissible:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Admissible}_{\Gamma_{\mathrm{val}}}(\Sigma) \; \\
+&amp;\land \; \operatorname{Valid}_{\Gamma_{\mathrm{val}}}(C \mid
+R_C,\Lambda_C,K_C) \; \\
+&amp;\land \; \operatorname{Compatible}_{\Gamma_{\mathrm{val}}} \left(
+\operatorname{src}(R), \operatorname{dst}(R), R \right) \not \\
+&amp;\Rightarrow
+\operatorname{Admissible}_{\Gamma_{\mathrm{val}}}(\Sigma')
+\end{aligned}
+$$</span></p>
+<p>The extension may create a dependency cycle, resource exhaustion,
+authority amplification, privacy leakage, correlated failure, semantic
+contradiction, or an unbounded information path.</p>
+<p>Admissibility is therefore non-monotonic under compositional
+extension.</p>
+<h3 id="local-validity-and-global-inadmissibility">13.3 Local Validity
+and Global Inadmissibility</h3>
+<p>Examples include two authorized datasets combining into
+re-identification (Sweeney, 2002; Narayanan &amp; Shmatikov, 2008); two
+valid delegations producing authority amplification (Miller, 2006); two
+safe financial positions creating correlated exposure (Coval, Jurek,
+&amp; Stafford, 2009); two supported claims yielding an unsupported
+conclusion; two secure components creating an insecure information-flow
+path; and two reliable services forming a cyclic failure cascade.</p>
+<p>The first and third are documented at length. Data releases
+satisfying a disclosure standard on their own may still identify
+individuals once linked against auxiliary records, and statistical
+de-anonymization succeeds against high-dimensional micro-data even when
+the release has been perturbed and the adversary’s background knowledge
+is partly mistaken (Sweeney, 2002; Narayanan &amp; Shmatikov, 2008). In
+structured finance, the tranching of pooled assets substitutes risks
+that are largely diversifiable for risks that are highly systematic, so
+positions each assessed as safe may carry an exposure visible only at
+the level of the combined structure (Coval, Jurek, &amp; Stafford,
+2009).</p>
+<p>Composition creates a new object of judgment. This
+configuration-level requirement is one of the ontology’s principal
+differentiators: architectural admissibility cannot generally be
+recovered by summing local compatibility verdicts.</p>
+<hr />
+<h2 id="constitutional-composability">14. Constitutional
+Composability</h2>
+<p>This paper uses <strong>constitutional</strong> as a technical
+architectural term.</p>
+<p>A constitutional rule is a system-level admissibility constraint
+governing which identities, authorities, relations, transformations, and
+effects may receive admission within a compositional regime. The term
+inherits intuitive force from legal constitutions but is not restricted
+to political institutions. Constitutional constraints may govern
+software authorization, evidence custody, engineering safety,
+organizational jurisdiction, data privacy, resource allocation, and
+identity continuity.</p>
+<p>A system is constitutionally composable when admitted compositions
+preserve the rules by which the system determines what it is permitted
+to become. Examples include: no unauthorized authority amplification; no
+identity collision; no unlogged external effect; no unsupported
+promotion of claims; no prohibited information flow; no composition
+beyond resource ceilings; and no admission without adequate lineage.</p>
+<p>Miller’s work on robust composition and object-capability systems is
+particularly relevant here because it distinguishes possession of
+permissions from effective authority and analyzes how composition can
+create unintended authority (Miller, 2006).</p>
+<h3 id="authority-accumulation-and-amplification">14.1 Authority
+Accumulation and Amplification</h3>
+<p><strong>Authority accumulation</strong> is the increase in reachable
+authority produced as valid delegations, references, or capabilities are
+combined. Accumulation is not necessarily invalid.</p>
+<p><strong>Authority amplification</strong> occurs when composition
+produces authority not justified by the participants’ legitimate grants,
+scopes, or delegation paths.</p>
+<p>The constitutional task is not to prohibit every increase in
+effective capability. It is to distinguish authorized accumulation from
+unauthorized amplification.</p>
+<h3 id="refusal">14.2 Refusal</h3>
+<p>A system unable to refuse invalid composition is not maximally
+composable. It is merely permissive.</p>
+<p>Selective refusal preserves the meaning of valid composition.</p>
+<hr />
+<h2 id="worked-profiles">15. Worked Profiles</h2>
+<p>Three profiles apply the diagnostic record across materially unlike
+domains. The first two trace capabilities that hold; the third traces
+one that fails. Each is summarized here, and the complete records appear
+in Appendix C.</p>
+<h3 id="interlocking-bricks">15.1 Interlocking Bricks</h3>
+<p>Five claims trace the same physical system through progressively
+stronger capabilities.</p>
+<p><strong>Alignment.</strong> Compatible bricks establish repeatable
+position and orientation on a regular grid. Carriage is almost entirely
+component-intrinsic geometry, and the claim holds only for undeformed
+parts within manufacturing tolerance.</p>
+<p><strong>Retention.</strong> Joined bricks remain connected under
+inversion and moderate handling. Carriage shifts to the interface:
+interference fit, friction, and material elasticity. This is the
+transition at which the environment stops doing the preserving work.</p>
+<p><strong>Invariant-bearing capacity.</strong> The connection transfers
+limited tension, compression, and shear while preserving attachment and
+bounded deformation. Carriage becomes distributed across material,
+interface geometry, connection count, and the higher-order load path,
+and the residual assumption is that larger structures distribute load
+within local connection capacity.</p>
+<p><strong>Standing.</strong> A stable subassembly may be transported
+and reintegrated as one bounded component. The claim depends on internal
+joints that are no longer individually inspected, which is precisely why
+hidden internal damage is its characteristic failure condition.</p>
+<p><strong>Recursive closure.</strong> The subassembly may participate
+in a larger structure, provided higher-order loads remain within
+inherited limits and exposed interfaces are not exhausted.</p>
+<p>The brick system’s capability arises from a profile combining regular
+geometry, retention, bounded load transfer, reversibility,
+substitutability, standing, and preserved external interfaces.</p>
+<h3 id="evidence-module">15.2 Evidence Module</h3>
+<p>The same five stages apply to a bounded research object containing a
+claim, observations, cited sources, an inference warrant, uncertainty,
+provenance, and version identity.</p>
+<p><strong>Alignment.</strong> The module can enter an analysis using
+compatible definitions, units, and temporal scope. Carriage rests on
+schemas, metadata, and receiving-context validation.</p>
+<p><strong>Retention.</strong> The claim remains bound to its evidence
+after copying or transfer. Carriage rests on content identity,
+citations, custody records, and archival systems. The residual
+assumption, that referenced evidence remains retrievable, is the one
+most often violated in practice.</p>
+<p><strong>Invariant-bearing capacity.</strong> The module preserves
+warranted meaning under summarization and incorporation into a larger
+argument. The invariants are scope, uncertainty, provenance,
+contradiction status, and warrant; the failures are scope expansion,
+certainty inflation, and contradiction suppression.</p>
+<p><strong>Standing.</strong> The package may be relied upon as a
+bounded analytical component within its declared question and
+evidentiary standard. Standing here requires inspectability of sources,
+transformations, assumptions, warrants, and uncertainty.</p>
+<p><strong>Recursive closure.</strong> The module may support a
+higher-order conclusion without losing its original support conditions,
+provided the receiving analysis imports assumptions, uncertainty, and
+contradiction status rather than only the conclusion.</p>
+<p>The structural correspondence is exact even though no mechanism is
+shared. Text may be easy to copy while justification dissolves.</p>
+<p>Syntactic portability is not epistemic composability.</p>
+<h3 id="a-failing-profile-linked-datasets">15.3 A Failing Profile:
+Linked Datasets</h3>
+<p>The two profiles above trace capabilities that hold. A framework for
+compositional validity should also show what a failure looks like when
+recorded through the same instrument, and where the record locates
+it.</p>
+<p>Consider a configuration containing two released datasets, prepared
+by different custodians, each satisfying a disclosure standard on its
+own terms.</p>
+<p><strong>The component records, as filed.</strong> Dataset <span
+class="math inline"><em>A</em></span> publishes coarsened demographic
+attributes. Its claim is that no individual is identifiable from the
+release alone; its envelope covers inspection of that release in
+isolation; its invariant is non-identifiability; its evidence is a
+disclosure check performed against the release. Dataset <span
+class="math inline"><em>B</em></span> publishes fine-grained behavioral
+records under a pseudonymous key, with a corresponding claim, envelope,
+and check. Each would pass an audit of the component it describes.
+Whether each is also correct depends on how its claim is read, and the
+two readings yield different diagnoses; they are separated below.</p>
+<p><strong>The formation.</strong> A third party joins the two on shared
+quasi-identifiers. A composite forms. Nothing prevents it, formation
+being ontic (Section 4.2); no admission was sought, and under a
+component-scoped regime none was required, since both parts were
+released as public artifacts.</p>
+<p><strong>Which conjunct fails.</strong> The composite claim would be
+that the join preserves non-identifiability. It does not. But the defect
+is not where component-scoped assurance looks for it:</p>
+<ul>
+<li><span class="math inline">Compatible </span> holds: the schemas
+align and the join is well formed.</li>
+<li><span class="math inline">Forms </span> holds: the composite
+exists.</li>
+<li><span class="math inline">Preserves </span> fails for the composite,
+though it held for each part.</li>
+<li>Neither component’s validity judgment was wrong. Each remains valid
+for its own <span class="math inline"><em>𝜚</em></span>, <span
+class="math inline"><em>Λ</em></span>, and <span
+class="math inline"><em>K</em></span>.</li>
+</ul>
+<p>This is the configuration-level pattern of Section 13.2: admissible
+parts, a locally compatible relation, an inadmissible whole (Sweeney,
+2002; Narayanan &amp; Shmatikov, 2008).</p>
+<p><strong>Two readings, two failure paths.</strong> Whether the
+component records are defective depends on how their claims are read.
+The framework separates the readings rather than blending them, because
+they locate the defect in different places.</p>
+<p><em>Case A: isolation-scoped claims.</em> Read strictly, each record
+claims only non-identifiability from its own release, with an envelope
+covering inspection of that release alone. On those terms the records
+are valid and <span class="math inline"><em>A</em><sub>res</sub></span>
+is correctly empty: auxiliary linkage lies outside the declared
+envelope, so its absence is not an assumption the claim depends upon.
+Each component holds standing for the purpose its record declares. The
+failure is then twofold, and neither part of it is a component defect.
+First, a standing-purpose mismatch: users and institutions relied upon
+the releases for a broader purpose — non-identifiability in the world —
+than any record covered, and standing is purpose-indexed (Section 8.3).
+Second, no configuration-level record or admission gate existed for the
+join, so the broader question was never anyone’s to answer.</p>
+<p><em>Case B: public non-identifiability claims.</em> Read as such
+releases are often in fact presented — as assurances that individuals
+will remain non-identifiable following public release — the envelope
+becomes the real data environment, and the diagnosis changes. The
+absence of a linkable auxiliary release is then a genuine residual
+assumption; the invariant is carried partly by <span
+class="math inline"><em>χ</em><sub><em>E</em></sub></span> rather than
+by the coarsening or keying alone; and leaving <span
+class="math inline"><em>A</em><sub>res</sub></span> empty is the hidden
+externalization of Section 16.3. On this reading the component record is
+defective before any join occurs, because it attributes to <span
+class="math inline"><em>χ</em><sub><em>G</em></sub></span> a share of
+the carriage that the environment was in fact supplying.</p>
+<p>The two cases are not a hedge. They are distinct failure paths that a
+component audit cannot tell apart and this record can: in Case A the
+paperwork is correct and the reliance placed upon it is not; in Case B
+the paperwork itself misstates where the constraint is carried.</p>
+<p><strong>What both readings share.</strong> Under either, publishing
+the second dataset changed <span
+class="math inline"><em>E</em><sub><em>Γ</em></sub></span>, and
+protection that had been adequate across the pair became inadequate
+without either component changing at all. Under either, no party was
+positioned to notice this from its own record alone. And under either,
+the configuration-level judgment — the one predicate ranging over <span
+class="math inline"><em>Σ</em></span> rather than over <span
+class="math inline">𝒩</span> — was never made, because no procedure
+required it.</p>
+<p><strong>What the framework prescribes.</strong> Not that either
+release should have been forbidden. That the join is an event requiring
+its own judgment: a formation whose admissibility is evaluated over the
+configuration, against an invariant that nothing in either part was
+carrying. Where no such gate exists, a configuration acquires a defect
+no component-scoped certificate could have detected, and every party’s
+paperwork remains in order.</p>
+<hr />
+<h2 id="failure-modes">16. Failure Modes</h2>
+<p><strong>16.1 False composability.</strong> Components appear
+compatible while hidden assumptions conflict.</p>
+<p><strong>16.2 Environmental subsidy.</strong> Continuous external
+repair or supervision creates the appearance of robust composition.</p>
+<p><strong>16.3 Hidden externalization.</strong> A component exports
+constraint-bearing work without declaring it as an assumption.</p>
+<p><strong>16.4 Destructive composition.</strong> The act of joining
+destroys prior interfaces, identities, or future compositional
+options.</p>
+<p><strong>16.5 Premature standing.</strong> A boundary is trusted
+before internal organization supports its exposed guarantees.</p>
+<p><strong>16.6 Unjustified exposure.</strong> A composite is published,
+packaged, or advertised as a component before it has earned standing for
+the purpose implied by the exposure.</p>
+<p><strong>16.7 Nonclosing composition.</strong> The result functions
+but cannot participate in further formation where further formation is
+required.</p>
+<p><strong>16.8 Semantic drift.</strong> Interfaces remain stable while
+their meanings diverge.</p>
+<p><strong>16.9 Invariant leakage.</strong> Local behavior is preserved
+by exporting costs, failures, or risks to the environment.</p>
+<p><strong>16.10 Recursive fragility.</strong> Small losses at each
+layer accumulate into major higher-order unreliability.</p>
+<p><strong>16.11 Mediator capture.</strong> An intermediary becomes
+indispensable and acquires unreviewed control over the relation.</p>
+<p><strong>16.12 Combinatorial explosion.</strong> Individually valid
+relations create too many configurations to evaluate safely.</p>
+<p><strong>16.13 Authority amplification.</strong> Valid permissions or
+delegations combine into an effect that no participant was entitled to
+authorize.</p>
+<p><strong>16.14 Temporal decay.</strong> A once-valid composition
+remains active after its evidence, assumptions, dependencies, or
+authority have changed.</p>
+<p><strong>16.15 Formation without validity.</strong> A composite forms
+and becomes operational before invariant preservation has been
+established.</p>
+<p><strong>16.16 Admission without standing.</strong> A regime
+authorizes reliance upon an object whose boundary, guarantees, or
+evidence do not justify treating it as a component.</p>
+<hr />
+<h2 id="design-principles">17. Design Principles</h2>
+<ol type="1">
+<li><p><strong>Separate proposal, formation, validity, and
+admission.</strong> A relation can be proposed without forming, form
+without being valid, and be valid without being admitted.</p></li>
+<li><p><strong>Separate exposure from justified exposure.</strong>
+Publishing a boundary is an act; earning it is a status.</p></li>
+<li><p><strong>Identify constraint carriage.</strong> Determine what
+carries the work required to realize and preserve each
+invariant.</p></li>
+<li><p><strong>Declare the disturbance envelope.</strong> A
+composability claim without an envelope is generally overbroad.</p></li>
+<li><p><strong>Separate retention from invariant preservation.</strong>
+A relation may persist while meaning, safety, alignment, or authority
+fails.</p></li>
+<li><p><strong>Internalize proportionally.</strong> Move constraint
+inward only when the new allocation better fits the intended
+use.</p></li>
+<li><p><strong>Expose residual assumptions.</strong> Do not hide burdens
+that remain with the context.</p></li>
+<li><p><strong>Treat mediators as components.</strong> Adapters,
+translators, and gateways require their own evidence and failure
+analysis.</p></li>
+<li><p><strong>Preserve reversibility where evolution matters.</strong>
+Avoid destructive bonds when repair, substitution, or learning is
+expected.</p></li>
+<li><p><strong>Grant standing only when earned.</strong> Packaging is
+not proof of bounded reliability.</p></li>
+<li><p><strong>Preserve constitutive lineage through
+abstraction.</strong> Higher-order objects should retain access to the
+components and relations supporting their guarantees.</p></li>
+<li><p><strong>Test configurations, not merely parts.</strong> Valid
+components may form an inadmissible architecture.</p></li>
+<li><p><strong>Evaluate relation paths.</strong> Accumulated
+consequences may remain invisible at individual interfaces.</p></li>
+<li><p><strong>Make refusal native.</strong> Reliable composability
+requires rejection of invalid combinations.</p></li>
+<li><p><strong>Govern evidentiary, standing, and admission status
+separately.</strong> Loss of admission does not imply loss of
+capability; loss of standing requires failure of justified bounded
+reliance; staleness of evidence requires neither.</p></li>
+<li><p><strong>Match evidence to consequence.</strong> Expansive,
+irreversible, or hazardous compositions require stronger
+support.</p></li>
+</ol>
+<hr />
+<h2 id="related-work-and-differential-contribution">18. Related Work and
+Differential Contribution</h2>
+<h3 id="hierarchy-decomposability-and-aggregativity">18.1 Hierarchy,
+Decomposability, and Aggregativity</h3>
+<p>Simon’s account of hierarchy and near-decomposability explains how
+stable intermediate forms enable complex systems to develop and remain
+intelligible (Simon, 1962). Alexander’s work on form and pattern
+examines how local relations participate in larger coherent structures
+(Alexander, 1964; Alexander et al., 1977). Wimsatt’s treatment of
+aggregativity, emergence, and limited decomposition bears directly on
+the distinction between mere collections and wholes whose properties
+depend upon organization (Wimsatt, 2007).</p>
+<p>The present framework inherits the importance of hierarchy but asks
+what carries the constraints by which an intermediate form remains
+stable enough to function as a component.</p>
+<h3 id="modularity-and-product-architecture">18.2 Modularity and Product
+Architecture</h3>
+<p>Parnas emphasized decomposition according to information-hiding
+decisions rather than arbitrary subdivision (Parnas, 1972). Baldwin and
+Clark developed modularity through shared design rules supporting
+independent development and substitution (Baldwin &amp; Clark, 2000).
+Ulrich analyzed product architecture through the mapping of functional
+elements to physical components and the specification of interfaces
+among them (Ulrich, 1995). Component-software theory likewise examines
+interfaces, replaceability, and assembly (Szyperski, 2002).</p>
+<p>Constraint-Bearing Composability distinguishes structural boundedness
+from standing and asks what justifies reliance upon the exposed
+boundary.</p>
+<h3 id="contracts-interfaces-and-program-correctness">18.3 Contracts,
+Interfaces, and Program Correctness</h3>
+<p>Hoare’s axiomatic treatment of programs established a foundational
+form of reasoning from preconditions to postconditions (Hoare, 1969).
+Meyer’s design-by-contract approach brought explicit assumptions and
+guarantees into software component design (Meyer, 1992). Interface
+automata and contract-based design formalize compatibility, assumptions,
+guarantees, refinement, and composition more rigorously than this
+conceptual paper attempts (de Alfaro &amp; Henzinger, 2001; Benveniste
+et al., 2018).</p>
+<p>The present framework does not replace those formalisms. It
+distinguishes formation from validity, constraint carriage from
+interface syntax, environmental retention from interface retention,
+capability from evidence and admission, exposure from justified
+exposure, encapsulation from standing, and local compatibility from
+architectural admissibility.</p>
+<h3 id="architectural-mismatch-and-local-to-global-failure">18.4
+Architectural Mismatch and Local-to-Global Failure</h3>
+<p>Garlan, Allen, and Ockerbloom showed that apparently reusable
+software components may fail to integrate because of hidden
+architectural assumptions (Garlan, Allen, &amp; Ockerbloom, 1995).</p>
+<p>The present framework generalizes the problem. Local validity may
+fail under extension because composition alters topology, reallocates
+constraint, creates new paths, changes scale, and introduces invariants
+visible only at configuration level.</p>
+<h3 id="robust-composition-and-authority">18.5 Robust Composition and
+Authority</h3>
+<p>Miller’s account of robust composition addresses the relationship
+between access control, concurrency, object capabilities, and authority
+(Miller, 2006). This work is especially relevant to constitutional
+composability because it shows that authority cannot be inferred merely
+from nominal permissions and that composition may create unintended
+effective power.</p>
+<p>Constraint-Bearing Composability treats authority amplification as
+one instance of a broader pattern: locally valid relations may combine
+into a globally inadmissible configuration.</p>
+<h3 id="differential-contribution">18.6 Differential Contribution</h3>
+<p>The framework is not reducible to contract theory, interface
+automata, modularity theory, or hierarchy theory, because those
+traditions generally begin with components, boundaries, or interfaces
+already sufficiently individuated to model.</p>
+<p>Constraint-Bearing Composability begins earlier and ranges more
+broadly. It asks whether objects are merely aggregated or genuinely
+composed; whether a proposed relation actually forms; what carries the
+realizing and preserving constraints; whether the formed composite
+preserves its designated invariants; whether exposure of its boundary is
+justified; and whether the complete configuration remains admissible
+across scale and time.</p>
+<hr />
+<h2 id="what-this-framework-does-not-claim">19. What This Framework Does
+Not Claim</h2>
+<p>The framework does not claim that all composability lies on one
+universal ladder; that internal carriage is superior to environmental
+support; that all domains share identical material mechanisms; or that a
+conceptual profile replaces domain-specific testing or proof.</p>
+<p>It does not claim to introduce assume-guarantee contracts; that
+modularity guarantees compositionality; that encapsulation guarantees
+standing; or that certification creates capability.</p>
+<p>It does not claim that compatibility is required for a composite to
+form; that exposure implies standing; that admission and standing are
+the same status; that valid components imply an admissible
+configuration; that structural role or nesting depth implies reliability
+or legitimacy; that every composition requires constitutional review;
+that every relation should be reversible; or that composability can be
+represented by one universal scalar measure.</p>
+<p>The framework supplies a shared structure for diagnosis. It does not
+erase domain expertise.</p>
+<hr />
+<h2 id="scope-and-conditions-of-inadequacy">20. Scope and Conditions of
+Inadequacy</h2>
+<p>This paper advances definitional, descriptive, and normative claims,
+and each class should be judged by its own standard.</p>
+<p><strong>Definitional claims.</strong> The paper distinguishes
+aggregation, realization, constitutive relation, proposal, formation,
+validity, compatibility, retention, invariant preservation, exposure,
+justified exposure, standing, admission, recursive closure,
+architectural admissibility, constraint carriage, internalization,
+externalization, and carriage adequacy. These should be judged by
+clarity, coherence, and explanatory usefulness.</p>
+<p><strong>Descriptive claims.</strong> The paper proposes that
+structurally similar compositional problems recur across physical,
+computational, epistemic, institutional, and economic systems. These
+should be evaluated through comparative application.</p>
+<p><strong>Normative claims.</strong> The paper argues that
+consequential compositions should distinguish formation from validity
+and exposure from standing, declare disturbance envelopes, expose
+residual assumptions, preserve constitutive lineage, represent mediators
+explicitly, support refusal, undergo review proportional to consequence,
+and remain subject to demotion and revocation. These should be judged by
+whether they improve reliability, intelligibility, adaptability, or
+legitimacy.</p>
+<p><strong>Conditions of inadequacy.</strong> The ontology would require
+revision if important compositional distinctions cannot be expressed
+through its primitives; if the constitutive-relation criterion fails to
+distinguish aggregations from compositions; if realization cannot be
+separated from preservation in practice; if constraint carriage fails to
+discriminate among materially different compositions; if standing adds
+no explanatory value beyond encapsulation; if mediated composition
+cannot be analyzed consistently; if evidentiary status, standing, and
+admission cannot be kept distinct; if formation and validity cannot be
+separated without contradiction; if cross-domain application depends
+only upon metaphor; or if independent analysts cannot use the diagnostic
+record to reach meaningfully comparable judgments.</p>
+<p>The last of these is an empirical claim rather than a conceptual one,
+and it is directly testable: independent analysts applying the record of
+Appendix B to the same documented cases, with agreement measured field
+by field. Such a study is planned, and the framework should be treated
+as unvalidated on this point until it has been carried out.</p>
+<p>The framework should therefore be treated as a candidate conceptual
+component: bounded, inspectable, revisable, and subject to the demands
+it places upon other compositions.</p>
+<hr />
+<h2 id="conclusion">21. Conclusion</h2>
+<p>Constraint-Bearing Composability provides five practical gains. It
+separates the existence of a composite from its validity and admission.
+It distinguishes realizing a whole from preserving one. It reveals where
+the work of maintaining a composition is actually carried. It
+distinguishes structural position from justified standing, and exposure
+from the entitlement to be relied upon. And it explains why locally
+valid parts may still form a globally inadmissible configuration.</p>
+<p>These distinctions support better interface design, more honest
+abstraction, stronger evidence practices, and constitutional governance
+of higher-order systems. The decisive question is not merely whether
+parts can be joined, nor whether every constraint can be moved inward,
+but which mechanisms and boundaries are capable, inspectable, and
+entitled to carry each constraint required by the whole.</p>
+<p>Parts become a structure when their relations can bear the present;
+they become an architecture when those relations can bear what comes
+next without surrendering the conditions that made the earlier structure
+worthy of trust.</p>
+<hr />
+<h2 id="appendix-a-compact-diagnostic-model">Appendix A: Compact
+Diagnostic Model</h2>
+<h2 id="a.1-primitive-configuration">A.1 Primitive Configuration</h2>
+<p><span class="math display">$$
+\begin{aligned}
+\Sigma = \langle &amp;\mathcal{N}, \mathcal{R}, \Gamma, \Lambda, K,
+\chi\rangle
+\end{aligned}
+$$</span></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Diagnostic question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Components <span class="math inline">𝒩</span></td>
+<td>What bounded entities participate?</td>
+</tr>
+<tr>
+<td>Relations <span class="math inline">ℛ</span></td>
+<td>How do they interact?</td>
+</tr>
+<tr>
+<td>Context <span class="math inline"><em>Γ</em></span></td>
+<td>What environmental, architectural, and governance conditions
+apply?</td>
+</tr>
+<tr>
+<td>Envelope <span class="math inline"><em>Λ</em></span></td>
+<td>Which disturbances must the composition survive?</td>
+</tr>
+<tr>
+<td>Invariants <span class="math inline"><em>K</em></span></td>
+<td>What properties must remain true?</td>
+</tr>
+<tr>
+<td>Carriage <span class="math inline"><em>χ</em></span></td>
+<td>What carries the work of realizing and preserving those
+properties?</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a.2-judgment-layers-and-cross-cutting-statuses">A.2 Judgment
+Layers and Cross-Cutting Statuses</h2>
+<p>The four judgment layers concern events and judgments about
+events:</p>
+<ul>
+<li><p><strong>Layer:</strong> Proposal<br />
+<strong>Question:</strong> What relation is intended?<br />
+<strong>Context:</strong> <span
+class="math inline"><em>Γ</em><sub>val</sub></span></p></li>
+<li><p><strong>Layer:</strong> Formation<br />
+<strong>Question:</strong> What composite actually formed?<br />
+<strong>Context:</strong> none; formation is ontic</p></li>
+<li><p><strong>Layer:</strong> Validity<br />
+<strong>Question:</strong> Which invariants does it preserve under the
+envelope?<br />
+<strong>Context:</strong> <span
+class="math inline"><em>Γ</em><sub>val</sub></span></p></li>
+<li><p><strong>Layer:</strong> Admission<br />
+<strong>Question:</strong> Has a governing regime permitted
+reliance?<br />
+<strong>Context:</strong> <span
+class="math inline"><em>Γ</em><sub>adm</sub></span></p></li>
+</ul>
+<p>The following are statuses rather than layers. They are not stages in
+the formation sequence and may change independently of it:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Status</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Evidentiary status</td>
+<td>How well is the capability claim supported?</td>
+</tr>
+<tr>
+<td>Standing status</td>
+<td>Is the boundary justified for a declared purpose?</td>
+</tr>
+<tr>
+<td>Admission status</td>
+<td>What is the current lifecycle state of the permission?</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a.3-core-predicates">A.3 Core Predicates</h2>
+<ul>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Compatible<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>, <em>R</em>)</span><br />
+<strong>Meaning:</strong> The proposed binary relation satisfies
+applicable local requirements</p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Forms (<em>C</em><sub>1</sub>, <em>C</em><sub>2</sub>, <em>R</em>, <em>C</em><sub>3</sub>)</span><br />
+<strong>Meaning:</strong> The relation is instantiated and produces
+<span class="math inline"><em>C</em><sub>3</sub></span></p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Realizes<sub><em>Γ</em><sub>val</sub></sub>(<em>X</em>, <em>K</em>)</span><br />
+<strong>Meaning:</strong> The subject establishes a whole in which <span
+class="math inline"><em>K</em></span> initially holds</p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Preserves<sub><em>Γ</em><sub>val</sub></sub>(<em>X</em>, <em>K</em>, <em>Λ</em>)</span><br />
+<strong>Meaning:</strong> Required invariants survive the envelope for
+the subject <span class="math inline"><em>X</em></span></p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Retains<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>3</sub>, <em>R</em>, <em>Λ</em>)</span><br />
+<strong>Meaning:</strong> The formed relation persists throughout the
+envelope</p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Valid<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em><sub>3</sub> ∣ <em>𝜚</em>, <em>Λ</em>, <em>K</em>)</span><br />
+<strong>Meaning:</strong> The composite preserves its designated
+invariants; <span class="math inline"><em>𝜚</em></span> is a relation or
+relation set</p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Standing<sub><em>Γ</em><sub>val</sub></sub>(<em>C</em>, <em>p</em>)</span><br />
+<strong>Meaning:</strong> Derived over an applicable record: validity,
+evidence adequacy, boundary adequacy for <span
+class="math inline"><em>p</em></span></p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">JustifiedExposure<sub><em>Γ</em><sub>val</sub></sub>(<em>Σ</em><sub><em>F</em></sub>, <em>C</em><sub>3</sub>, <em>p</em>)</span><br />
+<strong>Meaning:</strong> Exposure of the composite boundary is
+warranted</p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Admitted<sub><em>Γ</em><sub>adm</sub></sub>(<em>C</em>, <em>p</em>, ℰ<sub><em>A</em></sub>)</span><br />
+<strong>Meaning:</strong> Reliance is permitted under the governing
+regime</p></li>
+<li><p><strong>Predicate:</strong> <span
+class="math inline">Admissible<sub><em>Γ</em><sub>val</sub></sub>(<em>Σ</em>)</span><br />
+<strong>Meaning:</strong> The complete configuration satisfies
+system-level constraints</p></li>
+</ul>
+<p>The subject <span class="math inline"><em>X</em></span> of <span
+class="math inline">Realizes </span> and <span
+class="math inline">Preserves </span> may be a component, a composite, a
+relation set paired with its participants, or a configuration. Scope is
+carried by the subject, not by predicate arity.</p>
+<h2 id="a.4-entity-records">A.4 Entity Records</h2>
+<p><strong>Component.</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+C = \langle &amp;\operatorname{id}, B, F, A, G, \Lambda, \mathcal{E}_C,
+V\rangle
+\end{aligned}
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">id </span></td>
+<td>Controlled identity</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>B</em></span></td>
+<td>Boundary</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>F</em></span></td>
+<td>Exposed interfaces</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>A</em></span></td>
+<td>Assumptions exported to the context</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>G</em></span></td>
+<td>Guarantees exposed to external actors</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>Λ</em></span></td>
+<td>Declared disturbance envelope</td>
+</tr>
+<tr>
+<td><span class="math inline">ℰ<sub><em>C</em></sub></span></td>
+<td>Component evidence object</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>V</em></span></td>
+<td>Version and lifecycle state</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Relation.</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+R = \langle &amp;C_1, C_2, \tau, \mu, \Lambda_R, K_R, \chi(R), \\
+&amp;\mathcal{E}_R\rangle
+\end{aligned}
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span
+class="math inline"><em>C</em><sub>1</sub>, <em>C</em><sub>2</sub></span></td>
+<td>Participants</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>τ</em></span></td>
+<td>Interface correspondence</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>μ</em></span></td>
+<td>Relation mode</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>Λ</em><sub><em>R</em></sub></span></td>
+<td>Relation-specific disturbance envelope</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>K</em><sub><em>R</em></sub></span></td>
+<td>Relation-specific invariant set</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>χ</em>(<em>R</em>)</span></td>
+<td>Relation-level carriage allocation</td>
+</tr>
+<tr>
+<td><span class="math inline">ℰ<sub><em>R</em></sub></span></td>
+<td>Relation evidence object</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Context and projections.</strong></p>
+<p><span
+class="math display"><em>Γ</em> = ⟨<em>E</em><sub><em>Γ</em></sub>, <em>K</em><sub><em>Γ</em></sub>, <em>P</em><sub><em>Γ</em></sub>, <em>H</em><sub><em>Γ</em></sub>⟩   <em>Γ</em><sub>val</sub> = ⟨<em>E</em><sub><em>Γ</em></sub>, <em>K</em><sub><em>Γ</em></sub>, <em>H</em><sub><em>Γ</em></sub>⟩   <em>Γ</em><sub>adm</sub> = ⟨<em>P</em><sub><em>Γ</em></sub>, <em>K</em><sub><em>Γ</em></sub>, <em>H</em><sub><em>Γ</em></sub>⟩</span></p>
+<p><strong>Evidence object.</strong></p>
+<p><span
+class="math display">ℰ = ⟨<em>s</em>, <em>c</em>, <em>m</em>, <em>r</em>, <em>u</em>, <em>π</em>⟩</span></p>
+<p><strong>Diagnostic record.</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+\mathcal{D} = \langle &amp;q, \Lambda, K, \chi, \mathcal{E},
+A_{\mathrm{res}}, \Phi, \\
+&amp;V\rangle
+\end{aligned}
+$$</span></p>
+<h2 id="a.5-notation-index">A.5 Notation Index</h2>
+<ul>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>Σ</em></span><br />
+<strong>Meaning:</strong> Compositional configuration<br />
+<strong>Defined in:</strong> 2</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">𝒩, ℛ</span><br />
+<strong>Meaning:</strong> Component and relation sets<br />
+<strong>Defined in:</strong> 2</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>Γ</em></span><br />
+<strong>Meaning:</strong> Context<br />
+<strong>Defined in:</strong> 2.3</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>Γ</em><sub>val</sub>, <em>Γ</em><sub>adm</sub></span><br />
+<strong>Meaning:</strong> Validity and admission projections of the
+context<br />
+<strong>Defined in:</strong> 2.3</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>E</em><sub><em>Γ</em></sub>, <em>K</em><sub><em>Γ</em></sub>, <em>P</em><sub><em>Γ</em></sub>, <em>H</em><sub><em>Γ</em></sub></span><br />
+<strong>Meaning:</strong> Contextual guarantees; architectural
+invariants; admission rules; history<br />
+<strong>Defined in:</strong> 2.3</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>Λ</em></span><br />
+<strong>Meaning:</strong> Disturbance envelope<br />
+<strong>Defined in:</strong> 2.4</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>K</em></span><br />
+<strong>Meaning:</strong> Required invariants<br />
+<strong>Defined in:</strong> 2.5</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>P</em></span><br />
+<strong>Meaning:</strong> Property set<br />
+<strong>Defined in:</strong> 2.5</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>χ</em></span><br />
+<strong>Meaning:</strong> Carriage allocation, loci <span
+class="math inline"><em>χ</em><sub><em>O</em></sub></span> through <span
+class="math inline"><em>χ</em><sub><em>Q</em></sub></span><br />
+<strong>Defined in:</strong> 2.6</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>χ</em>(<em>C</em>), <em>χ</em>(<em>R</em>), <em>χ</em>(<em>Σ</em>)</span><br />
+<strong>Meaning:</strong> Carriage at component, relation, configuration
+granularity<br />
+<strong>Defined in:</strong> 6.1</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>μ</em></span><br />
+<strong>Meaning:</strong> Relation mode<br />
+<strong>Defined in:</strong> 2.2</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>τ</em></span><br />
+<strong>Meaning:</strong> Interface correspondence<br />
+<strong>Defined in:</strong> A.4</p></li>
+<li><p><strong>Symbol:</strong> <span class="math inline">𝒮</span><br />
+<strong>Meaning:</strong> Candidate minimal sufficient relation
+set<br />
+<strong>Defined in:</strong> 3.3</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>Θ</em>(𝒮)</span><br />
+<strong>Meaning:</strong> Conjunction of realization and preservation
+for <span class="math inline">𝒮</span><br />
+<strong>Defined in:</strong> 3.3</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>w</em></span><br />
+<strong>Meaning:</strong> Constitutive or containment path within a
+configuration<br />
+<strong>Defined in:</strong> 8.2</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">RC (<em>X</em>)</span><br />
+<strong>Meaning:</strong> Relational capacity profile<br />
+<strong>Defined in:</strong> 8.1</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>ρ</em>, <em>δ</em></span><br />
+<strong>Meaning:</strong> Preservation margin; degradation
+behavior<br />
+<strong>Defined in:</strong> 8.1</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">Roles<sub><em>Σ</em></sub>(<em>X</em>)</span><br />
+<strong>Meaning:</strong> Structural roles, set-valued<br />
+<strong>Defined in:</strong> 8.2</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">Depth<sub><em>Σ</em></sub>(<em>X</em>, <em>w</em>)</span><br />
+<strong>Meaning:</strong> Nesting depth along constitutive path <span
+class="math inline"><em>w</em></span><br />
+<strong>Defined in:</strong> 8.2</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>p</em></span><br />
+<strong>Meaning:</strong> Declared purpose<br />
+<strong>Defined in:</strong> 4.4, 8.3</p></li>
+<li><p><strong>Symbol:</strong> <span class="math inline">𝒟</span><br />
+<strong>Meaning:</strong> Diagnostic record<br />
+<strong>Defined in:</strong> 8.4</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">Applies (𝒟, <em>C</em>, <em>p</em>)</span><br />
+<strong>Meaning:</strong> The record’s subject is <span
+class="math inline"><em>C</em></span> and its claim covers <span
+class="math inline"><em>p</em></span><br />
+<strong>Defined in:</strong> 8.3</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">Covers (<em>q</em>, <em>p</em>)</span><br />
+<strong>Meaning:</strong> The capability claim extends to the
+purpose<br />
+<strong>Defined in:</strong> 8.3</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">Constitution (<em>C</em>)</span><br />
+<strong>Meaning:</strong> Constitutive relation set retained with <span
+class="math inline"><em>C</em></span><br />
+<strong>Defined in:</strong> 8.3, 10.6</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>𝜚</em></span><br />
+<strong>Meaning:</strong> Relation or relation set argument of
+validity<br />
+<strong>Defined in:</strong> 4.3</p></li>
+<li><p><strong>Symbol:</strong> <span class="math inline">ℰ</span><br />
+<strong>Meaning:</strong> Evidence object, scoped <span
+class="math inline">ℰ<sub><em>C</em></sub>, ℰ<sub><em>R</em></sub>, ℰ<sub><em>A</em></sub></span><br />
+<strong>Defined in:</strong> 8.5</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>q</em></span><br />
+<strong>Meaning:</strong> Capability claim<br />
+<strong>Defined in:</strong> 8.4</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>s</em>, <em>c</em>, <em>m</em>, <em>r</em>, <em>u</em>, <em>π</em></span><br />
+<strong>Meaning:</strong> Evidence subject, claim, method, result,
+uncertainty, provenance<br />
+<strong>Defined in:</strong> 8.5</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>A</em><sub>res</sub>, <em>Φ</em>, <em>V</em></span><br />
+<strong>Meaning:</strong> Residual assumptions; failure conditions;
+version<br />
+<strong>Defined in:</strong> 8.4</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">form<sub><em>R</em></sub></span><br />
+<strong>Meaning:</strong> Partial formation operator<br />
+<strong>Defined in:</strong> 10.5</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">⊕<sub><em>F</em></sub></span><br />
+<strong>Meaning:</strong> Formation update, introduces a composite<br />
+<strong>Defined in:</strong> 10.6</p></li>
+<li><p><strong>Symbol:</strong> <span class="math inline">⊕</span><br />
+<strong>Meaning:</strong> Extension update, adds component and
+edge<br />
+<strong>Defined in:</strong> 13.2</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline"><em>F</em><sub><em>i</em></sub>, <em>A</em><sub><em>i</em></sub>, <em>G</em><sub><em>i</em></sub></span><br />
+<strong>Meaning:</strong> Interfaces, assumptions, guarantees of <span
+class="math inline"><em>C</em><sub><em>i</em></sub></span><br />
+<strong>Defined in:</strong> A.4</p></li>
+<li><p><strong>Symbol:</strong> <span
+class="math inline">src , dst </span><br />
+<strong>Meaning:</strong> Relation endpoints<br />
+<strong>Defined in:</strong> 13.1</p></li>
+</ul>
+<p><strong>Note on schematic operators.</strong> Several operators are
+specified by their role rather than by a general definition: <span
+class="math inline">AggregateCarriage </span> (6.1), <span
+class="math inline">AdequateEvidence </span>, <span
+class="math inline">AdequateBoundary </span>, and <span
+class="math inline">Covers </span> (8.3), <span
+class="math inline">ProjectInterfaces </span> (10.7), and <span
+class="math inline">Residual </span> and <span
+class="math inline">Consequences </span> (10.9). Each must be
+instantiated for a domain before the framework can be applied there, and
+each marks the point at which domain-specific engineering, proof,
+measurement, or governance practice enters. Their schematic status is
+deliberate: supplying universal definitions would commit the ontology to
+domain assumptions it explicitly disclaims in Section 19.</p>
+<hr />
+<h2 id="appendix-b-diagnostic-record-template">Appendix B: Diagnostic
+Record Template</h2>
+<p><strong>Capability claim <span
+class="math inline"><em>q</em></span>:</strong> what the composition is
+claimed to realize, preserve, or accomplish.</p>
+<p><strong>Disturbance envelope <span
+class="math inline"><em>Λ</em></span>:</strong> conditions throughout
+which the claim must hold.</p>
+<p><strong>Required invariants <span
+class="math inline"><em>K</em></span>:</strong> properties that must
+remain true.</p>
+<p><strong>Constraint carriage <span
+class="math inline"><em>χ</em></span>:</strong> observer or container,
+environment, intrinsic structure, interface, mediator, internal
+organization, architecture, constitution.</p>
+<p><strong>Evidence <span class="math inline">ℰ</span>:</strong> method
+<span class="math inline"><em>m</em></span>, result <span
+class="math inline"><em>r</em></span>, uncertainty <span
+class="math inline"><em>u</em></span>, provenance <span
+class="math inline"><em>π</em></span>.</p>
+<p><strong>Residual assumptions <span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> what the
+context must continue to supply.</p>
+<p><strong>Failure conditions <span
+class="math inline"><em>Φ</em></span>:</strong> what invalidates or
+demotes the claim.</p>
+<p><strong>Version and lifecycle state <span
+class="math inline"><em>V</em></span>:</strong> applicable identity,
+revision, and status.</p>
+<p><strong>Structural roles and depth:</strong> <span
+class="math inline">Roles<sub><em>Σ</em></sub>(<em>X</em>)</span>, and
+<span
+class="math inline">Depth<sub><em>Σ</em></sub>(<em>X</em>, <em>w</em>)</span>
+for each constitutive path <span class="math inline"><em>w</em></span>
+by which the object is reached.</p>
+<p><strong>Evidentiary status:</strong> unsupported, preliminary,
+demonstrated, independently supported, contradicted, stale.</p>
+<p><strong>Standing status:</strong> candidate, qualified, constrained,
+demoted, lost.</p>
+<p><strong>Admission status:</strong> pending, admitted, active,
+suspended, revoked, expired, retired.</p>
+<hr />
+<h2 id="appendix-c-complete-worked-records">Appendix C: Complete Worked
+Records</h2>
+<h2 id="c.1-interlocking-bricks">C.1 Interlocking Bricks</h2>
+<h3 id="c.1.1-alignment">C.1.1 Alignment</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong>
+Compatible bricks establish repeatable position and orientation on a
+regular grid. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Ordinary assembly using
+undeformed components within specified manufacturing tolerances.
+<strong><span class="math inline"><em>K</em></span>:</strong> Geometric
+correspondence and permitted orientation. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Component-intrinsic
+geometry and interface geometry. <strong><span
+class="math inline"><em>m</em></span>:</strong> Dimensional inspection
+and repeated assembly trials. <strong><span
+class="math inline"><em>r</em></span>:</strong> Repeatable fitting and
+stable grid alignment. <strong><span
+class="math inline"><em>u</em></span>:</strong> Variation from
+manufacturing tolerances, wear, contamination, deformation.
+<strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Materials
+remain dimensionally stable and compatible. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Warping, obstruction,
+incompatible scale, partial engagement. <strong><span
+class="math inline"><em>V</em></span>:</strong> Applicable brick
+geometry and manufacturing specification.</p>
+<h3 id="c.1.2-retention">C.1.2 Retention</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> Joined
+bricks remain connected under inversion and moderate handling.
+<strong><span class="math inline"><em>Λ</em></span>:</strong> Forces
+below the tested separation threshold. <strong><span
+class="math inline"><em>K</em></span>:</strong> Continued attachment and
+bounded misalignment. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Interface interference,
+friction, material elasticity, geometry. <strong><span
+class="math inline"><em>m</em></span>:</strong> Pull-force testing,
+inversion trials, repeated connection cycles. <strong><span
+class="math inline"><em>r</em></span>:</strong> Observed persistence
+under specified handling conditions. <strong><span
+class="math inline"><em>u</em></span>:</strong> Wear, material age,
+temperature, variation in engagement force. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Components
+are fully engaged and undamaged. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Excessive load, heat
+deformation, incomplete engagement, accumulated wear. <strong><span
+class="math inline"><em>V</em></span>:</strong> Applicable component
+design and material revision.</p>
+<h3 id="c.1.3-invariant-bearing-capacity">C.1.3 Invariant-Bearing
+Capacity</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+connection transfers limited tension, compression, and shear while
+preserving attachment and bounded deformation. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Model-scale use within
+tested geometry and loading. <strong><span
+class="math inline"><em>K</em></span>:</strong> Attachment, geometric
+integrity, acceptable deformation. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Distributed across
+material, interface geometry, connection count, higher-order load path.
+<strong><span class="math inline"><em>m</em></span>:</strong> Mechanical
+testing and controlled structural trials. <strong><span
+class="math inline"><em>r</em></span>:</strong> Measured load transfer
+and observed structural persistence. <strong><span
+class="math inline"><em>u</em></span>:</strong> Scale effects,
+concentrated loads, fatigue, hidden weak joints. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong>
+Higher-order structures distribute loads within local connection
+capacity. <strong><span class="math inline"><em>Φ</em></span>:</strong>
+Leverage, fatigue, unsupported span, concentrated load, accumulated
+tolerance. <strong><span class="math inline"><em>V</em></span>:</strong>
+Specific assembly geometry, connection pattern, material state.</p>
+<h3 id="c.1.4-standing">C.1.4 Standing</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> A
+stable subassembly may be transported and reintegrated as one bounded
+component. <strong><span class="math inline"><em>Λ</em></span>:</strong>
+Handling below the weakest internal joint’s failure threshold.
+<strong><span class="math inline"><em>K</em></span>:</strong> Internal
+organization, identity, external interface availability. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Internal joints,
+subassembly geometry, handling procedure, exposed interfaces.
+<strong><span class="math inline"><em>m</em></span>:</strong> Repeated
+manipulation, inspection, transport, reintegration. <strong><span
+class="math inline"><em>r</em></span>:</strong> The subassembly remains
+identifiable and operational across repeated use. <strong><span
+class="math inline"><em>u</em></span>:</strong> Hidden connections and
+internal load redistribution. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Internal
+connections remain sound and exposed interfaces remain compatible.
+<strong><span class="math inline"><em>Φ</em></span>:</strong> Weak
+internal joints, exhausted interfaces, geometric distortion,
+undocumented internal damage. <strong><span
+class="math inline"><em>V</em></span>:</strong> Identified subassembly
+revision and component lineage.</p>
+<h3 id="c.1.5-recursive-closure">C.1.5 Recursive Closure</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+subassembly may participate in a larger structure. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Higher-order loads
+remain within inherited limits. <strong><span
+class="math inline"><em>K</em></span>:</strong> Subassembly identity,
+interface compatibility, load-path continuity. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Shared among subassembly
+internals, external interfaces, higher-order architecture. <strong><span
+class="math inline"><em>m</em></span>:</strong> Repeated higher-order
+composition and load-path inspection. <strong><span
+class="math inline"><em>r</em></span>:</strong> Successful reuse in
+larger assemblies. <strong><span
+class="math inline"><em>u</em></span>:</strong> Accumulated tolerance,
+interface exhaustion, emergent load concentration. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Scale
+effects do not invalidate lower-order relations. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Interface exhaustion,
+accumulated misalignment, excessive load, architectural mismatch.
+<strong><span class="math inline"><em>V</em></span>:</strong>
+Higher-order configuration and lineage state.</p>
+<h2 id="c.2-evidence-module">C.2 Evidence Module</h2>
+<h3 id="c.2.1-alignment">C.2.1 Alignment</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+module can enter an analysis using compatible definitions, units, and
+temporal scope. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Transfer into a
+receiving argument with declared semantic conventions. <strong><span
+class="math inline"><em>K</em></span>:</strong> Meaningful
+correspondence of terms, units, entities, timeframes. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Schemas, definitions,
+metadata, receiving-context validation. <strong><span
+class="math inline"><em>m</em></span>:</strong> Schema validation, unit
+checking, semantic review. <strong><span
+class="math inline"><em>r</em></span>:</strong> Established
+correspondence between source and receiving representations.
+<strong><span class="math inline"><em>u</em></span>:</strong> Ambiguous
+terms, incomplete metadata, domain shift. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> The
+receiving analysis preserves imported definitions and scope.
+<strong><span class="math inline"><em>Φ</em></span>:</strong> Unit
+mismatch, semantic drift, temporal mismatch, ambiguous terminology.
+<strong><span class="math inline"><em>V</em></span>:</strong> Applicable
+schema, terminology, source revision.</p>
+<h3 id="c.2.2-retention">C.2.2 Retention</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+claim remains bound to its evidence after copying or transfer.
+<strong><span class="math inline"><em>Λ</em></span>:</strong> Storage,
+transmission, and reuse preserving provenance metadata. <strong><span
+class="math inline"><em>K</em></span>:</strong> Evidentiary lineage,
+content identity, citation correspondence. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Content identity,
+citations, custody records, manifests, archival systems. <strong><span
+class="math inline"><em>m</em></span>:</strong> Manifest verification,
+content comparison, citation retrieval. <strong><span
+class="math inline"><em>r</em></span>:</strong> Stable content identity
+and retrievable supporting sources. <strong><span
+class="math inline"><em>u</em></span>:</strong> Source disappearance,
+mutable content, incomplete archival capture. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Referenced
+evidence remains available or adequately preserved. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Citation loss, source
+substitution, provenance break, unsupported summary. <strong><span
+class="math inline"><em>V</em></span>:</strong> Identified
+evidence-package revision and source state.</p>
+<h3 id="c.2.3-invariant-bearing-capacity">C.2.3 Invariant-Bearing
+Capacity</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+module preserves warranted meaning under summarization and incorporation
+into a larger argument. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Transformations that do
+not strengthen the claim beyond its evidence. <strong><span
+class="math inline"><em>K</em></span>:</strong> Scope, uncertainty,
+provenance, contradiction status, warrant. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Explicit claim
+boundaries, inference rules, uncertainty annotations, review, lineage.
+<strong><span class="math inline"><em>m</em></span>:</strong>
+Reproducible derivation and independent analytical review. <strong><span
+class="math inline"><em>r</em></span>:</strong> Reviewers can
+reconstruct the claim from retained evidence and warrant. <strong><span
+class="math inline"><em>u</em></span>:</strong> Interpretive
+disagreement, omitted context, source-selection effects. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Receiving
+analysts respect declared limitations and uncertainty. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Scope expansion,
+certainty inflation, contradiction suppression, evidence laundering.
+<strong><span class="math inline"><em>V</em></span>:</strong> Applicable
+analysis, source set, inference revision.</p>
+<h3 id="c.2.4-standing">C.2.4 Standing</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+evidence package may be relied upon as a bounded analytical component.
+<strong><span class="math inline"><em>Λ</em></span>:</strong> Uses
+within its declared question, scope, and evidentiary standard.
+<strong><span class="math inline"><em>K</em></span>:</strong>
+Inspectability of sources, transformations, assumptions, warrants,
+uncertainty. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Internal provenance,
+review procedures, schema, custody, external admission rules.
+<strong><span class="math inline"><em>m</em></span>:</strong> Lineage
+audit, methodological review, independent reconstruction. <strong><span
+class="math inline"><em>r</em></span>:</strong> Complete and inspectable
+support for the package’s exposed claims. <strong><span
+class="math inline"><em>u</em></span>:</strong> Unknown omitted evidence
+and residual model dependence. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> No
+material source class has been excluded without disclosure.
+<strong><span class="math inline"><em>Φ</em></span>:</strong> Premature
+abstraction, hidden selection, opaque inference, stale evidence.
+<strong><span class="math inline"><em>V</em></span>:</strong> Identified
+evidence-module revision and review state.</p>
+<h3 id="c.2.5-recursive-closure">C.2.5 Recursive Closure</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+module may support a higher-order conclusion without losing its original
+support conditions. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Higher-order analysis
+imports assumptions, uncertainty, contradiction status. <strong><span
+class="math inline"><em>K</em></span>:</strong> Evidentiary support
+conditions and lineage. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Dependency graphs,
+explicit imports, provenance, receiving-architecture rules.
+<strong><span class="math inline"><em>m</em></span>:</strong> Dependency
+tracing and reconstruction of the higher-order inference. <strong><span
+class="math inline"><em>r</em></span>:</strong> The higher-order
+conclusion remains linked to the module’s support conditions.
+<strong><span class="math inline"><em>u</em></span>:</strong>
+Interaction among modules and emergent inferential dependencies.
+<strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> The module
+is not treated as stronger than its validated claim. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Provenance compression,
+unsupported transitive inference, evidence laundering. <strong><span
+class="math inline"><em>V</em></span>:</strong> Higher-order analysis
+revision and dependency state.</p>
+<h2 id="c.3-failing-profile-linked-datasets">C.3 Failing Profile: Linked
+Datasets</h2>
+<p>The first two records below are the component records as each
+custodian filed them. Both are internally consistent under the
+isolation-scoped reading of Section 15.3; under the broader reading,
+both understate their residual assumptions. The third is the
+configuration record that no party produced, and whose absence is the
+defect on either reading.</p>
+<h3 id="c.3.1-dataset-a-as-filed">C.3.1 Dataset A, as Filed</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> No
+individual is identifiable from this release. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Inspection of the
+release in isolation. <strong><span
+class="math inline"><em>K</em></span>:</strong> Non-identifiability of
+individuals. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Recorded as
+component-intrinsic coarsening of demographic attributes. <strong><span
+class="math inline"><em>m</em></span>:</strong> Disclosure check against
+the release. <strong><span
+class="math inline"><em>r</em></span>:</strong> No individual isolated
+by the check. <strong><span
+class="math inline"><em>u</em></span>:</strong> Sensitivity of the check
+to attribute granularity. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Recorded
+as empty. Correct under the isolation-scoped reading; understated under
+the broader reading. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Insufficient coarsening;
+unique attribute combinations. <strong><span
+class="math inline"><em>V</em></span>:</strong> Release revision and
+coarsening parameters.</p>
+<h3 id="c.3.2-dataset-b-as-filed">C.3.2 Dataset B, as Filed</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> No
+individual is identifiable from this release. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Inspection of the
+release in isolation. <strong><span
+class="math inline"><em>K</em></span>:</strong> Non-identifiability of
+individuals. <strong><span
+class="math inline"><em>χ</em></span>:</strong> Recorded as pseudonymous
+keying of behavioral records. <strong><span
+class="math inline"><em>m</em></span>:</strong> Disclosure check against
+the release. <strong><span
+class="math inline"><em>r</em></span>:</strong> No individual isolated
+by the check. <strong><span
+class="math inline"><em>u</em></span>:</strong> Sensitivity of the check
+to record sparsity. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> Recorded
+as empty. Correct under the isolation-scoped reading; understated under
+the broader reading. <strong><span
+class="math inline"><em>Φ</em></span>:</strong> Key reversal; sparse
+high-dimensional records. <strong><span
+class="math inline"><em>V</em></span>:</strong> Release revision and
+keying scheme.</p>
+<h3 id="c.3.3-the-linked-configuration-as-it-should-read">C.3.3 The
+Linked Configuration, as It Should Read</h3>
+<p><strong><span class="math inline"><em>q</em></span>:</strong> The
+join of <span class="math inline"><em>A</em></span> and <span
+class="math inline"><em>B</em></span> on shared quasi-identifiers
+preserves non-identifiability. <strong><span
+class="math inline"><em>Λ</em></span>:</strong> Any environment in which
+both releases, or either release and comparable auxiliary data, are
+simultaneously available to one party. <strong><span
+class="math inline"><em>K</em></span>:</strong> Non-identifiability of
+individuals across the configuration. <strong><span
+class="math inline"><em>χ</em></span>:</strong> At configuration scale,
+no declared mechanism carries the invariant. Neither the coarsening of
+<span class="math inline"><em>A</em></span> nor the keying of <span
+class="math inline"><em>B</em></span> extends to the joined data.
+Whatever protection existed across the pair was environmental: the
+absence of the linkage that the join itself supplies. Publication of the
+second release removed that carrier without altering either part.
+<strong><span class="math inline"><em>m</em></span>:</strong> Linkage
+analysis across the released pair, not disclosure checking within
+either. <strong><span class="math inline"><em>r</em></span>:</strong>
+Individuals identifiable in the joined data. <strong><span
+class="math inline"><em>u</em></span>:</strong> Extent of further
+auxiliary data available to an adversary; whether other unlinked
+releases carry the same latent dependency. <strong><span
+class="math inline"><em>A</em><sub>res</sub></span>:</strong> That no
+further auxiliary release supplies additional linkage — an assumption no
+party can support, since none controls the environment it refers to.
+<strong><span class="math inline"><em>Φ</em></span>:</strong> Any
+release, by any party, that supplies the missing linkage; equivalently,
+any change to <span
+class="math inline"><em>E</em><sub><em>Γ</em></sub></span> that removes
+the environmental carrier. <strong><span
+class="math inline"><em>V</em></span>:</strong> The configuration as of
+the second release; both component revisions unchanged.</p>
+<p>Under the isolation-scoped reading, the component records are not
+corrected by this analysis: they remain accurate about their own
+subjects, and the defect is the missing third record together with the
+reliance placed upon the first two. Under the broader reading, the
+component records additionally understate their residual assumptions.
+What the configuration record supplies on either reading is the entry no
+component record had a field for: at the scale of the join, the carrier
+of the invariant was never inside either component, and no party was
+positioned to notice that from its own paperwork alone.</p>
+<hr />
+<h2 id="appendix-d-provisional-vocabulary">Appendix D: Provisional
+Vocabulary</h2>
+<p><strong>Admission</strong> An authoritative decision permitting use
+or reliance within a governing regime.</p>
+<p><strong>Aggregation</strong> Common containment, proximity, or
+membership without a constitutive relation among the aggregated
+members.</p>
+<p><strong>Architectural admissibility</strong> Satisfaction by a
+complete configuration of system-level and history-sensitive
+constraints, evaluated under the validity projection of the context.</p>
+<p><strong>Capability</strong> What a composition can realize or
+preserve within a declared disturbance envelope.</p>
+<p><strong>Carriage adequacy</strong> The ability of a
+constraint-carriage allocation to preserve designated invariants
+throughout the disturbance envelope.</p>
+<p><strong>Compatibility</strong> Satisfaction of the applicable local
+requirements for an intended relation.</p>
+<p><strong>Composability</strong> The capability of components to enter
+valid compositional relations under declared conditions.</p>
+<p><strong>Composition</strong> A formed whole whose constitutive
+relations realize and preserve the properties by which the whole is
+identified or used.</p>
+<p><strong>Compositionality</strong> The extent to which properties of a
+whole may be derived or bounded from its components, relations,
+assumptions, and context.</p>
+<p><strong>Constitutional composability</strong> Composition that
+preserves the system-level rules determining which identities,
+authorities, relations, transformations, and effects may receive
+admission.</p>
+<p><strong>Constitutive relation</strong> A relation belonging to at
+least one minimal relation set that both realizes the relevant
+invariants and preserves them throughout the disturbance envelope.</p>
+<p><strong>Constraint-Bearing Composability</strong> The diagnostic
+ontology developed in this paper for analyzing formation, constraint
+carriage, realization and preservation, standing, exposure, and
+architectural admission.</p>
+<p><strong>Constraint carriage</strong> The allocation of responsibility
+for preserving a composition among observers or containers, environment,
+component-intrinsic properties, interfaces, mediators, internal
+organization, architecture, and constitutional rules.</p>
+<p><strong>Constraint externalization</strong> A transition in which
+preserving responsibility moves or is exported outward.</p>
+<p><strong>Constraint internalization</strong> A transition in which
+preserving responsibility moves inward toward component-intrinsic
+structure, an interface, mediator, or internal organization.</p>
+<p><strong>Diachronic composability</strong> The capability to preserve
+or validly transform compositional relations across time.</p>
+<p><strong>Disturbance envelope</strong> The conditions, loads, and
+changes throughout which a capability claim is intended to remain
+valid.</p>
+<p><strong>Encapsulation</strong> Presentation of internal complexity
+through a bounded exterior.</p>
+<p><strong>Evidence object</strong> A scoped record of subject, claim,
+method, result, uncertainty, and provenance.</p>
+<p><strong>Evidentiary status</strong> The degree of support for a
+capability claim.</p>
+<p><strong>Exposure</strong> The act of presenting a composite through a
+boundary, independent of whether that presentation is warranted.</p>
+<p><strong>Formation</strong> Instantiation of a relation that produces
+a resulting composite, regardless of validity or admission.</p>
+<p><strong>Guarantee</strong> An externally exposed commitment that
+specified properties will hold under declared assumptions.</p>
+<p><strong>Invariant</strong> A property required to remain true
+throughout a compositional event or disturbance envelope.</p>
+<p><strong>Justified exposure</strong> Exposure of a composite boundary
+for a purpose for which the composite holds standing.</p>
+<p><strong>Mediated composition</strong> Composition enabled through an
+intermediary that translates, transforms, constrains, routes, buffers,
+or authenticates a relation.</p>
+<p><strong>Nesting depth</strong> The number of boundary crossings from
+the outermost boundary of a configuration to an object along a specified
+constitutive or containment path. Stated per path rather than as a
+single value.</p>
+<p><strong>Preservation</strong> Keeping designated properties true
+throughout a declared disturbance envelope. Preservation is
+envelope-relative and does not entail realization.</p>
+<p><strong>Property</strong> Any describable feature of a component,
+relation, configuration, or history.</p>
+<p><strong>Proposal</strong> Specification of an intended relation,
+including participants, mode, envelope, required invariants, and
+anticipated carriage, prior to and independent of formation.</p>
+<p><strong>Realization</strong> Bringing a whole and its designated
+properties into being, such that those properties initially hold.
+Realization is envelope-free and does not entail preservation.</p>
+<p><strong>Recursive closure</strong> Eligibility of a formed
+compositional result to participate in another formation.</p>
+<p><strong>Relational capacity</strong> The profile of invariants,
+disturbance envelope, preservation margin, and degradation behavior
+associated with a relation or composite.</p>
+<p><strong>Residual assumption</strong> A condition not discharged by
+the composition and therefore exported to its context.</p>
+<p><strong>Retention</strong> Persistence of a formed relation
+throughout a declared disturbance envelope.</p>
+<p><strong>Standing</strong> The justified eligibility of a composition
+to be treated as a bounded component for a declared purpose; derived
+from validity, evidence adequacy, and boundary adequacy.</p>
+<p><strong>Structural role</strong> The organizational kinds an object
+occupies within a configuration, drawn from entity, collection,
+assembly, component, subsystem, system, architecture, and ecology.
+Set-valued, since one object may occupy several roles at once.</p>
+<p><strong>Validity</strong> Preservation of designated invariants
+throughout the declared disturbance envelope under the validity
+projection of the context.</p>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that composability is commonly treated as a binary
+property: components either can or cannot be combined. Its nearest
+external comparison fields are formal, provenance, storage. The sources
+in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Fixity and preservation can
+keep bytes stable while representation dependencies, executability,
+interpretation, and institutional custody decay. These limits are not
+generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Alexander, C. (1964). <em>Notes on the Synthesis of Form</em>.
+Harvard University Press.</p>
+<p>Alexander, C., Ishikawa, S., Silverstein, M., Jacobson, M.,
+Fiksdahl-King, I., &amp; Angel, S. (1977). <em>A Pattern Language:
+Towns, Buildings, Construction</em>. Oxford University Press.</p>
+<p>Baldwin, C. Y., &amp; Clark, K. B. (2000). <em>Design Rules, Volume
+1: The Power of Modularity</em>. MIT Press.</p>
+<p>Benveniste, A., Caillaud, B., Nickovic, D., Passerone, R., Raclet,
+J.-B., Reinkemeier, P., Sangiovanni-Vincentelli, A., Damm, W.,
+Henzinger, T. A., &amp; Larsen, K. G. (2018). Contracts for system
+design. <em>Foundations and Trends in Electronic Design Automation,
+12</em>(2–3), 124–400.</p>
+<p>Coval, J., Jurek, J., &amp; Stafford, E. (2009). The economics of
+structured finance. <em>Journal of Economic Perspectives, 23</em>(1),
+3–25.</p>
+<p>de Alfaro, L., &amp; Henzinger, T. A. (2001). Interface automata. In
+<em>Proceedings of the 8th European Software Engineering Conference Held
+Jointly with the 9th ACM SIGSOFT International Symposium on Foundations
+of Software Engineering</em> (ESEC/FSE-9) (pp. 109–120). Association for
+Computing Machinery.</p>
+<p>Garlan, D., Allen, R., &amp; Ockerbloom, J. (1995). Architectural
+mismatch: Why reuse is so hard. <em>IEEE Software, 12</em>(6),
+17–26.</p>
+<p>Hoare, C. A. R. (1969). An axiomatic basis for computer programming.
+<em>Communications of the ACM, 12</em>(10), 576–580, 583.</p>
+<p>Meyer, B. (1992). Applying “design by contract.” <em>Computer,
+25</em>(10), 40–51.</p>
+<p>Miller, M. S. (2006). <em>Robust Composition: Towards a Unified
+Approach to Access Control and Concurrency Control</em> [Doctoral
+dissertation, Johns Hopkins University]. Baltimore, MD.</p>
+<p>Narayanan, A., &amp; Shmatikov, V. (2008). Robust de-anonymization of
+large sparse datasets. In <em>Proceedings of the 2008 IEEE Symposium on
+Security and Privacy</em> (pp. 111–125). IEEE Computer Society.</p>
+<p>Parnas, D. L. (1972). On the criteria to be used in decomposing
+systems into modules. <em>Communications of the ACM, 15</em>(12),
+1053–1058.</p>
+<p>Simon, H. A. (1962). The architecture of complexity. <em>Proceedings
+of the American Philosophical Society, 106</em>(6), 467–482.</p>
+<p>Sweeney, L. (2002). k-anonymity: A model for protecting privacy.
+<em>International Journal of Uncertainty, Fuzziness and Knowledge-Based
+Systems, 10</em>(5), 557–570.</p>
+<p>Szyperski, C. (2002). <em>Component Software: Beyond Object-Oriented
+Programming</em> (2nd ed.). Addison-Wesley.</p>
+<p>Ulrich, K. T. (1995). The role of product architecture in the
+manufacturing firm. <em>Research Policy, 24</em>(3), 419–440.</p>
+<p>Wimsatt, W. C. (2007). <em>Re-Engineering Philosophy for Limited
+Beings: Piecewise Approximations to Reality</em>. Harvard University
+Press.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.21632061">10.5281/zenodo.21632061</a></p>

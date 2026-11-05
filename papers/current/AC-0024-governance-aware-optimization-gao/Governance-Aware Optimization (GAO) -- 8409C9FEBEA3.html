@@ -1,0 +1,531 @@
+<h1 id="governance-aware-optimization-gao">Governance-Aware Optimization
+(GAO)</h1>
+<h2
+id="lawful-gradient-geometry-for-controlled-parameter-evolution">Lawful
+Gradient Geometry for Controlled Parameter Evolution</h2>
+<h3
+id="optimization-becomes-geometric-shaping-of-update-admissibility-updates-are-projected-bounded-or-scaled-according-to-declared-invariants-and-protected-subspaces.">Optimization
+becomes geometric shaping of update admissibility: updates are
+projected, bounded, or scaled according to declared invariants and
+protected subspaces.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern optimizers such as SGD, Adam, and AdamW are designed to
+accelerate convergence and stabilize learning under noisy gradients.
+They are not designed to encode authority, preserve semantic invariants,
+or regulate the legitimacy of parameter transformation. In contemporary
+large-scale training systems, this creates a structural asymmetry:
+governance may constrain deployment and evaluation, but optimization
+itself remains an ambient authority over parameter space.</p>
+<p>This paper introduces <strong>Governance-Aware Optimization
+(GAO)</strong>, a framework for integrating explicit law into the update
+rule itself. Rather than treating governance solely as an external
+admissibility predicate, GAO defines a governance transform over
+proposed updates, shaping gradient-based transitions before they reach
+canonical state. Optimization becomes <strong>geometric shaping of
+update admissibility</strong>: updates are projected, bounded, or scaled
+according to declared invariants and protected subspaces.</p>
+<p>GAO is not a new optimizer in the conventional sense. It is a
+<strong>transformation layer</strong> that composes with existing
+optimizers. GAO assumes a declared <strong>Training-Law
+artifact</strong> specifying protected subspaces, numeric bounds,
+invariants, drift monitors, and escalation policies. By distinguishing
+numeric descent from admissible motion, GAO preserves optimizer
+mechanics while embedding constraint, refusal, and structural stability
+directly into parameter evolution.</p>
+<hr />
+<h2 id="motivation">1. Motivation</h2>
+<p>Training pipelines increasingly operate in environments where
+parameter evolution has institutional, safety, and operational
+consequences. Fine-tuning may degrade protected behaviors.
+Hyperparameter drift may silently alter deployment characteristics.
+Safety heads or calibration layers may be overwritten in pursuit of
+narrow task performance.</p>
+<p>Governed Training Regimes (GTR) introduce an admissibility membrane
+around optimization. GAO asks a deeper question:</p>
+<p>Can governance influence the geometry of optimization itself?</p>
+<p>Traditional constrained optimization embeds penalties inside the
+objective. GAO instead treats governance as a transformation over
+proposed updates. The distinction is structural:</p>
+<ul>
+<li>Constrained optimization modifies what is minimized</li>
+<li>Governance-aware optimization modifies what is permitted to
+change</li>
+</ul>
+<p>GAO is compatible with GTR’s episode-level gating but operates at
+finer granularity: <strong>GTR asks whether a checkpoint may be
+promoted; GAO asks whether each individual update is
+admissible.</strong></p>
+<p>GAO operates in differentiable, gradient-based training regimes. It
+assumes parameter updates are computed through conventional optimizers
+and inserts governance between update proposal and state commitment.</p>
+<hr />
+<h2 id="formalization-of-admissibility">2. Formalization of
+Admissibility</h2>
+<p>Let parameter space be <span
+class="math inline">ℝ<sup><em>n</em></sup></span>.</p>
+<p>Define the <strong>admissible region</strong> of update vectors:</p>
+<p><span
+class="math display">𝒜(<em>θ</em><sub><em>t</em></sub>, ℒ) ⊆ ℝ<sup><em>n</em></sup></span></p>
+<p>where <span class="math inline">ℒ</span> is declared
+Training-Law.</p>
+<p>A conventional optimizer proposes:</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>t</em></sub><sup>prop</sup> = 𝒪(<em>θ</em><sub><em>t</em></sub>, <em>B</em><sub><em>t</em></sub>, <em>H</em>)</span></p>
+<p>GAO defines a governance transform:</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>t</em></sub><sup>gov</sup> = <strong>G</strong>(<em>θ</em><sub><em>t</em></sub>, <em>Δ</em><sub><em>t</em></sub><sup>prop</sup>; ℒ) ∈ 𝒜(<em>θ</em><sub><em>t</em></sub>, ℒ)</span></p>
+<p>State evolution becomes:</p>
+<p><span
+class="math display"><em>θ</em><sub><em>t</em> + 1</sub> = <em>θ</em><sub><em>t</em></sub> + <em>Δ</em><sub><em>t</em></sub><sup>gov</sup></span></p>
+<p>The optimizer proposes. Governance restricts. Commitment follows.</p>
+<p>Admissibility is geometric: it is the region of update vectors
+permitted under declared law. The admissible region (<span
+class="math inline">𝒜(<em>θ</em><sub><em>t</em></sub>, ℒ)</span>) may be
+<strong>convex</strong> (simple projection),
+<strong>manifold-constrained</strong> (tangent projection), or
+<strong>non-convex</strong>.</p>
+<p>For non-convex <span class="math inline">𝒜</span>, GAO may require
+approximate projection methods (e.g., Dykstra-style alternating
+projections for intersecting constraints) or refusal when no admissible
+direction exists. The non-linear nature of <span
+class="math inline"><strong>G</strong></span> may induce non-convex
+effective admissibility behavior, even when individual governance
+components are convex.</p>
+<hr />
+<h2 id="objective-space-vs-update-space-constraint">3. Objective-Space
+vs Update-Space Constraint</h2>
+<p>Penalty-based methods modify the loss:</p>
+<p><span
+class="math display"><em>L</em><sup>′</sup>(<em>θ</em>) = <em>L</em>(<em>θ</em>) + <em>λ</em><em>C</em>(<em>θ</em>)</span></p>
+<p>This alters the gradient:</p>
+<p><span
+class="math display">∇<em>L</em><sup>′</sup> = ∇<em>L</em> + <em>λ</em>∇<em>C</em></span></p>
+<p>Constraint is encoded into objective descent.</p>
+<p>GAO leaves the objective and raw gradient untouched. The optimizer
+computes its internal state (e.g., momentum, adaptive scaling) using
+conventional rules. Governance operates after the optimizer proposes an
+update.</p>
+<p>Thus:</p>
+<ul>
+<li>Penalty methods alter descent direction.</li>
+<li>GAO alters update admissibility.</li>
+</ul>
+<p>Numeric optimization and admissibility control occupy distinct
+layers.</p>
+<hr />
+<h2 id="the-governance-transform">4. The Governance Transform</h2>
+<p>Training-Law (<span class="math inline">ℒ</span>) may include:</p>
+<ul>
+<li>Protected parameter masks (<span class="math inline">𝒫</span>)</li>
+<li>Numeric bounds (<span class="math inline">ℬ</span>)</li>
+<li>Declared invariants (<span class="math inline">ℐ</span>)</li>
+<li>Drift monitors (<span class="math inline">𝒮</span>)</li>
+<li>Escalation policies (<span class="math inline">ℰ</span>)</li>
+</ul>
+<p>(<span class="math inline">ℒ</span>) is an inspectable governance
+artifact. It may be versioned or externally adjudicated, but within GAO
+it defines the admissible update region (<span
+class="math inline">𝒜</span>).</p>
+<p>GAO projections relate to constrained optimization and projection
+methods in classical literature (Bertsekas, 1999; Boyd &amp;
+Vandenberghe, 2004), but uniquely declare protection via Training-Law
+and place governance <strong>post-optimizer, pre-commit</strong>.</p>
+<hr />
+<h3 id="protected-subspace-projection">4.1 Protected Subspace
+Projection</h3>
+<p>Partition parameters into:</p>
+<ul>
+<li>Protected subspace (<span
+class="math inline"><em>P</em></span>)</li>
+<li>Governed subspace (<span class="math inline"><em>G</em></span>)</li>
+<li>Exploratory subspace (<span
+class="math inline"><em>X</em></span>)</li>
+</ul>
+<p>Let (<span
+class="math inline"><em>M</em><sub><em>P</em></sub></span>, <span
+class="math inline"><em>M</em><sub><em>G</em></sub></span>, <span
+class="math inline"><em>M</em><sub><em>X</em></sub></span>) be mutually
+exclusive masks such that:</p>
+<p><span
+class="math display"><em>M</em><sub><em>P</em></sub> + <em>M</em><sub><em>G</em></sub> + <em>M</em><sub><em>X</em></sub> = 1</span></p>
+<p>Let (<span
+class="math inline"><em>β</em><sub><em>G</em></sub> &lt; <em>β</em><sub><em>X</em></sub></span>)
+be per-subspace bounds declared in (<span
+class="math inline">ℒ</span>).</p>
+<p>Define:</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>t</em></sub><sup>gov</sup> = 0 ⋅ (<em>M</em><sub><em>P</em></sub> ⊙ <em>Δ</em><sub><em>t</em></sub><sup>prop</sup>) + clip(<em>M</em><sub><em>G</em></sub> ⊙ <em>Δ</em><sub><em>t</em></sub><sup>prop</sup>, −<em>β</em><sub><em>G</em></sub>, <em>β</em><sub><em>G</em></sub>) + clip(<em>M</em><sub><em>X</em></sub> ⊙ <em>Δ</em><sub><em>t</em></sub><sup>prop</sup>, −<em>β</em><sub><em>X</em></sub>, <em>β</em><sub><em>X</em></sub>)</span></p>
+<p>Protected parameters do not move. Governed parameters move under
+stricter bounds. Exploratory parameters retain wider authority.</p>
+<p>This is structured authority partitioning, not aggregate clipping
+(Han et al., 2015; Nocedal &amp; Wright, 2006).</p>
+<p>text Example masks: (<span
+class="math inline"><em>M</em><sub><em>P</em></sub> = one-hot(<code>safety_head</code>)</span>),
+(<span
+class="math inline"><em>M</em><sub><em>G</em></sub> = one-hot(<code>task_layer</code>)</span>),
+(<span
+class="math inline"><em>M</em><sub><em>X</em></sub> = one-hot(<code>adapter</code>)</span>).</p>
+<p>text Example: (<span
+class="math inline"><em>M</em><sub><em>P</em></sub></span>) zeros safety
+classifier weights, (<span
+class="math inline"><em>M</em><sub><em>G</em></sub></span>) clips
+task-specific layers to 10% norm change, (<span
+class="math inline"><em>M</em><sub><em>X</em></sub></span>) allows full
+freedom for new adapters.</p>
+<hr />
+<h3 id="invariant-preserving-projection">4.2 Invariant-Preserving
+Projection</h3>
+<p>Let an invariant (<span
+class="math inline"><em>I</em>(<em>θ</em>)</span>) be declared under
+law. GAO’s goal is to preserve the invariant locally by remaining on its
+level set.</p>
+<p>Project the proposed update onto the tangent space of the invariant
+manifold by removing its component along the normal direction (<span
+class="math inline">∇<em>I</em>(<em>θ</em><sub><em>t</em></sub>)</span>):</p>
+<p><span class="math display">$$
+\Delta_t^{\text{gov}} = \Delta_t^{\text{prop}} - \frac{\langle
+\Delta_t^{\text{prop}}, \nabla I(\theta_t) \rangle}{|\nabla
+I(\theta_t)|^2 + \epsilon} \nabla I(\theta_t)
+$$</span></p>
+<p>By construction:</p>
+<p><span
+class="math display">⟨<em>Δ</em><sub><em>t</em></sub><sup>gov</sup>, ∇<em>I</em>(<em>θ</em><sub><em>t</em></sub>)⟩ ≈ 0</span></p>
+<p>and therefore:</p>
+<p><span
+class="math display"><em>I</em>(<em>θ</em><sub><em>t</em></sub> + <em>Δ</em><sub><em>t</em></sub><sup>gov</sup>) ≈ <em>I</em>(<em>θ</em><sub><em>t</em></sub>)</span></p>
+<p>For multiple invariants (<span
+class="math inline"><em>I</em><sub><em>k</em></sub></span>), one may
+apply sequential or alternating projections. When invariant manifolds
+intersect non-transversally, sequential projection may fail to converge
+to a common admissible direction. In such cases, GAO may require
+approximate projection, relaxation, or refusal.</p>
+<p>This follows classical tangent-space projection geometry (Bertsekas,
+1999; Nocedal &amp; Wright, 2006).</p>
+<hr />
+<h3 id="drift-aware-authority-scaling">4.3 Drift-Aware Authority
+Scaling</h3>
+<p>Let drift measure (<span
+class="math inline"><em>d</em><sub><em>t</em></sub></span>) derive from
+KL divergence, calibration shift, or other declared metrics.</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>t</em></sub><sup>scaled</sup> = <em>ϕ</em>(<em>d</em><sub><em>t</em></sub>) ⋅ <em>Δ</em><sub><em>t</em></sub><sup>prop</sup></span></p>
+<p>Concrete choices:</p>
+<ul>
+<li>Linear: (<span
+class="math inline"><em>ϕ</em>(<em>d</em><sub><em>t</em></sub>) = max (0, 1 − <em>γ</em><em>d</em><sub><em>t</em></sub>)</span>)</li>
+<li>Exponential: (<span
+class="math inline"><em>ϕ</em>(<em>d</em><sub><em>t</em></sub>) = <em>e</em><sup>−<em>λ</em><em>d</em><sub><em>t</em></sub></sup></span>)</li>
+</ul>
+<p>To avoid oscillatory behavior, (<span
+class="math inline"><em>ϕ</em></span>) should be differentiable and
+Lipschitz continuous with constant (<span
+class="math inline"><em>L</em> &lt; 1</span>).</p>
+<hr />
+<h2 id="ordering-and-optimizer-interaction">5. Ordering and Optimizer
+Interaction</h2>
+<p>For adaptive optimizers (e.g., AdamW), internal state is computed
+from raw gradients. GAO operates on the proposed update after these
+computations.</p>
+<p>Recommended ordering:</p>
+<ol type="1">
+<li>Compute gradients</li>
+<li>Construct optimizer update (including weight decay)</li>
+<li>Apply GAO transform</li>
+<li>Apply learning rate scheduling consistently</li>
+</ol>
+<p>Repeated projections can alter effective momentum and step direction.
+Monitoring constraint activity is essential.</p>
+<hr />
+<h3 id="governance-contract-for-mathcall">5.1 Governance Contract for
+(<span class="math inline">ℒ</span>)</h3>
+<p>Governance contracts must be:</p>
+<ol type="1">
+<li>Explicit and inspectable</li>
+<li>Versioned and hash-bound to training episodes to ensure auditability
+and prevent tampering</li>
+<li>Declarative of protected subspaces and invariants</li>
+<li>Auditable for drift metrics</li>
+</ol>
+<hr />
+<h2 id="relationship-to-continual-learning">6. Relationship to Continual
+Learning</h2>
+<p>Continual learning methods infer parameter importance (e.g., via
+Fisher information). GAO instead uses declared invariants and masks.</p>
+<p>EWC-style protections are implicit and difficult to audit. GAO
+protections are explicit and inspectable.</p>
+<p>GAO relates to constrained optimization and continual-learning
+regularization (Bertsekas, 1999; Kirkpatrick et al., 2017; Zenke et al.,
+2017; Mallya &amp; Lazebnik, 2018), but uniquely defines admissibility
+via declared law rather than inferred importance.</p>
+<hr />
+<h2 id="computational-considerations">7. Computational
+Considerations</h2>
+<p>Overhead includes:</p>
+<ul>
+<li>O(n) masking and clipping</li>
+<li>Optional invariant gradient computation</li>
+<li>Drift metric evaluation</li>
+</ul>
+<p>Sparse tensors and precomputation can reduce overhead.</p>
+<hr />
+<h2 id="law-mutability">8. Law Mutability</h2>
+<p>Training-Law (<span class="math inline">ℒ</span>) may evolve.</p>
+<p>Staged transition:</p>
+<p><span
+class="math display">ℒ<sub><em>t</em></sub> = (1 − <em>α</em><sub><em>t</em></sub>)ℒ<sub>old</sub> + <em>α</em><sub><em>t</em></sub>ℒ<sub>new</sub></span></p>
+<p>Constraint activity should be monitored:</p>
+<p><span
+class="math display"><em>ρ</em><sub><em>t</em></sub> = |<em>Δ</em><sub><em>t</em></sub><sup>gov</sup>|/|<em>Δ</em><sub><em>t</em></sub><sup>prop</sup>|</span></p>
+<p>Persistently low (<span
+class="math inline"><em>ρ</em><sub><em>t</em></sub></span>) indicates
+overconstraining and should trigger law review.</p>
+<hr />
+<h2 id="failure-modes">9. Failure Modes</h2>
+<ul>
+<li>Overconstraint -&gt; increased convergence time, persistently low
+step ratio (<span
+class="math inline"><em>ρ</em><sub><em>t</em></sub></span>)</li>
+<li>Underconstraint -&gt; invariant violation frequency</li>
+<li>Metric gaming -&gt; adversarial satisfaction of declared metrics
+while violating intent (Goodhart’s Law)</li>
+<li>False confidence -&gt; “governance theater” if (<span
+class="math inline">ℒ</span>) is poorly specified</li>
+<li>Interpretability issues -&gt; projected updates may be difficult to
+diagnose without explicit logging of constraint activity and projection
+deltas</li>
+</ul>
+<p>Internal governance reduces violation likelihood but does not replace
+external admissibility checks.</p>
+<hr />
+<h2 id="admissibility-preservation">10. Admissibility Preservation</h2>
+<p>If (<span class="math inline">𝒜</span>) is convex and (<span
+class="math inline"><strong>G</strong></span>) is the exact orthogonal
+projection onto (<span class="math inline">𝒜</span>), then:</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>t</em></sub><sup>gov</sup> ∈ 𝒜</span></p>
+<p>For non-convex (<span class="math inline">𝒜</span>), GAO may require
+approximate projection methods (including alternating projection schemes
+such as Dykstra-style methods for intersecting constraints) or
+<strong>refusal</strong> when no admissible direction exists.</p>
+<hr />
+<h2 id="limitations">11. Limitations</h2>
+<p>GAO cannot:</p>
+<ul>
+<li>Detect violations not encoded in (<span
+class="math inline">ℒ</span>)</li>
+<li>Compensate for poorly specified invariants</li>
+<li>Replace evaluation-time governance</li>
+<li>Guarantee global safety properties</li>
+<li>Ensure feasibility when invariants conflict or admit empty
+intersections</li>
+</ul>
+<p>GAO introduces new hyperparameters (e.g., (<span
+class="math inline"><em>β</em><sub><em>G</em></sub></span>), (<span
+class="math inline"><em>β</em><sub><em>X</em></sub></span>), and drift
+scaling parameters) that require tuning. Multiple governance transforms
+may not commute; order matters and can limit composability.</p>
+<p>It shapes updates; it does not adjudicate legitimacy
+independently.</p>
+<hr />
+<h2 id="micro-examples">12. Micro-Examples</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Composite GAO</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>delta_prop <span class="op">=</span> optimizer.step()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>delta_gov <span class="op">=</span> GAO.subspace_projection(delta_prop, L)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>delta_gov <span class="op">=</span> GAO.invariant_projection(delta_gov, L)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>delta_gov <span class="op">=</span> GAO.drift_scale(delta_gov, L)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>theta_t <span class="op">+=</span> delta_gov</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Drift scaling example</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>d_t <span class="op">=</span> KL_divergence(model_logits, reference_logits)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>alpha_t_gov <span class="op">=</span> alpha_t <span class="op">*</span> exp(<span class="op">-</span>lambda_ <span class="op">*</span> d_t)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>delta_gov <span class="op">=</span> alpha_t_gov <span class="op">*</span> delta_prop</span></code></pre></div>
+<hr />
+<h2 id="broader-implications">13. Broader Implications</h2>
+<p>GAO reframes optimization as authority-constrained geometry.</p>
+<p>Parameter evolution is movement within a law-defined admissible
+region. By separating numeric descent from update admissibility control,
+GAO introduces a new systems design axis:</p>
+<p>Optimization dynamics vs Update admissibility geometry</p>
+<p>GAO enables transparent governance: (<span
+class="math inline">ℒ</span>) is inspectable, versioned, and auditable.
+GAO also supports dynamic governance: (<span
+class="math inline">ℒ</span>) can evolve during training, but changes
+must be staged and monitored.</p>
+<p>See companion work on <strong>Governed Training Regimes
+(GTR)</strong> for episode-level gating compatible with GAO.</p>
+<hr />
+<h2 id="conclusion">14. Conclusion</h2>
+<p>Optimizers were built for speed and stability, not legitimacy.</p>
+<p>Governance-Aware Optimization introduces law into the geometry of
+gradient descent. Updates are proposed by numeric rules but shaped by
+declared admissibility constraints before they alter state.</p>
+<p>GAO composes with existing optimizers. It does not redefine descent;
+it defines admissible motion.</p>
+<p>GAO is not a silver bullet. It requires careful specification of
+(<span class="math inline">ℒ</span>), explicit monitoring of governance
+effects, and external governance to preserve legitimacy.</p>
+<p>By partitioning parameter subspaces and shaping update admissibility,
+GAO enables structured exploration while preserving critical
+invariants.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern optimizers such as SGD, Adam, and AdamW
+are designed to accelerate convergence and stabilize learning under
+noisy gradients. Its nearest external comparison fields are governance,
+markets, formal. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7]
+are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Optimization can make a chosen objective efficient while preserving a
+bad objective, missing distributional harms, strategic behavior, or
+inadmissible states. Formal assurance remains relative to the encoded
+model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Harry Markowitz. “Portfolio Selection.” <em>The
+Journal of Finance</em> 7(1), 1952, pp. 77-91. DOI:
+10.1111/j.1540-6261.1952.tb01525.x.
+https://doi.org/10.1111/j.1540-6261.1952.tb01525.x
+<strong>Relationship:</strong> Predecessor risk-return optimization
+model; included to distinguish scalar optimization from governance-aware
+admissibility.</p>
+<p><strong>[E6]</strong> U.S. Department of the Treasury. <em>Tax
+Expenditures</em>. Office of Tax Analysis. <a
+href="https://home.treasury.gov/policy-issues/tax-policy/tax-expenditures">home.treasury.gov
+source</a> <strong>Relationship:</strong> Primary official baseline for
+the definition and estimation limits of U.S. federal tax
+expenditures.</p>
+<p><strong>[E7]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Markets</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1D49CCBB6E47B403</code>;<br />
+source SHA-256<br />
+<code>BB97EAC6F1861C2ED17DC0E0B75D47B04716E7FF3E3AC2A9B2F6CABCC67A5250</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>ACG for Quants</em>. Ableman
+Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-8A19CB4C1BD55BCA</code>;<br />
+source SHA-256<br />
+<code>2FEA83087B8DA79472BBA449C9D5B252B6DBA67C2EAF0DF41C206B1B0EEEF254</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18627087">10.5281/zenodo.18627087</a></p>

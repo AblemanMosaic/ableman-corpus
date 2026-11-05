@@ -1,0 +1,409 @@
+<h1
+id="governed-semantic-tokens-tokenization-as-an-admissibility-boundary">Governed
+Semantic Tokens: Tokenization as an Admissibility Boundary</h1>
+<h2
+id="tokenization-as-the-jurisdiction-where-meaning-is-allowed-to-count">Tokenization
+as the Jurisdiction Where Meaning Is Allowed to Count</h2>
+<h3
+id="gst-replaces-opaque-model-specific-vocabularies-with-registry-backed-token-identifiers-whose-semantics-are-explicit-typed-versioned-and-governed.">GST
+replaces opaque, model-specific vocabularies with registry-backed token
+identifiers whose semantics are explicit, typed, versioned, and
+governed.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Tokenization is typically treated as a preprocessing convenience: a
+lossy compression step that converts inputs into model-consumable units.
+While effective for scaling, this framing obscures a decisive systems
+question: <strong>where does meaning become admissible at all?</strong>
+This paper introduces <strong>Governed Semantic Tokens (GST)</strong>, a
+framework that reframes tokenization as a <strong>jurisdictional
+boundary</strong>—the point at which observations, language, and actions
+are promoted from raw signals into units of lawful semantic effect.</p>
+<p>GST replaces opaque, model-specific vocabularies with
+<strong>registry-backed token identifiers</strong> whose semantics are
+explicit, typed, versioned, and governed. Tokens are no longer merely
+units of prediction; they are <strong>units of admissible
+meaning</strong>. Each token carries constraints on provenance,
+authority, and permissible transitions, enabling refusal, auditability,
+and semantic stability across models, modalities, and time.</p>
+<p><strong>Central claim.</strong> When tokenization is treated as an
+admissibility boundary rather than a compression trick, systems exhibit
+higher coherence, structural resistance to injection, cross-model
+semantic stability, and auditable control over promotion to
+action—without requiring access to model internals or assumptions about
+cognition. Governance moves to the boundary where meaning enters the
+system, replacing trust with compilation.</p>
+<hr />
+<h2 id="scope-and-motivation">1. Scope and Motivation</h2>
+<p>As language models expand into multimodal, tool-using, and agentic
+settings, failures increasingly occur before or after inference rather
+than during it. Hallucination, prompt injection, authority leakage, and
+silent escalation are rarely failures of fluency. They are failures of
+<strong>promotion</strong>: text, images, or events are allowed to count
+when they should not.</p>
+<p>Tokenization is the earliest shared interface between messy reality
+and model cognition. Yet it remains ungoverned. Tokens inherit meaning
+implicitly from training corpora and drift across models, versions, and
+deployments. There is no principled place to say: <em>this may be
+observed, but not acted upon.</em></p>
+<p>This paper argues that tokenization is that place.</p>
+<hr />
+<h2 id="from-tokens-as-compression-to-tokens-as-law">2. From Tokens as
+Compression to Tokens as Law</h2>
+<p>Conventional tokenizers optimize for throughput, reuse, and
+reconstruction. Their success criteria are numerical; their semantics
+are implicit. Meaning emerges indirectly through training and is
+inseparable from a particular model family.</p>
+<p>Governed Semantic Tokens invert this priority:</p>
+<ul>
+<li>tokens are explicit semantic objects rather than latent codes,</li>
+<li>meaning is declared and enforced outside the model,</li>
+<li>the tokenizer functions as a compiler from signals into governed
+identifiers.</li>
+</ul>
+<p>Under GST, tokenization answers not “how should this be encoded?” but
+“<strong>what is this allowed to mean?</strong>”</p>
+<p>This inversion does not change how models generate sequences. It
+changes what the surrounding system is permitted to treat as real.</p>
+<hr />
+<h2 id="the-governed-semantic-token">3. The Governed Semantic Token</h2>
+<p>A Governed Semantic Token is a numeric identifier backed by a
+registry entry. The registry defines the token’s lawful semantics and
+admissible use. A minimal illustrative entry may resemble:</p>
+<pre><code>token_id: 4723
+{
+  type: &quot;claim&quot;,
+  provenance: { source: &quot;ocr&quot;, confidence: 0.92 },
+  authority: &quot;observer&quot;,
+  admissible_transitions: [&quot;observe&quot;, &quot;propose&quot;, &quot;refuse&quot;],
+  version: &quot;1.1&quot;
+}</code></pre>
+<p>This structure is illustrative, not prescriptive. Registries may be
+richer or sparser, centralized or federated. What matters is that
+semantics are explicit, inspectable, and stable across time.</p>
+<p>Multiple surface forms—languages, templates, or visual
+realizations—may compile to the same token when they assert the same
+governed object. Conversely, identical surface text may compile to
+different tokens depending on provenance, type, or authority.</p>
+<hr />
+<h2 id="tokenization-as-an-admissibility-boundary">4. Tokenization as an
+Admissibility Boundary</h2>
+<p>Let raw inputs (text, pixels, events) belong to a signal space <span
+class="math inline"><em>X</em></span>. Let governed tokens belong to a
+registry <span class="math inline"><em>R</em></span>.</p>
+<p>The tokenizer is a partial compiler:</p>
+<p><span
+class="math display"><em>τ</em> : <em>X</em> → <em>R</em> ∪ {⊥}</span></p>
+<p>If <span
+class="math inline"><em>τ</em>(<em>x</em>) = <em>r</em></span>, the
+signal is admitted as a governed token with declared semantics. If <span
+class="math inline"><em>τ</em>(<em>x</em>) = ⊥</span>, the signal is
+visible but inadmissible: it may be displayed or summarized, but it
+cannot participate in binding conclusions or actions.</p>
+<p>This undefinedness is not an error. It is the semantic basis of
+refusal at the boundary. The system may reason <em>about</em>
+inadmissible signals, but it may not reason <em>with</em> them as
+authority-bearing units.</p>
+<hr />
+<h2 id="multimodality-without-latent-ambiguity">5. Multimodality Without
+Latent Ambiguity</h2>
+<p>Recent multimodal systems demonstrate that images, audio, and video
+can be compressed into discrete token streams for efficiency. These
+tokens, however, remain opaque latents whose semantics are learned and
+model-bound rather than declared.</p>
+<p>GST treats multimodality differently. Modality-specific encoders
+compile signals into typed semantic identifiers:</p>
+<ul>
+<li>visual regions into object or field tokens,</li>
+<li>OCR outputs into untrusted observation tokens,</li>
+<li>UI events and sensor readings into event tokens.</li>
+</ul>
+<p>All modalities converge into a single governed identifier space. The
+model reasons over a unified semantic stream whose meaning is fixed by
+registry law rather than latent alignment.¹</p>
+<hr />
+<h2 id="injection-resistance-by-construction">6. Injection Resistance by
+Construction</h2>
+<p>Prompt injection exploits the fact that traditional tokenizers do not
+distinguish data from instruction. Strings originating from untrusted
+sources are tokenized identically to system directives.</p>
+<p>GST prevents this structurally:</p>
+<ul>
+<li>tokens are typed at the boundary,</li>
+<li>provenance is mandatory for instruction-capable tokens,</li>
+<li>flow constraints prevent observation tokens from crossing into
+action or syscall domains without explicit elevation.</li>
+</ul>
+<p>Injection is no longer an adversarial string problem. It becomes a
+type violation detected before inference or promotion.</p>
+<hr />
+<h2 id="cross-model-semantic-stability">7. Cross-Model Semantic
+Stability</h2>
+<p>In contemporary systems, token meaning is entangled with model
+weights and vocabulary files. Upgrading models subtly alters semantics,
+even when interfaces appear stable.</p>
+<p>GST decouples semantics from models:</p>
+<ul>
+<li>the registry defines meaning,</li>
+<li>models approximate over the same identifier space,</li>
+<li>swapping models does not redefine what a token denotes or
+permits.</li>
+</ul>
+<p>This enables heterogeneous model fleets, long-lived deployments, and
+offline/online interoperability without semantic drift.</p>
+<hr />
+<h2 id="refusal-as-boundary-success">8. Refusal as Boundary Success</h2>
+<p>When a signal cannot be compiled into a governed token, the tokenizer
+refuses. This refusal is a successful enforcement of semantic law.</p>
+<p>Two refusal modes are distinguished:</p>
+<ol type="1">
+<li><strong>Signal refusal:</strong> insufficient provenance, ambiguity,
+or confidence.</li>
+<li><strong>Authority refusal:</strong> correct signal, insufficient
+permission to promote.</li>
+</ol>
+<p>Both preserve system integrity by preventing illegitimate meaning
+from entering the semantic stream.</p>
+<hr />
+<h2 id="provenance-and-audit-at-token-granularity">9. Provenance and
+Audit at Token Granularity</h2>
+<p>Each admitted token carries a provenance envelope describing its
+source, transformation chain, confidence, and authority context. Audit
+logs thus become graphs of semantic identifiers with attached receipts,
+not opaque text transcripts.</p>
+<p>Post hoc analysis no longer asks “what did the model say?” but
+“<strong>which admissible tokens supported this outcome, and under what
+authority?</strong>”</p>
+<hr />
+<h2 id="compression-and-measurable-effects">10. Compression and
+Measurable Effects</h2>
+<p>GST does not abandon efficiency; it relocates it to the semantic
+layer.</p>
+<p>Semantic deduplication collapses many surface realizations into a
+single governed identifier, suggesting order-of-magnitude reductions in
+effective token diversity for reasoning and planning. Type-level
+separation structurally eliminates entire classes of injection pathways,
+reducing exploit surfaces by construction rather than detection.</p>
+<p>These effects arise from architecture, not tuning. They are
+properties of where meaning is admitted, not how probabilities are
+assigned.</p>
+<hr />
+<h2 id="relationship-to-mcir">11. Relationship to MCIR</h2>
+<p>Governed Semantic Tokens can be understood as <strong>MCIR at the
+tokenizer layer</strong>.</p>
+<p>Where MCIR governs proposals, state transitions, and syscalls, GST
+governs <strong>admission of meaning itself</strong>. The registry
+corresponds to MCIR’s semantic substrate; refusal semantics align;
+promotion to action mirrors syscall elevation. In this sense, GST
+functions as <em>MCIR-0</em>: the minimal viable substrate upon which
+higher-order governance can operate.</p>
+<hr />
+<h2 id="gst-pipeline-illustrative">12. GST Pipeline (Illustrative)</h2>
+<p>The GST pipeline operates in stages:</p>
+<ol type="1">
+<li><strong>Raw Signals</strong> -&gt; Modality-specific encoders</li>
+<li><strong>Proposal Tokens</strong> -&gt; Admissibility compiler
+(tau)</li>
+<li><strong>Admission Decision</strong> -&gt; Admit or Refuse</li>
+<li><strong>Governed Tokens (R)</strong> -&gt; Model inference</li>
+<li><strong>Token Sequences</strong> -&gt; Promotion rules</li>
+<li><strong>Action Layer</strong> -&gt; Execute or Refuse</li>
+</ol>
+<p><strong>Example Flows:</strong></p>
+<p><strong>Flow 1 (Accepted):</strong> Pixels -&gt; [signature_box]
+-&gt; GST:4723 -&gt; reasoning -&gt; [syscall_scan] -&gt; execute</p>
+<p><strong>Flow 2 (Refused at boundary):</strong> Untrusted text -&gt;
+[instruction | REFUSED] -&gt; log/display only</p>
+<p><strong>Flow 3 (Refused at promotion):</strong> Observation token
+-&gt; reasoning -&gt; [action_request | REFUSED] -&gt; refuse</p>
+<p>The diagram emphasizes that refusal is not terminal failure but
+lawful termination at multiple stages.</p>
+<hr />
+<h2 id="what-gst-is-not">13. What GST Is Not</h2>
+<p>GST is not a claim about model cognition, a replacement for training,
+or an attempt to make semantics decidable. It does not eliminate
+uncertainty or disagreement.</p>
+<p>It governs permission, not truth.</p>
+<hr />
+<h2 id="failure-modes">14. Failure Modes</h2>
+<p>GST may fail through:</p>
+<ul>
+<li>overconstraint leading to excessive refusal,</li>
+<li>registry sprawl diluting shared semantics,</li>
+<li>governance capture encoding bias,</li>
+<li>boundary leakage from ungoverned subsystems.</li>
+</ul>
+<p>These failures are visible by design. Governance does not disappear;
+it becomes inspectable.</p>
+<hr />
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Tokenization has been treated as plumbing. This paper argues it is
+constitutional.</p>
+<p>By relocating governance to the boundary where meaning enters the
+system, Governed Semantic Tokens provide a place to say no—cleanly,
+early, and audibly—before language hardens into action. They do not make
+models smarter. They make systems honest about what is allowed to
+count.</p>
+<p>As language increasingly acts on the world, the admissibility
+boundary is the deepest layer worth governing.</p>
+<hr />
+<p>¹ For example, visual tokens produced by systems such as DeepSeek-OCR
+can be treated as typed observation identifiers rather than raw latent
+codes, enabling explicit refusal and controlled promotion.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that tokenization is typically treated as a
+preprocessing convenience: a lossy compression step that converts inputs
+into model-consumable units. Its nearest external comparison fields are
+token, semantic, formal. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Statistical
+compression can improve efficiency while destroying distinctions needed
+for interpretation; semantic labels can conversely overstate stability
+that usage does not support. Formal vocabularies and graph links make
+commitments explicit but cannot by themselves establish correct
+identity, shared interpretation, or lossless translation between
+contexts. Formal assurance remains relative to the encoded model,
+trusted base, and refinement chain; proof does not remove specification
+error or unmodeled environmental behavior. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Rico Sennrich, Barry Haddow, and Alexandra
+Birch. “Neural Machine Translation of Rare Words with Subword Units.”
+<em>ACL 2016</em>, pp. 1715-1725. DOI: 10.18653/v1/P16-1162.
+https://doi.org/10.18653/v1/P16-1162 <strong>Relationship:</strong>
+Predecessor subword tokenization method used as a contrast to
+semantically governed token boundaries.</p>
+<p><strong>[E2]</strong> Taku Kudo and John Richardson. “SentencePiece:
+A Simple and Language Independent Subword Tokenizer and Detokenizer for
+Neural Text Processing.” <em>EMNLP 2018: System Demonstrations</em>.
+DOI: 10.18653/v1/D18-2012. https://doi.org/10.18653/v1/D18-2012
+<strong>Relationship:</strong> Predecessor tokenizer implementation used
+to separate statistical segmentation from semantic admissibility.</p>
+<p><strong>[E3]</strong> Peter D. Grunwald. <em>The Minimum Description
+Length Principle</em>. MIT Press, 2007. <a
+href="https://mitpress.mit.edu/9780262072816/the-minimum-description-length-principle/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor theory of
+compression and model selection; compression is not assumed to preserve
+governance or meaning.</p>
+<p><strong>[E4]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E5]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E6]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E7]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Token Parsimony</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.20382825</code>;<br />
+source SHA-256<br />
+<code>EC3AA22D32E2BBA21CFCB6D1FA2AE6EA8AC11B7781D19C51530A2F6D924B2E91</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Legends</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20330324</code>;<br />
+source SHA-256<br />
+<code>440CE8A83C2F86C020D1E9E482759F71D08F694F1C2250B5B624AEA0A4237AA7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Controlled Natural
+Language (GCNL)</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-99C179FB694070D1</code>;<br />
+source SHA-256<br />
+<code>75A4AE13167785A0761E1F9CB67A9975138166A7B2B06B4FDF37C1A895178193</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18469507">10.5281/zenodo.18469507</a></p>

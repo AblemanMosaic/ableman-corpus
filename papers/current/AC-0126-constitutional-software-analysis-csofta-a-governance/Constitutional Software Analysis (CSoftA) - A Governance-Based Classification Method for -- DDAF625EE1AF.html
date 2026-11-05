@@ -1,0 +1,967 @@
+<h1
+id="constitutional-software-analysis-csofta-a-governance-based-classification-method-for-software-systems">Constitutional
+Software Analysis (CSoftA): A Governance-Based Classification Method for
+Software Systems</h1>
+<h2
+id="a-structural-theory-of-authority-verification-enforcement-and-reachability-in-software-systems">A
+Structural Theory of Authority, Verification, Enforcement, and
+Reachability in Software Systems</h2>
+<h3
+id="the-log-remembers.-the-policy-declares.-the-constitution-determines-whether-the-transition-can-occur.">The
+log remembers. The policy declares. The constitution determines whether
+the transition can occur.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Software systems increasingly mediate authority. Access decisions,
+deployments, infrastructure modifications, model promotions, service
+communications, and operational workflows are governed by an expanding
+ecosystem of policies, credentials, approval mechanisms, and control
+systems.</p>
+<p>Yet software engineering lacks a rigorous method for distinguishing
+governance that constrains state transitions from governance that merely
+observes them.</p>
+<p>This paper introduces <strong>Constitutional Software Analysis
+(CSoftA)</strong>, a structural methodology for classifying governance
+according to how authority verification participates in the reachability
+of governed state transitions. The method formalizes authority
+verification as a prerequisite for governed state transitions and
+classifies governance into three constitutional states:</p>
+<ul>
+<li><strong>ACTIVE Governance</strong> - authority verification is a
+necessary and non-bypassable precondition for reachability of a governed
+state transition.</li>
+<li><strong>CRYSTALLIZED Governance</strong> - authority or authority
+verification is observed, recorded, or reconstructed but is not required
+for reachability of a governed state transition.</li>
+<li><strong>ABSENT Governance</strong> - authority verification is
+neither required nor meaningfully recorded.</li>
+</ul>
+<p>CSoftA evaluates governance at explicit authority boundaries rather
+than treating software systems as monolithic entities. Applied across
+eighty software systems spanning cloud infrastructure, identity
+management, service meshes, Kubernetes ecosystems, CI/CD platforms,
+infrastructure-as-code frameworks, observability systems, databases,
+messaging platforms, and machine learning tooling, the method reveals a
+recurring distinction between constitutive governance and observational
+governance.</p>
+<p>The central finding is that many systems commonly described as
+governance systems primarily preserve evidence of authority rather than
+requiring authority verification for state-transition reachability. This
+distinction provides a reproducible framework for analyzing software
+governance, comparing heterogeneous systems, identifying enforcement
+structures, and locating where authority actually binds within modern
+software architectures.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Software engineering possesses mature theories of reliability,
+scalability, security, and performance.</p>
+<p>It lacks an equivalent theory of authority.</p>
+<p>Most governance discussions implicitly assume that policies,
+controls, approvals, logs, monitoring systems, and compliance artifacts
+belong to a single category. They do not.</p>
+<p>A system that records a violation after it occurs is structurally
+different from a system that prevents the violation from occurring.</p>
+<p>A system that recommends compliance is structurally different from a
+system that requires compliance.</p>
+<p>A system that documents authority is structurally different from a
+system that enforces authority.</p>
+<p>Constitutional Software Analysis begins from a simple
+observation:</p>
+<blockquote>
+<p>Governance is not defined by what a system says. Governance is
+defined by what a system requires.</p>
+</blockquote>
+<p>The central question is therefore:</p>
+<blockquote>
+<p>Is the governed state transition reachable without successful
+authority verification?</p>
+</blockquote>
+<p>Everything else follows from the answer.</p>
+<hr />
+<h2 id="formal-foundations">2. Formal Foundations</h2>
+<h3 id="state-transitions">2.1 State Transitions</h3>
+<p>A state transition is a mapping from system state <span
+class="math inline"><em>S</em></span> to system state <span
+class="math inline"><em>S</em><sup>′</sup></span> induced by an
+attempted transition.</p>
+<p>A state transition is reachable if there exists at least one valid
+transition path from <span class="math inline"><em>S</em></span> to
+<span class="math inline"><em>S</em><sup>′</sup></span> under defined
+system and governance constraints.</p>
+<p>Examples include:</p>
+<ul>
+<li>Anonymous user -&gt; authenticated user</li>
+<li>Undeployed service -&gt; deployed service</li>
+<li>Unauthorized request -&gt; authorized request</li>
+<li>Draft model -&gt; production model</li>
+<li>Unprovisioned infrastructure -&gt; provisioned infrastructure</li>
+</ul>
+<p>Governance is evaluated with respect to whether a particular state
+transition remains reachable.</p>
+<p>A state transition is considered governed only if authority
+influences reachability of the transition itself rather than merely
+influencing observation of the transition after completion.</p>
+<p>CSoftA may therefore be interpreted as a reachability analysis over
+constrained state transitions.</p>
+<p>Reachability claims should be supported by observable system
+behavior, such as successful or failed transition attempts under
+controlled conditions.</p>
+<p>Distinct state transitions that share identical reachability
+conditions may be analyzed as a single equivalence class.</p>
+<p>Unless otherwise specified, all references to “the transition” refer
+to the governed state transition under analysis.</p>
+<hr />
+<h3 id="constitutional-reachability-constraint">2.2 Constitutional
+Reachability Constraint</h3>
+<p>A state transition is <strong>constitutionally constrained</strong>
+if it is unreachable without satisfying authority verification.</p>
+<p>This is the core property CSoftA evaluates.</p>
+<p>A system may possess governance artifacts, policies, logs, approvals,
+or documentation, but unless those artifacts constrain reachability,
+they do not constitute ACTIVE governance.</p>
+<hr />
+<h3 id="authority">2.3 Authority</h3>
+<p>Authority is a capability, credential, condition, or proof required
+to permit a governed state transition.</p>
+<p>Authority answers:</p>
+<blockquote>
+<p>Who or what may cause this transition to occur?</p>
+</blockquote>
+<p>Examples include:</p>
+<ul>
+<li>Authentication credentials</li>
+<li>Certificates</li>
+<li>Approval signatures</li>
+<li>Capability tokens</li>
+<li>Admission policies</li>
+<li>Cryptographic proofs</li>
+<li>Delegated trust relationships</li>
+</ul>
+<p>Authority is not identity.</p>
+<p>Identity answers who.</p>
+<p>Authority answers whether.</p>
+<hr />
+<h3 id="authority-possession-and-authority-verification">2.4 Authority
+Possession and Authority Verification</h3>
+<p>These concepts must be distinguished.</p>
+<h4 id="authority-possession">Authority Possession</h4>
+<p>The actor holds a credential, capability, proof, or authorization
+artifact.</p>
+<h4 id="authority-verification">Authority Verification</h4>
+<p>The system validates and accepts that artifact.</p>
+<p>The distinction is critical.</p>
+<p>A credential may exist without being checked.</p>
+<p>An authorization may be granted without being enforced.</p>
+<p>A verification process may execute without influencing system
+behavior.</p>
+<p>ACTIVE governance therefore depends not merely upon authority
+verification, but upon verification success being required for the
+governed state transition to become reachable.</p>
+<p>Authority verification is evaluated over both state and time;
+validity must hold at the moment the transition becomes reachable.</p>
+<p>Stale, replayed, expired, or time-of-check/time-of-use-broken
+verification that permits unauthorized reachability violates ACTIVE
+governance.</p>
+<hr />
+<h3 id="governance">2.5 Governance</h3>
+<p>Governance is a mechanism that mediates access to authority.</p>
+<p>Governance determines:</p>
+<ul>
+<li>Whether authority is required</li>
+<li>How authority is verified</li>
+<li>Under what conditions authority may be exercised</li>
+</ul>
+<p>Governance answers:</p>
+<blockquote>
+<p>Under what conditions may authority be exercised?</p>
+</blockquote>
+<hr />
+<h3 id="enforcement">2.6 Enforcement</h3>
+<p>Enforcement ensures governance conditions are actually required.</p>
+<p>Governance defines admissibility.</p>
+<p>Enforcement makes admissibility consequential.</p>
+<p>ACTIVE governance therefore requires enforcement.</p>
+<p>Governance without enforcement cannot bind state transitions.</p>
+<p>Verification outcomes must deterministically and exclusively
+constrain reachability of the governed state transition.</p>
+<p>A governance mechanism that evaluates authority but permits identical
+reachability regardless of verification outcome does not provide
+constitutional enforcement.</p>
+<p>Partial or conditional enforcement that allows the governed state
+transition to become reachable without full verification success does
+not constitute ACTIVE governance.</p>
+<p>Governance is not ACTIVE if enforcement can be predictably or
+systematically avoided under normal or degraded operating
+conditions.</p>
+<hr />
+<h3 id="state-transition-attempts">2.7 State Transition Attempts</h3>
+<p>A state transition attempt is an effort to induce a transition from
+<span class="math inline"><em>S</em></span> to <span
+class="math inline"><em>S</em><sup>′</sup></span>.</p>
+<p>Execution is therefore treated as an attempted state transition
+rather than as a separate primitive concept.</p>
+<hr />
+<h3 id="constitutional-principle">2.8 Constitutional Principle</h3>
+<p>Governance is only constitutionally relevant where authority
+participates in constraining state-transition reachability.</p>
+<p>Policies, documentation, organizational intent, compliance
+declarations, and audit artifacts do not by themselves constitute
+binding governance.</p>
+<hr />
+<h2 id="governance-states">3. Governance States</h2>
+<h3 id="active-governance">3.1 ACTIVE Governance</h3>
+<p>ACTIVE governance exists when authority verification is a necessary
+and non-bypassable precondition for a governed state transition.</p>
+<p>Without successful verification, the transition cannot become
+reachable.</p>
+<p>Without governance, the transition cannot become reachable.</p>
+<p>ACTIVE governance is therefore constitutive of reachability.</p>
+<p>Examples include:</p>
+<ul>
+<li>Certificate verification in mutual TLS</li>
+<li>IAM permission checks</li>
+<li>Admission controllers that block deployment</li>
+<li>Mandatory approval gates</li>
+<li>Cryptographic authorization requirements</li>
+</ul>
+<h4 id="formal-test">Formal Test</h4>
+<p>Governance is ACTIVE iff:</p>
+<ol type="1">
+<li>Authority verification is performed and applied.</li>
+<li>Verification success is required for the transition to become
+reachable.</li>
+<li>The transition remains unreachable when verification fails.</li>
+<li>Verification validity holds at the time of transition.</li>
+<li>Governance cannot be bypassed within the analyzed boundary.</li>
+</ol>
+<p>Evidence preservation is orthogonal to ACTIVE governance.</p>
+<p>A system may be fully governed while preserving little or no evidence
+of governance decisions.</p>
+<hr />
+<h3 id="crystallized-governance">3.2 CRYSTALLIZED Governance</h3>
+<p>CRYSTALLIZED governance preserves evidence of authority or authority
+verification but does not require authority verification for the
+transition.</p>
+<p>The transition remains reachable.</p>
+<p>Governance remains as memory.</p>
+<p>Examples include:</p>
+<ul>
+<li>Audit logs</li>
+<li>Monitoring systems</li>
+<li>Compliance reports</li>
+<li>Telemetry platforms</li>
+<li>Observability stacks</li>
+</ul>
+<p>CRYSTALLIZED governance is causally downstream of the transition’s
+reachability.</p>
+<p>It may explain, reconstruct, observe, investigate, or support
+remediation of the transition.</p>
+<p>It cannot prevent the initial reachability of the governed state
+transition.</p>
+<h4 id="formal-test-1">Formal Test</h4>
+<p>Governance is CRYSTALLIZED iff:</p>
+<ol type="1">
+<li>The transition remains reachable without authority
+verification.</li>
+<li>Governance records, reconstructs, or observes authority, authority
+verification, or transition behavior.</li>
+<li>Governance has no causal influence on whether the transition becomes
+reachable.</li>
+</ol>
+<hr />
+<h3 id="absent-governance">3.3 ABSENT Governance</h3>
+<p>ABSENT governance exists when authority verification is neither
+required nor meaningfully recorded.</p>
+<p>No binding authority exists at the analyzed boundary.</p>
+<h4 id="formal-test-2">Formal Test</h4>
+<p>Governance is ABSENT iff:</p>
+<ol type="1">
+<li>The transition remains reachable without authority
+verification.</li>
+<li>No meaningful governance mechanism constrains the transition.</li>
+<li>No meaningful governance mechanism preserves accountability.</li>
+</ol>
+<hr />
+<h2 id="bypass-resistance">4. Bypass Resistance</h2>
+<p>A governance mechanism that can be trivially circumvented does not
+provide constitutional enforcement.</p>
+<p>ACTIVE governance therefore requires bypass resistance.</p>
+<h3 id="bypass">Bypass</h3>
+<p>A bypass is a transition path that reaches the governed state
+transition without satisfying governance requirements while remaining
+inside the analyzed boundary.</p>
+<p>Examples include:</p>
+<ul>
+<li>Alternate APIs</li>
+<li>Privileged escape paths</li>
+<li>Disabled admission controllers</li>
+<li>Unauthenticated management interfaces</li>
+</ul>
+<p>If any reachable path to the governed state transition does not
+require successful authority verification, the transition is considered
+reachable without governance.</p>
+<p>A secure path existing somewhere in the system is not sufficient.</p>
+<p>The question is whether all reachable paths are governed under the
+assumed system and threat constraints.</p>
+<hr />
+<h3 id="boundary-leakage">Boundary Leakage</h3>
+<p>Boundary leakage occurs when a transition path exits the analyzed
+boundary, avoids governance, and re-enters to complete the governed
+state transition.</p>
+<p>Examples include:</p>
+<ul>
+<li>Direct datastore modification that bypasses an API governance
+layer</li>
+<li>Side-channel administration paths</li>
+<li>External automation operating outside a control plane</li>
+</ul>
+<p>A governance mechanism is not bypass-resistant if practical leakage
+paths exist.</p>
+<p>A leakage path is considered practical if it is accessible without
+violating assumed system constraints or requiring extraordinary
+capabilities beyond the threat model.</p>
+<p>Governance cannot be considered ACTIVE when practically available
+paths permit the governed transition to be reached without successful
+authority verification.</p>
+<p>The constitutional question is not:</p>
+<blockquote>
+<p>Does enforcement exist?</p>
+</blockquote>
+<p>The constitutional question is:</p>
+<blockquote>
+<p>Is enforcement unavoidable?</p>
+</blockquote>
+<hr />
+<h2 id="boundaries">5. Boundaries</h2>
+<p>CSoftA evaluates governance at explicit authority boundaries.</p>
+<p>A boundary is the minimal interface at which a governed state
+transition is made reachable or rendered unreachable by authority
+verification.</p>
+<p>Examples include:</p>
+<h3 id="process-boundaries">Process Boundaries</h3>
+<ul>
+<li>Syscalls</li>
+<li>Runtime APIs</li>
+<li>Plugin interfaces</li>
+</ul>
+<h4 id="network-boundaries">Network Boundaries</h4>
+<ul>
+<li>Service-to-service communication</li>
+<li>API gateways</li>
+<li>Load balancers</li>
+</ul>
+<h4 id="control-plane-boundaries">Control Plane Boundaries</h4>
+<ul>
+<li>Deployment admission</li>
+<li>Infrastructure provisioning</li>
+<li>Policy engines</li>
+</ul>
+<h4 id="organizational-boundaries">Organizational Boundaries</h4>
+<ul>
+<li>Human approvals</li>
+<li>Change management processes</li>
+<li>Promotion workflows</li>
+</ul>
+<p>Classifications are meaningful only relative to a fixed boundary
+definition.</p>
+<p>The same system may be ACTIVE at one boundary and ABSENT at
+another.</p>
+<p>This is expected.</p>
+<hr />
+<h2 id="governance-composition">6. Governance Composition</h2>
+<p>Real systems consist of multiple governance layers.</p>
+<p>Classifications must therefore compose.</p>
+<h3 id="rule-1-upstream-constraint-inheritance">Rule 1: Upstream
+Constraint Inheritance</h3>
+<p>If a transition requires passage through an ACTIVE boundary,
+downstream transitions inherit that authority requirement.</p>
+<p>ACTIVE constraints propagate.</p>
+<hr />
+<h3 id="rule-2-observation-cannot-upgrade-enforcement">Rule 2:
+Observation Cannot Upgrade Enforcement</h3>
+<p>CRYSTALLIZED governance cannot upgrade an ABSENT boundary.</p>
+<p>Logging an unauthorized transition does not transform it into an
+authorized transition.</p>
+<p>Observation cannot create enforcement.</p>
+<hr />
+<h3 id="rule-3-minimal-enforcement-cut-set">Rule 3: Minimal Enforcement
+Cut Set</h3>
+<p>A system’s effective governance is determined by the smallest set of
+ACTIVE boundaries whose removal permits the governed transition.</p>
+<p>This set is the <strong>Enforcement Cut Set</strong>.</p>
+<p>Procedure:</p>
+<ol type="1">
+<li>Identify all ACTIVE boundaries.</li>
+<li>Hypothetically remove or disable each boundary.</li>
+<li>Determine whether the governed transition remains reachable.</li>
+<li>Identify the smallest subset whose removal permits the
+transition.</li>
+</ol>
+<p>These boundaries constitute the actual enforcement structure.</p>
+<p>Everything else is supportive infrastructure.</p>
+<hr />
+<h3 id="rule-4-composite-transitions">Rule 4: Composite Transitions</h3>
+<p>Many workflows consist of multiple intermediate state
+transitions.</p>
+<p>Examples include:</p>
+<ul>
+<li>CI/CD pipelines</li>
+<li>Infrastructure provisioning workflows</li>
+<li>Machine learning deployment pipelines</li>
+</ul>
+<p>Governance may apply to individual transitions or to the composite
+transition as a whole.</p>
+<p>If a required intermediate transition is constrained by an ACTIVE
+boundary, the composite workflow inherits that constraint.</p>
+<hr />
+<h2 id="governance-conservation">7. Governance Conservation</h2>
+<p>Authority does not disappear.</p>
+<p>It moves.</p>
+<p>When governance is removed from one boundary, authority is
+transferred elsewhere:</p>
+<ul>
+<li>Administrators</li>
+<li>Platform operators</li>
+<li>Infrastructure owners</li>
+<li>Credential issuers</li>
+<li>Vendors</li>
+<li>Users</li>
+</ul>
+<p>Apparent absence of governance is often governance relocation.</p>
+<p>Authority relocation can be identified by tracing which actor,
+system, or process must intervene to prevent, approve, or reverse the
+governed state transition.</p>
+<p>The location of authority can also be identified by determining which
+component must be modified, controlled, or bypassed to prevent the
+transition.</p>
+<p>One purpose of CSoftA is locating where authority ultimately binds
+after such transfers occur.</p>
+<p>The analysis therefore concerns not merely the existence of
+authority, but its structural location.</p>
+<hr />
+<h2 id="governance-latency">8. Governance Latency</h2>
+<p>ACTIVE governance may operate at different temporal points.</p>
+<h3 id="pre-transition">Pre-Transition</h3>
+<p>Authority verified before the transition begins.</p>
+<p>Examples:</p>
+<ul>
+<li>Authentication</li>
+<li>Deployment approval</li>
+</ul>
+<h4 id="inline">Inline</h4>
+<p>Authority evaluated during the transition.</p>
+<p>Examples:</p>
+<ul>
+<li>Service mesh authorization</li>
+<li>Runtime policy engines</li>
+</ul>
+<h4 id="continuous">Continuous</h4>
+<p>The transition remains interruptible.</p>
+<p>Examples:</p>
+<ul>
+<li>Runtime containment</li>
+<li>Kill-switch architectures</li>
+<li>Active process termination</li>
+</ul>
+<p>Governance timing affects operational behavior but does not alter
+constitutional classification.</p>
+<p>Post-transition remediation does not constitute ACTIVE governance if
+the governed transition was reachable without successful authority
+verification.</p>
+<p>Rollback, quarantine, revocation, and penalty mechanisms may reduce
+consequences without altering constitutional classification.</p>
+<hr />
+<h3 id="partial-transitions">Partial Transitions</h3>
+<p>Distributed systems frequently produce partial transitions, side
+effects, and intermediate commitments.</p>
+<p>If a transition produces externally observable effects without
+successful authority verification, governance is not ACTIVE for that
+transition regardless of whether the system later fails, rolls back, or
+compensates.</p>
+<p>Authority verification must constrain the transition before
+prohibited effects become reachable.</p>
+<hr />
+<h2 id="corpus-overview">9. Corpus Overview</h2>
+<p>The initial CSoftA corpus analyzed eighty software systems across
+sixteen research waves.</p>
+<p>Domains included:</p>
+<ul>
+<li>Cloud Infrastructure</li>
+<li>Identity and Access Management</li>
+<li>Kubernetes Ecosystems</li>
+<li>Service Meshes</li>
+<li>Secrets Management</li>
+<li>Infrastructure as Code</li>
+<li>CI/CD Systems</li>
+<li>Observability Platforms</li>
+<li>Databases</li>
+<li>Messaging Systems</li>
+<li>AI/ML Platforms</li>
+<li>Security Tooling</li>
+<li>Configuration Management</li>
+</ul>
+<p>Each system was evaluated through boundary analysis rather than
+feature analysis.</p>
+<p>The result is a comparative governance corpus rather than a product
+review catalog.</p>
+<hr />
+<h2 id="key-findings">10. Key Findings</h2>
+<h3
+id="observational-governance-is-more-common-than-constitutive-governance">10.1
+Observational Governance Is More Common Than Constitutive
+Governance</h3>
+<p>Many systems marketed as governance platforms primarily preserve
+evidence.</p>
+<p>They answer:</p>
+<blockquote>
+<p>What happened?</p>
+</blockquote>
+<p>rather than:</p>
+<blockquote>
+<p>What transitions are permitted?</p>
+</blockquote>
+<p>The distinction appears repeatedly across logging, monitoring,
+observability, and compliance tooling.</p>
+<hr />
+<h3 id="credentials-are-constitutional-objects">10.2 Credentials Are
+Constitutional Objects</h3>
+<p>One pattern appeared repeatedly across identity systems, service
+meshes, cloud infrastructure, and secrets management.</p>
+<p>A credential functions as a portable proof of prior authorization.
+Transitions frequently reduce to verification of that proof.</p>
+<p>This suggests a broader architectural principle: governance systems
+externalize authorization into verifiable artifacts. The resulting
+pattern may be described as <strong>Authorization-Carrying
+Transitions</strong> — a transition becomes reachable only when
+accompanied by verifiable proof of authorization.</p>
+<p>This pattern appears across IAM systems, Vault, SPIFFE/SPIRE, mutual
+TLS, and certificate infrastructures. The convergence is notable and
+suggests a common architectural attractor for ACTIVE governance
+design.</p>
+<p><em>Note: the term “proof-carrying code” exists in programming
+languages theory (Necula, 1997) for a distinct concept — static
+verification that code satisfies a safety policy. The pattern described
+here operates at runtime over authority artifacts rather than at compile
+time over program properties. The structural resonance is intentional;
+the domains are different.</em></p>
+<hr />
+<h3 id="governance-recurses">10.3 Governance Recurses</h3>
+<p>Systems that preserve evidence become governance targets
+themselves.</p>
+<p>Logging systems.</p>
+<p>Telemetry systems.</p>
+<p>SIEM platforms.</p>
+<p>Observability stacks.</p>
+<p>If these systems can be modified without constraint, accountability
+becomes unreliable.</p>
+<p>Evidence preservation does not imply correctness, completeness, or
+integrity of the recorded data.</p>
+<p>Governance therefore recurses.</p>
+<p>The observer must also be governed.</p>
+<hr />
+<h3 id="defaults-are-constitutional">10.4 Defaults Are
+Constitutional</h3>
+<p>The effective constitution of a system is defined by its default
+operational state and the minimal actions required to alter that
+state.</p>
+<p>Capabilities matter.</p>
+<p>Defaults matter more.</p>
+<p>Users inherit defaults before they inherit expertise.</p>
+<hr />
+<h3 id="ai-governance-remains-structurally-underdeveloped">10.5 AI
+Governance Remains Structurally Underdeveloped</h3>
+<p>Modern machine learning platforms often provide sophisticated model
+development pipelines while lacking equivalent deployment
+governance.</p>
+<p>The result is an authority gap between model creation and model
+transition into production.</p>
+<p>As AI systems acquire operational authority, this gap becomes
+increasingly consequential.</p>
+<hr />
+<h2 id="worked-example-kubernetes-deployment">11. Worked Example:
+Kubernetes Deployment</h2>
+<p>Consider the deployment path:</p>
+<p><code>kubectl apply -&gt; API Server -</code><br />
+<code>&gt; Admission Controller -&gt; etcd -&gt; Scheduler</code></p>
+<h3 id="admission-controller-boundary">Admission Controller
+Boundary</h3>
+<p>Policy evaluates.</p>
+<p>Deployment may be denied.</p>
+<p>If denial prevents deployment:</p>
+<p>Classification: ACTIVE</p>
+<p>Authority binds.</p>
+<hr />
+<h4 id="audit-logging-boundary">Audit Logging Boundary</h4>
+<p>Deployment occurs.</p>
+<p>The event is recorded.</p>
+<p>Classification: CRYSTALLIZED</p>
+<p>Authority is observed.</p>
+<hr />
+<h4 id="etcd-persistence-boundary">etcd Persistence Boundary</h4>
+<p>Persistence itself does not determine authorization.</p>
+<p>Its classification depends upon prior governance layers.</p>
+<hr />
+<p>The example demonstrates a core CSoftA principle:</p>
+<p>Multiple governance states may coexist within a single architectural
+path.</p>
+<p>The analysis applies to boundaries, not products.</p>
+<hr />
+<h2 id="adversarial-interpretation">12. Adversarial Interpretation</h2>
+<p>The adversary is assumed to possess full knowledge of reachable
+system behavior and the ability to explore available transition paths
+within practical constraints.</p>
+<p>The adversary is further assumed to seek minimal authority while
+maximizing reachability of a target transition.</p>
+<p>The question remains:</p>
+<blockquote>
+<p>Can the governed state transition still be reached?</p>
+</blockquote>
+<p>If the answer is yes, governance is not constitutionally ACTIVE
+regardless of policy intent, documentation quality, or compliance
+claims.</p>
+<p>This perspective aligns governance analysis with security reasoning
+while preserving the framework’s structural focus.</p>
+<hr />
+<h2 id="counterexamples-and-edge-cases">13. Counterexamples and Edge
+Cases</h2>
+<h3 id="feature-flags-with-audit-logs">Feature Flags with Audit
+Logs</h3>
+<p>The transition remains reachable.</p>
+<p>Changes are recorded.</p>
+<p>Classification: CRYSTALLIZED.</p>
+<hr />
+<h3 id="soft-fail-admission-controllers">Soft-Fail Admission
+Controllers</h3>
+<p>Policies evaluate.</p>
+<p>Violations generate warnings.</p>
+<p>The transition proceeds.</p>
+<p>Classification: CRYSTALLIZED.</p>
+<hr />
+<h3 id="disabled-enforcement-by-default">Disabled Enforcement by
+Default</h3>
+<p>Enforcement exists as capability.</p>
+<p>The transition remains reachable without activation.</p>
+<p>Classification: ABSENT in the default state.</p>
+<p>Potential capability does not alter constitutional reality.</p>
+<hr />
+<h3 id="required-but-unverified-authority">Required but Unverified
+Authority</h3>
+<p>Policy declares authority is required.</p>
+<p>The system never verifies the authority claim.</p>
+<p>The transition remains reachable.</p>
+<p>Classification: ABSENT (Misconfigured Governance).</p>
+<p>Policy intent is not enforcement.</p>
+<hr />
+<h3 id="stale-verification">Stale Verification</h3>
+<p>Authority was valid at an earlier time.</p>
+<p>The credential or verification result is reused after authority is
+revoked, expired, or no longer applicable.</p>
+<p>The transition remains reachable.</p>
+<p>Classification: Non-ACTIVE (Bypassable Enforcement or ABSENT
+depending on boundary structure).</p>
+<p>Past authority is not present authority.</p>
+<hr />
+<h2 id="limitations">14. Limitations</h2>
+<p>CSoftA evaluates governance structure rather than governance
+quality.</p>
+<p>ACTIVE governance is not inherently desirable.</p>
+<p>CRYSTALLIZED governance is not inherently weak.</p>
+<p>The framework evaluates where authority binds.</p>
+<p>It does not prescribe optimal governance arrangements.</p>
+<p>Future work includes:</p>
+<ul>
+<li>Governance metrics</li>
+<li>Automated classification</li>
+<li>Governance topology visualization</li>
+<li>Constitutional software design patterns</li>
+<li>AI-agent governance analysis</li>
+<li>Enforcement cut-set tooling</li>
+</ul>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>Software increasingly functions as an authority system.</p>
+<p>Yet software engineering still lacks a precise vocabulary for
+describing where authority actually binds.</p>
+<p>Constitutional Software Analysis provides such a vocabulary.</p>
+<p>The framework distinguishes between governance that constrains
+state-transition reachability, governance that preserves evidence of
+state transitions, and governance that is absent entirely.</p>
+<p>Its central claim is straightforward:</p>
+<p>Authority is not what systems declare.</p>
+<p>Authority is what systems require, verify, and enforce to constrain
+reachability of state transitions.</p>
+<p>To understand governance, we must stop asking what policies exist and
+begin asking which state transitions remain unreachable without
+successful authority verification.</p>
+<p>The answer reveals the constitution hidden inside the software.</p>
+<hr />
+<h2 id="appendix-a-governance-decision-table">Appendix A: Governance
+Decision Table</h2>
+<ul>
+<li><p><strong>Authority Verification Required:</strong> Yes<br />
+<strong>Authority Verification Performed and Applied:</strong> Yes<br />
+<strong>Verification Success Required:</strong> Yes<br />
+<strong>Evidence Preserved:</strong> Optional<br />
+<strong>Practical Bypass Within Boundary:</strong> No<br />
+<strong>Classification:</strong> ACTIVE</p></li>
+<li><p><strong>Authority Verification Required:</strong> Yes<br />
+<strong>Authority Verification Performed and Applied:</strong> Yes<br />
+<strong>Verification Success Required:</strong> Yes<br />
+<strong>Evidence Preserved:</strong> Optional<br />
+<strong>Practical Bypass Within Boundary:</strong> Yes<br />
+<strong>Classification:</strong> Bypassable Enforcement
+(Non-ACTIVE)</p></li>
+<li><p><strong>Authority Verification Required:</strong> Yes<br />
+<strong>Authority Verification Performed and Applied:</strong> No<br />
+<strong>Verification Success Required:</strong> No<br />
+<strong>Evidence Preserved:</strong> Optional<br />
+<strong>Practical Bypass Within Boundary:</strong> N/A<br />
+<strong>Classification:</strong> ABSENT (Misconfigured
+Governance)</p></li>
+<li><p><strong>Authority Verification Required:</strong> No<br />
+<strong>Authority Verification Performed and Applied:</strong> No<br />
+<strong>Verification Success Required:</strong> No<br />
+<strong>Evidence Preserved:</strong> Yes<br />
+<strong>Practical Bypass Within Boundary:</strong> N/A<br />
+<strong>Classification:</strong> CRYSTALLIZED</p></li>
+<li><p><strong>Authority Verification Required:</strong> No<br />
+<strong>Authority Verification Performed and Applied:</strong> No<br />
+<strong>Verification Success Required:</strong> No<br />
+<strong>Evidence Preserved:</strong> No<br />
+<strong>Practical Bypass Within Boundary:</strong> N/A<br />
+<strong>Classification:</strong> ABSENT</p></li>
+</ul>
+<p>ACTIVE classification requires all of the following:</p>
+<ul>
+<li>Authority verification required</li>
+<li>Authority verification performed and applied</li>
+<li>Verification success required</li>
+<li>Verification valid at the time of transition</li>
+<li>No practical bypass path within the defined boundary</li>
+</ul>
+<p>Evidence preservation is orthogonal to enforcement.</p>
+<p>A system may be fully governed while preserving little or no
+evidence, and may preserve extensive evidence while governing no
+transitions.</p>
+<p>Evidence preservation does not imply correctness, completeness, or
+integrity of the recorded data.</p>
+<hr />
+<h2 id="appendix-b-constitutional-questions">Appendix B: Constitutional
+Questions</h2>
+<ol type="1">
+<li>What governed state transition is being analyzed?</li>
+<li>What authority permits that transition?</li>
+<li>Who possesses that authority?</li>
+<li>How is authority verified?</li>
+<li>Is verification success required?</li>
+<li>Is verification valid at the time of transition?</li>
+<li>Can the transition become reachable without successful authority
+verification?</li>
+<li>Can governance be bypassed?</li>
+<li>Do boundary leakage paths exist?</li>
+<li>Are all reachable paths governed under the assumed system and threat
+constraints?</li>
+<li>Is evidence preserved?</li>
+<li>Is preserved evidence correct, complete, and
+integrity-protected?</li>
+<li>Who governs the governor?</li>
+<li>What is the enforcement cut set?</li>
+</ol>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that software systems increasingly mediate
+authority. Its nearest external comparison fields are governance,
+software, open sovereign. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Modularity, secure-development practice, and reproducibility reduce
+classes of failure but do not guarantee architectural coherence or user
+sovereignty. Source availability and reproducible builds improve
+inspectability but do not alone guarantee comprehensibility, practical
+exit, hardware control, or sustainable maintenance. These limits are not
+generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E6]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure in Software Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-B307F65B51C503DE</code>;<br />
+source SHA-256<br />
+<code>9D2A9D79DE8BC3F2F8ABECA073E4D3607F7623F4368E63F8036081E39B4C75C3</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Ableman, A. Constitutional Software Analysis Corpus.
+CSoftA-Canonical. https://github.com/AblemanMosaic/CSoftA-Canonical.
+2026.</p>
+<p>Ableman, A. Constitutional Computing Research Corpus. Constitutional
+Meaning Base (CMB). Independent research corpus. 2025–2026.</p>
+<p>Ableman, A. Constitutional Governance Stack for Reasoning Systems.
+Ableman Research. 2025.</p>
+<p>Ableman, A. Semantic Reactor Theory. Ableman Research. 2024.
+https://zenodo.org/records/20153069</p>
+<p>Ableman, A. Ableman’s Razor. Ableman Research. 2024.
+https://doi.org/10.5281/zenodo.18113139</p>
+<p>Google. BeyondCorp: A New Approach to Enterprise Security. <a
+href="https://research.google/pubs/beyondcorp-a-new-approach-to-enterprise-security/">research.google
+source</a> Risher, Oswald, and Ward</p>
+<p>Lampson, B. Protection. Proceedings of the 5th Princeton Conference
+on Information Sciences and Systems. 1971. Reprinted in ACM Operating
+Systems Review, 8(1):18–24. 1974.</p>
+<p>Necula, G. C. Proof-Carrying Code. Proceedings of the 24th ACM
+SIGPLAN-SIGACT Symposium on Principles of Programming Languages (POPL).
+1997. pp. 106–119.</p>
+<p>NIST. SP 800-207: Zero Trust Architecture. National Institute of
+Standards and Technology. 2020.
+https://doi.org/10.6028/NIST.SP.800-207</p>
+<p>Ostrom, E. Governing the Commons: The Evolution of Institutions for
+Collective Action. Cambridge University Press. 1990.</p>
+<p>Saltzer, J. H., and Schroeder, M. D. The Protection of Information in
+Computer Systems. Proceedings of the IEEE, 63(9):1278–1308. 1975.</p>
+<p>SPIFFE Project. SPIFFE and SPIRE Documentation.
+https://spiffe.io/docs/. Accessed 2026.</p>
+<p>HashiCorp. Vault Documentation.
+https://developer.hashicorp.com/vault/docs. Accessed 2026.</p>
+<p>Kubernetes Project. Kubernetes Documentation.
+https://kubernetes.io/docs/. Accessed 2026.</p>
+<p>Amazon Web Services. AWS IAM Documentation.
+https://docs.aws.amazon.com/iam/. Accessed 2026.</p>
+<p>Amazon Web Services. AWS CodePipeline Documentation.
+https://docs.aws.amazon.com/codepipeline/. Accessed 2026.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20472196">10.5281/zenodo.20472196</a></p>

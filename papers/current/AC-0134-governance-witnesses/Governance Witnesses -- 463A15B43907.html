@@ -1,0 +1,809 @@
+<h1 id="governance-witnesses">Governance Witnesses</h1>
+<h2 id="from-authority-claims-to-admissible-evidence">From Authority
+Claims to Admissible Evidence</h2>
+<h3
+id="the-witness-is-not-the-authority.-the-witness-is-what-allows-an-authority-claim-to-be-evaluated.">The
+witness is not the authority. The witness is what allows an authority
+claim to be evaluated.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Governance systems produce policies, approvals, receipts, signatures,
+logs, delegations, reports, and proofs. Such artifacts can support
+governance claims, but their existence does not establish that authority
+was valid, procedure was followed, an effect occurred, or governance was
+legitimate. This paper introduces Governance Witnesses: accountable
+evidence artifacts whose content, provenance, scope, time, custody, and
+relation to a claim can be evaluated under an explicit schema.</p>
+<p>The framework separates witness well-formedness, integrity,
+attribution, relevance, admissibility, sufficiency, authority
+resolution, and final claim standing. It defines occurrence,
+authority-claim, intent, continuity, semantic, evaluation, and
+availability witnesses; a time-bound active-witness set; typed
+provenance relations; explicit binary or graded evaluation modes;
+coverage vectors; and evaluation witnesses that record the exact basis
+and method of judgment.</p>
+<p>The paper’s central claim is deliberately bounded: governance claims
+can become more reconstructable and falsifiable when their evidence is
+represented as witnesses evaluated under explicit, versioned functions.
+Witnesses do not themselves create authority, legitimacy, fairness,
+correctness, or truth.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+source file. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/governance-</code></p>
+<p><code>witnesses/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>283BFB5FDF27AE1BCC23151F8031CE9055E5D8A2B698A8043784CB76D64C85D5</code>.
+The source remains unchanged.</p>
+<p>The source contains a substantive manuscript followed by appended
+editorial dialogue, readiness percentages, and assertions that the work
+is formally coherent or publishable. Those appended judgments are
+treated as source-embedded AI/editorial material, not author-confirmed
+doctrine or evidence. This candidate preserves and repairs the paper’s
+conceptual core while withholding all publication and correctness
+standing.</p>
+<h2 id="the-category-error">1. The Category Error</h2>
+<p>Governance artifacts are often promoted through an invalid chain:</p>
+<pre class="text"><code>artifact exists -&gt; evidence is valid -&gt; authority exists -&gt;
+governance succeeded</code></pre>
+<p>Each arrow requires a separate evaluation. A signed record may be
+intact yet false. An authentic warrant may be expired or out of scope. A
+valid delegation may authorize an action without proving it occurred. A
+complete trace may demonstrate procedure without establishing legitimacy
+or fairness.</p>
+<p>Governance Witnesses therefore applies a non-promotion invariant:</p>
+<blockquote>
+<p>No property of a witness migrates into a stronger governance claim
+without an explicit, recorded evaluation rule.</p>
+</blockquote>
+<h2 id="witness-definition-and-envelope">2. Witness Definition and
+Envelope</h2>
+<p>A Governance Witness is an attributable evidence artifact offered in
+support of, against, or about a governance-relevant proposition.
+Cryptographic binding can strengthen integrity and attribution, but it
+is not required for every human, physical, institutional, or
+observational witness and cannot establish content truth by itself.</p>
+<p>A witness envelope is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+w= (&amp;id, type, content, subject, issuer, provenance, scope, \\
+&amp;time, custody, integrity, metadata)
+\end{aligned}.
+$$</span></p>
+<p>The envelope should identify what is asserted, who or what produced
+it, what it refers to, how it was obtained, when and where it applies,
+how it has been held, and which parts remain unknown or redacted.</p>
+<h2 id="claim-decomposition">3. Claim Decomposition</h2>
+<p>Compound claims must be decomposed before evaluation. The statement
+“Deployment X was authorized and executed” contains at least:</p>
+<ul>
+<li>an authority-surface claim;</li>
+<li>a delegation and scope claim;</li>
+<li>an admission or decision claim;</li>
+<li>an execution or occurrence claim;</li>
+<li>an identity and continuity claim;</li>
+<li>possibly a correctness, compliance, or effect claim.</li>
+</ul>
+<p>One receipt cannot satisfy all subclaims merely because it uses the
+word “deployment.” Each subclaim has a witness basis, evaluator,
+outcome, and ceiling. The composite claim cannot exceed its weakest
+required component unless the schema explicitly defines another
+logic.</p>
+<h2 id="witness-classes">4. Witness Classes</h2>
+<p><strong>Occurrence witnesses</strong> address whether an event,
+transition, or effect was observed.</p>
+<p><strong>Authority-claim witnesses</strong> record warrants,
+capabilities, delegations, constitutional declarations, and revocations.
+They witness claims about authority; they are not authority by
+themselves.</p>
+<p><strong>Intent witnesses</strong> record declared purpose,
+instruction, or requested outcome. They do not prove private motive or
+actual effect.</p>
+<p><strong>Continuity witnesses</strong> address identity, succession,
+custody, lineage, or sameness across time and transformation.</p>
+<p><strong>Semantic witnesses</strong> address preservation or declared
+change of meaning under a named lens, schema, canonicalization
+procedure, and tolerance.</p>
+<p><strong>Evaluation witnesses</strong> record the claim, schema,
+active witness basis, authority resolution, evaluator, time, outcome,
+reasons, uncertainty, and mode used.</p>
+<p><strong>Availability witnesses</strong> record the result of a
+bounded search, request, redaction, access denial, or
+expected-but-missing artifact. They cannot by themselves prove universal
+nonexistence or suppression.</p>
+<p>A single artifact may serve multiple classes only when each role is
+declared and evaluated separately.</p>
+<h2 id="validity-and-standing-layers">5. Validity and Standing
+Layers</h2>
+<p>Witness evaluation distinguishes:</p>
+<ol type="1">
+<li><strong>Structural validity:</strong> required fields and schema
+constraints are satisfied.</li>
+<li><strong>Integrity validity:</strong> hashes, signatures, seals, or
+custody checks pass where applicable.</li>
+<li><strong>Attribution validity:</strong> the issuer or observation
+source is identified to the required level.</li>
+<li><strong>Temporal validity:</strong> issuance, expiry, ordering, and
+evaluation time are consistent.</li>
+<li><strong>Semantic validity:</strong> the witness means what the
+evaluator claims under a declared interpretation.</li>
+<li><strong>Institutional validity:</strong> the relevant authority
+surface recognizes the issuer, act, or delegation.</li>
+<li><strong>Observational validity:</strong> the method and coverage
+support the proposition observed.</li>
+<li><strong>Relevance:</strong> the witness bears on the particular
+claim and schema.</li>
+<li><strong>Admissibility:</strong> the schema permits the witness to
+participate.</li>
+<li><strong>Sufficiency:</strong> the active witness basis satisfies the
+claim threshold.</li>
+</ol>
+<p>Passing one layer does not imply another. Final standing remains
+bounded by the weakest required layer and any unresolved conflict.</p>
+<h2 id="canonical-evaluation-contract">6. Canonical Evaluation
+Contract</h2>
+<p>Let <span class="math inline"><em>C</em></span> be a typed claim,
+<span class="math inline"><em>W</em></span> the available witness set,
+<span class="math inline"><em>Σ</em></span> a versioned evaluation
+schema, <span
+class="math inline"><em>A</em><em>u</em><em>t</em><em>h</em><sup>*</sup></span>
+the resolved authority surface or unresolved state, and <span
+class="math inline"><em>t</em></span> evaluation time.</p>
+<p>Define the active witness set:</p>
+<p><span
+class="math display"><em>W</em><sup><em>a</em><em>c</em><em>t</em><em>i</em><em>v</em><em>e</em></sup>(<em>C</em>, <em>Σ</em>, <em>t</em>) = {<em>w</em> ∈ <em>W</em> ∣ <em>W</em><em>F</em>(<em>w</em>, <em>Σ</em>) ∧ <em>R</em><em>e</em><em>l</em><em>e</em><em>v</em><em>a</em><em>n</em><em>t</em>(<em>w</em>, <em>C</em>, <em>Σ</em>) ∧ <em>I</em><em>n</em><em>S</em><em>c</em><em>o</em><em>p</em><em>e</em>(<em>w</em>, <em>C</em>) ∧ <em>A</em><em>c</em><em>t</em><em>i</em><em>v</em><em>e</em>(<em>w</em>, <em>t</em>) ∧ <em>N</em><em>o</em><em>t</em><em>R</em><em>e</em><em>v</em><em>o</em><em>k</em><em>e</em><em>d</em>(<em>w</em>, <em>t</em>)}.</span></p>
+<p>Custody, integrity, and conflict flags remain attached; activation
+does not erase defects. Evaluation returns a typed judgment rather than
+an unexplained number:</p>
+<p><span
+class="math display"><em>J</em>(<em>C</em>, <em>W</em>, <em>Σ</em>, <em>A</em><em>u</em><em>t</em><em>h</em><sup>*</sup>, <em>t</em>) = (<em>o</em><em>u</em><em>t</em><em>c</em><em>o</em><em>m</em><em>e</em>, <em>r</em><em>e</em><em>a</em><em>s</em><em>o</em><em>n</em><em>s</em>, <em>b</em><em>a</em><em>s</em><em>i</em><em>s</em>, <em>c</em><em>o</em><em>v</em><em>e</em><em>r</em><em>a</em><em>g</em><em>e</em>, <em>u</em><em>n</em><em>c</em><em>e</em><em>r</em><em>t</em><em>a</em><em>i</em><em>n</em><em>t</em><em>y</em>, <em>c</em><em>e</em><em>i</em><em>l</em><em>i</em><em>n</em><em>g</em>).</span></p>
+<p>Possible outcomes include <code>SUPPORTED</code>,
+<code>REFUTED</code>, <code>CONFLICTED</code>,
+<code>INSUFFICIENT</code>,<br />
+<code>INADMISSIBLE</code>, <code>AUTHORITY_UNRESOLVED</code>, and
+<code>UNKNOWN</code>.</p>
+<p>Schemas declare exactly one decision mode for a given claim type. A
+binary mode defines acceptance conditions. A graded mode defines a
+score, threshold, calibration meaning, and treatment of missing or
+conflicting evidence. Scores from different schemas are not comparable
+by default.</p>
+<h2 id="authority-resolution-without-evidence-erasure">7. Authority
+Resolution Without Evidence Erasure</h2>
+<p>An authority surface includes subject, jurisdiction, operation,
+object, bounds, duration, delegation, revocation, and provenance.
+Resolution is:</p>
+<p><span
+class="math display"><em>R</em><em>e</em><em>s</em><em>o</em><em>l</em><em>v</em><em>e</em><em>A</em><em>u</em><em>t</em><em>h</em>(<em>C</em>, <em>W</em><sup><em>a</em><em>c</em><em>t</em><em>i</em><em>v</em><em>e</em></sup>, <em>Σ</em>, <em>t</em>) → <em>A</em><em>u</em><em>t</em><em>h</em><sup>*</sup> ∪ {⊥}.</span></p>
+<p>If authority is unresolved, authority-dependent subclaims cannot be
+supported. Other subclaims need not disappear. Occurrence evidence may
+still show that an event happened without showing it was authorized.
+This prevents fail-closed authority semantics from erasing evidence of
+unauthorized conduct.</p>
+<p>Every delegation edge must be within the delegator’s power,
+unexpired, unrevoked, properly scoped, and continuous to the relevant
+subject. Conflict resolution must itself produce an evaluation
+witness.</p>
+<h2 id="provenance-and-composition">8. Provenance and Composition</h2>
+<p>Witnesses participate in a typed provenance graph:</p>
+<p><span class="math display">$$
+\begin{aligned}
+G=(V,E),\quad E\subseteq\{&amp;supports, refutes, derives, quotes,
+transforms, revokes, \\
+&amp;supersedes, duplicates, conflicts\}
+\end{aligned}.
+$$</span></p>
+<p>Set union and intersection organize collections but do not by
+themselves constitute a complete evidentiary algebra. Supersession,
+attenuation, revocation, and conflict are typed relations whose effects
+are defined by the schema. A new witness can lower standing by exposing
+contradiction, revocation, forgery, or missing context; evaluation is
+generally non-monotonic.</p>
+<p>Support justification should not be circular when the schema requires
+an acyclic basis. Historical, quotation, and conflict relations may
+contain cycles without making circular support admissible.</p>
+<h2 id="semantic-witnesses">9. Semantic Witnesses</h2>
+<p>Semantic equivalence is never absolute. Within a bounded,
+deterministic canonicalization profile:</p>
+<p><span
+class="math display"><em>x</em>≡<sub><em>Σ</em>, <em>L</em>, <em>ϵ</em></sub><em>y</em></span></p>
+<p>means that the declared lens <span
+class="math inline"><em>L</em></span>, schema <span
+class="math inline"><em>Σ</em></span>, and tolerance <span
+class="math inline"><em>ϵ</em></span> judge the relevant meanings
+equivalent. Byte or canonical-form equality can decide equivalence only
+for the profile and domain where that procedure is defined.
+Interpretive, social, or open-textured meaning may remain contested or
+require human adjudication.</p>
+<p>Semantic witnesses must preserve the source, transformation, lens,
+version, omissions, tolerance, and dissent. A semantic hash is an
+assertion produced by a procedure, not a universal proof that meaning
+remained unchanged.</p>
+<h2 id="coverage-density-and-sufficiency">10. Coverage, Density, and
+Sufficiency</h2>
+<p>For witness class <span class="math inline"><em>k</em></span>,
+coverage can be represented as:</p>
+<p><span class="math display">$$
+D_k=\frac{|W^{required}_k\cap W^{active}_k|}{|W^{required}_k|}.
+$$</span></p>
+<p>The vector <span
+class="math inline"><em>D</em> = (<em>D</em><sub>1</sub>, …, <em>D</em><sub><em>n</em></sub>)</span>
+detects missing classes better than a single count. It remains a
+coverage measure, not proof of quality or sufficiency. One hundred
+correlated receipts do not substitute for an authority witness, and one
+required high-quality witness may matter more than many redundant
+artifacts.</p>
+<p>A schema must therefore specify class dependencies, independence
+requirements, quality thresholds, conflict rules, and whether any
+missing element is blocking.</p>
+<h2 id="absence-suppression-redaction-and-availability">11. Absence,
+Suppression, Redaction, and Availability</h2>
+<p>Absence cannot be manufactured by creating a <code>no-witness</code>
+record. An availability witness should instead report a bounded
+procedure:</p>
+<pre class="text"><code>expected artifact
+search or request scope
+custodian queried
+time and method
+response or non-response
+access constraints
+result: not found, withheld, redacted, unavailable, or unknown</code></pre>
+<p>Suppression requires evidence that an artifact existed and was
+concealed. Redaction requires a declared redaction act and basis. “Not
+found” remains weaker than “never existed.” Silent omission can be made
+more observable, but not logically eliminated.</p>
+<h2 id="evaluation-witnesses-and-reproducibility">12. Evaluation
+Witnesses and Reproducibility</h2>
+<p>An evaluation witness should record or bind:</p>
+<pre class="text"><code>claim and decomposition
+schema and authority-resolution versions
+active witness identifiers and exact artifacts
+excluded witnesses and reasons
+evaluation time and environment
+evaluator identity and determinism class
+outcome, reasons, uncertainty, and ceiling</code></pre>
+<p>Hashes alone do not make replay possible. The underlying artifacts,
+schemas, algorithms, dependencies, canonicalization rules, and authority
+state must be retained or recoverable. Deterministic replay proves that
+the specified evaluator repeats the same judgment over the same inputs;
+it does not prove the judgment is correct.</p>
+<h2 id="authority-laundering">13. Authority Laundering</h2>
+<p>Authority laundering occurs when evidence, access, execution,
+identity, expertise, or repetition is promoted into authority without
+the required constitutional path. In this framework, a witness
+participates in detecting laundering when the evaluator can show that a
+stronger claim lacks the required authority-resolution and admissibility
+trace.</p>
+<p>The anti-laundering rule is:</p>
+<blockquote>
+<p>No witness, receipt, proof, signature, or evaluation may grant itself
+a stronger authority or standing than the governing schema and authority
+surface explicitly permit.</p>
+</blockquote>
+<h2 id="threat-model">14. Threat Model</h2>
+<p>Adversaries may possess valid keys, legitimate roles, evaluator
+influence, replay capability, selective disclosure power, schema
+control, timestamp control, Sybil identities, or access to the witness
+store. Failures include forged content under valid credentials,
+compromised issuers, omitted counterevidence, witness flooding,
+correlated witnesses, stale warrants, key-rotation discontinuity, schema
+downgrade, canonicalization collision, evaluator capture, provenance
+tampering, privacy leakage, and denial of witness availability.</p>
+<p>Mitigation candidates include separation of duties, independent
+witnesses, threshold or plural evaluation, schema pinning, revocation
+and continuity checks, omission detection, privacy-preserving
+disclosure, challenge procedures, and adversarial replay. None is
+established merely by appearing in the schema.</p>
+<h2 id="worked-example">15. Worked Example</h2>
+<p>Claim: “Deployment X was authorized and executed.”</p>
+<p>Decomposition finds an occurrence receipt, an expired warrant, an
+intent declaration, no continuity witness, and two conflicting authority
+witnesses. The occurrence subclaim may be supported if the receipt’s
+observation boundary is adequate. Intent may be supported as declared
+purpose. Authorization is<br />
+<code>AUTHORITY_UNRESOLVED</code> or</p>
+<p><code>REFUTED</code>, depending on the schema and conflict evidence.
+Continuity is <code>INSUFFICIENT</code>. The compound claim is therefore
+not supported.</p>
+<p>An evaluation witness records the active and excluded basis, the
+expired warrant, authority conflict, missing continuity evidence,
+outcome per subclaim, composite rule, and evaluation ceiling. The
+failure is reconstructable without pretending that one number resolves
+every dimension.</p>
+<h2 id="relation-to-the-corpus">16. Relation to the Corpus</h2>
+<p><em>Authority Laundering Theory</em> supplies the broader account of
+invalid standing promotion. <em>Epistemic Authority Governance</em>
+situates evidence and authority within an epistemic governance field.
+<em>Reasoning by Way of Receipts</em> governs which inferences receipts
+can support. <em>The Three Hash Rule</em> supplies a custody pattern for
+binding subject, artifact, and result.</p>
+<p>The Governed Meaning Base can store typed claims, witnesses,
+provenance, schemas, evaluations, dissent, and revision without treating
+storage as admission. These are interfaces, not identity mergers or
+transfers of evidentiary standing.</p>
+<h2 id="realization-funnel">17. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate witness, authority,
+evaluation, and dispute arrangements.</li>
+<li><strong>Specification:</strong> define envelopes, claim types,
+schemas, outcomes, relations, and ceilings.</li>
+<li><strong>CM1:</strong> include admissible realizations, including
+weak, captured, privacy-invasive, or incomplete ones.</li>
+<li><strong>CM2:</strong> identify preferable profiles under integrity,
+privacy, contestability, cost, and governance criteria.</li>
+<li><strong>IC:</strong> bind an Instance Constitution or Instance
+Configuration to a jurisdiction and use case.</li>
+<li><strong>IR:</strong> construct its Instance Realization or
+Implementation Realization.</li>
+<li><strong>Evidence:</strong> test parsing, custody, authority,
+evaluation, security, privacy, reproducibility, and claims.</li>
+<li><strong>Revision:</strong> update schema, authority, witness basis,
+judgment, or standing.</li>
+</ul>
+<p>This paper advances Specification and candidate CM1/CM2 structure. It
+supplies no implemented IC, IR, evaluator, or validation.
+Realization-stage IR remains distinct from Intermediate Representation
+in MCIR and compiler contexts.</p>
+<h2 id="witness-receipt-warrant-and-standing">Witness, Receipt, Warrant,
+and Standing</h2>
+<p>The completed P1 corpus permits a stable object model that prevents
+four central terms from collapsing:</p>
+<ul>
+<li><p><strong>Object:</strong> <strong>Witness</strong><br />
+<strong>Function:</strong> Evidence carrier about an occurrence,
+identity, authority, continuity, semantic claim, evaluation, or
+availability.<br />
+<strong>Does not establish:</strong> Truth, sufficiency, authority, or
+standing merely by existing.</p></li>
+<li><p><strong>Object:</strong> <strong>Receipt</strong><br />
+<strong>Function:</strong> Bounded record of an event, observation,
+decision, inference, refusal, or transition and its declared
+basis.<br />
+<strong>Does not establish:</strong> That the referenced witness is
+authentic, relevant, or sufficient.</p></li>
+<li><p><strong>Object:</strong> <strong>Warrant</strong><br />
+<strong>Function:</strong> Evaluated relation connecting a claim to
+authority, path, witnesses, receipts, and effect evidence.<br />
+<strong>Does not establish:</strong> Universal truth, moral legitimacy,
+or complete closure beyond its boundary.</p></li>
+<li><p><strong>Object:</strong> <strong>Standing</strong><br />
+<strong>Function:</strong> Current governed posture assigned to a claim
+under a versioned decision process.<br />
+<strong>Does not establish:</strong> Irrevocable truth or authority
+outside that process.</p></li>
+</ul>
+<p>Governance Witnesses is therefore the <strong>evidence-carrier schema
+and evaluation discipline</strong> within this chain. It should not
+duplicate receipt reasoning or structural-warrant theory.</p>
+<p>The chain is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;WitnessSet + ReceiptGraph + AuthorityModel + EvaluationPolicy \\
+&amp;\rightarrow WarrantAssessment \\
+&amp;\rightarrow StandingDecision
+\end{aligned}.
+$$</span></p>
+<p>Every arrow is contestable. A witness may be authentic but
+irrelevant. A receipt may accurately record a mistaken judgment. A
+warrant assessment may omit a bypass. A standing decision may be
+legitimate within one institution and invalid elsewhere. Later evidence
+can revise the result without rewriting the prior decision.</p>
+<p>Corpus integration adds <strong>counterwitness</strong> and
+<strong>absence-witness</strong> boundaries. A counterwitness bears
+against a claim under the same disciplined evaluation requirements. An
+absence witness supports only a bounded statement about observation
+coverage, time, and method; failure to observe is not universal
+non-occurrence. Redaction and unavailability must remain distinguishable
+from absence.</p>
+<p>The universal GSM can type <code>WITNESSES</code>,
+<code>COUNTERWITNESSES</code>, <code>RECORDED_IN</code>,<br />
+<code>EVALUATED_UNDER</code>, <code>RELEVANT_TO</code>,
+<code>ADMISSIBLE_FOR</code>, <code>SUFFICIENT_FOR</code>,
+<code>WARRANTS</code>,<br />
+<code>HAS_STANDING</code>,<br />
+and <code>REVISED_BY</code>. Evaluation relations must bind evaluator,
+policy, time, jurisdiction, and claim ceiling.</p>
+<p>This integration establishes four editorial commitments: adopt
+evidence-carrier schema as the paper’s official corpus role; adopt the
+four-object distinction; add counterwitness as a first-class class or
+posture; and require absence witnesses to declare coverage, method,
+time, and unavailable or redacted regions.</p>
+<h2 id="witness-location-control-domain-and-representation">Witness
+Location, Control Domain, and Representation</h2>
+<p>The fixed-seed comparison with recursive motifs, Epistemic IR, MCIR
+topology, and the Optional Coordinator adds a
+representation-and-independence contract for witnesses:</p>
+<p><span class="math display">$$
+\begin{aligned}
+W= (&amp;claim, carrier, method, observation\_boundary, \\
+&amp;representation\_graph, control\_domain, dependencies, \\
+&amp;coverage, ceiling, evaluation)
+\end{aligned}.
+$$</span></p>
+<p>An authoring AST can preserve the exact witness assertion, a
+canonical DAG can resolve witness and claim identity, and a receipt
+graph can record evaluation and standing transitions. These are
+correspondence relations, not one interchangeable witness object. Shared
+DAG nodes or common receipt infrastructure can create common-mode
+dependence that nominal witness count hides.</p>
+<p>Epistemic IR can carry the witness envelope and its contest or expiry
+state. Profile conformance remains a representation claim; authenticity,
+relevance, independence, sufficiency, and truth require separate
+evaluation. Recursive motif recurrence is not a witness and should not
+appear as evidence unless the claim being evaluated is specifically
+about motif use or predictive benefit.</p>
+<p>Coordinator-substitution experiments require witnesses for function
+coverage, displaced burdens, custody, stop behavior, and hidden
+integration roles. A witness controlled by the substituted coordinator,
+shared provider, or experiment harness may still be useful, but its
+dependence and ceiling must be explicit rather than counted as
+independent confirmation.</p>
+<p>The universal GSM can type<br />
+<code>LOCATES_WITNESS_IN_REPRESENTATION_GRAPH</code>,<br />
+<code>SHARES_WITNESS_CONTROL_DOMAIN</code>,
+<code>CARRIES_WITNESS_IN_EPISTEMIC_PROFILE</code>,<br />
+<code>COUNTS_AS_DEPENDENT_WITNESS</code>,
+<code>WITNESSES_COORDINATION_FUNCTION</code>,<br />
+<code>WITNESSES_DISPLACED_BURDEN</code>, and<br />
+<code>DOES_NOT_TREAT_MOTIF_AS_EVIDENCE</code>.</p>
+<p>This randomized review establishes four editorial commitments: add
+representation location and control domain to the witness envelope;
+preserve graph-specific correspondence; keep Epistemic IR conformance
+below witness validity; and require dependency-aware witnesses in
+coordinator-substitution studies.</p>
+<h2
+id="witnesses-across-observation-evaluation-and-governance">Witnesses
+Across Observation, Evaluation, and Governance</h2>
+<p>Downstream uses place governance witnesses in audit,
+authority-laundering analysis, agent interfaces, physical-material
+decisions, observability platforms, adversarial epistemology, craft
+processes, knowledge orientation, continual learning, legitimacy review,
+receipts, observable-state testing, and structural warrant. This breadth
+confirms the evidence-carrier role while making one universal witness
+score untenable.</p>
+<p>The downstream-stable envelope is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+W= (&amp;claim, carrier, class, issuer, method, competence, \\
+&amp;observation\_boundary, time, jurisdiction, \\
+&amp;control\_domain, dependencies, availability, privacy, \\
+&amp;coverage, ceiling, counterwitness, evaluation)
+\end{aligned}.
+$$</span></p>
+<p>Sensor readings, human testimony, laboratory results, execution
+traces, test reports, model outputs, institutional records, and absence
+observations are different witness classes. Their authenticity,
+competence, relevance, independence, coverage, and admissibility require
+class-specific evaluation. Multiple witnesses sharing a provider,
+schema, instrument, operator, training set, or evaluator remain
+dependent even if their files or signatures differ.</p>
+<p>Receipts can contain or reference witnesses while preserving a
+transition. Warrant evaluates how witnesses, authority paths, receipts,
+effects, and alternatives support a claim. Standing is the governed
+result under a declared process. An audit emits witnesses without
+proving defect coverage; a learning update consumes witnesses without
+gaining self-authorization; a material passport collects witnesses
+without certifying a site or batch.</p>
+<p>The reverse dependencies add a consequence-sensitive availability
+rule. Redaction, protected disclosure, suppression, loss, and
+non-observation are different states. Privacy can constrain access
+without erasing the existence, custodian, scope, or review path of a
+material witness. An absence claim must bind the method and observation
+boundary that make absence informative.</p>
+<p>The universal GSM can type<br />
+<code>OFFERS_WITNESS_FOR_CLAIM</code>,
+<code>HAS_WITNESS_CLASS</code>,<br />
+<code>OBSERVED_WITH_METHOD</code>, <code>CONTROLLED_IN_DOMAIN</code>,
+<code>SHARES_WITNESS_DEPENDENCY</code>,<br />
+<code>REDACTED_WITH_REVIEW_PATH</code>, <code>COUNTERWITNESSES</code>,
+<code>EVALUATED_FOR_RELEVANCE</code>,<br />
+and<br />
+<code>DOES_NOT_SELF_PROMOTE_TO_STANDING</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the downstream-stable witness envelope; require
+class-specific competence, independence, and coverage evaluation;
+preserve receipts, warrant, and standing as distinct objects; and make
+protected availability, counterwitnesses, and bounded absence
+first-class.</p>
+<h2 id="counterevidence-and-failure-tests">18. Counterevidence and
+Failure Tests</h2>
+<p>The framework must narrow or fail if: (1) a witness is treated as
+authority; (2) a valid signature masks false content; (3) an authentic
+issuer lacks jurisdiction; (4) a warrant is expired; (5) delegation
+exceeds the delegator; (6) occurrence is confused with authorization;
+(7) authorization is confused with effect; (8) intent is confused with
+motive; (9) continuity is inferred from naming; (10) semantic equality
+is claimed outside the canonicalization domain; (11) counterevidence
+lowers standing but the evaluator is monotonic; (12) irrelevant
+witnesses change outcome; (13) malformed witnesses change outcome; (14)
+revoked witnesses remain active; (15) authority failure erases
+occurrence evidence; (16) claim decomposition changes the answer; (17)
+one score hides conflicting subclaims; (18) density is inflated with
+duplicates; (19) correlated witnesses masquerade as independence; (20) a
+missing high-value class is averaged away; (21) a no-witness artifact is
+treated as proof of nonexistence; (22) redaction is mislabeled absence;
+(23) suppression is asserted without prior-existence evidence; (24)
+hashes exist but replay artifacts do not; (25) deterministic replay
+repeats an incorrect schema; (26) the evaluator controls the schema and
+evidence; (27) support depends circularly on itself; (28) provenance
+edges are mistyped; (29) schema upgrades change outcomes without
+disclosure; (30) key rotation breaks continuity; (31) valid credentials
+produce forged content; (32) selective disclosure hides refutation; (33)
+witness flooding exhausts evaluation; (34) privacy protection prevents
+required challenge; (35) timestamps are manipulated; (36) partitions
+create conflicting histories; (37) the witness store is unavailable;
+(38) the model cannot represent human testimony or physical observation;
+(39) external comparisons do not support the novelty claim; or (40) the
+paper’s formal properties are not mechanized or empirically tested.</p>
+<h2 id="evidence-without-borrowed-authority">Evidence Without Borrowed
+Authority</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Governance Witnesses are accountable artifacts that speak to
+governance-relevant propositions: what was observed, by which mechanism,
+under which profile, about which subject and event. A witness can
+support adjudication. It does not itself create authority, legitimacy,
+correctness, truth, or complete coverage.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Issuer-collusion attack.</strong> Several witnesses appear
+independent but share operator, code, data, clock, or incentives.
+Independence must be dimension-typed and evidenced.</li>
+<li><strong>Key-compromise attack.</strong> A valid signature
+authenticates a compromised witness. Key status, rotation, revocation,
+hardware, and incident history remain relevant.</li>
+<li><strong>Replay attack.</strong> A valid witness is reused for
+another subject, event, generation, or environment. Exact binding and
+freshness are mandatory.</li>
+<li><strong>Selective-disclosure attack.</strong> Favorable observations
+are published while contrary records are omitted. Coverage, sampling,
+retention, and disclosure policy need receipts.</li>
+<li><strong>Observation-gap attack.</strong> The witness cannot see the
+decisive effect path. Its statement must carry scope and unobserved
+remainder.</li>
+<li><strong>Semantic-mismatch attack.</strong> The artifact is
+technically authentic but the proposition is interpreted under the wrong
+schema or policy epoch. Meaning profiles are part of verification.</li>
+<li><strong>Privacy attack.</strong> Evidence necessary for audit
+exposes protected people or data. Collection, minimization, redaction,
+selective disclosure, and access governance are required.</li>
+<li><strong>Witness-authority laundering.</strong> A high-assurance
+witness is treated as permission to act. Evidence standing and effect
+authority remain separate.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper defines a witness architecture, proposition types, and
+evaluation program. Cryptographic accountability can bind artifact,
+issuer, subject, and lineage; it cannot establish observation
+completeness, semantic adequacy, independence, or truth without
+additional evidence.</p>
+<p>Claims about cryptographic security, hardware roots, transparency,
+privacy, distributed consensus, or legal evidentiary effect require
+exact algorithms, threat models, artifacts, and external sources.
+Internal examples demonstrate composition only. No external research was
+added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public question becomes answerable in a bounded way: who or what
+observed this claim, what exactly did it observe, what could it not see,
+who controlled the witness, and what decision may lawfully rely on
+it?</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Governance claims should not acquire standing because an institution
+produced paperwork, a key verified, a system emitted a receipt, or an
+evaluator returned a score. They acquire bounded standing only through
+an explicit relationship among a typed claim, accountable evidence,
+authority resolution, a declared schema, and a reconstructable
+judgment.</p>
+<p>The witness is not the authority. The witness is not the truth. It is
+an artifact through which a particular claim can be tested, challenged,
+revised, and refused.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<h3 id="author-corpus-interfaces-inspected-under-exact-custody">Author
+corpus interfaces inspected under exact custody</h3>
+<p>Ableman Adam Ableman <em>Authority Laundering Theory.</em></p>
+<p>Ableman Adam Ableman <em>Epistemic Authority Governance.</em></p>
+<p>Ableman Adam Ableman <em>Reasoning by Way of Receipts.</em></p>
+<p>Ableman Adam Ableman <em>The Three Hash Rule.</em></p>
+<h3 id="external-verification-required">External verification
+required</h3>
+<p>No external literature was consulted. Further evidentiary
+strengthening requires primary-source comparison with audit logging,
+evidence and provenance systems, capability security, proof-carrying
+data, decentralized identity, zero-knowledge proof, cryptographic
+attestation, distributed histories, and relevant institutional or legal
+evidence frameworks. Novelty, correctness, and formal soundness remain
+unestablished.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that governance systems produce policies,
+approvals, receipts, signatures, logs, delegations, reports, and proofs.
+Its nearest external comparison fields are governance, provenance,
+security. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are
+cited as predecessor literature, adjacent standards, or counterpressure
+- not as evidence that they caused the Ableman framework or that they
+validate its novel claims. The comparison isolates where established
+work already supplies provenance, formal assurance, institutional
+constraint, empirical method, or engineering practice, and where this
+paper adds a distinct claim about admissibility, authority, semantic
+custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice. A
+complete provenance graph can faithfully record a false or unauthorized
+process; provenance is evidence about lineage, not automatic truth or
+legitimacy. Unforgeable capabilities can constrain exercise of authority
+while still leaving allocation, delegation, revocation, and social
+legitimacy incorrectly specified. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847869">10.5281/zenodo.23847869</a></p>

@@ -1,0 +1,921 @@
+<h1 id="mosaic-internet-protocol-mip">Mosaic Internet Protocol
+(MIP)</h1>
+<h2
+id="constitutional-networking-as-a-meta-language-for-plural-internet-universes-with-canonical-governance-artifacts-and-mechanically-decidable-equality">Constitutional
+Networking as a Meta-Language for Plural Internet Universes with
+Canonical Governance Artifacts and Mechanically Decidable Equality</h2>
+<h3
+id="mosaic-internet-protocol-mip-proposes-a-different-discipline-make-disagreement-structurally-legible.">Mosaic
+Internet Protocol (MIP) proposes a different discipline: make
+disagreement structurally legible.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>The contemporary internet treats disagreement as failure. When
+networks diverge in governance, routing policy, or constitutional
+assumptions, the divergence is hidden: protocols time out, connections
+reset, packets drop — but no artifact names what happened or why. The
+result is governance by opacity.</p>
+<p>Mosaic Internet Protocol (MIP) proposes a different discipline:
+<strong>make disagreement structurally legible</strong>. MIP does not
+attempt to eliminate divergence between networks; it provides the
+machinery for divergence to be explicit, signed, inspectable, and
+lawful. A network operating under MIP can say, with a typed and
+attributable artifact: <em>this universe is not admissible here</em>.
+That refusal is governance success, not communication failure.</p>
+<p>MIP achieves this through <strong>hash-addressed universe
+constitution artifacts</strong>: explicit, canonicalized definitions of
+identity suites, frame semantics, routing admissibility, namespace
+governance, and amendment rules. Equality of canonicalized universe
+artifacts is mechanically decidable via hash comparison across
+independent implementations — without negotiation, without authority,
+without social trust above the mathematics.</p>
+<p>MIP operates as a meta-protocol: it does not specify a network, it
+specifies the language in which networks are constitutionally described.
+The Ableman Mosaic Internet Protocol (AMIP) is the specific
+constitutional network this research recommends — the argued conclusion
+of applying MIP discipline to the eight-dimension configuration manifold
+of possible constitutional networks.</p>
+<p>Detectability — not prohibition — is the primary security posture.
+Plurality is tolerable. Hidden drift is not.</p>
+<hr />
+<h2 id="problem-statement-fused-authority-and-hidden-drift">1. Problem
+Statement: Fused Authority and Hidden Drift</h2>
+<p>Most network stacks conflate:</p>
+<ul>
+<li>Identity</li>
+<li>Location</li>
+<li>Routing authority</li>
+</ul>
+<p>This fusion enables silent drift when:</p>
+<ul>
+<li>routing policy changes,</li>
+<li>cryptographic assumptions weaken,</li>
+<li>namespace semantics evolve,</li>
+<li>governance capture occurs.</li>
+</ul>
+<p>MIP asserts:</p>
+<blockquote>
+<p>Identity must be cryptographic and topology-independent. Routing must
+be optimization, not jurisdiction. Governance must be explicit,
+canonical, and hash-addressed.</p>
+</blockquote>
+<p>Plurality is tolerable. Undetectable drift is not.</p>
+<hr />
+<h2 id="detectability-as-design-axiom">2. Detectability as Design
+Axiom</h2>
+<p>The architecture is organized around a single enforcement chain:</p>
+<p>Canonicalization <span class="math inline">→</span> Hash equality
+<span class="math inline">→</span> Mechanical comparability <span
+class="math inline">→</span> Legitimate refusal <span
+class="math inline">→</span> Plurality without hidden drift.</p>
+<p>Canonicalization produces a unique semantic representation under a
+defined grammar. Hashing provides collision resistance over canonical
+bytes. Hash equality enables mechanical comparison. Mechanical
+comparison enables refusal with evidence. Refusal preserves plurality
+without semantic ambiguity.</p>
+<p>All subsequent sections implement this chain.</p>
+<hr />
+<h2 id="core-definitions">3. Core Definitions</h2>
+<h3 id="mosaic-id">3.1 Mosaic ID</h3>
+<p>A Mosaic ID is a self-certifying identifier derived deterministically
+from a public key under the universe’s identity suite. It is:</p>
+<ul>
+<li>topology-independent</li>
+<li>cryptographically verifiable</li>
+<li>portable across transports</li>
+</ul>
+<p>Routing may change location metadata; it may not alter Mosaic ID
+authority.</p>
+<p>Identity sovereignty is enforced at the frame level through
+<strong>constitutional attribution</strong>: a five-component claim that
+accompanies governed frames:</p>
+<ul>
+<li><strong>who</strong>: Mosaic ID —
+<code>BLAKE3(ed25519_pubkey_bytes)</code></li>
+<li><strong>by what authority</strong>: Ed25519 signature under the
+holder’s private key</li>
+<li><strong>under what regime</strong>: Phase_ID + Epoch_Public_Key
+(epoch governance)</li>
+<li><strong>meaning what</strong>: Semantic hash under the declared lens
+(lens governance)</li>
+</ul>
+<p>The private key signature is what makes the namespace unsquattable in
+practice — not the mathematical derivation alone. Any party can announce
+a public key; only the holder of the corresponding private key can
+produce a valid constitutional attribution claim. The trust chain is
+cryptography <span class="math inline">→</span> mathematics <span
+class="math inline">→</span> physics. No social trust layer sits above
+the mathematics.</p>
+<p>A further consequence: <strong>constitutional attribution
+drift</strong> — frames whose governance-class semantic hashes diverge
+from the node’s declared universe constitution — is a detectable
+violation. A node cannot silently change its behavior without producing
+a divergence observable by peers. Detectability, not prohibition, is the
+enforcement mechanism.</p>
+<h3 id="equality-vs.-compatibility">3.2 Equality vs. Compatibility</h3>
+<ul>
+<li><strong>Universe equality</strong>:<br />
+<code>BLAKE3(MIP-JCS-NFC(U1)) = BLAKE3(MIP-JCS-</code></li>
+</ul>
+<p><code>NFC(U2))</code> — canonical hash of the universe constitution
+artifact. The hash is stable within an epoch; it changes only when the
+constitution itself changes. - <strong>Universe compatibility</strong>:
+an explicitly declared relationship (e.g., bridge artifacts).</p>
+<p>Hash inequality implies constitutional divergence. Compatibility must
+be separately declared.</p>
+<p>Epoch governance (Cryptographic Phase) scopes the temporal validity
+of frames issued under a universe — the epoch authority is declared
+within the constitution artifact, not folded into the universe hash
+itself. Lens governance (Semantic Hashing) scopes the semantic equality
+of governance-class artifacts within the universe. These are orthogonal
+concerns: the universe hash is constitutionally stable; the epoch and
+lens context under which frames are evaluated may evolve through
+declared amendment.</p>
+<h3 id="three-layer-architecture-mip-cm-and-amip">3.3 Three-Layer
+Architecture: MIP, CM, and AMIP</h3>
+<p>MIP operates across three conceptually distinct layers. Understanding
+this separation is essential to understanding what MIP claims and what
+it does not.</p>
+<p><strong>MIP — the S-layer (domain physics).</strong> MIP is a
+meta-protocol discipline, not a network. It defines the invariants that
+any constitutional network must satisfy (4), the configuration space
+within which any constitutional network is specified (5), and the rules
+under which constitutional artifacts are compared. MIP cannot be “run.”
+It can only be satisfied. BGP, TCP/IP, WireGuard, Tor, and AMIP are all
+points in the MIP configuration space — some admissible, some not, some
+partial.</p>
+<p><strong>The Configuration Manifold — the CM-layer (navigating the
+space).</strong> The eight dimensions of 5 constitute a configuration
+manifold: the complete governance surface of any constitutional network.
+Existing protocols can be evaluated as points within this manifold —
+admissible on some dimensions, inadmissible on others, silent on others
+still. This analysis is MIP-layer work. It applies to any constitutional
+network, not just the one this research recommends. The CM layer
+produces the argued case for which dimension selections are
+constitutionally sound and why.</p>
+<p><strong>AMIP — the IC-layer (the recommended protocol).</strong> The
+Ableman Mosaic Internet Protocol (AMIP) is the specific constitutional
+network this research recommends. It sits at the same level as TCP/IP: a
+deployable, operational protocol with specific, argued selections at
+each of the eight configuration dimensions. AMIP is what you get when
+MIP discipline is applied to produce a concrete, admissible,
+fully-specified constitutional internet. The Ableman Mosaic is the AMIP
+universe instance (AME-0 — Ableman Mosaic Epoch Zero).</p>
+<p>The separation matters because the claims made at each layer are
+different in kind. MIP’s S-layer claims are universal — they assert what
+must hold in any constitutional network. The CM-layer claims are
+analytical — they assert where existing protocols sit in the manifold
+and what the admissible choices are. AMIP’s IC-layer claims are specific
+— they assert that this particular set of selections constitutes a
+sound, deployable, constitutional internet protocol.</p>
+<p>A reader who conflates MIP and AMIP will misread both. MIP is not
+AMIP. MIP is the language in which AMIP is constitutionally
+described.</p>
+<hr />
+<h2 id="architectural-invariants">4. Architectural Invariants</h2>
+<h3 id="substrate-may-not">4.1 Substrate May Not</h3>
+<ul>
+<li>reinterpret namespace semantics</li>
+<li>modify identity derivation</li>
+<li>require plaintext inspection for forwarding</li>
+<li>elevate routing hints into authority</li>
+</ul>
+<h3 id="routing-may-not">4.2 Routing May Not</h3>
+<ul>
+<li>rewrite Mosaic IDs</li>
+<li>redefine identity authority</li>
+<li>silently downgrade cryptographic suites</li>
+<li>infer legitimacy from popularity</li>
+</ul>
+<h3 id="namespace-may-not">4.3 Namespace May Not</h3>
+<ul>
+<li>alter identity semantics</li>
+<li>override universe constitution artifact</li>
+<li>equate discovery with admissibility</li>
+<li>erase divergence without fork artifacts</li>
+</ul>
+<h3 id="governance-may-not">4.4 Governance May Not</h3>
+<ul>
+<li>inspect ciphertext payloads</li>
+<li>silently amend lens definitions</li>
+<li>retroactively alter commitments without explicit amendment</li>
+</ul>
+<h3 id="canonicalization-boundary">4.5 Canonicalization Boundary</h3>
+<p>MCIR serialization must not:</p>
+<ul>
+<li>admit multiple encodings for the same semantic artifact</li>
+<li>conceal divergence via ordering or metadata variance</li>
+</ul>
+<p>Canonicalization provides semantic uniqueness under a defined
+grammar; cryptographic hashing provides collision resistance over
+canonical bytes. Both are required for equality guarantees.</p>
+<hr />
+<h2 id="universe-constitution-artifact-minimum-schema">5. Universe
+Constitution Artifact (Minimum Schema)</h2>
+<p>The universe constitution artifact <code>U</code> is an MCIR
+canonical AST containing eight dimensions. These dimensions constitute
+the complete governance surface of any constitutional network — a
+<strong>configuration manifold</strong> in which every universe is a
+point. Existing protocols (BGP, WireGuard, Tor) are points within this
+same manifold, occupying admissible ranges on some dimensions and
+inadmissible regions on others. Universe equality is decided by
+comparing canonical hashes of points in the manifold. Manifold
+navigation — which protocols satisfy which dimensions and why — is a
+configuration-layer concern above the domain physics defined here.</p>
+<p><strong>1. Identity Suite</strong></p>
+<ul>
+<li>public key curves</li>
+<li>Mosaic ID derivation algorithm</li>
+<li>signature primitives</li>
+</ul>
+<p><em>Note on cryptographic agility:</em> The identity suite is an
+epoch-specific selection. The epoch transition mechanism enables
+cryptographic migration without protocol changes. Current deployments
+use Ed25519 (identity signatures) and X25519 (session key exchange). A
+hybrid classical/post-quantum epoch (Dilithium-3 + Ed25519; Kyber-768 +
+X25519) is the planned successor, preserving backward compatibility
+during transition. BLAKE3 is retained across epochs — its post-quantum
+security level (128-bit against Grover’s algorithm) is sufficient for
+hash functions at current threat assessments.</p>
+<p><strong>2. Frame Semantics</strong></p>
+<ul>
+<li>envelope structure</li>
+<li>replay rules</li>
+<li>required cryptographic algorithms</li>
+<li>per-frame attribution signing rate (required / trust-tiered /
+session-bound)</li>
+</ul>
+<p><strong>3. Routing Specification</strong></p>
+<ul>
+<li>path object schema</li>
+<li>admissibility predicate definition</li>
+<li>deterministic scoring function</li>
+<li>evaluation resource bounds</li>
+</ul>
+<p><strong>4. Transport Set</strong></p>
+<ul>
+<li>permitted adapters</li>
+<li>encapsulation rules</li>
+</ul>
+<p><strong>5. Namespace Governance</strong></p>
+<ul>
+<li>DKN configuration</li>
+<li>manifest schema</li>
+<li>governance-class artifact definitions</li>
+<li>lens registry (LensID, version, hash)</li>
+</ul>
+<p><strong>6. Lens Governance</strong></p>
+<ul>
+<li>admissible lens artifacts</li>
+<li>upgrade/evolution rules</li>
+</ul>
+<p><strong>7. Amendment and Fork Rules</strong></p>
+<ul>
+<li>constitution update procedure</li>
+<li>compatibility semantics</li>
+<li>fork detection policy</li>
+</ul>
+<p><strong>8. Evaluation Parameters</strong></p>
+<ul>
+<li>deterministic evaluator definition</li>
+<li>resource model R</li>
+<li>receipt schema</li>
+</ul>
+<p>Initial admission of a universe constitution is governed by local
+policy; the artifact’s admission rules govern subsequent amendments and
+derivative universes.</p>
+<hr />
+<h2 id="universe-registry-and-admission-policy">6. Universe Registry and
+Admission Policy</h2>
+<p>Relays maintain a local registry of admitted universe constitution
+hashes.</p>
+<p>Admission policies may include:</p>
+<ul>
+<li>permissive acceptance</li>
+<li>signer allowlists</li>
+<li>quorum signatures</li>
+<li>web-of-trust receipts</li>
+<li>offline anchors</li>
+</ul>
+<p>Admission policy may centralize or decentralize authority; such
+centralization is visible in the constitution artifact and therefore
+comparable.</p>
+<p>No implicit root authority is assumed.</p>
+<hr />
+<h2 id="frame-structure">7. Frame Structure</h2>
+<p>A minimal frame contains:</p>
+<ul>
+<li><code>universe_hash</code></li>
+<li><code>source_id</code></li>
+<li><code>destination_id</code></li>
+<li><code>sequence_nonce</code></li>
+<li><code>route_metadata</code></li>
+<li><code>ciphertext</code></li>
+<li><code>integrity_tag</code></li>
+<li><code>attribution_sig</code> <em>(optional — 64 bytes; present when
+per-frame signing rate requires it)</em></li>
+</ul>
+<p>Envelope validation precedes decryption. The
+<code>attribution_sig</code> field carries the Ed25519 signature over
+the constitutional attribution claim (3.1) for this frame. Its presence
+is governed by the universe constitution’s declared per-frame signing
+rate: required on every frame, present at 1/N frames for established
+sessions under trust-tiered mode, or absent under session-bound mode
+where the constitutional handshake authenticates the session and AES-GCM
+provides per-frame integrity.</p>
+<hr />
+<h2 id="path-object-definition">8. Path Object Definition</h2>
+<pre><code>path = {
+  relay_ids: [M1, M2, ...],
+  transport_edges: [(M1, M2, link_type), ...],
+  receipts: [delivery_receipt_hashes],
+  cost_metrics: {latency, hop_count, reliability}
+}</code></pre>
+<p>Receipts must carry constitutional attribution — signed by the
+issuing relay’s Ed25519 key under the current epoch authority, carrying
+the <code>universe_hash</code> of the universe in which the receipt was
+issued. A receipt issued under one epoch is inadmissible under a
+successor epoch even if the signing key is unchanged, because the epoch
+authority has transitioned.</p>
+<p>Unverifiable receipts are ignored during scoring.</p>
+<p><code>P_route(F, path)</code> may depend only on:</p>
+<ul>
+<li>locally verifiable path metadata</li>
+<li>declared and verifiable receipts</li>
+<li>explicitly admitted external oracles (hash-addressed
+dependencies)</li>
+</ul>
+<p>Universes admitting external oracles trade decentralization for
+declared authority; such dependencies are visible in the constitution
+hash.</p>
+<p>Universes SHOULD minimize external oracle dependencies to preserve
+routing autonomy.</p>
+<hr />
+<h2
+id="ableman-mosaic-internet-protocol-amip-recommended-constitutional-instantiation">9.
+Ableman Mosaic Internet Protocol (AMIP) — Recommended Constitutional
+Instantiation</h2>
+<p>The Ableman Mosaic Internet Protocol (AMIP) is the specific
+constitutional network this research recommends. It is not an arbitrary
+example — it is the argued conclusion of CM-layer analysis applied to
+the eight configuration dimensions.</p>
+<p>The analysis proceeds as follows. For each dimension, existing
+protocols are evaluated as points in the MIP configuration manifold:</p>
+<ul>
+<li><strong>BGP</strong> is inadmissible at Dimensions 1, 2, 3, and 5.
+Its routing authority is jurisdictional rather than mathematical; its
+identity model is topological; its equality semantics are absent. Three
+of MIP’s domain invariants are architecturally foreclosed by BGP’s
+design — it cannot be augmented into admissibility; it must be
+replaced.</li>
+<li><strong>TCP/IP + TLS</strong> is admissible as transport
+infrastructure (Dimension 4) but silent on constitution. TLS with X.509
+certificates introduces a social trust layer (certificate authorities)
+above the cryptography — inadmissible under MIP-S-05’s requirement that
+the trust chain go no higher than mathematics.</li>
+<li><strong>WireGuard</strong> is the strongest existing transport
+substrate — its identity discipline (static public key as peer identity)
+is fully admissible under MIP-S-05. But it is constitutionally silent:
+no universe hash, no RefusalFrame, no receipt schema. It is the best
+candidate for a constitutional transport layer, not a constitutional
+protocol.</li>
+<li><strong>Tor</strong> is the closest existing protocol to
+admissibility — onion service addresses are self-certifying
+public-key-derived identities (fully admissible under MIP-S-05), and
+Tor’s hidden service architecture realizes four of MIP’s eight ARC
+primitives. But Tor’s relay governance is inadmissible: directory
+authorities introduce institutional trust above the mathematics, and
+circuit construction relies on self-reported bandwidth rather than
+verifiable receipts.</li>
+</ul>
+<p>From this analysis, AMIP makes the following selections:</p>
+<p><strong>Identity:</strong> Ed25519 — deterministic signatures, no
+randomness requirement, 128-bit classical security. Mosaic ID derived
+as<br />
+<code>BLAKE3(ed25519_pubkey_bytes)</code>. <strong>Session key
+exchange:</strong> X25519 ECDH — ephemeral session keys separate from
+identity keys. <strong>Frame integrity:</strong> AES-GCM-256.
+<strong>Hashing:</strong> BLAKE3 — 256-bit classical, 128-bit
+post-quantum (Grover bound). <strong>Canonical serialization:</strong>
+MIP-JCS-NFC (RFC 8785 profile with mandatory NFC pre-normalization; see
+13). <strong>Transports:</strong> Ethernet, WiFi (AP and client),
+Bluetooth, LoRa (via MRM protocol), WiFi mesh. <strong>Namespace
+governance:</strong> DKN — authority-keyed dimension IDs, two-layer
+trust architecture. <strong>Routing:</strong> Multi-path, hop caps,
+receipt-grounded deterministic scoring with epoch-keyed randomized
+sampling. <strong>Sybil posture:</strong> Assumes exposure; mitigates
+via receipt history depth and optional allowlists. <strong>Fork
+rule:</strong> Constitution mismatch <span class="math inline">→</span>
+isolate unless explicit bridge artifact declared.
+<strong>Stewardship:</strong> Non-constitutional (TCP/IP-only) devices
+may transit the AMIP network under declared stewardship modes with typed
+provenance receipts. <strong>Genesis epoch:</strong> AME-0 (Ableman
+Mosaic Epoch Zero).</p>
+<p>Each selection traces to a CM-layer finding: this choice is
+admissible, that choice forecloses invariants, this existing protocol is
+partial. The Ableman Mosaic Internet Protocol is not a thought
+experiment — it is the operational conclusion of applying MIP discipline
+seriously.</p>
+<p>The MIP Constitutional Codex v0.1 includes a benchmark harness (BM-1
+through BM-6) specifying the measurements that will empirically validate
+or falsify these selections: constitutional handshake overhead, receipt
+chain throughput, P_route evaluation time, per-frame signing cost, LoRa
+duty cycle interaction, and Byzantine detection latency against BGP
+withdrawal convergence as baseline. Results will be published when the
+reference implementation reaches operational status. Failure on any
+benchmark falsifies the corresponding AMIP selection as an argued
+conclusion and requires codex amendment.</p>
+<p><em>AMIP is operationalized in the MIP Constitutional Codex
+v0.1.</em></p>
+<hr />
+<h2 id="end-to-end-execution-trace">10. End-to-End Execution Trace</h2>
+<p>Universe: Ableman Mosaic Internet Protocol (AMIP), epoch AME-0
+Constitution hash: <code>h(U) = BLAKE3(MIP-JCS-NFC(U))</code></p>
+<ol type="1">
+<li>Node A constructs payload <code>p</code>.</li>
+<li>A builds frame <code>F</code> with <code>h(U)</code>,
+<code>M_A</code>, <code>M_B</code>.</li>
+<li>A signs and encrypts; attaches constitutional attribution claim if
+signing rate requires.</li>
+<li>Relay R validates signature and replay window.</li>
+<li>R checks <code>h(U)</code> against local registry.</li>
+<li>R evaluates <code>P_route(F, path)</code>.</li>
+<li>R forwards via declared transport.</li>
+<li>B receives and validates.</li>
+<li>B decrypts.</li>
+<li>Payload references governance artifact <code>G</code>.</li>
+<li>B resolves <code>G</code> via DKN.</li>
+<li>B verifies artifact and lens hash.</li>
+<li>Canonical lens evaluation mismatch detected.</li>
+<li>B emits constitutional refusal frame (11).</li>
+</ol>
+<hr />
+<h2 id="refusal-primitive">11. Refusal Primitive</h2>
+<p>Refusal is a protocol-defined outcome under a universe
+constitution.</p>
+<h3 id="refusal-frame-schema">11.1 Refusal Frame Schema</h3>
+<pre><code>{
+  universe_hash,
+  // BLAKE3(MIP-JCS-NFC(refusing node&#39;s admitted constitution))
+  refusing_node_id,        // BLAKE3(ed25519_pubkey_bytes) --- Mosaic ID
+  refused_frame_digest,    // BLAKE3(refused frame bytes)
+  reason_code,             // universe-specific typed vocabulary
+  optional_evidence_hash,  // hash of supporting artifact, if applicable
+  signature // Ed25519 over BLAKE3(MIP-JCS-NFC(above fields))
+}</code></pre>
+<p>The signature follows the same constitutional attribution discipline
+as regular frames — it is not a bare Ed25519 signature over raw bytes
+but a signature over the canonical hash of the refusal claim, binding
+the refusal to the refusing node’s identity and the current epoch.</p>
+<p>Defaults:</p>
+<ul>
+<li>Refusal is locally returned.</li>
+<li>Forwarding beyond one hop is disabled by default.</li>
+<li>Rate limiting uses per-source token buckets keyed by
+<code>(source_id)</code> and</li>
+</ul>
+<p><code>(refused_frame_digest)</code>. Rate parameters are declared in
+the universe constitution’s Evaluation Parameters dimension and
+therefore visible in the universe hash — rate policy is a constitutional
+choice, not an implementation detail.</p>
+<p>Refusal is scoped to the evaluating universe and does not imply
+global identity revocation.</p>
+<h3 id="constitutional-attribution-drift">11.2 Constitutional
+Attribution Drift</h3>
+<p>A distinct class of constitutional violation is <strong>attribution
+drift</strong>: a node whose frame-level semantic hashes diverge from
+its declared universe constitution without announcing an amendment. This
+is the silent behavioral change attack — the node’s bytes are
+well-formed and its signatures are valid, but the governance-class
+content of its frames no longer corresponds to what it claims to
+implement.</p>
+<p>Attribution drift is detectable — it does not require the drifting
+node to announce itself. Observers compare the semantic hashes embedded
+in governance-class frames against the hashes derivable from the node’s
+announced universe constitution. Divergence is evidence. The response is
+a typed observation, not a refusal — refusal applies to frame-level
+violations; attribution drift is surfaced through the constitutional
+observability layer.</p>
+<p>This closes the gap identified in 15 (“Governance hides in
+defaults”): under MIP, governance that departs from its declaration
+becomes visible through semantic hash comparison, not through trust in
+the node’s announcements.</p>
+<hr />
+<h2 id="semantic-hashing-scope">12. Semantic Hashing Scope</h2>
+<p>Semantic hashing applies only to governance-class artifacts,
+including:</p>
+<ul>
+<li>universe constitution artifacts</li>
+<li>lens definitions</li>
+<li>amendment artifacts</li>
+<li>bridge declarations</li>
+<li>routing predicate updates</li>
+</ul>
+<p>General content addressing remains byte-hash by default.</p>
+<hr />
+<h2 id="canonicalization-as-cryptographic-boundary">13. Canonicalization
+as Cryptographic Boundary</h2>
+<h3 id="canonicalization-threats">13.1 Canonicalization Threats</h3>
+<p>Failure modes include:</p>
+<ul>
+<li>AST encoding ambiguity across languages</li>
+<li>numeric normalization inconsistencies</li>
+<li>Unicode normalization variance</li>
+<li>map key ordering drift</li>
+<li>serializer version skew</li>
+<li>implicit coercion or optimization</li>
+</ul>
+<h3 id="canonicalization-principles">13.2 Canonicalization
+Principles</h3>
+<ul>
+<li>formally specified grammar</li>
+<li>strict type system</li>
+<li>no duplicate keys</li>
+<li>deterministic ordering by UTF-8 byte lexicographic order
+(MIP-JCS-NFC pre-normalizes strings to NFC before key ordering and value
+serialization)</li>
+<li>fixed numeric encoding rules</li>
+<li>exclusion of non-semantic metadata</li>
+<li>mandatory MIP-JCS-NFC conformance suite enforcement</li>
+</ul>
+<p>Canonicalization provides semantic uniqueness; hashing provides
+collision resistance. Both are required.</p>
+<p><strong>MIP-JCS-NFC deviation from RFC 8785:</strong> MIP uses a
+canonicalization profile called MIP-JCS-NFC. It follows RFC 8785 in all
+respects except one: string values are Unicode NFC-normalized before
+serialization. RFC 8785 3.2.3 explicitly prohibits altering parsed
+string data. MIP-JCS-NFC departs from this to prevent
+cross-implementation hash divergence on inputs that differ only in
+Unicode normalization form (e.g., <code>caf\'{e}</code> as precomposed
+U+00E9 versus decomposed</p>
+<p><code>e</code> + U+0301). Without NFC pre-normalization, two
+implementations receiving the same semantic string from different
+sources could produce different universe hashes — breaking MIP-S-03. The
+deviation is intentional, declared, and named explicitly rather than
+silently applied under the RFC 8785 name.</p>
+<p><strong>Operational definition:</strong> Mechanical equality (2, 14)
+is operationally defined by a normative conformance suite specifying 25
+MIP-JCS-NFC+BLAKE3 test vectors. Vector CV-06 and CV-07 test the
+critical MIP-JCS-NFC deviation from RFC 8785: NFC normalization is
+applied to strings before serialization: NFD-encoded and NFC-encoded
+representations of the same string must produce identical canonical
+bytes and identical BLAKE3 hashes. Vector CV-21 tests the full
+constitutional attribution claim structure. Any implementation passing
+all 25 vectors — plus the NFC equivalence invariant — satisfies the
+canonicalization requirement of this section. The conformance suite is
+defined in the MIP Constitutional Codex.</p>
+<hr />
+<h2 id="cross-implementation-equality-conformance-suite">14.
+Cross-Implementation Equality: Conformance Suite</h2>
+<p>Equality of canonicalized universe artifacts is mechanically
+decidable via hash comparison. This property is delivered, not
+aspirational.</p>
+<p>The normative conformance suite specifies:</p>
+<ol type="1">
+<li>25 MIP-JCS-NFC+BLAKE3 input/output pairs with canonical bytes in
+hexadecimal and BLAKE3 hashes computed by a reference
+implementation.</li>
+<li>A Unicode NFC equivalence invariant: NFD and NFC representations of
+the same string must produce identical hashes (CV-06 = CV-07).</li>
+<li>A constitutional attribution claim vector (CV-21): the full
+five-component attribution structure must hash identically across
+independent implementations.</li>
+<li>A runnable conformance test script that exits non-zero on any
+failure.</li>
+<li>A common failure modes table mapping symptoms to canonicalization
+bugs.</li>
+</ol>
+<p>Fuzz testing for AST equivalence and a golden hasher for fixtures
+remain recommended extensions beyond the normative suite.</p>
+<p>Identical canonical artifacts must produce identical hashes across
+independent implementations. The conformance suite is the falsifiable
+test of this claim.</p>
+<p><strong>Normative location:</strong> MIP Constitutional Codex
+v0.1,<br />
+<code>MIP-S/CX-S/CONFORMANCE_SUITE.md</code>. <strong>Critical
+vector:</strong> CV-21 tests the full constitutional attribution claim
+structure — passing CV-21 guarantees that AMIP frame attribution is
+equivalent across independent implementations in any language. Any
+implementation passing all 25 vectors satisfies the mechanical equality
+requirement of this section.</p>
+<hr />
+<h2 id="failure-without-constitution">15. Failure Without
+Constitution</h2>
+<p>Without constitutional definition:</p>
+<ul>
+<li>Identity collapses into topology</li>
+<li>Routing collapses into authority</li>
+<li>Forks collapse into fragmentation</li>
+<li>Namespaces drift silently</li>
+<li>Governance hides in defaults</li>
+</ul>
+<p>Without meta-language:</p>
+<ul>
+<li>Each network claims universality</li>
+<li>Interoperability requires informal compromise</li>
+<li>Authority centralizes through inertia</li>
+</ul>
+<p>The result is a monoculture masquerading as inevitability.</p>
+<hr />
+<h2 id="conclusion">16. Conclusion</h2>
+<p>The Mosaic Internet Protocol reframes networking as a governed
+configuration space. It does not propose a better internet. It proposes
+an internet where disagreement becomes structurally legible.</p>
+<p>“Constitutional” in this context means one precise thing:
+mechanically declared governance constraints, expressed as
+hash-addressed artifacts, subject to canonical equality verification.
+Not sovereignty. Not legitimacy in the political sense. Not ontology. A
+universe constitution is a hash-addressed document. What it grants is
+detectability — the ability to know, with a signed artifact, what rules
+are in force and when they have changed.</p>
+<p>It asserts:</p>
+<ul>
+<li>Identity is sovereign and cryptographic.</li>
+<li>Routing is configurable and optimizable.</li>
+<li>Transport is interchangeable.</li>
+<li>Trust is parameterized.</li>
+<li>Namespaces are semantically hash-bound.</li>
+<li>Universes are constitutionally declared.</li>
+<li>Forks are lawful.</li>
+<li>Refusal preserves boundaries.</li>
+</ul>
+<p>Most systems try to erase disagreement through forced continuity:
+same DNS root, same certificate authorities, same routing assumptions,
+same namespace semantics. MIP takes the opposite position: divergence is
+inevitable; hidden divergence is the real danger. The protocol does not
+eliminate disagreement. It makes disagreement inspectable, attributable,
+and lawful.</p>
+<p>Where legacy protocols fused identity with infrastructure, MIP
+separates them. Where divergence previously required rupture, MIP
+permits coexistence. Where governance hid in defaults, MIP makes it
+visible.</p>
+<p>And when universes disagree, the network need not collapse. It can
+simply say — with a typed, signed, attributable artifact:</p>
+<p>This universe is not admissible here.</p>
+<p>Refusal is stability. Configuration is sovereignty. Governance is
+visible.</p>
+<p>That is the Mosaic thesis. AMIP is its first executable
+instantiation.</p>
+<hr />
+<hr />
+<h2 id="appendix-a-minimal-sufficiency">Appendix A: Minimal
+Sufficiency</h2>
+<p><em>What is the smallest executable set that proves the core MIP
+claim?</em></p>
+<p>This appendix answers a necessary question: as the codex set grows —
+conformance suite, benchmark harness, post-quantum roadmap, router
+realization, namespace governance, semantic hashing layers — which
+elements are load-bearing, and which are elaborations?</p>
+<p>The answer matters for two reasons. First, it tells implementors
+where to start. Second, it protects the core claim from being buried
+under contestable engineering choices. The meta-protocol’s epistemic
+integrity depends on knowing what it would take to falsify it.</p>
+<h3 id="the-minimal-constitutional-stack">The Minimal Constitutional
+Stack</h3>
+<p>The following five elements, and only these five, are necessary and
+sufficient to demonstrate MIP-S compliance:</p>
+<p><strong>1. MIP-JCS-NFC canonicalization</strong> — a deterministic
+serialization that produces identical bytes from identical
+governance-class artifacts across independent implementations. This is
+the mechanical foundation. Without it, hash equality is not decidable
+and nothing else follows.</p>
+<p><strong>2. BLAKE3 universe hash</strong> —<br />
+<code>BLAKE3(MIP-JCS-NFC(U))</code> computed from the universe
+constitution dict. Two implementations that produce identical hashes
+from identical constitution dicts satisfy MIP-S-03 (Mechanical
+Equality). This is the core equality primitive.</p>
+<p><strong>3. Constitutional handshake</strong> — two peers exchange
+universe hashes, verify mutual admission, derive a session key, and
+produce a <code>handshake_completed</code> receipt. This demonstrates
+MIP-S-05 (Identity Sovereignty) and MIP-S-06 (Routing as Optimization)
+at minimum.</p>
+<p><strong>4. RefusalFrame</strong> — when universe hashes do not match,
+the refusing node produces a signed, typed RefusalFrame rather than a
+silent drop, timeout, or reset. This is the load-bearing primitive.
+Typed refusal is the concrete manifestation of MIP-S-01 (Detectability
+Axiom) and MIP-S-04 (Refusal as Protocol Primitive).</p>
+<p><strong>5. Receipt chain</strong> — at minimum two operations:
+<code>handshake_completed</code> and</p>
+<p><code>handshake_refused</code>. These establish that governance
+events are receipted, auditable, and chain-linked — MIP-S-07 (Governance
+Visibility) at its floor.</p>
+<h3 id="what-this-does-not-include">What This Does Not Include</h3>
+<p>The following are AMIP-specific selections or future-arc additions —
+they are not required to demonstrate MIP-S compliance:</p>
+<ul>
+<li>P_route multi-path scoring (AMIP AME-0 Dimension 3; routing can be
+as simple as “admitted registry check”)</li>
+<li>DKN namespace governance (AMIP selection; any namespace satisfying
+MIP-S-07 is admissible)</li>
+<li>Semantic lens evaluation (AMIP selection; hash equality alone
+satisfies MIP-S-03 at the floor)</li>
+<li>Epoch governance transitions (declared non-guarantee in AME-0;
+required in AME-1)</li>
+<li>ESA / COP observability surface (future-arc; receipt infrastructure
+is sufficient)</li>
+<li>The Ableman Mosaic Router (IR-3 realization; transport invariance is
+demonstrated by IR-1 and IR-2)</li>
+<li>ConstitutionalFastPath optimization (performance; not
+correctness)</li>
+<li>Stewardship modes (AMIP AME-0 deployment feature; not a MIP-S
+requirement)</li>
+</ul>
+<h3 id="the-falsifiable-test">The Falsifiable Test</h3>
+<p>Two nodes. One universe constitution dict. Three scenarios:</p>
+<ol type="1">
+<li><p>Both nodes compute the same universe hash from the same dict
+<span class="math inline">→</span> they establish a constitutional
+session <span class="math inline">→</span>
+<code>handshake_completed</code> receipt produced by both.</p></li>
+<li><p>One node presents a different universe hash <span
+class="math inline">→</span> the other produces a typed, signed
+RefusalFrame with<br />
+<code>reason_code: UNIVERSE_HASH_MISMATCH</code> <span
+class="math inline">→</span></p></li>
+</ol>
+<p><code>handshake_refused</code> receipt produced.</p>
+<ol start="3" type="1">
+<li>The conformance suite runs against both implementations <span
+class="math inline">→</span> all 25 MIP-JCS-NFC+BLAKE3 vectors pass
+<span class="math inline">→</span> NFC equivalence invariant (CV-06 =
+CV-07) holds.</li>
+</ol>
+<p>If all three scenarios produce the correct outcomes, the core MIP
+claim is demonstrated. Everything else in the codex set is elaboration,
+optimization, or AMIP-specific selection.</p>
+<p><strong>AMIP-WG</strong> (the WireGuard instantiation, specified in a
+companion IC codex) is the reference implementation of this minimal
+stack on existing internet infrastructure. It implements exactly the
+five elements above — constitutional handshake as first WireGuard
+transport payload, RefusalFrame on universe hash mismatch, four receipt
+operations — and nothing more. AMIP-WG is the minimal sufficiency
+demonstration.</p>
+<h3 id="the-doctrine">The Doctrine</h3>
+<p>Any addition to the minimal stack should pass this test: does it
+close a gap in the core claim, or does it elaborate an AMIP-specific
+choice? If the latter, it belongs in the IC or IR codices, not in MIP-S.
+The meta-protocol stays austere. The recommended protocol can be as rich
+as the engineering warrants.</p>
+<hr />
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<p><em>With the Ableman Mosaic Internet Protocol (AMIP) as Recommended
+Constitutional Instantiation</em> <strong>Version:</strong> 1.0</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the contemporary internet treats disagreement
+as failure. Its nearest external comparison fields are distributed,
+security, crypto. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Convergence and
+consensus establish agreement under a fault model; they do not establish
+that the agreed state is true, authorized, desirable, or semantically
+equivalent. Unforgeable capabilities can constrain exercise of authority
+while still leaving allocation, delegation, revocation, and social
+legitimacy incorrectly specified. A valid hash, signature, or inclusion
+proof establishes a bounded cryptographic relation, not meaning,
+authority, safety, or jurisdiction by itself. These limits are not
+generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Leslie Lamport. “Time, Clocks, and the Ordering
+of Events in a Distributed System.” <em>Communications of the ACM</em>
+21(7), 1978, pp. 558-565. DOI: 10.1145/359545.359563.
+https://lamport.azurewebsites.net/pubs/time-clocks.pdf
+<strong>Relationship:</strong> Foundational predecessor for partial
+order, causality, and distributed event ordering.</p>
+<p><strong>[E2]</strong> Leslie Lamport, Robert Shostak, and Marshall
+Pease. “The Byzantine Generals Problem.” <em>ACM Transactions on
+Programming Languages and Systems</em> 4(3), 1982, pp. 382-401. DOI:
+10.1145/357172.357176. https://doi.org/10.1145/357172.357176
+<strong>Relationship:</strong> Predecessor fault model for agreement
+under adversarial or inconsistent participants.</p>
+<p><strong>[E3]</strong> Marc Shapiro et al. <em>A Comprehensive Study
+of Convergent and Commutative Replicated Data Types</em>. INRIA Research
+Report RR-7506, 2011. https://inria.hal.science/inria-00555588
+<strong>Relationship:</strong> Predecessor convergence model for
+replicated state; convergence is compared with, but not equated to,
+legitimacy or semantic agreement.</p>
+<p><strong>[E4]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Optional
+Coordinator</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-727469A6944DA256</code>;<br />
+source SHA-256<br />
+<code>92E8F6743B8DDAFF369D2F40120A384DDE273613B12B27D2FC14610469F5A46E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional
+Synchronization</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-012675C952D76CD2</code>;<br />
+source SHA-256<br />
+<code>A2147B7E6431FF6EEC1C6CE6D7A1EB644B04E37402E9514495C83909565F93C1</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutional Collective
+with Optional Overmind (CCOO)</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-ED07EA7D91B87C5E</code>;<br />
+source SHA-256<br />
+<code>0346FA1B79A2A44A6034DEDCE4D0FA0E5C5CCD953F4AD29A88CEE1F290DCC210</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Communal Computing and
+Constitutional Governance</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-A6393299A70371DC</code>;<br />
+source SHA-256<br />
+<code>302FC6C269369AC4A4A5D8470E56596B6E8813A82530AD9DA64E9FAEEC4D2461</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20115615">10.5281/zenodo.20115615</a></p>

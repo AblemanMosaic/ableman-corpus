@@ -1,0 +1,1864 @@
+<h1 id="constitutional-synchronization">Constitutional
+Synchronization</h1>
+<h2
+id="executable-specification-through-governed-correspondence-among-meaning-model-realization-evidence-authority-and-projection">Executable
+Specification Through Governed Correspondence Among Meaning, Model,
+Realization, Evidence, Authority, and Projection</h2>
+<h3
+id="a-system-remains-itself-when-every-path-from-meaning-to-effect-can-still-be-made-to-answer-for-the-others.">A
+system remains itself when every path from meaning to effect can still
+be made to answer for the others.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Software systems rarely possess one authoritative representation of
+themselves. They exist simultaneously as requirements, semantic models,
+schemas, transition rules, source code, binaries, runtime processes,
+tests, receipts, authority records, documentation, and user interfaces.
+These representations may begin in agreement and later diverge
+independently. An application can execute successfully while running
+unadmitted bytes, preserving obsolete semantics, relying upon stale
+evidence, exercising revoked authority, or presenting users with a
+projection that no longer corresponds to constitutional state.</p>
+<p>This paper introduces <strong>constitutional
+synchronization</strong>, a domain-neutral framework for maintaining
+governed correspondence among the identity, meaning, lawful transitions,
+executable realizations, observed behavior, evidence, authority,
+history, dependencies, and public projections of a system.
+Constitutional synchronization does not collapse specification into
+implementation. It preserves their distinction while making the path
+between them explicit, identity-bearing, witnessed, and enforceable.</p>
+<p>A system is constitutionally synchronized for a declared purpose when
+its current realization can be shown to correspond to its admitted model
+and transition law; its execution is adequately witnessed; its evidence
+supports its current standing; its authority remains valid; its
+dependencies and historical lineage are current; and its external
+projections faithfully expose the relevant constitutional state. The
+framework distinguishes synchronization from equality, divergence from
+insufficient evidence, local synchronization from configuration-level
+synchronization, and resynchronization from ordinary mutation.</p>
+<p>The paper develops a formal model, a taxonomy of desynchronization, a
+system of constitutional courts, a synchronization-state vocabulary, and
+a governed resynchronization process. It further examines executable
+specification, content-addressed intake, user-interface projection,
+recursive self-hosting, and constitutionally bounded self-improvement.
+The central claim is that the traditional gulf between specification and
+implementation is not overcome by eliminating either side, but by
+maintaining enforceable correspondence across every identity-bearing
+layer through which meaning becomes effect.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>A contemporary software system exists in many places at once.</p>
+<p>It exists in the language used to describe its purpose. It exists in
+architecture diagrams, schemas, interface contracts, source
+repositories, compiled artifacts, deployment manifests, running
+processes, telemetry, tests, authorization records, documentation, and
+user interfaces. Each representation is partial. Each may change at a
+different time. Each may be maintained by a different person or machine.
+Each may claim to describe the same system.</p>
+<p>They often do not.</p>
+<p>A documentation page may describe an atomic transaction while the
+implementation performs several separately committed effects. A user
+interface may display a component as verified even though the
+verification applied only to a predecessor. A source hash may remain
+valid while the semantic regime under which the source was interpreted
+has changed. A package may be byte-identical to an admitted package but
+execute under a revoked authority. A test may continue to pass while
+observing the wrong process. A runtime may implement a useful capability
+that has never been incorporated into the governing model.</p>
+<p>Traditional software engineering recognizes portions of this problem.
+Axiomatic reasoning relates programs to preconditions and
+postconditions. Design by contract relates components to assumptions and
+guarantees. Formal specification relates implementations to abstract
+behaviors. Runtime verification compares executions with temporal
+properties. Model-driven engineering and models-at-runtime preserve
+relationships between operational systems and their models. Modular and
+interface theories constrain composition. System-safety methods examine
+emergent hazards and inadequate control at the level of the complete
+system.</p>
+<p>Yet these approaches commonly govern different correspondence
+surfaces. They do not ordinarily provide one vocabulary for asking
+whether meaning, identity, realization, observation, evidence,
+authority, history, and projection remain mutually accountable.</p>
+<p>This paper proposes such a vocabulary.</p>
+<p><strong>Constitutional synchronization</strong> is the maintained,
+governed correspondence among the representations through which a system
+acquires identity, meaning, executable form, evidence, permission,
+historical continuity, and external visibility.</p>
+<p>The word <strong>constitutional</strong> is used technically. It
+refers to the highest-order rules under which a system determines:</p>
+<ul>
+<li>what its objects are;</li>
+<li>which transitions are lawful;</li>
+<li>what evidence is required;</li>
+<li>who or what may authorize reliance;</li>
+<li>which effects may become reachable;</li>
+<li>how succession is established;</li>
+<li>and how invalid or stale states are refused, isolated, demoted, or
+repaired.</li>
+</ul>
+<p>The framework applies to software programs, applications, workflows,
+data systems, agent assemblies, scientific instruments, organizational
+protocols, and recursively self-hosting operating environments.</p>
+<p>Its central thesis is:</p>
+<blockquote>
+<p><strong>Executable specification is not achieved by making
+specification and implementation identical. It is achieved by making
+every transition between meaning and effect explicit, identity-bearing,
+witnessed, and constitutionally enforceable.</strong></p>
+</blockquote>
+<hr />
+<h2 id="the-many-bodies-of-a-system">2. The Many Bodies of a System</h2>
+<p>The traditional specification–implementation distinction is too
+narrow for modern systems.</p>
+<p>A system may possess at least the following bodies:</p>
+<ol type="1">
+<li><strong>Identity body</strong> – the exact artifacts, objects, and
+histories that constitute the system.</li>
+<li><strong>Semantic body</strong> – what the system’s concepts,
+interfaces, states, and outcomes mean.</li>
+<li><strong>Normative body</strong> – which invariants and transitions
+are permitted.</li>
+<li><strong>Realization body</strong> – the code, binaries, services,
+models, agents, and infrastructure that implement the system.</li>
+<li><strong>Operational body</strong> – what the realization actually
+does in a particular environment.</li>
+<li><strong>Evidentiary body</strong> – the tests, traces, receipts,
+proofs, observations, and replications supporting claims about the
+system.</li>
+<li><strong>Authority body</strong> – the standing, jurisdiction,
+delegation, admission, and effect permissions under which the system
+operates.</li>
+<li><strong>Historical body</strong> – the predecessor relationships,
+amendments, migrations, revocations, and prior states that explain how
+the system became current.</li>
+<li><strong>Dependency body</strong> – the actual components,
+environmental guarantees, toolchains, and mediated relations upon which
+behavior depends.</li>
+<li><strong>Projection body</strong> – what users, agents, interfaces,
+APIs, documentation, and dashboards are shown.</li>
+</ol>
+<p>These bodies are neither identical nor interchangeable.</p>
+<p>A binary hash identifies bytes. It does not identify their meaning,
+authority, or lawful role. A passing test establishes only what the test
+is capable of observing. A current specification does not prove that the
+deployed runtime realizes it. A user interface can correctly render
+stale state. A valid local component can participate in an invalid
+global configuration.</p>
+<p>A system therefore cannot be synchronized merely by checking that
+source code matches a repository or that an implementation passes tests.
+Synchronization is a multidimensional correspondence claim.</p>
+<hr />
+<h2 id="definition">3. Definition</h2>
+<h3 id="canonical-definition">3.1 Canonical definition</h3>
+<blockquote>
+<p><strong>Constitutional synchronization is the condition in which the
+identity, meaning, lawful transitions, executable realization, observed
+behavior, evidence, standing, authority, history, dependencies, and
+projections of a system remain adequately corresponding for a declared
+purpose throughout a declared disturbance envelope.</strong></p>
+</blockquote>
+<p>The term <strong>adequately corresponding</strong> is intentional.
+Synchronization does not require byte equality or representational
+identity among layers. A semantic model, a binary, an execution trace,
+and a user-interface card are different kinds of objects. They cannot be
+equal.</p>
+<p>They can, however, remain accountable to one another through explicit
+correspondence relations.</p>
+<h3 id="synchronization-is-purpose-relative">3.2 Synchronization is
+purpose-relative</h3>
+<p>A system is not synchronized in the abstract. It is synchronized for
+some purpose (p), some invariant set (K), some context (<span
+class="math inline"><em>Γ</em></span>), and some disturbance envelope
+(<span class="math inline"><em>Λ</em></span>).</p>
+<p>A component may be synchronized for:</p>
+<ul>
+<li>read-only historical inspection;</li>
+<li>experimental execution;</li>
+<li>local development;</li>
+<li>noncritical production work;</li>
+<li>safety-critical control;</li>
+<li>public evidentiary reliance.</li>
+</ul>
+<p>The evidence sufficient for one purpose may be inadequate for
+another.</p>
+<p>Thus: <span class="math display">Synchronized (<em>S</em>)</span> is
+generally incomplete. The fuller form is: <span
+class="math display">Synchronized<sub><em>Γ</em></sub>(<em>S</em>, <em>p</em>, <em>K</em>, <em>Λ</em>)</span>
+### 3.3 Synchronization is not equality</p>
+<p>Let a system state be represented as: <span
+class="math display">𝒮 = ⟨<em>I</em>, <em>M</em>, <em>T</em>, <em>R</em>, <em>O</em>, <em>E</em>, <em>A</em>, <em>H</em>, <em>D</em>, <em>P</em>, <em>Γ</em>, <em>Λ</em>⟩</span>
+where:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(I)</td>
+<td>Identity and constitutive objects</td>
+</tr>
+<tr>
+<td>(M)</td>
+<td>Meaning, model, and declared purpose</td>
+</tr>
+<tr>
+<td>(T)</td>
+<td>Lawful transition structure</td>
+</tr>
+<tr>
+<td>(R)</td>
+<td>Executable realization</td>
+</tr>
+<tr>
+<td>(O)</td>
+<td>Observed behavior</td>
+</tr>
+<tr>
+<td>(E)</td>
+<td>Evidence and witness</td>
+</tr>
+<tr>
+<td>(A)</td>
+<td>Standing, authority, admission, and jurisdiction</td>
+</tr>
+<tr>
+<td>(H)</td>
+<td>History and lineage</td>
+</tr>
+<tr>
+<td>(D)</td>
+<td>Dependencies and environmental guarantees</td>
+</tr>
+<tr>
+<td>(P)</td>
+<td>Human- and machine-facing projections</td>
+</tr>
+<tr>
+<td>(<span class="math inline"><em>Γ</em></span>)</td>
+<td>Current context</td>
+</tr>
+<tr>
+<td>(<span class="math inline"><em>Λ</em></span>)</td>
+<td>Disturbance envelope</td>
+</tr>
+</tbody>
+</table>
+<p>Constitutional synchronization does not assert: <span
+class="math display"><em>I</em> = <em>M</em> = <em>T</em> = <em>R</em> = <em>O</em> = <em>E</em> = <em>A</em> = <em>H</em> = <em>D</em> = <em>P</em></span>
+It asserts that relevant correspondence obligations among them are
+satisfied.</p>
+<p>A simplified synchronization condition is: <span
+class="math display">$$
+\begin{aligned}
+\operatorname{Synchronized}_{\Gamma}
+(\mathcal{S},p,K,\Lambda)
+\Longleftrightarrow;&amp;
+\operatorname{IdentityBound}(I,R,H)\\
+&amp;\land\operatorname{SemanticallyCorresponds}(M,R,p)\\
+&amp;\land\operatorname{TransitionConforms}(T,R,H)\\
+&amp;\land\operatorname{ObservedUnder}(O,R,\Gamma,\Lambda)\\
+&amp;\land\operatorname{EvidenceAdequate}(E,O,p)\\
+&amp;\land\operatorname{AuthorityCurrent}(A,R,p)\\
+&amp;\land\operatorname{DependenciesAccounted}(D,R,\Gamma)\\
+&amp;\land\operatorname{ProjectionFaithful}(P,I,M,O,E,A,H)\\
+&amp;\land\operatorname{ConfigurationAdmissible}(\mathcal{S},p)
+\end{aligned}
+$$</span> Each conjunct is independently falsifiable. No single result
+substitutes for all of them.</p>
+<hr />
+<h2 id="constitutional-objects-and-synchronization-edges">4.
+Constitutional Objects and Synchronization Edges</h2>
+<h3 id="synchronization-as-a-graph">4.1 Synchronization as a graph</h3>
+<p>A constitutionally modeled system may be represented as a graph:
+<span
+class="math display"><em>G</em><sub>sync</sub> = (<em>V</em><sub>sync</sub>, <em>E</em><sub>sync</sub>)</span>
+The vertices are identity-bearing constitutional objects:</p>
+<ul>
+<li>specifications;</li>
+<li>schemas;</li>
+<li>source artifacts;</li>
+<li>binaries;</li>
+<li>compiler profiles;</li>
+<li>runtime instances;</li>
+<li>observations;</li>
+<li>receipts;</li>
+<li>authority records;</li>
+<li>standing records;</li>
+<li>historical states;</li>
+<li>interface projections.</li>
+</ul>
+<p>The edges are typed correspondence obligations:</p>
+<ul>
+<li><code>IDENTIFIES</code>;</li>
+<li><code>REALIZES</code>;</li>
+<li><code>IMPLEMENTS</code>;</li>
+<li><code>OBSERVES</code>;</li>
+<li><code>SUPPORTS</code>;</li>
+<li><code>AUTHORIZES</code>;</li>
+<li><code>DEPENDS_ON</code>;</li>
+<li><code>SUPERSEDES</code>;</li>
+<li><code>PROJECTS</code>;</li>
+<li><code>TRANSLATES</code>;</li>
+<li><code>CONSTRAINS</code>;</li>
+<li><code>REVOKES</code>.</li>
+</ul>
+<p>A system becomes difficult to govern when these edges exist only
+informally.</p>
+<p>For example:</p>
+<pre class="text"><code>specification.md
+    REALIZED_BY
+runtime.bin
+
+runtime.bin
+    PRODUCED_BY
+compiler-profile-17
+
+receipt-884
+    OBSERVES
+runtime.bin
+
+admission-29
+    AUTHORIZES
+runtime.bin
+
+dashboard-card-12
+    PROJECTS
+admission-29</code></pre>
+<p>The graph makes questions of drift precise.</p>
+<p>If <code>runtime.bin</code> changes, which receipts become stale? If
+the compiler profile is revoked, which realizations lose standing? If an
+admission expires, which interface controls must become unreachable? If
+a projection still points to a superseded receipt, which users are
+receiving a false constitutional view?</p>
+<h3 id="synchronization-vectors">4.2 Synchronization vectors</h3>
+<p>Because synchronization is multidimensional, the system may maintain
+a synchronization vector: <span class="math display">$$
+\begin{aligned}
+\sigma(\mathcal{S},p) = \langle &amp;\sigma_I, \sigma_M, \sigma_T,
+\sigma_R, \sigma_O, \\
+&amp;\sigma_E, \sigma_A, \sigma_H, \sigma_D, \sigma_P, \\
+&amp;\sigma_C\rangle
+\end{aligned}
+$$</span> where (<span
+class="math inline"><em>σ</em><sub><em>C</em></sub></span>) represents
+configuration-level synchronization.</p>
+<p>Each dimension may hold a typed status rather than a Boolean:</p>
+<ul>
+<li>demonstrated;</li>
+<li>demonstrated with limits;</li>
+<li>stale;</li>
+<li>divergent;</li>
+<li>contradicted;</li>
+<li>unproven;</li>
+<li>unavailable;</li>
+<li>historical only;</li>
+<li>outside jurisdiction.</li>
+</ul>
+<p>This prevents a convenient aggregate status from concealing which
+correspondence has failed.</p>
+<h3 id="identity-is-necessary-but-insufficient">4.3 Identity is
+necessary but insufficient</h3>
+<p>Cryptographic commitment can establish that an artifact has not
+changed relative to a recorded digest.</p>
+<p>It cannot establish:</p>
+<ul>
+<li>that the artifact means what a model claims;</li>
+<li>that it was produced through the declared toolchain;</li>
+<li>that it remains authorized;</li>
+<li>that its evidence is current;</li>
+<li>that its effects are permissible;</li>
+<li>that it remains suitable for the present context.</li>
+</ul>
+<p>Thus: <span
+class="math display">DigestMatch  ⇏ ConstitutionalSynchronization </span>
+Content identity supplies a stable subject for synchronization claims.
+It does not settle those claims.</p>
+<hr />
+<h2 id="constitutional-synchronization-and-executable-specification">5.
+Constitutional Synchronization and Executable Specification</h2>
+<h3 id="the-traditional-gulf">5.1 The traditional gulf</h3>
+<p>The conventional specification–implementation gap is often described
+as the distance between what a system is intended to do and what its
+code actually does.</p>
+<p>Formal methods narrow this distance by representing intended behavior
+mathematically and proving or checking relationships between abstract
+models and implementations. Hoare logic, temporal logic, refinement,
+contracts, interface theories, and executable modeling environments each
+provide important machinery for portions of that problem.</p>
+<p>Constitutional synchronization expands the problem.</p>
+<p>A system may correctly implement a functional specification while
+remaining constitutionally desynchronized because:</p>
+<ul>
+<li>the implementation is not the admitted implementation;</li>
+<li>its authority has expired;</li>
+<li>its dependencies differ from those analyzed;</li>
+<li>its observation record is stale;</li>
+<li>its public interface overstates its standing;</li>
+<li>its semantic context has changed;</li>
+<li>its transition was unauthorized;</li>
+<li>its configuration produces higher-order effects absent from the
+local specification.</li>
+</ul>
+<h3 id="governed-closure-rather-than-collapse">5.2 Governed closure
+rather than collapse</h3>
+<p>Specification and implementation should remain distinct.</p>
+<p>If they became indistinguishable, correspondence could no longer be
+tested.</p>
+<p>The desired relationship is: <span
+class="math display">Specification ≠ Implementation</span> but: <span
+class="math display">$$
+\text{Specification}
+\xrightarrow[
+\text{witnessed}
+]{
+\text{authorized realization}
+}
+\text{Implementation}
+$$</span> The traditional gulf is not eliminated by merging the shores.
+It is closed by a governed bridge.</p>
+<p>That bridge contains:</p>
+<ul>
+<li>exact identities;</li>
+<li>declared semantics;</li>
+<li>lawful transition records;</li>
+<li>realization commitments;</li>
+<li>execution witnesses;</li>
+<li>evidence;</li>
+<li>standing;</li>
+<li>authority;</li>
+<li>rollback;</li>
+<li>historical succession.</li>
+</ul>
+<h3 id="reachability-gives-specification-force">5.3 Reachability gives
+specification force</h3>
+<p>A specification becomes executable in the constitutional sense when
+it governs which realizations may become operationally reachable.</p>
+<p>The critical invariant is: <span class="math display">$$
+\begin{aligned}
+&amp; \\
+&amp;\ne g\operatorname{Admitted}(R,p) \\
+&amp;\Rightarrow  \\
+&amp;\ne g\operatorname{ReachableAsConstitutionalBehavior}(R,p)
+\end{aligned}
+$$</span> Candidate code may exist. It may compile. It may run inside a
+sandbox. It may produce useful results.</p>
+<p>It does not thereby become the active system.</p>
+<p>This enforced asymmetry between candidate bytes and constitutional
+reality gives specification practical force. The model is not merely
+descriptive documentation. It constrains admission and reachability.</p>
+<h3 id="semantic-gravity">5.4 Semantic gravity</h3>
+<p>This paper calls the resulting effect <strong>semantic
+gravity</strong>.</p>
+<p>Semantic gravity is the architectural tendency for artifacts,
+transitions, and effects to remain attached to the identities, meanings,
+evidence, and authority that justify them.</p>
+<p>It arises from the combined operation of:</p>
+<ul>
+<li>content-addressed identity;</li>
+<li>fail-closed intake;</li>
+<li>explicit transition models;</li>
+<li>realization correspondence;</li>
+<li>witnessed execution;</li>
+<li>standing and authority gates;</li>
+<li>historical lineage;</li>
+<li>projection discipline.</li>
+</ul>
+<p>Without semantic gravity, artifacts drift toward operational use
+because they are available, convenient, or apparently functional.</p>
+<p>With semantic gravity, operational adoption requires lawful
+placement.</p>
+<hr />
+<h2 id="constitutional-desynchronization">6. Constitutional
+Desynchronization</h2>
+<h3 id="desynchronization-is-a-family-of-states">6.1 Desynchronization
+is a family of states</h3>
+<p>The opposite of synchronization is not one undifferentiated
+failure.</p>
+<p><strong>Constitutional desynchronization</strong> is any condition in
+which one or more required correspondence relations are divergent,
+stale, unproven, contradictory, or outside their declared context.</p>
+<p>A program may continue to execute while desynchronized. Indeed, some
+of the most dangerous desynchronizations preserve apparent
+functionality.</p>
+<h3 id="identity-desynchronization">6.2 Identity desynchronization</h3>
+<p>Identity desynchronization occurs when the system cannot establish
+that the operational artifact is the artifact to which its evidence,
+standing, or authority applies.</p>
+<p>Examples include:</p>
+<ul>
+<li>path substitution;</li>
+<li>mutable dependencies;</li>
+<li>stale generated files;</li>
+<li>an installed binary differing from the admitted binary;</li>
+<li>a receipt pointing to a predecessor;</li>
+<li>a package name reused for different bytes.</li>
+</ul>
+<p>Typical disposition:</p>
+<p><code>IDENTITY_DIVERGENCE</code></p>
+<p>Identity divergence should ordinarily fail closed because every
+downstream claim has lost its stable subject.</p>
+<h3 id="semantic-desynchronization">6.3 Semantic desynchronization</h3>
+<p>Semantic desynchronization occurs when labels, interfaces, or state
+names remain stable while their meaning changes.</p>
+<p>Examples include:</p>
+<ul>
+<li><code>active</code> changing from “installed and admitted” to
+“currently executing”;</li>
+<li>a timestamp changing from event time to ingestion time;</li>
+<li><code>authorized</code> being used for both delegated authority and
+mere technical reachability;</li>
+<li>a field retaining its name after changing units or population
+scope;</li>
+<li>the same concept being merged across incompatible disciplinary
+regimes.</li>
+</ul>
+<p>Typical disposition:</p>
+<p><code>SEMANTIC_DIVERGENCE</code></p>
+<p>Semantic drift is especially dangerous because syntactic composition
+may continue to succeed.</p>
+<h3 id="specificationrealization-desynchronization">6.4
+Specification–realization desynchronization</h3>
+<p>This occurs when the executable realization no longer corresponds to
+the admitted model or transition law.</p>
+<p>Examples include:</p>
+<ul>
+<li>an API accepting inputs beyond its contract;</li>
+<li>a supposedly atomic operation committing partial effects;</li>
+<li>failure semantics changing during refactoring;</li>
+<li>an optimization removing an invariant-preserving check;</li>
+<li>runtime behavior added without model amendment.</li>
+</ul>
+<p>Two directional states are useful:</p>
+<ul>
+<li><code>SPECIFICATION_AHEAD_OF_REALIZATION</code>;</li>
+<li><code>REALIZATION_AHEAD_OF_SPECIFICATION</code>.</li>
+</ul>
+<p>The second may describe a useful implementation innovation, but
+usefulness does not grant authority.</p>
+<h3 id="realizationobservation-desynchronization">6.5
+Realization–observation desynchronization</h3>
+<p>This occurs when the observation system does not adequately capture
+the behavior it claims to witness.</p>
+<p>Examples include:</p>
+<ul>
+<li>monitoring the wrong process;</li>
+<li>a success receipt emitted before commit;</li>
+<li>effects occurring outside the instrumented boundary;</li>
+<li>logs omitting rejected or rolled-back operations;</li>
+<li>a test observing a mock while production uses another pathway.</li>
+</ul>
+<p>Typical dispositions include:</p>
+<ul>
+<li><code>WITNESS_INSUFFICIENT</code>;</li>
+<li><code>OBSERVATION_DIVERGENCE</code>.</li>
+</ul>
+<p>Runtime verification provides important foundations for observing
+executions against declared properties, but constitutional
+synchronization additionally binds observations to identity, evidence,
+standing, authority, and projection.</p>
+<h3 id="evidence-desynchronization">6.6 Evidence desynchronization</h3>
+<p>Evidence desynchronization occurs when a claim continues to be
+presented as standing-bearing after its evidence has become stale,
+inapplicable, derivative, contradicted, or invalidated.</p>
+<p>Examples include:</p>
+<ul>
+<li>tests applying only to an older revision;</li>
+<li>an external source being corrected or withdrawn;</li>
+<li>apparently independent sources being traced to one origin;</li>
+<li>a disturbance envelope expanding beyond what was tested;</li>
+<li>a proof applying to a model no longer realized.</li>
+</ul>
+<p>Typical states include:</p>
+<ul>
+<li><code>EVIDENCE_STALE</code>;</li>
+<li><code>STANDING_EXCEEDS_EVIDENCE</code>;</li>
+<li><code>SYNCHRONIZATION_UNPROVEN</code>.</li>
+</ul>
+<p>Unproven synchronization is not the same as demonstrated divergence.
+The distinction is epistemically necessary.</p>
+<h3 id="authority-desynchronization">6.7 Authority
+desynchronization</h3>
+<p>Authority desynchronization occurs when current executable
+reachability and current authority no longer agree.</p>
+<p>Examples include:</p>
+<ul>
+<li>revoked code remaining active;</li>
+<li>expired delegation continuing to authorize effects;</li>
+<li>local experimental admission being treated as global production
+standing;</li>
+<li>a composition acquiring effective authority absent from its
+constituent grants;</li>
+<li>a user interface permitting an operation no longer admitted.</li>
+</ul>
+<p>Typical disposition:</p>
+<p><code>AUTHORITY_DIVERGENCE</code></p>
+<p>An artifact may remain technically capable and evidentially supported
+while lacking current permission.</p>
+<h3 id="temporal-desynchronization">6.8 Temporal desynchronization</h3>
+<p>Temporal desynchronization occurs when objects from different
+historical states are treated as contemporaneous.</p>
+<p>Examples include:</p>
+<ul>
+<li>current code with an obsolete schema;</li>
+<li>a revised dataset interpreted through the original publication
+notes;</li>
+<li>a new authority state paired with a prior dependency graph;</li>
+<li>current UI labels backed by historical court results;</li>
+<li>a package update combined with a predecessor’s admission
+receipt.</li>
+</ul>
+<p>Typical dispositions include:</p>
+<ul>
+<li><code>TEMPORAL_MISALIGNMENT</code>;</li>
+<li><code>HISTORICAL_ONLY</code>;</li>
+<li><code>RESYNCHRONIZATION_REQUIRED</code>.</li>
+</ul>
+<h3 id="dependency-desynchronization">6.9 Dependency
+desynchronization</h3>
+<p>Dependency desynchronization occurs when declared dependency topology
+differs from actual dependency topology.</p>
+<p>Examples include:</p>
+<ul>
+<li>hidden runtime imports;</li>
+<li>undocumented environmental guarantees;</li>
+<li>a new network dependency;</li>
+<li>a supposedly optional service becoming operationally mandatory;</li>
+<li>a compiler or interpreter identity changing beneath a stable build
+script;</li>
+<li>multiple independent witnesses relying upon one hidden common
+implementation.</li>
+</ul>
+<p>Typical disposition:</p>
+<p><code>DEPENDENCY_DRIFT</code></p>
+<p>Parnas’s treatment of modular decomposition and later work on
+architectural mismatch both show why hidden design decisions and
+incompatible assumptions undermine apparently composable systems.
+Constitutional synchronization makes those assumptions identity-bearing
+synchronization obligations.</p>
+<h3 id="projection-desynchronization">6.10 Projection
+desynchronization</h3>
+<p>Projection desynchronization occurs when a user interface, API,
+report, documentation surface, or agent context presents a state
+different from current constitutional reality.</p>
+<p>Examples include:</p>
+<ul>
+<li>showing <code>VERIFIED</code> when the object is only a
+candidate;</li>
+<li>displaying a historical result as current;</li>
+<li>leaving an action enabled after authority revocation;</li>
+<li>documenting an unadmitted capability;</li>
+<li>suppressing residuals that materially limit a claim;</li>
+<li>representing an unavailable court as passing.</li>
+</ul>
+<p>Typical disposition:</p>
+<p><code>PROJECTION_STALE</code></p>
+<p>Projection drift is not merely a cosmetic documentation defect. It
+alters the information upon which users and agents make decisions.</p>
+<h3 id="configuration-desynchronization">6.11 Configuration
+desynchronization</h3>
+<p>Configuration desynchronization occurs when components are locally
+synchronized but their composition is not.</p>
+<p>Examples include:</p>
+<ul>
+<li>circular dependency;</li>
+<li>semantic contradiction across interfaces;</li>
+<li>authority amplification;</li>
+<li>correlated failure;</li>
+<li>unbounded resource demand;</li>
+<li>information leakage produced only by combination;</li>
+<li>two current components depending upon incompatible historical
+regimes.</li>
+</ul>
+<p>This yields the non-implication: <span
+class="math display">(∀<em>C</em><sub><em>i</em></sub> ∈ <em>Σ</em> : Synchronized (<em>C</em><sub><em>i</em></sub>)) ⇏ Synchronized (<em>Σ</em>)</span>
+Constraint-Bearing Composability separately establishes why locally
+valid and compatible components may still form a globally inadmissible
+configuration. Constitutional synchronization extends that principle by
+asking whether the complete configuration’s meanings, histories,
+evidence, authority, and projections remain mutually aligned.</p>
+<hr />
+<h2 id="synchronization-state-vocabulary">7. Synchronization State
+Vocabulary</h2>
+<p>A practical system should not compress synchronization into
+<code>true</code> or <code>false</code>.</p>
+<p>A useful state vocabulary includes:</p>
+<ul>
+<li><p><strong>State:</strong> <code>SYNCHRONIZED</code><br />
+<strong>Meaning:</strong> All required correspondence obligations are
+currently demonstrated</p></li>
+<li><p><strong>State:</strong>
+<code>SYNCHRONIZED_WITH_DECLARED_LIMITS</code><br />
+<strong>Meaning:</strong> Correspondence holds only within explicit
+constraints</p></li>
+<li><p><strong>State:</strong>
+<code>SYNCHRONIZATION_UNPROVEN</code><br />
+<strong>Meaning:</strong> No divergence is established, but evidence is
+inadequate</p></li>
+<li><p><strong>State:</strong> <code>WITNESS_STALE</code><br />
+<strong>Meaning:</strong> Current realization lacks current
+observation</p></li>
+<li><p><strong>State:</strong>
+<code>SPECIFICATION_AHEAD_OF_REALIZATION</code><br />
+<strong>Meaning:</strong> The admitted model has not yet been fully
+realized</p></li>
+<li><p><strong>State:</strong>
+<code>REALIZATION_AHEAD_OF_SPECIFICATION</code><br />
+<strong>Meaning:</strong> Executable behavior exists without admitted
+model coverage</p></li>
+<li><p><strong>State:</strong> <code>IDENTITY_DIVERGENCE</code><br />
+<strong>Meaning:</strong> Operational identity differs from committed
+identity</p></li>
+<li><p><strong>State:</strong> <code>SEMANTIC_DIVERGENCE</code><br />
+<strong>Meaning:</strong> Meaning differs across supposedly shared
+representations</p></li>
+<li><p><strong>State:</strong> <code>AUTHORITY_DIVERGENCE</code><br />
+<strong>Meaning:</strong> Reachability and authority disagree</p></li>
+<li><p><strong>State:</strong> <code>DEPENDENCY_DRIFT</code><br />
+<strong>Meaning:</strong> Actual dependencies differ from declared
+dependencies</p></li>
+<li><p><strong>State:</strong> <code>PROJECTION_STALE</code><br />
+<strong>Meaning:</strong> External representation differs from
+constitutional state</p></li>
+<li><p><strong>State:</strong> <code>TEMPORAL_MISALIGNMENT</code><br />
+<strong>Meaning:</strong> Objects from incompatible historical states
+are combined</p></li>
+<li><p><strong>State:</strong>
+<code>CONFIGURATION_SPLIT_BRAIN</code><br />
+<strong>Meaning:</strong> Locally current components form a globally
+incoherent assembly</p></li>
+<li><p><strong>State:</strong> <code>HISTORICAL_ONLY</code><br />
+<strong>Meaning:</strong> State remains valid only as historical
+evidence</p></li>
+<li><p><strong>State:</strong>
+<code>QUARANTINED_PENDING_RESYNCHRONIZATION</code><br />
+<strong>Meaning:</strong> Operational reachability is restricted during
+repair</p></li>
+<li><p><strong>State:</strong>
+<code>UNRESOLVABLE_UNDER_CURRENT_MODEL</code><br />
+<strong>Meaning:</strong> Existing ontology cannot express or repair the
+divergence</p></li>
+</ul>
+<p>These states imply different remedies.</p>
+<p><code>PROJECTION_STALE</code> may require projection regeneration.
+<code>WITNESS_STALE</code> may require renewed observation.
+<code>IDENTITY_DIVERGENCE</code> may require immediate isolation.
+<code>UNRESOLVABLE_UNDER_CURRENT_MODEL</code> requires modeling work
+rather than an implementation patch.</p>
+<hr />
+<h2 id="constitutional-synchronization-courts">8. Constitutional
+Synchronization Courts</h2>
+<h3 id="courts-as-correspondence-mechanisms">8.1 Courts as
+correspondence mechanisms</h3>
+<p>A constitutional court is an identity-bearing mechanism that
+evaluates a bounded proposition under declared evidence, context, and
+authority.</p>
+<p>A synchronization court does not ask merely whether “the system
+works.” It asks which correspondence relation has been established.</p>
+<h3 id="court-families">8.2 Court families</h3>
+<h4 id="identity-court">Identity Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Is the object being evaluated the exact object to which the claim
+applies?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>content hashes;</li>
+<li>package commitments;</li>
+<li>compiler and toolchain identities;</li>
+<li>manifest membership;</li>
+<li>historical lineage.</li>
+</ul>
+<h4 id="semantic-court">Semantic Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Do the participating models, labels, interfaces, and data objects
+carry compatible meanings for the claimed use?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>typed semantic models;</li>
+<li>units;</li>
+<li>taxonomies;</li>
+<li>mapping contracts;</li>
+<li>translation-loss records;</li>
+<li>contextual regimes.</li>
+</ul>
+<h4 id="transition-court">Transition Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Was the movement from predecessor to successor permitted by the
+applicable transition law?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>predecessor identity;</li>
+<li>proposal;</li>
+<li>authority;</li>
+<li>transition contract;</li>
+<li>mutation envelope;</li>
+<li>successor commitment.</li>
+</ul>
+<h4 id="realization-court">Realization Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Does the executable artifact realize the admitted model and operation
+contract?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>source and binary identities;</li>
+<li>compiler profile;</li>
+<li>invocation;</li>
+<li>expected postconditions;</li>
+<li>actual outputs;</li>
+<li>bounded execution trace.</li>
+</ul>
+<h4 id="witness-court">Witness Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Did the observation mechanism adequately observe the relevant
+realization and effects?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>trace coverage;</li>
+<li>process identity;</li>
+<li>environment;</li>
+<li>timing;</li>
+<li>instrumentation boundaries;</li>
+<li>negative-control cases.</li>
+</ul>
+<h4 id="evidence-and-standing-court">Evidence and Standing Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Does the available evidence justify relying upon the object as a
+bounded component for the declared purpose?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>independent replication;</li>
+<li>mutation results;</li>
+<li>residual assumptions;</li>
+<li>contradiction status;</li>
+<li>disturbance-envelope coverage.</li>
+</ul>
+<h4 id="authority-court">Authority Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Is the claimed operation currently admitted within the correct
+jurisdiction and effect class?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>delegation lineage;</li>
+<li>current authority state;</li>
+<li>revocation status;</li>
+<li>jurisdiction;</li>
+<li>purpose;</li>
+<li>effect authorization.</li>
+</ul>
+<h4 id="projection-court">Projection Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Does the human- or machine-facing projection faithfully represent
+current constitutional state?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>source state identity;</li>
+<li>projection policy;</li>
+<li>displayed standing;</li>
+<li>current court result;</li>
+<li>omission rules;</li>
+<li>stale-state behavior.</li>
+</ul>
+<h4 id="configuration-court">Configuration Court</h4>
+<p>Question:</p>
+<blockquote>
+<p>Does the assembled system remain synchronized and admissible at
+configuration scale?</p>
+</blockquote>
+<p>Evidence may include:</p>
+<ul>
+<li>dependency graph;</li>
+<li>semantic graph;</li>
+<li>aggregate authority;</li>
+<li>information-flow paths;</li>
+<li>resource ceilings;</li>
+<li>correlated witness dependencies;</li>
+<li>historical compatibility.</li>
+</ul>
+<h3 id="a-court-census">8.3 A court census</h3>
+<p>A constitutional system should maintain a census describing each
+court’s meaning rather than exposing raw test filenames.</p>
+<p>A court record should include:</p>
+<ul>
+<li>court identity;</li>
+<li>proposition established;</li>
+<li>explicit nonclaims;</li>
+<li>jurisdiction;</li>
+<li>affected subsystem;</li>
+<li>applicable phase;</li>
+<li>current standing;</li>
+<li>latest result;</li>
+<li>current synchronization status;</li>
+<li>evidence requirements;</li>
+<li>dependency courts;</li>
+<li>supported toolchains and environments;</li>
+<li>body-access requirements;</li>
+<li>historical predecessors;</li>
+<li>supersession status;</li>
+<li>links to receipts, source, failures, and related courts.</li>
+</ul>
+<p>This provides a stable semantic layer for user interfaces, agents,
+schedulers, and audit tools.</p>
+<h3 id="body-dependent-and-digest-sufficient-courts">8.4 Body-dependent
+and digest-sufficient courts</h3>
+<p>Some courts can operate from commitments and compact state.</p>
+<p>Others require artifact bodies.</p>
+<p>A <strong>digest-sufficient</strong> court may establish:</p>
+<ul>
+<li>exact identity;</li>
+<li>manifest membership;</li>
+<li>recorded standing;</li>
+<li>declared dependency;</li>
+<li>historical linkage.</li>
+</ul>
+<p>A <strong>body-dependent</strong> court may require:</p>
+<ul>
+<li>source traversal;</li>
+<li>binary inspection;</li>
+<li>runtime trace;</li>
+<li>evidence contents;</li>
+<li>schema interpretation;</li>
+<li>semantic comparison.</li>
+</ul>
+<p>The distinction prevents a digest from being treated as proof of
+properties that only body inspection can establish.</p>
+<hr />
+<h2 id="resynchronization">9. Resynchronization</h2>
+<h3 id="resynchronization-is-not-ordinary-repair">9.1 Resynchronization
+is not ordinary repair</h3>
+<p>A patch changes an artifact.</p>
+<p>A resynchronization changes the correspondence graph so that
+identity, meaning, realization, evidence, authority, history, and
+projection become mutually accountable again.</p>
+<p>This may require changing:</p>
+<ul>
+<li>code;</li>
+<li>specification;</li>
+<li>standing;</li>
+<li>authority;</li>
+<li>dependencies;</li>
+<li>projections;</li>
+<li>or the ontology under which the discrepancy is expressed.</li>
+</ul>
+<h3 id="resynchronization-sequence">9.2 Resynchronization sequence</h3>
+<p>A governed resynchronization process may proceed as follows:</p>
+<ol type="1">
+<li><p><strong>Detect divergence.</strong> A court, witness, user, or
+agent identifies a failed or stale synchronization edge.</p></li>
+<li><p><strong>Bind the affected state.</strong> The relevant
+predecessor identities, evidence, authority, and projections are
+frozen.</p></li>
+<li><p><strong>Classify the divergence.</strong> The system
+distinguishes identity, semantic, realization, evidence, authority,
+temporal, dependency, projection, and configuration defects.</p></li>
+<li><p><strong>Constrain reachability.</strong> Unsafe or misleading
+behavior is quarantined, narrowed, or marked historical.</p></li>
+<li><p><strong>Generate exigence.</strong> The divergence becomes a
+typed attention object with custody and dependency.</p></li>
+<li><p><strong>Propose a target synchronized state.</strong> The
+proposal declares which representations will change and which invariants
+must remain.</p></li>
+<li><p><strong>Realize the successor.</strong> Candidate code, models,
+evidence, or projections are produced below standing.</p></li>
+<li><p><strong>Run synchronization courts.</strong> Each affected
+correspondence is re-evaluated.</p></li>
+<li><p><strong>Evaluate configuration consequences.</strong> Local
+repair is not accepted if the complete assembly becomes
+inadmissible.</p></li>
+<li><p><strong>Admit or refuse the successor.</strong> The transition
+receives standing and authority only if required courts pass.</p></li>
+<li><p><strong>Regenerate projections.</strong> Human and machine views
+are derived from the admitted successor state.</p></li>
+<li><p><strong>Preserve the divergence historically.</strong> The prior
+state and repair remain inspectable.</p></li>
+</ol>
+<h3 id="resynchronization-can-change-the-specification">9.3
+Resynchronization can change the specification</h3>
+<p>The implementation is not always the defective side.</p>
+<p>An implementation may reveal:</p>
+<ul>
+<li>an omitted requirement;</li>
+<li>an unmodeled environmental constraint;</li>
+<li>a useful capability absent from the specification;</li>
+<li>an invariant that cannot be realized;</li>
+<li>an ontology incapable of expressing the actual system.</li>
+</ul>
+<p>The lawful response may therefore be to amend the model.</p>
+<p>However: <span
+class="math display">UsefulUnmodeledBehavior  ⇏ AuthorizedSpecificationChange </span>
+Model revision remains a separate constitutional transition.</p>
+<hr />
+<h2 id="projection-and-human-interfaces">10. Projection and Human
+Interfaces</h2>
+<h3 id="projection-is-part-of-the-system">10.1 Projection is part of the
+system</h3>
+<p>A user interface is often treated as an external presentation
+layer.</p>
+<p>Constitutional synchronization treats it as an operational projection
+of system meaning.</p>
+<p>A projection may affect:</p>
+<ul>
+<li>user expectations;</li>
+<li>available actions;</li>
+<li>perceived standing;</li>
+<li>trust;</li>
+<li>authority;</li>
+<li>attention;</li>
+<li>interpretation of failure.</li>
+</ul>
+<p>It therefore participates in constitutional behavior.</p>
+<h3 id="governed-projection">10.2 Governed projection</h3>
+<p>A projection should be derived from: <span
+class="math display"><em>P</em> = Project (<em>I</em>, <em>M</em>, <em>O</em>, <em>E</em>, <em>A</em>, <em>H</em>, <em>Π</em>)</span>
+where (<span class="math inline"><em>Π</em></span>) is an explicit
+projection policy.</p>
+<p>The projection policy may determine:</p>
+<ul>
+<li>which information is shown;</li>
+<li>which details are summarized;</li>
+<li>which historical states are available;</li>
+<li>how uncertainty is represented;</li>
+<li>what actions are enabled;</li>
+<li>how stale or divergent states are displayed.</li>
+</ul>
+<p>The UI may simplify. It may not silently change standing or
+meaning.</p>
+<h3 id="court-census-projection">10.3 Court census projection</h3>
+<p>A constitutionally synchronized court census would allow a UI to
+display:</p>
+<ul>
+<li>what each court proves;</li>
+<li>what it cannot prove;</li>
+<li>its latest result;</li>
+<li>whether that result is current;</li>
+<li>its dependencies;</li>
+<li>evidence and toolchain requirements;</li>
+<li>body-dependent or digest-sufficient status;</li>
+<li>historical and superseded results;</li>
+<li>affected subsystem and certification band;</li>
+<li>related failures and receipts.</li>
+</ul>
+<p>The UI becomes a governed view of court meaning rather than an
+independent metadata system.</p>
+<h3 id="human-adequacy-remains-externally-witnessed">10.4 Human adequacy
+remains externally witnessed</h3>
+<p>Mechanical synchronization can establish that a UI faithfully
+projects constitutional state.</p>
+<p>It cannot alone establish that the projection is:</p>
+<ul>
+<li>understandable;</li>
+<li>appropriately salient;</li>
+<li>cognitively manageable;</li>
+<li>correctly named for its audience;</li>
+<li>adequate for human decision-making.</li>
+</ul>
+<p>Thus: <span
+class="math display">ProjectionFaithful  ⇏ HumanlyAdequate </span>
+Human-interface adequacy requires human evidence.</p>
+<hr />
+<h2 id="local-and-configuration-level-synchronization">11. Local and
+Configuration-Level Synchronization</h2>
+<h3 id="the-local-fallacy">11.1 The local fallacy</h3>
+<p>A system may contain components that are each individually:</p>
+<ul>
+<li>correctly identified;</li>
+<li>semantically coherent;</li>
+<li>well tested;</li>
+<li>currently admitted;</li>
+<li>faithfully projected.</li>
+</ul>
+<p>Their combination may still be desynchronized.</p>
+<p>Examples include:</p>
+<ul>
+<li>two services using different definitions of the same state;</li>
+<li>two individually authorized capabilities producing unauthorized
+aggregate power;</li>
+<li>a current component depending on a historically incompatible
+schema;</li>
+<li>two independent-looking witnesses sharing one hidden
+implementation;</li>
+<li>individually safe data releases enabling prohibited inference when
+joined.</li>
+</ul>
+<h3 id="configuration-synchronization">11.2 Configuration
+synchronization</h3>
+<p>A configuration is constitutionally synchronized when:</p>
+<ul>
+<li>its components remain individually synchronized;</li>
+<li>its relations preserve declared semantics;</li>
+<li>aggregate authority remains justified;</li>
+<li>dependency topology is current;</li>
+<li>shared context is consistent;</li>
+<li>configuration-level invariants hold;</li>
+<li>projections do not conceal higher-order consequences.</li>
+</ul>
+<p>This requires a separate configuration court.</p>
+<p>Pairwise correspondence is insufficient because some properties arise
+only from:</p>
+<ul>
+<li>cycles;</li>
+<li>paths;</li>
+<li>accumulation;</li>
+<li>scale;</li>
+<li>shared dependency;</li>
+<li>mediation;</li>
+<li>historical interaction.</li>
+</ul>
+<h3 id="synchronization-and-composability">11.3 Synchronization and
+composability</h3>
+<p>Constraint-Bearing Composability asks what carries the invariants by
+which a composition remains valid and admissible. Constitutional
+synchronization asks whether the representations and judgments
+supporting that composition remain current and mutually accountable.</p>
+<p>The frameworks are complementary.</p>
+<p>A composition may have adequate constraint carriage at one time and
+later become desynchronized because:</p>
+<ul>
+<li>its evidence becomes stale;</li>
+<li>a mediator changes;</li>
+<li>authority expires;</li>
+<li>a projection is not updated;</li>
+<li>a dependency is replaced;</li>
+<li>a semantic regime shifts.</li>
+</ul>
+<p>Likewise, synchronized components may form a configuration whose
+constraint carriage is inadequate.</p>
+<hr />
+<h2 id="recursive-self-hosting">12. Recursive Self-Hosting</h2>
+<h3 id="synchronizing-the-synchronizer">12.1 Synchronizing the
+synchronizer</h3>
+<p>The most consequential application arises when a constitutional
+system represents and modifies itself.</p>
+<p>A self-hosting system must synchronize:</p>
+<ul>
+<li>the specification of its admission machinery;</li>
+<li>the implementation of that machinery;</li>
+<li>the witness observing it;</li>
+<li>the authority permitting change;</li>
+<li>the historical transition;</li>
+<li>the projections used by operators.</li>
+</ul>
+<p>The danger is self-ratification.</p>
+<h3 id="role-separation">12.2 Role separation</h3>
+<p>A sound recursive process preserves: <span class="math display">$$
+\begin{aligned}
+&amp;\text{Proposal} \\
+&amp;\neq \text{Investigation} \\
+&amp;\neq \text{Witness} \\
+&amp;\neq \text{Admission} \\
+&amp;\neq \text{Effect}
+\end{aligned}
+$$</span> These distinctions may be implemented through different
+humans, models, programs, or institutions.</p>
+<p>Where one language model performs several roles, separation can still
+be meaningful if each invocation is governed by:</p>
+<ul>
+<li>role-specific context;</li>
+<li>explicit information exposure;</li>
+<li>blinded inputs where appropriate;</li>
+<li>distinct output contracts;</li>
+<li>restricted authority;</li>
+<li>immutable task commitments;</li>
+<li>independently checkable receipts.</li>
+</ul>
+<p>The relevant property is not merely agent identity. It is
+informational and constitutional independence.</p>
+<h3 id="bootstrap-sequence">12.3 Bootstrap sequence</h3>
+<p>A constitutional bootstrap may proceed through:</p>
+<ol type="1">
+<li>externally hosted seed;</li>
+<li>self-representation;</li>
+<li>self-observation;</li>
+<li>decomposition into bounded constitutional components;</li>
+<li>candidate native realizations;</li>
+<li>correspondence testing against the incumbent;</li>
+<li>shadow operation;</li>
+<li>bounded substitution;</li>
+<li>constitutional cutover;</li>
+<li>historical preservation of the seed.</li>
+</ol>
+<p>The fixed point is reached when: <span
+class="math display">CGSOS  * <em>n</em> → CGSOS  * <em>n</em> + 1</span>
+is itself a constitutionally synchronized transition.</p>
+<h3 id="independent-anchors">12.4 Independent anchors</h3>
+<p>The system cannot prove its deepest courts solely by invoking those
+same courts.</p>
+<p>Bootstrapping therefore requires partially independent anchors:</p>
+<ul>
+<li>a small seed verifier;</li>
+<li>alternate realizations;</li>
+<li>historical replay;</li>
+<li>negative mutation tests;</li>
+<li>frozen external commitments;</li>
+<li>detached witnesses;</li>
+<li>human or physical outcomes where appropriate.</li>
+</ul>
+<p>The closer a component lies to identity, authority, admission,
+witness, or effect reachability, the stronger the required
+independence.</p>
+<hr />
+<h2 id="constitutionally-bounded-self-improvement">13. Constitutionally
+Bounded Self-Improvement</h2>
+<h3 id="from-synchronization-failure-to-exigence">13.1 From
+synchronization failure to exigence</h3>
+<p>A desynchronization can become a structured work object: <span
+class="math display">$$
+\begin{aligned}
+&amp;\text{divergence} \\
+&amp;\rightarrow \text{exigence} \\
+&amp;\rightarrow \text{investigation} \\
+&amp;\rightarrow \text{modeled correction} \\
+&amp;\rightarrow \text{realization} \\
+&amp;\rightarrow \text{witness} \\
+&amp;\rightarrow \text{admission}
+\end{aligned}
+$$</span> This creates a lawful self-improvement loop.</p>
+<h3 id="positive-feedback">13.2 Positive feedback</h3>
+<p>An admitted improvement may improve the machinery that produces later
+improvements:</p>
+<ul>
+<li>better observation yields better diagnosis;</li>
+<li>better diagnosis yields better attention allocation;</li>
+<li>better models yield better realizations;</li>
+<li>better realizations reduce witness ambiguity;</li>
+<li>better evidence improves admission;</li>
+<li>better projections improve human governance.</li>
+</ul>
+<p>This is genuine recursive acceleration.</p>
+<h3 id="why-optimization-is-incomplete">13.3 Why “optimization” is
+incomplete</h3>
+<p>A constitutionally synchronized system should not maximize one scalar
+objective at the expense of standing, evidence, authority,
+reversibility, or human purpose.</p>
+<p>It performs <strong>governed evolution</strong>.</p>
+<p>A faster implementation that conceals residuals or weakens refusal
+may be constitutionally worse.</p>
+<h3 id="three-recursive-loops">13.4 Three recursive loops</h3>
+<p>A useful distinction is:</p>
+<h4 id="operational-loop">Operational loop</h4>
+<p>Changes scheduling, caching, resource allocation, retry policies, and
+other runtime behavior without changing admitted meaning.</p>
+<h4 id="engineering-loop">Engineering loop</h4>
+<p>Changes implementations while preserving admitted models and
+constitutional invariants.</p>
+<h4 id="constitutional-loop">Constitutional loop</h4>
+<p>Changes models, capability boundaries, schemas, standing rules,
+authority structures, or amendment procedures.</p>
+<p>Automation may increase from the constitutional loop toward the
+operational loop. Constitutional change should remain the most
+demanding.</p>
+<hr />
+<h2 id="relationship-to-prior-work">14. Relationship to Prior Work</h2>
+<p>Constitutional synchronization does not replace formal specification,
+contracts, interface theories, runtime verification, models-at-runtime,
+modularity, or system-safety engineering.</p>
+<p>It builds upon their central insights while broadening the
+correspondence problem.</p>
+<p>Hoare’s axiomatic basis relates program execution to logical
+assertions. Design by Contract makes assumptions and guarantees
+explicit. TLA+ and related temporal methods specify system behavior and
+refinement. Interface automata and contract-based design formalize
+compatibility and composition.</p>
+<p>Modularity and architectural-mismatch research show why hidden design
+decisions and incompatible assumptions undermine composition. Runtime
+verification examines executions against declared properties.
+Models-at-runtime research maintains causally connected models of
+operational systems. System-theoretic safety emphasizes control,
+feedback, and emergent hazards in complex sociotechnical systems.</p>
+<p>The distinctive contribution of constitutional synchronization is the
+treatment of all the following as one governed correspondence
+ecology:</p>
+<ul>
+<li>identity;</li>
+<li>semantics;</li>
+<li>transition law;</li>
+<li>realization;</li>
+<li>observation;</li>
+<li>evidence;</li>
+<li>standing;</li>
+<li>authority;</li>
+<li>historical continuity;</li>
+<li>dependency;</li>
+<li>projection;</li>
+<li>configuration-level admissibility.</li>
+</ul>
+<p>It also treats external reachability, revocation, public projection,
+and resynchronization as first-class consequences of correspondence
+judgments.</p>
+<hr />
+<h2 id="propositions">15. Propositions</h2>
+<p>The framework advances the following propositions.</p>
+<h3
+id="proposition-1-execution-success-does-not-imply-constitutional-synchronization">Proposition
+1: Execution success does not imply constitutional synchronization</h3>
+<p><span
+class="math display">ExecutionSuccess (<em>R</em>) ⇏ Synchronized (<em>R</em>)</span>
+A process may complete while running unadmitted bytes, violating
+semantics, exercising revoked authority, or producing misleading
+projections.</p>
+<h3
+id="proposition-2-cryptographic-identity-is-necessary-but-insufficient">Proposition
+2: Cryptographic identity is necessary but insufficient</h3>
+<p><span
+class="math display">DigestMatch (<em>R</em>) ⇏ MeaningMatch (<em>R</em>)</span>
+Nor does it imply authority, standing, correspondence, or
+admissibility.</p>
+<h3
+id="proposition-3-local-synchronization-does-not-imply-configuration-synchronization">Proposition
+3: Local synchronization does not imply configuration
+synchronization</h3>
+<p><span
+class="math display">(∀<em>C</em><sub><em>i</em></sub> : Synchronized (<em>C</em><sub><em>i</em></sub>)) ⇏ Synchronized (<em>Σ</em>)</span>
+### Proposition 4: Synchronization is claim- and purpose-relative</p>
+<p>A system may be synchronized for bounded experimental use and
+unsynchronized for production reliance.</p>
+<h3
+id="proposition-5-divergence-and-insufficiency-are-distinct">Proposition
+5: Divergence and insufficiency are distinct</h3>
+<p><span
+class="math display">NotProvenSynchronized  ⇏ ProvenDivergent </span>
+### Proposition 6: Projection is constitutionally consequential</p>
+<p>A projection that misstates standing or authority changes the
+practical behavior of the system even when underlying code is
+correct.</p>
+<h3
+id="proposition-7-resynchronization-is-a-governed-successor-transition">Proposition
+7: Resynchronization is a governed successor transition</h3>
+<p>A lawful repair preserves predecessor identity, divergence evidence,
+authorization, and succession.</p>
+<h3
+id="proposition-8-recursive-synchronization-requires-non-self-ratification">Proposition
+8: Recursive synchronization requires non-self-ratification</h3>
+<p>A system cannot acquire external standing merely by proposing,
+witnessing, and admitting itself through one unseparated context.</p>
+<hr />
+<h2 id="conditions-of-inadequacy">16. Conditions of Inadequacy</h2>
+<p>The framework should be revised if:</p>
+<ul>
+<li>important forms of system drift cannot be expressed through its
+correspondence model;</li>
+<li>analysts cannot distinguish divergence from insufficient
+evidence;</li>
+<li>synchronization states fail to produce meaningfully different
+remedies;</li>
+<li>configuration-level synchronization adds no explanatory value beyond
+local correctness;</li>
+<li>projection synchronization proves irrelevant to user or agent
+behavior;</li>
+<li>constitutional courts merely rename tests without improving
+jurisdiction or nonclaim clarity;</li>
+<li>synchronization records impose more complexity than the failures
+they prevent;</li>
+<li>independent analysts cannot reconstruct why a system received a
+synchronization status;</li>
+<li>the framework cannot handle partial observability or probabilistic
+correspondence;</li>
+<li>recursive self-hosting necessarily collapses into
+self-ratification;</li>
+<li>empirical application fails to reveal defects missed by ordinary
+verification and configuration management.</li>
+</ul>
+<p>These conditions make the framework testable rather than merely
+definitional.</p>
+<hr />
+<h2 id="research-agenda">17. Research Agenda</h2>
+<h3 id="synchronization-corpus">17.1 Synchronization corpus</h3>
+<p>Construct a benchmark of real systems containing:</p>
+<ul>
+<li>stale documentation;</li>
+<li>mismatched binaries;</li>
+<li>semantic interface drift;</li>
+<li>revoked but reachable capabilities;</li>
+<li>outdated tests;</li>
+<li>hidden dependencies;</li>
+<li>stale dashboards;</li>
+<li>locally valid but globally incoherent assemblies.</li>
+</ul>
+<p>Measure whether independent analysts can classify the divergence
+consistently.</p>
+<h3 id="court-discrimination">17.2 Court discrimination</h3>
+<p>For every synchronization court, test not only that valid examples
+pass but that targeted historical and adversarial mutations fail.</p>
+<h3 id="synchronization-cost-measurement">17.3 Synchronization-cost
+measurement</h3>
+<p>Measure:</p>
+<ul>
+<li>runtime overhead;</li>
+<li>storage overhead;</li>
+<li>context size;</li>
+<li>witness latency;</li>
+<li>false refusal;</li>
+<li>false admission;</li>
+<li>resynchronization cost;</li>
+<li>operator attention.</li>
+</ul>
+<h3 id="human-projection-studies">17.4 Human projection studies</h3>
+<p>Test whether synchronized projections improve:</p>
+<ul>
+<li>standing reconstruction;</li>
+<li>detection of stale evidence;</li>
+<li>authority understanding;</li>
+<li>appropriate refusal;</li>
+<li>trust calibration.</li>
+</ul>
+<p>Also test whether fabricated constitutional structure can counterfeit
+warrant.</p>
+<h3 id="self-hosting-experiments">17.5 Self-hosting experiments</h3>
+<p>Progressively replace hosted constitutional services with admitted
+native realizations while preserving alternate verification, rollback,
+and historical replay.</p>
+<h3 id="configuration-courts">17.6 Configuration courts</h3>
+<p>Develop graph-based methods for detecting:</p>
+<ul>
+<li>authority amplification;</li>
+<li>semantic contradiction;</li>
+<li>historical incompatibility;</li>
+<li>dependency cycles;</li>
+<li>common-mode witness failure;</li>
+<li>projection inconsistency.</li>
+</ul>
+<h3 id="synchronization-under-uncertainty">17.7 Synchronization under
+uncertainty</h3>
+<p>Extend the framework to probabilistic models, nondeterministic
+systems, machine-learning realizations, and partially observable
+environments.</p>
+<hr />
+<h2 id="conclusion">18. Conclusion</h2>
+<p>A software system is not one artifact.</p>
+<p>It is an evolving collection of identity-bearing representations
+through which meaning becomes executable effect. Requirements, models,
+schemas, code, binaries, runtime behavior, evidence, authority, history,
+dependencies, and user projections all claim to describe or govern the
+same system. Their agreement cannot be assumed, and their divergence
+cannot be reduced to one category of bug.</p>
+<p>Constitutional synchronization provides a framework for keeping these
+representations mutually accountable.</p>
+<p>It does not erase the distinction between specification and
+implementation. It relies upon that distinction. Specification must
+remain separate enough to constrain realization. Realization must remain
+separate enough to be witnessed. Observation must remain separate enough
+to provide evidence. Evidence must remain separate enough from authority
+that proof does not grant permission. Projection must remain separate
+enough from constitutional state that its fidelity can be tested.</p>
+<p>The breakthrough is therefore not collapse through identity. It is
+closure through governed correspondence.</p>
+<p>A constitutionally synchronized system can answer:</p>
+<ul>
+<li>what it claims to be;</li>
+<li>which exact realization carries that claim;</li>
+<li>how the realization was produced;</li>
+<li>what it actually did;</li>
+<li>which evidence supports reliance;</li>
+<li>which authority permits its use;</li>
+<li>which history made it current;</li>
+<li>which dependencies sustain it;</li>
+<li>what users and agents are being shown;</li>
+<li>and what transition could lawfully restore correspondence when those
+answers diverge.</li>
+</ul>
+<p>Executable specification emerges when those answers are not merely
+documented but enforced.</p>
+<p>The deepest implication is recursive. Once a system can represent,
+witness, and govern its own synchronization, it can turn its own
+divergences into bounded engineering work. It can improve
+implementations without silently amending meaning, revise models without
+rewriting history, regenerate projections without inventing standing,
+and replace portions of its host substrate without surrendering
+constitutional continuity.</p>
+<p>A system remains itself not because its code never changes, but
+because change cannot escape the identities, constraints, evidence,
+authority, and history that make the successor answerable to the system
+it claims to continue.</p>
+<hr />
+<h2 id="appendix-a-compact-synchronization-record">Appendix A – Compact
+Synchronization Record</h2>
+<pre class="text"><code>SynchronizationRecord
+    record_id
+    subject_identity
+    purpose
+    context
+    disturbance_envelope
+    invariant_set
+
+    semantic_model_identity
+    transition_model_identity
+    realization_identity
+    execution_environment_identity
+    observation_identity
+    evidence_identity
+    standing_identity
+    authority_identity
+    historical_state_identity
+    dependency_snapshot_identity
+    projection_identity
+
+    identity_status
+    semantic_status
+    transition_status
+    realization_status
+    observation_status
+    evidence_status
+    authority_status
+    temporal_status
+    dependency_status
+    projection_status
+    configuration_status
+
+    overall_disposition
+    declared_limits
+    residuals
+    required_resynchronization
+    predecessor_record
+    issued_by
+    issued_at
+    receipt_commitment</code></pre>
+<hr />
+<h2 id="appendix-b-court-census-record">Appendix B – Court Census
+Record</h2>
+<pre class="text"><code>CourtRecord
+    court_identity
+    canonical_name
+    proposition_established
+    explicit_nonclaims
+    jurisdiction
+    affected_subsystem
+    applicable_phase
+    certification_band
+
+    current_standing
+    synchronization_status
+    latest_result
+    latest_result_identity
+    latest_result_time
+
+    required_evidence
+    required_toolchain
+    required_environment
+    body_access_class
+    dependency_courts
+
+    source_identity
+    realization_identity
+    receipt_links
+    failure_links
+    related_courts
+
+    predecessor
+    superseded_by
+    historical_results</code></pre>
+<p>Recommended <code>body_access_class</code> values:</p>
+<pre class="text"><code>DIGEST_SUFFICIENT
+METADATA_SUFFICIENT
+SELECTIVE_BODY_ACCESS_REQUIRED
+FULL_BODY_ACCESS_REQUIRED
+RUNTIME_EXECUTION_REQUIRED
+EXTERNAL_WITNESS_REQUIRED</code></pre>
+<hr />
+<h2 id="appendix-c-divergence-and-response-matrix">Appendix C –
+Divergence and Response Matrix</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 66%" />
+</colgroup>
+<thead>
+<tr>
+<th>Divergence</th>
+<th>Default response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identity divergence</td>
+<td>Isolate and fail closed</td>
+</tr>
+<tr>
+<td>Semantic divergence</td>
+<td>Block composition; reopen model or translation</td>
+</tr>
+<tr>
+<td>Specification ahead</td>
+<td>Continue candidate realization work</td>
+</tr>
+<tr>
+<td>Realization ahead</td>
+<td>Quarantine capability; propose model amendment</td>
+</tr>
+<tr>
+<td>Witness stale</td>
+<td>Renew observation before relying</td>
+</tr>
+<tr>
+<td>Evidence stale</td>
+<td>Narrow or demote standing</td>
+</tr>
+<tr>
+<td>Authority divergence</td>
+<td>Remove reachability or renew authority</td>
+</tr>
+<tr>
+<td>Temporal misalignment</td>
+<td>Reconstruct compatible historical state</td>
+</tr>
+<tr>
+<td>Dependency drift</td>
+<td>Recompute dependency and configuration courts</td>
+</tr>
+<tr>
+<td>Projection stale</td>
+<td>Regenerate projection; mark prior view historical</td>
+</tr>
+<tr>
+<td>Configuration split-brain</td>
+<td>Refuse assembly; identify conflicting subgraphs</td>
+</tr>
+<tr>
+<td>Unresolvable under model</td>
+<td>Generate ontology or modeling exigence</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that software systems rarely possess one
+authoritative representation of themselves. Its nearest external
+comparison fields are distributed, governance, crypto. The sources in
+[E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Convergence and
+consensus establish agreement under a fault model; they do not establish
+that the agreed state is true, authorized, desirable, or semantically
+equivalent. A written constitution can legitimate domination as easily
+as constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. A valid hash, signature, or inclusion
+proof establishes a bounded cryptographic relation, not meaning,
+authority, safety, or jurisdiction by itself. These limits are not
+generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Leslie Lamport. “Time, Clocks, and the Ordering
+of Events in a Distributed System.” <em>Communications of the ACM</em>
+21(7), 1978, pp. 558-565. DOI: 10.1145/359545.359563.
+https://lamport.azurewebsites.net/pubs/time-clocks.pdf
+<strong>Relationship:</strong> Foundational predecessor for partial
+order, causality, and distributed event ordering.</p>
+<p><strong>[E2]</strong> Leslie Lamport, Robert Shostak, and Marshall
+Pease. “The Byzantine Generals Problem.” <em>ACM Transactions on
+Programming Languages and Systems</em> 4(3), 1982, pp. 382-401. DOI:
+10.1145/357172.357176. https://doi.org/10.1145/357172.357176
+<strong>Relationship:</strong> Predecessor fault model for agreement
+under adversarial or inconsistent participants.</p>
+<p><strong>[E3]</strong> Marc Shapiro et al. <em>A Comprehensive Study
+of Convergent and Commutative Replicated Data Types</em>. INRIA Research
+Report RR-7506, 2011. https://inria.hal.science/inria-00555588
+<strong>Relationship:</strong> Predecessor convergence model for
+replicated state; convergence is compared with, but not equated to,
+legitimacy or semantic agreement.</p>
+<p><strong>[E4]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Mosaic Internet Protocol
+(MIP)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20115615</code>;<br />
+source SHA-256<br />
+<code>C56A63A0B84816BF8AF602C7467221B467312339ACE5F77DB754F804ABF833C0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Optional
+Coordinator</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-727469A6944DA256</code>;<br />
+source SHA-256<br />
+<code>92E8F6743B8DDAFF369D2F40120A384DDE273613B12B27D2FC14610469F5A46E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutional Collective
+with Optional Overmind (CCOO)</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-ED07EA7D91B87C5E</code>;<br />
+source SHA-256<br />
+<code>0346FA1B79A2A44A6034DEDCE4D0FA0E5C5CCD953F4AD29A88CEE1F290DCC210</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Communal Computing and
+Constitutional Governance</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-A6393299A70371DC</code>;<br />
+source SHA-256<br />
+<code>302FC6C269369AC4A4A5D8470E56596B6E8813A82530AD9DA64E9FAEEC4D2461</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Benveniste, A., Caillaud, B., Nickovic, D., Passerone, R., Raclet,
+J.-B., Reinkemeier, P., Sangiovanni-Vincentelli, A., Damm, W.,
+Henzinger, T. A., &amp; Larsen, K. G. (2015). <em>Contracts for Systems
+Design: Theory</em>. Research Report, INRIA.</p>
+<p>Blair, G., Bencomo, N., &amp; France, R. B. (2009). <a
+href="mailto:Models@run.time">Models@run.time</a>. <em>Computer,
+42</em>(10), 22–27.</p>
+<p>de Alfaro, L., &amp; Henzinger, T. A. (2001). Interface automata. In
+<em>Proceedings of the 8th European Software Engineering Conference and
+9th ACM SIGSOFT International Symposium on Foundations of Software
+Engineering</em>, 109–120. doi:10.1145/503209.503226.</p>
+<p>Garlan, D., Allen, R., &amp; Ockerbloom, J. (1995). Architectural
+mismatch, or, why it’s hard to build systems out of existing parts. In
+<em>Proceedings of the 17th International Conference on Software
+Engineering</em>, 179–185.</p>
+<p>Hoare, C. A. R. (1969). An axiomatic basis for computer programming.
+<em>Communications of the ACM, 12</em>(10), 576–580, 583.
+doi:10.1145/363235.363259.</p>
+<p>Lamport, L. (1994). The Temporal Logic of Actions. <em>ACM
+Transactions on Programming Languages and Systems, 16</em>(3),
+872–923.</p>
+<p>Lamport, L. (2003). <em>Specifying Systems: The TLA+ Language and
+Tools for Hardware and Software Engineers</em>. Addison-Wesley.</p>
+<p>Leucker, M., &amp; Schallhart, C. (2009). A brief account of runtime
+verification. <em>Journal of Logic and Algebraic Programming,
+78</em>(5), 293–303.</p>
+<p>Leveson, N. G. (2012). <em>Engineering a Safer World: Systems
+Thinking Applied to Safety</em>. MIT Press.</p>
+<p>Adam Ableman (2026). <em>Constraint-Bearing Composability: An
+Ontology of Constraint Carriage, Component Standing, and Architectural
+Admission</em>. Constitutional Computing.</p>
+<p>Meyer, B. (1992). Applying “Design by Contract.” <em>Computer,
+25</em>(10), 40–51. doi:10.1109/2.161279.</p>
+<p>Parnas, D. L. (1972). On the criteria to be used in decomposing
+systems into modules. <em>Communications of the ACM, 15</em>(12),
+1053–1058. doi:10.1145/361598.361623.</p>
+<h3 id="standing-and-claim-boundary">Standing and Claim Boundary</h3>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h3 id="references-1">References</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848756">10.5281/zenodo.23848756</a></p>

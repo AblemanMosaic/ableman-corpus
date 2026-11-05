@@ -1,0 +1,376 @@
+<h1
+id="governed-training-regimes-admissible-parameter-transformation-under-law">Governed
+Training Regimes: Admissible Parameter Transformation Under Law</h1>
+<h2 id="admissible-parameter-transformation-under-law">Admissible
+Parameter Transformation Under Law</h2>
+<h3
+id="training-is-reframed-as-semantic-compilation-under-law-optimization-is-preserved-but-authority-over-model-evolution-is-bounded-and-reviewable.">Training
+is reframed as semantic compilation under law: optimization is
+preserved, but authority over model evolution is bounded and
+reviewable.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern machine learning training regimes treat parameter optimization
+as a numerical procedure governed primarily by loss minimization.
+Gradients are computed, updates are applied, checkpoints are written,
+and evaluation metrics are inspected. Governance, where present, is
+external and informal-embedded in experiment tracking systems, review
+processes, or post-hoc audits. Parameter evolution proceeds as ambient
+authority over model state.</p>
+<p>This paper introduces <strong>Governed Training Regimes
+(GTR)</strong>: a systems-level framework in which training is
+formalized as a sequence of <strong>admissible parameter state
+transitions</strong>. A governed regime specifies training intent
+canonically, constrains execution through an admissibility predicate
+over proposed updates, and binds state transitions to receipted
+evidence. Parameter updates may be refused. Checkpoints may be denied
+promotion. Data defines jurisdiction rather than serving as
+undifferentiated input.</p>
+<p>The defining contribution of GTR is the introduction of a
+<strong>first-class admissibility operator over parameter state
+transitions</strong>. Training is reframed as semantic compilation under
+law: optimization is preserved, but authority over model evolution is
+bounded and reviewable.</p>
+<hr />
+<h2 id="deployment-context-and-threat-model">1. Deployment Context and
+Threat Model</h2>
+<p>Governed Training Regimes are designed for settings characterized
+by:</p>
+<ul>
+<li>Large-scale foundation model training and fine-tuning,</li>
+<li>Multi-team artifact management,</li>
+<li>Incremental checkpoint promotion pipelines,</li>
+<li>Safety- or policy-constrained deployment environments.</li>
+</ul>
+<p>In such contexts, parameter evolution has operational and governance
+consequences. We identify four failure classes:</p>
+<ul>
+<li><strong>Provenance Drift</strong> - datasets change without
+canonical binding.</li>
+<li><strong>Hyperparameter Drift</strong> - optimizer configurations
+vary without stable specification.</li>
+<li><strong>Regression Without Ceremony</strong> - degraded checkpoints
+are promoted.</li>
+<li><strong>Authority Expansion</strong> - parameter updates alter
+behavioral capacity without formal admissibility review.</li>
+</ul>
+<p>Existing tools-logging systems, experiment trackers, model
+documentation-record outcomes but do not constrain state transitions.
+GTR introduces governance at the level of parameter transformation.</p>
+<hr />
+<h2 id="architectural-overview">2. Architectural Overview</h2>
+<p>A Governed Training Regime treats each optimizer step as a proposed
+transition. The optimizer computes a candidate update <span
+class="math inline"><em>Δ</em><sub><em>t</em></sub></span> from <span
+class="math inline"><em>θ</em><sub><em>t</em></sub></span>. An
+admissibility membrane evaluates <span
+class="math display">𝒜(<em>θ</em><sub><em>t</em></sub>, <em>Δ</em><sub><em>t</em></sub>, ℒ) ∈ {ALLOW, REFUSE, ESCALATE}</span></p>
+<p>If <span class="math inline">ALLOW</span>, the canonical state
+advances to <span
+class="math inline"><em>θ</em><sub><em>t</em> + 1</sub></span>. If <span
+class="math inline">REFUSE</span>, state remains <span
+class="math inline"><em>θ</em><sub><em>t</em></sub></span> and a refusal
+receipt is emitted. If <span class="math inline">ESCALATE</span>, the
+proposal is routed to supervisory policy (human or automated) and may be
+deferred or rolled back. Episode-level checks gate whether the run may
+begin; promotion-level checks gate whether a checkpoint may become
+canonical. Governance operates at three annotated layers:</p>
+<ul>
+<li><strong>Episode-Level</strong> - prior to optimizer invocation
+(Training-MCIR validation).</li>
+<li><strong>Update-Level</strong> - at the admissibility membrane.</li>
+<li><strong>Promotion-Level</strong> - at checkpoint gating.</li>
+</ul>
+<p>The optimizer proposes; admissibility governs state advancement.</p>
+<hr />
+<h2 id="formal-core">3. Formal Core</h2>
+<p>Let parameter state at step <span
+class="math inline"><em>t</em></span> be <span
+class="math inline"><em>θ</em><sub><em>t</em></sub> ∈ ℝ<sup><em>n</em></sup></span>.</p>
+<p>An optimizer proposes:</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>t</em></sub> = 𝒪(<em>θ</em><sub><em>t</em></sub>, <em>B</em><sub><em>t</em></sub>, <em>H</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>B</em><sub><em>t</em></sub></span> is
+a batch (hash-identified),</li>
+<li><span class="math inline"><em>H</em></span> is optimizer
+configuration,</li>
+<li><span class="math inline">𝒪</span> is a numeric optimizer (e.g.,
+AdamW).</li>
+</ul>
+<p>Training-Law (<span class="math inline">ℒ</span>) consists of:</p>
+<ul>
+<li>invariant predicates (<span
+class="math inline"><em>I</em><sub><em>k</em></sub>(<em>θ</em>)</span>),</li>
+<li>update constraints (<span
+class="math inline"><em>U</em><sub><em>j</em></sub>(<em>θ</em>, <em>Δ</em>)</span>),</li>
+<li>protected parameter masks (<span
+class="math inline"><em>P</em>(<em>θ</em>, <em>Δ</em>)</span>),</li>
+<li>evaluation gates (<span
+class="math inline"><em>E</em>(<em>θ</em>)</span>).</li>
+</ul>
+<p>Define:</p>
+<p><span
+class="math display">𝒜(<em>θ</em><sub><em>t</em></sub>, <em>Δ</em><sub><em>t</em></sub>, ℒ) ∈ {ALLOW, REFUSE, ESCALATE}</span></p>
+<p>State evolution becomes:</p>
+<p><span class="math display">$$
+\theta_{t+1} =
+\begin{cases}
+\theta_t + \Delta_t &amp; \text{if } \mathcal{A} = \text{ALLOW} \\
+\theta_t &amp; \text{if } \mathcal{A} = \text{REFUSE}
+\end{cases}
+$$</span></p>
+<p>The ESCALATE branch may trigger:</p>
+<ul>
+<li>human review,</li>
+<li>automated supervisory policy,</li>
+<li>rollback,</li>
+<li>batch reprocessing.</li>
+</ul>
+<p>Constrained optimization embeds constraints inside the objective. GTR
+introduces an external admissibility predicate capable of refusing
+updates regardless of gradient direction.</p>
+<hr />
+<h2 id="training-mcir-canonical-specification">4. Training-MCIR:
+Canonical Specification</h2>
+<p>A governed episode binds:</p>
+<ul>
+<li>dataset identity and jurisdiction,</li>
+<li>optimizer configuration,</li>
+<li>objectives,</li>
+<li>invariant declarations,</li>
+<li>evaluation rituals,</li>
+<li>effect surface.</li>
+</ul>
+<p>Hyperparameters are law-bound declarations.</p>
+<p>Two episodes with identical Training-MCIR must be reproducible or
+explainable in divergence.</p>
+<hr />
+<h2 id="training-law-three-layers">5. Training-Law: Three Layers</h2>
+<h3 id="episode-level">5.1 Episode-Level</h3>
+<ul>
+<li>Dataset verified.</li>
+<li>Invariants declared.</li>
+<li>Optimizer lawful.</li>
+<li>Effect surface bounded.</li>
+</ul>
+<h3 id="update-level">5.2 Update-Level</h3>
+<p>Checks may include:</p>
+<ul>
+<li>gradient norm bounds,</li>
+<li>update magnitude limits,</li>
+<li>protected parameter masks (e.g., safety heads, calibration
+layers),</li>
+<li>invariant preservation (<span
+class="math inline"><em>I</em><sub><em>k</em></sub>(<em>θ</em><sub><em>t</em> + 1</sub>)</span>).</li>
+</ul>
+<p>Checks may operate on:</p>
+<ul>
+<li>full vectors,</li>
+<li>masked subsets,</li>
+<li>summary statistics,</li>
+<li>head-level aggregates.</li>
+</ul>
+<h3 id="promotion-level">5.3 Promotion-Level</h3>
+<p>Checkpoint promotion requires:</p>
+<ul>
+<li>evaluation gates satisfied,</li>
+<li>regression thresholds respected,</li>
+<li>invariants preserved,</li>
+<li>evidence pack complete.</li>
+</ul>
+<hr />
+<h2 id="training-peir-regulated-execution">6. Training-PEIR: Regulated
+Execution</h2>
+<p>Execution is constrained by:</p>
+<ul>
+<li>deterministic seed policy,</li>
+<li>capability-scoped dataset access,</li>
+<li>receipted artifact persistence,</li>
+<li>bounded hardware interaction.</li>
+</ul>
+<p>Invariant checks scale linearly and may leverage summary statistics
+to ensure scalability for large models.</p>
+<hr />
+<h2 id="relationship-to-prior-work">7. Relationship to Prior Work</h2>
+<p>GTR differs from:</p>
+<ul>
+<li>Trust-region and constrained optimization - numeric bounding
+only.</li>
+<li>Differential privacy - information leakage constraints.</li>
+<li>Safe RL - behavioral constraints.</li>
+<li>Experiment tracking - recording without gating.</li>
+<li>Formal verification - post-training guarantees.</li>
+</ul>
+<p>The defining contribution is a first-class admissibility operator
+over parameter state transitions.</p>
+<hr />
+<h2 id="minimal-governed-optimizer-loop">8. Minimal Governed Optimizer
+Loop</h2>
+<p>delta = optimizer(theta, batch, config) decision = A(theta, delta,
+law)</p>
+<p>if decision == ALLOW: theta = theta + delta elif decision == REFUSE:
+record_refusal(theta, delta) elif decision == ESCALATE:
+invoke_supervisor(theta, delta)</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern machine learning training regimes treat
+parameter optimization as a numerical procedure governed primarily by
+loss minimization. Its nearest external comparison fields are ai,
+governance, formal. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. These limits are not generic disclaimers: they
+identify the assumptions that a later empirical, formal, or
+implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E7]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18623302">10.5281/zenodo.18623302</a></p>

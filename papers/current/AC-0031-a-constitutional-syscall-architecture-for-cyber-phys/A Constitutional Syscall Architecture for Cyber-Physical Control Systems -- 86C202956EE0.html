@@ -1,0 +1,829 @@
+<h1
+id="a-constitutional-syscall-architecture-for-cyber-physical-control-systems">A
+Constitutional Syscall Architecture for Cyber-Physical Control
+Systems</h1>
+<h2
+id="core-abi-effect-adjudication-and-evidence-for-robotics-platforms">Core
+ABI, Effect Adjudication, and Evidence for Robotics Platforms</h2>
+<h3
+id="an-authorization-receipt-proves-only-that-a-named-policy-state-admitted-a-request.">An
+authorization receipt proves only that a named policy state admitted a
+request.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper specifies a constitutional programming architecture for
+cyber-physical control. An effect-pure computational core proposes
+world-touching operations; a boundary evaluates them against scoped
+authority, versioned constraints, current context, and timing
+obligations. Actuation, sensing, time, persistence, and communication
+become explicit constitutional crossings rather than ambient
+privileges.</p>
+<p>The central correction is that admissibility is not execution. A
+complete effect lifecycle distinguishes proposal, admission, dispatch,
+device acceptance, physical observation, and evidentiary standing. An
+authorization receipt proves only that a named policy state admitted a
+request. It does not prove that a driver accepted it, an actuator moved,
+the intended physical effect occurred, or the surrounding world remained
+safe. Cyber-physical governance therefore requires typed receipts,
+independent observations, bounded unknown states, non-bypassability
+evidence over the whole trusted computing base, and an emergency path
+that does not depend on the ordinary adjudicator remaining healthy.</p>
+<p>The architecture is presented as a proposal and evaluation program,
+not as demonstrated safety, real-time performance, replay equivalence,
+certification, or standards conformance.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/</code></p>
+<p><code>constitutional-syscall-architecture-cyber-</code><br />
+<code>physical/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>53BF4F2280B5F2029BF160F8B4161E72C3CADB3190BF5B739846FE6CD7930694</code>.
+The source remains unchanged.</p>
+<p>The architectural thesis and source-native constructs are author
+material. Lifecycle, formal, safety-boundary, evidence, integration,
+test, and decision additions are AI editorial or synthetic candidates
+until adopted. No robot, controller, boundary, driver, or safety system
+was implemented or tested. No external reference or standard was
+checked.</p>
+<h2 id="constitutional-effect-separation">1. Constitutional Effect
+Separation</h2>
+<p>The architecture separates four logical regions:</p>
+<ol type="1">
+<li><strong>Computational core:</strong> produces typed proposals but
+lacks direct effect authority.</li>
+<li><strong>Constitutional boundary:</strong> decides whether a proposal
+is admissible under a bound policy state.</li>
+<li><strong>Effect substrate:</strong> dispatches admitted operations
+through drivers, transports, devices, and physical interfaces.</li>
+<li><strong>Witness and evidence surface:</strong> observes requested
+and actual outcomes and assigns bounded evidentiary standing.</li>
+</ol>
+<p>The governing invariant is conditional, not self-proving:</p>
+<blockquote>
+<p>No in-scope world-touching operation may occur except through an
+admitted effect path, and no claim of effect may exceed the available
+observation.</p>
+</blockquote>
+<p>“In-scope” must be enumerated. Motors can coast, gravity acts,
+batteries fail, networks inject traffic, sensors age, interrupts fire,
+and human operators can touch equipment without a software syscall. The
+boundary governs mediated commands; it does not constitutionalize
+physics merely by naming an API.</p>
+<h2 id="minimal-effect-abi">2. Minimal Effect ABI</h2>
+<p>The source proposes five categories:</p>
+<pre class="text"><code>ACTUATE
+SENSE
+TIME
+PERSIST
+COMMUNICATE</code></pre>
+<p>A request envelope should bind at least:</p>
+<pre class="text"><code>EffectRequest {
+  request_id
+  operation
+  typed_parameters
+  requester_identity
+  requested_capability
+  policy_ref
+  context_ref
+  deadline
+  freshness_requirement
+  idempotency_key
+  provenance
+}</code></pre>
+<p>Operation-specific schemas remain necessary. Torque, brake, and
+velocity requests require units, frames, bounds, and validity intervals.
+Sensor reads require source, calibration, timestamp, quality, and
+freshness. Time calls must distinguish monotonic time, wall time,
+duration, and deadline. Persistence and communication require
+destination, confidentiality, retention, and retry semantics.</p>
+<p>A small ABI reduces the constitutional surface only if extensions
+cannot bypass its obligations.</p>
+<h2 id="effect-lifecycle-and-typed-outcomes">3. Effect Lifecycle and
+Typed Outcomes</h2>
+<p>Let <span class="math inline"><em>r</em></span> be an effect request,
+<span class="math inline"><em>a</em></span> authority state, <span
+class="math inline"><em>c</em></span> observed context, and <span
+class="math inline"><em>p</em></span> policy version. Admission is:</p>
+<p><span
+class="math display"><em>A</em>(<em>r</em>, <em>a</em>, <em>c</em>, <em>p</em>) → (<em>o</em>, <em>q</em>),</span></p>
+<p>where <span class="math inline"><em>o</em></span> is a typed decision
+and <span class="math inline"><em>q</em></span> is a structured reason.
+Admission outcomes include:</p>
+<pre class="text"><code>AUTHORIZE
+SIMULATE
+DEFER
+REFUSE
+CANCEL
+UNKNOWN</code></pre>
+<p><code>AUTHORIZE</code> means only that dispatch is permitted under
+the bound inputs. The full lifecycle is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;PROPOSED \\
+&amp;\rightarrow ADJUDICATED \\
+&amp;\rightarrow DISPATCHED \\
+&amp;\rightarrow ACCEPTED \\
+&amp;\rightarrow OBSERVED \\
+&amp;\rightarrow EVIDENCE
+\end{aligned}.
+$$</span></p>
+<p>Each arrow can fail, time out, or become unknown. A robust result
+vocabulary therefore includes <code>DISPATCH_FAILED</code>,<br />
+<code>DEVICE_REJECTED</code>, <code>EFFECT_OBSERVED</code>,
+<code>EFFECT_NOT_OBSERVED</code>, <code>PARTIAL_EFFECT</code>,<br />
+<code>CONFLICTED_OBSERVATION</code>, and
+<code>OUTCOME_UNKNOWN</code>.</p>
+<p>This separation prevents the architecture from treating a policy
+decision or log entry as proof of physical success.</p>
+<h2 id="authority-is-scoped-not-merely-ranked">4. Authority Is Scoped,
+Not Merely Ranked</h2>
+<p>A scalar lattice such as <span
+class="math inline"><em>L</em><sub>0</sub> ≤ <em>L</em><sub>1</sub> ≤ <em>L</em><sub>2</sub> ≤ <em>L</em><sub>3</sub></span>
+cannot express all relevant authority. Authority should be a scoped
+capability:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\alpha = (&amp;subject, operation, object, bounds, context, validity, \\
+&amp;delegation, provenance)
+\end{aligned}.
+$$</span></p>
+<p>An authority can permit braking but not acceleration, one robot but
+not another, one geofence but not a neighboring zone, or one time window
+but not indefinite repetition. More rank does not automatically mean
+broader jurisdiction.</p>
+<p>Multiple authorities require a declared composition algebra. A simple
+sequence is insufficient when authorities disagree, operate over
+disjoint scopes, or return stale results. Composition must define
+precedence, conjunction, veto, conflict, abstention, timeout, evidence,
+and recovery. Refusal need not always dominate: an expired or
+out-of-scope refusal is not equivalent to a valid safety veto.</p>
+<h2 id="binding-between-admission-and-effect">5. Binding Between
+Admission and Effect</h2>
+<p>Physical context can change after admission but before actuation. The
+architecture should bind:</p>
+<ul>
+<li>the request and typed parameters;</li>
+<li>the policy and contract version;</li>
+<li>the authority state;</li>
+<li>the context snapshot and freshness window;</li>
+<li>the effect adapter and device identity;</li>
+<li>the deadline and cancellation semantics.</li>
+</ul>
+<p>If any required binding changes before dispatch or acceptance, the
+request is re-adjudicated or refused. Repetition does not create
+authority.</p>
+<p>The Three Hash Rule supplies a nearby custody discipline: bind the
+intended subject, the frozen governed artifact, and the observed result
+rather than allowing one hash to stand for the whole transition. The
+exact three-hash mapping for cyber-physical effects remains an author
+and implementation decision; this paper does not claim that a hash
+proves physical reality.</p>
+<h2 id="receipts-and-witnesses">6. Receipts and Witnesses</h2>
+<p>At least three receipt classes are needed:</p>
+<ol type="1">
+<li><strong>Adjudication receipt:</strong> what request was evaluated
+against which authority, context, and policy, with what decision.</li>
+<li><strong>Dispatch receipt:</strong> what adapter or device endpoint
+accepted or rejected which admitted request.</li>
+<li><strong>Effect observation receipt:</strong> what independent
+witness observed, with calibration, timestamp, uncertainty, and
+coverage.</li>
+</ol>
+<p>Receipts support reasoning only within their observation boundaries.
+A boundary-generated receipt cannot independently prove the boundary was
+not bypassed. A motor-controller acknowledgment cannot prove wheel
+motion. A wheel encoder cannot alone prove vehicle displacement. Witness
+independence and coverage must be declared.</p>
+<p>The Governed Meaning Base can preserve operation schemas, authority
+scopes, policy lineage, receipt types, tests, and revision relations. It
+does not turn stored assertions into evidence automatically.</p>
+<h2 id="non-bypassability-and-the-trusted-computing-base">7.
+Non-Bypassability and the Trusted Computing Base</h2>
+<p>The statement “all effects traverse the boundary” is a whole-system
+property. Its trusted computing base can include boot configuration,
+runtime, scheduler, memory protection, middleware, drivers,
+direct-memory-access devices, firmware, buses, credential stores, update
+paths, operator interfaces, clocks, log sinks, and recovery
+mechanisms.</p>
+<p>Wrapping a middleware topic is insufficient if a controller, plugin,
+driver, maintenance interface, or compromised component can reach
+hardware through another path. Non-bypassability evidence should include
+path enumeration, negative tests, privilege analysis, boot and
+configuration binding, runtime integrity checks, and physical interface
+review.</p>
+<p>The claim must also be scoped. The system may prove that a defined
+software path is mediated without proving that every possible physical
+or administrative effect is controlled.</p>
+<h2 id="real-time-and-safety-paths">8. Real-Time and Safety Paths</h2>
+<p>Real-time feasibility requires measured worst-case behavior, not the
+labels “fast path” and “slow path.” Each control loop must declare
+deadline, jitter budget, policy-evaluation bound, queue behavior, cache
+invalidation cost, timeout result, and overload posture.</p>
+<p>Slow adjudication must not block a hard deadline without a
+predeclared safe response. Precomputed envelopes can support bounded
+fast paths, but only if their context, validity, and revocation
+semantics are explicit.</p>
+<p>Emergency stop should not rely solely on the ordinary boundary,
+network, controller, clock, or log remaining healthy. A defensible
+design uses independent and preferably diverse stop or energy-isolation
+paths appropriate to the hazard analysis. “Fail safe” is not universal:
+an abrupt stop can itself be hazardous, and some systems must remain
+fail-operational long enough to reach a safer state.</p>
+<h2 id="sensing-time-and-simulation">9. Sensing, Time, and
+Simulation</h2>
+<p>Sensing is a constitutional crossing because imported information
+changes what the core may infer and do. Yet mediation does not guarantee
+truth. Sensor identity, calibration, timestamp, uncertainty, occlusion,
+spoofing risk, and transformation lineage must travel with the
+observation.</p>
+<p>Time is also plural. Monotonic time supports intervals; wall time
+supports external coordination; logical time orders distributed events.
+Replay must preserve which form was used and which nondeterministic
+inputs were recorded.</p>
+<p>An identical ABI does not establish simulation/hardware equivalence.
+Simulation replaces a physical effect with a model-mediated result.
+Correspondence requires explicit tolerances, domain assumptions,
+calibration, coverage, and tests across the simulation-to-hardware
+boundary.</p>
+<h2 id="logging-replay-and-evidence-ceilings">10. Logging, Replay, and
+Evidence Ceilings</h2>
+<p>A log entry can record request, decision, bound state, and later
+observations. Append-only and hashable are design intentions, not proof
+of tamper evidence, completeness, availability, or correct observation.
+Custody, sequencing, omission detection, key management, clock behavior,
+and independent witnesses remain relevant.</p>
+<p>Replay can reproduce recorded adjudication when code, policy, inputs,
+ordering, and nondeterminism are sufficiently bound. It cannot replay
+the physical world. Deterministic decision replay and physical outcome
+reconstruction are different claims.</p>
+<p>Accordingly:</p>
+<p><span
+class="math display"><em>S</em><em>t</em><em>a</em><em>n</em><em>d</em><em>i</em><em>n</em><em>g</em>(<em>c</em><em>l</em><em>a</em><em>i</em><em>m</em>) ≤ <em>C</em><em>o</em><em>v</em><em>e</em><em>r</em><em>a</em><em>g</em><em>e</em>(<em>r</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em><em>s</em>, <em>w</em><em>i</em><em>t</em><em>n</em><em>e</em><em>s</em><em>s</em><em>e</em><em>s</em>, <em>c</em><em>u</em><em>s</em><em>t</em><em>o</em><em>d</em><em>y</em>).</span></p>
+<p>This paper supplies no evidence that the proposed system meets a
+real-time deadline, prevents bypass, makes simulation equivalent to
+hardware, satisfies a safety standard, or improves safety.</p>
+<h2 id="failure-and-recovery-semantics">11. Failure and Recovery
+Semantics</h2>
+<p>The architecture must define behavior for boundary crash,
+policy-store unavailability, stale context, authority conflict, network
+partition, duplicate request, delayed cancellation, device reset,
+partial actuation, missing witness, full log, corrupted clock, power
+loss, and restart after uncertain effect.</p>
+<p>Recovery cannot assume the last authorized command either occurred or
+did not occur. Unknown outcome is a first-class state. Before
+resumption, the system may require physical re-observation,
+reconciliation, safe-state acquisition, or human inspection.</p>
+<p>Liveness is also constitutional. A boundary that refuses everything
+may preserve one safety invariant while destroying mission, rescue,
+medical, or stability obligations. Availability targets and lawful
+degraded modes must be specified alongside refusal.</p>
+<h2 id="relation-to-the-corpus">12. Relation to the Corpus</h2>
+<p><em>Effect Sovereignty</em> supplies the general core-world
+distinction and effect-boundary thesis. This paper specializes that
+thesis for cyber-physical control and adds operation-specific timing,
+observation, hardware, and recovery obligations.</p>
+<p><em>Reasoning by Way of Receipts</em> constrains what can be inferred
+from adjudication, dispatch, and observation records. <em>The Three Hash
+Rule</em> supplies a custody pattern for binding intent, governed
+artifact, and result. <em>Agentic Interface Surfaces</em> provides a
+nearby account of executable interfaces that recognize progress through
+evidence-bearing effects. These are typed interfaces, not automatic
+identity or evidentiary inheritance.</p>
+<h2 id="realization-funnel">13. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate ways computational proposals
+can relate to physical effects.</li>
+<li><strong>Specification:</strong> define the ABI, authority,
+lifecycle, timing, safety, and evidence obligations.</li>
+<li><strong>CM1:</strong> include every admissible realization,
+including slow, over-restrictive, unsafe, or weakly observed
+variants.</li>
+<li><strong>CM2:</strong> select preferable variants under hazard,
+sovereignty, performance, assurance, and reversibility criteria.</li>
+<li><strong>IC:</strong> bind one Instance Constitution or Instance
+Configuration to a platform and operating domain.</li>
+<li><strong>IR:</strong> construct an Instance Realization or
+Implementation Realization of boundary, adapters, witnesses, recovery,
+and evidence.</li>
+<li><strong>Evidence:</strong> test timing, bypass resistance, effect
+correspondence, failures, and claims.</li>
+<li><strong>Revision:</strong> change contracts, architecture, or
+standing when evidence or operating conditions change.</li>
+</ul>
+<p>This paper is a Specification and CM1/CM2 architecture candidate. It
+does not instantiate an IC, build an IR, or supply platform evidence.
+Realization-stage IR is distinct from Intermediate Representation in
+MCIR and other compiler contexts.</p>
+<h2 id="evaluation-program">14. Evaluation Program</h2>
+<p>A credible evaluation should include:</p>
+<ul>
+<li>ABI completeness and extension tests;</li>
+<li>direct and indirect bypass attempts;</li>
+<li>authority-scope, expiry, delegation, and conflict tests;</li>
+<li>worst-case execution time and jitter measurements;</li>
+<li>cache staleness and revocation races;</li>
+<li>duplicate, reordered, and delayed request tests;</li>
+<li>partial-actuation and lost-acknowledgment recovery;</li>
+<li>independent effect-observation coverage;</li>
+<li>sensor spoofing, staleness, and calibration faults;</li>
+<li>simulation/hardware correspondence under declared tolerances;</li>
+<li>log omission, reordering, corruption, and custody tests;</li>
+<li>power loss, restart, partition, and degraded-mode behavior;</li>
+<li>emergency-stop independence and common-cause failure analysis;</li>
+<li>learned-controller adaptation under refusal without reward
+hacking.</li>
+</ul>
+<h2 id="cyber-physical-effect-boundary-abi-profile">Cyber-Physical
+Effect-Boundary ABI Profile</h2>
+<p>Across the completed P1 corpus, the Constitutional Syscall
+Architecture is the <strong>cyber-physical effect-boundary ABI profile
+for proposing, adjudicating, dispatching, observing, reconciling, and
+receipting device-facing actions</strong>. It does not make a safe
+controller by interface design alone, eliminate hard real-time paths, or
+prove that all physical effects pass through the mediated boundary.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Integrity Enforcement
+Layer</em><br />
+<strong>Supplies:</strong> General protected effect mediation and
+refusal.<br />
+<strong>Syscall-architecture boundary:</strong> The syscall paper
+specializes mediation to robotics and cyber-physical effects.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Rule placement, court separation, ratchets,
+effect atomicity, and remainder.<br />
+<strong>Syscall-architecture boundary:</strong> The syscall ABI is one
+concrete boundary profile for those mechanics.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Cognitive ABI for
+Capability-Centered Computing</em><br />
+<strong>Supplies:</strong> Capability contracts, qualification, routing,
+substitution, and effect ceilings.<br />
+<strong>Syscall-architecture boundary:</strong> Cognitive planning may
+propose calls; device authority and effect evidence remain separately
+bound.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>MosaiCOS: A Constitutional
+Operating System</em><br />
+<strong>Supplies:</strong> A proposed full operating-system
+configuration.<br />
+<strong>Syscall-architecture boundary:</strong> The syscall ABI can be
+an OS subsystem without inheriting whole-system standing.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Testing for Deriving
+Observable State of Software Systems</em><br />
+<strong>Supplies:</strong> Bounded observation and state-derivation
+tests.<br />
+<strong>Syscall-architecture boundary:</strong> Device observations
+support reconciliation; they do not make hidden physical state fully
+known.</p></li>
+</ul>
+<p>An effect invocation should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+E= (&amp;principal, capability, target, command, prestate, \\
+&amp;authority, safety\_profile, deadline, admission, \\
+&amp;dispatch, witnesses, outcome, remainder, receipt)
+\end{aligned}.
+$$</span></p>
+<p>Proposal, admission, reservation, dispatch, physical effect,
+observation, verification, commit, and recovery are different events. A
+pre-effect decision cannot attest to a future physical outcome. A
+post-effect receipt may establish only the observation captured by its
+witnesses. Unknown, late, duplicated, partially applied, and
+irreversible effects require explicit outcomes.</p>
+<p>Non-bypassability is a claim about the trusted computing base and
+actual effect paths. Emergency and hard real-time paths may use
+preauthorized bounded profiles, but their scope, expiry, telemetry,
+reconciliation, and override authority remain inspectable. Simulation
+evidence does not transfer automatically to physical deployment.</p>
+<p>The universal GSM can type <code>PROPOSES_SYSCALL</code>,
+<code>REQUIRES_DEVICE_CAPABILITY</code>,<br />
+<code>ADMITTED_UNDER_SAFETY_PROFILE</code>,
+<code>RESERVED_FOR_EXECUTION</code>,
+<code>DISPATCHED_TO_DEVICE</code>,<br />
+<code>OBSERVED_BY_SENSOR</code>, <code>RECONCILED_WITH_PRESTATE</code>,
+<code>PARTIALLY_EFFECTED</code>, <code>BYPASSED_MEDIATOR</code>,<br />
+<code>RECOVERED_BY</code>,<br />
+and<br />
+<code>RECEIPTED_WITH_CEILING</code>. These relations preserve the
+physical uncertainty boundary.</p>
+<p>This integration establishes four editorial commitments: adopt
+cyber-physical effect-boundary ABI profile as the official corpus role;
+adopt the effect-invocation envelope; require explicit partial, late,
+duplicate, unknown, and irreversible outcomes; and make
+non-bypassability and simulation-to-physical transfer separately
+evidenced claims.</p>
+<h2 id="effect-intent-custody-and-resolved-identity">Effect-Intent
+Custody and Resolved Identity</h2>
+<p>The fixed-seed comparison with the Implementation Codex, HLIR,
+<em>Who Has the Ball?</em>, and GTK adds a cross-layer effect-intent
+contract:</p>
+<p><span class="math display">$$
+\begin{aligned}
+I= (&amp;intent\_id, proposal\_head, custodian, term\_bindings, \\
+&amp;capability, target, authority, admission, dispatch, \\
+&amp;observation, reconciliation, terminal\_disposition)
+\end{aligned}.
+$$</span></p>
+<p>HLIR can express the proposed effect and unresolved alternatives. The
+Implementation Codex can package the selected device profile,
+dependencies, safety assumptions, and effect-boundary realization.
+Neither artifact is a dispatched command. The syscall boundary must bind
+the exact admitted intent and reject widening introduced during lowering
+or realization.</p>
+<p>Work Custody becomes safety-relevant while an effect is pending,
+partially applied, late, unknown, or under recovery. A named custodian
+must remain responsible for observation, reconciliation, escalation, and
+terminal disposition even if device control, review authority, and
+recovery execution belong to different actors. Custody does not itself
+grant any of those authorities.</p>
+<p>GTK can resolve the lexical and semantic identity of capabilities,
+targets, safety profiles, outcomes, and recovery operations under a
+versioned registry. Resolver success is neither capability possession
+nor effect authority. Ambiguity, version conflict, or jurisdiction
+mismatch should stop or qualify admission rather than be silently
+normalized.</p>
+<p>The universal GSM can type<br />
+<code>CUSTODIES_EFFECT_INTENT</code>,
+<code>BINDS_SYSCALL_TERM_WITH_GTK</code>,<br />
+<code>LOWERS_PROPOSAL_WITHOUT_DISPATCH</code>,
+<code>REJECTS_INTENT_WIDENING</code>,<br />
+<code>RETAINS_CUSTODY_DURING_EFFECT_UNKNOWN</code>,
+<code>RECONCILES_PARTIAL_PHYSICAL_EFFECT</code>,<br />
+and<br />
+<code>RESOLVES_IDENTITY_WITHOUT_GRANTING_AUTHORITY</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the effect-intent contract; retain custody through unknown and recovery
+states; bind capability and target terms through versioned resolution;
+and make resolver, proposal, realization, admission, dispatch, and
+physical effect distinct events.</p>
+<h2 id="the-cross-layer-trace-to-a-physical-effect">The Cross-Layer
+Trace to a Physical Effect</h2>
+<p>Nine downstream uses place the constitutional syscall at the final
+governed crossing of a longer chain. GTK resolves the identity of
+capabilities, targets, safety profiles, and outcomes. Governance as
+Compilation and GCML carry stage and procedural obligations toward an
+effect membrane. HLIR expresses a reviewable proposal. The
+Implementation Codex packages the selected device configuration and
+boundary realization. Jnana II and MosaiCOS can host the membrane as one
+subsystem. APD states the bounded containment objective. Work custody
+keeps an unresolved physical intent owned through observation and
+recovery.</p>
+<p>The complete trace is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+T= (&amp;proposal, term\_bindings, selected\_IC, \\
+&amp;realization\_package, call\_intent, authority, admission, \\
+&amp;reservation, dispatch, physical\_effect, observation, \\
+&amp;reconciliation, custody, terminal\_disposition)
+\end{aligned}.
+$$</span></p>
+<p>No upstream artifact is a device command. Resolver success does not
+grant capability. Procedural reachability does not grant authority. A
+conforming Implementation Codex does not prove the membrane is
+non-bypassable. Admission and dispatch do not prove an effect. Device
+acknowledgment and sensor observation have separate ceilings. Unknown,
+partial, late, duplicate, cancelled-after-effect, and irreversible
+outcomes must retain custody until a terminal disposition is
+justified.</p>
+<p>Every lowering boundary should bind the exact predecessor intent and
+declare preserved, refined, deferred, refused, or widened fields.
+Undeclared widening of target, magnitude, duration, timing, safety
+profile, or recovery scope invalidates the call. Emergency and real-time
+paths remain profiles with bounded preauthorization, expiry, telemetry,
+reconciliation, and independent stop obligations.</p>
+<p>The universal GSM can type<br />
+<code>RESOLVES_EFFECT_TERM</code>,
+<code>LOWERS_EFFECT_PROPOSAL</code>,<br />
+<code>PACKAGES_DEVICE_CONFIGURATION</code>,
+<code>PROPOSES_CONSTITUTIONAL_SYSCALL</code>,<br />
+<code>REJECTS_EFFECT_INTENT_WIDENING</code>,
+<code>DISPATCHES_SEPARATELY_FROM_ADMISSION</code>,<br />
+<code>OBSERVES_PHYSICAL_EFFECT_WITH_CEILING</code>, and<br />
+<code>RETAINS_CUSTODY_UNTIL_RECONCILED</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the full cross-layer effect trace; require explicit
+preservation and widening checks at each lowering; retain custody
+through all nonterminal effect outcomes; and require emergency,
+real-time, simulation, and bypass claims to carry separate evidence
+profiles.</p>
+<h2 id="counterevidence-and-claim-boundary-tests">15. Counterevidence
+and Claim-Boundary Tests</h2>
+<p>The proposal must narrow or fail if: (1) an unmediated hardware path
+exists; (2) admission is reported as physical success; (3) a log can be
+emitted before effect; (4) device acknowledgment is mistaken for motion;
+(5) witnesses share the same failure source; (6) context expires before
+actuation; (7) authority rank crosses jurisdiction; (8) multi-authority
+conflicts lack a deterministic rule; (9) refusal deadlocks a
+safety-critical loop; (10) the emergency path depends on the failed
+component; (11) worst-case latency misses deadlines; (12) cache reuse
+survives revocation; (13) duplicate retries create repeated actuation;
+(14) cancellation arrives after irreversible effect; (15) restart
+assumes an unknown effect did not occur; (16) sensors are stale or
+spoofed; (17) time sources jump or disagree; (18) simulation parity
+exceeds measured correspondence; (19) physical replay is claimed from
+decision replay; (20) log custody cannot detect omission; (21) policy
+updates race active commands; (22) extensions bypass the base ABI; (23)
+an operator or maintenance port bypasses authority; (24) firmware or DMA
+bypasses middleware; (25) a safe stop creates a new hazard; (26)
+over-refusal destroys required liveness; (27) learning adapts around
+refusal; (28) contract semantics are ambiguous; (29) external standards
+do not support the attributed claim; (30) the demonstration platform
+lacks an adequate hazard analysis; (31) cryptographic binding does not
+bind physical observation; (32) evidence coverage is too narrow for the
+paper’s conclusion; (33) implementation details expand the trusted base
+beyond review; (34) the same request has non-idempotent device
+semantics; (35) policy compromise authorizes unsafe effects; or (36) the
+architecture cannot state which effects remain outside its
+jurisdiction.</p>
+<h2 id="physical-effects-require-more-than-a-valid-syscall">Physical
+Effects Require More Than a Valid Syscall</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Constitutional robotics turns world-touching operations into
+structured syscalls: an effect-pure core proposes action, a
+constitutional boundary checks identity, authority, contracts, state,
+and limits, and the resulting actuation receives a typed outcome and
+receipt. This improves inspectability. It does not guarantee physical
+safety, stability, or complete control.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Sensor-spoof attack.</strong> Valid authorization operates
+on false state. Sensor identity, calibration, plausibility, redundancy,
+and uncertainty must enter adjudication.</li>
+<li><strong>Timing attack.</strong> A correct command arrives too late
+or in the wrong order. Deadlines, jitter, clock source, freshness, and
+safe timeout behavior are contract fields.</li>
+<li><strong>Control-instability attack.</strong> Individually admissible
+actions destabilize the closed loop. The syscall boundary must compose
+with verified control envelopes and rate limits.</li>
+<li><strong>Physical-remainder attack.</strong> Refusal or cancellation
+occurs after momentum, heat, pressure, charge, or mechanical motion
+persists. Recovery must model irreversible and decaying effects.</li>
+<li><strong>Emergency-override attack.</strong> A safety bypass becomes
+an unbounded authority path. Override identity, scope, duration,
+logging, and post-event review are mandatory.</li>
+<li><strong>Partition attack.</strong> The controller loses network,
+authority, time, or evidence services. The local safe state and degraded
+mode must not depend on unavailable adjudication.</li>
+<li><strong>Human-override failure.</strong> A person cannot understand,
+reach, or safely use the stop mechanism. Human factors and accessibility
+are part of the safety case.</li>
+<li><strong>Actuator-bypass attack.</strong> Firmware, manual controls,
+maintenance tools, or alternate buses reach the physical effect outside
+the syscall path. Complete mediation is hardware- and
+topology-relative.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a cyber-physical effect-boundary ABI and
+evaluation agenda. It does not establish safety certification, control
+stability, real-time correctness, hazard coverage, human-factors
+adequacy, or implementation readiness for any physical system.</p>
+<p>Every realization claim requires exact hardware, firmware, plant
+model, sensors, actuators, timing, network, hazards, safety envelope,
+test environment, independent witness, and residual-risk record. Current
+robotics, control, functional-safety, and regulatory sources plus
+qualified engineering review are required. No external research was
+added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The accessible result is that an AI should not touch the physical
+world through an unstructured tool call. Every actuation should cross a
+boundary that can say who requested it, what state justified it, which
+limits applied, what actually happened, and how the system entered a
+safe remainder.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Cyber-physical systems should not inherit world-touching authority
+merely because a controller can produce a command. A constitutional
+syscall architecture makes requests, authority, policy, outcomes, and
+evidence explicit. Its strongest contribution is not the claim that one
+boundary makes a robot safe, but the separation of questions that
+ordinary stacks can blur: what was proposed, what was permitted, what
+was dispatched, what physically happened, what was observed, and what
+may now be claimed.</p>
+<p>That separation creates an architecture that can be tested. Until
+those tests exist, the work remains a specification for governed
+physical effects, not a certification of them.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<h3 id="author-corpus-interfaces-inspected-under-exact-custody">Author
+corpus interfaces inspected under exact custody</h3>
+<p>Ableman Adam Ableman <em>Effect Sovereignty.</em></p>
+<p>Ableman Adam Ableman <em>Reasoning by Way of Receipts.</em></p>
+<p>Ableman Adam Ableman <em>The Three Hash Rule.</em></p>
+<p>Ableman Adam Ableman <em>Agentic Interface Surfaces.</em></p>
+<h3 id="external-verification-required">External verification
+required</h3>
+<p>The source mentions ROS-style middleware, F1TENTH-class platforms,
+IEC 61508, ISO 10218, and ANSI/RIA R15.06. No external source was
+consulted in this pass. Publication should verify terminology,
+applicability, bibliographic details, current editions, and every
+standards-alignment statement against primary sources.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Evidence.</strong> This stage is outside the present paper’s
+asserted contribution and evidentiary scope.</li>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that this paper specifies a constitutional
+programming architecture for cyber-physical control. Its nearest
+external comparison fields are cps, security, provenance. The sources in
+[E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Runtime monitors and
+fallback controllers only protect modeled safety envelopes and can fail
+through sensor error, timing assumptions, unsafe recovery, or omitted
+hazards. Unforgeable capabilities can constrain exercise of authority
+while still leaving allocation, delegation, revocation, and social
+legitimacy incorrectly specified. A complete provenance graph can
+faithfully record a false or unauthorized process; provenance is
+evidence about lineage, not automatic truth or legitimacy. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Edward R. Griffor et al. <em>Framework for
+Cyber-Physical Systems: Volume 1, Overview</em>. NIST SP 1500-201, 2017.
+DOI: 10.6028/NIST.SP.1500-201. https://doi.org/10.6028/NIST.SP.1500-201
+<strong>Relationship:</strong> Adjacent cyber-physical systems framework
+for trustworthiness, timing, data, and lifecycle concerns.</p>
+<p><strong>[E2]</strong> J. Tanner Slagel et al. “A Formal Verification
+Framework for Runtime Assurance.” <em>NASA Formal Methods</em>, 2024.
+NASA NTRS 20230017350. https://ntrs.nasa.gov/citations/20230017350
+<strong>Relationship:</strong> Adjacent runtime-assurance formalization,
+useful for comparing failover safety with constitutional admission and
+effect recognition.</p>
+<p><strong>[E3]</strong> Nancy G. Leveson and John P. Thomas. <em>STPA
+Handbook</em>. MIT, 2018.
+https://psas.scripts.mit.edu/home/books-and-handbooks/
+<strong>Relationship:</strong> Adjacent systems-theoretic hazard
+analysis method; used to test treatment of unsafe control and
+system-level constraints.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Robotics</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18750683</code>;<br />
+source SHA-256<br />
+<code>D10DF9B6B7F742D9EEABF01BC5DFC3755BB4EBF548E8CB5F215BB9D94678F514</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutionally Governed
+Infrastructure</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-EF5747107D56F516</code>;<br />
+source SHA-256<br />
+<code>9C708BA381108EEA252404DF33F7B3B1648EC9CF5F2ACF00BAB88C6A15540926</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constitutional Robotics: System Calls as the
+Programming Model for Actuation, Sensing, and Epistemic World
+Interaction.</em> Zenodo, 2026. doi:10.5281/zenodo.18750683</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847356">10.5281/zenodo.23847356</a></p>

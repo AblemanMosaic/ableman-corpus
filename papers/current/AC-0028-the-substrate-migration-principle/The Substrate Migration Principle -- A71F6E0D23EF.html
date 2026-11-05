@@ -1,0 +1,478 @@
+<h1 id="the-substrate-migration-principle">The Substrate Migration
+Principle</h1>
+<h2
+id="how-computing-advances-by-enforcing-invariants-below-the-application-layer">How
+Computing Advances by Enforcing Invariants Below the Application
+Layer</h2>
+<h3
+id="undefined-behavior-moved-from-convention-to-type-systems.">Undefined
+behavior moved from convention to type systems.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Across the history of computing, major reliability and security
+advances have followed a recurring structural transition: concerns once
+managed through voluntary discipline at the application layer migrate
+downward into enforced invariants at the substrate layer. Memory safety
+moved from programmer caution to hardware protection. Concurrency
+correctness moved from ad hoc coordination to transactional engines.
+Undefined behavior moved from convention to type systems. Isolation
+moved from policy to kernel-enforced capability regimes.</p>
+<p>This paper articulates that recurring pattern as the
+<strong>Substrate Migration Principle (SMP)</strong>: when a
+structurally recurring class of failures cannot be reliably contained
+through application-layer discipline, and when a formalizable subset of
+that failure class can be identified, systems evolve by relocating that
+subset into the substrate, where it becomes mechanically
+constrained.</p>
+<p>The paper argues that contemporary AI-driven and autonomous systems
+are approaching a new migration threshold. A distinct failure class -
+unauthorized semantic continuation - cannot be reliably mitigated
+through advisory governance, policy documentation, or alignment
+heuristics alone. If the historical pattern holds, governance may
+partially migrate downward, becoming a first-class invariant enforced at
+transformation boundaries.</p>
+<p>The claim is descriptive and cautiously predictive. It reframes
+governance not as compliance overlay, but as a candidate invariant class
+subject to partial formalization under structural pressure.</p>
+<hr />
+<h2 id="introduction-invariant-descent-as-structural-pattern">1.
+Introduction: Invariant Descent as Structural Pattern</h2>
+<p>Computing history is often narrated through hardware acceleration or
+algorithmic innovation. A quieter structural dynamic underlies many of
+its most consequential shifts:</p>
+<ol type="1">
+<li>A recurring failure class emerges at the application layer</li>
+<li>Practitioners attempt to mitigate it through discipline and
+convention</li>
+<li>Scale, automation, or economic pressure overwhelms voluntary
+control</li>
+<li>A formalizable subset of the concern is identified</li>
+<li>That subset migrates downward into the substrate as enforced
+invariant</li>
+</ol>
+<p>This paper names that dynamic the <strong>Substrate Migration
+Principle</strong>.</p>
+<p>The principle does not assert inevitability. It identifies a
+pressure-driven pattern: fragility that exhibits invariant structure and
+resists local mitigation tends, under sufficient scale and cost, to
+descend into enforced architectural constraint.</p>
+<p>The contemporary question is whether governance - specifically, the
+legitimacy of semantic continuation - has reached such a threshold.</p>
+<hr />
+<h2 id="application-discipline-vs.-substrate-enforcement">2. Application
+Discipline vs. Substrate Enforcement</h2>
+<p>For clarity, we distinguish two architectural strata.</p>
+<p><strong>Application Layer</strong></p>
+<ul>
+<li>Domain-specific logic</li>
+<li>Human-guided discipline</li>
+<li>Conventions and policies</li>
+<li>Review processes and documentation</li>
+<li>Advisory enforcement</li>
+</ul>
+<p><strong>Substrate Layer</strong></p>
+<ul>
+<li>Mechanically enforced invariants</li>
+<li>Hardware, kernel, runtime, or compiler constraints</li>
+<li>Non-optional guarantees</li>
+<li>Compositionally stable enforcement</li>
+</ul>
+<p>The defining property of substrate enforcement is not low-level
+implementation but <strong>non-optional invariance</strong>. Violations
+cannot silently succeed.</p>
+<p>Migration occurs when concerns transition from “be careful” to
+“cannot proceed.”</p>
+<hr />
+<h2 id="historical-migrations-with-limits">3. Historical Migrations
+(With Limits)</h2>
+<h3 id="memory-safety">3.1 Memory Safety</h3>
+<p>Memory corruption was initially mitigated through programmer
+discipline. Memory management units, segmentation, paging, and managed
+runtimes embedded memory boundaries into hardware and language
+substrates.</p>
+<p>The migration was real but incomplete. Speculative execution side
+channels and unsafe escape hatches demonstrate that enforcement reshapes
+rather than eliminates the failure surface. Still, the invariant class
+descended materially.</p>
+<h3 id="concurrency-and-transactions">3.2 Concurrency and
+Transactions</h3>
+<p>Lock discipline proved insufficient under scale. Race conditions and
+inconsistent state proliferated. Transactional engines and ACID
+databases formalized atomicity and isolation as substrate
+guarantees.</p>
+<p>Distributed consistency remains difficult, yet atomicity migrated
+from convention to enforcement.</p>
+<h3 id="type-systems-and-undefined-behavior">3.3 Type Systems and
+Undefined Behavior</h3>
+<p>Type systems rendered large classes of misuse syntactically
+unrepresentable. Compile-time invariants replaced runtime caution.</p>
+<p>Escape hatches persist. Migration does not imply perfection; it
+indicates structural descent.</p>
+<p>These cases illustrate a consistent trajectory: invariants migrate
+partially and pragmatically under pressure.</p>
+<hr />
+<h2 id="the-substrate-migration-principle-1">4. The Substrate Migration
+Principle</h2>
+<p>From these cases, we derive:</p>
+<blockquote>
+<p><strong>Substrate Migration Principle (SMP)</strong> When a recurring
+class of failures exhibits structural regularity and cannot be reliably
+mitigated through application-layer discipline, and when a meaningful
+subset of that failure class admits formalization, systems evolve by
+relocating that subset into the substrate as mechanically enforced
+invariants.</p>
+</blockquote>
+<p>Three criteria characterize migratable concerns:</p>
+<ol type="1">
+<li><p><strong>Structural Recurrence</strong> Failures share invariant
+shape across domains.</p></li>
+<li><p><strong>Discipline Collapse Under Scale</strong> Voluntary
+mitigation degrades predictably under autonomy, reuse, or economic
+pressure.</p></li>
+<li><p><strong>Partial Formalizability</strong> Some subset of the
+concern can be expressed as enforceable constraint.</p></li>
+</ol>
+<p>Migration captures enforceable structure - not total domain
+complexity.</p>
+<hr />
+<h2
+id="the-emerging-failure-class-unauthorized-semantic-continuation">5.
+The Emerging Failure Class: Unauthorized Semantic Continuation</h2>
+<p>Modern AI-driven and institutional systems generate semantic effects
+at runtime.</p>
+<p>They:</p>
+<ul>
+<li>Produce claims</li>
+<li>Chain reasoning across contexts</li>
+<li>Invoke tools autonomously</li>
+<li>Escalate outputs into decisions</li>
+<li>Normalize interpretations through repetition</li>
+</ul>
+<p>A recurring structural failure appears:</p>
+<p>Semantic artifacts escalate in authority without explicit binding to
+the conditions under which such escalation is licensed.</p>
+<h3 id="worked-example-clinical-decision-escalation">5.1 Worked Example:
+Clinical Decision Escalation</h3>
+<p>Consider a clinical decision-support pipeline:</p>
+<ol type="1">
+<li><p>A language model outputs: “Recent trials suggest Drug X reduces
+stroke risk by 40% in elderly patients.”</p></li>
+<li><p>The statement is structured and tagged as a medical
+insight</p></li>
+<li><p>A downstream module classifies the statement as “evidence-backed”
+because it matches expected syntactic form</p></li>
+<li><p>The system elevates the recommendation to clinician-facing
+advisory status</p></li>
+</ol>
+<p>The transformation chain implicitly performs:</p>
+<p>Unverified text -&gt; Structured claim -&gt; Evidence-backed
+classification -&gt; Clinical recommendation.</p>
+<p>No transformation boundary revalidates authority.</p>
+<p>The failure is not merely hallucination. It is unlicensed escalation
+across semantic layers.</p>
+<p>Application-layer mitigations remain advisory. Substrate-level
+enforcement would require:</p>
+<ul>
+<li>Provenance-bound evidence tokens</li>
+<li>Authority-typed escalation permissions</li>
+<li>Mechanical refusal when promotion lacks valid authorization</li>
+</ul>
+<p>The failure class is structural: continuation without authority
+constraint.</p>
+<hr />
+<h2 id="is-governance-formalizable">6. Is Governance Formalizable?</h2>
+<p>Memory safety violations are syntactic. Type errors are decidable.
+Information flow admits lattice formalization.</p>
+<p>Semantic legitimacy is more contextual. Yet migration historically
+captures formalizable subsets rather than complete normative
+domains.</p>
+<p>Governance may admit similar structural subsets.</p>
+<h3 id="minimal-authority-lattice">6.1 Minimal Authority Lattice</h3>
+<p>Authority levels may be modeled as a partially ordered set.</p>
+<p><span
+class="math display"><em>L</em> = {<em>L</em><sub>0</sub>, <em>L</em><sub>1</sub>, <em>L</em><sub>2</sub>, <em>L</em><sub>3</sub>}</span></p>
+<p>With order:</p>
+<p><span
+class="math display"><em>L</em><sub>0</sub> ≤ <em>L</em><sub>1</sub> ≤ <em>L</em><sub>2</sub> ≤ <em>L</em><sub>3</sub></span></p>
+<p>Escalation requires explicit promotion authorization.</p>
+<p>Absent valid authorization, escalation fails mechanically.</p>
+<p>This lattice does not encode truth or moral authority. It enforces
+structural constraints on semantic escalation.</p>
+<h3 id="structural-scope">6.2 Structural Scope</h3>
+<p>Such a lattice constrains:</p>
+<ul>
+<li>How claims may escalate</li>
+<li>Who may authorize escalation</li>
+<li>When continuation must fail</li>
+</ul>
+<p>It does not adjudicate ultimate legitimacy.</p>
+<p>Migration would regulate propagation structure, not moral
+content.</p>
+<hr />
+<h2 id="relation-to-prior-work">7. Relation to Prior Work</h2>
+<p>SMP generalizes invariant descent observed in:</p>
+<ul>
+<li>Saltzer and Schroeder’s least privilege principle</li>
+<li>Denning’s information flow lattices</li>
+<li>Lamport’s temporal invariants</li>
+<li>Leveson’s safety constraint frameworks</li>
+<li>Brooks’ critique of discipline-based reliability</li>
+</ul>
+<p>Each formalized a specific invariant class under structural
+pressure.</p>
+<p>SMP abstracts their shared trajectory: partial formalization leading
+to architectural enforcement.</p>
+<hr />
+<h2 id="detecting-imminent-migration">8. Detecting Imminent
+Migration</h2>
+<p>A discipline-to-substrate transition becomes plausible when:</p>
+<ol type="1">
+<li><strong>Recurring structure</strong> - e.g., unlicensed escalation
+across AI pipelines</li>
+<li><strong>Amplified impact</strong> - autonomous systems act on
+unverified claims</li>
+<li><strong>Degraded discipline</strong> - prompt engineering fails
+under scale</li>
+<li><strong>Proliferating but unenforced formalisms</strong> -
+guardrails remain advisory</li>
+<li><strong>Accumulating externalities</strong> - regulatory and
+economic pressure intensifies</li>
+</ol>
+<p>SMP functions as a diagnostic lens for identifying invariant descent
+pressure.</p>
+<hr />
+<h2 id="the-objection-legitimacy-is-social">9. The Objection: Legitimacy
+Is Social</h2>
+<p>A serious objection asserts that legitimacy is irreducibly social and
+cannot be substrate-encoded.</p>
+<p>SMP does not claim to mechanize moral truth.</p>
+<p>Historical migrations did not encode full correctness; they
+constrained structural properties.</p>
+<p>Similarly, governance migration would constrain escalation structure
+and authority propagation. It would not resolve normative
+disagreement.</p>
+<p>The claim is architectural, not metaphysical.</p>
+<hr />
+<h2 id="scope-and-modesty">10. Scope and Modesty</h2>
+<p>SMP does not claim:</p>
+<ul>
+<li>Complete mechanization of governance</li>
+<li>Deterministic legitimacy resolution</li>
+<li>Inevitable invariant descent</li>
+<li>Elimination of semantic drift</li>
+</ul>
+<p>It proposes that under structural pressure, partially formalizable
+aspects of governance may migrate into enforced system invariants.</p>
+<p>Migration reshapes the failure surface. It does not abolish
+fragility.</p>
+<hr />
+<h2 id="conclusion">11. Conclusion</h2>
+<p>Computing evolves when recurring fragilities acquire enforceable
+structure.</p>
+<p>Under sufficient scale and cost, discipline yields to constraint.</p>
+<p>Historical invariant descents moved memory, concurrency, isolation,
+and type safety downward into substrate enforcement.</p>
+<p>AI-driven systems reveal a new fragility: unauthorized semantic
+continuation.</p>
+<p>If the Substrate Migration Principle continues to apply, aspects of
+governance - authority binding, escalation constraints, admissibility
+enforcement - may descend into substrate-level invariants.</p>
+<p>SMP offers a structural diagnostic rather than a deterministic law:
+when voluntary discipline collapses under scale, invariant descent
+becomes the architecture of stabilization.</p>
+<hr />
+<h2 id="appendix-formal-definition-of-the-authority-lattice">Appendix:
+Formal Definition of the Authority Lattice</h2>
+<p>Let <span
+class="math inline"><em>L</em> = {<em>L</em><sub>0</sub>, <em>L</em><sub>1</sub>, <em>L</em><sub>2</sub>, <em>L</em><sub>3</sub>}</span>
+be a set of authority levels, with partial order <span
+class="math inline">≤</span> defined as:</p>
+<p><span
+class="math display"><em>L</em><sub>0</sub> ≤ <em>L</em><sub>1</sub> ≤ <em>L</em><sub>2</sub> ≤ <em>L</em><sub>3</sub></span></p>
+<p>Let <span
+class="math inline"><em>T</em>(<em>i</em> → <em>j</em>)</span> be a
+promotion token for escalation from <span
+class="math inline"><em>L</em><sub><em>i</em></sub></span> to <span
+class="math inline"><em>L</em><sub><em>j</em></sub></span>, where <span
+class="math inline"><em>i</em> &lt; <em>j</em></span>.</p>
+<p>Define a promotion function:</p>
+<p><span
+class="math display">Promote : <em>L</em><sub><em>i</em></sub> × <em>L</em><sub><em>j</em></sub> × <em>T</em> → <em>L</em><sub><em>j</em></sub></span></p>
+<p>such that:</p>
+<p><span
+class="math display">Promote(<em>L</em><sub><em>i</em></sub>, <em>L</em><sub><em>j</em></sub>, <em>T</em>) = <em>L</em><sub><em>j</em></sub>  if:</span></p>
+<ol type="1">
+<li><span
+class="math inline"><em>L</em><sub><em>i</em></sub> ≤ <em>L</em><sub><em>j</em></sub></span></li>
+<li><span class="math inline"><em>T</em></span> is a valid token for
+<span
+class="math inline">(<em>L</em><sub><em>i</em></sub> → <em>L</em><sub><em>j</em></sub>)</span></li>
+<li><span class="math inline"><em>T</em></span> is issued by an
+authorized entity</li>
+</ol>
+<p>Otherwise, <span
+class="math inline">Promote(<em>L</em><sub><em>i</em></sub>, <em>L</em><sub><em>j</em></sub>, <em>T</em>)</span>
+is undefined (escalation fails).</p>
+<p>This lattice is not intended to encode truth or moral authority, but
+to enforce structural constraints on semantic escalation.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that across the history of computing, major
+reliability and security advances have followed a recurring structural
+transition: concerns once managed through voluntary discipline at the
+application layer migrate downward into enforced invariants at the
+substrate layer. Its nearest external comparison fields are open
+sovereign, software, governance. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Source availability
+and reproducible builds improve inspectability but do not alone
+guarantee comprehensibility, practical exit, hardware control, or
+sustainable maintenance. Modularity, secure-development practice, and
+reproducibility reduce classes of failure but do not guarantee
+architectural coherence or user sovereignty. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Free Software Foundation. <em>The Free Software
+Definition</em>. https://www.gnu.org/philosophy/free-sw.html
+<strong>Relationship:</strong> Normative predecessor for user freedoms;
+the paper may add reconstruction, governance, or hardware-boundary
+obligations beyond license rights.</p>
+<p><strong>[E2]</strong> Open Source Initiative. <em>The Open Source
+Definition</em>. https://opensource.org/osd
+<strong>Relationship:</strong> Adjacent licensing baseline; source
+availability is not treated as sufficient for operational
+sovereignty.</p>
+<p><strong>[E3]</strong> Martin Kleppmann et al. “Local-First Software:
+You Own Your Data, in Spite of the Cloud.” <em>Onward! 2019</em>,
+pp. 154-178. DOI: 10.1145/3359591.3359737.
+https://www.inkandswitch.com/local-first/ <strong>Relationship:</strong>
+Adjacent local-first design program relevant to user custody, offline
+operation, and collaboration.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E6]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Jnana</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-ECEAB04A620F163D</code>;<br />
+source SHA-256<br />
+<code>76D921D2975BDCD25D6DFB506F5E85F7AFDBF4D2CCC65F8C45394121F9D90060</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Jnana and the Next Open
+Source Revolution</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-473AD6FAA1659E24</code>;<br />
+source SHA-256<br />
+<code>E73859FD3B4AD4F7ED80E96F93F2D5A0DCB3A2D76C5741813F878B3874D7887D</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Cold Boot Continuity as a
+Deployment Primitive</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-3DB3470715D914D0</code>;<br />
+source SHA-256<br />
+<code>4CBB05E90E4ECA37EDA78C0E1FC1FDD180B2D6E0936831B57379AD7124776D4E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure in Software Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-B307F65B51C503DE</code>;<br />
+source SHA-256<br />
+<code>9D2A9D79DE8BC3F2F8ABECA073E4D3607F7623F4368E63F8036081E39B4C75C3</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Coding and
+Debugging</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18115533</code>;<br />
+source SHA-256<br />
+<code>2469EDA96DBC1E207855A9AD27314A7FAB59FA35E6EFEF9288C30F949376BF16</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18726868">10.5281/zenodo.18726868</a></p>

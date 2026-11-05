@@ -1,0 +1,826 @@
+<h1 id="jnana-ii-constitutional-transformation-substrate">Jnana II:
+Constitutional Transformation Substrate</h1>
+<h2
+id="transformation-admissibility-authority-containment-and-evidence-under-ai-acceleration">Transformation
+Admissibility, Authority Containment, and Evidence Under AI
+Acceleration</h2>
+<h3
+id="replay-requires-explicit-closure-and-may-be-exact-deterministic-equivalence-class-or-observational.">Replay
+requires explicit closure and may be exact, deterministic,
+equivalence-class, or observational.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Software assurance usually evaluates programs, artifacts, or
+executions more directly than the authority and law governing the
+transformations that produced them. Compilers, build pipelines,
+configuration, CI, package hooks, deployment systems, and AI-generated
+rewrites may introduce dependencies, capabilities, effects, and policy
+changes whose authority is partly ambient or retrospectively
+narrated.</p>
+<p>Jnana II proposes a <strong>constitutional transformation
+substrate</strong> in which transformation regimes, admission rules,
+capability grants, effect boundaries, and receipts become explicit
+governed artifacts. Its strongest thesis is not that program correctness
+can be replaced by constitutional review. It is that program correctness
+and transformation admissibility answer different questions: whether a
+result satisfies a technical property, and whether the transformation
+was permitted to bind under declared law, authority, capability, and
+effect limits.</p>
+<p>The architecture organizes MCIR, MCIR-Law, Constitutional Invariants,
+PEIR, Domain Effects, and ReceiptLog into a
+proposal-admission-lowering-effect-witness path. The revision sharply
+bounds the claims. Canonical representation gives an artifact standing
+within a declared Jnana profile, not existence in general. A decidable
+law layer does not make arbitrary execution predictable. Effect
+membranes govern only mediated paths. Actual effects may be partial or
+irreversible. Receipts prove recorded relations, not truth or
+legitimacy. Replay requires explicit closure and may be exact,
+deterministic, equivalence-class, or observational.</p>
+<p>The paper adds an authority envelope, negative-power obligations,
+coverage testing, failure atomicity, recovery, an incremental adoption
+ladder, GMB/GSM integration, and a full evaluation program. It remains a
+specification candidate: no implementation, universal containment,
+deterministic replay, hardware adaptation, or transformation-correctness
+result is established.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. The custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/jnana-ii-</code></p>
+<p><code>constitutional-transformation-substrate/</code><br />
+<code>integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>9385155F925B1C15BA88D5133F97665833E5C8D295F66F3B7492CCBF4D9FA652</code>.
+The source remains unchanged.</p>
+<p>The Jnana II architecture, named components, constrained-proposer
+model, negative-power thesis, hardware discussion, and migration outline
+are author material. The formal envelope, bounded claims, recovery and
+coverage requirements, corpus integration, tests, counterevidence, and
+decisions added here are AI editorial or synthetic candidates until
+adopted. No external research was conducted.</p>
+<h2 id="program-correctness-and-transformation-admissibility">1. Program
+Correctness and Transformation Admissibility</h2>
+<p>A type check, proof, test, reproducible build, or artifact hash can
+support a bounded property claim. It does not by itself answer:</p>
+<ul>
+<li>who authorized the transformation;</li>
+<li>which law and version applied;</li>
+<li>whether the tool and dependencies were admitted;</li>
+<li>whether capability or effect scope expanded;</li>
+<li>whether an exception or break-glass path was used;</li>
+<li>what partial effects occurred on failure; or</li>
+<li>which evidence supports promotion of the result.</li>
+</ul>
+<p>Jnana II calls this second family <strong>transformation
+admissibility</strong>. It complements rather than supersedes technical
+correctness.</p>
+<h2 id="the-constitutional-transformation-envelope">2. The
+Constitutional Transformation Envelope</h2>
+<p>Represent a governed transformation as:</p>
+<p><span
+class="math display"><em>T</em> = (<em>I</em>, <em>P</em>, <em>L</em>, <em>A</em>, <em>C</em>, <em>G</em>, <em>Γ</em>, <em>X</em>, <em>W</em>, <em>R</em>),</span></p>
+<p>where <span class="math inline"><em>I</em></span> binds exact inputs
+and predecessor identity, <span class="math inline"><em>P</em></span>
+the proposal, <span class="math inline"><em>L</em></span> applicable
+law, <span class="math inline"><em>A</em></span> authority, <span
+class="math inline"><em>C</em></span> requested capabilities, <span
+class="math inline"><em>G</em></span> the gate decision, <span
+class="math inline"><em>Γ</em></span> the admitted transformation regime
+and environment, <span class="math inline"><em>X</em></span> resulting
+artifacts and external effects, <span
+class="math inline"><em>W</em></span> evidence and receipts, and <span
+class="math inline"><em>R</em></span> recovery and revision state.</p>
+<p>The path is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;I \\
+&amp;\rightarrow P \\
+&amp;\rightarrow (L,A,C) \\
+&amp;\rightarrow G \\
+&amp;\rightarrow \Gamma \\
+&amp;\rightarrow X \\
+&amp;\rightarrow W \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<p>A refusal, deferment, escalation, or partial-failure record is a
+valid result. A gate decision does not guarantee that downstream
+mediation is complete.</p>
+<h2 id="mcir-as-a-governed-carrier">3. MCIR as a Governed Carrier</h2>
+<p>MCIR can represent program semantics, compiler passes, gates,
+identity regimes, capabilities, laws, and effect declarations under a
+chosen profile. Canonicalization supports stable identity only for
+material admitted to that profile and canonicalization law.</p>
+<p>The source says that a transformation that cannot be canonically
+represented does not exist within Jnana. The bounded claim is: it
+receives no Jnana standing under that profile. The external
+transformation may still exist and may still affect the system through
+an uncovered path. Unrepresentable or unresolved material should be
+refused, isolated, or explicitly carried as remainder rather than
+erased.</p>
+<h2 id="mcir-law-and-admission">4. MCIR-Law and Admission</h2>
+<p>MCIR-Law is proposed as a decidable law and gate layer over bounded
+artifacts and questions. A decision may return <code>ADMIT</code>,<br />
+<code>REFUSE</code>, <code>DEFER</code>, <code>ESCALATE</code>, or
+<code>NOT_COVERED</code>. It should bind:</p>
+<ul>
+<li>proposal and artifact identity;</li>
+<li>law and constitutional-invariant versions;</li>
+<li>authority and delegation chain;</li>
+<li>requested capability and effect classes;</li>
+<li>evidence obligations and unresolved material;</li>
+<li>result, reason, and expiry;</li>
+<li>exception or emergency status; and</li>
+<li>appeal and revision path.</li>
+</ul>
+<p>Decidability applies only to the declared gate language and inputs.
+It does not decide arbitrary behavior or guarantee that reality matches
+the model.</p>
+<h2 id="constitutional-invariants">5. Constitutional Invariants</h2>
+<p>Constitutional Invariants constrain how ordinary law and
+transformation regimes may change. Candidate invariants include:</p>
+<ol type="1">
+<li>no effect authority without an explicit grant;</li>
+<li>no grant widening without constitutionally authorized change;</li>
+<li>no law mutation that silently weakens receipt or witness
+obligations;</li>
+<li>no promotion of AI output into author, maintainer, or constitutional
+standing by generation alone;</li>
+<li>no exception path without identity, scope, time, evidence, and
+closure;</li>
+<li>no retroactive relabeling of an unauthorized effect as
+authorized;</li>
+<li>no claim of replay beyond its demonstrated class; and</li>
+<li>no claim of complete mediation without coverage evidence.</li>
+</ol>
+<p>These are candidate specifications, not proven enforced
+properties.</p>
+<h2 id="peir-and-execution">6. PEIR and Execution</h2>
+<p>PEIR is proposed as an expressive execution layer below the decidable
+admission surface. The architecture does not solve general program
+behavior or make Turing-complete execution safe by declaration.</p>
+<p>Containment depends on concrete mediation, resource limits,
+isolation, host and hardware assumptions, recovery, and tested
+correspondence between admitted representation and realized execution.
+“All actual behavior is visible and reversible” is too strong. Behavior
+outside instrumentation may be invisible; physical, network, financial,
+disclosure, and human effects may be irreversible.</p>
+<p>The supported goal is bounded observability, mediation, and
+compensating recovery for declared effect classes.</p>
+<h2 id="domain-effects-and-capability-sovereignty">7. Domain Effects and
+Capability Sovereignty</h2>
+<p>Domain Effects define interfaces between computation and external
+consequence. Each effect request should declare class, target,
+parameters, authority, duration, expected result, compensation, and
+evidence.</p>
+<p>No ambient syscall authority is an architectural objective, not a
+present fact. The threat model must cover direct syscalls, subprocesses,
+build scripts, package hooks, network clients, credentials, plugins,
+drivers, firmware, humans, and emergency channels. Governance Coverage
+Gaps tests whether a path can reach an effect without crossing the
+declared membrane.</p>
+<p>An effect membrane cannot govern what it cannot observe or interpose
+upon.</p>
+<h2 id="partial-failure-atomicity-and-recovery">8. Partial Failure,
+Atomicity, and Recovery</h2>
+<p>A transformation can emit an artifact, modify state, send a request,
+expose a secret, and then fail. A single pass/fail status hides this
+structure.</p>
+<p>The receipt should record:</p>
+<ul>
+<li>intended and attempted effects;</li>
+<li>completed, failed, unknown, and compensating effects;</li>
+<li>retained intermediate artifacts;</li>
+<li>rollback or repair attempts;</li>
+<li>residual risk and next authority; and</li>
+<li>whether retry is safe, idempotent, or prohibited.</li>
+</ul>
+<p>Atomicity is a property to demonstrate at a defined boundary, not a
+default assumption. Recovery may restore a local artifact without
+undoing an external consequence.</p>
+<h2 id="receiptlog-and-replay-classes">9. ReceiptLog and Replay
+Classes</h2>
+<p>ReceiptLog binds transformation evidence and lineage. A receipt is
+useful only with exact identities, governed keys, observation limits,
+and preserved payload custody.</p>
+<p>Replay should be classified:</p>
+<ul>
+<li><strong>exact artifact replay:</strong> identical retained result
+bytes;</li>
+<li><strong>deterministic execution replay:</strong> identical result
+under declared closed inputs and runtime;</li>
+<li><strong>equivalence-class replay:</strong> different result
+satisfying a declared relation;</li>
+<li><strong>observational replay:</strong> repeated tests produce
+results within declared bounds; or</li>
+<li><strong>non-replayable with reconstruction:</strong> history can be
+inspected but not rerun.</li>
+</ul>
+<p>Reproducibility does not establish legitimacy, and legitimacy does
+not establish reproducibility.</p>
+<h2 id="ai-as-constrained-proposer">10. AI as Constrained Proposer</h2>
+<p>AI may propose code, MCIR changes, gate rules, law amendments,
+capability changes, tests, and explanations. Proposal is not authority.
+The architecture should ensure that a model cannot obtain effect merely
+by describing it, cannot author its own grant, and cannot choose the
+evidence standard by which its result is promoted.</p>
+<p>This separation fails if the same agent controls proposal,
+interpretation, admission, effect, and witness without independent
+constraints. Human review alone is not sufficient if the interface hides
+scope, dependencies, or partial effects. Automation may assist every
+role while preserving distinct authority and receipts.</p>
+<h2 id="negative-power">11. Negative Power</h2>
+<p>Negative power is the capacity to refuse, stop, exit, fork, revoke,
+recover, and renegotiate without an unauthorized effect being treated as
+inevitable. It requires:</p>
+<ul>
+<li>visible binding and capability scope;</li>
+<li>a usable stop or refusal path;</li>
+<li>revocation and expiry;</li>
+<li>provider and dependency exit where claimed;</li>
+<li>governed break-glass behavior;</li>
+<li>appeal and amendment;</li>
+<li>reconstruction or migration material; and</li>
+<li>evidence of what occurred before refusal.</li>
+</ul>
+<p>Negative power is bounded by physical reality, safety duties,
+shared-resource rights, and the chosen constitution. It is not an
+unlimited individual veto over every system.</p>
+<h2 id="hardware-and-host-boundary">12. Hardware and Host Boundary</h2>
+<p>Firmware hashes, verified boot, admitted backends, syscall bridges,
+and device profiles may strengthen a bounded platform claim. They do not
+prove hardware behavior or remove supply-chain, microcode,
+management-engine, peripheral, physical-access, timing, side-channel,
+and availability assumptions.</p>
+<p>Each platform profile should state the lowest trusted boundary,
+excluded components, update and recovery authority, measurement regime,
+and claim ceiling. Hardware sovereignty is not established merely by
+representing a firmware image in MCIR.</p>
+<h2 id="incremental-adoption-ladder">13. Incremental Adoption
+Ladder</h2>
+<ul>
+<li><p><strong>Level:</strong> 0<br />
+<strong>Adoption target:</strong> exact inputs, proposals, results, and
+receipts<br />
+<strong>Claim ceiling:</strong> custody only</p></li>
+<li><p><strong>Level:</strong> 1<br />
+<strong>Adoption target:</strong> capability and effect inventory<br />
+<strong>Claim ceiling:</strong> declared inventory, not
+coverage</p></li>
+<li><p><strong>Level:</strong> 2<br />
+<strong>Adoption target:</strong> proposal/authority separation and
+typed gate outcomes<br />
+<strong>Claim ceiling:</strong> bounded admission process</p></li>
+<li><p><strong>Level:</strong> 3<br />
+<strong>Adoption target:</strong> admitted transformation profiles and
+replay classification<br />
+<strong>Claim ceiling:</strong> conformance for tested profiles</p></li>
+<li><p><strong>Level:</strong> 4<br />
+<strong>Adoption target:</strong> mediated build, package, tool, and
+deployment effects<br />
+<strong>Claim ceiling:</strong> coverage limited to tested
+paths</p></li>
+<li><p><strong>Level:</strong> 5<br />
+<strong>Adoption target:</strong> host, recovery, provider-exit, and
+hardware profiles<br />
+<strong>Claim ceiling:</strong> assurance limited to declared
+boundary</p></li>
+</ul>
+<p>Advancement requires evidence from the current level. A receipt-only
+system must not claim effect containment.</p>
+<h2 id="corpus-integration">14. Corpus Integration</h2>
+<p><strong>Jnana</strong> supplies the original governed-genome
+architecture. Jnana II narrows its transformation and authority
+implications. <strong>Water: MCIR as the Engineering of Governed
+Change</strong> supplies transformation-carriage detail.
+<strong>Constitutionally Governed Infrastructure</strong> broadens the
+runtime and institutional boundary. <strong>Governance Coverage
+Gaps</strong> supplies the escape-path audit.</p>
+<p><strong>The Three Hash Rule</strong> binds governing input, judgment
+or operation, and result. <strong>Reasoning by Way of Receipts</strong>
+supplies claim-bounded inference. The <strong>Governed Meaning Base
+(GMB)</strong> can retain law, authority, representations, grants,
+effects, evidence, exceptions, conflicts, and revisions. The universal
+<strong>GSM</strong> can type these relations without making
+representation equal realization or receipt equal truth.</p>
+<h2 id="realization-funnel">15. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate constitutional, incremental,
+centralized, federated, and legacy-wrapping regimes.</li>
+<li><strong>Specification:</strong> define identity, law, authority,
+capabilities, effects, receipts, refusal, recovery, and claim
+ceilings.</li>
+<li><strong>CM1:</strong> retain admissible configurations, including
+costly, partial, centralized, or undesirable ones.</li>
+<li><strong>CM2:</strong> prefer configurations by sovereignty,
+containment, inspectability, accessibility, performance, and migration
+burden.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for one bounded toolchain and platform.</li>
+<li><strong>IR:</strong> produce an Instance Realization or
+Implementation Realization of schemas, gates, compilers, membranes,
+stores, and interfaces.</li>
+<li><strong>Evidence:</strong> run custody, bypass, conformance, effect,
+partial-failure, replay, recovery, provider-exit, and platform
+tests.</li>
+<li><strong>Revision:</strong> amend law and architecture through
+successor identity, migration, and receipts.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 and adoption
+criteria. It does not select a complete IC or produce an IR.</p>
+<p>In this funnel, IR denotes the realization stage and remains distinct
+from Intermediate Representation in MCIR.</p>
+<h2 id="evaluation-program">16. Evaluation Program</h2>
+<p>Evaluation should include untrusted AI proposals, hidden
+dependencies, capability widening, compiler and policy upgrades, build
+and install hooks, direct syscall and subprocess paths, plugin and
+credential effects, denied and deferred operations, partial failure,
+rollback, compromised receipts, replay divergence, concurrent changes,
+break-glass events, provider removal, schema migration, and platform
+recovery.</p>
+<p>Measures should include uncovered capability rate, bypass success,
+false admission and refusal, obligation loss, effect mismatch, unknown
+residual effects, replay class, reconstruction success, recovery time,
+user comprehension, performance cost, accessibility burden, and
+governance capture risk.</p>
+<h2 id="constitutional-transformation-substrate-profile">Constitutional
+Transformation Substrate Profile</h2>
+<p>Across the completed P1 corpus, Jnana II is the
+<strong>constitutional transformation substrate profile for software and
+agentic toolchains</strong>. It proposes a coordinated surface for exact
+proposals, MCIR carriers, bounded law, capability grants, procedural
+lowering, effect mediation, receipts, recovery, and provider exit. It
+does not replace program correctness, prove complete mediation, or
+establish that a Jnana realization exists.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> The general stage-contract theory of governed
+translation.<br />
+<strong>Jnana II boundary:</strong> Jnana II configures that theory for
+software transformation and effect paths.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Implementation
+Codex</em><br />
+<strong>Supplies:</strong> IC-to-IR realization package with phases,
+bindings, gates, tests, and journals.<br />
+<strong>Jnana II boundary:</strong> A Codex can package a Jnana
+realization without becoming the substrate’s semantic identity.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Constitutional Syscall
+Architecture for Cyber-Physical Control Systems</em><br />
+<strong>Supplies:</strong> A specialized effect-mediation profile at a
+cyber-physical boundary.<br />
+<strong>Jnana II boundary:</strong> Constitutional syscalls are one
+membrane realization, not the whole transformation substrate.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Audit of capabilities and effects that escape
+declared governance.<br />
+<strong>Jnana II boundary:</strong> Coverage evidence sets the ceiling
+of every Jnana containment claim.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Ableman Format
+Specification (AFS)</em><br />
+<strong>Supplies:</strong> Artifact roles, profiles, canonical
+encodings, validators, and conformance fixtures.<br />
+<strong>Jnana II boundary:</strong> AFS can standardize Jnana artifacts
+without proving their execution or authority.</p></li>
+</ul>
+<p>The substrate should expose six independently testable planes:
+representation, law and admission, capability authority, transformation
+execution, external effect, and evidence/recovery. A plane boundary is
+valid only when the mapping, authority, bypass model, and failure
+behavior are explicit. One component may implement several planes, but
+their claims remain distinct.</p>
+<p>A realization profile should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+J= (&amp;representation, law, invariants, authority, capabilities, \\
+&amp;lowering, executor, effect\_membrane, witness, recovery, \\
+&amp;exit, coverage, platform\_boundary)
+\end{aligned}.
+$$</span></p>
+<p>The corrected funnel clarifies that this document remains at
+Specification. IC may mean Instance Constitution or Instance
+Configuration. Realization-stage IR may mean Instance Realization or
+Implementation Realization and must not be conflated with MCIR’s
+Intermediate Representation. A schema set, reference CLI, mediated
+toolchain, host profile, and hardware-bounded platform are progressively
+stronger IR classes, not one binary implementation claim.</p>
+<p>The universal GSM can type<br />
+<code>CONFIGURES_JNANA_SUBSTRATE</code>,<br />
+<code>REPRESENTS_TRANSFORMATION_IN_MCIR</code>,
+<code>EVALUATES_UNDER_MCIR_LAW</code>,<br />
+<code>GRANTS_BOUNDED_CAPABILITY</code>,
+<code>LOWERS_TO_EXECUTION_PROFILE</code>,
+<code>CROSSES_EFFECT_MEMBRANE</code>,<br />
+<code>WITNESSES_PARTIAL_EFFECT</code>,
+<code>RECOVERS_LOCAL_STATE</code>, <code>EXITS_PROVIDER</code>,<br />
+and<br />
+<code>BOUNDS_CLAIM_AT_PLATFORM</code>. These relations turn the
+architecture into a testable profile rather than a totalizing system
+label.</p>
+<p>This integration establishes four editorial commitments: retain Jnana
+II as the constitutional transformation substrate profile; adopt the
+six-plane separation and realization-profile envelope; define
+progressively stronger IR classes and their evidence gates; and make
+coverage, partial effects, recovery, provider exit, and platform
+boundary mandatory claim ceilings.</p>
+<h2
+id="os-composition-and-safety-critical-physical-transformation-at-the-randomized-edge">OS
+Composition and Safety-Critical Physical Transformation at the
+Randomized Edge</h2>
+<p>The clipped fixed-seed edge comparison with MosaiCOS and the
+Direct-Coupled Dynamic Torque Reactor provides two demanding realization
+profiles without broadening Jnana II into a total system:</p>
+<p><span class="math display">$$
+\begin{aligned}
+J^*= (&amp;representation, law, invariants, authority, capabilities, \\
+&amp;lowering, executor, effect\_membrane, witness, recovery, \\
+&amp;exit, coverage, OS\_boundary, physical\_safety\_boundary, \\
+&amp;remainder)
+\end{aligned}.
+$$</span></p>
+<p>MosaiCOS may host or consume a Jnana II realization for software,
+package, policy, session, service, and configuration transformations.
+The OS constitution, selected IC, realized IR, Jnana substrate, source
+tree, build, runtime, deployment, and evidence package remain separate
+subjects. Neither profile proves the other conforms.</p>
+<p>DCDTR supplies a safety-critical physical-domain stress case.
+Controller or calibration changes may be proposed and lowered through
+Jnana planes, but effect mediation must terminate at explicit device
+capabilities, hardware identity, timing constraints, safety interlocks,
+qualified authority, and independently measured plant behavior. A
+passing software receipt does not establish torque, energy, thermal,
+emissions, or vehicle safety claims.</p>
+<p>The universal GSM can type<br />
+<code>COMPOSES_WITH_OS_ENVIRONMENT</code>,<br />
+<code>TRANSFORMS_CONTROLLER_ARTIFACT</code>,
+<code>TERMINATES_AT_HARDWARE_BOUNDARY</code>,<br />
+<code>REQUIRES_PHYSICAL_SAFETY_AUTHORITY</code>,
+<code>WITNESSES_PARTIAL_PHYSICAL_EFFECT</code>,<br />
+<code>RECOVERS_SOFTWARE_NOT_WORLD_STATE</code>, and<br />
+<code>TRANSFERS_NO_VEHICLE_EVIDENCE</code>.</p>
+<p>This randomized review establishes four editorial commitments: add OS
+and physical-safety boundaries to the realization profile; preserve
+distinct MosaiCOS/Jnana subjects; treat DCDTR as a bounded
+transformation stress case; and state that software recovery, replay,
+and receipts cannot restore or prove external physical state.</p>
+<h2 id="a-host-composition-contract-for-the-transformation-substrate">A
+Host-Composition Contract for the Transformation Substrate</h2>
+<p>Ten retained downstream uses place Jnana II inside other
+architectures without merging their identities. Governance as
+Compilation supplies the general stage theory. Crystallized Governance
+supplies a constitutional artifact profile. Jnana and its open-source
+projection supply wider architectural and contribution contexts. UGK may
+supply transition functions. MDSP can profile Jnana II as one domain
+standard. MosaiCOS can host it. Governance Coverage Gaps bounds
+mediation claims. Direct-Coupled Dynamic Torque Reactor supplies a
+safety-critical physical stress profile. <em>Everything Is a
+Compiler</em> treats it as an engineered architecture, not proof of the
+universal lens. Digital Gold supplied only a bibliographic mention and
+is not retained as a dependency.</p>
+<p>The composition contract is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;host, substrate\_profile, representations, law, \\
+&amp;capabilities, execution, effect\_membrane, receipts, \\
+&amp;replay, recovery, exit, platform\_boundary, coverage, \\
+&amp;conformance, remainder)
+\end{aligned}.
+$$</span></p>
+<p>Each host must name which Jnana II planes it realizes, which external
+mechanisms supply omitted planes, and where effects can bypass the
+substrate. Hosting, calling, profiling, or sharing MCIR artifacts does
+not establish identity or conformance. UGK transaction logic, OS
+scheduling, package management, hardware drivers, professional
+engineering, and domain law remain separately governed dependencies.</p>
+<p>Composition testing should cover partial failure across substrate and
+host, duplicate and late effects, rollback after external change,
+receipt disagreement, capability revocation, provider exit, unavailable
+recovery dependencies, and host updates that invalidate a previously
+qualified membrane. A successful replay may establish computational
+reconstruction while leaving physical or institutional effects
+unreplayed.</p>
+<p>The universal GSM can type<br />
+<code>HOSTS_JNANA_SUBSTRATE_PROFILE</code>,
+<code>SUPPLIES_EXTERNAL_PLANE</code>,<br />
+<code>COMPOSES_UGK_TRANSACTION</code>,
+<code>MEDIATES_DOMAIN_TRANSFORMATION</code>,<br />
+<code>BYPASSES_SUBSTRATE_EFFECT_PATH</code>,
+<code>REVOKES_CAPABILITY_AFTER_HOST_CHANGE</code>,<br />
+<code>REPLAYS_WITH_EXTERNAL_REMAINDER</code>, and<br />
+<code>CONFORMS_WITHOUT_IDENTITY_MERGER</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the host-composition contract; require plane coverage
+and bypass disclosure; test cross-boundary partial failure, revocation,
+replay, recovery, and exit; and preserve host, UGK, domain, OS, and
+Jnana II identity and authority boundaries.</p>
+<h2 id="counterevidence-and-failure-modes">17. Counterevidence and
+Failure Modes</h2>
+<p>The proposal should be narrowed or rejected where: (1) transformation
+correctness is presented as replacing program correctness; (2) all
+conventional tooling is described as ambient; (3) existing security and
+provenance mechanisms are ignored; (4) canonical representation is
+confused with existence; (5) MCIR profile limits are hidden; (6)
+decidable law is applied to undecidable behavior; (7) gate admission is
+treated as execution safety; (8) PEIR correspondence is untested; (9)
+all behavior is called visible; (10) irreversible effects are called
+reversible; (11) effect paths bypass the membrane; (12) build or package
+hooks retain ambient authority; (13) partial effects are hidden by one
+status; (14) rollback is assumed atomic; (15) receipts omit environment
+or dependencies; (16) signatures are treated as authority; (17)
+deterministic replay lacks closure; (18) equivalence is selected after
+results; (19) AI proposal gains standing by fluency; (20) one actor
+controls proposal, law, admission, effect, and witness; (21)
+constitutional invariants can be weakened by ordinary law; (22)
+break-glass use is silent; (23) negative power ignores shared rights or
+safety; (24) provider exit is claimed without reconstruction; (25)
+firmware hashes are treated as hardware behavior; (26) lower platform
+layers exceed the claim boundary; (27) migration levels are conflated;
+(28) GMB inclusion becomes validation; (29) adjacent papers are merged
+by thematic overlap; (30) a specification is presented as a working
+substrate; (31) measured overhead or complexity defeats the use case; or
+(32) external technical research shows the novelty or feasibility claim
+is overstated.</p>
+<h2
+id="govern-transformations-without-confusing-admission-and-correctness">Govern
+Transformations Without Confusing Admission and Correctness</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Jnana II proposes a substrate in which transformation proposals, law,
+authority, capability grants, admitted environments, external effects,
+receipts, recovery, and revision become explicit. Technical correctness
+and transformation admissibility answer different questions. A lawful
+transformation can be technically wrong; a technically correct artifact
+can result from an unauthorized or unsafe transformation.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Admission-correctness collapse.</strong> An admitted
+transformation is treated as correct, secure, safe, useful, or
+semantically faithful.</li>
+<li><strong>Canonical-existence attack.</strong> Material outside MCIR
+or the selected profile is treated as nonexistent rather than
+unrepresented, unresolved, or an uncovered effect path.</li>
+<li><strong>Decidability-overreach attack.</strong> A decidable bounded
+law language is presented as deciding arbitrary behavior, social
+conflict, or future effects.</li>
+<li><strong>Membrane-coverage attack.</strong> Governed syscalls or
+Domain Effects are assumed complete while direct host, dependency,
+hardware, network, administrator, or recovery paths remain.</li>
+<li><strong>Partial-effect attack.</strong> Failure after some
+irreversible or external action is represented as atomic refusal or
+clean rollback.</li>
+<li><strong>Receipt-truth attack.</strong> ReceiptLog proves legitimacy,
+reality, completeness, or causal responsibility beyond the recorded
+relation.</li>
+<li><strong>Host-composition attack.</strong> A compliant Jnana
+component runs within a host whose scheduler, filesystem, credentials,
+update path, or recovery authority violates the claimed envelope.</li>
+<li><strong>Negative-power bypass.</strong> Refusal and nonpromotion
+rights exist in the model but deadlines, defaults, emergency paths, or
+resource control force continuation.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>Jnana II is a constitutional transformation-substrate specification
+candidate. It does not establish an implementation, universal
+containment, transformation correctness, complete mediation,
+deterministic replay, hardware adaptation, failure atomicity, or
+recovery. Canonical representation grants only profile-relative
+standing, not general existence or authority.</p>
+<p>Systems, security, compiler, operating-system, hardware,
+distributed-transaction, formal-methods, and human-governance claims
+require current primary-source comparison and exact adversarial
+realization evidence. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public question becomes: was this exact transformation authorized
+under the right law, tools, capabilities, host, and effect boundary -
+and separately, did it produce the technically and semantically correct
+result?</p>
+<h2 id="conclusion">19. Conclusion</h2>
+<p>AI acceleration increases the rate at which software, configuration,
+dependencies, and authority assumptions can change. The central Jnana II
+insight is that those transformations need a constitutional surface:
+exact proposal, law, authority, capability, gate, transformation,
+effect, witness, and recovery.</p>
+<p>That surface cannot make arbitrary execution decidable or all effects
+reversible. It cannot govern escape paths it does not mediate, and it
+cannot turn receipts into legitimacy. Its contribution is more precise:
+it makes transformation authority an explicit object of design and
+testing alongside program behavior.</p>
+<p>Jnana II is therefore best understood as a specification for bounded
+lawful transformation. Its next proof is not rhetorical completeness. It
+is a small, adversarially tested toolchain profile that can demonstrate
+where authority begins, where it ends, which effects cross the membrane,
+and what remains outside the constitution.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires authorized primary-source review of compiler and
+build architecture, formal methods, capability systems, sandboxing and
+isolation, software supply-chain security, reproducible builds, package
+and CI systems, AI coding tools, operating-system mediation, firmware
+and verified boot, hardware trust boundaries, and related constitutional
+or policy-as-code systems.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that software assurance usually evaluates programs,
+artifacts, or executions more directly than the authority and law
+governing the transformations that produced them. Its nearest external
+comparison fields are governance, security, formal. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Unforgeable capabilities can constrain exercise of authority while still
+leaving allocation, delegation, revocation, and social legitimacy
+incorrectly specified. Formal assurance remains relative to the encoded
+model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847983">10.5281/zenodo.23847983</a></p>

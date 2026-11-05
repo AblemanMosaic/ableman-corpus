@@ -1,0 +1,2550 @@
+<h1 id="cryptographic-admissibility-and-jurisdiction">Cryptographic
+Admissibility and Jurisdiction</h1>
+<h2
+id="chc-as-a-mathematical-primitive-for-state-identity-semantic-identity-and-admissible-authority">CHC
+as a Mathematical Primitive for State Identity, Semantic Identity, and
+Admissible Authority</h2>
+<h3
+id="the-state-hash-binds-the-jurisdiction.-the-semantic-hash-binds-the-claims.-admissibility-decides-what-may-act.">The
+state hash binds the jurisdiction. The semantic hash binds the claims.
+Admissibility decides what may act.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Cryptographic verification systems typically bind artifacts to
+hashes, signatures, attestations, or provenance records. These
+mechanisms can often prove that a file, binary, package, document, or
+runtime artifact has not changed, but they do not natively bind that
+artifact to typed claims about intent, authority, jurisdiction, custody,
+resource use, lineage, or present admissibility under policy.</p>
+<p>Cryptographic Homological Compilation (CHC) defines a two-hash
+architecture and a freshness verification procedure. The State Hash
+<span class="math inline"><em>H</em><sub><em>s</em></sub></span> binds
+the artifact. The Semantic Hash <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> binds typed
+semantic dimensions whose values and attestations are independently
+verifiable under declared policy. Freshness is an evaluation layer, not
+a hash object.</p>
+<p>CHC’s novelty is not hashes, signatures, Merkle trees, attestations,
+provenance, freshness, or revocation in isolation. Its contribution is
+the separation of state identity, semantic identity, and admissibility
+into independently addressable cryptographic domains. Traditional
+cryptographic systems bind state. CHC binds state, claims, and
+admissibility as separately addressable cryptographic domains. The
+resulting architecture replaces authority-by-assertion with
+authority-by-admissibility, where signatures, institutions, registries,
+and attestations become evidence inputs rather than self-authorizing
+sources of legitimacy.</p>
+<p>CHC does not prove meaning. It cryptographically binds attestations
+about meaning to artifact state, then evaluates whether those bindings
+remain admissible under declared policy. Freshness evaluates
+admissibility, not truth. More generally, CHC relocates authority from
+implicit institutional trust toward explicit policy-evaluable
+admissibility. Signatures, attestations, manifests, checkpoints, and
+other evidence sources become inputs to policy rather than
+self-justifying sources of authority. The result is a candidate
+architectural foundation for a family of governed execution systems,
+including verified compilation, supply-chain security, distributed
+identity, constitutional governance systems, semantic operating systems,
+and continuous execution governance.</p>
+<p>Security boundary: CHC binds attestations about meaning to artifact
+state and evaluates admissibility under policy; it does not establish
+the truth of the claims themselves.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>A conventional cryptographic hash proves that an artifact is
+stable.</p>
+<p>A signature proves that a key endorsed something.</p>
+<p>An attestation proves that a claim was made under some procedure.</p>
+<p>But software execution depends on more than artifact stability,
+signer identity, or procedural claims. A binary may be bit-identical and
+still stale. A manifest may be signed and still superseded. A
+source-to-binary claim may be present and still lack authority. A
+package may carry provenance and still be inadmissible under a local
+policy.</p>
+<p>CHC is not primarily a software distribution protocol. It is a
+cryptographic admissibility primitive from which software distribution,
+supply-chain governance, semantic identity systems, constitutional
+runtimes, and related architectures may be constructed.</p>
+<p>More precisely, CHC is an implementation architecture of
+Cryptographic Admissibility, not vice versa. Cryptographic Admissibility
+is the theory. CHC is the first binding architecture that realizes the
+theory through State Hashes, Semantic Hashes, receipts, freshness
+evaluation, and policy-bound admissibility.</p>
+<p>The missing primitive is a cryptographic structure that
+separates:</p>
+<pre class="text"><code>state integrity
+semantic attestation
+present admissibility under policy</code></pre>
+<p>Existing verification systems often conflate evidence production with
+authority. A signature, transparency log, registry entry, or
+institutional attestation may be treated as implicitly authoritative
+because of its source. CHC instead treats all such outputs as evidence
+objects whose admissibility is determined by explicit policy. Authority
+becomes a property of evaluation rather than origin.</p>
+<p>CHC proposes that separation through:</p>
+<pre class="text"><code>H_s -&gt; H_m -&gt; Freshness Evaluation</code></pre>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>H</em><sub><em>s</em></sub></span>
+binds a deterministic State Jurisdiction;</li>
+<li><span class="math inline"><em>H</em><sub><em>m</em></sub></span>
+binds typed semantic claims to that state;</li>
+<li>freshness evaluation determines whether the state-and-semantic
+binding may still be accepted.</li>
+</ul>
+<p>This structure prevents three common collapses:</p>
+<ol type="1">
+<li>treating identity as authority;</li>
+<li>treating historical validity as present admissibility;</li>
+<li>treating metadata as verified semantic content.</li>
+</ol>
+<p>The broader contribution is a generalization of content addressing.
+Traditional content addressing asks:</p>
+<pre class="text"><code>What exists?</code></pre>
+<p>CHC asks three separable questions:</p>
+<pre class="text"><code>What exists?
+What is claimed?
+What may act?</code></pre>
+<p>This turns content addressing into admissibility addressing.</p>
+<hr />
+<h2 id="notation">2. Notation</h2>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline"><em>J</em></span></td>
+<td>State Jurisdiction space</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>j</em></span></td>
+<td>State Jurisdiction</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>A</em></span></td>
+<td>Artifact space, a common subclass of State Jurisdictions</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>a</em></span></td>
+<td>Artifact</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>D</em></span></td>
+<td>Typed semantic dimension space</td>
+</tr>
+<tr>
+<td><span class="math inline">𝒟</span></td>
+<td>Schema-ordered tuple of semantic dimensions</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>M</em></span></td>
+<td>Manifest sources and manifest state</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>R</em></span></td>
+<td>Trust-root set</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>E</em></span></td>
+<td>Evidence set</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>P</em></span></td>
+<td>Deterministic policy program</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>t</em></span></td>
+<td>Verifiable epoch, checkpoint, or log position</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>π</em></span></td>
+<td>Freshness, consistency, inclusion, or revocation evidence</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>ρ</em></span></td>
+<td>Receipt</td>
+</tr>
+<tr>
+<td><span class="math inline">ℛ</span></td>
+<td>Receipt graph</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>s</em></sub></span></td>
+<td>State Hash</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>m</em></sub></span></td>
+<td>Semantic Hash</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>R</em></sub></span></td>
+<td>Policy-bound digest of the active trust-root set</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>P</em></sub></span></td>
+<td>Policy-bound digest of the active policy program</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>M</em></sub></span></td>
+<td>Manifest root hash</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline"><em>H</em><sub><em>R</em></sub></span> and
+<span class="math inline"><em>H</em><sub><em>P</em></sub></span> are
+operational inputs to freshness evaluation. A verifier must know not
+only which roots and policy exist, but which root-set interpretation and
+policy version are active for the decision.</p>
+<hr />
+<h2 id="threat-model">3. Threat Model</h2>
+<p>The adversary may forge metadata, substitute manifests, equivocate
+between manifests, replay stale attestations, compromise a signer,
+suppress revocation information, exploit schema ambiguity, spoof
+registries, roll back schemas, present old but valid binaries, downgrade
+policy, exploit policy-source inconsistency, poison caches, or attempt
+to mix valid state hashes with unrelated semantic claims.</p>
+<p>CHC’s security claims hold only under declared assumptions:
+collision-resistant and second-preimage-resistant hash functions,
+EUF-CMA-secure signatures, canonical encoding, authenticated trust-root
+state, authenticated schema registry state, policy-correct verification,
+and the availability assumptions required by the selected freshness
+sources.</p>
+<p>Claims about compiler subversion, supply-chain integrity, or
+execution safety are bounded by the declared CHC verification boundary.
+Components outside that boundary remain trusted premises unless modeled
+as CHC State Jurisdictions with their own semantic attestations,
+receipts, and freshness checks.</p>
+<hr />
+<h2 id="formal-model">4. Formal Model</h2>
+<h3 id="state-jurisdiction">4.1 State Jurisdiction</h3>
+<p>Let <span class="math inline"><em>J</em></span> be the State
+Jurisdiction space.</p>
+<p>A State Jurisdiction is a deterministic, policy-declared boundary
+over which state identity is computed.</p>
+<p>Examples include:</p>
+<ul>
+<li>a source file;</li>
+<li>a binary;</li>
+<li>a package;</li>
+<li>a repository;</li>
+<li>a container image;</li>
+<li>a model checkpoint;</li>
+<li>a runtime state;</li>
+<li>a deployment snapshot;</li>
+<li>a manifest tree;</li>
+<li>a distributed state graph.</li>
+</ul>
+<p>Artifacts are one class of State Jurisdiction:</p>
+<p><span class="math display"><em>A</em> ⊆ <em>J</em></span></p>
+<p>The State Hash is:</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub> : <em>J</em> → {0, 1}<sup><em>n</em></sup></span></p>
+<p>with:</p>
+<p><span
+class="math display"><em>h</em><sub><em>s</em></sub> = <em>H</em><sub><em>s</em></sub>(<em>j</em>)</span></p>
+<p>The State Hash does not prescribe the granularity of state. It
+fingerprints a declared State Jurisdiction. Multiple jurisdictions may
+coexist simultaneously over the same underlying materials. CHC
+standardizes the fingerprinting relationship rather than a specific
+level of granularity.</p>
+<p><span class="math inline"><em>H</em><sub><em>s</em></sub></span> is
+computed from the bytes or canonical state representation of <span
+class="math inline"><em>j</em></span> after applying the declared
+normalization rule. If normalization depends on state-type metadata
+outside the bytes themselves, that metadata is part of the hash domain
+and must be bound in the Artifact State and Encoding dimension. For
+native binary builds, the normalization boundary is the clean
+pre-metadata artifact produced by Phase 1. For containers, documents,
+repositories, deployment snapshots, and structured packages, the
+normalization boundary is the schema-defined and versioned canonical
+serialization of the state payload, excluding CHC metadata unless the
+schema explicitly states otherwise. The normalization boundary is
+therefore a compatibility contract.</p>
+<p><span class="math inline"><em>H</em><sub><em>s</em></sub></span> must
+not depend on semantic dimensions, manifests, policies, freshness state,
+or attestations.</p>
+<hr />
+<h3 id="jurisdiction-algebra">4.2 Jurisdiction Algebra</h3>
+<p>State Jurisdictions may relate to one another.</p>
+<p>A file may belong to a repository. A repository may belong to a
+release. A release may belong to a distribution. A compiler may belong
+to a toolchain. A toolchain may belong to a build environment.</p>
+<p>CHC therefore defines jurisdiction relationships:</p>
+<p><span
+class="math display"><em>J</em><sub>1</sub> ⊆ <em>J</em><sub>2</sub></span></p>
+<p>meaning that <span class="math inline"><em>J</em><sub>1</sub></span>
+is contained within the state boundary of <span
+class="math inline"><em>J</em><sub>2</sub></span>, and:</p>
+<p><span
+class="math display"><em>d</em><em>e</em><em>r</em><em>i</em><em>v</em><em>e</em>(<em>J</em><sub>1</sub> → <em>J</em><sub>2</sub>)</span></p>
+<p>meaning that the identity or admissibility of <span
+class="math inline"><em>J</em><sub>2</sub></span> depends on a declared
+relationship to <span
+class="math inline"><em>J</em><sub>1</sub></span>.</p>
+<p>Jurisdiction composition is policy-defined:</p>
+<p><span
+class="math display"><em>c</em><em>o</em><em>m</em><em>p</em><em>o</em><em>s</em><em>e</em>(<em>J</em><sub>1</sub>, <em>J</em><sub>2</sub>) → <em>J</em><sub>3</sub> ∪ <em>C</em><em>o</em><em>n</em><em>f</em><em>l</em><em>i</em><em>c</em><em>t</em></span></p>
+<p>Composition succeeds only when the two jurisdictions have compatible
+normalization rules, schema versions, and policy-declared relation
+types. Otherwise, composition returns a conflict object.</p>
+<p>Examples:</p>
+<pre class="text"><code>source file
+  in repository
+      in release
+          in distribution</code></pre>
+<pre class="text"><code>compiler binary
+  in toolchain
+      in build environment
+          in deployment pipeline</code></pre>
+<pre class="text"><code>knowledge shard
+  in knowledge graph
+      in distributed knowledge network</code></pre>
+<p>The purpose of jurisdiction algebra is not to impose one global
+hierarchy. It is to make jurisdictional relationships explicit,
+hashable, and policy-evaluable.</p>
+<hr />
+<h3 id="typed-semantic-dimension-space">4.3 Typed Semantic Dimension
+Space</h3>
+<p>Let the semantic dimension space be a disjoint typed union:</p>
+<p><span
+class="math display"><em>D</em> = ⨆<sub><em>i</em> ∈ <em>I</em></sub><em>D</em><sub><em>i</em></sub></span></p>
+<p>Each <span class="math inline"><em>D</em><sub><em>i</em></sub></span>
+is a typed domain registered under a dimension identifier.</p>
+<p>A dimension instance is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;d_i = \langle id_i, schema_i, version_i, value_i, \\
+&amp;attestation_i \rangle \in D_i
+\end{aligned}
+$$</span></p>
+<p>The dimension collection attached to a State Jurisdiction is a
+schema-ordered tuple:</p>
+<p><span
+class="math display">𝒟 = (<em>d</em><sub>(1)</sub>, <em>d</em><sub>(2)</sub>, …, <em>d</em><sub>(<em>k</em>)</sub>)</span></p>
+<p><span class="math inline">𝒟</span> has no author-controlled ordering.
+Its order is determined by the schema registry. Duplicate dimensions are
+forbidden unless the schema explicitly declares a multivalue rule.</p>
+<p>Empty <span class="math inline">𝒟</span> is a degenerate case valid
+only for non-executable, non-distributable, non-deployable artifact
+classes whose policy explicitly permits no semantic claims. Executable,
+distributable, deployable, or publishable jurisdictions require
+policy-defined core dimensions.</p>
+<hr />
+<h3 id="well-formedness">4.4 Well-Formedness</h3>
+<p>A dimension tuple is admissible for hashing only if</p>
+<p><span class="math display"><em>W</em><em>F</em>(𝒟) = true</span></p>
+<p>where WF requires:</p>
+<ol type="1">
+<li>every <span
+class="math inline"><em>i</em><em>d</em><sub><em>i</em></sub></span>
+resolves in the schema registry;</li>
+<li>every schema is hash-addressed, signed or transparency-logged, and
+versioned;</li>
+<li>every value is normalized under its schema;</li>
+<li>no implicit defaults are used;</li>
+<li>every required core dimension is present;</li>
+<li>every attestation cryptographically binds <span
+class="math inline"><em>h</em><sub><em>v</em><sub><em>i</em></sub></sub></span>,
+<span class="math inline"><em>H</em><sub><em>s</em></sub></span>, <span
+class="math inline">schema_hash<sub><em>i</em></sub></span>, signer
+identity, issuer or signer class, policy context, and expiry or validity
+interval;</li>
+<li>the same expiry or validity interval is visible to the policy state
+so freshness can reject claims whose signatures remain cryptographically
+valid but whose admissibility interval has expired;</li>
+<li>every duplicate or multivalue dimension obeys its schema rule.</li>
+</ol>
+<p>Normalization rules must be explicit for semantically equivalent but
+byte-distinct values, including timestamps, URIs, identifiers, JSON-like
+objects, numeric encodings, and Unicode strings.</p>
+<hr />
+<h3 id="governance-algebra">4.5 Governance Algebra</h3>
+<p>Let G denote the algebra of operations available over semantic
+dimension tuples and their evidence objects.</p>
+<p>Projection is an operation:</p>
+<p><span
+class="math display"><em>p</em><em>r</em><em>o</em><em>j</em><sub><em>S</em></sub> : 𝒟 → <em>S</em></span></p>
+<p>which extracts a policy-declared semantic view.</p>
+<p>Merge is an operation:</p>
+<p><span
+class="math display"><em>m</em><em>e</em><em>r</em><em>g</em><em>e</em> : 𝒟<sub>1</sub> × 𝒟<sub>2</sub> → 𝒟<sub>3</sub> ∪ <em>C</em><em>o</em><em>n</em><em>f</em><em>l</em><em>i</em><em>c</em><em>t</em></span></p>
+<p>Merge fails unless a policy-defined reconciliation event is present.
+A failed merge returns a conflict object rather than silently choosing a
+branch.</p>
+<p>Other operations include dimension extension, revocation application,
+trust-root selection, manifest lookup, freshness evaluation, receipt
+graph traversal, jurisdiction composition, and policy execution.</p>
+<p>A policy predicate is a deterministic program drawn from that
+algebra:</p>
+<p><span
+class="math display"><em>g</em><sub><em>P</em></sub> : (<em>H</em><sub><em>s</em></sub>, 𝒟, <em>R</em>, <em>M</em>, <em>t</em>, <em>π</em>) → {true, false}</span></p>
+<p>CHC does not assume that governance predicates are monotone. A policy
+must explicitly declare whether adding dimensions preserves, narrows, or
+invalidates admissibility. The algebra supports extension, but no policy
+may silently treat extension as safe.</p>
+<hr />
+<h3 id="admissibility-principle">4.6 Admissibility Principle</h3>
+<p>CHC treats authority as a derived property of admissibility rather
+than a primitive property of identity.</p>
+<p>Signatures, receipts, manifests, checkpoints, witnesses,
+institutions, and registries contribute evidence. Policy determines
+admissibility.</p>
+<pre class="text"><code>Identity != Authority
+
+Authority := Admissibility(Evidence, Policy)</code></pre>
+<p>Authority is not a primitive property. Authority emerges from
+admissible evidence evaluated under declared policy.</p>
+<p><span
+class="math display">Authority(<em>E</em>, <em>P</em>) := Admissible(<em>E</em>, <em>P</em>)</span></p>
+<p>In CHC, an entity does not become authoritative merely because it
+signs, publishes, witnesses, or stores a claim. Its output becomes
+evidence. Whether that evidence has authority is determined by the
+active policy over semantic dimensions, jurisdiction, receipts,
+freshness state, and trust-root interpretation.</p>
+<p>This is the central governance inversion:</p>
+<pre class="text"><code>authority-by-assertion
+        -&gt;
+authority-by-admissibility</code></pre>
+<p>Under authority-by-admissibility, signatures, institutions,
+registries, transparency systems, and witnesses become evidence
+producers rather than final arbiters of authority.</p>
+<hr />
+<h3 id="identityauthority-separation-principle">4.7 Identity–Authority
+Separation Principle</h3>
+<p>Any architecture that permits authority mutation without state
+mutation must represent state identity and authority as independently
+addressable domains.</p>
+<p>Equivalently:</p>
+<blockquote>
+<p>If a system allows authority claims to change while preserving the
+identity of the underlying state, then authority cannot be identical to
+state identity.</p>
+</blockquote>
+<p><em>Proof sketch.</em> Authority may change under policy, revocation,
+freshness, or jurisdictional reinterpretation while <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> remains
+invariant; therefore authority is not identical to state identity. A
+formal proof of this principle, under explicit definitions of
+architectural addressability and authority mutation, is left to
+subsequent work.</p>
+<p>CHC satisfies this principle by separating:</p>
+<pre class="text"><code>H_s = state identity
+
+H_m = semantic identity
+
+P   = admissibility evaluation</code></pre>
+<p>Thus authority is not carried by <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> alone, nor by
+signer identity alone, nor by the mere existence of an attestation.
+Authority is derived when policy evaluates semantic claims, receipts,
+jurisdiction, freshness, and trust-root state as admissible.</p>
+<p>This principle is the formal basis for CHC’s authority normalization:
+the signer, institution, registry, or manifest does not become authority
+by assertion. It becomes evidence within an admissibility calculus.</p>
+<hr />
+<h2 id="the-cryptographic-admissibility-triad">5. The Cryptographic
+Admissibility Triad</h2>
+<p>CHC separates cryptographic identity into three independently
+evaluable domains:</p>
+<pre class="text"><code>State Identity
+      down
+Semantic Identity
+      down
+Admissibility</code></pre>
+<p>The corresponding operational structure is:</p>
+<pre class="text"><code>H_s = State Identity
+
+H_m = Semantic Identity
+
+P = Admissibility</code></pre>
+<p>State identity answers:</p>
+<blockquote>
+<p>What exists within this State Jurisdiction?</p>
+</blockquote>
+<p>Semantic identity answers:</p>
+<blockquote>
+<p>What is claimed about that state?</p>
+</blockquote>
+<p>Admissibility answers:</p>
+<blockquote>
+<p>What may act under policy?</p>
+</blockquote>
+<p>Traditional systems often collapse these layers. CHC separates
+them.</p>
+<p>This separation is the core architecture of cryptographic
+admissibility.</p>
+<hr />
+<h3 id="admissibility-separation-principle">5.1 Admissibility Separation
+Principle</h3>
+<p>State identity, semantic identity, and admissibility are
+independently mutable domains.</p>
+<p>A valid cryptographic governance architecture should permit change in
+one domain without requiring mutation of the others.</p>
+<p>Formally:</p>
+<pre class="text"><code>State Identity      = H_s(J)
+
+Semantic Identity   = H_m(h_s, D, R, P)
+
+Admissibility       = P(H_s, H_m, D, M, R, t, pi)</code></pre>
+<p>A change to semantic claims should not require mutation of the
+underlying state.</p>
+<p>A change to policy should not require mutation of the state or
+semantic hash.</p>
+<p>A change to freshness evidence should not require mutation of state
+identity or semantic identity.</p>
+<p>This is the separation that allows CHC to distinguish:</p>
+<pre class="text"><code>what exists
+what is claimed
+what may act</code></pre>
+<p>The principle can be stated compactly:</p>
+<blockquote>
+<p>State identity, semantic identity, and admissibility must be
+separately addressable so that authority claims may change without
+rewriting state, and admissibility may change without falsifying prior
+claims.</p>
+</blockquote>
+<p>This is the Cryptographic Admissibility Principle.</p>
+<hr />
+<h3 id="separation-consequence">5.2 Separation Consequence</h3>
+<p>The Admissibility Separation Principle implies that CHC can refuse
+execution without denying artifact integrity.</p>
+<p>It can revoke admissibility without rewriting history.</p>
+<p>It can update policy without mutating state identity.</p>
+<p>It can add semantic claims without changing the State Hash.</p>
+<p>It can preserve evidence while denying authority.</p>
+<p>This is the practical distinction between:</p>
+<pre class="text"><code>the claim was made</code></pre>
+<p>and:</p>
+<pre class="text"><code>the claim may act</code></pre>
+<hr />
+<h3 id="architectural-diagram">5.3 Architectural Diagram</h3>
+<pre class="text"><code>State Jurisdiction
+        down
+      H_s
+        down
+  State Identity
+        down
+Semantic Dimensions
+        down
+      H_m
+        down
+ Semantic Identity
+        down
+Receipts / Evidence
+        down
+Freshness Evaluation
+        down
+ Admissibility
+        down
+Execution / Refusal Decision</code></pre>
+<p>The diagram should be read as a separation of addressable domains,
+not as a single linear pipeline. State identity may remain stable while
+semantic identity changes. Semantic identity may remain historically
+valid while admissibility changes. Admissibility may change because
+policy, receipts, freshness evidence, revocation state, or
+jurisdictional interpretation changes.</p>
+<p>This separation may be compressed into a single invariant: the three
+domains are independently addressable.</p>
+<hr />
+<h3 id="chc-in-one-sentence">5.4 CHC in One Sentence</h3>
+<p>Traditional cryptographic systems bind state.</p>
+<p>CHC binds state, claims, and admissibility as separately addressable
+cryptographic domains.</p>
+<hr />
+<h2 id="chc-novelty-boundary">6. CHC Novelty Boundary</h2>
+<p>CHC does not invent:</p>
+<pre class="text"><code>hashes
+signatures
+Merkle trees
+attestations
+provenance
+freshness
+revocation</code></pre>
+<p>CHC introduces and composes the following primitives:</p>
+<pre class="text"><code>State Jurisdiction
+
+Semantic Identity
+
+Admissibility Separation
+
+Authority Normalization
+
+Two-Hash Binding
+
+Cryptographic Admissibility</code></pre>
+<p>The novelty is not that CHC uses cryptographic evidence.</p>
+<p>CHC’s novelty claim is not the existence of any individual component
+but the formal treatment of State Identity, Semantic Identity, and
+Admissibility as independently addressable cryptographic domains.
+Existing systems may provide identity, provenance, attestation,
+freshness, or policy independently; CHC treats semantic identity as a
+first-class cryptographic object positioned between state identity and
+admissibility. A Semantic Hash differs from metadata hashing because
+dimensions are schema-governed, independently attestable,
+policy-addressable claims rather than opaque auxiliary fields.</p>
+<hr />
+<h2 id="the-two-hash-rule">7. The Two-Hash Rule</h2>
+<p>CHC requires two independent cryptographic layers.</p>
+<h3 id="state-hash">7.1 State Hash</h3>
+<p><span class="math display"><em>H</em><sub><em>s</em></sub></span></p>
+<p>answers:</p>
+<blockquote>
+<p>What state jurisdiction exists?</p>
+</blockquote>
+<h3 id="semantic-hash">7.2 Semantic Hash</h3>
+<p><span class="math display"><em>H</em><sub><em>m</em></sub></span></p>
+<p>answers:</p>
+<blockquote>
+<p>What typed attestations are bound to this state jurisdiction?</p>
+</blockquote>
+<h3 id="state-jurisdiction-principle">7.3 State Jurisdiction
+Principle</h3>
+<p>The State Hash does not prescribe the granularity of state. It
+fingerprints a declared State Jurisdiction. A jurisdiction may consist
+of a single file, a binary, a repository, a manifest tree, a deployment
+snapshot, a distributed state graph, or any other deterministically
+bounded state domain. Multiple jurisdictions may coexist simultaneously.
+CHC therefore standardizes the fingerprinting relationship rather than a
+specific level of granularity.</p>
+<hr />
+<h3 id="freshness-evaluation">7.4 Freshness Evaluation</h3>
+<p>Freshness is not a third hash.</p>
+<p>Freshness answers:</p>
+<blockquote>
+<p>Is this state-and-semantic binding still admissible now under the
+active policy hash and active trust-root hash?</p>
+</blockquote>
+<p>It is policy-relative and time-relative. It is evaluated over:</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, 𝒟, <em>M</em>, <em>R</em>, <em>P</em>, <em>t</em>, <em>π</em></span></p>
+<p>A separate freshness digest would merely package the result of a
+verification procedure and would itself require freshness evaluation.
+CHC therefore keeps the cryptographic basis minimal:</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub> → <em>H</em><sub><em>m</em></sub></span></p>
+<p>with freshness performed at the point of use.</p>
+<hr />
+<h3 id="why-not-one-hash">7.5 Why Not One Hash?</h3>
+<p>One hash collapses state identity and semantic claims into one
+digest. Any change to authority, jurisdiction, lineage, custody, schema,
+or attestation would require treating the underlying state as
+changed.</p>
+<p>This destroys separation of concerns.</p>
+<hr />
+<h3
+id="why-not-one-state-hash-plus-externally-evaluated-freshness-evidence">7.6
+Why Not One State Hash Plus Externally Evaluated Freshness
+Evidence?</h3>
+<p>A state-hash-plus-freshness-evidence system can check whether a state
+is current, and that evidence may itself be manifest-bound,
+checkpoint-bound, or log-backed. But it cannot distinguish current state
+integrity from current semantic admissibility. It lacks a cryptographic
+object binding typed semantic claims to state.</p>
+<p>The minimal structure is therefore:</p>
+<pre class="text"><code>state hash
+semantic hash
+freshness procedure</code></pre>
+<p>not:</p>
+<pre class="text"><code>state hash only</code></pre>
+<p>and not:</p>
+<pre class="text"><code>state hash + external freshness evidence</code></pre>
+<hr />
+<h2 id="domain-separation">8. Domain Separation</h2>
+<p>CHC uses explicit domain separation tags.</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub>(<em>j</em>) = <em>H</em>(<code>"CHC:H_s:v1"</code> ∥ <em>E</em><em>n</em><em>c</em><em>o</em><em>d</em><em>e</em><sub><em>J</em></sub>(<em>j</em>))</span></p>
+<p><span
+class="math display"><em>H</em><sub><em>m</em></sub>(<em>h</em><sub><em>s</em></sub>, 𝒟, <em>H</em><sub><em>R</em></sub>, <em>H</em><sub><em>P</em></sub>) = <em>H</em>(<code>"CHC:H_m:v1"</code> ∥ <em>h</em><sub><em>s</em></sub> ∥ <em>H</em><sub><em>R</em></sub> ∥ <em>H</em><sub><em>P</em></sub> ∥ <em>E</em>(𝒟))</span></p>
+<p>Each dimension value hash uses its own tag:</p>
+<p><span
+class="math display"><em>h</em><sub><em>v</em><sub><em>i</em></sub></sub> = <em>H</em>(<code>"CHC:DIMVALUE:v1"</code> ∥ <em>v</em><em>a</em><em>l</em><em>u</em><em>e</em><sub><em>i</em></sub>)</span></p>
+<p>Each attestation message uses its own tag:</p>
+<p><span
+class="math display"><em>m</em><em>s</em><em>g</em><sub><em>i</em></sub> = <code>"CHC:DIMATT:v1"</code> ∥ ...</span></p>
+<p>Domain separation is mandatory across state hash, semantic hash,
+value hash, attestation message, policy hash, manifest hash, and
+root-set hash. A digest valid in one layer must not be reusable in
+another.</p>
+<p><span class="math inline"><em>H</em><sub><em>R</em></sub></span> is a
+digest of the trust-root set. It is not a substitute for policy
+evaluation, revocation state, or freshness checking.</p>
+<hr />
+<h2 id="semantic-hash-construction">9. Semantic Hash Construction</h2>
+<p>The Semantic Hash is:</p>
+<p><span
+class="math display"><em>H</em><sub><em>m</em></sub> : (<em>h</em><sub><em>s</em></sub>, 𝒟, <em>H</em><sub><em>R</em></sub>, <em>H</em><sub><em>P</em></sub>) → {0, 1}<sup><em>n</em></sup></span></p>
+<p>defined as:</p>
+<p><span
+class="math display"><em>H</em><sub><em>m</em></sub> = <em>H</em>(<code>"CHC:H_m:v1"</code> ∥ <em>H</em><sub><em>s</em></sub>(<em>j</em>) ∥ <em>H</em><sub><em>R</em></sub> ∥ <em>H</em><sub><em>P</em></sub> ∥ <em>E</em>(𝒟))</span></p>
+<p><span class="math inline"><em>H</em><sub><em>m</em></sub></span> is
+binding over the canonical encoding <span
+class="math inline">(<em>h</em><sub><em>s</em></sub>, <em>E</em>(𝒟), <em>H</em><sub><em>R</em></sub>, <em>H</em><sub><em>P</em></sub>)</span>
+under standard hash assumptions.</p>
+<p>CHC does not claim that <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> authenticates
+meaning. It binds attestations about meaning to state identity.</p>
+<p>Optional dimensions are included in <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> only when
+present and schema-admissible. Omitted optional dimensions are
+represented as absence, not as implicit nulls, unless the schema
+explicitly defines a null-valued dimension. When present, optional
+dimensions change <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>. Optionality
+affects policy evaluation, not hash inclusion.</p>
+<p>Dimension extension must preserve second-preimage resistance.
+Given:</p>
+<p><span
+class="math display">𝒟<sup>′</sup> = 𝒟 ∪ {<em>d</em><sub><em>k</em> + 1</sub>}</span></p>
+<p>it should be computationally infeasible to find:</p>
+<p><span
+class="math display">(<em>H</em><sub><em>s</em></sub>, 𝒟, <em>H</em><sub><em>R</em></sub>, <em>H</em><sub><em>P</em></sub>) ≠ (<em>H</em><sub><em>s</em></sub><sup>′</sup>, 𝒟<sup>′</sup>, <em>H</em><sub><em>R</em></sub><sup>′</sup>, <em>H</em><sub><em>P</em></sub><sup>′</sup>)</span></p>
+<p>such that both produce the same semantic hash, except with negligible
+probability.</p>
+<hr />
+<h2 id="canonical-ordering">10. Canonical Ordering</h2>
+<p>Each schema registry entry has:</p>
+<p><span
+class="math display"><em>r</em><em>e</em><em>g</em><em>i</em><em>s</em><em>t</em><em>r</em><em>y</em><sub><em>k</em></sub><em>e</em><em>y</em><sub><em>i</em></sub> = <em>H</em>(<em>i</em><em>d</em><sub><em>i</em></sub> ∥ <em>s</em><em>c</em><em>h</em><em>e</em><em>m</em><em>a</em><sub><em>h</em></sub><em>a</em><em>s</em><em>h</em><sub><em>i</em></sub> ∥ <em>v</em><em>e</em><em>r</em><em>s</em><em>i</em><em>o</em><em>n</em><sub><em>i</em></sub>)</span></p>
+<p>Dimensions are ordered lexicographically by:</p>
+<p><span
+class="math display">(<em>r</em><em>e</em><em>g</em><em>i</em><em>s</em><em>t</em><em>r</em><em>y</em><sub><em>k</em></sub><em>e</em><em>y</em><sub><em>i</em></sub>, <em>i</em><em>d</em><sub><em>i</em></sub>, <em>v</em><em>e</em><em>r</em><em>s</em><em>i</em><em>o</em><em>n</em><sub><em>i</em></sub>)</span></p>
+<p>The schema hash appears twice by design as defense-in-depth: once for
+registry ordering and once to bind each value and attestation to its
+interpretation schema.</p>
+<hr />
+<h2 id="dimension-encoding">11. Dimension Encoding</h2>
+<p>Each dimension <span
+class="math inline"><em>d</em><sub><em>i</em></sub></span> is encoded
+as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;E(d_i)= len(id_i) \\
+&amp;\parallel id_i \\
+&amp;\parallel len(schema_i) \\
+&amp;\parallel schema_i \\
+&amp;\parallel len(version_i) \\
+&amp;\parallel version_i \\
+&amp;\parallel len(value_i) \\
+&amp;\parallel value_i \\
+&amp;\parallel len(h_{v_i}) \\
+&amp;\parallel h_{v_i} \\
+&amp;\parallel len(attestation_i) \\
+&amp;\parallel attestation_i
+\end{aligned}
+$$</span></p>
+<p>Encoding must use a deterministic canonical format such as
+deterministic CBOR, SSZ, or another declared canonical serialization.
+Canonical serialization must be byte-for-byte deterministic across
+implementations. Implicit defaults are forbidden.</p>
+<p>Length-prefixing alone is insufficient unless nested encodings also
+have unambiguous field delimiters and canonical field ordering.</p>
+<p>The dimension tuple encoding is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;E(\mathcal{D}) = len(k) \\
+&amp;\parallel E(d_{(1)}) \\
+&amp;\parallel \cdots \\
+&amp;\parallel E(d_{(k)})
+\end{aligned}
+$$</span></p>
+<p>All variable-length fields are length-prefixed.</p>
+<hr />
+<h2 id="receipts">12. Receipts</h2>
+<p>A receipt is a cryptographically accountable evidence object
+recording a claim, observation, or transition relevant to a State
+Jurisdiction. Receipts are the primary evidentiary substrate through
+which semantic identity participates in admissibility evaluation.</p>
+<p>A receipt records at minimum:</p>
+<pre class="text"><code>receipt = {
+  observer_or_issuer,
+  state_jurisdiction,
+  state_hash,
+  semantic_claim_or_event,
+  policy_context,
+  epoch_or_checkpoint,
+  evidence_payload,
+  attestation_or_signature,
+  receipt_schema
+}</code></pre>
+<p>Receipts are the primary evidentiary substrate of CHC. Logs are
+implementation artifacts; receipts are admissibility artifacts. They may
+support dimension attestations, freshness checks, manifest consistency,
+custody derivation, causal lineage, quorum finality, checkpoint
+continuity, or policy evaluation.</p>
+<p>A receipt does not automatically confer authority. It contributes
+evidence to the admissibility predicate.</p>
+<hr />
+<h2 id="receipt-graphs">13. Receipt Graphs</h2>
+<p>Receipts may compose into a Receipt Graph:</p>
+<p><span
+class="math display">ℛ = (<em>V</em><sub><em>R</em></sub>, <em>E</em><sub><em>R</em></sub>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>V</em><sub><em>R</em></sub></span> is
+a set of receipts;</li>
+<li><span class="math inline"><em>E</em><sub><em>R</em></sub></span> is
+a set of receipt dependencies;</li>
+<li>each edge records that one receipt relies on, confirms, supersedes,
+refutes, or derives from another receipt.</li>
+</ul>
+<p>A Receipt Graph must be acyclic unless the schema explicitly defines
+a cycle-safe consensus or CRDT interpretation.</p>
+<p>Receipt graphs provide the evidentiary substrate for provenance,
+custody, recursive toolchain binding, freshness continuity, and semantic
+lineage.</p>
+<p>Example:</p>
+<pre class="text"><code>Receipt A
+   down
+Receipt B
+   down
+Receipt C</code></pre>
+<p>A Receipt Graph answers:</p>
+<blockquote>
+<p>What evidence depends on what prior evidence?</p>
+</blockquote>
+<p>This gives CHC a cryptographic provenance structure without treating
+any single receipt as self-authorizing.</p>
+<hr />
+<h2 id="dimension-attestation">14. Dimension Attestation</h2>
+<p>An attestation is any accountable cryptographic evidence object
+capable of binding a semantic claim to a State Hash under a declared
+State Jurisdiction.</p>
+<p>For each dimension <span
+class="math inline"><em>d</em><sub><em>i</em></sub></span>, the attested
+message is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;msg_i = \texttt{"CHC:DIMATT:v1"} \\
+&amp;\parallel id_i \\
+&amp;\parallel schema_hash_i \\
+&amp;\parallel version_i \\
+&amp;\parallel h_{v_i} \\
+&amp;\parallel H_s \\
+&amp;\parallel H_P \\
+&amp;\parallel policy_context_i \\
+&amp;\parallel signer_identity_i \\
+&amp;\parallel signer_class_i \\
+&amp;\parallel validity_interval_i
+\end{aligned}
+$$</span></p>
+<p>Signer identities must be normalized under a schema-declared identity
+encoding before inclusion in attestation messages. Equivalent signer
+identities expressed in different formats must either canonicalize to
+the same byte representation or fail comparison.</p>
+<p>Attestation forms include:</p>
+<ul>
+<li>single signature;</li>
+<li>multisignature;</li>
+<li>threshold proof;</li>
+<li>aggregate signature;</li>
+<li>quorum receipt;</li>
+<li>checkpoint receipt;</li>
+<li>consensus receipt;</li>
+<li>witness receipt.</li>
+</ul>
+<p>Signers may be witnesses, builders, custodians, auditors, issuers, or
+threshold members. Authority must still be separately established by
+predicate. Signer identity alone is not authority.</p>
+<p>Validity intervals are mandatory for dimensions that affect
+authority, revocation, or execution admissibility.</p>
+<hr />
+<h2 id="signature-and-receipt-verification">15. Signature and Receipt
+Verification</h2>
+<p>For a single signature:</p>
+<p><span
+class="math display"><em>V</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em><em>S</em><em>i</em><em>n</em><em>g</em><em>l</em><em>e</em><sub><em>i</em></sub>(<em>d</em><sub><em>i</em></sub>, <em>R</em>, <em>P</em>) = true</span></p>
+<p>iff the signature verifies over <span
+class="math inline">msg<sub><em>i</em></sub></span>, the signer is valid
+under <span class="math inline"><em>R</em></span>, and the signer is
+permitted by policy to attest dimension <span
+class="math inline"><em>D</em><sub><em>i</em></sub></span>.</p>
+<p>Threshold, multisignature, aggregate-signature, receipt, checkpoint,
+and quorum schemes are schema-specific and not interchangeable unless
+the schema explicitly declares equivalence. The schema registry must
+distinguish aggregate proof mode from threshold proof mode and receipt
+verification mode.</p>
+<p>For aggregate, threshold, quorum, or receipt-based attestations:</p>
+<p><span
+class="math display"><em>V</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em><em>E</em><em>v</em><em>i</em><em>d</em><em>e</em><em>n</em><em>c</em><em>e</em><sub><em>i</em></sub>(<em>d</em><sub><em>i</em></sub>, <em>R</em>, <em>P</em>, <em>q</em><sub><em>i</em></sub>) = true</span></p>
+<p>iff:</p>
+<ol type="1">
+<li>the evidence object verifies under its schema;</li>
+<li>signer-set, witness-set, or authority-set membership proofs verify
+where required;</li>
+<li>the valid set satisfies the policy threshold or receipt rule.</li>
+</ol>
+<p>Aggregate validity alone is insufficient unless the scheme
+cryptographically binds the signer set and the policy accepts that
+binding.</p>
+<p>The dimension verifier is:</p>
+<p><span
+class="math display"><em>V</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em><sub><em>i</em></sub> = <em>V</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em><em>S</em><em>i</em><em>n</em><em>g</em><em>l</em><em>e</em><sub><em>i</em></sub> ∨ <em>V</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em><em>E</em><em>v</em><em>i</em><em>d</em><em>e</em><em>n</em><em>c</em><em>e</em><sub><em>i</em></sub></span></p>
+<p>depending on the schema-declared attestation mode.</p>
+<p>The full semantic verification rule is:</p>
+<p><span class="math display">$$
+V(H_m)=WF(\mathcal{D})\land \bigwedge_{i=1}^{k}Verify_i(d_i,R,P)
+$$</span></p>
+<hr />
+<h2 id="trust-roots">16. Trust Roots</h2>
+<p>Let:</p>
+<p><span
+class="math display"><em>R</em> = {<em>r</em><sub>1</sub>, …, <em>r</em><sub><em>m</em></sub>}</span></p>
+<p>be the trust-root set.</p>
+<p>Each root contains:</p>
+<ul>
+<li>root identifier;</li>
+<li>public key or verification rule;</li>
+<li>jurisdiction;</li>
+<li>validity interval;</li>
+<li>revocation rule;</li>
+<li>rotation rule;</li>
+<li>policy binding.</li>
+</ul>
+<p>The trust-root hash is:</p>
+<p><span
+class="math display"><em>H</em><sub><em>R</em></sub> = <em>H</em>(<code>"CHC:ROOTSET:v1"</code> ∥ <em>E</em>(<em>R</em>))</span></p>
+<p>The trust-root hash commits to the root set and its canonical
+ordering or normalization rule.</p>
+<p>Trust roots establish admissible verification pathways.</p>
+<p>Trust roots are evidence-routing mechanisms, not authority sources.
+Authority remains policy-derived. They do not themselves establish
+authority. Authority remains a policy-evaluated property derived from
+semantic dimensions, receipts, jurisdiction, freshness state, and active
+policy.</p>
+<p>Trust-root set hash and active policy hash are both inputs to
+trust-root validation. Root material alone is insufficient without the
+policy that interprets it.</p>
+<p>Trust-root models include PKI, web-of-trust, threshold governance,
+append-only transparency logs, and constitutional governance
+systems.</p>
+<p>Root rotation and revocation are signed updates over <span
+class="math inline"><em>R</em></span>, producing a new <span
+class="math inline"><em>H</em><sub><em>R</em></sub></span>. Different
+trust domains may reach different admissibility decisions over the same
+state. CHC makes this explicit rather than pretending that trust is
+universal.</p>
+<hr />
+<h2 id="canonical-governance-dimensions">17. Canonical Governance
+Dimensions</h2>
+<p>CHC defines eight canonical governance dimensions.</p>
+<h3 id="mandatory-core">Mandatory Core</h3>
+<ol type="1">
+<li><strong>Artifact State and Encoding</strong> — artifact identity,
+media type, serialization format, normalization rule, artifact role, and
+<span class="math inline"><em>H</em><sub><em>s</em></sub></span>;</li>
+<li><strong>Causal</strong> — parent state, parent semantic hash, or
+causal predecessor;</li>
+<li><strong>Intent</strong> — declared purpose or action;</li>
+<li><strong>Authority</strong> — predicate-bearing authority claim;</li>
+<li><strong>Jurisdiction</strong> — policy domain in which authority is
+evaluated;</li>
+<li><strong>Custody</strong> — actor, agent, steward, or custody
+chain.</li>
+</ol>
+<h3 id="canonical-optional">Canonical Optional</h3>
+<ol start="7" type="1">
+<li><strong>Semantics</strong> — behavioral contract or semantic
+interpretation, when applicable;</li>
+<li><strong>Resources</strong> — observed or declared resource use.</li>
+</ol>
+<p>The canonical model is (8+n), where (n) denotes extension dimensions.
+Some deployments may record Resources as observable metadata rather than
+a semantic-hash envelope member, but the dimension remains part of the
+canonical governance model.</p>
+<p>Confidence is not part of the canonical eight. It may be introduced
+as an extension dimension with its own schema.</p>
+<hr />
+<h2 id="artifact-state-and-encoding-dimension">18. Artifact State and
+Encoding Dimension</h2>
+<p>The Artifact State and Encoding dimension has the following normative
+schema sketch:</p>
+<pre class="text"><code>artifact_state_and_encoding = {
+  required state_hash: H_s,
+  required media_type: string,
+  required serialization_format: string,
+  required normalization_scheme: string,
+  required artifact_role: enum[
+    source,
+    build_input,
+    intermediate,
+    clean_binary,
+    release_binary,
+    package,
+    container_image,
+    policy_object,
+    manifest_object,
+    runtime_state
+  ],
+  optional artifact_size: integer,
+  optional content_address: string
+}</code></pre>
+<p>This prevents ambiguity about what was hashed.</p>
+<hr />
+<h2 id="causal-dimension">19. Causal Dimension</h2>
+<p>The Causal dimension is a relation over hashes:</p>
+<p><span
+class="math display"><em>C</em><em>a</em><em>u</em><em>s</em><em>a</em><em>l</em> ⊆ <em>H</em><em>a</em><em>s</em><em>h</em> × <em>H</em><em>a</em><em>s</em><em>h</em> × <em>R</em><em>e</em><em>l</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em><em>T</em><em>y</em><em>p</em><em>e</em></span></p>
+<p>A causal edge is:</p>
+<p><span
+class="math display">(parent_hash, child_hash, relation)</span></p>
+<p>Causal edges may represent immediate predecessors or transitive
+ancestry. If transitive ancestry is stored, the schema must declare
+whether the stored relation is a path summary, closure proof, or direct
+edge list.</p>
+<p>Examples include:</p>
+<ul>
+<li>parent state hash;</li>
+<li>parent semantic hash;</li>
+<li>previous receipt;</li>
+<li>prior build step;</li>
+<li>prior manifest checkpoint.</li>
+</ul>
+<p>Causality is the minimal form of lineage.</p>
+<hr />
+<h2 id="intent-dimension">20. Intent Dimension</h2>
+<p>The Intent dimension declares the action or purpose associated with
+the state jurisdiction.</p>
+<p>Examples:</p>
+<ul>
+<li>build;</li>
+<li>package;</li>
+<li>deploy;</li>
+<li>execute;</li>
+<li>publish;</li>
+<li>distribute;</li>
+<li>verify;</li>
+<li>archive.</li>
+</ul>
+<p>Intent is mandatory for execution, deployment, publication, or
+distribution. It may be absent only when policy permits a non-operative
+state class.</p>
+<p>Intent is not authority.</p>
+<hr />
+<h2 id="authority-dimension">21. Authority Dimension</h2>
+<p>The Authority dimension contains an attested claim that a particular
+authority predicate was satisfied.</p>
+<p>The verification question is:</p>
+<p><span
+class="math display"><em>A</em><em>u</em><em>t</em><em>h</em><em>o</em><em>r</em><em>i</em><em>t</em><em>y</em><em>P</em><em>r</em><em>e</em><em>d</em><em>i</em><em>c</em><em>a</em><em>t</em><em>e</em>(<em>d</em><sub><em>a</em><em>u</em><em>t</em><em>h</em><em>o</em><em>r</em><em>i</em><em>t</em><em>y</em></sub>, <em>d</em><sub><em>j</em><em>u</em><em>r</em><em>i</em><em>s</em><em>d</em><em>i</em><em>c</em><em>t</em><em>i</em><em>o</em><em>n</em></sub>, <em>P</em>, <em>t</em>, <em>R</em><em>e</em><em>v</em>) = true</span></p>
+<p>Authority predicates are policy- and time-dependent by default. They
+depend on jurisdiction, signer class, time, revocation state, and policy
+version.</p>
+<p>The question is not:</p>
+<blockquote>
+<p>Who signed this?</p>
+</blockquote>
+<p>This distinction prevents attribution laundering.</p>
+<hr />
+<h2 id="jurisdiction-dimension">22. Jurisdiction Dimension</h2>
+<p>The Jurisdiction dimension specifies the governance domain in which
+authority is evaluated.</p>
+<p>Jurisdictions may be flat, hierarchical, or overlapping. The policy
+must declare which model applies.</p>
+<p>Nested governance systems may treat jurisdiction as a derived
+dimension whose authority is established through a higher jurisdictional
+claim.</p>
+<p>Examples:</p>
+<ul>
+<li>organization;</li>
+<li>protocol;</li>
+<li>legal regime;</li>
+<li>constitutional rule-set;</li>
+<li>repository policy;</li>
+<li>deployment environment.</li>
+</ul>
+<p>The same state may be admissible in one jurisdiction and inadmissible
+in another.</p>
+<hr />
+<h2 id="semantics-dimension">23. Semantics Dimension</h2>
+<p>The Semantics dimension binds a state jurisdiction to a declared
+semantic contract.</p>
+<p>A semantic contract may include:</p>
+<ul>
+<li>API contract;</li>
+<li>protocol contract;</li>
+<li>interface shape;</li>
+<li>behavioral specification;</li>
+<li>side-effect boundary;</li>
+<li>type-level contract;</li>
+<li>interpretation regime;</li>
+<li>execution promise.</li>
+</ul>
+<p>This dimension may be absent where no semantic contract is claimed.
+Absence must be explicit and policy-evaluable.</p>
+<hr />
+<h2 id="custody-dimension">24. Custody Dimension</h2>
+<p>The Custody dimension is a provenance claim.</p>
+<p>It may record actor continuity, stewardship, possession history,
+receipt chain, or agent identity.</p>
+<p>Custody may be derived from receipts and signatures when the schema
+declares the derivation rule. Otherwise, it requires its own dedicated
+attestation type.</p>
+<p>Custody is not equivalent to a chain-of-possession proof unless its
+schema explicitly includes transfer attestations, custody intervals, and
+signer validation. Custody supports auditability and provenance, but it
+is not a security guarantee by itself and does not confer authority.</p>
+<hr />
+<h2 id="resource-dimension">25. Resource Dimension</h2>
+<p>The Resource dimension records declared or measured resource
+information.</p>
+<p>Examples:</p>
+<ul>
+<li>output bytes;</li>
+<li>estimated tokens;</li>
+<li>actual tokens;</li>
+<li>CPU budget;</li>
+<li>memory budget;</li>
+<li>energy budget;</li>
+<li>storage allocation;</li>
+<li>network bandwidth.</li>
+</ul>
+<p>Resource claims may be declarative, measured, or both. Runtime
+measurements may include estimation error or measurement uncertainty.
+The schema must encode whether each value is estimated, measured, or
+both, and must define uncertainty semantics where applicable.</p>
+<p>A deployment may choose to include resource claims inside the
+semantic hash or record them as policy-visible metadata. Either choice
+must be declared.</p>
+<hr />
+<h2 id="extension-dimensions">26. Extension Dimensions</h2>
+<p>Non-canonical dimensions may be added as domain-specific
+extensions.</p>
+<p>Examples include:</p>
+<ul>
+<li>Confidence;</li>
+<li>Clinical Context;</li>
+<li>Consent;</li>
+<li>Regulatory Class;</li>
+<li>Deployment Environment;</li>
+<li>Evidence Level;</li>
+<li>Semantic Reactor State;</li>
+<li>Consensus Weight.</li>
+</ul>
+<p>Extension dimensions can be required by policy even if they are not
+canonical. “Extension” means outside the canonical eight, not
+necessarily optional.</p>
+<p>Extension dimensions must follow the same encoding, attestation,
+ordering, and policy rules as canonical dimensions.</p>
+<hr />
+<h2 id="schema-registry">27. Schema Registry</h2>
+<p>CHC separates ontology from attestation.</p>
+<p>Ontology answers:</p>
+<blockquote>
+<p>What dimensions exist?</p>
+</blockquote>
+<p>Attestation answers:</p>
+<blockquote>
+<p>What values are claimed?</p>
+</blockquote>
+<p>The schema registry is an append-only, hash-addressed, signed or
+transparency-logged structure. The schema registry itself is
+freshness-bound; schema verification must reject stale registry
+checkpoints under policy.</p>
+<p>Each schema entry includes:</p>
+<ul>
+<li>dimension identifier;</li>
+<li>schema hash;</li>
+<li>version;</li>
+<li>machine-checkable migration rule;</li>
+<li>forward compatibility behavior;</li>
+<li>backward compatibility behavior;</li>
+<li>deprecation rule;</li>
+<li>registry signature or log inclusion proof.</li>
+</ul>
+<p>Backward compatibility must be explicit. No verifier may silently
+coerce one schema version into another.</p>
+<p>Schema drift is a failure mode, not an implementation detail.</p>
+<hr />
+<h2 id="freshness-verification">28. Freshness Verification</h2>
+<p>Freshness is an evaluation procedure over existing CHC objects.</p>
+<p>A freshness check evaluates:</p>
+<p><span
+class="math display"><em>F</em><em>r</em><em>e</em><em>s</em><em>h</em>(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, 𝒟, <em>M</em>, <em>R</em>, <em>P</em>, <em>t</em>, <em>π</em>) = true</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>M</em></span> is one or more
+policy-selected receipt sources and the resulting manifest state;</li>
+<li><span class="math inline"><em>R</em></span> is the trust-root
+set;</li>
+<li><span class="math inline"><em>P</em></span> is the policy
+program;</li>
+<li><span class="math inline"><em>t</em></span> is a verifiable epoch,
+checkpoint, or log position;</li>
+<li><span class="math inline"><em>π</em></span> is freshness
+evidence.</li>
+</ul>
+<p>Policy-selected receipt sources may include local manifests, private
+or organizational manifest servers, public publisher manifests,
+peer-to-peer manifest consensus, transparency logs, revocation logs,
+quorum checkpoints, CRDT state, cache state, checkpoint receipts,
+consensus receipts, and witness receipts. Signed snapshots are receipt
+sources only when tied to a specific policy hash or root-set
+version.</p>
+<p>Cached evidence may be used only if the cache is itself
+freshness-bound by a checkpoint, expiry, signed snapshot, or
+policy-defined validity window. Cache invalidation is policy-driven; a
+cache is not an implicit trust root.</p>
+<p>The strongest deployment combines independent receipt sources so
+disagreement becomes evidence rather than noise.</p>
+<p>A CHC verifier performs freshness evaluation at the point of
+attempted action, including program execution. A binary may be
+byte-identical, semantically bound, and historically valid, yet still
+fail execution if the current freshness sources do not establish present
+admissibility under the active policy.</p>
+<p>Freshness sources are backend-neutral. A deployment may use a local
+manifest, an organizational manifest service, public publisher
+manifests, independent manifest mirrors, transparency logs, checkpoint
+witnesses, or a peer-to-peer manifest network. These sources are not
+treated as authority by themselves. They are evidence sources whose
+outputs are evaluated by policy.</p>
+<p>A stronger deployment can require agreement or non-conflict among
+many independent manifest sources. For example, users, organizations,
+auditors, distributions, or public mirrors may publish manifests for
+software they run and choose to represent as verified by them. A
+verifier may then require threshold agreement, latest-valid checkpoints,
+consistency proofs, quorum receipts, or fork-accountability checks
+across independently operated mirrors.</p>
+<p>This creates a practical trust-hardening model: an attacker must not
+merely compromise a signing key or substitute a local manifest, but must
+defeat the policy-selected freshness network within the relevant scope.
+Widely mirrored, independently operated, or peer-to-peer manifest
+systems make rollback, equivocation, stale binary replay, and unilateral
+authority substitution substantially harder because disagreement becomes
+evidence rather than noise.</p>
+<p>This does not make public manifests self-authorizing. Each manifest
+remains an evidence object. Its authority arises only when the active
+policy accepts it as fresh, consistent, jurisdictionally relevant, and
+sufficient for execution.</p>
+<p>Freshness is not a property of a hash. Freshness is a property of
+admissibility evaluated against current evidence.</p>
+<hr />
+<h2 id="freshness-failure-taxonomy">29. Freshness Failure Taxonomy</h2>
+<p>Freshness may fail in distinct ways:</p>
+<ol type="1">
+<li><strong>STALE_STATE</strong> — <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> no longer
+matches the accepted state.</li>
+<li><strong>STALE_SEMANTIC_ATTESTATION</strong> — <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> binds old
+claims no longer accepted.</li>
+<li><strong>STALE_REVOCATION_STATE</strong> — revocation information is
+missing or outdated.</li>
+<li><strong>STALE_CHECKPOINT</strong> — the presented log or consensus
+checkpoint is older than policy permits.</li>
+<li><strong>POLICY_STALE</strong> — the verifier is using an outdated
+policy hash or trust-root interpretation.</li>
+</ol>
+<p>A stale policy invalidates the entire decision path. The verifier
+must reload and re-evaluate under the active policy if available; if the
+active policy cannot be obtained, strict mode rejects the execution
+request.</p>
+<hr />
+<h2 id="freshness-proof-types">30. Freshness Proof Types</h2>
+<p>A freshness proof <span class="math inline"><em>π</em></span> may be
+one of the following.</p>
+<h3 id="latest-valid-checkpoint-proof">Latest Valid Checkpoint
+Proof</h3>
+<p><span class="math display">$$
+\begin{aligned}
+\pi_{lvc} = \langle &amp;checkpoint, scope, H_P, H_R, sig,
+consistency_path\rangle
+\end{aligned}
+$$</span></p>
+<p>Latest Valid Checkpoint Proof is a named proof class in the schema
+registry and must be independently versioned.</p>
+<p>Verification interface:</p>
+<p><span
+class="math display"><em>V</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em><em>L</em><em>V</em><em>C</em>(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>M</em>, <em>t</em>, <em>π</em><sub><em>l</em><em>v</em><em>c</em></sub>, <em>R</em>, <em>P</em>) = true</span></p>
+<p>iff the checkpoint is signed by an accepted checkpoint authority,
+bound to the active policy hash and root-set hash, current under policy,
+and consistent with the verifier’s highest previously observed
+checkpoint.</p>
+<p>Other proof types include:</p>
+<ol type="1">
+<li>transparency-log inclusion proof;</li>
+<li>log consistency proof;</li>
+<li>consensus checkpoint proof;</li>
+<li>revocation inclusion or non-inclusion proof;</li>
+<li>CRDT convergence proof;</li>
+<li>threshold-signed epoch proof;</li>
+<li>VDF-backed time proof;</li>
+<li>secure-time attestation.</li>
+</ol>
+<p>Each proof type requires a verification algorithm.</p>
+<p>A freshness check succeeds only when the policy-accepted proof set
+verifies.</p>
+<hr />
+<h2 id="anti-rollback-and-freeze-resistance">31. Anti-Rollback and
+Freeze Resistance</h2>
+<p>Clients track:</p>
+<p><span
+class="math display"><em>c</em><em>h</em><em>e</em><em>c</em><em>k</em><em>p</em><em>o</em><em>i</em><em>n</em><em>t</em><sub><em>m</em><em>a</em><em>x</em></sub></span></p>
+<p>the highest valid checkpoint previously observed for a trust
+domain.</p>
+<p>By default, a presented checkpoint is accepted only if:</p>
+<p><span
+class="math display"><em>c</em><em>h</em><em>e</em><em>c</em><em>k</em><em>p</em><em>o</em><em>i</em><em>n</em><em>t</em><sub><em>t</em></sub> &gt; <em>c</em><em>h</em><em>e</em><em>c</em><em>k</em><em>p</em><em>o</em><em>i</em><em>n</em><em>t</em><sub><em>m</em><em>a</em><em>x</em></sub></span></p>
+<p>Equality-based checkpoint acceptance is allowed only for idempotent
+rechecks of the same <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>, same <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>, and same
+<span class="math inline"><em>H</em><sub><em>P</em></sub></span> within
+a policy-declared validity window:</p>
+<p><span
+class="math display"><em>c</em><em>h</em><em>e</em><em>c</em><em>k</em><em>p</em><em>o</em><em>i</em><em>n</em><em>t</em><sub><em>t</em></sub> = <em>c</em><em>h</em><em>e</em><em>c</em><em>k</em><em>p</em><em>o</em><em>i</em><em>n</em><em>t</em><sub><em>m</em><em>a</em><em>x</em></sub></span></p>
+<p>Every accepted checkpoint must include a consistency proof from the
+prior checkpoint unless the policy defines a trusted genesis
+condition.</p>
+<p>Policies must define maximum staleness:</p>
+<p><span class="math display"><em>Δ</em></span></p>
+<p>Execution requires:</p>
+<p><span
+class="math display"><em>n</em><em>o</em><em>w</em> − <em>t</em> ≤ <em>Δ</em></span></p>
+<p>or an equivalent consensus-derived freshness bound when local clocks
+are unreliable.</p>
+<hr />
+<h2 id="safety-and-liveness">32. Safety and Liveness</h2>
+<p>CHC separates safety from liveness.</p>
+<p>In strict fail-closed mode, unavailable logs, unreachable manifest
+sources, missing revocation data, or network partitions may block
+execution. This is a deliberate availability tradeoff.</p>
+<p>Deployments may define grace modes, but grace modes must be explicit
+policy states with bounded duration, recorded risk, auditable
+refusal/acceptance behavior, and a rollback or revalidation
+deadline.</p>
+<p>Grace mode may bypass staleness only if policy permits it. It should
+not bypass known revocation. A deployment that permits revocation bypass
+must declare that behavior as an emergency policy with separate audit
+treatment.</p>
+<hr />
+<h2 id="revocation-semantics">33. Revocation Semantics</h2>
+<p>CHC distinguishes four revocation classes:</p>
+<ol type="1">
+<li><strong>Claim Revocation</strong> — invalidates the admissibility of
+a specific claim.</li>
+<li><strong>Dimension-Value Revocation</strong> — invalidates the
+encoded value itself under its schema or trust domain.</li>
+<li><strong>Signer-Future-Authority Revocation</strong> — prevents a
+signer from making future claims of a given class.</li>
+<li><strong>Trust-Root Revocation</strong> — replaces, narrows, or
+revokes a trust-root entry or root set.</li>
+</ol>
+<p>Claim revocation may cascade into dimension-value revocation when
+policy declares the claim as constitutive of the value. Dimension-value
+revocation may cascade into claim revocation when the value is no longer
+admissible evidence for any claim. Without an explicit cascade rule, the
+classes remain separate.</p>
+<p>A revocation may invalidate:</p>
+<ul>
+<li>only the affected claim;</li>
+<li>only the affected dimension;</li>
+<li>all predicates depending on that dimension;</li>
+<li>the full Semantic Hash;</li>
+<li>all descendants in the lineage DAG.</li>
+</ul>
+<p>A revocation proof contains:</p>
+<ul>
+<li>revoked target;</li>
+<li>revocation authority;</li>
+<li>revocation epoch;</li>
+<li>inclusion proof;</li>
+<li>consistency proof;</li>
+<li>propagation bound.</li>
+</ul>
+<p>Revocation changes the outcome of freshness and policy evaluation
+over <span class="math inline"><em>H</em><sub><em>s</em></sub></span>
+and <span class="math inline"><em>H</em><sub><em>m</em></sub></span>. It
+does not require a third hash.</p>
+<hr />
+<h2 id="manifest-model">34. Manifest Model</h2>
+<p>A CHC manifest is an ordered Merkle tree with a root:</p>
+<p><span class="math display"><em>H</em><sub><em>M</em></sub></span></p>
+<p>The manifest tree commits to both leaf content and leaf order using
+positional indexing or hash-linked sequence commitments, as declared by
+the manifest schema. Manifest leaf typing is committed in the leaf hash,
+not only in the positional schema.</p>
+<p>A leaf hash has the form:</p>
+<p><span
+class="math display"><em>H</em><sub><em>l</em><em>e</em><em>a</em><em>f</em></sub> = <em>H</em>(<code>"CHC:MANIFEST:LEAF:v1"</code> ∥ <em>l</em><em>e</em><em>a</em><em>f</em><sub><em>t</em></sub><em>y</em><em>p</em><em>e</em> ∥ <em>p</em><em>o</em><em>s</em><em>i</em><em>t</em><em>i</em><em>o</em><em>n</em> ∥ <em>l</em><em>e</em><em>a</em><em>f</em><sub><em>p</em></sub><em>a</em><em>y</em><em>l</em><em>o</em><em>a</em><em>d</em>)</span></p>
+<p>Manifest leaves may include:</p>
+<ul>
+<li><span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>;</li>
+<li><span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>;</li>
+<li>dimension commitments;</li>
+<li>dimension attestations;</li>
+<li>lineage references;</li>
+<li>policy hash;</li>
+<li>trust-root hash;</li>
+<li>schema hashes;</li>
+<li>freshness references;</li>
+<li>revocation references.</li>
+</ul>
+<p>Merkle inclusion proofs allow partial disclosure and partial
+verification.</p>
+<hr />
+<h2 id="manifest-consistency-and-fork-accountability">35. Manifest
+Consistency and Fork Accountability</h2>
+<p>Manifest consistency is evaluated within a policy scope.</p>
+<p>A policy scope may be:</p>
+<ul>
+<li>package name and version;</li>
+<li>state identity;</li>
+<li>source repository;</li>
+<li>build lineage;</li>
+<li>deployment channel;</li>
+<li>jurisdiction;</li>
+<li>semantic coordinate.</li>
+</ul>
+<p>Multiple valid manifests may coexist across different policy scopes
+over the same state. This is a formal design feature, not a
+contradiction. Different valid manifests over different scopes do not
+imply different truth values; they imply different admissibility
+contexts.</p>
+<p>An equivocation proof is:</p>
+<p><span
+class="math display"><em>E</em><em>q</em> = ⟨<em>M</em><sub>1</sub>, <em>M</em><sub>2</sub>, <em>s</em><em>i</em><em>g</em><sub>1</sub>, <em>s</em><em>i</em><em>g</em><sub>2</sub>, <em>s</em><em>c</em><em>o</em><em>p</em><em>e</em>, <em>c</em><em>o</em><em>n</em><em>f</em><em>l</em><em>i</em><em>c</em><em>t</em><sub><em>p</em></sub><em>r</em><em>e</em><em>d</em><em>i</em><em>c</em><em>a</em><em>t</em><em>e</em>⟩</span></p>
+<p>where the conflict occurs within the same policy scope.</p>
+<p>Policies may define quarantine, revocation, fork-choice, exclusion,
+or escalation.</p>
+<hr />
+<h2 id="policy-function">36. Policy Function</h2>
+<p>Execution is allowed iff:</p>
+<p><span
+class="math display"><em>P</em>(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, 𝒟, <em>M</em>, <em>R</em>, <em>t</em>, <em>π</em>) = true</span></p>
+<p><span class="math inline"><em>P</em></span> must be deterministic,
+total, versioned, auditable, hash-addressed, and explicit about
+fail-closed or grace behavior.</p>
+<p>The policy hash is:</p>
+<p><span
+class="math display"><em>H</em><sub><em>P</em></sub> = <em>H</em>(<code>"CHC:POLICY:v1"</code> ∥ <em>p</em><em>o</em><em>l</em><em>i</em><em>c</em><em>y</em><sub><em>b</em></sub><em>y</em><em>t</em><em>e</em><em>s</em>)</span></p>
+<p>Freshness sources must bind <span
+class="math inline"><em>H</em><sub><em>P</em></sub></span> or otherwise
+prove that their evidence is valid for the policy being evaluated.</p>
+<p>A recommended precedence order is:</p>
+<ol type="1">
+<li>schema validity;</li>
+<li>trust-root validity;</li>
+<li>signature and attestation verification;</li>
+<li>revocation;</li>
+<li>staleness;</li>
+<li>manifest consistency;</li>
+<li>partial verification;</li>
+<li>semantic equivalence transformation, only if explicitly enabled by
+policy;</li>
+<li>execution decision.</li>
+</ol>
+<p>A policy bug is a first-class failure mode.</p>
+<hr />
+<h2 id="partial-verification">37. Partial Verification</h2>
+<p>Partial verification is unsafe by default.</p>
+<p>Let:</p>
+<p><span class="math display">𝒟<sup>′</sup> ⊂ 𝒟</span></p>
+<p>be the verified dimension subset.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>M</em><sub><em>m</em><em>i</em><em>s</em><em>s</em><em>i</em><em>n</em><em>g</em></sub> = 𝒟 \ 𝒟<sup>′</sup></span></p>
+<p>be the missing dimension set.</p>
+<p>Partial verification is permitted only when both are explicitly
+declared:</p>
+<ol type="1">
+<li>the required core dimension set;</li>
+<li>the missing-dimension risk envelope.</li>
+</ol>
+<p>Omitted dimensions may still be implicitly required through
+transitive policy dependencies. For example, omitting Jurisdiction may
+invalidate Authority because the authority predicate may depend on
+jurisdictional scope.</p>
+<p>A policy may define mandatory core dimensions:</p>
+<p><span
+class="math display">𝒟<sub><em>c</em><em>o</em><em>r</em><em>e</em></sub> ⊆ 𝒟</span></p>
+<p>Execution is denied unless:</p>
+<p><span
+class="math display">𝒟<sub><em>c</em><em>o</em><em>r</em><em>e</em></sub> ⊆ 𝒟<sup>′</sup></span></p>
+<p>Non-core omissions may be accepted only under a declared risk
+envelope. Partial verification must emit an explicit risk class, not
+merely pass or fail.</p>
+<hr />
+<h2 id="semantic-equivalence">38. Semantic Equivalence</h2>
+<p>Semantic equivalence is a policy-specified optimization, not a
+general property of CHC.</p>
+<p>Define a schema-declared projection:</p>
+<p><span
+class="math display"><em>p</em><em>r</em><em>o</em><em>j</em><sub><em>S</em></sub> : 𝒟 → <em>S</em></span></p>
+<p>and a schema-version-specific equivalence relation:</p>
+<p><span
+class="math display">∼<sub><em>S</em>, <em>v</em></sub></span></p>
+<p>Two CHC objects are semantically equivalent under (S) and schema
+version (v) iff:</p>
+<p><span
+class="math display"><em>p</em><em>r</em><em>o</em><em>j</em><sub><em>S</em></sub>(𝒟<sup>(1)</sup>)∼<sub><em>S</em>, <em>v</em></sub><em>p</em><em>r</em><em>o</em><em>j</em><sub><em>S</em></sub>(𝒟<sup>(2)</sup>)</span></p>
+<p>Equivalence is checked over normalized values, projections, or
+schema-defined relations. The relation must be explicit and
+policy-enabled. Schema-version-specific equivalence prevents silent
+cross-schema comparison.</p>
+<hr />
+<h2 id="semantic-continuity">39. Semantic Continuity</h2>
+<p>CHC separates state identity from semantic identity, but practical
+systems often require semantic continuity across time.</p>
+<p>Given two state jurisdictions:</p>
+<p><span
+class="math display"><em>j</em><sub><em>t</em><sub>0</sub></sub>, <em>j</em><sub><em>t</em><sub>1</sub></sub></span></p>
+<p>with:</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub>(<em>j</em><sub><em>t</em><sub>0</sub></sub>), <em>H</em><sub><em>s</em></sub>(<em>j</em><sub><em>t</em><sub>1</sub></sub>)</span></p>
+<p>and semantic hashes:</p>
+<p><span
+class="math display"><em>H</em><sub><em>m</em></sub>(<em>t</em><sub>0</sub>), <em>H</em><sub><em>m</em></sub>(<em>t</em><sub>1</sub>)</span></p>
+<p>a future CHC extension may define semantic continuity as a
+policy-evaluable relation between the two semantic states.</p>
+<p>At minimum, semantic continuity would ask:</p>
+<pre class="text"><code>Which semantic claims persisted?
+Which claims changed?
+Which claims were revoked?
+Which authority predicates remain admissible?
+Which lineage edges justify the transition?</code></pre>
+<p>CHC does not require a complete theory of semantic evolution to
+function. It requires only that semantic claims be bound to state and
+evaluated under policy. However, systems such as DKN and CSH naturally
+pressure this boundary, because knowledge identity and constitutional
+meaning often depend not merely on a single semantic hash but on
+admissible semantic evolution across time.</p>
+<p>Semantic continuity is therefore a natural future extension of CHC:
+the study of how semantic identity persists, changes, or fails across
+successive State Jurisdictions.</p>
+<hr />
+<h2 id="privacy-and-selective-disclosure">40. Privacy and Selective
+Disclosure</h2>
+<p>Rich semantic dimensions may leak sensitive information.</p>
+<p>CHC supports commitment-based dimensions:</p>
+<p><span
+class="math display"><em>C</em><sub><em>i</em></sub> = <em>C</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em>(<em>v</em><em>a</em><em>l</em><em>u</em><em>e</em><sub><em>i</em></sub>, <em>r</em><sub><em>i</em></sub>)</span></p>
+<p>Verification may use:</p>
+<ul>
+<li>opening proofs;</li>
+<li>Merkle inclusion proofs;</li>
+<li>set-membership proofs;</li>
+<li>zero-knowledge predicates.</li>
+</ul>
+<p>Commitments do not reveal raw values, but schema membership
+disclosure, reused commitments, stable identifiers, repeated signer
+keys, or key reuse across policy scopes may leak equality or
+linkability. Policies must account for this.</p>
+<hr />
+<h2 id="source-binary-binding-and-build-proofs">41. Source-Binary
+Binding and Build Proofs</h2>
+<p>CHC binds source to binary through a two-phase architecture.</p>
+<h3 id="phase-1-clean-build">Phase 1: Clean Build</h3>
+<p>The build system produces:</p>
+<p><span
+class="math display"><em>B</em><em>i</em><em>n</em><em>a</em><em>r</em><em>y</em><sub><em>c</em><em>l</em><em>e</em><em>a</em><em>n</em></sub></span></p>
+<p>and computes:</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub>(<em>B</em><em>i</em><em>n</em><em>a</em><em>r</em><em>y</em><sub><em>c</em><em>l</em><em>e</em><em>a</em><em>n</em></sub>)</span></p>
+<p>Native CHC deployments require:</p>
+<ul>
+<li>hermetic builds;</li>
+<li>reproducibility evidence;</li>
+<li>build sandboxing;</li>
+<li>dependency pinning;</li>
+<li>environment hashing;</li>
+<li>independent rebuild checks where policy requires them.</li>
+</ul>
+<h3 id="phase-2-semantic-binding">Phase 2: Semantic Binding</h3>
+<p>Semantic dimensions are attached after <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> is fixed.</p>
+<p>The build proof:</p>
+<p><span
+class="math display"><em>π</em><sub><em>b</em><em>u</em><em>i</em><em>l</em><em>d</em></sub></span></p>
+<p>is included in the Causal dimension.</p>
+<p>It must bind at minimum:</p>
+<ul>
+<li>source hash;</li>
+<li>clean binary hash;</li>
+<li>environment hash;</li>
+<li>dependency graph or dependency manifest;</li>
+<li>builder identity;</li>
+<li>build step evidence.</li>
+</ul>
+<p>Independent rebuild checks strengthen <span
+class="math inline"><em>π</em><sub><em>b</em><em>u</em><em>i</em><em>l</em><em>d</em></sub></span>,
+but the proof must bind source and environment even when such checks are
+omitted.</p>
+<p>Without <span
+class="math inline"><em>π</em><sub><em>b</em><em>u</em><em>i</em><em>l</em><em>d</em></sub></span>,
+source-binary correspondence remains an attested claim rather than a
+reproducibility proof.</p>
+<hr />
+<h2 id="recursive-toolchain-binding-and-trusting-trust">42. Recursive
+Toolchain Binding and Trusting Trust</h2>
+<p>CHC addresses Thompson-style “Trusting Trust” attacks by extending
+the same state-and-semantic binding applied to application binaries to
+the compiler toolchain itself. A compiler is treated as a CHC state
+jurisdiction with its own State Hash, Semantic Hash, causal lineage,
+build proof, source hash, environment hash, dependency graph, compiler
+provenance, receipts, and freshness evidence.</p>
+<p>The compiler used to build an application is therefore not an ambient
+trusted premise; it becomes a policy-evaluable dependency.</p>
+<p>The recursive dependency shape is:</p>
+<pre class="text"><code>application binary
+  depends on compiler binary
+    depends on compiler source
+      depends on prior compiler/toolchain state
+        depends on receipts, rebuilds, policy, freshness</code></pre>
+<p>CHC does not merely ask:</p>
+<pre class="text"><code>Did this source produce this binary?</code></pre>
+<p>It asks:</p>
+<pre class="text"><code>What produced the producer?</code></pre>
+<p>CHC recursively converts trusted premises into auditable
+jurisdictions. Every producer may itself become a state jurisdiction
+subject to provenance, receipts, and admissibility evaluation. For
+toolchains, execution-time freshness means that a compiler binary is not
+accepted merely because it was once valid or locally present. At the
+point of use, the verifier may require current admissibility evidence
+from policy-selected manifest backends, including independent mirrors or
+peer-to-peer manifest consensus. This turns stale or forked compiler
+lineages into freshness failures rather than invisible trust
+assumptions.</p>
+<p>Trusting Trust is defeated as an invisible attack class within a
+toolchain-closed CHC verification boundary. CHC does not make subversion
+impossible; it prevents operative producers inside the declared boundary
+from remaining unaudited premises. A compiler subversion attempt must
+either satisfy recursive admissibility requirements or surface as a
+state, lineage, receipt, freshness, rebuild, dependency, or policy
+failure. Components outside the declared boundary remain explicit
+trusted premises until modeled as CHC State Jurisdictions.</p>
+<p>Within the declared CHC verification boundary, Thompson-style
+compiler subversion becomes an auditable and rejectable provenance
+failure rather than an invisible assumption. This boundary may include
+the compiler, assembler, linker, build scripts, dependency graph, build
+environment, operating system image, container image, or any other
+toolchain state jurisdiction that policy requires. Hardware, microcode,
+firmware, policy engines, and external infrastructure remain within
+scope only when modeled as CHC state jurisdictions with their own
+semantic attestations and freshness checks.</p>
+<h3 id="no-ambient-producer-principle">42.1 No Ambient Producer
+Principle</h3>
+<p>Trusting Trust attacks persist because conventional build systems
+allow producers to remain ambient premises. A compiler, assembler,
+linker, build script, dependency resolver, package manager, runtime,
+signing tool, or registry writer may influence executable state without
+itself being represented as an admissible object in the same
+verification system.</p>
+<p>CHC rejects ambient producer privilege.</p>
+<p>Any artifact, tool, service, or environment capable of producing,
+transforming, lowering, assembling, linking, packaging, signing,
+registering, admitting, or executing a State Jurisdiction must itself be
+one of:</p>
+<pre class="text"><code>1. a CHC State Jurisdiction with its own state hash, semantic hash,
+receipts, lineage, freshness evidence, and admissibility predicate;
+or
+
+2. an explicitly declared trusted premise outside the CHC
+verification boundary.</code></pre>
+<p>No producer may silently occupy a privileged position between state
+identity and admissibility.</p>
+<p>This principle can be stated compactly:</p>
+<pre class="text"><code>No executable state may be admitted from an unaudited producer
+inside the declared verification boundary.</code></pre>
+<p>A compiler is therefore not merely a tool that produces evidence. It
+is itself evidence-bearing state. Its authority to produce executable
+artifacts is derived from admissibility, not from its role, name,
+institutional origin, signature, or historical acceptance.</p>
+<h3 id="toolchain-closure">42.2 Toolchain Closure</h3>
+<p>A CHC verification boundary is toolchain-closed when every producer
+participating in the build or admission of executable state is itself
+modeled as a CHC State Jurisdiction or explicitly declared as an
+out-of-bound trusted premise.</p>
+<p>A toolchain-closed boundary may include:</p>
+<pre class="text"><code>source repository
+compiler source
+compiler binary
+assembler
+linker
+optimizer
+code generator
+build scripts
+dependency resolver
+package manager
+container image
+operating system image
+runtime
+policy engine
+registry writer
+signing tool
+receipt generator</code></pre>
+<p>Each modeled producer has:</p>
+<pre class="text"><code>state hash
+semantic hash
+source hash where applicable
+build proof
+environment hash
+dependency graph
+authority dimension
+jurisdiction dimension
+custody dimension
+receipts
+freshness evidence
+policy-bound admissibility</code></pre>
+<p>A producer outside the closure boundary is not ignored. It is
+recorded as an explicit trusted premise with a declared trust downgrade,
+risk class, and policy-visible nonclaim.</p>
+<h3 id="trusting-trust-closure-claim">42.3 Trusting Trust Closure
+Claim</h3>
+<p>Within a toolchain-closed CHC verification boundary, a Thompson-style
+compiler-subversion attack cannot remain an invisible assumption.</p>
+<p>A malicious compiler that produces a compromised binary while
+presenting benign source must satisfy the same admissibility predicates
+as any other executable producer. If the compiler, its source, its prior
+compiler, its build environment, its dependencies, or its build receipts
+are missing, stale, revoked, inconsistent, non-reproducible where
+reproducibility is required, or inconsistent with independent rebuild
+evidence, execution is refused.</p>
+<p>Thus, inside the declared CHC boundary, Trusting Trust is transformed
+from an invisible trust premise into a policy-evaluable failure
+class.</p>
+<p>A Trusting Trust attack must appear as at least one of:</p>
+<pre class="text"><code>state hash mismatch
+semantic hash mismatch
+missing producer jurisdiction
+missing source-binary build proof
+invalid causal lineage
+unmodeled prior compiler
+unmodeled build environment
+dependency drift
+stale compiler authority
+revoked toolchain authority
+failed independent rebuild
+failed diverse rebuild
+receipt mismatch
+policy-source inconsistency
+freshness failure
+explicit out-of-bound trusted premise</code></pre>
+<p>CHC therefore does not claim that all possible subversion is
+metaphysically impossible. It claims that no producer inside the
+declared verification boundary may remain both operative and
+unaudited.</p>
+<p>This is the precise sense in which CHC counters Trusting Trust:</p>
+<pre class="text"><code>Trusting Trust is defeated as an invisible attack class
+within a toolchain-closed CHC verification boundary.</code></pre>
+<p>Components outside the declared boundary remain trusted premises
+unless and until they are admitted as CHC State Jurisdictions. Hardware,
+microcode, firmware, physical manufacturing, and external infrastructure
+are not magically solved by CHC; they become further boundary candidates
+for recursive admission.</p>
+<h3 id="relation-to-diverse-double-compiling">42.4 Relation to Diverse
+Double-Compiling</h3>
+<p>Diverse Double-Compiling strengthens CHC toolchain closure by
+introducing an independent producer path. CHC does not replace diverse
+rebuild techniques; it gives them jurisdiction, receipts, freshness, and
+admissibility semantics.</p>
+<p>A CHC policy may require:</p>
+<pre class="text"><code>compiler_A(source) -&gt; binary_A
+
+compiler_B(source) -&gt; binary_B
+
+Compare(binary_A, binary_B) -&gt; verdict</code></pre>
+<p>The comparison verdict need not always be byte identity. Depending on
+the target, policy may accept:</p>
+<pre class="text"><code>BYTE_IDENTICAL
+OUTPUT_CORRESPONDS
+RECEIPT_CORRESPONDS
+STRUCTURE_CORRESPONDS
+NOT_COMPARABLE
+GAP_CERTIFIED
+REFUSED</code></pre>
+<p>Where byte identity is required and fails, execution is refused.</p>
+<p>Where byte identity is not expected, CHC requires explicit policy
+justification for accepting weaker correspondence. The verifier must not
+silently promote behavioral correspondence into equivalence.</p>
+<p>This lets CHC generalize the insight of Diverse Double-Compiling:
+independent production paths become receipt-bearing evidence inside a
+larger admissibility calculus.</p>
+<h3 id="compiler-admissibility-predicate">42.5 Compiler Admissibility
+Predicate</h3>
+<p>A compiler is admissible to produce executable state only if policy
+accepts its producer lineage.</p>
+<p>A minimal compiler admissibility predicate is:</p>
+<pre class="text"><code>CompilerAdmissible(C, P) =
+  StateHashValid(C)
+  and SemanticHashValid(C)
+  and SourceHashBound(C)
+  and BuildProofValid(C)
+  and EnvironmentHashBound(C)
+  and DependencyGraphAdmissible(C)
+  and ProducerLineageClosedOrDeclared(C)
+  and FreshnessValid(C, P)
+  and AuthorityPredicate(C, P)
+  and NoUnmodeledProducer(C)</code></pre>
+<p>An application binary produced by compiler C is admissible only
+if:</p>
+<pre class="text"><code>ApplicationAdmissible(A, C, P) =
+  StateHashValid(A)
+  and SemanticHashValid(A)
+  and SourceBinaryProofValid(A, C)
+  and CompilerAdmissible(C, P)
+  and BuildReceiptsValid(A)
+  and FreshnessValid(A, P)
+  and AuthorityPredicate(A, P)</code></pre>
+<p>This makes the compiler an admissible dependency rather than a
+background assumption.</p>
+<hr />
+<h2 id="independence-requirement">43. Independence Requirement</h2>
+<p>CHC requires hash-domain independence plus build-pipeline isolation
+between State Hash generation and semantic dimension binding: no
+semantic feedback into Phase 1 inputs.</p>
+<p>This means:</p>
+<ol type="1">
+<li>Phase 1 build input excludes semantic dimensions;</li>
+<li>metadata embedding occurs only after <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> is
+computed;</li>
+<li>rebuilding with altered semantic dimensions does not alter <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>;</li>
+<li>final artifact metadata can be removed or normalized to recover the
+clean binary hash.</li>
+</ol>
+<p>This prevents circular hash dependency and semantic feedback
+channels.</p>
+<hr />
+<h2 id="worked-example-ledger-tool-v2.4">44. Worked Example: Ledger-Tool
+v2.4</h2>
+<p>This example illustrates how CHC distinguishes state identity,
+semantic identity, and admissibility.</p>
+<p>Assume an artifact:</p>
+<pre class="text"><code>name: ledger-tool
+version: v2.4
+role: release_binary
+channel: stable</code></pre>
+<h3 id="state-jurisdiction-1">44.1 State Jurisdiction</h3>
+<p>The declared State Jurisdiction is the release binary payload:</p>
+<pre class="text"><code>J = ledger-tool:v2.4:release_binary</code></pre>
+<p>The verifier computes:</p>
+<pre class="text"><code>H_s = sha256(&quot;ledger-tool-v2.4-clean-binary-bytes&quot;)
+    = 7d9c...a41</code></pre>
+<p>This answers:</p>
+<pre class="text"><code>What exists?</code></pre>
+<p>It does not answer who may publish it, whether it is fresh, or
+whether it may execute.</p>
+<hr />
+<h3 id="semantic-dimensions">44.2 Semantic Dimensions</h3>
+<p>The artifact carries the following semantic dimensions:</p>
+<pre class="text"><code>Artifact State and Encoding:
+  state_hash: 7d9c...a41
+  media_type: application/x-elf
+  serialization_format: elf64
+  normalization_scheme: chc-clean-binary-v1
+  artifact_role: release_binary
+
+Intent:
+  publish
+  execute
+
+Jurisdiction:
+  ledger-tool/stable-channel
+
+Authority:
+  maintainer-quorum-2-of-3
+
+Causal:
+  source_hash: b91e...119
+  build_environment_hash: 3ad2...92f
+  dependency_manifest_hash: 0be7...8cd
+  build_receipt: receipt:build:812
+
+Custody:
+  builder: ci-runner-04
+  release_steward: maintainer-set-alpha</code></pre>
+<p>Each dimension value is normalized, hashed, and attested.</p>
+<p>The Semantic Hash is:</p>
+<pre class="text"><code>H_m = H(&quot;CHC:H_m:v1&quot; || H_s || H_R || H_P || E(D))
+    = 4aa2...c90</code></pre>
+<p>This answers:</p>
+<pre class="text"><code>What is claimed about what exists?</code></pre>
+<p>It does not by itself prove the claims are true. It binds the claims
+to the state.</p>
+<hr />
+<h3 id="receipts-and-freshness">44.3 Receipts and Freshness</h3>
+<p>The verifier receives:</p>
+<pre class="text"><code>build receipt:
+  receipt:build:812
+
+maintainer quorum receipt:
+  receipt:quorum:421
+
+stable-channel checkpoint:
+  checkpoint:812
+
+revocation checkpoint:
+  revocation-log:812
+
+policy hash:
+  H_P = 991d...e02
+
+trust-root hash:
+  H_R = 61ff...772</code></pre>
+<p>The freshness proof states:</p>
+<pre class="text"><code>pi_lvc = latest-valid-checkpoint(
+  checkpoint = 812,
+  scope = ledger-tool/stable-channel,
+  H_P = 991d...e02,
+  H_R = 61ff...772
+)</code></pre>
+<p>The policy evaluates:</p>
+<pre class="text"><code>P(H_s, H_m, D, M, R, t, pi)</code></pre>
+<p>and checks:</p>
+<pre class="text"><code>state hash matches stable manifest
+semantic hash matches release manifest
+maintainer quorum is valid
+build receipt is valid
+source-binary build proof is valid
+revocation state is current
+checkpoint is latest valid checkpoint
+policy hash is current</code></pre>
+<p>Result:</p>
+<pre class="text"><code>ADMISSIBLE</code></pre>
+<p>The artifact may execute under this policy.</p>
+<hr />
+<h3 id="same-state-revoked-authority">44.4 Same State, Revoked
+Authority</h3>
+<p>Now assume the binary is unchanged:</p>
+<pre class="text"><code>H_s = 7d9c...a41</code></pre>
+<p>and the Semantic Hash remains historically valid:</p>
+<pre class="text"><code>H_m = 4aa2...c90</code></pre>
+<p>But one maintainer key in the quorum is revoked at checkpoint
+819:</p>
+<pre class="text"><code>revocation-log:819
+  revoked: maintainer-key-B
+  scope: ledger-tool/stable-channel</code></pre>
+<p>The verifier evaluates again under the current checkpoint:</p>
+<pre class="text"><code>pi_lvc = latest-valid-checkpoint(
+  checkpoint = 819,
+  scope = ledger-tool/stable-channel,
+  H_P = 991d...e02,
+  H_R = 61ff...772
+)</code></pre>
+<p>The State Hash check succeeds.</p>
+<p>The Semantic Hash check succeeds.</p>
+<p>The freshness and revocation checks fail the authority predicate:</p>
+<pre class="text"><code>AuthorityPredicate(
+  maintainer-quorum-2-of-3,
+  ledger-tool/stable-channel,
+  P,
+  checkpoint 819,
+  Rev
+) = false</code></pre>
+<p>Result:</p>
+<pre class="text"><code>INADMISSIBLE</code></pre>
+<p>The artifact is not denied as a historical object.</p>
+<p>The claim is not erased.</p>
+<p>The binary is not rewritten.</p>
+<p>The execution decision changes because admissibility changed.</p>
+<p>This is the Admissibility Separation Principle in operation:</p>
+<pre class="text"><code>same state
+same historical semantic claims
+different admissibility result</code></pre>
+<hr />
+<h2 id="concrete-threat-example">45. Concrete Threat Example</h2>
+<p>An attacker compromises the build server for
+<code>ledger-tool v2.4</code> and publishes a malicious binary through a
+legitimate distribution channel.</p>
+<p>Decisive failure:</p>
+<ol type="1">
+<li>The verifier computes <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> from the
+downloaded binary.</li>
+<li>The current accepted manifest for <code>ledger-tool v2.4</code>
+records a different <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>.</li>
+<li>The artifact is refused.</li>
+</ol>
+<p>Corroborating failures if the attacker supplies a replacement
+manifest:</p>
+<ul>
+<li>replacement manifest not accepted by freshness sources;</li>
+<li>Authority dimension lacks a valid predicate;</li>
+<li>Causal dimension lacks a build proof from certified source.</li>
+</ul>
+<p>Result:</p>
+<p><span
+class="math display"><em>P</em>(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, 𝒟, <em>M</em>, <em>R</em>, <em>t</em>, <em>π</em>) = false</span></p>
+<p>Execution is refused.</p>
+<hr />
+<h2 id="stale-binary-example">46. Stale Binary Example</h2>
+<p>An attacker presents an old but once-valid binary.</p>
+<p>The State Hash check succeeds.</p>
+<p>The Semantic Hash check succeeds.</p>
+<p>However, the freshness check fails because the presented checkpoint
+is older than the highest previously observed checkpoint, the artifact
+exceeds the policy staleness window, or revocation state has
+advanced.</p>
+<p>Therefore:</p>
+<p><span
+class="math display"><em>F</em><em>r</em><em>e</em><em>s</em><em>h</em>(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, 𝒟, <em>M</em>, <em>R</em>, <em>P</em>, <em>t</em>, <em>π</em>) = false</span></p>
+<p>and execution is denied.</p>
+<p>Historical validity is a prerequisite, but not sufficient on its own,
+for present admissibility.</p>
+<hr />
+<h2 id="native-chc-and-retrofit-chc">47. Native CHC and Retrofit
+CHC</h2>
+<h3 id="native-chc">Native CHC</h3>
+<p>An artifact is built with CHC from the beginning. Its State Hash,
+Semantic Hash, lineage, manifests, and freshness evidence are generated
+as part of its lifecycle.</p>
+<h3 id="retrofit-chc">Retrofit CHC</h3>
+<p>A legacy artifact may receive semantic dimensions after creation.</p>
+<p>Retrofit dimensions must include machine-readable, schema-validated
+assurance fields:</p>
+<pre class="text"><code>required schema_field: chc_origin = post_hoc
+required trust_downgrade: true</code></pre>
+<p>Post-hoc dimensions are lower assurance unless anchored to a
+contemporaneous source of truth such as an archived release manifest,
+timestamped transparency log, reproducible build record, or
+independently verifiable distribution record.</p>
+<hr />
+<h2 id="interoperability">48. Interoperability</h2>
+<p>CHC composes with existing verification systems while relocating
+their role within the trust architecture. Signing systems, transparency
+systems, provenance systems, update systems, and registry systems remain
+valuable evidence producers. CHC does not require their institutional
+authority to be treated as self-justifying. Their outputs become
+policy-evaluable receipts within a common admissibility framework.</p>
+<p>CHC subsumes rather than replaces these systems. Their cryptographic
+outputs remain useful, but their authority is normalized into evidence
+participating in admissibility evaluation.</p>
+<h3 id="oci-container-images-and-container-image-registries">OCI,
+Container Images, and Container Image Registries</h3>
+<p>CHC manifests may be attached as OCI artifact metadata, linked
+attestations, registry-adjacent verification records, or container image
+registry policy artifacts.</p>
+<h3 id="artifact-and-package-registries">Artifact and Package
+Registries</h3>
+<p>CHC can bind package registry metadata, release artifacts, package
+indexes, and binary distribution records into typed dimensions and
+freshness sources.</p>
+<h3 id="sbom">SBOM</h3>
+<p>SPDX or CycloneDX documents may be bound as dimensions or lineage
+leaves.</p>
+<h3 id="in-toto">in-toto</h3>
+<p>in-toto attestations may populate build-proof and lineage
+dimensions.</p>
+<h3 id="slsa">SLSA</h3>
+<p>SLSA provenance may be encoded as build-quality dimensions.</p>
+<h3 id="sigstore">Sigstore</h3>
+<p>Sigstore identities and transparency logs may serve as identity and
+log inputs.</p>
+<h3 id="tuf">TUF</h3>
+<p>TUF timestamp and targets metadata may serve as freshness and
+manifest-consistency inputs.</p>
+<hr />
+<h2 id="comparison-to-existing-systems">49. Comparison to Existing
+Systems</h2>
+<p>CHC is a composition and authority-normalization layer. Existing
+systems continue to produce signatures, attestations, checkpoints,
+manifests, and transparency records. CHC changes how those outputs are
+interpreted by reducing them to evidence objects subject to policy
+evaluation. Authority emerges from admissibility rather than
+institutional position.</p>
+<p>Institutional assertions retain evidentiary value but lose privileged
+status outside the admissibility calculus.</p>
+<p>CHC’s unique claim is policy-evaluable composition across dimensions,
+attestations, manifests, revocation state, and freshness sources.</p>
+<p>Existing systems primarily answer whether a claim was made. CHC
+additionally asks whether the claim remains admissible under current
+policy, current provenance state, and current freshness conditions.</p>
+<p>TUF provides secure update metadata, including timestamp and target
+metadata. CHC can consume TUF metadata as freshness and manifest
+evidence while adding typed semantic dimensions and per-dimension
+attestations.</p>
+<p>in-toto provides supply-chain layout and link metadata. CHC can bind
+in-toto attestations into lineage and build-proof dimensions while
+adding semantic hashing and policy evaluation over typed dimensions.</p>
+<p>SLSA defines supply-chain assurance levels. CHC can encode SLSA level
+and provenance as dimensions while adding cryptographic semantic
+composition.</p>
+<p>Sigstore provides signing, identity, and transparency logging. CHC
+can use Sigstore as an identity and log input while adding governance
+algebra, multidimensional semantic binding, and authority/jurisdiction
+separation.</p>
+<p>The central reviewer question for CHC is whether existing systems
+already provide equivalent separation under different terminology. CHC’s
+answer is that existing systems often provide elements of the
+separation, but do not generally make State Identity, Semantic Identity,
+and Admissibility independently addressable domains under a unified
+cryptographic admissibility primitive.</p>
+<hr />
+<h2 id="complexity-analysis">50. Complexity Analysis</h2>
+<p>Let:</p>
+<p><span class="math display"><em>k</em> = |𝒟|</span></p>
+<p>and let <span
+class="math inline"><em>s</em><sub><em>i</em></sub></span> be the number
+of signatures or attestation elements for dimension <span
+class="math inline"><em>i</em></span>.</p>
+<p>Dimension storage is:</p>
+<p><span class="math display"><em>O</em>(<em>k</em>)</span></p>
+<p>Signature storage is:</p>
+<p><span
+class="math display"><em>O</em>(∑<sub><em>i</em></sub><em>s</em><sub><em>i</em></sub>)</span></p>
+<p>Dimension verification is:</p>
+<p><span class="math display"><em>O</em>(<em>k</em>)</span></p>
+<p>Signer verification cost is:</p>
+<p><span
+class="math display"><em>O</em>(∑<sub><em>i</em></sub><em>s</em><sub><em>i</em></sub>)</span></p>
+<p>unless aggregation reduces it.</p>
+<p>Trust-root validation cost is:</p>
+<p><span class="math display"><em>C</em><sub><em>R</em></sub></span></p>
+<p>depending on the root model. Flat root-set lookup may be <span
+class="math inline"><em>O</em>(1)</span> or <span
+class="math inline"><em>O</em>(log <em>r</em>)</span>; path validation
+in hierarchical models may scale with chain length.</p>
+<p>Policy evaluation cost is:</p>
+<p><span class="math display"><em>C</em><sub><em>P</em></sub></span></p>
+<p>relative to policy program size, referenced inputs, and required
+external checks.</p>
+<p>Policy-source verification cost is:</p>
+<p><span
+class="math display"><em>C</em><sub><em>P</em><em>S</em></sub></span></p>
+<p>and may dominate latency when freshness sources, policy registries,
+and trust-root registries must be queried or reconciled.</p>
+<p>Merkle proof size is logarithmic in the number of manifest
+leaves:</p>
+<p><span class="math display"><em>O</em>(log <em>N</em>)</span></p>
+<p>not necessarily logarithmic in the number of semantic claims unless
+each claim is separately represented as a leaf.</p>
+<p>Freshness verification cost depends on proof type:</p>
+<ul>
+<li>log inclusion: <span
+class="math inline"><em>O</em>(log <em>N</em>)</span>;</li>
+<li>consistency proof: <span
+class="math inline"><em>O</em>(log <em>N</em>)</span>;</li>
+<li>threshold checkpoint: <span
+class="math inline"><em>O</em>(<em>s</em>)</span> or <span
+class="math inline"><em>O</em>(1)</span> with aggregation;</li>
+<li>CRDT convergence: implementation-dependent;</li>
+<li>P2P manifest consensus: network-dependent.</li>
+</ul>
+<p>Worst-case bandwidth depends on manifest source count, proof size,
+revocation proof size, trust-root fanout, cache consistency proofs, and
+policy evidence requirements.</p>
+<hr />
+<h2 id="failure-modes">51. Failure Modes</h2>
+<p>CHC implementations must explicitly handle:</p>
+<ul>
+<li>missing dimension;</li>
+<li>conflicting authorities;</li>
+<li>stale manifest;</li>
+<li>stale cache with valid signature;</li>
+<li>unavailable log;</li>
+<li>partitioned network;</li>
+<li>revocation conflict;</li>
+<li>schema mismatch;</li>
+<li>schema drift;</li>
+<li>policy bug;</li>
+<li>policy downgrade;</li>
+<li>misconfigured policy source;</li>
+<li>policy-source inconsistency;</li>
+<li>operator misconfiguration;</li>
+<li>inconsistent cache;</li>
+<li>compromised signer;</li>
+<li>compromised trust root;</li>
+<li>replayed manifest;</li>
+<li>equivocated manifest;</li>
+<li>registry spoofing;</li>
+<li>schema rollback;</li>
+<li>privacy leakage through reused commitments.</li>
+</ul>
+<p>Default behavior should be fail-closed unless policy declares a
+bounded grace mode.</p>
+<hr />
+<h2 id="chc-derived-architectures">52. CHC-Derived Architectures</h2>
+<p>The CHC architecture establishes a generalized cryptographic
+pattern:</p>
+<ol type="1">
+<li>fingerprint a bounded State Jurisdiction;</li>
+<li>bind semantic claims to that state;</li>
+<li>evaluate admissibility under policy and freshness.</li>
+</ol>
+<p>Several downstream systems may be understood as specializations of
+this pattern.</p>
+<p>Distributed Knowledge Networks (DKN) apply State Jurisdiction
+fingerprinting to self-certifying knowledge identity, unsquattable
+namespace construction, distributed provenance tracking, and
+policy-evaluable knowledge state continuity. Knowledge identities become
+self-certifying and namespace ownership becomes cryptographically
+unsquattable through jurisdiction-bound identity construction.</p>
+<p>Constitutional Semantic Hashing (CSH) applies the Semantic Hash
+concept to governance-bound semantic identity and policy-evaluable
+meaning claims. Meaning becomes policy-evaluable rather than
+authority-asserted, extending admissibility principles into semantic
+governance.</p>
+<p>These systems are not required by CHC and are not equivalent to CHC.
+They are examples of architectures derived from the same underlying
+cryptographic separation of state identity, semantic identity, and
+admissibility.</p>
+<hr />
+<h2 id="empirical-evaluation-plan">53. Empirical Evaluation Plan</h2>
+<p>CHC should be evaluated against benchmark scenarios:</p>
+<ol type="1">
+<li>compromised build server;</li>
+<li>malicious package substitution;</li>
+<li>stale valid binary replay;</li>
+<li>manifest equivocation;</li>
+<li>revoked authority key;</li>
+<li>forked manifest network;</li>
+<li>partial verification under constrained runtime;</li>
+<li>retrofit CHC over legacy binaries;</li>
+<li>schema drift attack;</li>
+<li>policy bug or policy downgrade;</li>
+<li>partial disclosure privacy leakage;</li>
+<li>selective-disclosure reidentification or linkability leakage;</li>
+<li>equivalence-class abuse or overbroad semantic equivalence;</li>
+<li>compiler/toolchain subversion under recursive CHC binding.</li>
+</ol>
+<p>Metrics:</p>
+<ul>
+<li>false acceptance rate;</li>
+<li>false refusal rate;</li>
+<li>detection latency;</li>
+<li>revocation propagation time;</li>
+<li>verification overhead;</li>
+<li>manifest bandwidth;</li>
+<li>consensus latency;</li>
+<li>developer integration cost;</li>
+<li>privacy leakage under repeated selective disclosure;</li>
+<li>linkability across policy scopes;</li>
+<li>toolchain subversion detection rate.</li>
+</ul>
+<p>Baselines:</p>
+<ul>
+<li>TUF;</li>
+<li>in-toto;</li>
+<li>SLSA;</li>
+<li>Sigstore;</li>
+<li>OCI signatures;</li>
+<li>SBOM-only workflows;</li>
+<li>reproducible-build-only workflows.</li>
+</ul>
+<hr />
+<h2 id="conclusion">54. Conclusion</h2>
+<p>CHC is a cryptographic architecture for binding state identity to
+semantic attestations without confusing the two.</p>
+<p>It does not prove meaning.</p>
+<p>It cryptographically binds claims about meaning.</p>
+<p>It does not make signatures into authority.</p>
+<p>It separates identity from admissibility.</p>
+<p>It does not treat historical validity as present trust.</p>
+<p>It evaluates freshness at execution time using the State Hash,
+Semantic Hash, manifests, revocation state, checkpoints, caches,
+receipts, and policy.</p>
+<p>The core contribution is:</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub> → <em>H</em><sub><em>m</em></sub></span></p>
+<p>plus a freshness verification procedure.</p>
+<p>State identity.</p>
+<p>Semantic attestation.</p>
+<p>Present admissibility under policy.</p>
+<p>CHC in one sentence:</p>
+<pre class="text"><code>Traditional cryptographic systems bind state.
+
+CHC binds state, claims, and admissibility as separately addressable
+cryptographic domains.</code></pre>
+<p>Together they form a candidate architectural foundation for a family
+of governed execution systems, including verified compilation,
+supply-chain security, semantic operating systems, distributed knowledge
+networks, constitutional governance platforms, and continuous execution
+governance.</p>
+<p>CHC extends content addressing into admissibility addressing.</p>
+<p>Traditional cryptographic systems answer:</p>
+<p>What exists?</p>
+<p>CHC answers:</p>
+<p>What exists? What is claimed? What may act?</p>
+<p>The transition from identity to admissibility is the transition from
+cryptographic integrity to cryptographic governance. Governance refers
+to deterministic admissibility evaluation over evidence and policy, not
+institutional or political governance.</p>
+<p>In this sense, CHC treats governance not as an external layer imposed
+upon cryptography, but as a cryptographically addressable object in its
+own right.</p>
+<hr />
+<h3 id="references">References</h3>
+<h4 id="authors-related-work">Author’s Related Work</h4>
+<p>Adam Ableman. Related Works: Cryptographic Homological Compilation;
+Authority Laundering Theory; Distributed Knowledge Networks (DKN);
+Constitutional Semantic Hashing (CSH); Governed Semantic Operating
+System (GSOS).</p>
+<h4
+id="cryptographic-foundations-hashing-and-time-stamping">Cryptographic
+Foundations, Hashing, and Time-Stamping</h4>
+<p>Haber, Stuart, and W. Scott Stornetta. “How to Time-Stamp a Digital
+Document.” <em>Journal of Cryptology</em>, vol. 3, no. 2, 1991,
+pp. 99–111.</p>
+<p>Merkle, Ralph C. “Protocols for Public Key Cryptosystems.”
+<em>Proceedings of the 1980 IEEE Symposium on Security and Privacy</em>,
+1980, pp. 122–133.</p>
+<p>Rivest, Ronald L. “The MD5 Message-Digest Algorithm.” <em>RFC
+1321</em>, Internet Engineering Task Force, April 1992.</p>
+<p>National Institute of Standards and Technology. <em>Secure Hash
+Standard (SHS)</em>. FIPS PUB 180-4, August 2015.</p>
+<p>National Institute of Standards and Technology. <em>SHA-3 Standard:
+Permutation-Based Hash and Extendable-Output Functions</em>. FIPS PUB
+202, August 2015.</p>
+<p>Nakamoto, Satoshi. “Bitcoin: A Peer-to-Peer Electronic Cash System.”
+2008.</p>
+<h4 id="distributed-systems-ordering-and-trust">Distributed Systems,
+Ordering, and Trust</h4>
+<p>Lamport, Leslie. “Time, Clocks, and the Ordering of Events in a
+Distributed System.” <em>Communications of the ACM</em>, vol. 21, no. 7,
+1978, pp. 558–565.</p>
+<p>Lampson, Butler W. “Protection.” <em>Proceedings of the 5th Princeton
+Conference on Information Sciences and Systems</em>, 1971.</p>
+<h4
+id="trusting-trust-reproducible-builds-and-compiler-provenance">Trusting
+Trust, Reproducible Builds, and Compiler Provenance</h4>
+<p>Thompson, Ken. “Reflections on Trusting Trust.” <em>Communications of
+the ACM</em>, vol. 27, no. 8, 1984, pp. 761–763.</p>
+<p>Wheeler, David A. “Countering Trusting Trust through Diverse
+Double-Compiling.” <em>Proceedings of the 21st Annual Computer Security
+Applications Conference</em>, 2005.</p>
+<p>Wheeler, David A. <em>Fully Countering Trusting Trust through Diverse
+Double-Compiling.</em> Ph.D. dissertation, George Mason University,
+2009.</p>
+<p>Reproducible Builds Project. <em>Reproducible Builds:
+Independently-Verifiable Path from Source to Binary Code.</em></p>
+<h4 id="software-supply-chain-security-and-provenance">Software Supply
+Chain Security and Provenance</h4>
+<p>The Update Framework Project. <em>The Update Framework
+Specification.</em></p>
+<p>Samuel, Justin, Nick Mathewson, Justin Cappos, and Roger Dingledine.
+“Survivable Key Compromise in Software Update Systems.” <em>Proceedings
+of the 17th ACM Conference on Computer and Communications Security</em>,
+2010.</p>
+<p>Torres-Arias, Santiago, Hammad Afzali, Trishank Karthik Kuppusamy,
+Reza Curtmola, and Justin Cappos. “in-toto: Providing Farm-to-Table
+Guarantees for Bits and Bytes.” <em>Proceedings of the 28th USENIX
+Security Symposium</em>, 2019.</p>
+<p>in-toto Project. <em>in-toto Framework.</em></p>
+<p>SLSA Project. <em>Supply-chain Levels for Software Artifacts
+Specification.</em></p>
+<p>Sigstore Project. <em>Sigstore: Software Signing for Everybody</em>.
+Cooper, Zachary, et al. “Sigstore: Software Signing for Everybody.”
+<em>Proceedings of the 2022 ACM SIGSAC Conference on Computer and
+Communications Security</em>, 2022.</p>
+<p>Rekor Project. <em>Rekor Transparency Log.</em></p>
+<h4
+id="transparency-logs-key-transparency-and-verifiable-data-structures">Transparency
+Logs, Key Transparency, and Verifiable Data Structures</h4>
+<p>Laurie, Ben, Adam Langley, and Emilia Kasper. <em>Certificate
+Transparency.</em> RFC 6962, Internet Engineering Task Force, 2013.</p>
+<p>Laurie, Ben, Adam Langley, Emilia Kasper, Eran Messeri, and Rob
+Stradling. <em>Certificate Transparency Version 2.0.</em> RFC 9162,
+Internet Engineering Task Force, 2021.</p>
+<p>Google Trillian Project. <em>Trillian: A Transparent, Highly
+Scalable, and Cryptographically Verifiable Data Store.</em></p>
+<p>Melara, Marcela S., Aaron Blankstein, Joseph Bonneau, Edward W.
+Felten, and Michael J. Freedman. “CONIKS: Bringing Key Transparency to
+End Users.” <em>Proceedings of the 24th USENIX Security Symposium</em>,
+2015.</p>
+<h4 id="content-addressing-artifacts-and-package-metadata">Content
+Addressing, Artifacts, and Package Metadata</h4>
+<p>Benet, Juan. “IPFS — Content Addressed, Versioned, P2P File System.”
+2014.</p>
+<p>Open Container Initiative. <em>OCI Image Format
+Specification.</em></p>
+<p>Open Container Initiative. <em>OCI Distribution
+Specification.</em></p>
+<p>Open Container Initiative. <em>OCI Artifact Specifications and
+Guidance.</em></p>
+<p>SPDX Project. <em>System Package Data Exchange
+Specification.</em></p>
+<p>ISO/IEC. <em>ISO/IEC 5962:2021 — SPDX Specification.</em></p>
+<p>OWASP Foundation. <em>CycloneDX Bill of Materials
+Specification.</em></p>
+<p>Ecma International. <em>ECMA-424: CycloneDX Bill of Materials
+Specification.</em></p>
+<h4 id="identity-credentials-and-attestation-models">Identity,
+Credentials, and Attestation Models</h4>
+<p>World Wide Web Consortium. <em>Verifiable Credentials Data Model
+v2.0.</em></p>
+<p>World Wide Web Consortium. <em>Verifiable Credentials
+Overview.</em></p>
+<p>Adams, Carlisle, and Steve Lloyd. <em>Understanding PKI: Concepts,
+Standards, and Deployment Considerations.</em> Addison-Wesley, 2002.</p>
+<h4 id="software-release-governance-and-component-systems">Software
+Release, Governance, and Component Systems</h4>
+<p>van der Hoek, André, and Alexander L. Wolf. “Software Release
+Management for Component-Based Software.” <em>Software: Practice and
+Experience</em>, vol. 33, no. 1, 2003, pp. 77–98.</p>
+<h4 id="foundations-and-working-groups">Foundations and Working
+Groups</h4>
+<p>Open Source Security Foundation (OpenSSF). <em>OpenSSF Best Practices
+and Project Specifications.</em> Linux Foundation.</p>
+<p>Cloud Native Computing Foundation (CNCF). <em>CNCF Project
+Documentation and Technology Radar.</em>.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that cryptographic verification systems typically
+bind artifacts to hashes, signatures, attestations, or provenance
+records. Its nearest external comparison fields are crypto, security,
+governance. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are
+cited as predecessor literature, adjacent standards, or counterpressure
+- not as evidence that they caused the Ableman framework or that they
+validate its novel claims. The comparison isolates where established
+work already supplies provenance, formal assurance, institutional
+constraint, empirical method, or engineering practice, and where this
+paper adds a distinct claim about admissibility, authority, semantic
+custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself.
+Unforgeable capabilities can constrain exercise of authority while still
+leaving allocation, delegation, revocation, and social legitimacy
+incorrectly specified. A written constitution can legitimate domination
+as easily as constrain it unless amendment, participation, enforcement,
+and appeal remain effective in practice. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references-1">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20602448">10.5281/zenodo.20602448</a></p>

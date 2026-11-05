@@ -1,0 +1,1703 @@
+<h1 id="a-theory-of-agentic-observation">A Theory of Agentic
+Observation</h1>
+<h2
+id="semantic-projection-interfaces-parsimonious-observation-surfaces-and-the-governance-of-cognitive-bandwidth">Semantic
+Projection Interfaces, Parsimonious Observation Surfaces, and the
+Governance of Cognitive Bandwidth</h2>
+<h3
+id="the-cheapest-token-is-not-the-compressed-token-but-the-unobserved-substrate-whose-address-shape-and-relevance-were-already-sufficient.">The
+cheapest token is not the compressed token, but the unobserved substrate
+whose address, shape, and relevance were already sufficient.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern AI systems scale primarily through larger models, longer
+context windows, greater retrieval bandwidth, and increasingly massive
+datacenter infrastructure. Yet the dominant architecture of agentic
+systems still assumes a primitive observation model: tools expose raw
+substrate directly to the model, and the model itself performs
+filtering, reduction, interpretation, and relevance extraction after
+observation has already occurred.</p>
+<p>This paper argues that the observation surface itself is the
+neglected optimization layer in agentic systems.</p>
+<p>We introduce a theory of <em>agentic observation</em>: the study of
+how autonomous systems transform substrate reality into cognitively
+consumable semantic projections. We propose that most current agentic
+tooling is epistemically inefficient because it emits substrate dumps
+rather than minimally sufficient semantic projections. This creates
+structural inflation of token usage, inference cost, latency, cognitive
+pollution, and datacenter demand.</p>
+<p>We define the <em>Parsimonious Observation Surface</em> (POS): a
+tool-interface paradigm in which tools emit the minimum semantically
+sufficient projection necessary for the next admissible decision, while
+preserving explicit escalation paths into deeper substrate detail when
+required.</p>
+<p>To operationalize this framework, we introduce typed Decision
+Classes, calibrated utility functions, Well-Formed Sufficiency,
+Delta-indexed minimality, Observation Contracts, Projection Calculus,
+Address Algebra, Escalation Graphs, Projection Normal Forms,
+Witness-Carrying and Proof-Carrying Projections, policy lattices,
+incremental observation, and observation-planning metrics.</p>
+<p>We argue that token cost is fundamentally a bandwidth-governance
+problem; that long-context scaling partially masks poor interface
+design; that semantic projection is a more foundational optimization
+layer than prompt compression; and that local/edge AI systems become
+substantially more viable when observation bandwidth is reduced at the
+tool boundary rather than merely compressed after emission.</p>
+<p>Future agentic systems will require explicit theories of observation,
+projection, admissibility, semantic sufficiency, calibration,
+uncertainty, and observation economics in order to remain
+computationally sustainable as AI infrastructure scales.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>The modern AI stack is expanding under a peculiar assumption:</p>
+<blockquote>
+<p>reality should be observed first, and compressed later.</p>
+</blockquote>
+<p>This assumption permeates current agentic tooling.</p>
+<p>A file reader emits entire files. A grep operation emits hundreds of
+raw matches. A diff operation emits full hunks before significance is
+established. A test runner streams logs continuously regardless of
+inferential value. A retrieval system injects giant context blocks so
+the model may determine relevance after the fact.</p>
+<p>The prevailing architecture treats the model itself as the primary
+reduction engine.</p>
+<p>This creates a paradox: the more powerful the model becomes, the less
+pressure exists to design intelligent observation surfaces.</p>
+<p>Long-context models become landfills with attention.</p>
+<p>Instead of redesigning the interface between tools and cognition, the
+field increasingly scales:</p>
+<ul>
+<li>context windows,</li>
+<li>datacenters,</li>
+<li>inference budgets,</li>
+<li>retrieval pipelines,</li>
+<li>and memory systems.</li>
+</ul>
+<p>The result is epistemic inefficiency at planetary scale.</p>
+<p>This paper proposes an alternative direction: not merely compressing
+tokens, but redesigning observation itself.</p>
+<hr />
+<h2 id="the-observation-problem">2. The Observation Problem</h2>
+<p>Agentic systems fundamentally operate by observing substrate
+state.</p>
+<p>A tool invocation is an observation act.</p>
+<p>Every tool therefore implicitly answers four questions:</p>
+<ol type="1">
+<li>What portion of substrate is exposed?</li>
+<li>In what representation?</li>
+<li>At what semantic resolution?</li>
+<li>Under what escalation policy?</li>
+</ol>
+<p>Current systems answer poorly.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-R</span> <span class="st">&quot;foo&quot;</span> .</span></code></pre></div>
+<p>typically emits:</p>
+<ul>
+<li>full paths,</li>
+<li>repeated content,</li>
+<li>raw line bodies,</li>
+<li>redundant context,</li>
+<li>terminal formatting,</li>
+<li>often hundreds or thousands of lines.</li>
+</ul>
+<p>Yet most downstream agent decisions require far less.</p>
+<p>The next decision is usually one of:</p>
+<ul>
+<li>continue,</li>
+<li>fetch deeper,</li>
+<li>branch,</li>
+<li>ignore,</li>
+<li>inspect a specific region,</li>
+<li>compare candidates.</li>
+</ul>
+<p>The raw dump is therefore epistemically excessive.</p>
+<p>We define this as:</p>
+<h3 id="substrate-overexposure">Substrate Overexposure</h3>
+<blockquote>
+<p>the emission of substrate detail beyond the minimum semantically
+sufficient projection required for the next admissible cognitive
+transition.</p>
+</blockquote>
+<p>Substrate overexposure creates:</p>
+<ul>
+<li>token waste,</li>
+<li>context pollution,</li>
+<li>retrieval churn,</li>
+<li>degraded attention allocation,</li>
+<li>inference amplification,</li>
+<li>repeated semantic filtering,</li>
+<li>and unnecessary infrastructure scaling.</li>
+</ul>
+<hr />
+<h2 id="definitions-and-assumptions">3. Definitions and Assumptions</h2>
+<p>The theory uses the following notation consistently.</p>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span
+class="math inline"><em>S</em><sub><em>u</em></sub></span></td>
+<td>underlying substrate</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>P</em></span></td>
+<td>projection emitted from <span
+class="math inline"><em>S</em><sub><em>u</em></sub></span></td>
+</tr>
+<tr>
+<td><span class="math inline"><em>Δ</em></span></td>
+<td>finite typed decision class</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>d</em></span></td>
+<td>admissible decision</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>U</em>(<em>d</em> ∣ <em>P</em>)</span></td>
+<td>calibrated expected utility of decision <span
+class="math inline"><em>d</em></span> under projection <span
+class="math inline"><em>P</em></span></td>
+</tr>
+<tr>
+<td><span class="math inline"><em>C</em>(<em>P</em>)</span></td>
+<td>projection cost</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>Δ</em></sub>(<em>P</em>)</span></td>
+<td>posterior entropy over decisions in <span
+class="math inline"><em>Δ</em></span> given <span
+class="math inline"><em>P</em></span></td>
+</tr>
+<tr>
+<td><span class="math inline"><em>γ</em>(<em>P</em>)</span></td>
+<td>decision margin</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>A</em></span></td>
+<td>address tuple</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>G</em> = (<em>V</em>, <em>E</em>)</span></td>
+<td>escalation graph</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>S</em>(<em>P</em>, <em>Δ</em>)</span></td>
+<td>sufficiency predicate</td>
+</tr>
+</tbody>
+</table>
+<p>The framework assumes:</p>
+<ol type="1">
+<li><span class="math inline"><em>Δ</em></span> is finite and typed for
+the relevant next-step decision.</li>
+<li><span class="math inline"><em>U</em>(<em>d</em> ∣ <em>P</em>)</span>
+is estimated by calibrated predictors and periodically audited.</li>
+<li>Projection functions operate over declared substrate domains with
+known address semantics.</li>
+<li>Robustness claims require a domain-specific perturbation metric
+<span
+class="math inline"><em>d</em>(<em>S</em><sub><em>u</em></sub>, <em>S</em><sub><em>u</em></sub><sup>′</sup>)</span>.</li>
+<li><span class="math inline"><em>C</em>(<em>P</em>)</span> is
+scalarized only for exposition; the canonical implementation model
+preserves the Pareto frontier over tokens, latency, and energy unless a
+policy explicitly supplies scalar weights.</li>
+</ol>
+<p>These assumptions do not make POS universal.</p>
+<p>They make it testable.</p>
+<hr />
+<h2 id="decision-classes">4. Decision Classes</h2>
+<p>The key observation of POS systems is that observation is always
+relative to a bounded next-step decision space.</p>
+<p>We define a <em>Decision Class</em>:</p>
+<p><span
+class="math display"><em>Δ</em> = {<em>d</em><sub>1</sub>, <em>d</em><sub>2</sub>, …, <em>d</em><sub><em>n</em></sub>}</span></p>
+<p>where <span class="math inline"><em>Δ</em></span> represents the
+finite set of admissible next cognitive transitions available to the
+observing agent.</p>
+<p>Examples:</p>
+<p><span
+class="math display"><em>Δ</em><sub>nav</sub> = {<code>open</code>, <code>skip</code>, <code>branch</code>}</span></p>
+<p><span class="math display">$$
+\begin{aligned}
+\Delta_{\text{debug}} = \{&amp;\texttt{inspect\_file},
+\texttt{compare\_versions}, \\
+&amp;\texttt{run\_tests}, \texttt{stop}\}
+\end{aligned}\tag{3}
+$$</span></p>
+<p>POS systems target sufficiency relative to <span
+class="math inline"><em>Δ</em></span>, not universal understanding.</p>
+<p>The objective is not:</p>
+<blockquote>
+<p>fully understand substrate.</p>
+</blockquote>
+<p>The objective is:</p>
+<blockquote>
+<p>support the next admissible transition with minimum observation
+cost.</p>
+</blockquote>
+<hr />
+<h2 id="well-formed-sufficiency">5. Well-Formed Sufficiency</h2>
+<p>Let <span class="math inline"><em>S</em><sub><em>u</em></sub></span>
+denote the underlying substrate and <span
+class="math inline"><em>P</em></span> denote a projection emitted from
+that substrate.</p>
+<p>A projection is sufficient relative to <span
+class="math inline"><em>Δ</em></span> when it preserves the same next
+admissible decision as direct substrate observation, or exposes a unique
+bounded escalation edge.</p>
+<p>We define the <em>Sufficiency Predicate</em>:</p>
+<p><span
+class="math display"><em>S</em>(<em>P</em>, <em>Δ</em>) = 1</span></p>
+<p>iff:</p>
+<p><span
+class="math display">arg max<sub><em>d</em> ∈ <em>Δ</em></sub>𝔼[<em>U</em>(<em>d</em> ∣ <em>P</em>)] = arg max<sub><em>d</em> ∈ <em>Δ</em></sub>𝔼[<em>U</em>(<em>d</em> ∣ <em>S</em><sub><em>u</em></sub>)]</span></p>
+<p>or there exists a unique typed escalation edge:</p>
+<p><span class="math display">$$
+\exists! e_i \in G \tag{6}
+$$</span></p>
+<p>such that <span
+class="math inline"><em>e</em><sub><em>i</em></sub></span> exposes the
+precise additional information required to resolve the decision.</p>
+<p>Because argmax may be unstable under ties, POS systems require a
+global tie-breaking rule:</p>
+<ul>
+<li>lexicographic ordering,</li>
+<li>prior-weighted ordering,</li>
+<li>or policy-defined decision precedence.</li>
+</ul>
+<p>Without tie-breaking, sufficiency is not well formed.</p>
+<hr />
+<h2 id="calibration-of-utility">6. Calibration of Utility</h2>
+<p>The term <span
+class="math inline"><em>U</em>(<em>d</em> ∣ <em>P</em>)</span> cannot
+remain an informal preference estimate.</p>
+<p>POS systems define <span
+class="math inline"><em>U</em>(<em>d</em> ∣ <em>P</em>)</span> through
+calibrated predictors that estimate expected decision utility under
+projection <span class="math inline"><em>P</em></span>.</p>
+<p>These predictors are evaluated using proper scoring rules such
+as:</p>
+<ul>
+<li>Brier score,</li>
+<li>log score,</li>
+<li>calibration error,</li>
+<li>regret against substrate-derived decisions.</li>
+</ul>
+<p>Periodic recalibration occurs through:</p>
+<ul>
+<li>Witness-Carrying Projection audits,</li>
+<li>Proof-Carrying Projection verification,</li>
+<li>human-in-the-loop overrides,</li>
+<li>and retrospective substrate checks.</li>
+</ul>
+<p>Calibration prevents projection systems from becoming confidently
+wrong.</p>
+<p>A POS surface therefore does not merely emit compact projections.</p>
+<p>It must learn whether its projections actually preserve decision
+quality.</p>
+<hr />
+<h2 id="delta-indexed-minimality">7. <span
+class="math inline"><em>Δ</em></span>-Indexed Minimality</h2>
+<p>POS systems seek not merely sufficient projections, but approximately
+minimal sufficient projections.</p>
+<p>We define:</p>
+<p><span
+class="math display"><em>P</em><sub><em>Δ</em></sub><sup>*</sup> = arg min<sub><em>P</em></sub><em>C</em>(<em>P</em>)  s.t.  <em>S</em>(<em>P</em>, <em>Δ</em>) = 1</span></p>
+<p>where:</p>
+<ul>
+<li><span
+class="math inline"><em>P</em><sub><em>Δ</em></sub><sup>*</sup></span>
+is the minimal-cost sufficient projection,</li>
+<li>and <span class="math inline"><em>C</em>(<em>P</em>)</span> denotes
+projection cost.</li>
+</ul>
+<p>Tools attempt to approximate:</p>
+<p><span
+class="math display"><em>P</em> ≈ <em>P</em><sub><em>Δ</em></sub><sup>*</sup></span></p>
+<p>and report an estimated optimality gap:</p>
+<p><span class="math display">$$
+\eta = \frac{C(P)}{C(P^*_\Delta)} \tag{9}
+$$</span></p>
+<p>Because <span
+class="math inline"><em>P</em><sub><em>Δ</em></sub><sup>*</sup></span>
+may not be directly computable, POS tools report intervals:</p>
+<p><span
+class="math display">[<em>η</em><sub><em>L</em></sub>, <em>η</em><sub><em>U</em></sub>]</span></p>
+<p>using:</p>
+<ul>
+<li>lower bounds from information-theoretic limits,</li>
+<li>lower bounds from decision entropy,</li>
+<li>lower bounds from schema constraints,</li>
+<li>upper bounds from achieved projection cost,</li>
+<li>and dual certificates from Projection Calculus.</li>
+</ul>
+<h3 id="proposition-1-minimality-depends-on-sufficiency">Proposition 1 –
+Minimality Depends on Sufficiency</h3>
+<p><span
+class="math inline"><em>P</em><sub><em>Δ</em></sub><sup>*</sup></span>
+is meaningful only after <span class="math inline"><em>Δ</em></span>,
+<span class="math inline"><em>S</em>(<em>P</em>, <em>Δ</em>)</span>,
+calibrated <span class="math inline"><em>U</em></span>, and the
+tie-breaking rule are fixed.</p>
+<p>Otherwise the minimization target is underdetermined.</p>
+<p>Minimality is not “smallness.”</p>
+<p>It is minimum cost subject to decision-preserving sufficiency.</p>
+<hr />
+<h2 id="information-lower-bounds">8. Information Lower Bounds</h2>
+<p>Observation cannot be reduced arbitrarily.</p>
+<p>For a task with decision class <span
+class="math inline"><em>Δ</em></span>, any sufficient projection must
+preserve enough information to distinguish relevant decision states.</p>
+<p>A lower-bound intuition is:</p>
+<p><span
+class="math display"><em>C</em>(<em>P</em>) ≥ <em>Ω</em>(<em>H</em>(<em>Δ</em>) − <em>I</em>(<em>P</em>; <em>Δ</em><sup>⟂</sup>))</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>H</em>(<em>Δ</em>)</span> is decision
+uncertainty,</li>
+<li><span
+class="math inline"><em>I</em>(<em>P</em>; <em>Δ</em><sup>⟂</sup>)</span>
+represents information carried by <span
+class="math inline"><em>P</em></span> that is irrelevant to <span
+class="math inline"><em>Δ</em></span>.</li>
+</ul>
+<p>This connects POS to Fano-style limits: when the projection lacks
+enough information to distinguish decisions, error becomes
+unavoidable.</p>
+<p>The sublinear observation claim is therefore bounded, not
+magical.</p>
+<p>For many indexed, sketched, or topology-preserving tasks, sufficient
+observation may be sublinear in substrate size.</p>
+<p>But for rare critical events, adversarial distributions, or unindexed
+substrates, larger observation may be required.</p>
+<hr />
+<h2 id="semantic-projections">9. Semantic Projections</h2>
+<p>We define a <em>semantic projection</em> as:</p>
+<blockquote>
+<p>a bounded representation of substrate state preserving only
+distinctions relevant to a declared inferential purpose.</p>
+</blockquote>
+<p>A semantic projection is not a summary.</p>
+<p>A summary attempts to restate meaning.</p>
+<p>A projection instead preserves:</p>
+<ul>
+<li>identity,</li>
+<li>location,</li>
+<li>shape,</li>
+<li>status,</li>
+<li>magnitude,</li>
+<li>relevance,</li>
+<li>escalation affordances,</li>
+<li>uncertainty bounds,</li>
+<li>and continuity hooks,</li>
+</ul>
+<p>while deliberately suppressing irrelevant substrate detail.</p>
+<p>Example:</p>
+<p>Raw substrate:</p>
+<pre class="text"><code>482 matching lines across 31 files...</code></pre>
+<p>Semantic projection:</p>
+<pre class="text"><code>hits=482 files=31
+top:
+1 core/parser.py@[22,81,91]
+2 runtime/env.py@[14,77]
+fetch:
+--file core/parser.py --range 1:120</code></pre>
+<p>The projection preserves cardinality, locality, navigation,
+escalation path, and inferential direction.</p>
+<p>It suppresses redundant content, low-value line bodies, repeated
+context, formatting overhead, and unnecessary substrate exposure.</p>
+<hr />
+<h2 id="observation-contracts-as-types">10. Observation Contracts as
+Types</h2>
+<p>POS systems require explicit contracts governing projection
+behavior.</p>
+<p>We define an <em>Observation Contract</em>:</p>
+<p><span
+class="math display">𝒪 = (<em>p</em>, <em>Δ</em>, <em>Σ</em>, <em>G</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>p</em></span> = inferential
+purpose,</li>
+<li><span class="math inline"><em>Δ</em></span> = admissible decision
+class,</li>
+<li><span class="math inline"><em>Σ</em></span> = projection
+schema,</li>
+<li><span
+class="math inline"><em>G</em> = (<em>V</em>, <em>E</em>)</span> =
+escalation graph.</li>
+</ul>
+<p>Observation contracts function as types.</p>
+<p>A tool is therefore a typed projection function:</p>
+<p><span class="math display">$$
+T: S_u \rightarrow P \tag{13}
+$$</span></p>
+<p>where <span class="math inline"><em>P</em></span> must satisfy <span
+class="math inline"><em>Σ</em></span>, expose valid addresses, respect
+policies, and preserve sufficiency or escalation.</p>
+<p>Projection contracts support variance rules over decision
+classes.</p>
+<p>If:</p>
+<p><span
+class="math display"><em>Δ</em><sub>1</sub> ≼ <em>Δ</em><sub>2</sub></span></p>
+<p>then <span class="math inline"><em>Δ</em><sub>1</sub></span> refines
+<span class="math inline"><em>Δ</em><sub>2</sub></span>.</p>
+<p>A projection sufficient for a refined decision class may be reused
+for a coarser task when policy permits.</p>
+<p>This enables projection reuse across related agent loops.</p>
+<hr />
+<h2 id="the-parsimonious-observation-surface">11. The Parsimonious
+Observation Surface</h2>
+<p>We define the <em>Parsimonious Observation Surface</em> (POS):</p>
+<blockquote>
+<p>a tool-interface discipline in which tools emit the minimum
+semantically sufficient projection necessary for the next admissible
+decision, while preserving explicit escalation paths into deeper
+substrate layers.</p>
+</blockquote>
+<p>POS systems are characterized by:</p>
+<ul>
+<li>address-first design,</li>
+<li>fetch-on-demand escalation,</li>
+<li>bounded default observation,</li>
+<li>semantic density maximization,</li>
+<li>inferential sufficiency targeting,</li>
+<li>typed projections,</li>
+<li>calibrated utility,</li>
+<li>witness or proof support,</li>
+<li>substrate suppression unless required,</li>
+<li>and explicit governance policies.</li>
+</ul>
+<p>A POS tool does not answer:</p>
+<blockquote>
+<p>What data exists?</p>
+</blockquote>
+<p>It answers:</p>
+<blockquote>
+<p>What is the smallest observation sufficient to continue reasoning
+coherently?</p>
+</blockquote>
+<hr />
+<h2 id="governance-of-observation">12. Governance of Observation</h2>
+<p>Observation escalation should itself be governed.</p>
+<p>This governance loop combines entropy, margin, marginal utility,
+escalation edges, and policy constraints. It determines whether a
+projection is sufficient, whether further observation is justified, and
+which additional substrate edge is admissible if sufficiency has not yet
+been reached.</p>
+<h3 id="decision-entropy">12.1 Decision Entropy</h3>
+<p>We define decision entropy as posterior entropy over decisions in
+<span class="math inline"><em>Δ</em></span> given <span
+class="math inline"><em>P</em></span>:</p>
+<p><span
+class="math display"><em>H</em><sub><em>Δ</em></sub>(<em>P</em>)</span></p>
+<p>This is not entropy over projection uncertainty in general.</p>
+<p>It is uncertainty over the admissible next decision.</p>
+<p>POS systems enforce two-threshold hysteresis:</p>
+<p><span
+class="math display"><em>τ</em><sub>low</sub> &lt; <em>κ</em><sub>high</sub></span></p>
+<p>with stateful gating:</p>
+<ul>
+<li>if <span
+class="math inline"><em>H</em><sub><em>Δ</em></sub>(<em>P</em>) ≤ <em>τ</em><sub>low</sub></span>,
+escalation is forbidden unless the decision margin fails;</li>
+<li>if <span
+class="math inline"><em>H</em><sub><em>Δ</em></sub>(<em>P</em>) ≥ <em>κ</em><sub>high</sub></span>,
+escalation is required;</li>
+<li>between thresholds, prior state is preserved.</li>
+</ul>
+<h3 id="decision-margin">12.2 Decision Margin</h3>
+<p>Sufficiency may fail even when entropy appears low.</p>
+<p>We define the <em>Decision Margin</em>:</p>
+<p><span
+class="math display"><em>γ</em>(<em>P</em>) = max<sub><em>d</em></sub>𝔼[<em>U</em>(<em>d</em> ∣ <em>P</em>)] − max<sub><em>d</em> ≠ <em>d</em><sup>*</sup></sub>𝔼[<em>U</em>(<em>d</em> ∣ <em>P</em>)]</span></p>
+<p>where <span class="math inline"><em>d</em><sup>*</sup></span> is the
+current best decision.</p>
+<p>If:</p>
+<p><span
+class="math display"><em>γ</em>(<em>P</em>) &lt; <em>γ</em><sub>min</sub></span></p>
+<p>then escalation is required, even when entropy appears low.</p>
+<h4 id="proposition-2-entropy-alone-is-insufficient">Proposition 2 –
+Entropy Alone Is Insufficient</h4>
+<p>Low <span
+class="math inline"><em>H</em><sub><em>Δ</em></sub>(<em>P</em>)</span>
+does not guarantee robust decision sufficiency if <span
+class="math inline"><em>γ</em>(<em>P</em>)</span> is small.</p>
+<p>A projection may concentrate probability mass while leaving the top
+two decisions nearly tied.</p>
+<p>Therefore escalation governance requires both entropy and margin.</p>
+<h3 id="marginal-utility">12.3 Marginal Utility</h3>
+<p>Observation systems should stop observing once additional substrate
+loses inferential value.</p>
+<p>We define marginal utility:</p>
+<p><span class="math display">$$
+MU(t) = \frac{\partial U}{\partial t} \tag{19}
+$$</span></p>
+<p>representing expected utility gain per additional token.</p>
+<p>POS systems enforce:</p>
+<p><span class="math display">$$
+MU(t) &lt; \lambda \Rightarrow \text{stop} \tag{20}
+$$</span></p>
+<p>This prevents projection inflation.</p>
+<h3 id="escalation-graphs">12.4 Escalation Graphs</h3>
+<p>Observation surfaces require explicit escalation structure.</p>
+<p>We define an <em>Escalation Graph</em>:</p>
+<p><span
+class="math display"><em>G</em> = (<em>V</em>, <em>E</em>)</span></p>
+<p>where nodes are projections and edges are bounded substrate
+expansions.</p>
+<p>Each edge contains:</p>
+<p><span class="math display">$$
+\begin{aligned}
+e_i = (&amp;\text{cost}, \text{added\_info}, \text{preconditions}, \\
+&amp;\mathbb{E}[\text{IG}])
+\end{aligned}\tag{22}
+$$</span></p>
+<p>An escalation edge is admissible iff:</p>
+<ol type="1">
+<li>its preconditions are checkable within <span
+class="math inline"><em>P</em></span>;</li>
+<li>its cost bound is certified;</li>
+<li>its policy labels are satisfiable;</li>
+<li>its target projection type is known;</li>
+<li>its address dependencies are resolvable.</li>
+</ol>
+<p>This prevents hidden-cost escalation.</p>
+<p>The planner selects escalation edges according to:</p>
+<p><span class="math display">$$
+\frac{\mathbb{E}[\text{IG}]}{C} \tag{23}
+$$</span></p>
+<p>subject to policy constraints and budget state.</p>
+<p>The output of this governance loop becomes the input to incremental
+observation: once observation is justified, the system must decide
+whether to refine, reuse, delta-update, or escalate rather than simply
+re-read substrate.</p>
+<hr />
+<h2 id="address-algebra">13. Address Algebra</h2>
+<p>Address-first systems require stable address semantics.</p>
+<p>We define an address tuple:</p>
+<p><span
+class="math display"><em>A</em> = (<em>s</em>, <em>p</em>, <em>r</em>, <em>v</em>, <em>h</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>s</em></span> = scope,</li>
+<li><span class="math inline"><em>p</em></span> = path,</li>
+<li><span class="math inline"><em>r</em></span> = span/range,</li>
+<li><span class="math inline"><em>v</em></span> = version,</li>
+<li><span class="math inline"><em>h</em></span> = content hash.</li>
+</ul>
+<p>For cross-modal POS, addresses extend to:</p>
+<p><span
+class="math display"><em>A</em> = (<em>m</em>, <em>s</em>, <em>p</em>, <em>r</em>, <em>v</em>, <em>h</em>, <em>c</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>m</em></span> = modality,</li>
+<li><span class="math inline"><em>c</em></span> = coordinate
+system.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>text span:<br />
+<code>text:repo:core/</code><br />
+<code>parser.py:78:92:git:abc123:sha256...</code></li>
+<li>image box: <code>image:frame42:box(x,y,w,h):v7:sha256...</code></li>
+<li>trace window: <code>trace:serviceA:t0:t1:v12:sha256...</code></li>
+</ul>
+<p>Address Algebra supports:</p>
+<ul>
+<li>joins,</li>
+<li>meets,</li>
+<li>delta computation,</li>
+<li>continuity preservation,</li>
+<li>temporal localization,</li>
+<li>causal slicing,</li>
+<li>and cross-tool composition.</li>
+</ul>
+<hr />
+<h2 id="projection-types-and-projection-normal-form">14. Projection
+Types and Projection Normal Form</h2>
+<p>POS systems require typed projections with explicit invariants.</p>
+<p>Core projection types include:</p>
+<table>
+<thead>
+<tr>
+<th>Projection Type</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CardinalityType</td>
+<td>counts, distincts, heavy hitters</td>
+</tr>
+<tr>
+<td>TopologyType</td>
+<td>graphs, diffs, dependency structures</td>
+</tr>
+<tr>
+<td>SliceType</td>
+<td>bounded windows</td>
+</tr>
+<tr>
+<td>VerdictType</td>
+<td>pass/fail + witnesses</td>
+</tr>
+<tr>
+<td>IndexType</td>
+<td>inverted indices and scores</td>
+</tr>
+<tr>
+<td>TemporalType</td>
+<td>time-indexed windows and causal slices</td>
+</tr>
+<tr>
+<td>CrossModalType</td>
+<td>modality-specific locators and witnesses</td>
+</tr>
+</tbody>
+</table>
+<p>Each projection additionally possesses a canonical
+representation:</p>
+<h3 id="projection-normal-form-pnf">Projection Normal Form (PNF)</h3>
+<p>PNF defines:</p>
+<ul>
+<li>canonical ordering,</li>
+<li>deterministic encoding,</li>
+<li>stable hashing,</li>
+<li>equality semantics,</li>
+<li>cross-language serialization,</li>
+<li>and cache-compatible representation.</li>
+</ul>
+<p>Projection hash:</p>
+<p><span
+class="math display"><em>h</em><sub><em>P</em></sub> = Hash(PNF(<em>P</em>))</span></p>
+<p>Collision policy:</p>
+<ol type="1">
+<li>compare hash;</li>
+<li>if collision suspected, fall back to structural equality;</li>
+<li>if structural equality fails, invalidate cache and escalate.</li>
+</ol>
+<p>PNF enables:</p>
+<ul>
+<li>cache reuse,</li>
+<li>deterministic comparison,</li>
+<li><span class="math inline"><em>Δ</em></span>-equivalence
+detection,</li>
+<li>auditability,</li>
+<li>and platform-stable projection exchange.</li>
+</ul>
+<h4 id="proposition-3-pnf-preserves-delta-equivalence">Proposition 3 –
+PNF Preserves <span
+class="math inline"><em>Δ</em></span>-Equivalence</h4>
+<p>If PNF is canonical and semantics-preserving, then:</p>
+<p><span
+class="math display"><em>P</em>∼<sub><em>Δ</em></sub><em>Q</em> ⇒ PNF(<em>P</em>)∼<sub><em>Δ</em></sub>PNF(<em>Q</em>)</span></p>
+<p>PNF may change representation, ordering, and serialization, but it
+may not change calibrated utilities over <span
+class="math inline"><em>Δ</em></span>.</p>
+<p>Therefore cache equality and <span
+class="math inline"><em>Δ</em></span>-equivalence remain aligned.</p>
+<hr />
+<h2 id="minimal-grammar-for-projections">15. Minimal Grammar for
+Projections</h2>
+<p>A minimal PNF grammar may be expressed as:</p>
+<pre class="ebnf"><code>projection      ::= header body witnesses proofs edges bounds policies
+header ::= &quot;contract&quot; id &quot;type&quot; ptype &quot;delta&quot; delta_id &quot;hash&quot; hash
+body            ::= field*
+field           ::= key &quot;:&quot; value
+value           ::= scalar | list | map | address
+address ::= &quot;addr(&quot; modality &quot;,&quot; scope &quot;,&quot; path &quot;,&quot; range &quot;,&quot;
+version &quot;,&quot; hash &quot;)&quot;
+witnesses       ::= &quot;witnesses&quot; &quot;[&quot; witness* &quot;]&quot;
+proofs          ::= &quot;proofs&quot; &quot;[&quot; proof* &quot;]&quot;
+edges           ::= &quot;edges&quot; &quot;[&quot; edge* &quot;]&quot;
+bounds          ::= &quot;bounds&quot; map
+policies        ::= &quot;policies&quot; &quot;[&quot; label* &quot;]&quot;
+edge ::= &quot;edge(&quot; id &quot;,&quot; cost &quot;,&quot; preconditions &quot;,&quot; added_info &quot;)&quot;</code></pre>
+<p>This grammar is intentionally small.</p>
+<p>The purpose is not expressive maximalism.</p>
+<p>The purpose is deterministic projection exchange.</p>
+<hr />
+<h2 id="delta-equivalence-classes">16. <span
+class="math inline"><em>Δ</em></span>-Equivalence Classes</h2>
+<p>Different projections may be decision-equivalent.</p>
+<p>We define:</p>
+<p><span
+class="math display"><em>P</em>∼<sub><em>Δ</em></sub><em>Q</em> ⇔ ∀<em>d</em> ∈ <em>Δ</em>, 𝔼[<em>U</em>(<em>d</em> ∣ <em>P</em>)] = 𝔼[<em>U</em>(<em>d</em> ∣ <em>Q</em>)]</span></p>
+<p>POS systems may replace projections with cheaper <span
+class="math inline"><em>Δ</em></span>-equivalent representatives:</p>
+<p><span
+class="math display">min<sub><em>P</em><sub><em>i</em></sub> ∈ [<em>P</em>]<sub><em>Δ</em></sub></sub><em>C</em>(<em>P</em><sub><em>i</em></sub>)</span></p>
+<p>This formalizes semantic substitutability under bounded decision
+spaces.</p>
+<p><span class="math inline"><em>Δ</em></span>-equivalence substitution
+preserves argmax decisions by construction.</p>
+<hr />
+<h2 id="projection-calculus">17. Projection Calculus</h2>
+<p>Projection generation itself can be formalized.</p>
+<p>We define <em>Projection Calculus</em> as the algebra of substrate
+reduction operators.</p>
+<ul>
+<li><p><strong>Operator:</strong> restrict<br />
+<strong>Notation:</strong> <span
+class="math inline"><em>R</em><sub><em>Ω</em></sub>(<em>S</em><sub><em>u</em></sub>)</span><br />
+<strong>Function:</strong> reduce substrate to scope <span
+class="math inline"><em>Ω</em></span></p></li>
+<li><p><strong>Operator:</strong> aggregate<br />
+<strong>Notation:</strong> <span
+class="math inline">Agg(<em>P</em>)</span><br />
+<strong>Function:</strong> compress distributions</p></li>
+<li><p><strong>Operator:</strong> index<br />
+<strong>Notation:</strong> <span
+class="math inline">Idx(<em>S</em><sub><em>u</em></sub>)</span><br />
+<strong>Function:</strong> expose navigational structure</p></li>
+<li><p><strong>Operator:</strong> sample<br />
+<strong>Notation:</strong> <span
+class="math inline">Samp<sub><em>k</em></sub>(<em>S</em><sub><em>u</em></sub>)</span><br />
+<strong>Function:</strong> bounded representative extraction</p></li>
+<li><p><strong>Operator:</strong> sketch<br />
+<strong>Notation:</strong> <span
+class="math inline">Sketch<sub><em>ϵ</em>, <em>δ</em></sub>(<em>S</em><sub><em>u</em></sub>)</span><br />
+<strong>Function:</strong> probabilistic approximation</p></li>
+<li><p><strong>Operator:</strong> attach-address<br />
+<strong>Notation:</strong> <span
+class="math inline">Addr(<em>P</em>, <em>A</em>)</span><br />
+<strong>Function:</strong> preserve escalation continuity</p></li>
+<li><p><strong>Operator:</strong> summarize-to-symbol<br />
+<strong>Notation:</strong> <span
+class="math inline">Sym(<em>P</em>)</span><br />
+<strong>Function:</strong> replace stable semantics with
+symbols</p></li>
+<li><p><strong>Operator:</strong> redact<br />
+<strong>Notation:</strong> <span
+class="math inline">Redact<sub><em>L</em></sub>(<em>P</em>)</span><br />
+<strong>Function:</strong> remove policy-disallowed fields</p></li>
+<li><p><strong>Operator:</strong> fuse<br />
+<strong>Notation:</strong> <span
+class="math inline">Fuse(<em>P</em><sub>1</sub>, <em>P</em><sub>2</sub>)</span><br />
+<strong>Function:</strong> merge compatible projections</p></li>
+<li><p><strong>Operator:</strong> normalize<br />
+<strong>Notation:</strong> <span
+class="math inline">PNF(<em>P</em>)</span><br />
+<strong>Function:</strong> canonicalize representation</p></li>
+</ul>
+<p>Several laws follow.</p>
+<h3 id="restriction-idempotence">Restriction Idempotence</h3>
+<p><span
+class="math display"><em>R</em><sub><em>Ω</em></sub>(<em>R</em><sub><em>Ω</em></sub>(<em>S</em><sub><em>u</em></sub>)) = <em>R</em><sub><em>Ω</em></sub>(<em>S</em><sub><em>u</em></sub>)</span></p>
+<h4 id="escalation-monotonicity">Escalation Monotonicity</h4>
+<p>Escalation may increase substrate exposure but may not destroy prior
+address continuity.</p>
+<h4 id="composition-compatibility">Composition Compatibility</h4>
+<p>Projection composition is valid only when shared addresses, policies,
+uncertainty bounds, and <span
+class="math inline"><em>Δ</em></span>-closure are preserved.</p>
+<p>Projection cost may be scalarized for simple cases:</p>
+<p><span
+class="math display"><em>C</em>(<em>P</em>) = <em>α</em>|<em>P</em>|+<em>β</em><em>L</em>(<em>P</em>) + <em>γ</em><sub><em>E</em></sub><em>E</em>(<em>P</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">|<em>P</em>|</span> = token size,</li>
+<li><span class="math inline"><em>L</em>(<em>P</em>)</span> =
+latency,</li>
+<li><span class="math inline"><em>E</em>(<em>P</em>)</span> = energy
+cost.</li>
+</ul>
+<p>However, the canonical implementation model preserves the vector:</p>
+<p><span
+class="math display"><em>C</em>(<em>P</em>) = (tokens, latency, energy)</span></p>
+<p>and optimizes over a Pareto frontier unless a policy explicitly
+supplies scalar weights.</p>
+<p>This prevents hidden tradeoff collapse.</p>
+<hr />
+<h2 id="projection-composition">18. Projection Composition</h2>
+<p>Projection composition is valid only under address and decision
+compatibility.</p>
+<p>Let <span
+class="math inline"><em>P</em><sub>2</sub> ∘ <em>P</em><sub>1</sub></span>
+denote composition.</p>
+<p>Composition is valid iff:</p>
+<ol type="1">
+<li><span class="math inline"><em>P</em><sub>1</sub></span> and <span
+class="math inline"><em>P</em><sub>2</sub></span> share a compatible
+address space;</li>
+<li>their contracts are policy-compatible;</li>
+<li><span class="math inline"><em>Δ</em></span>-closure holds;</li>
+<li>their uncertainty bounds can be reconciled.</li>
+</ol>
+<p>If these conditions fail, the system inserts a normalization
+projection.</p>
+<p>Projection fusion merges multiple compatible projections into a
+single typed projection using address joins, duplicate-witness
+elimination, and bound reconciliation.</p>
+<hr />
+<h2 id="incremental-observation">19. Incremental Observation</h2>
+<p>Many agentic systems are persistent.</p>
+<p>They do not observe once.</p>
+<p>They observe repeatedly across time.</p>
+<p>Incremental observation governs this temporal continuity: instead of
+restarting from raw substrate, the system refines partial projections,
+preserves locality, emits sparse saliency, computes deltas, and reuses
+cache-valid prior observations.</p>
+<h3 id="anytime-projections">19.1 Anytime Projections</h3>
+<p>Some observations should progressively refine over time.</p>
+<p>We define an anytime projection sequence:</p>
+<p><span
+class="math display"><em>P</em><sup>(1)</sup> ⊂ <em>P</em><sup>(2)</sup> ⊂ …</span></p>
+<p>with:</p>
+<p><span
+class="math display"><em>C</em>(<em>P</em><sup>(<em>i</em> + 1)</sup>) ≥ <em>C</em>(<em>P</em><sup>(<em>i</em>)</sup>)</span></p>
+<p>and non-decreasing decision margin:</p>
+<p><span
+class="math display"><em>γ</em>(<em>P</em><sup>(<em>i</em> + 1)</sup>) ≥ <em>γ</em>(<em>P</em><sup>(<em>i</em>)</sup>)</span></p>
+<p>The agent may stop when either:</p>
+<p><span
+class="math display"><em>S</em>(<em>P</em><sup>(<em>i</em>)</sup>, <em>Δ</em>) = 1</span></p>
+<p>or the budget is exhausted.</p>
+<h3 id="semantic-locality">19.2 Semantic Locality</h3>
+<p>Observation cost is partially driven by attention fragmentation.</p>
+<p>We define semantic locality:</p>
+<p><span class="math display">$$
+L_s \tag{37}
+$$</span></p>
+<p>which penalizes cross-address cognitive jumps.</p>
+<p>Projection planners prefer locality-preserving observation chains
+minimizing:</p>
+<p><span
+class="math display">∑<sub><em>i</em></sub><em>L</em><sub><em>s</em></sub>(<em>P</em><sub><em>i</em></sub>, <em>P</em><sub><em>i</em> + 1</sub>)</span></p>
+<h3 id="sparse-attention-hints">19.3 Sparse Attention Hints</h3>
+<p>Projections may emit sparse saliency maps:</p>
+<p><span
+class="math display"><em>σ</em> : <em>A</em> → [0, 1]</span></p>
+<p>subject to a top-<span class="math inline"><em>k</em></span>
+constraint.</p>
+<p>Downstream models treat <span class="math inline"><em>σ</em></span>
+as an attention prior, not as a substitute for proof.</p>
+<h3 id="delta-projections">19.4 Delta-Projections</h3>
+<p>Long-running agents repeatedly re-observe evolving substrate.</p>
+<p>We define:</p>
+<p><span
+class="math display"><em>Δ</em><em>P</em><sub><em>t</em></sub> = <em>P</em><sub><em>t</em></sub> − <em>P</em><sub><em>t</em> − 1</sub></span></p>
+<p>Delta projections support incremental recomputation through
+pipelines.</p>
+<p>For composed projections:</p>
+<p><span
+class="math display"><em>Δ</em>(<em>P</em><sub>2</sub> ∘ <em>P</em><sub>1</sub>) = <em>Δ</em><em>P</em><sub>2</sub> ∘ <em>P</em><sub>1</sub> ⊕ <em>P</em><sub>2</sub> ∘ <em>Δ</em><em>P</em><sub>1</sub></span></p>
+<p>This permits incremental update without recomputing the full
+observation chain.</p>
+<h3 id="cache-coherence">19.5 Cache Coherence</h3>
+<p>Projection caches are maintained through:</p>
+<ul>
+<li>version vectors,</li>
+<li>address hashes,</li>
+<li>bounded staleness,</li>
+<li>causal clocks,</li>
+<li>slice freshness guarantees,</li>
+<li>and partial invalidation rules.</li>
+</ul>
+<p>Cache consistency modes include:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strong</td>
+<td>reuse only when versions match exactly</td>
+</tr>
+<tr>
+<td>Bounded-staleness</td>
+<td>reuse if age (<span
+class="math inline"> ≤ <em>Δ</em><em>t</em></span>)</td>
+</tr>
+<tr>
+<td>Causal</td>
+<td>reuse if vector-clock dependencies are satisfied</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="witness-carrying-and-proof-carrying-projections">20.
+Witness-Carrying and Proof-Carrying Projections</h2>
+<p>Projection minimization introduces epistemic risk.</p>
+<p>We therefore define two composable evidence layers.</p>
+<h3 id="witness-carrying-projections">20.1 Witness-Carrying
+Projections</h3>
+<p>Witness-Carrying Projections (WCPs) contain minimal evidence bundles
+preserving:</p>
+<ul>
+<li>hashes,</li>
+<li>counters,</li>
+<li>samples,</li>
+<li>witnesses,</li>
+<li>confidence scores,</li>
+<li>and derivation metadata.</li>
+</ul>
+<p>Each witness bundle exposes:</p>
+<p><span class="math display">$$
+c_w \tag{42}
+$$</span></p>
+<p>verified through:</p>
+<ul>
+<li>stratified sampling,</li>
+<li>spot-checks,</li>
+<li>and sublinear audits.</li>
+</ul>
+<p>For estimating key rates, a practical witness sampling bound is:</p>
+<p><span class="math display">$$
+k = O\left( \frac{1}{\epsilon^2} \log \frac{1}{\delta} \right) \tag{43}
+$$</span></p>
+<p>WCP metadata must declare:</p>
+<ul>
+<li>sample size,</li>
+<li>sampling frame,</li>
+<li>confidence level,</li>
+<li>error tolerance,</li>
+<li>and audit method.</li>
+</ul>
+<h3 id="proof-carrying-projections">20.2 Proof-Carrying Projections</h3>
+<p>Proof-Carrying Projections (PCPs) attach succinct cryptographic
+derivation proofs:</p>
+<ul>
+<li>Merkle paths,</li>
+<li>inclusion proofs,</li>
+<li>content-authenticity hashes,</li>
+<li>derivation commitments.</li>
+</ul>
+<p>A standard PCP verification API checks proof material against <span
+class="math inline"><em>h</em></span> in:</p>
+<p><span
+class="math display"><em>A</em> = (<em>s</em>, <em>p</em>, <em>r</em>, <em>v</em>, <em>h</em>)</span></p>
+<p>Failure semantics:</p>
+<ul>
+<li>invalid proof -&gt; reject projection;</li>
+<li>missing proof -&gt; downgrade confidence;</li>
+<li>unverifiable address -&gt; escalate;</li>
+<li>mismatched hash -&gt; invalidate cache and fetch substrate.</li>
+</ul>
+<p>WCP and PCP are not alternatives.</p>
+<p>WCP supplies epistemic confidence.</p>
+<p>PCP supplies derivation verification.</p>
+<p>A projection may carry either, both, or neither, depending on risk
+class and policy.</p>
+<p>When both are present, PCP verification gates admissibility of the
+evidence bundle, while <span
+class="math inline"><em>c</em><sub><em>w</em></sub></span> estimates the
+statistical adequacy of the verified witnesses.</p>
+<hr />
+<h2 id="projection-lipschitzness-and-robustness">21. Projection
+Lipschitzness and Robustness</h2>
+<p>POS systems must remain stable under bounded substrate
+perturbation.</p>
+<p>Let <span
+class="math inline"><em>d</em>(<em>S</em><sub><em>u</em></sub>, <em>S</em><sub><em>u</em></sub><sup>′</sup>)</span>
+be a domain-specific distance metric, such as:</p>
+<ul>
+<li>edit distance,</li>
+<li>graph cut distance,</li>
+<li>schema distance,</li>
+<li>temporal divergence,</li>
+<li>trace distance.</li>
+</ul>
+<p>A projection function is Lipschitz-stable when:</p>
+<p><span class="math display">$$
+\left| \frac{U(\cdot \mid P(S_u))}{U(\cdot \mid P(S_u'))} \right|_\infty
+\le L \cdot d(S_u, S_u') \tag{45}
+$$</span></p>
+<p>The perturbation metric must be selected per substrate domain and
+decision class. A code-edit distance may be appropriate for parser
+debugging, while graph-cut distance may be appropriate for dependency
+analysis and temporal divergence may be appropriate for trace debugging.
+Robustness claims are only meaningful when this metric captures the
+changes that matter for <span class="math inline"><em>Δ</em></span>.</p>
+<p>Without robustness guarantees, projections become manipulable
+observation surfaces.</p>
+<hr />
+<h2 id="policy-lattices-and-information-flow-governance">22. Policy
+Lattices and Information-Flow Governance</h2>
+<p>Observation governance policies compose algebraically.</p>
+<p>We define a <em>Policy Lattice</em> supporting:</p>
+<ul>
+<li>meet,</li>
+<li>join,</li>
+<li>monotonic tightening.</li>
+</ul>
+<p>Policies include:</p>
+<ul>
+<li>privacy,</li>
+<li>cost,</li>
+<li>latency,</li>
+<li>security,</li>
+<li>retention,</li>
+<li>jurisdiction,</li>
+<li>and audit constraints.</li>
+</ul>
+<p>Monotonicity requirement:</p>
+<blockquote>
+<p>tightening policy may not increase exposed substrate.</p>
+</blockquote>
+<p>However, lattice meet may produce deadlock.</p>
+<p>POS systems therefore define prioritized joins with minimal
+relaxation:</p>
+<p><span class="math display"><em>δ</em><sub>relax</sub></span></p>
+<p>Every relaxation is audit-logged.</p>
+<p>Projection fields additionally carry security labels.</p>
+<p>For labels <span
+class="math inline"><em>L</em><sub><em>h</em></sub></span> and <span
+class="math inline"><em>L</em><sub><em>l</em></sub></span>, POS requires
+non-interference:</p>
+<p><span
+class="math display"><em>N</em><em>I</em>(<em>L</em><sub><em>h</em></sub> ↛ <em>L</em><sub><em>l</em></sub>)</span></p>
+<p>except through approved aggregators.</p>
+<p>This is enforced by the type system over Projection Calculus
+operators.</p>
+<hr />
+<h2 id="observation-planning">23. Observation Planning</h2>
+<p>Observation itself can be planned strategically.</p>
+<p>We define cost-to-go:</p>
+<p><span class="math display"><em>J</em>(<em>P</em>)</span></p>
+<p>representing expected remaining observation cost.</p>
+<p>The planner optimizes:</p>
+<p><span
+class="math display"><em>C</em>(<em>P</em><sub><em>i</em></sub>) + 𝔼[<em>J</em>(<em>P</em><sub><em>i</em> + 1</sub>)]</span></p>
+<p>while minimizing regret:</p>
+<p><span
+class="math display"><em>R</em> = <em>U</em>(<em>d</em><sup>*</sup> ∣ <em>S</em><sub><em>u</em></sub>) − <em>U</em>(<em>d</em><sub><em>P</em></sub> ∣ <em>P</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>d</em><sup>*</sup></span> = optimal
+substrate decision,</li>
+<li><span class="math inline"><em>d</em><sub><em>P</em></sub></span> =
+projection-induced decision.</li>
+</ul>
+<p>Regret decomposes into:</p>
+<p><span
+class="math display"><em>R</em> = <em>R</em><sub>proj</sub> + <em>R</em><sub>model</sub> + <em>R</em><sub>policy</sub></span></p>
+<p>This isolates gains attributable to the observation surface
+itself.</p>
+<p>A reference planner may use A* over projection space:</p>
+<p>```text open_set := initial projections while open_set not empty: P
+:= lowest C(P)+J(P) if S(P, Delta): return P for edge in
+admissible_edges(P): P’ := apply(edge) if h_P not visited and not
+Delta-equivalent to cheaper projection: enqueue(P’)</p>
+<hr />
+<h2 id="failure-modes-and-remediation">27. Failure Modes and
+Remediation</h2>
+<ul>
+<li><p><strong>Failure:</strong> Underprojection<br />
+<strong>Description:</strong> Necessary distinctions omitted<br />
+<strong>Remediation:</strong> mandatory escalation</p></li>
+<li><p><strong>Failure:</strong> Overprojection<br />
+<strong>Description:</strong> Excess substrate exposed<br />
+<strong>Remediation:</strong> contract tightening</p></li>
+<li><p><strong>Failure:</strong> Escalation Ambiguity<br />
+<strong>Description:</strong> No clear fetch path<br />
+<strong>Remediation:</strong> edge validation</p></li>
+<li><p><strong>Failure:</strong> Semantic Drift<br />
+<strong>Description:</strong> Projection meaning changes<br />
+<strong>Remediation:</strong> symbol migration</p></li>
+<li><p><strong>Failure:</strong> Address Loss<br />
+<strong>Description:</strong> locality destroyed<br />
+<strong>Remediation:</strong> address algebra repair</p></li>
+<li><p><strong>Failure:</strong> Projection Inflation<br />
+<strong>Description:</strong> compact form grows verbose<br />
+<strong>Remediation:</strong> MU stop rule</p></li>
+<li><p><strong>Failure:</strong> Decision Oscillation<br />
+<strong>Description:</strong> Delta flips repeatedly<br />
+<strong>Remediation:</strong> hysteresis</p></li>
+<li><p><strong>Failure:</strong> Witness Spoofing<br />
+<strong>Description:</strong> invalid evidence<br />
+<strong>Remediation:</strong> PCP verification</p></li>
+<li><p><strong>Failure:</strong> Budget Starvation<br />
+<strong>Description:</strong> premature stop<br />
+<strong>Remediation:</strong> exploration floor</p></li>
+<li><p><strong>Failure:</strong> Policy Deadlock<br />
+<strong>Description:</strong> no admissible edge<br />
+<strong>Remediation:</strong> relaxation ladder</p></li>
+</ul>
+<hr />
+<h2 id="empirical-evaluation">28. Empirical Evaluation</h2>
+<p>POS should be evaluated through controlled A/B protocols. For each
+task family, the benchmark defines substrate <span
+class="math inline"><em>S</em><sub><em>u</em></sub></span>, decision
+class <span class="math inline"><em>Δ</em></span>, ground-truth next
+decision <span class="math inline"><em>d</em><sup>*</sup></span>, policy
+configuration, and substrate snapshot. Raw-substrate,
+heuristic-filtered, conventional-summary, and POS systems are then
+compared on the same task sequence.</p>
+<p>Core metrics include:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sufficiency rate</td>
+<td>fraction of steps where <span
+class="math inline"><em>S</em>(<em>P</em>, <em>Δ</em>) = 1</span></td>
+</tr>
+<tr>
+<td>Overexposure ratio</td>
+<td><span
+class="math inline"><em>C</em>(<em>P</em>)/<em>C</em>(<em>P</em><sub><em>Δ</em></sub><sup>*</sup>)</span>
+or estimated <span class="math inline"><em>η</em></span></td>
+</tr>
+<tr>
+<td>Regret</td>
+<td><span
+class="math inline"><em>U</em>(<em>d</em><sup>*</sup> ∣ <em>S</em><sub><em>u</em></sub>) − <em>U</em>(<em>d</em><sub><em>P</em></sub> ∣ <em>P</em>)</span></td>
+</tr>
+<tr>
+<td>Escalation rate</td>
+<td>fraction of steps requiring deeper fetch</td>
+</tr>
+<tr>
+<td>Token amortization</td>
+<td>token cost over full agent loop</td>
+</tr>
+<tr>
+<td>Latency</td>
+<td>wall-clock decision time</td>
+</tr>
+<tr>
+<td>Energy</td>
+<td>joule estimate per observation loop</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>reuse of prior projections</td>
+</tr>
+<tr>
+<td>Witness confidence</td>
+<td>average <span
+class="math inline"><em>c</em><sub><em>w</em></sub></span></td>
+</tr>
+<tr>
+<td>Proof failure rate</td>
+<td>PCP verification failure frequency</td>
+</tr>
+</tbody>
+</table>
+<p>Benchmark suites should include debugging tasks, retrieval tasks, CI
+tasks, log analysis, trace analysis, cross-modal inspection, and
+multi-agent orchestration.</p>
+<hr />
+<h2 id="theoretical-observation-bound">29. Theoretical Observation
+Bound</h2>
+<p>Under bounded decision classes, indexed substrates, calibrated
+utility, and Lipschitz assumptions, many tasks admit projections
+satisfying:</p>
+<p><span
+class="math display"><em>C</em>(<em>P</em>) = <em>O</em>(log |<em>S</em><sub><em>u</em></sub>|)</span></p>
+<p>through sketches, indices, topology projections, heavy-hitter
+summaries, bounded witnesses, and address-preserving escalation.</p>
+<p>This formalizes the possibility of sublinear observation.</p>
+<p>The observing agent need not ingest substrate proportional to
+substrate size.</p>
+<p>However, this bound is conditional.</p>
+<p>It may fail under:</p>
+<ul>
+<li>rare critical events,</li>
+<li>adversarially hidden signals,</li>
+<li>non-stationary utility,</li>
+<li>unindexed substrates,</li>
+<li>continuous or very large <span
+class="math inline"><em>Δ</em></span>,</li>
+<li>domains where sketches suppress decisive outliers,</li>
+<li>and substrates that violate Lipschitz assumptions.</li>
+</ul>
+<hr />
+<h2 id="running-example-parser-fault-localization">30. Running Example –
+Parser Fault Localization</h2>
+<p>Goal: locate a faulty parser rule.</p>
+<p>Decision class:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\Delta = \{&amp;\text{inspect\_file}, \text{compare\_versions}, \\
+&amp;\text{run\_tests}, \text{stop}\}
+\end{aligned}\tag{57}
+$$</span></p>
+<p>Observation Contract:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\mathcal{O} = (&amp;\text{parser fault localization}, \Delta, \\
+&amp;\text{TopologyType}, G_{\text{debug}})
+\end{aligned}\tag{58}
+$$</span></p>
+<p>Initial projection:</p>
+<p>```text ProjectionType: CardinalityType failures=12 modules=3 top:
+parser.py@[22,81] lexer.py@</p>
+<hr />
+<h2 id="datacenters-edge-ai-and-observation-economics">31. Datacenters,
+Edge AI, and Observation Economics</h2>
+<p>The implications extend beyond token billing.</p>
+<p>If agentic systems continuously over-observe substrate,
+infrastructure scales around avoidable epistemic waste.</p>
+<p>This means:</p>
+<ul>
+<li>more inference,</li>
+<li>more memory,</li>
+<li>more bandwidth,</li>
+<li>more cooling,</li>
+<li>more datacenter construction,</li>
+<li>more energy expenditure,</li>
+<li>larger cloud dependence.</li>
+</ul>
+<p>POS systems suggest a different future: smaller observation loops,
+higher semantic density, and substantially reduced inference demand.</p>
+<p>The key insight:</p>
+<blockquote>
+<p>local inference becomes more viable when the observation surface
+itself is parsimonious.</p>
+</blockquote>
+<p>A smaller cognitive loop requires less model capacity.</p>
+<p>Thus observation theory directly impacts hardware viability.</p>
+<hr />
+<h2 id="limitations">32. Limitations</h2>
+<p>POS does not eliminate the need for deep substrate access.</p>
+<p>It governs when such access is justified.</p>
+<p>Several limitations remain.</p>
+<p>First, <span
+class="math inline"><em>U</em>(<em>d</em> ∣ <em>P</em>)</span> may be
+non-stationary. If utility changes faster than calibration, sufficiency
+decisions degrade.</p>
+<p>Second, <span class="math inline"><em>Δ</em></span> may be large,
+continuous, or poorly specified. POS works best when next-step decision
+classes are finite and typed.</p>
+<p>Third, adversarial substrates may be constructed to defeat projection
+assumptions. Rare decisive events are especially dangerous when sketches
+or summaries suppress tails.</p>
+<p>Fourth, Lipschitz assumptions may fail. Small substrate edits can
+sometimes produce discontinuous semantic consequences.</p>
+<p>Fifth, policy lattices may deadlock. Privacy, latency, security, and
+cost constraints can jointly forbid every useful escalation edge.</p>
+<p>Sixth, projection models may learn bad compression habits. A
+projection surface can become a subtle bottleneck if optimized against
+incomplete feedback.</p>
+<p>These limits do not invalidate POS.</p>
+<p>They define the boundary where disciplined escalation, audit, proof,
+or full substrate access becomes necessary.</p>
+<hr />
+<h2 id="the-missing-theory">33. The Missing Theory</h2>
+<p>Current AI systems possess:</p>
+<ul>
+<li>theories of training,</li>
+<li>theories of optimization,</li>
+<li>theories of retrieval,</li>
+<li>theories of memory,</li>
+<li>theories of alignment,</li>
+<li>theories of scaling.</li>
+</ul>
+<p>But they largely lack:</p>
+<ul>
+<li>theories of observation.</li>
+</ul>
+<p>Tools are still treated as substrate emitters rather than epistemic
+interfaces.</p>
+<p>Without explicit observation theory, systems compensate through
+brute-force cognition.</p>
+<p>That path is computationally expensive and structurally
+inelegant.</p>
+<hr />
+<h2 id="scope-and-limits-of-the-claim">34. Scope and Limits of the
+Claim</h2>
+<p>The strongest claim of this paper is not that all observation can be
+made small.</p>
+<p>It is that much current agentic observation is unnecessarily large
+because tools emit substrate before decision relevance is
+established.</p>
+<p>POS is therefore a theory of governed reduction, not a denial of deep
+inspection.</p>
+<p>When <span class="math inline"><em>Δ</em></span> is finite, utility
+is calibrated, substrate has usable address structure, and projection
+assumptions hold, observation can often be made sublinear.</p>
+<p>When those conditions fail, POS should escalate, audit, or fetch raw
+substrate.</p>
+<p>The discipline lies in knowing which case one is in.</p>
+<hr />
+<h2 id="conclusion">35. Conclusion</h2>
+<p>The future of agentic systems may depend less on larger models than
+on better observation.</p>
+<p>The dominant architecture today assumes:</p>
+<p>observe broadly, compress later, reason afterward.</p>
+<p>This paper proposes the inverse:</p>
+<p>observe minimally, escalate selectively, preserve inferential
+continuity.</p>
+<p>A raw substrate dump assumes cognition should emerge from
+abundance.</p>
+<p>A semantic projection assumes cognition should emerge from
+disciplined observation.</p>
+<p>The difference between those assumptions may ultimately
+determine:</p>
+<ul>
+<li>the scalability of agentic systems,</li>
+<li>the economics of inference,</li>
+<li>the sustainability of datacenter growth,</li>
+<li>the viability of local AI,</li>
+<li>and the cognitive architecture of machine intelligence itself.</li>
+</ul>
+<p>The cheapest token is not the compressed token.</p>
+<p>It is the token never emitted because the semantic projection was
+already sufficient.</p>
+<hr />
+<h2 id="appendix-a-symbol-glossary">Appendix A – Symbol Glossary</h2>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span
+class="math inline"><em>S</em><sub><em>u</em></sub></span></td>
+<td>underlying substrate</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>P</em></span></td>
+<td>projection</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>Δ</em></span></td>
+<td>decision class</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>S</em>(<em>P</em>, <em>Δ</em>)</span></td>
+<td>sufficiency predicate</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>U</em>(<em>d</em> ∣ <em>P</em>)</span></td>
+<td>expected utility of decision <span
+class="math inline"><em>d</em></span> under projection <span
+class="math inline"><em>P</em></span></td>
+</tr>
+<tr>
+<td><span class="math inline"><em>C</em>(<em>P</em>)</span></td>
+<td>projection cost</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>P</em><sub><em>Δ</em></sub><sup>*</sup></span></td>
+<td>minimal sufficient projection for <span
+class="math inline"><em>Δ</em></span></td>
+</tr>
+<tr>
+<td><span class="math inline"><em>η</em></span></td>
+<td>optimality gap</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>H</em><sub><em>Δ</em></sub>(<em>P</em>)</span></td>
+<td>decision entropy</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>γ</em>(<em>P</em>)</span></td>
+<td>decision margin</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>A</em></span></td>
+<td>address tuple</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>G</em> = (<em>V</em>, <em>E</em>)</span></td>
+<td>escalation graph</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>R</em></span></td>
+<td>regret</td>
+</tr>
+<tr>
+<td><span class="math inline"><em>J</em>(<em>P</em>)</span></td>
+<td>cost-to-go</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>L</em><sub><em>s</em></sub></span></td>
+<td>semantic locality</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>h</em><sub><em>P</em></sub></span></td>
+<td>projection hash</td>
+</tr>
+<tr>
+<td><span
+class="math inline"><em>c</em><sub><em>w</em></sub></span></td>
+<td>witness confidence</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-b-proof-sketches">Appendix B – Proof Sketches</h2>
+<h3 id="b.1-delta-equivalence-substitution">B.1 <span
+class="math inline"><em>Δ</em></span>-Equivalence Substitution</h3>
+<p>If:</p>
+<p><span
+class="math display"><em>P</em>∼<sub><em>Δ</em></sub><em>Q</em></span></p>
+<p>then for every <span
+class="math inline"><em>d</em> ∈ <em>Δ</em></span>:</p>
+<p><span
+class="math display">𝔼[<em>U</em>(<em>d</em> ∣ <em>P</em>)] = 𝔼[<em>U</em>(<em>d</em> ∣ <em>Q</em>)]</span></p>
+<p>Therefore the argmax decision under <span
+class="math inline"><em>P</em></span> is identical to the argmax
+decision under <span class="math inline"><em>Q</em></span>, assuming the
+same tie-breaking rule.</p>
+<p>Thus <span class="math inline"><em>Q</em></span> may replace <span
+class="math inline"><em>P</em></span> without changing the next
+admissible decision.</p>
+<hr />
+<h3 id="b.2-pnf-preservation">B.2 PNF Preservation</h3>
+<p>If PNF is semantics-preserving, then canonicalization changes only
+representation, not decision utility.</p>
+<p>Therefore:</p>
+<p><span
+class="math display"><em>P</em>∼<sub><em>Δ</em></sub>PNF(<em>P</em>)</span></p>
+<p>and if <span
+class="math inline"><em>P</em>∼<sub><em>Δ</em></sub><em>Q</em></span>,
+then:</p>
+<p><span
+class="math display">PNF(<em>P</em>)∼<sub><em>Δ</em></sub>PNF(<em>Q</em>)</span></p>
+<p>This allows canonical hashes to support cache reuse without breaking
+decision equivalence.</p>
+<hr />
+<h3 id="b.3-sublinear-observation-via-sketches-and-indices">B.3
+Sublinear Observation via Sketches and Indices</h3>
+<p>For indexed substrates, many decision classes require only:</p>
+<ul>
+<li>counts,</li>
+<li>top-<span class="math inline"><em>k</em></span> elements,</li>
+<li>locality maps,</li>
+<li>or bounded witnesses.</li>
+</ul>
+<p>Sketches and indices can compute these in:</p>
+<p><span
+class="math display"><em>O</em>(log |<em>S</em><sub><em>u</em></sub>|)</span></p>
+<p>or sublinear access under appropriate assumptions.</p>
+<p>Thus a sufficient projection may be sublinear even when the substrate
+is large.</p>
+<hr />
+<h3 id="b.4-non-interference-under-projection-calculus">B.4
+Non-Interference Under Projection Calculus</h3>
+<p>If every Projection Calculus operator is type-checked against
+information-flow labels, and disallowed high-to-low flows are rejected,
+then emitted low-security projections cannot depend on high-security
+substrate fields except through approved aggregators.</p>
+<p>Therefore:</p>
+<p><span
+class="math display"><em>N</em><em>I</em>(<em>L</em><sub><em>h</em></sub> ↛ <em>L</em><sub><em>l</em></sub>)</span></p>
+<p>holds by operator composition.</p>
+<hr />
+<h3 id="b.5-anytime-convergence-under-hysteresis">B.5 Anytime
+Convergence Under Hysteresis</h3>
+<p>Given an anytime projection sequence with non-decreasing decision
+margin and two-threshold entropy hysteresis, escalation cannot oscillate
+indefinitely near a single threshold.</p>
+<p>The system either:</p>
+<ul>
+<li>reaches sufficiency,</li>
+<li>exhausts budget,</li>
+<li>or stabilizes in the hysteresis band until new information
+arrives.</li>
+</ul>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern AI systems scale primarily through
+larger models, longer context windows, greater retrieval bandwidth, and
+increasingly massive datacenter infrastructure. Its nearest external
+comparison fields are observation, ai, provenance. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Telemetry can be
+complete at the instrumented boundary while omitting the causal
+variable, real-world effect, or authority question that matters.
+Retrieval, tool use, and policy layers can reduce unsupported output
+without eliminating model error, source error, omission, bias, or the
+environmental and institutional costs of scale. A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy. These
+limits are not generic disclaimers: they identify the assumptions that a
+later empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E2]</strong> W3C. <em>Trace Context, Level 1</em>. W3C
+Recommendation, 23 November 2021. https://www.w3.org/TR/trace-context/
+<strong>Relationship:</strong> Adjacent distributed tracing standard for
+propagating trace identity across service boundaries.</p>
+<p><strong>[E3]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E4]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<p><strong>[E5]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E6]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E7]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Constitutional
+Observability Platform</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-9FC6DF9C2BCB38DA</code>;<br />
+source SHA-256<br />
+<code>D93D41518A823703E1076B02D95D28BD7ADF29D3DC15760E0165E84E28BC70B9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Testing for Deriving
+Observable State of Software Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-BAA7A4A4150F5D66</code>;<br />
+source SHA-256<br />
+<code>0B6AAC8B71DA25E24F7FB4A018692F609096DBA8383C9C8C0AC15F1AF711B3A8</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Epistemic Situational
+Awareness (ESA)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18123102</code>;<br />
+source SHA-256<br />
+<code>D43BD7CF219AB9A6EAF715CFA8CBFA32FCB8A11B8DFCADE004E00595D5F68503</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Anthropic. <em>Context Engineering for AI Agents.</em></p>
+<p>Anthropic. <em>Building Effective Tools for AI Agents.</em></p>
+<p>LangChain. <em>Context Engineering Documentation.</em></p>
+<p>Model Context Protocol (MCP) discussions on tool schema minimization
+and response filtering.</p>
+<p>Research on information theory, semantic compression, bounded
+rationality, probabilistic sketches, partial-state observation systems,
+sparse attention architectures, and edge AI inference systems.</p>
+<p>Unix philosophy and composable tool-interface design traditions.</p>
+<p>Distributed systems literature on projection, indexing, delta
+synchronization, caching, and partial-state replication.</p>
+<p>Literature on proper scoring rules, calibration, information-flow
+control, Merkle proofs, streaming algorithms, and approximate query
+processing.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20437813">10.5281/zenodo.20437813</a></p>

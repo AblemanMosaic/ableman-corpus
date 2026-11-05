@@ -1,0 +1,476 @@
+<h1
+id="semantic-hashing-hashes-as-declared-equivalence-classes-of-meaning">Semantic
+Hashing: Hashes as Declared Equivalence Classes of Meaning</h1>
+<h2
+id="hashing-as-executable-semantic-collapse-rather-than-byte-integrity">Hashing
+as Executable Semantic Collapse Rather Than Byte Integrity</h2>
+<h3
+id="under-this-view-hashes-do-not-identify-objects-or-byte-sequences-but-equivalence-classes-of-meaning-defined-by-an-explicit-semantic-projection-or-lens-.">Under
+this view, hashes do not identify objects or byte sequences, but
+equivalence classes of meaning defined by an explicit semantic
+projection (or lens ).</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Hashing is conventionally understood as a cryptographic or
+engineering primitive: a deterministic function for integrity
+verification, deduplication, and tamper detection over concrete data.
+While effective, this framing obscures a deeper and increasingly central
+systems problem: <strong>how can a system determine that two artifacts
+are meaningfully the same without re-interpreting, re-reasoning, or
+trusting narrative explanations?</strong></p>
+<p>This paper introduces <strong>Semantic Hashing</strong>, a reframing
+of hashing as a <em>governed semantic operator</em> rather than a
+structural checksum. Under this view, hashes do not identify objects or
+byte sequences, but <strong>equivalence classes of meaning</strong>
+defined by an explicit semantic projection (or <em>lens</em>). Meaning
+is first declared - by specifying which distinctions are invariant and
+which are forbidden from relevance - then aggressively normalized and
+hashed. The resulting hash serves as a stable, addressable identifier
+for semantic sameness across time, representation, and context.</p>
+<p><strong>Central claim.</strong> When hashing is applied
+<em>after</em> an explicit, governed semantic collapse, it becomes a
+mechanism for admissibility, drift detection, and semantic continuity
+rather than mere integrity checking. Semantic hashing converts value
+judgments about meaning into enforceable system invariants, enabling
+refusal without debate, audit without re-interpretation, and continuity
+without trust.</p>
+<hr />
+<h2 id="the-irreducible-maneuver">1. The Irreducible Maneuver</h2>
+<p>At its most reduced form, semantic hashing performs a single
+maneuver:</p>
+<ol type="1">
+<li><strong>Select the meaning you are willing to keep.</strong></li>
+<li><strong>Commit that selection to a canonical form.</strong></li>
+<li><strong>Hash it.</strong></li>
+<li><strong>Let everything else fall away.</strong></li>
+</ol>
+<p>No inference is required. No interpretation is preserved. No appeal
+is possible after the fact.</p>
+<p>What remains is not a summary of the system, but a <strong>decision
+about what is allowed to survive change</strong>.</p>
+<hr />
+<h3 id="selection-before-security">1.1 Selection Before Security</h3>
+<p>The decisive step is not the hash.</p>
+<p>It is the moment a system declares:</p>
+<ul>
+<li><em>this distinction matters,</em></li>
+<li><em>this variation does not,</em></li>
+<li><em>this change is admissible,</em></li>
+<li><em>this one is not.</em></li>
+</ul>
+<p>Before any cryptographic commitment occurs, the system must choose
+what it agrees to remember. Everything not chosen is deliberately
+abandoned to entropy. It may remain observable, archived, or narratable,
+but it is denied participation in identity, admissibility, or
+continuity.</p>
+<p>This is not an optimization. It is a value judgment rendered
+executable.</p>
+<hr />
+<h3 id="loss-as-discipline">1.2 Loss as Discipline</h3>
+<p>The maneuver is intentionally lossy.</p>
+<p>Semantic hashing does not attempt to preserve richness, context, or
+nuance. It replaces them with a hard boundary: <em>either this survives
+the maneuver, or it does not.</em></p>
+<p>This apparent brittleness is the point. Meaning that cannot survive
+explicit selection cannot be relied upon for governance, admissibility,
+or continuity. Systems that attempt to carry everything forward
+ultimately carry nothing with integrity.</p>
+<p>Loss, here, is discipline.</p>
+<hr />
+<h3 id="from-brittleness-to-instrumentation">1.3 From Brittleness to
+Instrumentation</h3>
+<p>In isolation, the maneuver is fragile. A poorly chosen selection
+collapses too much or too little. A careless projection produces false
+sameness or spurious difference.</p>
+<p>The critical move is not to avoid this fragility, but to
+<strong>govern it</strong>.</p>
+<p>When the process of selection is explicit, versioned, inspectable,
+and revisable only through declared change, brittleness becomes
+precision. The system gains the ability to test itself against its own
+prior commitments and to detect semantic drift without
+re-interpretation.</p>
+<hr />
+<h3 id="the-hash-as-a-vow">1.4 The Hash as a Vow</h3>
+<p>Only after selection and normalization does hashing occur.</p>
+<p>At this point, the hash is no longer a checksum of data. It is a
+<strong>vow</strong>:</p>
+<p><em>Everything we agreed mattered is captured here. Everything else,
+we have agreed to forget.</em></p>
+<p>The hash names an equivalence class of meanings. It does not describe
+them, justify them, or explain them. It simply asserts that anything
+bearing this hash is indistinguishable under the declared regime of
+relevance.</p>
+<hr />
+<h3 id="what-the-maneuver-enables">1.5 What the Maneuver Enables</h3>
+<p>This maneuver enables a class of statements most systems cannot make
+honestly:</p>
+<ul>
+<li><em>This is the same rule we enforced before.</em></li>
+<li><em>This transformation is admissible under the same law.</em></li>
+<li><em>Nothing we agreed mattered has changed.</em></li>
+</ul>
+<p>Or, just as importantly:</p>
+<ul>
+<li><em>Something that mattered did change.</em></li>
+</ul>
+<p>Semantic hashing does not make systems correct. It makes them
+<strong>accountable to their own definitions of meaning</strong>.</p>
+<hr />
+<h2 id="semantic-hashing-and-governed-continuation">2. Semantic Hashing
+and Governed Continuation</h2>
+<p>Semantic hashing does not stand alone. It composes directly with
+<strong>Governed Semantic Compilation (GSC)</strong> to form a complete
+governed continuation protocol.</p>
+<p>GSC governs <strong>when an output may be promoted</strong> from
+proposal to binding state. Semantic hashing governs <strong>what it
+means for that output to count as the same thing</strong> when promotion
+is evaluated.</p>
+<p>Operationally:</p>
+<ol type="1">
+<li>Outputs are proposed (GSC preview).</li>
+<li>A semantic lens extracts invariant structure (semantic
+hashing).</li>
+<li>The resulting hash is compared against admissible equivalence
+classes (GSC validation).</li>
+<li>Promotion occurs if and only if the hash is admissible; otherwise,
+refusal is enforced.</li>
+</ol>
+<p>This composition defeats authority laundering mechanically. Narrative
+explanations cannot retroactively assert continuity if the semantic hash
+has changed.</p>
+<hr />
+<h2 id="scope-and-motivation">3. Scope and Motivation</h2>
+<p>Modern systems routinely claim that two things are “the same”:</p>
+<ul>
+<li>the same policy,</li>
+<li>the same intent,</li>
+<li>the same rule,</li>
+<li>the same procedure,</li>
+<li>the same outcome under constraint.</li>
+</ul>
+<p>These claims are rarely mechanized. Instead, sameness is asserted
+through narrative, documentation, or institutional memory. When disputes
+arise, systems fall back to re-interpretation, authority, or
+re-reasoning - processes that are expensive, ambiguous, and vulnerable
+to drift.</p>
+<p>Hashing is ubiquitous, but almost never used at this semantic level.
+Hashes protect bytes, blocks, or messages, while meaning is assumed to
+be stable without being specified. Semantic hashing addresses this gap
+by making sameness explicit, enforceable, and testable.</p>
+<hr />
+<h2 id="traditional-hashing-and-its-limits">4. Traditional Hashing and
+Its Limits</h2>
+<p>Traditional hashing answers a structural question:</p>
+<p><em>Are these bytes identical?</em></p>
+<p>It excels at integrity, deduplication, and tamper detection. But
+structural identity is insufficient for semantic identity.</p>
+<p>Consider two cases:</p>
+<ul>
+<li><p>Two policy documents are byte-identical, but one is issued under
+a superseded authority and the other under a current mandate. A
+traditional hash declares them the same; a semantic hash incorporating
+provenance declares them different.</p></li>
+<li><p>Two JSON configurations differ only in key ordering. Traditional
+hashes differ; a semantic hash under a structural-equivalence lens
+remains stable.</p></li>
+</ul>
+<p>Semantic hashing asks a different question:</p>
+<p><strong>Are these meanings equivalent under a declared notion of
+relevance?</strong></p>
+<hr />
+<h2 id="declared-meaning-and-the-semantic-lens">5. Declared Meaning and
+the Semantic Lens</h2>
+<p>A <strong>semantic lens</strong> is an explicit projection from a
+rich artifact into a reduced representation containing only
+invariant-relevant structure.</p>
+<p>A minimal characterization treats a semantic lens <strong>L</strong>
+as a triple:</p>
+<ul>
+<li><strong>E</strong> : Artifact -&gt; Features (extraction)</li>
+<li><strong>N</strong> : Features -&gt; Features (normalization)</li>
+<li><strong>C</strong> : Features -&gt; CanonicalForm
+(canonicalization)</li>
+</ul>
+<p>This decomposition is illustrative, not prescriptive. What matters is
+not the formalism, but that the projection is explicit, inspectable, and
+governed.</p>
+<p>The lens does not preserve everything. It enforces forgetting.
+Distinctions excluded by the lens are forbidden from relevance under
+that regime.</p>
+<hr />
+<h2 id="targeted-semantic-collapse">6. Targeted Semantic Collapse</h2>
+<p>Applying a semantic lens produces <strong>targeted semantic
+collapse</strong>.</p>
+<p>Surface variation is destroyed. Incidental structure is erased. Only
+declared invariants remain. Normalization is intentionally aggressive:
+sorting unordered sets, canonicalizing identifiers, stripping narrative,
+collapsing equivalent forms.</p>
+<p>After collapse, any remaining difference is semantically meaningful
+by construction.</p>
+<hr />
+<h2 id="hashing-as-equivalence-class-commitment">7. Hashing as
+Equivalence-Class Commitment</h2>
+<p>Once collapse is complete, hashing is applied.</p>
+<p>The resulting hash does not identify an object. It identifies
+<strong>membership in an equivalence class</strong> defined by the
+lens.</p>
+<p>All artifacts that project, normalize, and hash identically are
+semantically identical under that lens. The hash is a name for a
+semantic region, not a description of a thing.</p>
+<hr />
+<h2 id="semantic-hashes-as-admissibility-tokens">8. Semantic Hashes as
+Admissibility Tokens</h2>
+<p>Because semantic hashes identify equivalence classes, they function
+naturally as admissibility gates.</p>
+<p>Admissibility reduces to a simple check:</p>
+<p><em>Does this semantic hash belong to an allowed class?</em></p>
+<p>No re-interpretation is required. If the hash changes, admissibility
+fails. Refusal becomes mechanical rather than rhetorical.</p>
+<hr />
+<h2 id="drift-detection-without-re-reasoning">9. Drift Detection Without
+Re-Reasoning</h2>
+<p>Semantic hashing enables drift detection without re-evaluation.</p>
+<p>If the lens defines what must not change, any semantic drift
+manifests as a hash change. This exposes silent reinterpretation,
+gradual erosion, and authority laundering as state changes rather than
+arguments.</p>
+<p>For example:</p>
+<ul>
+<li>Policy v1 -&gt; v2: wording changes, semantic hash stable.</li>
+<li>Policy v2 -&gt; v3: wording unchanged, scope altered, semantic hash
+changes.</li>
+</ul>
+<p>Continuity claims are thus testable, not asserted.</p>
+<hr />
+<h2 id="temporal-anchoring-and-semantic-receipts">10. Temporal Anchoring
+and Semantic Receipts</h2>
+<p>A semantic hash anchors meaning in time. It asserts that a particular
+meaning existed, under a particular lens version, at a particular
+moment.</p>
+<p>Hashes are computed as:</p>
+<pre><code>H(Lens_ID, Lens_Version, Canonical_Form)</code></pre>
+<p>Lens evolution is therefore explicit. Old hashes remain valid under
+old regimes; new hashes signal declared change rather than silent
+drift.</p>
+<p>This yields <strong>semantic receipts</strong>: immutable records
+that prove what meaning existed when, without freezing future
+evolution.</p>
+<hr />
+<h2 id="practical-lens-examples">11. Practical Lens Examples</h2>
+<ul>
+<li><p><strong>Domain:</strong> Code patches<br />
+<strong>Lens Preserves:</strong> AST structure, control flow<br />
+<strong>Lens Discards:</strong> Whitespace, comments</p></li>
+<li><p><strong>Domain:</strong> Legal policy<br />
+<strong>Lens Preserves:</strong> Jurisdiction, authority, scope<br />
+<strong>Lens Discards:</strong> Narrative justification</p></li>
+<li><p><strong>Domain:</strong> Function signatures<br />
+<strong>Lens Preserves:</strong> Arity, types, effects<br />
+<strong>Lens Discards:</strong> Implementation details</p></li>
+<li><p><strong>Domain:</strong> Workflow definitions<br />
+<strong>Lens Preserves:</strong> State transitions<br />
+<strong>Lens Discards:</strong> UI layout, labeling</p></li>
+</ul>
+<p>These are not abstractions; they are explicit answers to the question
+<em>“what counts as the same thing here?”</em></p>
+<hr />
+<h2 id="relationship-to-mcir">12. Relationship to MCIR</h2>
+<p>Semantic hashing is a foundational primitive within MCIR-style
+governed systems.</p>
+<p>Laws, transitions, and receipts are each subject to semantic hashing
+under distinct lenses. Each lens defines what “the same law,” “the same
+move,” or “the same history” means. MCIR demonstrates that semantic
+hashing is operational, not theoretical: it enables admissibility,
+refusal, and governance without relying on narrative trust or model
+cognition.</p>
+<hr />
+<h2 id="failure-modes-and-limits">13. Failure Modes and Limits</h2>
+<p>Semantic hashing is not universal.</p>
+<p>Failure modes include:</p>
+<ul>
+<li>poorly chosen lenses that collapse too much or too little,</li>
+<li>unacknowledged lens drift,</li>
+<li>governance capture embedding biased invariants,</li>
+<li>adversarial exploitation of weak lenses,</li>
+<li>fragmentation into incompatible semantic regimes.</li>
+</ul>
+<p>These failures are visible by design. They surface as explicit
+changes in declared meaning rather than hidden reinterpretations. Lens
+contestation and forking are legitimate governance outcomes, not
+errors.</p>
+<hr />
+<h2 id="what-semantic-hashing-is-not">14. What Semantic Hashing Is
+Not</h2>
+<p>Semantic hashing does not determine truth, eliminate disagreement, or
+capture all nuance. It governs <strong>permission</strong>, not
+correctness.</p>
+<p>Learned or inferred lenses belong to a different regime with
+different guarantees. Semantic hashing, as defined here, requires lenses
+to be declared, not discovered.</p>
+<hr />
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Hashing has long protected data. Semantic hashing protects
+meaning.</p>
+<p>By forcing systems to declare what they are willing to treat as
+invariant - and enforcing that declaration mechanically - semantic
+hashing converts vague claims of continuity into executable commitments.
+It allows systems to say, precisely and without rhetoric, <em>nothing
+meaningful changed</em>, or to acknowledge, just as precisely, that it
+did.</p>
+<p>As systems increasingly act on language, policy, and intent, the
+ability to mechanize semantic sameness without re-interpretation becomes
+foundational.</p>
+<p>The hash is no longer a checksum of bytes. It is a commitment about
+meaning.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that hashing is conventionally understood as a
+cryptographic or engineering primitive: a deterministic function for
+integrity verification, deduplication, and tamper detection over
+concrete data. Its nearest external comparison fields are crypto,
+semantic, formal. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself.
+Formal vocabularies and graph links make commitments explicit but cannot
+by themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. Formal assurance remains relative
+to the encoded model, trusted base, and refinement chain; proof does not
+remove specification error or unmodeled environmental behavior. These
+limits are not generic disclaimers: they identify the assumptions that a
+later empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E6]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E7]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18500533">10.5281/zenodo.18500533</a></p>

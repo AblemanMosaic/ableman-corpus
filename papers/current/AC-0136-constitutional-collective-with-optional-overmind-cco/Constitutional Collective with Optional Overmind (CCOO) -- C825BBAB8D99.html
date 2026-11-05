@@ -1,0 +1,1767 @@
+<h1
+id="constitutional-collective-with-optional-overmind-ccoo">Constitutional
+Collective with Optional Overmind (CCOO)</h1>
+<h2
+id="a-constitutional-theory-of-distributed-coordination-emergent-agency-and-admissible-continuation">A
+Constitutional Theory of Distributed Coordination, Emergent Agency, and
+Admissible Continuation</h2>
+<h3
+id="the-swarm-need-not-know-itself-when-its-participants-know-what-may-continue.">The
+swarm need not know itself when its participants know what may
+continue.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper presents the Constitutional Collective with Optional
+Overmind (CCOO) framework and reports preliminary empirical evidence
+from its experimental program. The framework treats constitutions not as
+policies executed by agents but as generative operators determining
+which continuations are admissible. Coordination is the structure of the
+admissible continuation relation, not the optimization of trajectories
+within a state space.</p>
+<p>The framework’s central distinction is that the object of governance
+is <em>continuation</em>, not <em>solution</em>. Unlike constraint
+satisfaction systems that solve for admissible states, optimization
+systems that seek optimal trajectories, and viability theory that
+imposes fixed external constraints, CCOO governs admissible trajectories
+through constitutional operators that are endogenously generated,
+locally instantiated, and compositionally constrained.</p>
+<p>Within this framework, the paper formalizes a property the
+experimental program surfaced: <em>constitutional incompleteness</em>. A
+constitution is incomplete with respect to a task when a local amendment
+can reduce task cost without invoking centralized aggregation. This
+concept is the empirical lens through which the role of an Overmind is
+evaluated.</p>
+<p>On a stationary and single-drift toy substrate, the experiments
+report:</p>
+<ul>
+<li>Coherent threat-response coordination by a pure local constitutional
+collective without any central executive.</li>
+<li>An apparent Overmind advantage of 30-73% regret reduction that
+resolves, on inspection, into compression of redundant signal-bleed
+rather than generation of primary coordination.</li>
+<li>A node-local amendment (8-neighbor local-max) that captures
+approximately 101% of the Overmind’s gain and beats it in 56-80% of runs
+at the three thresholds tested – the Overmind’s advantage was
+constitutional incompleteness, internalizable downward by a richer local
+rule.</li>
+<li>Under a single-change-point intensity drift, the static node-local
+rule remains dominant; existing EMA memory does not recover; the
+Overmind benefit shrinks toward zero at well-calibrated thresholds.</li>
+</ul>
+<p>Within the recorded caveats (stationary and single-change-point
+substrate; toy environment; no consciousness claims;
+topology-conditional completeness), the Overmind is optional,
+non-necessary in the regimes tested, and internalizable downward by
+local constitutional refinement. The framework’s contribution is the
+lens that made this observable: continuation, not solution, is what is
+governed.</p>
+<blockquote>
+<p>Order corresponds to the structure of the admissible continuation
+relation rather than the optimization of trajectories within a state
+space.</p>
+</blockquote>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>The dominant question of collective systems has historically
+been:</p>
+<blockquote>
+<p>How should a coordinator organize a population?</p>
+</blockquote>
+<p>CCOO begins elsewhere.</p>
+<p>It asks:</p>
+<blockquote>
+<p>What if the coordinator is not fundamental?</p>
+</blockquote>
+<p>Across nature and engineering, coherent behavior routinely appears
+without centralized planners:</p>
+<ul>
+<li>ant colonies,</li>
+<li>immune systems,</li>
+<li>plant signaling networks,</li>
+<li>microbial ecologies,</li>
+<li>markets,</li>
+<li>routing protocols,</li>
+<li>distributed consensus systems.</li>
+</ul>
+<p>These systems frequently exhibit coordinated behavior despite
+possessing no global observer and no executive self-model.</p>
+<p>Traditional explanations often describe such phenomena as
+emergence.</p>
+<p>CCOO attempts to describe the mechanism beneath emergence.</p>
+<p>The central claim is simple:</p>
+<blockquote>
+<p>Collective order arises when participation itself becomes
+constitutionally governed.</p>
+</blockquote>
+<hr />
+<h2 id="the-constitutional-inversion">2. The Constitutional
+Inversion</h2>
+<p>Most architectures assume:</p>
+<pre class="text"><code>Perception
+    |
+Reasoning
+    |
+Coordinator
+    |
+Action</code></pre>
+<p>Even decentralized systems frequently hide a coordinator implicitly
+within optimization procedures, reward functions, or planning
+layers.</p>
+<p>CCOO inverts this hierarchy.</p>
+<pre class="text"><code>Constitution
+      |
+Admissible Continuation
+      |
+Node Participation
+      |
+Collective Dynamics
+      |
+(Optional Overmind)
+      |
+Action</code></pre>
+<p>The constitution is not a policy.</p>
+<p>The constitution is not a planner.</p>
+<p>The constitution is a generative operator defining which
+continuations remain admissible.</p>
+<p>Nodes do not consult the constitution.</p>
+<p>Nodes instantiate it.</p>
+<hr />
+<h2 id="constitutional-state-structure">3. Constitutional State
+Structure</h2>
+<p>Let <span class="math inline"><em>S</em></span> denote the global
+state space.</p>
+<p>CCOO assumes factorization:</p>
+<p><span class="math display">$$
+S=\prod_{i=1}^{n}S_i
+$$</span></p>
+<p>with projection operators:</p>
+<p><span
+class="math display"><em>π</em><sub><em>i</em></sub> : <em>S</em> → <em>S</em><sub><em>i</em></sub></span></p>
+<p>mapping global states to node-local states.</p>
+<p>Time is indexed discretely.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>s</em><sub><em>t</em></sub> ∈ <em>S</em></span></p>
+<p>denote system state at time <span
+class="math inline"><em>t</em></span>.</p>
+<p>Raw continuation is defined by:</p>
+<p><span
+class="math display"><em>F</em><sub><em>t</em></sub> ⊆ <em>S</em> × <em>S</em>.</span></p>
+<p>The global constitutional admissibility relation is:</p>
+<p><span
+class="math display"><em>A</em><sub><em>t</em></sub> ⊆ <em>F</em><sub><em>t</em></sub>.</span></p>
+<p>A continuation is admissible when:</p>
+<p><span
+class="math display">(<em>s</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>) ∈ <em>A</em><sub><em>t</em></sub>.</span></p>
+<p>Unlike constraint satisfaction systems, which solve for states:</p>
+<p><span
+class="math display"><em>s</em><sup>*</sup> ∈ <em>S</em>,</span></p>
+<p>CCOO governs admissible trajectories:</p>
+<p><span
+class="math display">(<em>s</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>) ∈ <em>A</em><sub><em>t</em></sub>  ∀<em>t</em>.</span></p>
+<p>The object of governance is therefore continuation rather than
+solution.</p>
+<p>CCOO differs from fixed viability theory and constrained dynamical
+systems in that admissibility is endogenously generated, locally
+instantiated, and compositionally constrained rather than externally
+specified as a fixed viability kernel.</p>
+<p>This three-part distinction is the novelty firewall against three
+nearby formalisms. <strong>Against viability theory</strong>: viability
+kernels are typically treated here as externally specified viability
+constraints on a dynamical system; CCOO’s admissibility relation is
+generated by constitutional operators carried by the participants
+themselves and may change as constitutions evolve (Section 13).
+<strong>Against distributed constraint optimization (DCOP)</strong>:
+DCOP seeks assignments that optimize an objective under distributed
+constraints; CCOO requires no scalar objective and treats the question
+“what may continue” as primitive rather than derivative of “what
+maximizes reward.” <strong>Against constrained dynamical
+systems</strong>: constrained dynamical systems impose constraints from
+outside the system’s dynamics; CCOO’s constraints are compositional in
+the sense of Section 7, generated by local node operators and combined
+through an explicit interaction graph rather than imposed globally.
+Whenever CCOO is described in subsequent sections, these three contrasts
+are what distinguish it from the nearest existing formalism in each
+direction.</p>
+<hr />
+<h2 id="constitutional-continuation">4. Constitutional Continuation</h2>
+<p>CCOO introduces a constitutional operator:</p>
+<p><span
+class="math display"><em>C</em> : (<em>S</em>, <em>H</em>, <em>Θ</em>) → 𝒫(<em>S</em> × <em>S</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>S</em></span> is the current
+state,</li>
+<li><span class="math inline"><em>H</em></span> is constitutional
+history,</li>
+<li><span class="math inline"><em>Θ</em></span> is constitutional
+parameterization,</li>
+<li><span class="math inline">𝒫</span> denotes the power set.</li>
+</ul>
+<p>Then:</p>
+<p><span
+class="math display"><em>A</em><sub><em>t</em></sub> = <em>C</em>(<em>s</em><sub><em>t</em></sub>, <em>h</em><sub><em>t</em></sub>, <em>θ</em><sub><em>t</em></sub>).</span></p>
+<p>To preserve locality and prevent collapse into replay-based
+governance, history is constrained.</p>
+<p>Each node maintains bounded history:</p>
+<p><span
+class="math display"><em>h</em><sub><em>i</em></sub> ∈ <em>H</em><sub><em>i</em></sub><sup>(<em>k</em>)</sup></span></p>
+<p>or equivalently a sufficient statistic:</p>
+<p><span
+class="math display"><em>σ</em><sub><em>i</em></sub> = <em>Σ</em>(<em>h</em><sub><em>i</em></sub>).</span></p>
+<p>The sufficient statistic is bounded:</p>
+<p><span
+class="math display">|<em>σ</em><sub><em>i</em></sub>| ≤ <em>c</em></span></p>
+<p>and non-invertible:</p>
+<p><span
+class="math display"><em>Σ</em><sup>−1</sup>(<em>σ</em><sub><em>i</em></sub>)</span></p>
+<p>contains multiple possible histories.</p>
+<p>Thus <span class="math inline"><em>σ</em><sub><em>i</em></sub></span>
+cannot reconstruct the full trajectory.</p>
+<p>Constitutions may therefore be state-dependent, history-dependent,
+and amendable without requiring unbounded replay of system history.</p>
+<p>Admissibility is not required to be derivable from scalar
+optimization.</p>
+<p>In particular, CCOO does not require existence of a global
+objective:</p>
+<p><span class="math display"><em>U</em> : <em>S</em> → ℝ</span></p>
+<p>such that admissible transitions are exactly those that maximize
+<span class="math inline"><em>U</em></span>.</p>
+<p>Transitions outside <span
+class="math inline"><em>A</em><sub><em>t</em></sub></span> are not
+prohibited.</p>
+<p>They are constitutionally undefined.</p>
+<p>This distinction is fundamental.</p>
+<p>Traditional systems frequently model failure as a state.</p>
+<p>CCOO models failure as the withdrawal of admissible continuation
+itself.</p>
+<p>Order therefore emerges through admissibility rather than
+enforcement.</p>
+<hr />
+<h3 id="constitutional-execution-semantics">5. Constitutional Execution
+Semantics</h3>
+<p>The admissibility relation induces a partial dynamical system. Let
+<span
+class="math inline">(<em>S</em>, <em>A</em><sub><em>t</em></sub>)</span>
+denote the constitutional transition structure at time <span
+class="math inline"><em>t</em></span>. The semantic model treats a
+proposed transition outside <span
+class="math inline"><em>A</em><sub><em>t</em></sub></span> as
+constitutionally undefined. This does not mean the physical,
+institutional, or software substrate is incapable of producing it. A
+realization enforces the constitutional boundary only when an execution
+mediator actually refuses, contains, repairs, or terminates the proposed
+effect.</p>
+<p>For a current state <span
+class="math inline"><em>s</em><sub><em>t</em></sub></span>, let the
+typed proposal resolver be</p>
+<p><span
+class="math display"><em>R</em><sub><em>t</em></sub> : <em>S</em> → <em>S</em> ∪ {⊥},</span></p>
+<p>where <span class="math inline">⊥</span> denotes constitutional
+non-continuation. Extend it by definition with <span
+class="math inline"><em>R</em><sub><em>t</em></sub>(⊥) = ⊥</span> when
+idempotence is discussed. A successful result must satisfy</p>
+<p><span
+class="math display"><em>R</em><sub><em>t</em></sub>(<em>s</em><sub><em>t</em></sub>) = <em>s</em><sub><em>t</em> + 1</sub> ⇒ (<em>s</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>) ∈ <em>A</em><sub><em>t</em></sub>,</span></p>
+<p>and when no admissible continuation is available it returns <span
+class="math inline">⊥</span>. A concrete resolver may project to an
+admissible successor, invoke declared repair, escalate, or terminate,
+but each path requires a visible authority and evidence contract.</p>
+<p>Local candidate resolvers do not compose by an unqualified Cartesian
+product. They propose a tuple that must also satisfy the compatibility
+relation:</p>
+<p><span class="math display">$$
+R_t(s_t)=
+\begin{cases}
+s' &amp; \text{if }\forall i,\ s_i'=R_{i,t}(s_{i,t})\ \text{and
+}(s_t,s')\in A_t,\\
+\bot &amp; \text{otherwise.}
+\end{cases}
+$$</span></p>
+<p>The resolver may be idempotent on its extended codomain,</p>
+<p><span
+class="math display"><em>R</em><sub><em>t</em></sub>(<em>R</em><sub><em>t</em></sub>(<em>s</em>)) = <em>R</em><sub><em>t</em></sub>(<em>s</em>),</span></p>
+<p>but idempotence, locality, and admissibility do not by themselves
+prove that hidden optimization is absent. That stronger claim requires
+inspection of the resolver, dependencies, information flows, objectives,
+and receipts.</p>
+<h2 id="nodes-as-constitutional-participants">6. Nodes as Constitutional
+Participants</h2>
+<p>Nodes possess:</p>
+<ul>
+<li>local observations,</li>
+<li>local state,</li>
+<li>communication channels,</li>
+<li>constitutional constraints.</li>
+</ul>
+<p>Nodes need not possess:</p>
+<ul>
+<li>global awareness,</li>
+<li>centralized authority,</li>
+<li>self-models,</li>
+<li>representations of the collective.</li>
+</ul>
+<p>Each node participates through local admissibility evaluation.</p>
+<p>Formally:</p>
+<p><span
+class="math display"><em>P</em><sub><em>i</em></sub> : <em>O</em><sub><em>i</em></sub> → <em>T</em><sub><em>i</em></sub>.</span></p>
+<p>Node-local constitutional operators satisfy:</p>
+<p><span
+class="math display"><em>C</em><sub><em>i</em></sub> : (<em>S</em><sub><em>i</em></sub>, <em>H</em><sub><em>i</em></sub>, <em>Θ</em><sub><em>i</em></sub>) → 𝒫(<em>S</em><sub><em>i</em></sub> × <em>S</em><sub><em>i</em></sub>).</span></p>
+<p>Locality requires <span
+class="math inline"><em>C</em><sub><em>i</em></sub></span> to depend
+only on:</p>
+<ul>
+<li><span
+class="math inline"><em>π</em><sub><em>i</em></sub>(<em>s</em>)</span>,</li>
+<li>bounded neighborhood state,</li>
+<li><span class="math inline"><em>h</em><sub><em>i</em></sub></span> or
+<span class="math inline"><em>σ</em><sub><em>i</em></sub></span>.</li>
+</ul>
+<p>Local admissibility becomes:</p>
+<p><span
+class="math display"><em>A</em><sub><em>i</em>, <em>t</em></sub> = <em>C</em><sub><em>i</em></sub>(<em>s</em><sub><em>i</em>, <em>t</em></sub>, <em>h</em><sub><em>i</em>, <em>t</em></sub>, <em>θ</em><sub><em>i</em>, <em>t</em></sub>).</span></p>
+<p>Collective behavior emerges through interaction among admissible
+local continuations.</p>
+<hr />
+<h2 id="composition-of-admissibility">7. Composition of
+Admissibility</h2>
+<p>A central challenge for constitutional collectives is the composition
+of local admissibility into globally coherent continuation.</p>
+<p>Local admissibility alone is insufficient.</p>
+<p>Distinct nodes may independently authorize transitions that are
+mutually incompatible.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>G</em> = (<em>V</em>, <em>E</em>)</span></p>
+<p>denote the constitutional interaction graph.</p>
+<p>For each local admissibility relation:</p>
+<p><span
+class="math display"><em>A</em><sub><em>i</em>, <em>t</em></sub> ⊆ <em>S</em><sub><em>i</em></sub> × <em>S</em><sub><em>i</em></sub>,</span></p>
+<p>define the cylinder lift:</p>
+<p><span
+class="math display"><em>A</em><sub><em>i</em>, <em>t</em></sub><sup>↑</sup> = {(<em>s</em>, <em>s</em><sup>′</sup>) ∈ <em>S</em> × <em>S</em> ∣ (<em>s</em><sub><em>i</em></sub>, <em>s</em><sub><em>i</em></sub><sup>′</sup>) ∈ <em>A</em><sub><em>i</em>, <em>t</em></sub>}.</span></p>
+<p>CCOO introduces a compatibility relation:</p>
+<p><span
+class="math display"><em>Φ</em><sub><em>t</em></sub>(<em>s</em>, <em>s</em><sup>′</sup>) = ⋀<sub>(<em>i</em>, <em>j</em>) ∈ <em>E</em></sub><em>ϕ</em><sub><em>i</em><em>j</em>, <em>t</em></sub>(<em>s</em><sub><em>i</em></sub>, <em>s</em><sub><em>j</em></sub>, <em>s</em><sub><em>i</em></sub><sup>′</sup>, <em>s</em><sub><em>j</em></sub><sup>′</sup>).</span></p>
+<p>Global admissibility is defined by:</p>
+<p><span
+class="math display"><em>A</em><sub><em>t</em></sub> = (⋂<sub><em>i</em></sub><em>A</em><sub><em>i</em>, <em>t</em></sub><sup>↑</sup>) ∩ <em>Φ</em><sub><em>t</em></sub>.</span></p>
+<p>Equivalently:</p>
+<p><span
+class="math display">(<em>s</em>, <em>s</em><sup>′</sup>) ∈ <em>A</em><sub><em>t</em></sub> ⇔ ∀<em>i</em>, (<em>s</em><sub><em>i</em></sub>, <em>s</em><sub><em>i</em></sub><sup>′</sup>) ∈ <em>A</em><sub><em>i</em>, <em>t</em></sub> ∧ <em>Φ</em><sub><em>t</em></sub>(<em>s</em>, <em>s</em><sup>′</sup>).</span></p>
+<p>Compatibility therefore factorizes over local interactions rather
+than arbitrary global logic.</p>
+<p>When <span class="math inline"><em>G</em></span> contains cycles,
+pairwise compatibility may not imply global compatibility. CCOO
+therefore requires either:</p>
+<ul>
+<li>acyclic interaction structure,</li>
+<li>junction-tree-style consistency,</li>
+<li>or an explicit global consistency condition on <span
+class="math inline"><em>Φ</em><sub><em>t</em></sub></span>.</li>
+</ul>
+<p>This preserves the distributed character of constitutional
+participation without silently collapsing the model into centralized
+admissibility.</p>
+<hr />
+<h2 id="viability-conditions">8. Viability Conditions</h2>
+<p>Not every constitution admits continuation.</p>
+<p>CCOO therefore introduces viability requirements.</p>
+<p>Strong viability:</p>
+<p><span
+class="math display">∀<em>s</em> ∈ <em>S</em>, ∃<em>s</em><sup>′</sup>
+such that
+(<em>s</em>, <em>s</em><sup>′</sup>) ∈ <em>A</em><sub><em>t</em></sub>.</span></p>
+<p>A weaker condition requires existence of at least one infinite
+admissible path:</p>
+<p><span
+class="math display">(<em>s</em><sub>0</sub>, <em>s</em><sub>1</sub>, <em>s</em><sub>2</sub>, …)</span></p>
+<p>such that:</p>
+<p><span
+class="math display">(<em>s</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>) ∈ <em>A</em><sub><em>t</em></sub>  ∀<em>t</em>.</span></p>
+<p>Constitutions violating both conditions are constitutionally
+degenerate.</p>
+<p>A local deadlock is distinct from global collapse.</p>
+<p>Deadlock occurs when:</p>
+<p><span class="math display">∃<em>s</em> ∈ <em>S</em> such that
+<em>s</em><sup>′</sup> ∣ (<em>s</em>, <em>s</em><sup>′</sup>) ∈ <em>A</em><sub><em>t</em></sub> = ∅.</span></p>
+<p>Global collapse occurs when:</p>
+<p><span
+class="math display"><em>A</em><sub><em>t</em></sub> = ∅.</span></p>
+<p>Deadlock may be local, reachable, and repairable.</p>
+<p>Collapse means the admissibility relation itself no longer supports
+continuation.</p>
+<hr />
+<h2 id="continuation-topology">9. Continuation Topology</h2>
+<p>To support robustness and stability analysis, CCOO equips the state
+space with additional structure.</p>
+<p>Let:</p>
+<p><span class="math display">(<em>S</em>, <em>d</em>)</span></p>
+<p>or equivalently:</p>
+<p><span class="math display">(<em>S</em>, <em>τ</em>)</span></p>
+<p>represent a metric or topological state space.</p>
+<p>The admissibility relation:</p>
+<p><span
+class="math display"><em>A</em><sub><em>t</em></sub> ⊆ <em>S</em> × <em>S</em></span></p>
+<p>should be closed under the induced topology.</p>
+<p>Constitutional operators should satisfy perturbation robustness.</p>
+<p>If:</p>
+<p><span
+class="math display">(<em>s</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>) ∈ <em>A</em><sub><em>t</em></sub></span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>d</em>(<em>s</em><sub><em>t</em></sub>, <em>s̃</em><sub><em>t</em></sub>) &lt; <em>ϵ</em>,</span></p>
+<p>then there should exist:</p>
+<p><span
+class="math display"><em>s̃</em><sub><em>t</em> + 1</sub></span></p>
+<p>such that:</p>
+<p><span
+class="math display">(<em>s̃</em><sub><em>t</em></sub>, <em>s̃</em><sub><em>t</em> + 1</sub>) ∈ <em>A</em><sub><em>t</em></sub></span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>d</em>(<em>s</em><sub><em>t</em> + 1</sub>, <em>s̃</em><sub><em>t</em> + 1</sub>) &lt; <em>η</em>.</span></p>
+<p>This expresses an upper-hemicontinuity-style constraint on
+constitutional continuation.</p>
+<p>Small perturbations in state should not induce discontinuous collapse
+of admissibility.</p>
+<p>This provides a continuity foundation for stability analysis and
+constitutional amendment.</p>
+<hr />
+<h3 id="meaning-binding-as-structural-participation">10. Meaning-Binding
+as Structural Participation</h3>
+<p>CCOO uses a bounded operational profile from the corpus’s
+meaning-binding family:</p>
+<blockquote>
+<p>A distinction is continuation-relevant when it changes the admissible
+continuation relation.</p>
+</blockquote>
+<p>Let <span class="math inline"><em>Δ</em> : <em>S</em> → {0, 1}</span>
+represent a distinction. Its admissibility sensitivity is witnessed
+when</p>
+<p><span
+class="math display"><em>A</em><sub><em>Δ</em>, <em>t</em></sub>△<em>A</em><sub><em>t</em></sub> ≠ ∅,</span></p>
+<p>or, relative to a declared measure <span
+class="math inline"><em>μ</em></span>,</p>
+<p><span
+class="math display"><em>μ</em>(<em>A</em><sub><em>Δ</em>, <em>t</em></sub>△<em>A</em><sub><em>t</em></sub>) &gt; 0.</span></p>
+<p>This supports a claim about <strong>causal or constitutional
+relevance</strong>: the distinction participates in selecting what may
+continue. It does not, without additional criteria, settle whether the
+distinction carries semantic content, is understood by a subject, has
+legitimate authority, or has phenomenal character. Plants, immune cells,
+routing nodes, and robots can therefore instantiate this operational
+profile without the paper claiming that all instantiate one
+undifferentiated kind of human-like meaning.</p>
+<p>The distinction matters because a collective can coordinate through
+distributed continuation-relevance without a centralized representation.
+The stronger philosophical identity between this profile and meaning
+remains an author claim and an empirical and conceptual research
+question.</p>
+<h3 id="constitutional-incompleteness">11. Constitutional
+Incompleteness</h3>
+<p>The experimental program surfaced a bounded comparison concept: a
+constitution may be viable and coherent yet leave capability that a
+richer local rule could capture without central aggregation.</p>
+<h4 id="definition">Definition</h4>
+<p>Given a task <span class="math inline"><em>τ</em></span>, an
+environment and topology <span class="math inline"><em>e</em></span>, an
+evaluation contract <span class="math inline"><em>χ</em></span>, and a
+declared local amendment class <span class="math inline">ℒ</span>, a
+constitution <span class="math inline"><em>C</em></span> is
+<strong>witnessed incomplete</strong> when there exists <span
+class="math inline"><em>C</em><sup>′</sup> ∈ ℒ</span> such that:</p>
+<ol type="1">
+<li><span class="math inline"><em>C</em><sup>′</sup></span> reduces the
+declared task cost relative to <span
+class="math inline"><em>C</em></span> under <span
+class="math inline"><em>χ</em></span>;</li>
+<li><span class="math inline"><em>C</em><sup>′</sup></span> remains
+within the declared locality, memory, information, and authority
+bounds;</li>
+<li><span class="math inline"><em>C</em><sup>′</sup></span> uses no
+additional global state or central aggregation forbidden by the
+comparison contract; and</li>
+<li>the result is supported by reproducible evidence within the stated
+seed, parameter, and topology scope.</li>
+</ol>
+<p>A recovered local amendment is a positive witness of incompleteness
+within that scope. The converse is not available by failed search alone.
+If no amendment is found, the warranted result is only:</p>
+<blockquote>
+<p>No improving amendment was found within amendment class <span
+class="math inline">ℒ</span>, search procedure <span
+class="math inline"><em>q</em></span>, budget <span
+class="math inline"><em>b</em></span>, environment <span
+class="math inline"><em>e</em></span>, and evidence contract <span
+class="math inline"><em>χ</em></span>.</p>
+</blockquote>
+<p>It does not establish irreducible centralization or global
+constitutional completeness. Such a closure claim would require an
+exhaustive or otherwise justified completeness result for the declared
+amendment space.</p>
+<h4 id="topology-and-comparison-dependence">Topology and Comparison
+Dependence</h4>
+<p>Completeness is relative to the task, topology, observation model,
+cost, admissibility regime, amendment class, and search budget. A
+constitution can be witnessed incomplete for one profile and unresolved
+for another. The paper’s local-max result is therefore evidence that one
+measured Overmind advantage was internalizable within the tested
+topology; it is not a theorem that all Overmind functions are locally
+internalizable.</p>
+<h3 id="the-optional-overmind">12. The Optional Overmind</h3>
+<p>The Overmind is modeled as an optional proposing and parameterization
+role, not as a sovereign. Formally, <span
+class="math inline"><em>O</em> : <em>S</em> → <em>Θ</em></span> may
+propose <span
+class="math inline"><em>θ</em><sub><em>t</em> + 1</sub></span>, but a
+proposal acquires effect only through a declared delegation and
+amendment path:</p>
+<p><span
+class="math display"><em>θ</em><sub><em>t</em> + 1</sub> = Admit<sub><em>D</em>, <em>A</em>, <em>E</em></sub>(<em>O</em>(<em>s</em><sub><em>t</em></sub>), <em>θ</em><sub><em>t</em></sub>),</span></p>
+<p>where <span class="math inline"><em>D</em></span> is delegated scope,
+<span class="math inline"><em>A</em></span> the applicable authority and
+admissibility contract, and <span class="math inline"><em>E</em></span>
+the evidence obligation. Rate limits such as</p>
+<p><span
+class="math display"><em>d</em><sub><em>Θ</em></sub>(<em>θ</em><sub><em>t</em></sub>, <em>θ</em><sub><em>t</em> + 1</sub>) ≤ <em>ϵ</em></span></p>
+<p>are useful but insufficient. Non-sovereignty also requires
+transparent proposal identity, bounded jurisdiction, local refusal where
+the constitution grants it, revocation or exit, no unilateral
+manufacture of standing, auditable information access, and recovery from
+bad amendments.</p>
+<p>The statement that an Overmind changes parameters rather than state
+does not by itself remove control: changing future admissibility can
+indirectly control future state. The authority surface must therefore
+govern both direct effects and parameter-mediated effects.</p>
+<p>Within the source-reported toy profile, the tested central
+contribution appears optional because a named local amendment matched or
+exceeded its dominant benefit. Outside that profile, optionality remains
+a hypothesis to test. Claims that an Overmind may emerge or disappear
+without invalidating the collective also require explicit
+collective-identity and continuity criteria.</p>
+<h3 id="constitutional-evolution">13. Constitutional Evolution</h3>
+<p>Let <span class="math inline">𝒞</span> be a space of constitutions
+and let <span
+class="math inline"><em>M</em><sub><em>t</em> → <em>t</em> + 1</sub></span>
+be a declared migration relation from states governed by <span
+class="math inline"><em>C</em><sub><em>t</em></sub></span> to states
+governed by <span
+class="math inline"><em>C</em><sub><em>t</em> + 1</sub></span>. Mere
+nonempty overlap <span
+class="math inline"><em>A</em><sub><em>t</em></sub> ∩ <em>A</em><sub><em>t</em> + 1</sub> ≠ ∅</span>
+is too weak: the shared transition may be unreachable from the current
+system, may strand protected obligations, or may not support
+rollback.</p>
+<p>An amendment candidate should instead state at least:</p>
+<ol type="1">
+<li>the authority and jurisdiction that may amend <span
+class="math inline"><em>C</em><sub><em>t</em></sub></span>;</li>
+<li>preserved invariants and obligations;</li>
+<li>a migration relation for reachable current states;</li>
+<li>continued or explicitly terminated admissible paths;</li>
+<li>evidence, rollback, recovery, and failure semantics; and</li>
+<li>a bound such as <span
+class="math inline"><em>d</em><sub>𝒞</sub>(<em>C</em><sub><em>t</em></sub>, <em>C</em><sub><em>t</em> + 1</sub>) ≤ <em>ϵ</em><sub>𝒞</sub></span>
+when the metric has operational meaning.</li>
+</ol>
+<p>The amendment is continuity-preserving only within the states and
+obligations covered by that contract. Constitutional evolution is
+therefore a governed bridge between revisions, not simply motion through
+a metric space of constitutions.</p>
+<h3 id="proposition-candidates-and-proof-obligations">14. Proposition
+Candidates and Proof Obligations</h3>
+<h4
+id="proposition-candidate-1-global-continuation-under-join-consistent-local-admissibility">Proposition
+Candidate 1: Global Continuation under Join-Consistent Local
+Admissibility</h4>
+<p>For a fixed current state <span
+class="math inline"><em>s</em></span>, define each node’s candidate
+successor set</p>
+<p><span
+class="math display"><em>D</em><sub><em>i</em></sub>(<em>s</em>) = {<em>s</em><sub><em>i</em></sub><sup>′</sup> ∣ (<em>s</em><sub><em>i</em></sub>, <em>s</em><sub><em>i</em></sub><sup>′</sup>) ∈ <em>A</em><sub><em>i</em>, <em>t</em></sub>}.</span></p>
+<p>Nonempty <span
+class="math inline"><em>D</em><sub><em>i</em></sub>(<em>s</em>)</span>
+and separate edge-wise satisfiability are not enough to imply one
+globally compatible tuple: the assignments that satisfy different
+incident edges can conflict. A sufficient theorem therefore needs a
+stronger condition, such as a join tree whose cluster relations are
+nonempty and pairwise consistent on every separator, or an explicit
+globally consistent relation <span
+class="math inline"><em>Φ</em><sub><em>t</em></sub></span> with</p>
+<p><span
+class="math display">(∏<sub><em>i</em></sub><em>D</em><sub><em>i</em></sub>(<em>s</em>)) ∩ <em>Φ</em><sub><em>t</em></sub>(<em>s</em>, ⋅) ≠ ∅.</span></p>
+<p>Under that condition, a globally admissible successor exists by
+construction. Establishing weaker sufficient assumptions, computational
+complexity, and distributed witness construction remains a proof
+obligation.</p>
+<h4
+id="proposition-candidate-2-robust-retention-of-a-declared-invariant-set">Proposition
+Candidate 2: Robust Retention of a Declared Invariant Set</h4>
+<p>Closedness of <span class="math inline"><em>K</em></span> and <span
+class="math inline"><em>A</em><sub><em>t</em></sub></span>, pointwise
+viability in <span class="math inline"><em>K</em></span>, and an
+informal upper-hemicontinuity-style condition do not alone establish
+trajectory-level stability under repeated perturbation. A valid result
+must quantify perturbations and require robust controlled invariance.
+One possible assumption is that there exist <span
+class="math inline"><em>ϵ</em>, <em>η</em> &gt; 0</span> and a selection
+or resolver <span
+class="math inline"><em>r</em><sub><em>t</em></sub></span> such that for
+every <span class="math inline"><em>s</em></span> within <span
+class="math inline"><em>ϵ</em></span> of <span
+class="math inline"><em>K</em></span> and every allowed disturbance,
+<span
+class="math inline"><em>r</em><sub><em>t</em></sub>(<em>s</em>)</span>
+is admissible and remains within <span
+class="math inline"><em>η</em></span> of <span
+class="math inline"><em>K</em></span>, with a recurrence bound that
+prevents error accumulation.</p>
+<p>Under a specified metric, disturbance model, time horizon, and
+recurrence inequality, a stability theorem may then be proved. Until
+those objects and bounds are supplied, this section records proposition
+candidates rather than established theorems.</p>
+<h2
+id="bounded-collective-architecture-and-experimental-subject">Bounded
+Collective Architecture and Experimental Subject</h2>
+<p>The completed P1 corpus clarifies CCOO’s role: it is a
+<strong>bounded collective architecture and experimental
+subject</strong> for questions about constitutional continuation and
+optional higher-order coordination. It is not the general theory of
+coordinator optionality, continuation, split authority, or governance
+incentives.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Optional
+Coordinator</em><br />
+<strong>Supplies:</strong> Function decomposition, substitution,
+displaced burden, and relative-necessity tests.<br />
+<strong>CCOO boundary:</strong> CCOO supplies one architecture and
+experiment to which those tests can be applied.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Continuation
+Primacy</em><br />
+<strong>Supplies:</strong> Reachable, admissible, viable, and terminal
+continuation vocabulary.<br />
+<strong>CCOO boundary:</strong> CCOO instantiates a continuation model;
+its results do not establish the general thesis.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Split-Authority AI
+Coordination</em><br />
+<strong>Supplies:</strong> Separation of proposal, evaluation,
+authorization, execution, and review powers.<br />
+<strong>CCOO boundary:</strong> An optional Overmind can still conceal
+concentrated authority unless powers are decomposed.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Incentive
+Engineering</em><br />
+<strong>Supplies:</strong> Analysis of incentives created by
+recognition, evidence, and institutional structure.<br />
+<strong>CCOO boundary:</strong> Lower regret or coordination cost does
+not establish aligned incentives or legitimacy.</p></li>
+</ul>
+<p>A CCOO experimental profile should bind:</p>
+<p><span
+class="math display"><em>Q</em> = (<em>N</em>, <em>K</em>, <em>O</em>, <em>A</em>, <em>T</em>, <em>R</em>, <em>E</em>),</span></p>
+<p>where <span class="math inline"><em>N</em></span> is the participant
+set and topology, <span class="math inline"><em>K</em></span> the local
+constitutional operators, <span class="math inline"><em>O</em></span>
+the optional Overmind function bundle, <span
+class="math inline"><em>A</em></span> the authority distribution, <span
+class="math inline"><em>T</em></span> the task and environment, <span
+class="math inline"><em>R</em></span> the resource and communication
+regime, and <span class="math inline"><em>E</em></span> the evaluation
+and evidence protocol. Changing any element may produce a different
+experiment rather than a replication.</p>
+<p>Corpus integration strengthens three boundaries. First, endogenous
+amendment does not self-legitimate: the authority to amend and the
+rights of affected participants must be specified. Second, an Overmind
+may be computationally optional while its information, memory,
+arbitration, or accountability functions remain necessary and displaced.
+Third, a toy result supports only the named topology, drift regime,
+objective, baselines, and measurement procedure.</p>
+<p>The universal GSM can type <code>PARTICIPATES_IN</code>,
+<code>GOVERNED_BY_LOCAL_OPERATOR</code>,<br />
+<code>COORDINATED_BY</code>, <code>OPTIONALLY_AGGREGATED_BY</code>,
+<code>AMENDED_BY</code>, <code>DISPLACES_FUNCTION_TO</code>,<br />
+<code>MEASURED_UNDER</code>,<br />
+and <code>CONTESTED_BY</code>. The CCOO identity should remain separate
+from experimental runs, parameter configurations, result records, and
+broader collective-governance concepts.</p>
+<p>This integration establishes four editorial commitments: adopt
+bounded collective architecture and experimental subject as CCOO’s
+official corpus role; adopt the seven-part experimental profile; require
+authority and rights to accompany endogenous amendment claims; and route
+general coordinator-necessity claims to <em>The Optional
+Coordinator</em> rather than repeating them here.</p>
+<h2 id="experimental-lineage-and-cross-domain-restraint">Experimental
+Lineage and Cross-Domain Restraint</h2>
+<p>The fixed-seed comparison with Digital Gold, Dynatology, the
+Epistemic Lineage Engine, and the seventeen-system software evidence
+study strengthens CCOO as an experimental subject rather than a
+universal collective theory:</p>
+<p><span class="math display">$$
+\begin{aligned}
+X= (&amp;architecture, configuration, run, environment, seed, \\
+&amp;authority\_distribution, measurements, artifacts, \\
+&amp;lineage, interpretation, standing, remainder)
+\end{aligned}.
+$$</span></p>
+<p>Dynatology supplies a typed possibility, admissibility, path,
+refusal, realization, and viability grammar for the experiment. The
+Epistemic Lineage Engine should bind configuration, code and artifact
+heads, environment, operations, observations, branches, interpretations,
+replay class, and revision so later results cannot silently replace
+predecessors.</p>
+<p>Digital Gold is a distinct monetary-automaton thesis. Similar
+distributed or constitutional language does not transfer consensus,
+security, identity, economic, or experimental evidence. The
+seventeen-system study is a different evidence object about existing
+software structures and also has no direct bearing on CCOO
+performance.</p>
+<p>Those two nonrelations are part of the result. Randomized adjacency
+should expose false analogy as well as useful interface. The universal
+GSM can type<br />
+<code>INSTANTIATES_DYNATOLOGICAL_EXPERIMENT</code>,<br />
+<code>RECORDED_AS_LINEAGE_EPISODE</code>,
+<code>BINDS_RUN_CONFIGURATION</code>,
+<code>RETAINS_INTERPRETIVE_REMAINDER</code>,<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_MONETARY_AUTOMATON</code>,<br />
+and<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_SOFTWARE_CORPUS_</code><br />
+<code>STUDY</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the run-level experimental object; bind CCOO results to exact epistemic
+lineage; preserve the Dynatology interface as a typed profile; and
+record nonrelations to Digital Gold and the software evidence study.</p>
+<h2 id="experimental-program">15. Experimental Program</h2>
+<p>The CCOO research program proceeds through five branches.</p>
+<h3 id="branch-1---overmind-characterization">Branch 1 - Overmind
+Characterization</h3>
+<p>Conditions:</p>
+<ul>
+<li>Stateless aggregation</li>
+<li>Memory-bearing aggregation</li>
+<li>Performance-monitoring aggregation</li>
+</ul>
+<p>Question:</p>
+<blockquote>
+<p>What capabilities does an increasingly sophisticated Overmind
+provide?</p>
+</blockquote>
+<h3 id="branch-2---constitutional-collective">Branch 2 - Constitutional
+Collective</h3>
+<p>Conditions:</p>
+<ul>
+<li>No Overmind</li>
+<li>Local constitutional participation</li>
+<li>Local bounded memory</li>
+</ul>
+<p>Question:</p>
+<blockquote>
+<p>Can coherent collective behavior emerge without central
+coordination?</p>
+</blockquote>
+<h3 id="branch-3---collective-optional-overmind">Branch 3 - Collective +
+Optional Overmind</h3>
+<p>Question:</p>
+<blockquote>
+<p>Does the Overmind contribute capabilities unavailable to the
+collective itself?</p>
+</blockquote>
+<h3 id="branch-4---non-stationary-worlds">Branch 4 - Non-Stationary
+Worlds</h3>
+<p>Question:</p>
+<blockquote>
+<p>When do memory and adaptation become necessary?</p>
+</blockquote>
+<h3 id="branch-5---constitutional-evolution">Branch 5 - Constitutional
+Evolution</h3>
+<p>Question:</p>
+<blockquote>
+<p>How can constitutions amend themselves without abandoning
+constitutional admissibility?</p>
+</blockquote>
+<hr />
+<h2
+id="experimental-findings-stationary-and-single-drift-toy-substrate">16.
+Experimental Findings: Stationary and Single-Drift Toy Substrate</h2>
+<p>The branches in Section 15 have been partially executed against a
+stationary toy environment (2D mesh, gated pure-transducer perception
+nodes, typed-token signaling with decay, action-and-cost model,
+deterministic seeded receipts). The findings below are retained as
+source-reported preliminary results under the explicit caveats stated at
+the end of this section. The short report labels are not independently
+verifiable from the artifacts recovered in this review package.</p>
+<h3
+id="branch-1-overmind-ladder-central-aggregation-characterization">16.1
+Branch 1: Overmind Ladder (Central Aggregation Characterization)</h3>
+<p>Two conditions on a central aggregator were characterized:</p>
+<ul>
+<li><p><strong>Condition A</strong> (stateless central executor). Naive
+frozen constitution (<span
+class="math inline"><em>t</em><em>h</em><em>r</em><em>e</em><em>s</em><em>h</em><em>o</em><em>l</em><em>d</em> = 1.0</span>)
+over-fires, producing false-positive-dominated regret. The
+population-tuned static threshold basin centers near 2.5 (single-seed
+thresholds of 2.0 are seed-fitted, not robust). Named static
+constitutions: <span
+class="math inline"><em>A</em><sub><em>n</em><em>a</em><em>i</em><em>v</em><em>e</em></sub></span>
+(<span
+class="math inline"><em>t</em><em>h</em><em>r</em><em>e</em><em>s</em><em>h</em><em>o</em><em>l</em><em>d</em> = 1.0</span>)
+and <span
+class="math inline"><em>A</em><sub><em>c</em><em>a</em><em>n</em><em>d</em><em>i</em><em>d</em><em>a</em><em>t</em><em>e</em></sub></span>
+(<span
+class="math inline"><em>t</em><em>h</em><em>r</em><em>e</em><em>s</em><em>h</em><em>o</em><em>l</em><em>d</em> = 2.5</span>).</p></li>
+<li><p><strong>Condition B</strong> (stateful central executor;
+exponential-moving-average signal memory). On the stationary
+environment, memory is a <em>tuning substitute</em>: it beats <span
+class="math inline"><em>A</em><sub><em>n</em><em>a</em><em>i</em><em>v</em><em>e</em></sub></span>
+but offers no advantage over the well-tuned <span
+class="math inline"><em>A</em><sub><em>c</em><em>a</em><em>n</em><em>d</em><em>i</em><em>d</em><em>a</em><em>t</em><em>e</em></sub></span>.
+The best stationary <span class="math inline"><em>B</em></span>
+collapses to memory decay near zero. The hypothesized payoff of memory
+(adaptivity under drift) is tested separately in Branch 4
+below.</p></li>
+</ul>
+<h3
+id="branch-2-constitutional-collective-pure-local-participation">16.2
+Branch 2: Constitutional Collective (Pure Local Participation)</h3>
+<p>Pure local constitutional participation (<span
+class="math inline"><em>C</em><em>C</em>1</span>: no node memory, no
+central state) achieves coherent threat-response coordination without
+any central executive on the stationary environment.</p>
+<h3
+id="branch-3-collective-optional-overmind-stationary-report-hash-1d8047b8">16.3
+Branch 3: Collective + Optional Overmind (Stationary; Report Hash
+1d8047b8)</h3>
+<p>The Overmind under test has two possible acts:</p>
+<ul>
+<li><strong>Contradiction resolution.</strong> Tiny refinement (a
+handful of resolutions per run; a few regret units beyond suppression).
+Matches the prior expectation.</li>
+<li><strong>Redundancy suppression.</strong> Large effect: cuts <span
+class="math inline"><em>C</em><em>C</em>1</span> regret by 30-73% across
+thresholds (e.g. at <span
+class="math inline"><em>t</em><em>h</em><em>r</em><em>e</em><em>s</em><em>h</em><em>o</em><em>l</em><em>d</em> = 1.0</span>,
+regret falls from 1259 to 344) by removing signal-bleed false positives
+the local collective structurally cannot self-remove under the frozen
+four-rule constitution.</li>
+</ul>
+<p>The Overmind here only <em>compresses</em> — it withdraws redundant
+defends — and does not generate the primary threat-detection
+coordination, which the collective produces.</p>
+<p>A node-local amendment was then tested: a local-max clause requiring
+a node to act only if its signal magnitude is the maximum within a
+neighborhood.</p>
+<ul>
+<li><strong>4-neighbor local-max</strong> (report hash <span
+class="math inline"><em>e</em><em>c</em>4<em>a</em>1565</span>):
+internalizes 53-62% of the Overmind gain. The residual is a stencil
+artifact, since orthogonal diffusion creates diagonal secondary maxima a
+4-neighbor stencil cannot see.</li>
+<li><strong>8-neighbor local-max</strong> (report hash <span
+class="math inline">1<em>f</em>2<em>e</em><em>c</em><em>f</em>85</span>):
+captures 101.3%, 100.6%, and 101.3% of the Overmind gain at thresholds
+1.0, 2.0, and 2.5 respectively (100 seeds each), and beats the Overmind
+in 80%, 56%, and 53% of runs (ties: 19%, 38%, 40%). The 8-neighbor
+stencil matches the diagonal leakage structure of 4-connected
+diffusion.</li>
+</ul>
+<p>The verdict registered for all three thresholds (registry text):
+“8-neighbor local-max captures <span class="math inline">≥</span> 90% of
+the Overmind gain. The residual was a stencil artifact; the Overmind’s
+win is mostly constitutional incompleteness, internalizable downward by
+a slightly richer local rule.”</p>
+<p>This is the empirical instantiation of Section 11: the gap closed by
+a node-local amendment evidenced constitutional incompleteness rather
+than irreducible centralization.</p>
+<h3 id="branch-4-non-stationary-worlds-drift1-report-hash-69073b79">16.4
+Branch 4: Non-Stationary Worlds, drift1 (Report Hash 69073b79)</h3>
+<p>A single-change-point intensity-regime drift was applied at step 150
+of 300: pre-drift threat-spawn intensity ranged over <span
+class="math inline">[1, 5]</span>; post-drift over <span
+class="math inline">[2, 4]</span> (option-A drift, staying within the
+emitting band). 100 seeds. No new adaptive thresholding or new memory
+semantics were introduced; existing <span
+class="math inline"><em>C</em><em>C</em>2</span> EMA memory was included
+as a comparator.</p>
+<ul>
+<li><span
+class="math inline"><em>C</em><em>C</em>1<sub><em>l</em><em>o</em><em>c</em><em>a</em><em>l</em>_<em>m</em><em>a</em><em>x</em>_8</sub></span>
+remains the best static rule under drift (post-drift mean regret <span
+class="math inline"> ≈ 9.29</span> at <span
+class="math inline"><em>t</em><em>h</em><em>r</em><em>e</em><em>s</em><em>h</em><em>o</em><em>l</em><em>d</em> = 1.0</span>;
+do-nothing ratio <span class="math inline"> ≈ 0.012</span>). Win rate
+against <span class="math inline"><em>C</em><em>C</em>1</span>: 1.00
+across thresholds 1.0, 2.0; 0.52 at threshold 2.5 where the static
+threshold begins to under-fire.</li>
+<li>Existing <span class="math inline"><em>C</em><em>C</em>2</span> EMA
+memory does <strong>not</strong> recover: across all 100 seeds, 0/100
+win rate vs. <span
+class="math inline"><em>C</em><em>C</em>1<sub><em>l</em><em>o</em><em>c</em><em>a</em><em>l</em>_<em>m</em><em>a</em><em>x</em>_8</sub></span>
+in the post-drift window (smoothing is not adaptation).</li>
+<li>Overmind benefit shrinks but is not magnitude-neutral: relative gain
+swings with regime redundancy (0.97 / 0.93 / -0.01 across thresholds 1.0
+/ 2.0 / 2.5 post-drift). The Overmind never becomes necessary.</li>
+<li>The only crack observed: a high static threshold under-fires in the
+weaker post-drift regime (false-negative rate up). This
+<em>motivates</em> an adaptive-threshold probe in a later branch but
+does not authorize one in this paper.</li>
+</ul>
+<p>Sub-gate drift indicates an observability/projection boundary rather
+than an action-admissibility failure.</p>
+<h3 id="recorded-caveats">16.5 Recorded Caveats</h3>
+<p>The following caveats are explicit in the experimental record and
+apply to every finding above. They are stated here rather than buried
+per-section because the framework’s reach is governed by them.</p>
+<ol type="1">
+<li><strong>Stationary and single-change-point substrate only.</strong>
+Findings extend to non-stationary regimes only as Branch 4+ probes
+them.</li>
+<li><strong>No consciousness claims.</strong> The program evaluates
+admissibility, continuation governance, collective coordination, and
+optional aggregation. It does not evaluate consciousness, selfhood,
+phenomenology, or subjective experience.</li>
+<li><strong>No promotion.</strong> No constitution or rule is promoted
+to a general claim; findings are scoped to the seeds, parameters, and
+topology under which they were measured.</li>
+<li><strong>Toy environment.</strong> The substrate is a finite 2D mesh
+with simple threat dynamics. Generalization to richer participation
+topologies, sparser meshes, or qualitatively different dynamics is
+open.</li>
+<li><strong>Topology-conditional completeness.</strong> The 8-neighbor
+local-max rule works in this experiment because the 8-neighbor stencil
+matches the diagonal leakage structure of 4-connected diffusion. The
+constitutional lesson is that admissibility rules must fit the
+participation topology; the rule itself is not claimed to be
+universal.</li>
+<li><strong>The Overmind’s apparent advantage is a property of the
+frozen constitution under which it was measured.</strong> A constitution
+that suppresses redundancy node-locally shrinks the Overmind’s edge.
+This is an amendment question (Section 11), not evidence that the
+Overmind is intrinsically capability-generating in all
+constitutions.</li>
+</ol>
+<h3 id="summary">16.6 Summary</h3>
+<p>Within the bounds of these caveats, the experiments support a reading
+the original framework anticipated only as a hypothesis: in the regimes
+tested, coordination capability migrated downward as the constitution
+became more complete. The collective without an Overmind matched or
+exceeded the Overmind-augmented collective on the dominant lever of the
+environment, and a static local rule remained dominant across the one
+drift regime tested. The Overmind, where measured, was optional,
+non-necessary, and internalizable downward by local constitutional
+refinement.</p>
+<p>The source-reported findings are summarized below. All numbers are
+described by the source as 100-seed means on the stationary substrate
+unless otherwise noted. The labels are retained for possible future
+binding to an experimental archive; in this package they are short
+source labels, not verified content hashes.</p>
+<ul>
+<li><p><strong>Branch:</strong> Branch 1<br />
+<strong>Probe:</strong> Stateful central (EMA memory)<br />
+<strong>Key finding:</strong> Tuning substitute only; collapses to decay
+<span class="math inline"> ≈ 0</span> at well-tuned static
+threshold<br />
+<strong>Hash:</strong> –</p></li>
+<li><p><strong>Branch:</strong> Branch 2<br />
+<strong>Probe:</strong> Pure local collective (<span
+class="math inline"><em>C</em><em>C</em>1</span>)<br />
+<strong>Key finding:</strong> Coherent threat-response coordination
+without central executive<br />
+<strong>Hash:</strong> –</p></li>
+<li><p><strong>Branch:</strong> Branch 3<br />
+<strong>Probe:</strong> Overmind, redundancy suppression<br />
+<strong>Key finding:</strong> Cuts <span
+class="math inline"><em>C</em><em>C</em>1</span> regret 30–73% by
+removing signal-bleed false positives<br />
+<strong>Hash:</strong> <span
+class="math inline">1<em>d</em>8047<em>b</em>8</span></p></li>
+<li><p><strong>Branch:</strong> Branch 3<br />
+<strong>Probe:</strong> 4-neighbor local-max amendment<br />
+<strong>Key finding:</strong> Captures 53–62% of Overmind gain; residual
+is a diffusion-diagonal stencil artifact<br />
+<strong>Hash:</strong> <span
+class="math inline"><em>e</em><em>c</em>4<em>a</em>1565</span></p></li>
+<li><p><strong>Branch:</strong> Branch 3<br />
+<strong>Probe:</strong> 8-neighbor local-max amendment<br />
+<strong>Key finding:</strong> Captures 101% of Overmind gain; beats
+Overmind in 53–80% of runs across thresholds<br />
+<strong>Hash:</strong> <span
+class="math inline">1<em>f</em>2<em>e</em><em>c</em><em>f</em>85</span></p></li>
+<li><p><strong>Branch:</strong> Branch 4<br />
+<strong>Probe:</strong> drift_1 (intensity change-point)<br />
+<strong>Key finding:</strong> <span
+class="math inline"><em>C</em><em>C</em>1<sub><em>l</em><em>o</em><em>c</em><em>a</em><em>l</em>_<em>m</em><em>a</em><em>x</em>_8</sub></span>
+remains best static rule; EMA memory does not recover (0/100)<br />
+<strong>Hash:</strong> <span
+class="math inline">69073<em>b</em>79</span></p></li>
+</ul>
+<hr />
+<h2 id="generalized-minimal-executable-model">17. Generalized Minimal
+Executable Model</h2>
+<p>Section 16 reports a specific instantiation of an executable model
+already built and run. This section sketches the more general class of
+minimal models the framework admits, of which the threat-detection
+coordination probed in Section 16 is one instance.</p>
+<p>A minimal executable model may be constructed using finite-state
+agents operating under local admissibility rules.</p>
+<p>Example:</p>
+<ul>
+<li>agents occupy a grid,</li>
+<li>movement remains admissible only when local density remains below
+threshold <span class="math inline"><em>k</em></span>,</li>
+<li>no reward function is supplied,</li>
+<li>no centralized controller exists.</li>
+</ul>
+<p>Observed quantities include:</p>
+<ul>
+<li>clustering,</li>
+<li>phase transitions,</li>
+<li>deadlock,</li>
+<li>constitutional collapse,</li>
+<li>stability under perturbation,</li>
+<li>admissible path entropy.</li>
+</ul>
+<p>Control comparisons should include:</p>
+<ul>
+<li>reward optimization,</li>
+<li>random policy,</li>
+<li>fixed-rule execution.</li>
+</ul>
+<p>The purpose of the model is not optimization.</p>
+<p>The purpose is to determine whether coherent collective structure
+emerges from admissibility alone.</p>
+<hr />
+<h3 id="metrics-for-constitutional-collectives">18. Metrics for
+Constitutional Collectives</h3>
+<p>The following are measurement families, not definition-complete
+metrics until their domains and sampling contracts are declared.</p>
+<h4 id="binding-density">Binding Density</h4>
+<p>For finite transition sets, <span
+class="math inline">|<em>A</em><sub><em>t</em></sub>|/|<em>F</em><sub><em>t</em></sub>|</span>
+is defined when <span
+class="math inline">|<em>F</em><sub><em>t</em></sub>| &gt; 0</span>. For
+continuous or infinite spaces, replace cardinality with an identified
+measure and state its normalization.</p>
+<h4 id="constitutional-integration">Constitutional Integration</h4>
+<p><span
+class="math inline"><em>I</em>(<em>A</em><sub><em>i</em>, <em>t</em></sub>; <em>A</em><sub><em>j</em>, <em>t</em></sub>)</span>
+is meaningful only after defining random variables, a probability
+distribution or empirical sampling process, and what observation of a
+relation means. Structural overlap or constraint dependence may be
+preferable when no stochastic model exists.</p>
+<h4 id="stability">Stability</h4>
+<p><span
+class="math inline"><em>d</em>(<em>s</em><sub><em>t</em></sub>, <em>s</em><sup>*</sup>) → 0</span>
+requires an equilibrium <span
+class="math inline"><em>s</em><sup>*</sup></span>, a metric, a
+trajectory or policy, and convergence conditions. Collective stability
+may instead concern invariant sets, boundedness, recurrence, or
+recovery.</p>
+<h4 id="renegotiability">Renegotiability</h4>
+<p>For finite sets, <span
+class="math inline">|<em>A</em><sub><em>θ</em><sup>′</sup></sub> ∩ <em>A</em><sub><em>θ</em></sub>|/|<em>A</em><sub><em>θ</em></sub>|</span>
+measures retained old admissibility when the denominator is nonzero. It
+is directional, not symmetric, and does not measure amendment
+legitimacy, reversibility, or migration safety. Infinite spaces again
+require a measure.</p>
+<h4 id="coherence-propagation-and-path-entropy">Coherence, Propagation,
+and Path Entropy</h4>
+<p>Constitutional coherence needs an equivalence relation over
+circumstances and a disagreement rule. Constraint propagation depth
+needs a declared influence graph. Admissible path entropy</p>
+<p><span
+class="math display"><em>H</em><sub><em>A</em></sub> = −∑<sub>(<em>s</em>, <em>s</em><sup>′</sup>) ∈ <em>A</em><sub><em>t</em></sub></sub><em>p</em>(<em>s</em>, <em>s</em><sup>′</sup>)log <em>p</em>(<em>s</em>, <em>s</em><sup>′</sup>)</span></p>
+<p>requires a normalized distribution and sampling frame. High entropy
+can indicate expressive continuation or uncontrolled variation; low
+entropy can indicate useful precision or overconstraint. Interpretation
+is profile-dependent.</p>
+<h2 id="failure-modes">19. Failure Modes</h2>
+<p>Constitutional systems may fail in multiple distinct ways.</p>
+<h3 id="global-admissibility-collapse">Global Admissibility
+Collapse</h3>
+<p><span
+class="math display"><em>A</em><sub><em>t</em></sub> = ∅</span></p>
+<h3 id="local-deadlock">Local Deadlock</h3>
+<p><span class="math display">∃<em>s</em> ∈ <em>S</em> such that
+<em>s</em><sup>′</sup> ∣ (<em>s</em>, <em>s</em><sup>′</sup>) ∈ <em>A</em><sub><em>t</em></sub> = ∅.</span></p>
+<h3 id="fragmentation">Fragmentation</h3>
+<p>The admissibility relation decomposes into disconnected
+components.</p>
+<h3 id="oscillatory-admissibility">Oscillatory Admissibility</h3>
+<p>Continuation cycles persist without convergence.</p>
+<h3 id="overconstraint">Overconstraint</h3>
+<p><span
+class="math display">|<em>A</em><sub><em>t</em></sub>| → 0</span></p>
+<h3 id="underconstraint">Underconstraint</h3>
+<p><span
+class="math display"><em>A</em><sub><em>t</em></sub> ≈ <em>F</em><sub><em>t</em></sub></span></p>
+<h3 id="resolution-dominance">Resolution Dominance</h3>
+<p>System behavior becomes governed primarily by <span
+class="math inline"><em>R</em><sub><em>t</em></sub></span> rather than
+<span class="math inline"><em>A</em><sub><em>t</em></sub></span>.</p>
+<p>In this regime the constitution becomes decorative rather than
+operational.</p>
+<h3 id="objective-capture">Objective Capture</h3>
+<p>A scalar objective silently determines continuation, reducing
+constitutional admissibility to disguised optimization.</p>
+<hr />
+<h2 id="comparative-positioning">20. Comparative Positioning</h2>
+<p>CCOO differs from four nearby framings: it does not assume
+self-modeling is required for coherent collective behavior; it treats
+coordination as a property of admissible participation rather than
+executive control; it introduces explicit governance structure rather
+than relying solely on emergent local heuristics; and it prioritizes
+admissibility over optimization. The central question becomes “What may
+continue?” rather than “What maximizes reward?”</p>
+<hr />
+<h2 id="relation-to-existing-formalisms">21. Relation to Existing
+Formalisms</h2>
+<p>CCOO has bridges to several formal traditions. The most important
+comparisons are with the formalisms it could be mistaken for and is
+not.</p>
+<h3 id="constraint-satisfaction">Constraint Satisfaction</h3>
+<p>Constraint satisfaction seeks states <span
+class="math inline"><em>s</em><sup>*</sup> ∈ <em>S</em></span>
+satisfying constraints. CCOO governs admissible trajectories <span
+class="math inline">(<em>s</em><sub><em>t</em></sub>, <em>s</em><sub><em>t</em> + 1</sub>) ∈ <em>A</em><sub><em>t</em></sub> ∀<em>t</em></span>.
+The primitive is continuation, not state.</p>
+<h4 id="distributed-constraint-optimization">Distributed Constraint
+Optimization</h4>
+<p>Distributed constraint optimization seeks assignments that optimize
+an objective under distributed constraints. CCOO does not require a
+scalar objective and does not treat coordination as maximization. Its
+primitive is admissible continuation.</p>
+<h4 id="control-theory-and-viability">Control Theory and Viability</h4>
+<p>Viability kernels and invariant-preserving trajectories are CCOO’s
+closest formal neighbor. The distinction is that viability kernels are
+typically treated here as externally specified viability constraints on
+a dynamical system, whereas CCOO’s admissibility relation is generated
+by constitutional operators carried by the participants themselves and
+may evolve (Section 13).</p>
+<h4 id="other-bridges">Other Bridges</h4>
+<p>Process calculi describe allowed continuation traces; type systems
+describe type-correct state transitions; category theory describes
+morphisms between states with hom-set restrictions. CCOO has natural
+bridges to each, but these are correspondences rather than equivalences
+– the novelty in CCOO is not its translatability into these formalisms
+but its decomposition of admissibility into local operators with
+compositional structure.</p>
+<h2 id="applications">22. Applications</h2>
+<p>Potential application domains include:</p>
+<ul>
+<li>swarm robotics,</li>
+<li>autonomous vehicle fleets,</li>
+<li>distributed sensor networks,</li>
+<li>planetary exploration systems,</li>
+<li>decentralized AI collectives,</li>
+<li>biological modeling,</li>
+<li>institutional governance,</li>
+<li>resilient infrastructure systems.</li>
+</ul>
+<p>The architecture is substrate-neutral.</p>
+<p>Only admissible continuation is required.</p>
+<hr />
+<h3 id="realization-funnel">23. Realization Funnel</h3>
+<p>CCOO can be expressed through the full corpus funnel:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> conceivable collective structures,
+including incoherent, harmful, centralized, nonviable, and unrealizable
+variants.</li>
+<li><strong>Specification:</strong> roles, topology, state and
+transition types, locality, authority, admissibility, compatibility,
+viability, evidence, refusal, and falsification obligations.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> every configuration
+satisfying the mandatory specification, including undesirable but not
+prohibited realizations.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> the preferred
+region under declared objectives and risk posture, such as minimizing
+unnecessary centralization while preserving robustness and
+recovery.</li>
+<li><strong>IC:</strong> the selected <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for one
+environment, topology, task, and authority profile.</li>
+<li><strong>IR:</strong> the concrete <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong> of
+that same selected stage. The two IR expansions are current and
+interchangeable; wording alone does not change the stage.</li>
+<li><strong>Evidence:</strong> observations, reports, receipts,
+counterexamples, and claim ceilings bound to the realized profile.</li>
+<li><strong>Revision:</strong> amendments to any earlier stage with
+retained lineage and explicit migration.</li>
+</ul>
+<p>The source-reported experiment is an IR-and-Evidence claim only if
+its implementation and exact results can be bound. In the present
+package those artifacts were not recovered, so the manuscript describes
+such a claim but does not independently establish it.</p>
+<h3 id="corpus-placement">24. Corpus Placement</h3>
+<p>CCOO is a coordination-domain profile of the larger
+constitutional-computing program, not a replacement for that
+program.</p>
+<ol type="1">
+<li><em>Constitutional Computing</em> supplies the wider thesis that
+capability can be generated inside explicit constraints; CCOO
+specializes it to distributed continuation.</li>
+<li><em>Admissibility Engineering</em> supplies the design discipline
+for turning constraints, refusals, and evidence obligations into
+operational selection surfaces.</li>
+<li><em>Terminability</em> sharpens CCOO’s <span
+class="math inline">⊥</span> result: legitimate continuation includes
+the capacity to stop, escalate, or remain unresolved.</li>
+<li><em>Sovereign Software</em> contributes inspectability,
+renegotiability, exit, and reconstruction requirements for
+implementations that claim participant sovereignty.</li>
+<li><em>The Well-Governed Mind</em> is an adjacent agent-level
+governance architecture. A constitutional collective and a governed mind
+may compose, but neither is automatically an instance of the other.</li>
+<li><em>Semantic Legitimacy Before Context</em> prevents a locally
+useful signal, parameter, or narrative from gaining standing through
+usefulness alone.</li>
+<li><em>Governance Witnesses</em> motivates exact evidence for
+authority, admission, refusal, and effect. It does not substitute a
+receipt for truth.</li>
+<li><em>Meaning as Binding</em> supplies a nearby meaning-binding
+theory; CCOO uses only the bounded continuation-relevance profile unless
+the stronger theory is separately defended.</li>
+</ol>
+<h3 id="governed-meaning-base-and-universal-gsm-projection">25. Governed
+Meaning Base and Universal GSM Projection</h3>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the author-confirmed <code>CCF -&gt; CMB -&gt; GMB</code> lineage. A
+GMB can host CCOO specifications, constitutions, topology, delegations,
+amendments, claims, source artifacts, reports, receipts,
+counterevidence, and revision lineage. It is not the collective, the
+Overmind, the constitutional authority, or proof that a realization
+conforms.</p>
+<p>The universal GSM should distinguish at least: collective, node,
+role, local and global state, raw transition, local admissibility
+relation, compatibility predicate, global admissibility relation,
+resolver, refusal, topology, neighborhood, constitution, amendment,
+migration relation, Overmind proposal, delegation, authority, task, cost
+function, observation contract, report, receipt, evidence item, claim,
+claim ceiling, effect, failure, and revision.</p>
+<p>High-value typed relations include <code>CARRIES</code>,
+<code>GENERATES</code>, <code>LIFTS_TO</code>,
+<code>COMPATIBLE_WITH</code>,<br />
+<code>COMPOSES_INTO</code>, <code>PROPOSES_AMENDMENT</code>,
+<code>AUTHORIZED_BY</code>, <code>REFUSED_BY</code>,
+<code>MIGRATES_THROUGH</code>,<br />
+<code>REALIZES_CANDIDATE</code>, <code>OBSERVED_BY</code>,
+<code>SUPPORTED_BY</code>, <code>COUNTEREVIDENCED_BY</code>,<br />
+and <code>SUCCEEDS</code>. Every consequential relation requires origin
+class, scope, standing, source or evidence basis, and revision
+identity.</p>
+<h2 id="optional-coordination-without-optional-accountability">Optional
+Coordination Without Optional Accountability</h2>
+<p>Eight retained downstream uses position CCOO as one bounded
+collective architecture within continuation theory, Dynatology, monetary
+automata, epistemic lineage, qualia-boundary testing, optional
+coordination, work custody, and software-evidence studies. The evidence
+supports a comparison among local-only, centrally aggregated, and
+optionally coordinated systems on declared toy environments. It does not
+establish a universal collective law, social legitimacy, collective
+consciousness, or the superiority of an overmind outside those
+conditions.</p>
+<p>The collective configuration is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+K^*= (&amp;participants, local\_constitutions, shared\_rules, \\
+&amp;environment, coordination\_problem, \\
+&amp;overmind\_capabilities, invocation\_conditions, \\
+&amp;proposal\_protocol, adoption\_authority, local\_refusal, \\
+&amp;dependency\_graph, custody, exit, recovery, evidence, \\
+&amp;inequality, capture, remainder)
+\end{aligned}.
+$$</span></p>
+<p>An overmind is optional only if the collective can identify its
+dependency, refuse or remove it under the declared profile, preserve
+mandatory local and shared constraints, and reach a safe continuation or
+explicit terminal condition. Intermittent use does not establish
+optionality when training, identity, keys, registries, communication,
+recovery, or goal definition remain centrally controlled. Conversely,
+locality alone does not establish autonomy, coordination quality,
+fairness, or resilience.</p>
+<p>Experiments should compare matched information, compute,
+communication, and authority budgets across local, mandatory-central,
+and optional-central conditions. Measures should include task outcome,
+viability, deadlock, fragmentation, oscillation, latency, resource
+inequality, minority constraint preservation, hidden coordination
+burden, capture, exit cost, recovery, and performance under drift. The
+overmind may propose, summarize, route, or simulate without acquiring
+adoption authority unless separately granted.</p>
+<p>The universal GSM can type<br />
+<code>INSTANTIATES_CCOO_PROFILE</code>,
+<code>INVOKES_OPTIONAL_OVERMIND</code>,<br />
+<code>RETAINS_LOCAL_REFUSAL</code>,
+<code>DEPENDS_ON_HIDDEN_COORDINATOR</code>,
+<code>EXERCISES_OVERMIND_EXIT</code>,<br />
+<code>MEASURES_COORDINATION_INEQUALITY</code>,
+<code>RECOVERS_WITHOUT_CENTRAL_NODE</code>,<br />
+and<br />
+<code>DOES_NOT_INFER_COLLECTIVE_CONSCIOUSNESS</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the collective configuration record; define
+operational optionality through removal and recovery; require matched
+authority and resource budgets plus inequality and capture measures; and
+preserve separate gates for institutional legitimacy, participant
+sovereignty, and consciousness claims.</p>
+<h3 id="counterevidence-and-falsification-program">26. Counterevidence
+and Falsification Program</h3>
+<p>The proposal is weakened or narrowed if any of the following survives
+serious testing:</p>
+<ol type="1">
+<li>CCOO can be reduced without explanatory loss to ordinary distributed
+constraints, viability, control, or optimization under a renamed
+objective.</li>
+<li>Local constitutional operators cannot be identified independently of
+the behavior they are invoked to explain.</li>
+<li>The composition rule cannot produce global successors without
+effectively centralized consistency solving.</li>
+<li>Resolver or compatibility machinery reintroduces the hidden
+coordinator the architecture claims to avoid.</li>
+<li>Reported local advantages disappear under preregistered seeds,
+richer topologies, alternate costs, adversarial disturbances, or exact
+replication.</li>
+<li>An Overmind contributes information, memory, counterfactual search,
+or cross-scale repair that cannot be internalized within the declared
+locality and resource bounds.</li>
+<li>Parameter control functions as sovereign state control despite the
+direct-state prohibition.</li>
+<li>Constitutional amendments lack authority, safe migration, rollback,
+or recovery and therefore merely rename online policy updates.</li>
+<li>Admissibility sensitivity classifies trivial causal differences as
+meaning while missing semantically important but behaviorally dormant
+distinctions.</li>
+<li>Collective identity cannot be preserved or adjudicated across node
+replacement, topology change, constitutional revision, Overmind
+emergence, or partition.</li>
+<li>The proposed metrics change with arbitrary representation or measure
+choices and fail to predict operational outcomes.</li>
+<li>The GMB can represent a coherent CCOO account while its sources,
+evidence, authority, or implementation claims are wrong.</li>
+</ol>
+<h3 id="publication-standing-and-evidence-limits">27. Publication
+Standing and Evidence Limits</h3>
+<h3 id="internal-corpus-references">Internal Corpus References</h3>
+<p><strong>[I1]</strong> Ableman Adam Ableman <em>Constitutional
+Computing.</em> Exact source,<br />
+SHA-256<br />
+<code>A1EF0D1F7B5DF84A107E986421EAA95827AEDCB801B7DA63F72BEECA6047BE8D</code>.</p>
+<p><strong>[I2]</strong> Ableman Adam Ableman <em>Sovereign
+Software.</em> Exact source,<br />
+SHA-256<br />
+<code>D8A2707865C6636485A564546D91F2CCF45AAC80161B94AC56A3DA5CF2EB2C13</code>.</p>
+<p><strong>[I3]</strong> Ableman Adam Ableman <em>Terminability.</em>
+Exact source,<br />
+SHA-256<br />
+<code>DB5709B17A67DD138D2438C73978E33679FB866B97F5CD15144CEDBAEA27C74C</code>.</p>
+<p><strong>[I4]</strong> Ableman Adam Ableman <em>Admissibility
+Engineering.</em> Exact source,<br />
+SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>.</p>
+<p><strong>[I5]</strong> Ableman Adam Ableman <em>The Well-Governed
+Mind.</em> Exact source,<br />
+SHA-256<br />
+<code>E94A1667686262FFC639B18488E9517BDA1DA5ECF2FA4A92973B834B8F81643B</code>.</p>
+<p><strong>[I6]</strong> Ableman Adam Ableman <em>Semantic Legitimacy
+Before Context.</em> Exact source,<br />
+SHA-256<br />
+<code>1E9058F212FCB00E42E35E927DF2E7F830BC9C9499AAFF469FE65FF8AE137B68</code>.</p>
+<p><strong>[I7]</strong> Ableman Adam Ableman <em>Governance
+Witnesses.</em> Exact source,<br />
+SHA-256<br />
+<code>A4F1E85FB60F8A92218109EC44700DFE76B74DAAE0D65FF2B200E34A16FA9AB7</code>.</p>
+<p><strong>[I8]</strong> Ableman Adam Ableman <em>Meaning as
+Binding.</em> Exact source,<br />
+SHA-256<br />
+<code>A9EA6370E77A71A997F1D1CAC18EF6213125C6F3E13BEEBC9F5E8BFB94FE0B45</code>.</p>
+<p><strong>[I9]</strong> Ableman Adam Ableman <em>Integrating Semantic
+Manifold Topology.</em> Exact GMB documentation source,<br />
+SHA-256<br />
+<code>49A05A424F226A21C81D638727E1165DE1AD55AB1CBDC56EA65D67A1362A4B08</code>.</p>
+<p><strong>Reference-status note.</strong> These are internal corpus
+references. No external research, experimental replay, independent
+replication, peer review, publication, or implementation verification
+occurred in this pass.</p>
+<h3 id="conclusion">28. Conclusion</h3>
+<p>CCOO proposes a constitutional inversion: coordination is the
+structure of the admissible continuation relation, not the optimization
+of trajectories within the state space. Nodes need not know the whole;
+they need only know how to continue.</p>
+<p>The framework began as a hypothesis about the optional status of
+central coordinators. The experimental program (Section 16) provides
+preliminary evidence under explicit caveats. In the regimes tested,
+coordination capability migrated downward as the constitution became
+more complete: a local-max amendment internalized the Overmind’s
+dominant contribution, and a static local rule remained dominant under
+the drift regime probed. The Overmind, where measured, was optional,
+non-necessary, and internalizable.</p>
+<p>This shift – from “the Overmind may be optional” stated as hypothesis
+to “the Overmind was internalizable” stated as empirical observation
+under named caveats – is what the paper’s experimental program
+contributes beyond the framework itself. The framework supplied the
+lens; constitutional incompleteness (Section 11) supplied the concept;
+the experiments supplied the evidence.</p>
+<p>The purpose of CCOO is not to eliminate coordinators. It is to
+determine whether coordinators are necessary, and to provide both a
+framework for that determination and an instance in which it can be
+carried out. The result for the stationary substrate is one data point.
+Branch 4 preliminarily extends to non-stationary regimes (drift_1,
+characterized); Branch 5, on constitutional evolution, remains future
+work.</p>
+<p>The central hypothesis, as before:</p>
+<blockquote>
+<p>Order corresponds to the structure of the admissible continuation
+relation <span
+class="math inline"><em>A</em><sub><em>t</em></sub></span>, not the
+optimization of trajectories within the state space <span
+class="math inline"><em>S</em></span>.</p>
+</blockquote>
+<p>What the experiments add is that, in the regimes so far tested, this
+relation appears to be locally instantiable to a degree the framework
+originally treated as an open question.</p>
+<hr />
+<h2 id="optional-coordination-requires-demonstrable-exit">Optional
+Coordination Requires Demonstrable Exit</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>CCOO studies whether a distributed collective can govern admissible
+continuation locally while using a central coordinator only when it adds
+a bounded capability. The central figure called an Overmind may
+summarize, route, compress, or propose. It is optional only when
+participants retain adoption authority and the collective can remove it,
+recover, and continue or terminate safely.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Hidden-coordinator attack.</strong> Identity, keys,
+training, registries, communication, goal definition, recovery, or
+compatibility remain centrally controlled even when action selection is
+local.</li>
+<li><strong>Nominal-optionality attack.</strong> The Overmind is invoked
+intermittently but cannot be removed without unacceptable loss, lockout,
+or unsafe state.</li>
+<li><strong>Locality-as-sovereignty attack.</strong> Local computation
+is treated as participant autonomy despite inherited rules, unequal
+resources, unavailable exit, or ungoverned infrastructure.</li>
+<li><strong>Resource-budget attack.</strong> Local and central
+conditions receive unequal information, compute, communication, memory,
+or authority and their performance is compared as architecture.</li>
+<li><strong>Minority-erasure attack.</strong> Global coherence or regret
+reduction suppresses a locally valid constraint, dissent, safety
+boundary, or participant right.</li>
+<li><strong>Toy-result inflation attack.</strong> Source-reported
+stationary and single-drift results are generalized without exact code,
+seeds, configurations, receipts, replication, or richer
+environments.</li>
+<li><strong>Objective-capture attack.</strong> Constitutional
+admissibility becomes a renamed scalar optimization objective or
+evaluator preference.</li>
+<li><strong>Collective-consciousness attack.</strong> Coordination,
+shared state, emergence, or an Overmind is treated as evidence of
+collective experience, selfhood, or moral status.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper contributes a formal collective architecture, an
+operational test for optional coordination, and source-reported toy
+experiments. It does not establish universal coordinator eliminability,
+institutional legitimacy, fairness, participant sovereignty, collective
+identity, consciousness, or superiority over ordinary distributed
+control and optimization.</p>
+<p>The numerical findings remain source-reported until their exact
+reports, code, seeds, configurations, receipts, and result calculations
+are bound and independently replayed. Broader claims require external
+literature research, matched-resource experiments, adversarial
+environments, removal-and-recovery exercises, and affected-participant
+governance. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public standard for an “optional” central intelligence is
+practical: can the collective identify the dependency, refuse its
+proposal, remove it, recover without it, and preserve every mandatory
+constraint and participant boundary?</p>
+<h2 id="appendix-a-formal-research-questions">Appendix A: Formal
+Research Questions</h2>
+<ol type="1">
+<li><p>What minimal constitutional structures generate stable collective
+behavior?</p></li>
+<li><p>What classes of collective coordination require an
+Overmind?</p></li>
+<li><p>What capabilities emerge from local constitutional participation
+alone?</p></li>
+<li><p>How does bounded memory alter admissibility dynamics?</p></li>
+<li><p>Under what conditions does constitutional evolution remain
+admissible?</p></li>
+</ol>
+<hr />
+<h2 id="appendix-b-initial-experimental-roadmap">Appendix B: Initial
+Experimental Roadmap</h2>
+<p>Phase 0: Infrastructure validation.</p>
+<p>Phase 1: Overmind characterization.</p>
+<p>Phase 2: Pure constitutional collective.</p>
+<p>Phase 3: Collective plus optional Overmind.</p>
+<p>Phase 4: Non-stationary environments.</p>
+<p>Phase 5: Constitutional evolution.</p>
+<hr />
+<hr />
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<h3 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h3>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. The integration custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/</code></p>
+<p><code>constitutional-collective-optional-overmind/</code><br />
+<code>integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>8DFB520D4E18577DBEAB78227141C573C1117105B63FB99C5EE6EA5A50A4799B</code>.
+The exact source remains unchanged. The framework, terminology, formal
+architecture, experimental narrative, numerical results, caveats,
+examples, applications, and original references are author material.
+This pass repairs several formal overclaims, applies the current
+realization funnel and Governed Meaning Base terminology, maps direct
+corpus interfaces, adds a universal-GSM projection, and exposes
+counterevidence and author-decision surfaces. Those changes are AI
+editorial or synthetic contributions until adopted. The manuscript names
+four short report labels for its experimental findings. A bounded search
+of the supplied Mosaic roots recovered no separate report, receipt,
+code, seed list, configuration, or result artifact bearing those labels.
+The numerical results are therefore preserved as <strong>source-reported
+findings</strong>, not independently verified evidence. External
+citations were not researched or validated in this pass. The paper’s
+strongest supported standing in this package is a formal research
+architecture with source-reported toy results. It does not establish
+that all distributed systems are constitutional collectives, that every
+coordinator is eliminable, that the Overmind is universally unnecessary,
+that admissibility sensitivity is sufficient for semantic meaning, or
+that any implementation conforms to CCOO.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the Constitutional Collective with Optional
+Overmind (CCOO) framework and reports preliminary empirical evidence
+from its experimental program. Its nearest external comparison fields
+are governance, distributed, provenance. The sources in [E1], [E2],
+[E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Convergence and consensus establish agreement under a fault model; they
+do not establish that the agreed state is true, authorized, desirable,
+or semantically equivalent. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Leslie Lamport. “Time, Clocks, and the Ordering
+of Events in a Distributed System.” <em>Communications of the ACM</em>
+21(7), 1978, pp. 558-565. DOI: 10.1145/359545.359563.
+https://lamport.azurewebsites.net/pubs/time-clocks.pdf
+<strong>Relationship:</strong> Foundational predecessor for partial
+order, causality, and distributed event ordering.</p>
+<p><strong>[E6]</strong> Leslie Lamport, Robert Shostak, and Marshall
+Pease. “The Byzantine Generals Problem.” <em>ACM Transactions on
+Programming Languages and Systems</em> 4(3), 1982, pp. 382-401. DOI:
+10.1145/357172.357176. https://doi.org/10.1145/357172.357176
+<strong>Relationship:</strong> Predecessor fault model for agreement
+under adversarial or inconsistent participants.</p>
+<p><strong>[E7]</strong> Marc Shapiro et al. <em>A Comprehensive Study
+of Convergent and Commutative Replicated Data Types</em>. INRIA Research
+Report RR-7506, 2011. https://inria.hal.science/inria-00555588
+<strong>Relationship:</strong> Predecessor convergence model for
+replicated state; convergence is compared with, but not equated to,
+legitimacy or semantic agreement.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Mosaic Internet Protocol
+(MIP)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20115615</code>;<br />
+source SHA-256<br />
+<code>C56A63A0B84816BF8AF602C7467221B467312339ACE5F77DB754F804ABF833C0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Optional
+Coordinator</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-727469A6944DA256</code>;<br />
+source SHA-256<br />
+<code>92E8F6743B8DDAFF369D2F40120A384DDE273613B12B27D2FC14610469F5A46E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<h3 id="author-works-constitutional-framework-series">Author Works
+(Constitutional Framework Series)</h3>
+<p>Ableman Adam Ableman (in preparation). <em>Ableman’s Consciousness
+Ontology (ACO)</em>. Manuscript.</p>
+<p>Ableman Adam Ableman (in preparation). <em>Constitutional
+Computing</em>. Manuscript.</p>
+<p>Ableman Adam Ableman (in preparation). <em>Constitutional Operating
+Systems</em>. Manuscript.</p>
+<p>Ableman Adam Ableman (in preparation). <em>Constitutional
+Robotics</em>. Manuscript.</p>
+<p>Ableman Adam Ableman (in preparation). <em>Constitutional Semantic
+Crystallization</em>. Manuscript.</p>
+<p>Ableman Adam Ableman (in preparation). <em>Constraint-Bound Inference
+and Invariant Extraction</em>. Manuscript.</p>
+<p>Ableman Adam Ableman (in preparation). <em>Constitutional
+Science</em>. Manuscript.</p>
+<h3 id="external-works">External Works</h3>
+<p>Dennett, D. C. (1987). <em>The Intentional Stance</em>. Cambridge,
+MA: MIT Press.</p>
+<p>Holland, J. H. (1998). <em>Emergence: From Chaos to Order</em>.
+Reading, MA: Addison-Wesley.</p>
+<p>Maturana, H. R., &amp; Varela, F. J. (1980). <em>Autopoiesis and
+Cognition: The Realization of the Living</em>. Boston Studies in the
+Philosophy of Science, Vol. 42. Dordrecht: D. Reidel Publishing
+Company.</p>
+<p>Ostrom, E. (1990). <em>Governing the Commons: The Evolution of
+Institutions for Collective Action</em>. Cambridge: Cambridge University
+Press.</p>
+<h3 id="related-literatures-representative-citations">Related
+Literatures (Representative Citations)</h3>
+<p>Bonabeau, E., Dorigo, M., &amp; Theraulaz, G. (1999). <em>Swarm
+Intelligence: From Natural to Artificial Systems</em>. New York: Oxford
+University Press. <em>(swarm intelligence)</em></p>
+<p>Hutchins, E. (1995). <em>Cognition in the Wild</em>. Cambridge, MA:
+MIT Press. <em>(distributed cognition)</em></p>
+<p>Stone, P., &amp; Veloso, M. (2000). Multiagent systems: A survey from
+a machine learning perspective. <em>Autonomous Robots</em>, 8(3),
+345-383. <em>(multi-agent reinforcement learning)</em></p>
+<p>Aubin, J.-P. (1991). <em>Viability Theory</em>. Boston: Birkhauser.
+<em>(viability theory; comparator formalism, Section 21)</em></p>
+<p>Yokoo, M. (2001). <em>Distributed Constraint Satisfaction:
+Foundations of Cooperation in Multi-agent Systems</em>. Berlin:
+Springer. <em>(distributed constraint optimization; comparator
+formalism, Section 21)</em></p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Crystallization.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20310115</p>
+<p>Adam Ableman <em>Constraint-Bound Inference and Invariant
+Extraction.</em> Zenodo, 2026. doi:10.5281/zenodo.18175271</p>
+<p>Adam Ableman <em>Semantic Manifold Topology.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20257244</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847504">10.5281/zenodo.23847504</a></p>

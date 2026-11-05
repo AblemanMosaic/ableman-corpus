@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Ableman Corpus · Constitutional Computing</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Ableman Corpus home">
+      <img src="assets/mosaic-logo-1024.png" alt="Mosaic radial mark">
+      <span><strong>Ableman Corpus</strong><small>Constitutional Computing</small></span>
+    </a>
+    <nav aria-label="Four research territories">
+      <button data-territory="Intelligence">Intelligence</button>
+      <button data-territory="Computation">Computation</button>
+      <button data-territory="Coordination">Coordination</button>
+      <button data-territory="Possibility">Possibility</button>
+    </nav>
+    <a class="library-link" href="#library">Library</a>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">THE CURRENT INTEGRATED CORPUS OF ADAM ABLEMAN</p>
+        <h1>Constrain AI as power.<br><span>Universalize AI as capability.</span><br>Rebuild computing for human sovereignty.</h1>
+        <p class="lede">A paper library and semantic atlas for inspecting how meaning, constraints, authority, realization, evidence, and revision remain connected across intelligent and computational systems.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#questions">Begin with a question</a>
+          <a class="secondary" href="#library">Browse all papers</a>
+        </div>
+      </div>
+      <div class="hero-mark" aria-hidden="true">
+        <img src="assets/mosaic-logo-1024.png" alt="">
+      </div>
+    </section>
+
+    <section class="territory-band" aria-label="Research territories">
+      <article data-territory-card="Intelligence"><span>01</span><h2>Intelligence</h2><p>How can intelligent capability be useful without becoming an unaccountable oracle or an uncontrolled source of effects?</p></article>
+      <article data-territory-card="Computation"><span>02</span><h2>Computation</h2><p>How can computing become inspectable, reconstructable, collaborative, and sovereign?</p></article>
+      <article data-territory-card="Coordination"><span>03</span><h2>Coordination</h2><p>How can complex institutions remain accountable, plural, adaptable, and governable?</p></article>
+      <article data-territory-card="Possibility"><span>04</span><h2>Possibility</h2><p>What determines what can emerge, persist, combine, transform, or be refused?</p></article>
+    </section>
+
+    <section class="questions section" id="questions">
+      <div class="section-heading">
+        <p class="eyebrow">CONCEPTUAL ENTRY POINTS</p>
+        <h2>Start with the problem, not the vocabulary.</h2>
+        <p>Each path opens a selected neighborhood of papers. The questions are navigation aids; the papers and their receipts remain the source-bearing objects.</p>
+      </div>
+      <div class="question-grid" id="question-grid"></div>
+    </section>
+
+    <section class="funnel section" id="funnel">
+      <div class="section-heading compact">
+        <p class="eyebrow">REALIZATION FUNNEL</p>
+        <h2>Follow an idea from possibility to accountable revision.</h2>
+      </div>
+      <ol>
+        <li><b>Possibility</b><span>What may be conceived.</span></li>
+        <li><b>Specification</b><span>What is named or required.</span></li>
+        <li><b>CM1</b><span>All admissible realizations, including undesirable ones.</span></li>
+        <li><b>CM2</b><span>The preferred admissible manifold.</span></li>
+        <li><b>IC</b><span>The selected instance configuration.</span></li>
+        <li><b>IR</b><span>The implementation or instance realization.</span></li>
+        <li><b>Evidence</b><span>What the realized system can support.</span></li>
+        <li><b>Revision</b><span>What returns to change the model.</span></li>
+      </ol>
+    </section>
+
+    <section class="library section" id="library">
+      <div class="library-heading">
+        <div>
+          <p class="eyebrow">CURRENT EDITIONS</p>
+          <h2>The paper library</h2>
+          <p id="library-count">Loading the corpus index…</p>
+        </div>
+        <div class="controls">
+          <label><span>Search</span><input id="search" type="search" placeholder="Title, abstract, keyword, profile…"></label>
+          <label><span>Sort</span><select id="sort"><option value="chronology-asc">Historical accession sequence</option><option value="chronology-desc">Newest documented first</option><option value="title">Title</option><option value="date-desc">Newest publication date</option><option value="date-asc">Oldest publication date</option><option value="references">Reference density</option></select></label>
+        </div>
+      </div>
+      <div class="active-filter" id="active-filter" hidden></div>
+      <div class="paper-grid" id="paper-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>Ableman Corpus</strong><span>Adam Ableman · Constitutional Computing</span></div>
+    <div><a href="https://github.com/AblemanMosaic/ableman-corpus">GitHub repository</a><span>Papers: CC BY-ND 4.0</span><span>Software: Apache 2.0</span></div>
+  </footer>
+
+  <dialog id="paper-dialog">
+    <button class="close" aria-label="Close paper details">×</button>
+    <div id="dialog-content"></div>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>

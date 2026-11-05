@@ -1,0 +1,1068 @@
+<h1 id="semantic-memory-hierarchies">Semantic Memory Hierarchies</h1>
+<h2 id="the-database-computes.-the-archive-remembers.">The database
+computes. The archive remembers.</h2>
+<h3
+id="hot-databases-cold-archives-and-governed-movement-between-them">Hot
+Databases, Cold Archives, and Governed Movement Between Them</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern software systems commonly flatten all memory roles into a
+single substrate: the database.</p>
+<p>Transactional state, historical records, immutable artifacts, audit
+trails, search indexes, media metadata, semantic lineage, and long-term
+archives are frequently treated as equivalent categories of storage
+merely because they are digitally representable.</p>
+<p>The Ottoman architect Mimar Sinan’s sixteenth-century hamam
+(bath-house) designs did not maintain every chamber at maximum thermal
+intensity simultaneously. Heat was staged, circulated, retained, and
+transitioned through specialized zones — a <em>sicaklik</em> hot
+chamber, a <em>iliklik</em> warm transitional chamber, and a
+<em>sogukluk</em> cool chamber for rest — each optimized for different
+functions in the bather’s progression. Semantic Memory Hierarchies apply
+the same principle to computational memory: databases remain
+computationally hot, archives remain durable and cool, and governed
+transitions regulate movement between thermal states. (See Necipoglu
+2005 for a comprehensive treatment of Sinan’s architectural corpus.)</p>
+<p>SMH is a semantic memory architecture that thermally separates
+computational memory from durable semantic memory, assigns canonical
+authority to an immutable filesystem-based archive hierarchy, and
+governs artifact movement between HOT, WARM, COLD, and DEEP tiers via
+explicit, receipted operations. It does not optimize storage location;
+it optimizes the role of memory within the system.</p>
+<p>In SMH, thermal state refers to the frequency, immediacy, and
+computational intensity with which artifacts participate in active
+system operations. SMH separates memory into four governed thermal tiers
+— hot computational memory, warm indexed memory, cold canonical archival
+memory, and deep compressed archival memory — where databases serve as
+bounded computational working memory, archives serve as canonical
+semantic memory, and governed hydration/eviction operations move
+artifacts between tiers according to access patterns, semantic value,
+and operational need.</p>
+<p>The paper formalizes tiered semantic storage, archive hydration,
+projection-based filesystem organization, rebuildable indexes, canonical
+archive authority, and governed storage movement. It also defines the
+advantage boundary of SMH explicitly: the architecture becomes
+structurally superior to database-for-everything designs when systems
+possess significant archival mass, immutable or semi-immutable
+historical records, auditability requirements, semantic lineage, or cold
+historical strata that need not remain in active computational memory.
+Conversely, systems whose data remains almost entirely live,
+transactional, and actively relational may continue to benefit from
+database-centric architectures.</p>
+<p>SMH therefore does not replace databases.</p>
+<p>It restores them to the role they perform best.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>The relational database became the dominant computational memory
+substrate of modern software because it solved an important problem:</p>
+<p>fast relational computation over structured state.</p>
+<p>But over time, databases accumulated responsibilities far beyond this
+original role.</p>
+<p>They became:</p>
+<ul>
+<li>archives,</li>
+<li>historical memory,</li>
+<li>audit substrates,</li>
+<li>semantic lineage stores,</li>
+<li>media indexes,</li>
+<li>legal record repositories,</li>
+<li>and institutional truth engines.</li>
+</ul>
+<p>This convergence was convenient.</p>
+<p>It was not necessarily optimal.</p>
+<p>A modern database often carries:</p>
+<ul>
+<li>decades of cold records,</li>
+<li>massive historical tables,</li>
+<li>immutable artifacts,</li>
+<li>expired operational state,</li>
+<li>and semantically dead historical sediment inside the same substrate
+responsible for active transactional computation.</li>
+</ul>
+<p>The result is familiar:</p>
+<ul>
+<li>database bloat,</li>
+<li>degraded hot-path performance,</li>
+<li>expensive migrations,</li>
+<li>fragile monolithic backups,</li>
+<li>operational complexity,</li>
+<li>and increasing epistemic opacity.</li>
+</ul>
+<p>The core mistake is subtle:</p>
+<blockquote>
+<p>not all memory is computational memory.</p>
+</blockquote>
+<p>Some memory exists to:</p>
+<ul>
+<li>prove,</li>
+<li>preserve,</li>
+<li>remember,</li>
+<li>audit,</li>
+<li>reconstruct,</li>
+<li>or survive.</li>
+</ul>
+<p>This paper proposes that software systems should structurally
+distinguish between:</p>
+<ul>
+<li>active computational memory, and:</li>
+<li>durable semantic memory.</li>
+</ul>
+<hr />
+<h2 id="the-central-doctrine">2. The Central Doctrine</h2>
+<p>Semantic Memory Hierarchies rest on four principles:</p>
+<pre><code>The database computes.
+The archive remembers.
+
+Canonical authority lives in the archive.
+Computational acceleration lives in the database.
+
+An artifact has one canonical residence
+and many navigational addresses.
+
+Time orders memory.
+Topic orients memory.
+Type audits memory.
+Hash proves memory.</code></pre>
+<p>These principles define a memory hierarchy rather than a storage
+trick.</p>
+<p>The database is not eliminated.</p>
+<p>It is thermally specialized.</p>
+<hr />
+<h3 id="operational-definitions-of-thermal-state">2.1 Operational
+Definitions of Thermal State</h3>
+<p>Thermal vocabulary recurs throughout this paper. To prevent the
+metaphor from operating without specification, the following operational
+definitions apply.</p>
+<p><em>Thermal state</em> of an artifact is determined by the
+conjunction of four measurable properties: <em>access frequency</em>
+(how often the artifact is consulted within a defined window),
+<em>access recency</em> (how recently the last consultation occurred),
+<em>mutation rate</em> (how often the artifact’s state changes, with
+archival artifacts having effectively zero mutation rate), and
+<em>computational involvement</em> (whether the artifact participates in
+active joins, aggregations, transactional state, or only in
+retrieval-style access).</p>
+<p>The four tiers correspond to bounded regions in this space.
+<em>Hot</em> artifacts exhibit high access frequency, recent access,
+possible mutation, and active computational involvement. <em>Warm</em>
+artifacts exhibit moderate access frequency, recent-or-near-recent
+access, low mutation, and primarily retrieval-style involvement.
+<em>Cold</em> artifacts exhibit low access frequency, possibly distant
+access, zero mutation, and consultation-only involvement. <em>Deep</em>
+artifacts exhibit near-zero access frequency, distant access, zero
+mutation, and exist primarily for continuity, recovery, or legal
+preservation.</p>
+<p>A constitution governing an SMH deployment specifies the thresholds:
+what counts as “high” access frequency in this system, what
+mutation-rate band qualifies as “low,” what consultation pattern
+qualifies as “retrieval-style.” The framework does not prescribe
+canonical thresholds because they depend on the deployment’s workload,
+scale, and operational tempo. The framework prescribes that thresholds
+<em>be specified</em> rather than left implicit, and that artifacts
+crossing a threshold trigger governed transition between tiers rather
+than silent drift.</p>
+<hr />
+<h2 id="the-four-tier-semantic-memory-model">3. The Four-Tier Semantic
+Memory Model</h2>
+<p>SMH separates semantic memory into four governed thermal tiers:</p>
+<pre><code>HOT    -&gt; active computational memory
+WARM   -&gt; indexed nearby archival memory
+COLD   -&gt; canonical immutable archive
+DEEP   -&gt; compressed/export archival bundles</code></pre>
+<hr />
+<h3 id="hot-memory">3.1 Hot Memory</h3>
+<p>Hot memory is:</p>
+<ul>
+<li>fast,</li>
+<li>transactional,</li>
+<li>mutable,</li>
+<li>bounded,</li>
+<li>relational,</li>
+<li>and computational.</li>
+</ul>
+<p>Implemented using:</p>
+<ul>
+<li>SQLite,</li>
+<li>PostgreSQL,</li>
+<li>or equivalent systems.</li>
+</ul>
+<p>Hot memory contains:</p>
+<ul>
+<li>active sessions,</li>
+<li>recent operational state,</li>
+<li>working tables,</li>
+<li>temporary hydrations,</li>
+<li>indexes,</li>
+<li>recent artifacts,</li>
+<li>and active semantic computation.</li>
+</ul>
+<p>This is where joins happen. This is where dashboards run. This is
+where transactional logic executes.</p>
+<p>The database excels here.</p>
+<p>But critically:</p>
+<blockquote>
+<p>the hot tier is bounded.</p>
+</blockquote>
+<p>It is not permitted to become an unbounded civilization-scale
+archive.</p>
+<hr />
+<h3 id="warm-memory">3.2 Warm Memory</h3>
+<p>Warm memory bridges active computation and deep archive.</p>
+<p>Warm memory consists of:</p>
+<ul>
+<li>recently accessed archive partitions,</li>
+<li>indexed cold artifacts,</li>
+<li>semantically nearby records,</li>
+<li>and high-value retained material.</li>
+</ul>
+<p>Warm memory permits:</p>
+<ul>
+<li>rapid retrieval,</li>
+<li>metadata querying,</li>
+<li>and partial semantic access without fully hydrating archives into
+hot computational space.</li>
+</ul>
+<p>Warm memory functions similarly to filesystem cache layers, virtual
+memory paging, or semantic nearline storage. Concrete realizations
+include Redis or Memcached as recently-loaded archive metadata caches,
+materialized views or projection tables in the hot database that
+summarize cold-tier content for rapid query, SQLite or DuckDB instances
+holding hydrated archive slices, Elasticsearch or Tantivy indexes over
+cold-tier artifacts, and content-addressed staging directories for
+recently-fetched archive bundles.</p>
+<hr />
+<h3 id="cold-memory">3.3 Cold Memory</h3>
+<p>Cold memory is the canonical archive.</p>
+<p>Cold memory is:</p>
+<ul>
+<li>immutable,</li>
+<li>hash-verified,</li>
+<li>append-only,</li>
+<li>portable,</li>
+<li>human-legible,</li>
+<li>inspectable,</li>
+<li>and authoritative.</li>
+</ul>
+<p>Cold memory lives primarily in filesystem structures.</p>
+<p>Example:</p>
+<pre><code>/archive/canonical/2026/05/17/
+  20260517_RetrievalReceipt_sess042_003.csh9ab712.json</code></pre>
+<p>The filesystem itself becomes partially semantic.</p>
+<p>The path encodes:</p>
+<ul>
+<li>chronology,</li>
+<li>artifact class,</li>
+<li>semantic category,</li>
+<li>and partial identity.</li>
+</ul>
+<p>Cold memory is not optimized for:</p>
+<ul>
+<li>large relational joins,</li>
+<li>active aggregation,</li>
+<li>or high-frequency mutation.</li>
+</ul>
+<p>It is optimized for durability, inspectability, replayability,
+portability, and semantic continuity. Concrete realizations include
+POSIX filesystems on local or networked storage, S3-compatible object
+stores with versioning enabled, IPFS or other content-addressed storage
+networks, append-only WORM (write-once-read-many) media, and git-style
+content-hashed repositories. The defining property is not the substrate
+but the discipline: cold-tier storage commits to immutability,
+hash-verifiable integrity, and path-based or hash-based addressability
+that survives independent of the database that may be querying it.</p>
+<hr />
+<h3 id="deep-memory">3.4 Deep Memory</h3>
+<p>Deep memory contains:</p>
+<ul>
+<li>compressed archive bundles,</li>
+<li>off-site backups,</li>
+<li>export artifacts,</li>
+<li>and long-horizon preservation units.</li>
+</ul>
+<p>Deep memory is intentionally operationally distant. It exists not for
+live interaction, but for continuity, recovery, preservation, and
+institutional durability. Concrete realizations include LTO tape
+libraries, AWS Glacier or Azure Archive Storage, optical archive media
+(M-DISC, archival Blu-ray), offsite encrypted backup vaults, and
+air-gapped institutional repositories. Retrieval latency is
+intentionally measured in minutes to hours rather than milliseconds:
+deep memory’s value is its operational distance from active computation,
+which makes it resilient against the failure modes that affect more
+accessible tiers.</p>
+<hr />
+<h2 id="governed-movement-between-tiers">4. Governed Movement Between
+Tiers</h2>
+<p>Artifacts do not silently move between tiers.</p>
+<p>Movement itself is a governed semantic operation.</p>
+<p>This is one of the central architectural advances of SMH.</p>
+<p>Example:</p>
+<pre><code>archive query
+-&gt; hydrate archive slice into working table
+-&gt; compute
+-&gt; emit result receipt
+-&gt; evict working table</code></pre>
+<p>This process formalizes:</p>
+<ul>
+<li>archive hydration,</li>
+<li>computational staging,</li>
+<li>and semantic thermal transitions.</li>
+</ul>
+<p>Example receipts:</p>
+<pre><code>ArchiveHydrationReceipt
+ArchiveEvictionReceipt
+StorageTierTransitionReceipt</code></pre>
+<p>The movement of semantic memory itself becomes observable.</p>
+<hr />
+<h2 id="projection-discipline">5. Projection Discipline</h2>
+<p>SMH introduces projection discipline:</p>
+<blockquote>
+<p>An artifact has one canonical residence and many navigational
+addresses.</p>
+</blockquote>
+<p>Example:</p>
+<p>Canonical:</p>
+<pre><code>/archive/canonical/2026/05/17/
+  20260517_CONDEX_claim_sess042_005.cshf3109a.json</code></pre>
+<p>Projection:</p>
+<pre><code>/archive/projections/by_topic/ai/grag/
+  -&gt; symlink to canonical artifact</code></pre>
+<p>This distinction matters.</p>
+<p>Without it:</p>
+<ul>
+<li>semantic duplication emerges,</li>
+<li>authority ambiguity appears,</li>
+<li>and archives fragment.</li>
+</ul>
+<p>The canonical archive remains truth. Projections remain
+navigation.</p>
+<hr />
+<h2 id="the-advantage-boundary">6. The Advantage Boundary</h2>
+<p>SMH is not universally superior.</p>
+<p>This distinction must remain explicit.</p>
+<hr />
+<h3 id="where-database-only-architectures-win">6.1 Where Database-Only
+Architectures Win</h3>
+<p>Database-centric systems remain superior when:</p>
+<ul>
+<li>nearly all records remain hot,</li>
+<li>active relational joins dominate,</li>
+<li>mutation frequency is extremely high,</li>
+<li>transactional consistency is the primary concern,</li>
+<li>and archival mass is minimal.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>high-frequency trading engines,</li>
+<li>low-latency telemetry systems,</li>
+<li>live multiplayer synchronization layers,</li>
+<li>short-lived ephemeral state systems.</li>
+</ul>
+<p>In such environments, the archive layer provides little benefit and
+may introduce unnecessary complexity.</p>
+<hr />
+<h3 id="where-smh-becomes-superior">6.2 Where SMH Becomes Superior</h3>
+<p>SMH becomes structurally superior when systems possess:</p>
+<ul>
+<li>significant archival mass,</li>
+<li>immutable or semi-immutable historical records,</li>
+<li>semantic lineage,</li>
+<li>audit trails,</li>
+<li>cold historical strata,</li>
+<li>or long-term institutional memory.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>email systems,</li>
+<li>legal systems,</li>
+<li>medical records,</li>
+<li>AI semantic archives,</li>
+<li>research systems,</li>
+<li>media libraries,</li>
+<li>governance systems,</li>
+<li>accounting systems,</li>
+<li>compliance archives,</li>
+<li>and semantic operating systems.</li>
+</ul>
+<p>In these environments, flattening all memory into a single database
+creates:</p>
+<ul>
+<li>hot-path degradation,</li>
+<li>database bloat,</li>
+<li>operational opacity,</li>
+<li>and thermal confusion between active state and durable history.</li>
+</ul>
+<p>SMH resolves this by thermally separating memory roles.</p>
+<hr />
+<h2 id="why-this-improves-performance">7. Why This Improves
+Performance</h2>
+<p>The performance advantage of SMH is frequently misunderstood.</p>
+<p>The claim is not:</p>
+<blockquote>
+<p>“filesystems are faster than databases.”</p>
+</blockquote>
+<p>The claim is:</p>
+<blockquote>
+<p>databases perform better when they are allowed to remain
+computationally hot.</p>
+</blockquote>
+<p>A bounded hot tier:</p>
+<ul>
+<li>stays smaller,</li>
+<li>indexes faster,</li>
+<li>joins faster,</li>
+<li>caches better,</li>
+<li>and avoids carrying cold historical mass unnecessarily.</li>
+</ul>
+<p>Cold records remain accessible through:</p>
+<ul>
+<li>hydration,</li>
+<li>warm indexing,</li>
+<li>and projections, without permanently burdening the hot tier.</li>
+</ul>
+<p>Thus SMH improves performance indirectly by:</p>
+<ul>
+<li>preserving database thermal locality,</li>
+<li>reducing active index mass,</li>
+<li>and externalizing archival burden.</li>
+</ul>
+<p>SMH improves performance not by replacing databases, but by
+preserving computational locality against archival collapse.</p>
+<p>The architecture optimizes:</p>
+<ul>
+<li>memory temperature, not merely storage location.</li>
+</ul>
+<hr />
+<h2 id="example-deployment">8. Example Deployment</h2>
+<p>Consider a large-scale email system.</p>
+<pre><code>HOT
+- inbox indexes
+- unread state
+- active search cache
+- current session metadata
+
+WARM
+- recent monthly message partitions
+- recent attachment metadata
+- recently searched archives
+
+COLD
+- immutable .eml archive
+- canonical attachment filesystem
+- historical receipt lineage
+
+DEEP
+- yearly compressed bundles
+- offsite retention snapshots
+- legal preservation exports</code></pre>
+<p>A user searching old mail does not require every historical message
+to remain permanently loaded into active relational computation.</p>
+<p>Instead:</p>
+<ul>
+<li>the database remains hot and bounded,</li>
+<li>the archive remains durable and canonical,</li>
+<li>and historical partitions hydrate into active computation only when
+needed.</li>
+</ul>
+<p>This distinction scales naturally across:</p>
+<ul>
+<li>legal systems,</li>
+<li>medical archives,</li>
+<li>AI governance systems,</li>
+<li>research environments,</li>
+<li>and semantic operating systems.</li>
+</ul>
+<hr />
+<h2 id="relationship-to-existing-architectures">9. Relationship to
+Existing Architectures</h2>
+<p>SMH does not claim invention of:</p>
+<ul>
+<li>hierarchical filesystems,</li>
+<li>content-addressed storage,</li>
+<li>database indexes,</li>
+<li>event sourcing,</li>
+<li>append-only archives,</li>
+<li>or semantic file systems.</li>
+</ul>
+<p>Rather, SMH contributes thermal semantic memory formalization,
+governed tier movement, canonical archive authority doctrine, projection
+discipline, and explicit separation between computational memory and
+semantic memory.</p>
+<p>The novelty is architectural synthesis.</p>
+<h3 id="relationship-to-the-constitutional-computing-corpus">9.1
+Relationship to the Constitutional Computing Corpus</h3>
+<p>SMH is one paper in a broader research corpus that develops
+governance frameworks for computational systems. Several concepts SMH
+uses — receipts, governed transitions, canonical authority, projection
+discipline — are developed more formally in companion papers, and SMH
+inherits their architectural commitments rather than redeveloping
+them.</p>
+<p><em>Constitutional Storage</em> (Ableman Ableman 2025c) treats
+storage itself as a governed admissibility system: occupied state, free
+state, movement authority, deletion semantics, repair obligations, and
+emergency reserves are jointly governed under a single constitutional
+model. SMH composes naturally with Constitutional Storage: the four-tier
+thermal model can be understood as one possible capacity-jurisdiction
+structure (in the Constitutional Storage sense) in which hot, warm,
+cold, and deep are explicitly named jurisdictions with their own
+admissibility rules. Movement between tiers in SMH is exactly the
+<em>governed transition</em> primitive Constitutional Storage
+formalizes.</p>
+<p><em>The Three Hash Rule</em> (Ableman Ableman, in preparation)
+develops the receipt framework SMH uses. The
+<em>ArchiveHydrationReceipt</em>, <em>ArchiveEvictionReceipt</em>, and
+<em>StorageTierTransitionReceipt</em> artifacts introduced in Section 4
+are concrete instances of the role-based receipt typology Three Hash
+Rule develops: each functions in the receipt role (immutable historical
+record of the tier transition) and may simultaneously function in the
+evidence role (constitutional fact consulted by subsequent admissibility
+decisions about the same artifact’s tier eligibility).</p>
+<p><em>Constitutional Computation</em> (Ableman Ableman 2025a) defines
+the foundational governance vocabulary — canonical authority,
+admissibility, governed transitions — that SMH applies to memory
+hierarchy. The principle <em>“canonical authority lives in the archive;
+computational acceleration lives in the database”</em> (Section 2) is a
+domain-specific application of the canonical-authority doctrine
+developed in Constitutional Computation.</p>
+<p><em>Constitutional Legends</em> (Ableman Ableman 2025b) develops the
+jurisdictional projection system that SMH applies to filesystem
+organization. The principle <em>“an artifact has one canonical residence
+and many navigational addresses”</em> (Section 5) is a direct
+application of the projection-versus-canonical distinction developed in
+Constitutional Legends.</p>
+<p><em>Fractal Governance Architecture</em> (Ableman Ableman, in
+preparation) develops the federation-versus-hierarchy distinction that
+determines how SMH deployments compose across organizational boundaries.
+A single-organization SMH deployment is a hierarchical constitution:
+hot, warm, cold, and deep tiers are governed under one constitutional
+root. A multi-organization SMH deployment (cross-institutional archives,
+federated medical-records systems, multi-vendor compliance repositories)
+is a federated constitution: each organization’s SMH instance is
+independently governed, and cross-organization tier movement requires
+explicit receipt-recognition between the participating
+constitutions.</p>
+<p>SMH does not reproduce these frameworks; it applies them to the
+memory-hierarchy domain. Readers seeking the formal apparatus underlying
+the governance primitives invoked here are directed to the companion
+papers.</p>
+<hr />
+<h2 id="structural-homology-with-cognitive-systems">10. Structural
+Homology with Cognitive Systems</h2>
+<p>One reason SMH feels natural is that biological cognition already
+operates similarly.</p>
+<p>Human cognition distinguishes:</p>
+<ul>
+<li>active working memory,</li>
+<li>nearby recall,</li>
+<li>long-term memory,</li>
+<li>and deep inaccessible memory.</li>
+</ul>
+<p>The brain does not maintain all memories at maximum activation
+simultaneously.</p>
+<p>SMH mirrors this principle computationally.</p>
+<p>Hot memory resembles:</p>
+<ul>
+<li>active attention.</li>
+</ul>
+<p>Warm memory resembles:</p>
+<ul>
+<li>nearby recall.</li>
+</ul>
+<p>Cold memory resembles:</p>
+<ul>
+<li>stable long-term memory.</li>
+</ul>
+<p>Deep memory resembles:</p>
+<ul>
+<li>dormant historical preservation.</li>
+</ul>
+<p>This is not merely metaphorical.</p>
+<p>It reflects a universal constraint:</p>
+<blockquote>
+<p>systems that remember indefinitely cannot keep everything equally
+active.</p>
+</blockquote>
+<p>Thermal hierarchy emerges naturally.</p>
+<hr />
+<h2 id="failure-of-flat-memory-architectures">11. Failure of Flat Memory
+Architectures</h2>
+<p>Flat database architectures fail gradually rather than
+catastrophically.</p>
+<p>Over time:</p>
+<ul>
+<li>indexes accumulate,</li>
+<li>historical mass expands,</li>
+<li>cold records dominate storage,</li>
+<li>operational queries slow,</li>
+<li>backups become enormous,</li>
+<li>and archival meaning dissolves into monolithic relational
+sediment.</li>
+</ul>
+<p>The database becomes:</p>
+<ul>
+<li>operational engine,</li>
+<li>archive,</li>
+<li>legal memory,</li>
+<li>semantic substrate,</li>
+<li>and institutional history simultaneously.</li>
+</ul>
+<p>This thermal collapse is common precisely because databases are so
+capable.</p>
+<p>Their success encourages architectural overloading.</p>
+<p>SMH resists this structurally.</p>
+<hr />
+<h2 id="semantic-civilization-infrastructure">12. Semantic Civilization
+Infrastructure</h2>
+<p>The implications extend naturally from enterprise archives toward
+AI-native semantic systems.</p>
+<p>As AI systems increasingly generate:</p>
+<ul>
+<li>semantic artifacts,</li>
+<li>receipts,</li>
+<li>lineage graphs,</li>
+<li>governed outputs,</li>
+<li>and long-term epistemic archives, the distinction between:</li>
+<li>computational memory, and:</li>
+<li>semantic civilization memory becomes increasingly important.</li>
+</ul>
+<p>The archive is not merely storage.</p>
+<p>It becomes institutional continuity.</p>
+<p>This matters for:</p>
+<ul>
+<li>AI governance,</li>
+<li>semantic replay,</li>
+<li>auditability,</li>
+<li>legal memory,</li>
+<li>and long-term epistemic stability.</li>
+</ul>
+<hr />
+<h2 id="conclusion">13. Conclusion</h2>
+<p>Databases changed computing because they made active computation
+tractable.</p>
+<p>But active computation is not the same thing as durable memory.</p>
+<p>Semantic Memory Hierarchies restore this distinction.</p>
+<p>The architecture does not replace databases.</p>
+<p>It liberates them from archival overload.</p>
+<p>Databases become:</p>
+<ul>
+<li>fast,</li>
+<li>bounded,</li>
+<li>computational,</li>
+<li>and thermally optimized.</li>
+</ul>
+<p>Archives become:</p>
+<ul>
+<li>durable,</li>
+<li>inspectable,</li>
+<li>portable,</li>
+<li>canonical,</li>
+<li>and semantically authoritative.</li>
+</ul>
+<p>The result is not merely a hybrid storage model.</p>
+<p>It is a theory of memory roles inside computational systems.</p>
+<p>Hot databases. Cold archives. Governed movement between them.</p>
+<p>The database computes.</p>
+<p>The archive remembers.</p>
+<hr />
+<h2 id="appendix-a-minimal-smh-rule-set">Appendix A: Minimal SMH Rule
+Set</h2>
+<p>A minimal Semantic Memory Hierarchies constitution should
+specify:</p>
+<pre><code>1. Four-tier vocabulary and naming.
+2. Thermal threshold definitions (access frequency, recency,
+   mutation rate, computational involvement).
+3. Canonical-residence rule (every artifact has exactly one
+   canonical tier).
+4. Projection-versus-canonical distinction.
+5. Hot-tier bounding rule (size, mutation rate, or
+   computational-involvement cap).
+6. Warm-tier admission and eviction rule.
+7. Cold-tier immutability and hash-integrity rule.
+8. Deep-tier operational-distance rule.
+9. Hydration admission rule (cold -&gt; warm or cold -&gt; hot).
+10. Eviction admission rule (hot -&gt; warm, warm -&gt; cold).
+11. Demotion admission rule (warm -&gt; cold, cold -&gt; deep).
+12. Receipt requirements for each tier transition.
+13. Reconstruction rule (indexes are derived, not authoritative).
+14. Projection authority (canonical artifact is truth;
+    projections are navigation only).
+15. Cross-constitutional receipt-recognition rule (if multiple
+    SMH deployments interoperate).</code></pre>
+<p>Without these, the system may still store and retrieve artifacts.</p>
+<p>It cannot guarantee thermal discipline or canonical authority.</p>
+<hr />
+<h2 id="appendix-b-database-centric-to-smh-translation">Appendix B:
+Database-Centric to SMH Translation</h2>
+<table>
+<colgroup>
+<col style="width: 61%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>Database-Centric Concept</th>
+<th>SMH Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database as system-of-record</td>
+<td>Hot computational tier + cold canonical archive</td>
+</tr>
+<tr>
+<td>Archive table (cold rows in hot DB)</td>
+<td>Cold canonical archive with warm projection</td>
+</tr>
+<tr>
+<td>Soft delete (logical deletion flag)</td>
+<td>Tier demotion with deletion receipt</td>
+</tr>
+<tr>
+<td>Database backup</td>
+<td>Deep memory snapshot</td>
+</tr>
+<tr>
+<td>Read replica</td>
+<td>Warm projection of hot tier</td>
+</tr>
+<tr>
+<td>Materialized view</td>
+<td>Warm-tier projection of cold-tier content</td>
+</tr>
+<tr>
+<td>Audit log table</td>
+<td>Cold-tier receipt lineage</td>
+</tr>
+<tr>
+<td>Database migration</td>
+<td>Schema-aware hot-tier rehydration from cold archive</td>
+</tr>
+<tr>
+<td>Index</td>
+<td>Rebuildable warm-tier projection</td>
+</tr>
+<tr>
+<td>Database bloat</td>
+<td>Thermal collapse: cold mass accumulated in hot tier</td>
+</tr>
+<tr>
+<td>Archival partition</td>
+<td>Cold-tier jurisdiction with hydration receipts</td>
+</tr>
+<tr>
+<td>WORM table</td>
+<td>Cold-tier artifact with constitutional immutability</td>
+</tr>
+<tr>
+<td>Database compaction</td>
+<td>Hot-tier rebalancing plus cold-tier demotion</td>
+</tr>
+<tr>
+<td>Foreign key to historical record</td>
+<td>Reference to cold-tier canonical artifact</td>
+</tr>
+<tr>
+<td>Stored procedure over archive</td>
+<td>Hydrate-compute-emit-evict pattern</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-c-problem-to-solution-matrix">Appendix C:
+Problem-to-Solution Matrix</h2>
+<ul>
+<li><p><strong>Problem:</strong> Database bloat from historical
+accumulation<br />
+<strong>SMH Solution:</strong> Tier demotion to cold canonical
+archive<br />
+<strong>Remaining Cost:</strong> Eviction policy complexity</p></li>
+<li><p><strong>Problem:</strong> Slow joins over mixed hot/cold
+data<br />
+<strong>SMH Solution:</strong> Hot-tier bounding + cold hydration on
+demand<br />
+<strong>Remaining Cost:</strong> Hydration latency</p></li>
+<li><p><strong>Problem:</strong> Expensive backups of monolithic
+databases<br />
+<strong>SMH Solution:</strong> Cold-tier already inherently
+archivable<br />
+<strong>Remaining Cost:</strong> Cold-tier custody overhead</p></li>
+<li><p><strong>Problem:</strong> Lost provenance after database
+migration<br />
+<strong>SMH Solution:</strong> Cold-tier canonical authority survives
+migration<br />
+<strong>Remaining Cost:</strong> Schema-mapping receipts</p></li>
+<li><p><strong>Problem:</strong> Audit-log table overgrowth<br />
+<strong>SMH Solution:</strong> Receipt lineage in cold tier<br />
+<strong>Remaining Cost:</strong> Receipt indexing overhead</p></li>
+<li><p><strong>Problem:</strong> Search over cold records is slow<br />
+<strong>SMH Solution:</strong> Warm-tier projections and indexes<br />
+<strong>Remaining Cost:</strong> Projection-rebuild cost</p></li>
+<li><p><strong>Problem:</strong> Compliance retention conflicts with
+operational performance<br />
+<strong>SMH Solution:</strong> Deep-tier retention with no hot-tier
+presence<br />
+<strong>Remaining Cost:</strong> Deep-tier retrieval latency</p></li>
+<li><p><strong>Problem:</strong> Disaster recovery rebuilding hot
+state<br />
+<strong>SMH Solution:</strong> Cold tier is the source of truth; hot is
+reconstructible<br />
+<strong>Remaining Cost:</strong> Reconstruction time</p></li>
+<li><p><strong>Problem:</strong> Duplicate artifacts across
+services<br />
+<strong>SMH Solution:</strong> Canonical residence rule with projection
+symlinks<br />
+<strong>Remaining Cost:</strong> Projection-maintenance
+discipline</p></li>
+<li><p><strong>Problem:</strong> Hot-path degradation under archival
+load<br />
+<strong>SMH Solution:</strong> Hot-tier bounding cap<br />
+<strong>Remaining Cost:</strong> Tier-transition operational
+cost</p></li>
+<li><p><strong>Problem:</strong> Cross-organization archive
+interoperability<br />
+<strong>SMH Solution:</strong> Cross-constitutional receipt
+recognition<br />
+<strong>Remaining Cost:</strong> Federation governance overhead</p></li>
+<li><p><strong>Problem:</strong> Schema evolution against historical
+records<br />
+<strong>SMH Solution:</strong> Cold-tier canonical artifacts survive
+schema change<br />
+<strong>Remaining Cost:</strong> Translation discipline</p></li>
+</ul>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern software systems commonly flatten all
+memory roles into a single substrate: the database. Its nearest external
+comparison fields are storage, semantic, software. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Fixity and
+preservation can keep bytes stable while representation dependencies,
+executability, interpretation, and institutional custody decay. Formal
+vocabularies and graph links make commitments explicit but cannot by
+themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. Modularity, secure-development
+practice, and reproducibility reduce classes of failure but do not
+guarantee architectural coherence or user sovereignty. These limits are
+not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Consultative Committee for Space Data Systems.
+<em>Reference Model for an Open Archival Information System (OAIS)</em>.
+CCSDS 650.0-M-3, Issue 3, December 2024.
+https://ccsds.org/Pubs/650x0m3.pdf <strong>Relationship:</strong>
+Predecessor preservation model for information packages, representation
+information, and designated communities.</p>
+<p><strong>[E2]</strong> John Kunze et al. <em>The BagIt File Packaging
+Format (V1.0)</em>. RFC 8493, 2018.
+https://www.rfc-editor.org/rfc/rfc8493 <strong>Relationship:</strong>
+Adjacent custody and transfer format for payload manifests, fixity, and
+complete package movement.</p>
+<p><strong>[E3]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E6]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E7]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Storage</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788662</code>;<br />
+source SHA-256<br />
+<code>115725C7F7B72C3B720E4EF67F660F329B778D34C4D4232848C6082E849203F7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Cold Boot Continuity as a
+Deployment Primitive</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-3DB3470715D914D0</code>;<br />
+source SHA-256<br />
+<code>4CBB05E90E4ECA37EDA78C0E1FC1FDD180B2D6E0936831B57379AD7124776D4E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Custody</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20300952</code>;<br />
+source SHA-256<br />
+<code>E3887FE98E6369E39AC3FC2EAC63F2DF7C2AD18AD682B3A745C0CD0AD241D0F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1682AE03F0BA815</code>;<br />
+source SHA-256<br />
+<code>5D5D8306514E5FA2C4412D5B468A12681DDCF7002135DC00251A53BF84C79CD6</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>The Implementation
+Codex</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-872EEF9E301B18DE</code>;<br />
+source SHA-256<br />
+<code>1373E9770B5B86EB394BFAF993F5526155D406F4528694B465FDE22A7D525132</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<h3
+id="companion-papers-in-the-constitutional-computing-research-series">Companion
+Papers in the Constitutional Computing Research Series</h3>
+<p>Adam Ableman. 2025a. “Constitutional Computation: Computing Through
+Authorized Transformation.” Constitutional Computing Research
+Manuscript. https://doi.org/10.5281/zenodo.20624487</p>
+<p>Adam Ableman. 2025b. “Constitutional Legends: Jurisdictional
+Projection Systems for Governed Semantic Participation.” Constitutional
+Computing Research Manuscript.
+https://doi.org/10.5281/zenodo.20330323</p>
+<p>Adam Ableman. 2025c. “Constitutional Storage: Governed Occupancy,
+Governed Absence, and the Receipted Transitions Between Them.”
+Constitutional Computing Research Manuscript. [DOI to be assigned upon
+Zenodo deposit.]</p>
+<p>Adam Ableman. In preparation. “The Three Hash Rule: Governance
+Completeness Through Independent Cryptographic Commitments.”
+Manuscript.</p>
+<p>Adam Ableman. In preparation. “Fractal Governance Architecture:
+Constitutional Composability for Federated and Hierarchical Systems.”
+Manuscript.</p>
+<h3 id="storage-hierarchies-and-memory-architectures">Storage
+Hierarchies and Memory Architectures</h3>
+<p>McKusick, Marshall Kirk, Joy, William N., Leffler, Samuel J., and
+Fabry, Robert S. 1984. “A Fast File System for UNIX.” <em>ACM
+Transactions on Computer Systems</em> 2(3): 181-197.
+https://doi.org/10.1145/989.990. Foundational treatment of filesystem
+layout and free-space management whose cylinder-group locality concept
+informs SMH’s tier-locality discipline.</p>
+<p>Rosenblum, Mendel, and Ousterhout, John K. 1992. “The Design and
+Implementation of a Log-Structured File System.” <em>ACM Transactions on
+Computer Systems</em> 10(1): 26-52.
+https://doi.org/10.1145/146941.146943. Treatment of storage as
+append-only history with derived current state, an architectural pattern
+that informs SMH’s treatment of cold archives as canonical authority
+with derived warm-tier projections.</p>
+<p>O’Neil, Patrick, Cheng, Edward, Gawlick, Dieter, and O’Neil,
+Elizabeth. 1996. “The Log-Structured Merge-Tree (LSM-Tree).” <em>Acta
+Informatica</em> 33(4): 351-385. https://doi.org/10.1007/s002360050048.
+The LSM-tree architecture exemplifies the hot-warm-cold tier separation
+at the storage-engine level, with SMH generalizing the pattern to the
+system-architecture level.</p>
+<p>Patterson, David A., Gibson, Garth, and Katz, Randy H. 1988. “A Case
+for Redundant Arrays of Inexpensive Disks (RAID).” <em>Proceedings of
+the 1988 ACM SIGMOD International Conference on Management of Data</em>:
+109-116. https://doi.org/10.1145/50202.50214. Hierarchical storage
+organization for durability and performance that informs SMH’s treatment
+of tier-specific reliability properties.</p>
+<h3
+id="content-addressed-storage-and-append-only-archives">Content-Addressed
+Storage and Append-Only Archives</h3>
+<p>Benet, Juan. 2014. “IPFS: Content Addressed, Versioned, P2P File
+System (DRAFT 3).” arXiv:1407.3561. Content-addressed storage
+architecture relevant to SMH’s cold-tier canonical-authority
+doctrine.</p>
+<p>Chacon, Scott, and Straub, Ben. 2014. <em>Pro Git</em>, 2nd
+ed. Apress. https://doi.org/10.1007/978-1-4842-0076-6. Treatment of
+git’s content-addressed object model, an immutable hash-verified archive
+substrate that exemplifies SMH’s cold-tier discipline.</p>
+<h3 id="cognitive-models-of-memory-hierarchy">Cognitive Models of Memory
+Hierarchy</h3>
+<p>Atkinson, Richard C., and Shiffrin, Richard M. 1968. “Human Memory: A
+Proposed System and Its Control Processes.” In <em>The Psychology of
+Learning and Motivation</em>, edited by Kenneth W. Spence and Janet T.
+Spence, 89-195. Academic Press. The multi-store model of memory
+(sensory, short-term, long-term) that establishes the cognitive
+precedent SMH’s four-tier architecture parallels.</p>
+<p>Baddeley, Alan. 2003. “Working Memory: Looking Back and Looking
+Forward.” <em>Nature Reviews Neuroscience</em> 4(10): 829-839.
+https://doi.org/10.1038/nrn1201. Modern treatment of working memory as
+bounded, active computational substrate, supporting SMH’s hot-tier
+bounding discipline.</p>
+<p>Tulving, Endel. 1972. “Episodic and Semantic Memory.” In
+<em>Organization of Memory</em>, edited by Endel Tulving and Wayne
+Donaldson, 381-403. Academic Press. The episodic-semantic distinction in
+long-term memory that parallels SMH’s distinction between historical
+receipts (episodic) and canonical artifacts (semantic).</p>
+<h3 id="architectural-precedent-for-the-hamam-analogy">Architectural
+Precedent for the Hamam Analogy</h3>
+<p>Necipoglu, Gulru. 2005. <em>The Age of Sinan: Architectural Culture
+in the Ottoman Empire</em>. Princeton University Press. Comprehensive
+treatment of Mimar Sinan’s architectural corpus, including the
+thermal-zone hamam designs whose principles inform the SMH analogy.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20793071">10.5281/zenodo.20793071</a></p>
