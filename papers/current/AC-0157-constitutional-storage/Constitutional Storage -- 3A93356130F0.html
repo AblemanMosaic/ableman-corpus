@@ -1,0 +1,1907 @@
+<h1 id="constitutional-storage">Constitutional Storage</h1>
+<h2
+id="governed-occupancy-governed-absence-and-the-receipted-transitions-between-them">Governed
+Occupancy, Governed Absence, and the Receipted Transitions Between
+Them</h2>
+<h3
+id="a-system-is-not-full-when-space-runs-out.-it-is-full-when-its-state-is-ungoverned.">A
+system is not full when space runs out. It is full when its state is
+ungoverned.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern storage systems already manage free space through free lists,
+allocators, compaction, tiering, garbage collection, replication,
+quotas, snapshots, reserves, and recovery logs. This paper does not
+claim to invent those mechanisms. Its central claim is different:
+<em>storage health depends on constitutional consistency across occupied
+state, free state, movement authority, deletion semantics, repair
+obligations, and emergency reserves — and these mechanisms are usually
+specified as independent operational subsystems rather than as one
+coherent admission, receipt, repair, and authority model.</em>
+Constitutional Storage offers that integrated specification.</p>
+<p>Dense storage systems often inherit a <em>false unity</em> of a
+different kind. They collapse object identity, object placement,
+free-space discovery, lookup routing, deletion semantics, fragmentation
+repair, auditability, and execution authority into a single operational
+surface. In hash tables this collapse appears in the popular “full
+parking lot” problem: as a table approaches capacity, empty slots become
+rare, greedy insertion forms clusters, and lookup or insertion appears
+to slow under the weight of probability. In allocators, file systems,
+object stores, and artifact archives, the same collapse appears as
+fragmentation, stale descriptors, free-space table growth, expensive
+compaction, ambiguous deletion, and recovery failure. But the deeper
+failure is upstream: when occupied state is not constitutionally
+governed — when retention is unjustified, movement authority is unclear,
+deletion semantics are ambiguous, repair debt is unbounded, and reserve
+discipline is informal — free-space failure is the symptom rather than
+the disease.</p>
+<p>This paper proposes <strong>Constitutional Storage</strong>: a
+storage architecture in which objects, spaces, transitions, receipts,
+repair obligations, low-overhead exceptions, and capacity reserves are
+separately represented and separately governed. The architecture treats
+<em>occupancy</em> and <em>absence</em> as parallel constitutional
+states, joined by <em>admissible transitions</em> between them. It
+introduces a Things table for object descriptors, a Spaces table for
+free extents, a transition constitution for admissible mutations,
+receipts for replayable legitimacy, and jurisdictional capacity classes
+for the differentiated reserves modern systems already use
+informally.</p>
+<p>Motivated by the popular account of Andrew Krapivin’s work on Elastic
+Hashing and the long shadow of Andrew Yao’s dense-hashing frame, this
+paper treats the “firebreak” insight as a special case of a broader
+principle: empty space is not nothing. It is state. Where open
+addressing manages empty slots inside the lookup geometry of a hash
+table, Constitutional Storage separates object lookup from space
+allocation through independently governed Things and Spaces tables. It
+then governs the transitions between them.</p>
+<p>A worked parking-infrastructure analogy in Section 2.5 illustrates
+the same separation between object lookup, free-space visibility, and
+jurisdictional routing — and the limits of physical analogies for
+digital occupancy governance. The intellectual contribution of the
+present paper is not the discovery of the pattern but its reconstruction
+as a unified constitutional specification spanning occupancy, absence,
+movement, repair, authority, and receipts.</p>
+<p>The model further introduces three distinct cost-governance
+mechanisms. <strong>Repair governance</strong> controls physical
+disorder: fragmentation, compaction, pinned objects, and free-space
+table growth. <strong>Batch governance</strong> controls receipt
+overhead by grouping many small operations into verifiable aggregate
+transitions. <strong>Fast-lane governance</strong> controls semantic
+significance by allowing trivial operations to use compact primitives
+only while they remain within scoped authority, bounded debt, and
+reconciliation rules.</p>
+<p>The result is not a claim that metadata makes physical costs vanish.
+Moving bytes still costs time. Compaction still amplifies writes. Dense
+indexes still matter. Receipts still consume space. Rather,
+Constitutional Storage claims that these costs become legible,
+governable, schedulable, and accountable once storage state is separated
+into its constitutional axes. The full parking lot is not abolished by
+magic. It is dissolved as sovereign architecture and reduced to one
+licensed province inside a larger governed system.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Storage systems are often designed as if emptiness were obvious.</p>
+<p>An empty slot is simply empty.</p>
+<p>A free block is simply free.</p>
+<p>A deleted file simply returns space.</p>
+<p>A hash table slot either contains a key or does not.</p>
+<p>This simplicity is useful at small scale. It becomes unstable at
+density.</p>
+<p>As systems approach fullness, absence stops behaving like nothing. It
+becomes structure. It has shape, locality, cost, history, ownership, and
+consequence. One free byte beside another free byte is not the same
+constitutional fact as one free byte separated from another by an
+immovable artifact. Ten thousand scattered holes are not equivalent to
+one contiguous open field. A deleted range is not merely missing
+content; it is a transition in object identity, placement, history, and
+future admissibility.</p>
+<p>The popular story of dense hash tables gives this instability a
+memorable image: the full parking lot. When the lot is mostly empty, a
+driver finds a space quickly. When the lot is almost full, the driver
+circles. Greedy strategies make the problem worse by taking the first
+available space, producing clusters that future searches must cross.
+Elastic Hashing changes the story by intentionally skipping some
+available spaces. Those empty spaces become firebreaks. They prevent
+clusters from merging and preserve future navigability.</p>
+<p>This paper accepts the firebreak lesson and lifts it into a broader
+storage architecture.</p>
+<p>The important discovery is not only that an algorithm may skip a
+slot.</p>
+<p>The important discovery is that absence has structure.</p>
+<p>An empty location may be:</p>
+<pre><code>a firebreak
+a free extent
+a compaction target
+a deferred repair obligation
+a fast-lane budget
+a reserved jurisdiction
+a fragmentation symptom
+a constitutional violation</code></pre>
+<p>A storage system fails when it treats all of these as the same kind
+of nothing.</p>
+<p>Constitutional Storage therefore begins from a separation:</p>
+<pre><code>object identity != object placement
+object placement != free-space state
+free-space state != mutation admissibility
+mutation admissibility != historical receipt
+historical receipt != current authority</code></pre>
+<p>When these are collapsed, dense storage becomes chaotic.</p>
+<p>When they are separated, dense storage becomes governable.</p>
+<hr />
+<h2 id="scope">2. Scope</h2>
+<p>Before scoping the paper, one boundary needs to be set explicitly.
+Constitutional Storage does not argue that existing systems lack
+free-space management. They do not. Modern storage systems already use
+free lists, allocation classes, compaction, garbage collection, tiering,
+replication, quotas, snapshots, reserves, and recovery logs. The claim
+is different: these mechanisms are often specified as operational
+subsystems rather than as one constitutional model of admissible
+occupancy, absence, movement, repair, and authority. Constitutional
+Storage asks not only where space is free, but why occupied space
+remains legitimate, when it may move, when it must be deleted, when
+disorder becomes debt, and when emergency reserves may be consumed. The
+paper is a requirements framework for integrated storage governance, not
+a proposal for new low-level mechanisms.</p>
+<p>Constitutional Storage does not claim to eliminate physical cost.</p>
+<p>It does not make compaction free. It does not make indexes
+unnecessary. It does not make receipt overhead disappear. It does not
+replace dense hash tables, B-trees, LSM trees, slab allocators, or
+cache-local primitives.</p>
+<p>Its claim is narrower and stronger:</p>
+<blockquote>
+<p>Allocation, identity, repair, authority, and historical legibility
+should be separately represented and separately governed.</p>
+</blockquote>
+<p>The paper addresses storage systems in which objects may have durable
+identity, semantic meaning, authority constraints, audit requirements,
+deletion semantics, or repair obligations. The model is less useful for
+trivial, isolated, short-lived data structures where full governance
+would cost more than it clarifies. For those cases, the model introduces
+a governed fast lane rather than pretending every byte deserves full
+ceremony.</p>
+<p>Constitutional Storage is therefore not a universal replacement for
+compact data structures.</p>
+<p>It is a constitutional architecture for deciding when compactness is
+sufficient, when governance is required, and how the two coexist.</p>
+<hr />
+<h3 id="a-worked-example-mall-parking-as-constitutional-storage">2.5 A
+Worked Example: Mall Parking as Constitutional Storage</h3>
+<p>A familiar physical-infrastructure system has been implementing the
+architecture this paper proposes for decades. Large shopping-mall
+parking structures, particularly in regions where indicator-light
+systems have been deployed, instantiate the core Constitutional Storage
+pattern in concrete and humanly observable form. The worked example
+below maps each component of the parking system to a paper concept,
+identifies what the parking solution gets right that conventional
+dense-storage designs get wrong, and notes the gap that allowed the
+pattern to remain unrecognized in the systems-theory literature.</p>
+<p><strong>The parking infrastructure.</strong> A representative mall
+parking structure has the following observable components: each parking
+space has an overhead indicator light (typically green for free, red for
+occupied), the lights are driven by a sensor-based detection layer that
+tracks per-space occupancy state, each floor displays an aggregate sign
+showing the count of free spaces on that floor, spaces are numbered for
+identification, and drivers make routing and parking decisions by
+reading the lights and signs rather than by searching the lot.</p>
+<p><strong>The architectural mapping.</strong> The components of the
+mall parking system map directly onto the components of Constitutional
+Storage:</p>
+<ul>
+<li><p>The per-space indicator lights are the <em>Spaces table</em>.
+They encode free-space state per extent, independently of any object
+identity. A green light asserts that the extent is free; a red light
+asserts that it is occupied. The lights are derived from physical
+occupancy state, not generated independently.</p></li>
+<li><p>The per-floor aggregate signs are <em>Spaces-table aggregates
+over jurisdictions</em>. Each floor is a jurisdiction; the sign reports
+the count of free extents within that jurisdiction. Drivers can make
+routing decisions at the floor granularity without consulting individual
+space lights.</p></li>
+<li><p>The space numbers are the <em>Things table</em>. They allow a
+driver who has parked a specific car (an object with identity) to locate
+it again by identifier rather than by spatial search. The Things table
+answers “where is my car?”; the Spaces table answers “where is any free
+spot?”.</p></li>
+<li><p>The act of parking is a <em>transition</em> (free -&gt;
+occupied). The detection layer admits the transition by updating the
+per-space state, which propagates to the indicator light. The act of
+leaving is the inverse transition (occupied -&gt; free). Both
+transitions update the Spaces-table state without modifying the
+Things-table identifier the space carries.</p></li>
+<li><p>The driver’s decision process is <em>consultation of the
+constitutional layer before action</em>. A driver reads the per-floor
+sign to choose a jurisdiction, then reads per-space lights within that
+jurisdiction to choose an extent, then performs the parking transition.
+At no point does the driver probe densely through occupied spaces
+looking for one that happens to be free.</p></li>
+</ul>
+<p><strong>What the parking solution gets right.</strong> The
+conventional dense-storage failure mode this paper opens with — circling
+endlessly through a near-full table looking for a slot that may not
+exist, with no global free-space information available — is precisely
+the failure mode that mall parking infrastructure eliminates. A driver
+in a smart parking system does not greedy-probe; the driver consults the
+Spaces-table state directly and routes to a jurisdiction where free
+space is abundant. <em>Empty space is exposed as legible state, not
+encountered through dense search.</em> This is the architectural
+commitment the present paper makes for hash tables, allocators, file
+systems, and object stores.</p>
+<p>The per-floor aggregate signs further demonstrate that the pattern
+composes naturally across jurisdictional granularity. A driver who does
+not care which specific space they get but cares about avoiding crowded
+floors uses the level-aggregate sign as a routing primitive. “The top
+floor has hundreds of free spaces; the lower floors have a few; I will
+route to abundance and accept the walk.” This is the routing logic of a
+federated allocator that prefers high-availability jurisdictions,
+expressed at human scale.</p>
+<p><strong>The integration gap.</strong> The architectural pattern of
+exposing free-space state as legible constitutional information has been
+deployed in physical parking infrastructure for decades. Systems-theory
+work on hash tables, allocators, and storage has extensively developed
+individual mechanisms — probing strategies, allocation classes,
+compaction algorithms, garbage collection, tiering policies, replication
+management, write-ahead logging, snapshot regimes, lifecycle policies —
+but has rarely reconstructed these mechanisms as components of a
+<em>single constitutional specification</em> in which occupancy,
+absence, movement, repair, authority, and receipts are governed
+together. The present paper does not claim to discover individual
+storage mechanisms; it claims to offer their reconstruction as a unified
+constitutional specification.</p>
+<p><strong>Caveats on the analogy.</strong> The mall parking system is a
+partial instantiation of Constitutional Storage, not a complete one. It
+implements the Things-table / Spaces-table separation and the
+constitutional indexing layer, but it does not implement receipts
+(parking events are not durably auditable in most deployments),
+federation (one mall’s parking system does not interoperate with
+another’s), authority artifacts (there are no capabilities or
+delegations beyond the physical access controls), or governed amendments
+to the constitution itself (the lighting policy is fixed by the mall,
+not subject to constitutional revision).</p>
+<p>A further limit of the analogy is on the Things-table side. Cars in a
+parking system cannot be moved to colder jurisdictions, compressed for
+denser storage, deduplicated against other cars, or replicated across
+multiple spaces. Digital artifacts can. The parking analogy strongly
+demonstrates the lookup/allocation separation and the Spaces-table
+indexing layer, but it cannot demonstrate the
+<em>occupancy-mobility</em> dimension that distinguishes digital storage
+from physical parking. The Things table in digital storage is
+substantially more constitutionally active than the spot-numbering
+scheme in parking infrastructure suggests: digital objects are subject
+to retention policies, tiering obligations, deduplication rules,
+movement authorities, and lifecycle constraints that have no parking-lot
+analogue. The reasons the analogy cannot fully demonstrate the model are
+the same reasons digital storage especially benefits from it: mobility,
+deduplication, tiering, and versioning are precisely the constitutional
+surfaces that integrated governance is designed to discipline, and
+digital systems have far more such surface than parking systems do. The
+occupied-space governance developed in Section 7.4 is the part of the
+architecture the analogy cannot show.</p>
+<p>The analogy is useful for demonstrating the core pattern; the formal
+architecture extends the pattern with the additional machinery that
+digital storage systems can support.</p>
+<hr />
+<h2 id="the-failure-of-collapsed-storage">3. The Failure of Collapsed
+Storage</h2>
+<p>A collapsed storage system asks one structure to answer too many
+questions.</p>
+<p>In a simple open-addressing hash table, the array is expected to
+answer:</p>
+<pre><code>What keys exist?
+Where are they?
+Where is there room for new keys?
+How can a future lookup find a key?
+How much fullness can the table tolerate?
+What repair, if any, is required after insertion?</code></pre>
+<p>In a simple file allocator, the storage layer may be expected to
+answer:</p>
+<pre><code>What files exist?
+Where are their bytes?
+Which regions are free?
+Which holes are contiguous?
+Can an update preserve locality?
+Can deletion avoid fragmentation?
+When should compaction occur?</code></pre>
+<p>In a governed artifact system, still more questions arise:</p>
+<pre><code>Who authorized this mutation?
+What semantic object does this byte sequence represent?
+Is the object current, deleted, superseded, or historical?
+Can the state be replayed?
+Can the artifact move without changing identity?
+Can trivial operations bypass heavy receipt overhead?</code></pre>
+<p>The collapse is convenient because it hides the questions.</p>
+<p>It is dangerous because hidden questions do not disappear. They
+return as performance cliffs, stale metadata, fragmented heaps,
+ambiguous deletion, recovery failure, and audit gaps.</p>
+<p>Constitutional Storage rejects this collapse.</p>
+<p>It does not ask one structure to be the filing cabinet, parking map,
+legal record, repair schedule, and traffic policy.</p>
+<p>It separates those roles.</p>
+<hr />
+<h2 id="constitutional-storage-model">4. Constitutional Storage
+Model</h2>
+<p>A Constitutional Storage system is defined as:</p>
+<pre><code>CS = (A, T, S, Gamma, R, Omega, Lambda)</code></pre>
+<p>where:</p>
+<ul>
+<li><code>A</code> is the artifact arena, the physical or logical space
+in which artifact bodies may reside.</li>
+<li><code>T</code> is the Things table, mapping artifact keys to
+descriptors.</li>
+<li><code>S</code> is the Spaces table, representing free extents and
+storage-health summaries.</li>
+<li><code>Gamma</code> is the storage constitution, deciding
+admissibility of mutations and repairs.</li>
+<li><code>R</code> is the receipt ledger, recording admitted transitions
+and repair obligations.</li>
+<li><code>Omega</code> is the ordering relation over storage
+events.</li>
+<li><code>Lambda</code> is the lane policy, distinguishing full
+governance, batched governance, repair governance, and fast-lane
+governance.</li>
+</ul>
+<p>A storage transition has the form:</p>
+<pre><code>(A_t, T_t, S_t, p)  =&gt;Gamma  (A_{t+1}, T_{t+1}, S_{t+1}, r, pi)</code></pre>
+<p>where:</p>
+<ul>
+<li><code>p</code> is a storage petition,</li>
+<li><code>r</code> is a receipt,</li>
+<li><code>pi</code> is the proof or explanation that the transition was
+admitted.</li>
+</ul>
+<p>The constitution does not merely ask:</p>
+<pre><code>Can these bytes be written?</code></pre>
+<p>It asks:</p>
+<pre><code>Is this mutation admissible under the current state?
+Does it preserve descriptor correctness?
+Does it preserve free-space correctness?
+Does it create unacceptable fragmentation?
+Does it require immediate repair?
+May repair be deferred?
+Which lane may process it?
+What receipt must be emitted?</code></pre>
+<p>Thus storage becomes authorized transformation rather than raw
+mutation.</p>
+<hr />
+<h2 id="things-and-spaces">5. Things and Spaces</h2>
+<p>The central architectural separation is between
+<strong>Things</strong> and <strong>Spaces</strong>.</p>
+<p>The Things table records what exists:</p>
+<pre><code>ThingDescriptor {
+    key
+    address
+    length
+    state_hash
+    content_hash?
+    meaning_hash?
+    admissibility_hash?
+    locality_hash?
+    version
+    receipt_ref
+    lane
+    flags
+}</code></pre>
+<p>The Spaces table records what remains available:</p>
+<pre><code>FreeExtent {
+    start
+    length
+    class?
+    region?
+    mobility_constraints?
+    repair_status?
+}</code></pre>
+<p>A lookup asks the Things table:</p>
+<pre><code>lookup(key) -&gt; address, length</code></pre>
+<p>An allocation asks the Spaces table:</p>
+<pre><code>allocate(size, constraints) -&gt; start, length</code></pre>
+<p>This separates two questions that open addressing deliberately binds
+together:</p>
+<pre><code>Where can the object be placed?
+How will the object be found later?</code></pre>
+<p>In Constitutional Storage, the first is an allocation question.</p>
+<p>The second is an indexing question.</p>
+<p>They may be optimized differently, governed differently, compacted
+differently, and repaired differently.</p>
+<h3 id="minimal-example">5.1 Minimal Example</h3>
+<p>Initial state:</p>
+<pre><code>Arena A:
+    [0..1023] free
+
+Things T:
+    {}
+
+Spaces S:
+    FreeExtent(start=0, length=1024)</code></pre>
+<p>Create artifact <code>X</code> of length <code>128</code>:</p>
+<pre><code>petition:
+    Create(X, length=128)
+
+post-state:
+    Things:
+        X -&gt; ThingDescriptor(address=0, length=128, state_hash=H(X))
+
+    Spaces:
+        FreeExtent(start=128, length=896)
+
+receipt:
+    R_create_X</code></pre>
+<p>Create artifact <code>Y</code> of length <code>64</code>:</p>
+<pre><code>Things:
+    X -&gt; address=0, length=128
+    Y -&gt; address=128, length=64
+
+Spaces:
+    FreeExtent(start=192, length=832)</code></pre>
+<p>Delete <code>X</code>:</p>
+<pre><code>Things:
+    Y -&gt; address=128, length=64
+
+Spaces:
+    FreeExtent(start=0, length=128)
+    FreeExtent(start=192, length=832)
+
+receipt:
+    R_delete_X</code></pre>
+<p>Repair moves <code>Y</code> to reduce fragmentation:</p>
+<pre><code>move:
+    Y from [128..191] to [0..63]
+
+Things:
+    Y -&gt; address=0, length=64
+
+Spaces:
+    FreeExtent(start=64, length=960)
+
+receipt:
+    R_move_Y</code></pre>
+<p>The content of <code>Y</code> did not change.</p>
+<p>Its placement changed.</p>
+<p>The receipt records which axis changed.</p>
+<p>This is the whole architecture in miniature: things, spaces,
+movement, deletion, and repair become separately legible.</p>
+<hr />
+<h2 id="storage-invariants">6. Storage Invariants</h2>
+<p>A Constitutional Storage system must preserve a compact set of
+invariants.</p>
+<h3 id="coverage">6.1 Coverage</h3>
+<p>Every addressable unit in the arena must be classified:</p>
+<pre><code>unit in occupied or unit in free or unit in reserved</code></pre>
+<p>No unit may be unaccounted for.</p>
+<h3 id="disjointness">6.2 Disjointness</h3>
+<p>Free extents and occupied extents must not overlap.</p>
+<pre><code>forall f in S, forall d in T:
+    extent(f) intersect extent(d) = empty</code></pre>
+<h3 id="ownership">6.3 Ownership</h3>
+<p>Every occupied extent must be owned by exactly one current descriptor
+unless explicitly governed as shared, deduplicated, or
+copy-on-write.</p>
+<pre><code>occupied_extent -&gt; unique owner</code></pre>
+<h3 id="descriptor-correctness">6.4 Descriptor Correctness</h3>
+<p>Every descriptor must point to bytes whose state commitment matches
+the descriptor.</p>
+<pre><code>H(storage[address:length]) = descriptor.state_hash</code></pre>
+<h3 id="movement-preservation">6.5 Movement Preservation</h3>
+<p>If an artifact is moved without content or semantic change, its
+content or state commitment must remain stable, and the movement must be
+receipted as placement change rather than content change.</p>
+<h3 id="coalescence">6.6 Coalescence</h3>
+<p>Adjacent free extents must either be coalesced or explicitly recorded
+as non-coalescible for a constitutional reason.</p>
+<pre><code>Free[a, n] + Free[a+n, m] -&gt; Free[a, n+m]</code></pre>
+<h3 id="atomicity">6.7 Atomicity</h3>
+<p>Mutations touching Things, Spaces, receipts, and the arena must
+commit atomically or recover deterministically.</p>
+<h3 id="repair-boundedness">6.8 Repair Boundedness</h3>
+<p>Temporary disorder is admissible only if bounded by explicit
+thresholds and accompanied by repair obligations.</p>
+<h3 id="lane-containment">6.9 Lane Containment</h3>
+<p>Fast-lane operations must remain within their authorized scope or
+escalate.</p>
+<p>A fast lane that silently handles non-trivial state is not a fast
+lane.</p>
+<p>It is a breach.</p>
+<hr />
+<h3 id="capacity-with-jurisdiction">6.10 Capacity with Jurisdiction</h3>
+<p>Free space is not undifferentiated. Modern storage systems already
+maintain differentiated capacity informally: an emergency reserve held
+back from ordinary allocation, a repair-debt reserve held against
+compaction obligations, a failure-domain reserve held against
+replication recovery, a burst reserve held for traffic spikes, a
+legal-retention reserve held against regulatory obligations, a migration
+reserve held against pending tiering moves, a fast-lane budget held for
+trivial operations. These reserves are typically operational rather than
+constitutional: they exist as configuration thresholds, allocation
+watermarks, or scheduling priorities, but they are not always specified
+as jurisdictionally distinct capacity classes whose admissibility rules
+differ.</p>
+<p>Constitutional Storage treats capacity as <em>jurisdictional</em>.
+Each constitution decides which capacity jurisdictions to recognize,
+with what admissibility rules, with what reserve discipline, with what
+crossover authority, and with what reconciliation obligations. <em>The
+framework does not prescribe a canonical reserve typology</em>; it
+requires that whatever reserves a constitution chooses to maintain be
+specified as jurisdictional capacity classes with explicit
+constitutional rules, not as informal operational thresholds.</p>
+<p>This composes naturally with the lane containment invariant of
+Section 6.9: fast-lane budget is one jurisdiction of capacity among
+several, and its containment rules are one instance of the broader
+pattern that capacity jurisdictions have explicit boundary policies.</p>
+<h3 id="mechanical-durability-versus-constitutional-legitimacy">6.11
+Mechanical Durability versus Constitutional Legitimacy</h3>
+<p>A state recovered from write-ahead logs, snapshots, replicas, or
+erasure-coded reconstruction may be <em>byte-identical</em> to a valid
+prior state and yet <em>constitutionally illegitimate</em>. The
+mechanical durability of storage — the property that bytes survive
+failure and can be reconstructed — is necessary but not sufficient for
+constitutional admissibility. A recovered state may exhibit invalid
+allocations (Things-table entries whose Spaces-table extents are no
+longer consistent), unbounded repair debt (compaction obligations
+exceeding any constitutional deadline), unlicensed fast-path leakage
+(lane budgets exceeded without reconciliation), expired retention
+(objects past their constitutional lifetime), missing receipts
+(occupancy whose original admission is no longer producible), or
+ambiguous authority (delegations whose chain of attestation has been
+broken in the recovery path).</p>
+<p>Constitutional Storage distinguishes these two properties explicitly.
+<em>Mechanical durability</em> is the substrate-level property that
+storage state can be reconstructed after failure. <em>Constitutional
+legitimacy</em> is the framework-level property that the reconstructed
+state satisfies the framework’s admissibility predicates: invariant
+compliance, receipt producibility, authority chain integrity, repair
+debt boundedness, lane containment, and capacity-jurisdiction
+discipline. Recovery must produce both. A recovery process that produces
+byte-identical state but breaks constitutional legitimacy has succeeded
+mechanically and failed constitutionally; the framework treats this as a
+recovery failure requiring constitutional remediation, not as a
+successful recovery requiring no further action. Constitutional
+remediation is itself a governed response: it takes the form of
+receipted repair, receipted rollback to a previously legitimate state,
+or receipted replay against the constitution in force at the time of the
+original transitions, with the remediation transition’s own receipt
+recording what was restored, against which constitution, and by what
+authority. Mechanical recovery without governed remediation leaves the
+system byte-faithful but constitutionally adrift; mechanical recovery
+followed by governed remediation restores both substrate and
+standing.</p>
+<p>This distinction matters in three operational contexts.
+<em>Forensics</em>: explaining what a system was permitted to do at a
+given time requires constitutional legitimacy, not just mechanical
+reconstruction. <em>Compliance</em>: regulated workloads require that
+recovered state be auditable under the constitution that governed its
+creation, not merely that the bytes have been restored. <em>Long-term
+maintainability</em>: byte-faithful archives whose constitutional
+context has been lost are mechanically durable but operationally
+fragile, because future actions taken against them lack the legitimacy
+frame against which they could be evaluated.</p>
+<p>The framework’s commitment is that recovery operations must restore
+<em>both</em> mechanical state and constitutional legitimacy, and that
+the receipt of a recovery operation is itself a governed transition
+whose admissibility is checked against the constitution in force at the
+time of recovery.</p>
+<hr />
+<h2 id="three-costs-three-governance-mechanisms">7. Three Costs, Three
+Governance Mechanisms</h2>
+<p>Constitutional Storage separates three different costs that are often
+blurred.</p>
+<h3 id="physical-disorder-repair-governance">7.1 Physical Disorder:
+Repair Governance</h3>
+<p>Physical disorder concerns the shape of storage itself: fragmented
+free space, scattered extents, pinned regions, and failed contiguity. It
+is governed through metrics, repair obligations, compaction policies,
+and movement receipts.</p>
+<p>Repair governance answers:</p>
+<pre><code>What shape is the storage in?
+What shape must it remain in?
+What disorder may persist temporarily?
+What repair is owed?</code></pre>
+<h3 id="receipt-overhead-batch-governance">7.2 Receipt Overhead: Batch
+Governance</h3>
+<p>Receipt overhead concerns the cost of proving many small operations.
+It is governed through batches, Merkle roots, aggregate receipts, and
+inclusion proofs.</p>
+<p>Batch governance answers:</p>
+<pre><code>Which operations may be grouped?
+What aggregate state transition did they produce?
+Can each operation still be proven inside the batch?</code></pre>
+<h3 id="semantic-significance-fast-lane-governance">7.3 Semantic
+Significance: Fast-Lane Governance</h3>
+<p>Semantic significance concerns whether an operation is trivial enough
+to use compact machinery without full procedure. It is governed through
+lane scope, lane authority, budgets, reconciliation, and escalation.</p>
+<p>Fast-lane governance answers:</p>
+<pre><code>Is this operation truly trivial?
+Who authorized reduced procedure?
+How much unreconciled state may accumulate?
+When must the operation escalate?</code></pre>
+<p>These mechanisms may interact, but they do not answer the same
+question. Repair governs physical layout. Batching governs proof cost.
+Fast lanes govern procedural weight.</p>
+<hr />
+<h3 id="occupancy-legitimacy-governance-of-occupied-space">7.4 Occupancy
+Legitimacy: Governance of Occupied Space</h3>
+<p>The three governance mechanisms above — repair, batch, fast-lane —
+address how storage state is <em>changed</em> under constitutional
+discipline. They do not yet address why specific state is <em>legitimate
+in the first place</em>. Free-space failure is often downstream of
+occupied-space failure. A system runs out of usable space not only
+because holes are poorly tracked, but because occupied regions have
+unclear legitimacy: stale objects persist past their justification, cold
+objects remain in hot storage, pinned objects are not constitutionally
+justified for the pinning, replicas exceed policy, legal holds are
+ambiguous, deletion is incomplete, and objects that should be moved,
+compressed, deduplicated, or demoted to colder jurisdictions remain
+sovereign in their current placement.</p>
+<p><em>The emergency is not that the system cannot find a hole. The
+emergency is that it never governed why the full spaces deserved to
+remain full.</em></p>
+<p><strong>Occupied-space governance as a constitutional
+question.</strong> Occupancy legitimacy is the Things-table analogue of
+what Spaces-table governance has done for free-space. Where Spaces
+governance asks <em>where is space free, under what jurisdiction, and
+with what reserve discipline?</em>, occupancy governance asks <em>why
+does each occupied extent currently retain its space, under what
+authority, with what expiration, and under what movement
+obligation?</em> Both are constitutional questions about state
+legitimacy; both produce admissibility decisions about transitions; both
+are settled through receipts and reconciled through repair governance.
+The framework treats them symmetrically.</p>
+<p><strong>Failure modes of unjustified occupancy.</strong> Concrete
+failures attributable to ungoverned occupancy include:</p>
+<ul>
+<li><em>Stale retention</em>: objects retained past their
+constitutionally justified lifetime, often because expiration policy was
+never declared or because deletion semantics were ambiguous.</li>
+<li><em>Tier inversion</em>: cold objects occupying hot storage, or hot
+objects exiled to cold storage, because movement authority was never
+granted and tiering policy was never enforced.</li>
+<li><em>Unjustified pinning</em>: objects marked immovable without a
+constitutional reason for the pinning, often because pinning was an
+operational shortcut whose justification decayed but whose status
+persisted.</li>
+<li><em>Replica excess</em>: more copies of an object than policy
+permits, accumulated because replication mechanisms ran without
+retention reconciliation.</li>
+<li><em>Ambiguous holds</em>: legal, regulatory, or compliance holds
+applied to objects without clear scope, expiration, or release
+authority, leading to permanent quasi-retention.</li>
+<li><em>Incomplete deletion</em>: objects whose primary descriptors are
+removed but whose replicas, snapshots, derived indexes, or auxiliary
+structures persist, leaving the system in a state where the object is
+partially gone.</li>
+<li><em>Under-receipted authority</em>: occupancy whose original
+constitutional basis is no longer producible — the receipt of admission
+was lost, never created, or held only by a party with no incentive to
+retain it.</li>
+</ul>
+<p>Each of these failures is a constitutional question about the Things
+table that the conventional storage stack often handles operationally,
+partially, or not at all. Constitutional Storage requires that each be
+governed explicitly: every occupied extent should have a
+constitutionally derivable answer to <em>why this object, in this place,
+under what authority, until when?</em></p>
+<p><strong>Fast lanes as licensed jurisdictions, not lawless
+shortcuts.</strong> Section 7.3 introduced fast-lane governance as a
+mechanism for trivial operations to use compact primitives while
+remaining under constitutional scope. The occupancy-legitimacy framing
+sharpens this characterization. A governed fast lane is a <em>licensed
+jurisdiction</em> with explicit scope, debt budget, reconciliation
+deadlines, and escalation rules, rather than a <em>lawless shortcut</em>
+whose disorder eventually leaks into the main system. The constitutional
+distinction is exactly the distinction between governed and ungoverned
+occupancy: a fast-lane object occupies its space under explicit,
+time-bounded, reconciliation-obligated authority, not under the silent
+assumption that the shortcut will eventually be cleaned up.</p>
+<p><strong>The architectural symmetry.</strong> The Three Costs
+(physical disorder, receipt overhead, semantic significance) and their
+corresponding governance mechanisms apply to occupancy legitimacy as
+much as to absence management. Stale retention produces physical
+disorder (unrecoverable space) and should be subject to repair
+governance. Per-object legitimacy verification incurs receipt overhead
+and should be subject to batch governance. Trivial occupancy events
+(cache writes, ephemeral artifacts, in-flight buffers) carry minimal
+semantic significance and should be eligible for fast-lane governance
+with reconciliation obligations. The three governance mechanisms
+generalize from absence-management to a unified treatment of occupancy
+and absence as parallel constitutional states.</p>
+<hr />
+<h2 id="repair-governance">8. Repair Governance</h2>
+<p>Fragmentation is not merely scattered free space. It is a storage
+state in which future admissible transitions become more expensive or
+impossible.</p>
+<p>A fragmented system may have enough total free space and still be
+unable to admit an allocation requiring contiguity:</p>
+<pre><code>total_free = 1024
+largest_free_extent = 12
+request = 128</code></pre>
+<p>Naively, this is failure.</p>
+<p>Constitutionally, it is debt.</p>
+<p>Define:</p>
+<pre><code>fragmentation_score(S)
+free_extent_count(S)
+largest_free_extent(S)
+unrepaired_bytes(S)
+repair_deadline(S)
+pinned_fragmentation_score(S)</code></pre>
+<p>A constitution may set thresholds:</p>
+<pre><code>fragmentation_score(S) &lt;= F_max
+free_extent_count(S) &lt;= E_max
+largest_free_extent(S) &gt;= L_min
+unrepaired_bytes(S) &lt;= B_max
+repair_deadline(S) &lt;= T_max</code></pre>
+<p>A mutation is admissible if it either preserves these bounds or emits
+a bounded repair obligation:</p>
+<pre><code>admit(p) iff
+    preserves_health(p, S)
+    or creates_bounded_repair_obligation(p, S)</code></pre>
+<p>A repair operation may perform:</p>
+<pre><code>move artifact
+split artifact
+merge extents
+rewrite descriptors
+compress pages
+evacuate arena
+rebalance lanes
+reclassify hot/cold objects</code></pre>
+<p>A movement receipt has the form:</p>
+<pre><code>MoveReceipt {
+    key
+    old_address
+    new_address
+    length
+    content_hash_before
+    content_hash_after
+    reason
+    policy
+    prior_receipt
+}</code></pre>
+<p>The required invariant is:</p>
+<pre><code>content_hash_before = content_hash_after</code></pre>
+<p>unless the operation is explicitly a content-changing update.</p>
+<p>Thus physical movement does not silently become semantic
+mutation.</p>
+<hr />
+<h2 id="batch-governance">9. Batch Governance</h2>
+<p>Batching addresses proof and receipt overhead, not physical
+fragmentation.</p>
+<p>A batch is a governed set of operations:</p>
+<pre><code>Batch {
+    operations[]
+    scope
+    aggregate_prestate
+    aggregate_poststate
+    merkle_root
+    policy
+}</code></pre>
+<p>Instead of issuing one heavy receipt per tiny operation, the system
+may issue one aggregate receipt with inclusion proofs:</p>
+<pre><code>BatchReceipt {
+    batch_root
+    operation_count
+    pre_state_root
+    post_state_root
+    policy
+    proof_summary
+}</code></pre>
+<p>Each operation remains individually provable through Merkle
+inclusion, while the overhead is amortized across the batch.</p>
+<p>Batch governance is appropriate for:</p>
+<pre><code>tiny writes
+counters
+temporary cache entries
+hot index updates
+short-lived derived state
+fast-lane reconciliation</code></pre>
+<p>Batching does not remove governance.</p>
+<p>It changes governance granularity.</p>
+<hr />
+<h2 id="fast-lane-governance">10. Fast-Lane Governance</h2>
+<p>Ultra-compact structures remain valuable.</p>
+<p>Dense hash tables, compact arrays, slab allocators, bitmaps, caches,
+Bloom filters, and hot-path indexes may outperform full constitutional
+descriptors for trivial operations.</p>
+<p>Constitutional Storage therefore introduces a governed fast lane.</p>
+<p>A fast lane is not outside the constitution. It is a constitutionally
+authorized jurisdiction with reduced procedure.</p>
+<pre><code>FastLane {
+    scope
+    authority
+    jurisdiction
+    operation_class
+    representation
+    budget
+    reconciliation_rule
+    escalation_rule
+    audit_rule
+}</code></pre>
+<p>An operation may enter the fast lane only if it satisfies lane
+policy:</p>
+<pre><code>fast_admit(op, S, Lambda) iff
+    op.class in Lambda.allowed_classes
+    and op.size &lt;= Lambda.max_size
+    and op.risk &lt;= Lambda.max_risk
+    and op.semantic_weight &lt;= Lambda.max_semantic_weight
+    and op.scope subseteq Lambda.scope
+    and lane_debt &lt;= Lambda.max_debt</code></pre>
+<p>If any condition fails, the operation escalates:</p>
+<pre><code>fast lane -&gt; batched lane -&gt; full lane -&gt; administrative review</code></pre>
+<p>Fast-lane state must periodically reconcile with canonical state.
+Reconciliation checks:</p>
+<pre><code>fast-lane state root
+operation summary
+budget consumption
+fragmentation contribution
+descriptor consistency
+scope compliance
+semantic-weight compliance</code></pre>
+<p>The result may be:</p>
+<pre><code>confirm lane state
+promote objects to full lane
+compact lane
+flush lane
+quarantine lane
+revoke lane authority
+emit violation receipt</code></pre>
+<p>The fast lane is lawful because its boundaries are known.</p>
+<p>It may move quickly because it knows where it must stop.</p>
+<hr />
+<h2 id="mutation-semantics">11. Mutation Semantics</h2>
+<p>CRUD operations are not primitive effects. They are petitions whose
+meaning depends on which constitutional axis changes.</p>
+<h3 id="create">11.1 Create</h3>
+<p>A create petition requests admission to allocate space, write bytes,
+construct a descriptor, update free-space state, and emit a receipt.</p>
+<h3 id="read">11.2 Read</h3>
+<p>A read petition may be trivial, privileged, audited, private, or
+semantic depending on the artifact and jurisdiction. Reads may enter a
+fast lane when they do not alter state and do not disclose protected
+material.</p>
+<h3 id="update">11.3 Update</h3>
+<p>An update petition may be in-place, append-only, copy-on-write,
+page-local, relocation-based, or semantically transformative.</p>
+<p>The constitution distinguishes:</p>
+<pre><code>same identity, changed content
+same content, changed placement
+same meaning, changed representation
+superseded artifact
+partial deletion
+versioned mutation</code></pre>
+<h3 id="delete">11.4 Delete</h3>
+<p>Deletion is not disappearance.</p>
+<p>A delete petition changes current state while preserving historical
+legibility. The constitution decides whether deletion means:</p>
+<pre><code>remove current descriptor
+tombstone descriptor
+preserve receipt only
+preserve content hash
+preserve semantic identity
+permit address reuse
+forbid address reuse
+create new version</code></pre>
+<p>A deleted artifact may cease to occupy current state while remaining
+valid historical evidence.</p>
+<hr />
+<h2 id="partial-deletion-and-normalization">12. Partial Deletion and
+Normalization</h2>
+<p>Partial deletion is where naive storage often becomes
+constitutionally ambiguous.</p>
+<p>Suppose a file occupies:</p>
+<pre><code>File A = [0..99]</code></pre>
+<p>A petition deletes the first half:</p>
+<pre><code>delete [0..49]</code></pre>
+<p>A naive system might leave:</p>
+<pre><code>free [0..49]
+File A remainder [50..99]</code></pre>
+<p>Constitutional Storage instead asks what the operation means.</p>
+<p>If the content itself has changed, then the result is a new current
+version:</p>
+<pre><code>File A v1 = [0..99]
+File A v2 = [50..99]</code></pre>
+<p>If placement is normalized after deletion, the remaining content may
+be moved:</p>
+<pre><code>move [50..99] -&gt; [0..49]
+File A v2 -&gt; address 0, length 50
+free [50..99]</code></pre>
+<p>This is not merely deletion. It is:</p>
+<pre><code>content transition
+placement transition
+free-space transition
+receipt transition</code></pre>
+<p>The question is not simply:</p>
+<pre><code>Which bytes remain?</code></pre>
+<p>The constitutional question is:</p>
+<pre><code>What object now exists, where does it live, why is that transition
+admissible, and what history remains?</code></pre>
+<hr />
+<h2 id="recursive-index-governance-and-small-artifacts">13. Recursive
+Index Governance and Small Artifacts</h2>
+<p>The Things table itself must be stored somewhere.</p>
+<p>This creates a recursion:</p>
+<pre><code>artifact bodies need descriptors
+descriptors need indexes
+indexes need storage
+storage needs descriptors</code></pre>
+<p>Constitutional Storage handles this by classifying indexes as
+governed artifacts with special roles. Possible implementations
+include:</p>
+<pre><code>sparse hash table
+dense open-addressed hash table
+B-tree
+LSM tree
+trie
+perfect hash table
+bitmap-indexed slab
+append-only log with checkpointed index</code></pre>
+<p>The constitution need not choose one representation globally. It may
+assign representations by jurisdiction:</p>
+<pre><code>tiny hot keys:
+    dense fast-lane hash table
+
+large durable artifacts:
+    full descriptor index
+
+range queries:
+    B-tree
+
+write-heavy streams:
+    LSM
+
+immutable archives:
+    perfect hash or content-addressed map</code></pre>
+<p>Small artifacts are the hardest case for full constitutional
+descriptors. If an artifact is 16 bytes and its descriptor is 64 bytes,
+overhead dominates.</p>
+<p>The model responds through granularity adaptation:</p>
+<pre><code>inline values
+slab pages
+micro-batches
+page-level receipts
+Merkleized subrecords
+fast-lane indexes
+semantic grouping
+temporary lanes</code></pre>
+<p>Tiny artifacts may become subrecords inside a governed page:</p>
+<pre><code>PageDescriptor {
+    page_id
+    address
+    length
+    subrecord_root
+    policy
+}</code></pre>
+<p>The open-addressing problem therefore remains important as a local
+primitive.</p>
+<p>It is not abolished.</p>
+<p>It is licensed.</p>
+<hr />
+<h2 id="concurrency-and-recovery">14. Concurrency and Recovery</h2>
+<p>Concurrent writers can double-allocate the same extent unless
+allocation is governed.</p>
+<p>The constitution must prevent:</p>
+<pre><code>Writer A consumes extent X
+Writer B consumes extent X</code></pre>
+<p>Possible mechanisms include:</p>
+<pre><code>single-writer log
+extent locks
+compare-and-swap claims
+optimistic transactions
+epochs
+lease-based allocation
+sharded arenas
+conflict receipts</code></pre>
+<p>A concurrent allocation is admissible only if its claimed extent
+remains free at commit time.</p>
+<pre><code>admit(allocation) iff
+    extent in free_state_at_commit</code></pre>
+<p>Crash recovery is the same problem under interrupted time.</p>
+<p>A storage transition may touch:</p>
+<pre><code>artifact body
+Things table
+Spaces table
+receipt ledger
+repair obligations
+lane budgets</code></pre>
+<p>A crash between these updates can create contradiction.
+Constitutional Storage therefore requires transactional structure:</p>
+<pre><code>prepare
+reserve extent
+write body
+update descriptor
+update spaces
+emit commit receipt
+publish state root</code></pre>
+<p>The governing invariant is:</p>
+<pre><code>No current state without a receipt.
+No receipt without reconstructible state.</code></pre>
+<hr />
+<h2 id="threat-model">15. Threat Model</h2>
+<p>Constitutional Storage distinguishes four major threat classes.</p>
+<h3 id="benign-fragmentation">15.1 Benign Fragmentation</h3>
+<p>Benign fragmentation arises from ordinary mixed-size create, update,
+and delete operations. It is handled through coalescence, repair
+obligations, batching, and background compaction.</p>
+<h3 id="adversarial-fragmentation">15.2 Adversarial Fragmentation</h3>
+<p>Adversarial fragmentation arises when a workload intentionally
+creates pathological layouts:</p>
+<pre><code>allocate large
+allocate small
+allocate large
+allocate small
+delete large</code></pre>
+<p>The constitution may respond with allocation-class separation, slab
+isolation, mobility requirements, repair surcharges, lane revocation, or
+workload quarantine.</p>
+<h3 id="pinned-object-fragmentation">15.3 Pinned-Object
+Fragmentation</h3>
+<p>Pinned objects cannot always move. Objects may be pinned because of
+external references, memory mapping, hardware constraints, real-time
+access, legal hold, active transactions, or cross-jurisdictional
+anchoring.</p>
+<p>Pinned objects require mobility classes:</p>
+<pre><code>movable
+temporarily pinned
+permanently pinned
+movable only through indirection
+movable only with authority</code></pre>
+<h3 id="unlicensed-fast-path-behavior">15.4 Unlicensed Fast-Path
+Behavior</h3>
+<p>A fast lane becomes dangerous when it handles operations outside its
+scope. The threat is not speed. The threat is hidden significance.</p>
+<p>Unlicensed fast-path behavior includes:</p>
+<pre><code>semantic objects treated as trivial
+authority-bearing state cached without reconciliation
+fast-lane debt exceeding budget
+cross-jurisdictional operations handled locally
+compact indexes becoming canonical without receipts</code></pre>
+<p>The remedy is escalation, quarantine, reconciliation, and possible
+revocation of lane authority.</p>
+<hr />
+<h2 id="physical-cost">16. Physical Cost</h2>
+<p>Governance cannot abolish physics.</p>
+<p>Compaction moves bytes. Receipts consume space. Indexes consume
+memory. Batches need reconciliation. Fast lanes need audits.</p>
+<p>The constitution can govern these costs but not erase them.</p>
+<p>Storage policy should therefore include budgets:</p>
+<pre><code>max_write_amplification
+max_compaction_bytes_per_operation
+max_background_repair_rate
+max_receipt_growth
+max_latency
+max_media_wear</code></pre>
+<p>A repair may be admissible in one regime and inadmissible in
+another.</p>
+<p>For example:</p>
+<pre><code>SSD with limited endurance:
+    defer compaction aggressively
+
+archival magnetic storage:
+    compact in large scheduled windows
+
+memory arena:
+    compact freely if references are relocatable
+
+real-time system:
+    avoid latency spikes; use incremental repair</code></pre>
+<p>The constitutional question is not:</p>
+<pre><code>Can disorder be removed for free?</code></pre>
+<p>It is:</p>
+<pre><code>When is the cost of repair admissible?</code></pre>
+<hr />
+<h2 id="relationship-to-open-addressing">17. Relationship to Open
+Addressing</h2>
+<p>Yao’s analysis and the later Krapivin-Farach-Colton-Kuszmaul result
+concern a deliberately constrained model: open addressing, probing,
+load, and the cost of finding items in dense tables.</p>
+<p>This model is artificial in the productive sense. It isolates the
+physics of one low-level province.</p>
+<p>Constitutional Storage does not claim that this province is
+meaningless.</p>
+<p>It claims that the province should not be mistaken for the whole
+kingdom.</p>
+<p>Open addressing asks:</p>
+<pre><code>How fast can lookup remain when the array itself is the main
+representation?</code></pre>
+<p>Constitutional Storage asks:</p>
+<pre><code>Which representation should govern lookup, placement, absence,
+repair, and authority?</code></pre>
+<p>These are different questions.</p>
+<p>A mature system may use elastic hashing or related dense-table
+techniques inside the Things table, inside fast lanes, inside caches, or
+inside compact metadata pages. But it should not force every artifact
+body to live under the same constraint.</p>
+<p>The result is architectural peace:</p>
+<pre><code>open addressing:
+    primitive
+
+constitutional storage:
+    system
+
+fast lane:
+    licensed primitive inside the system</code></pre>
+<p>Elastic Hashing teaches that greed can be locally rational and
+globally destructive.</p>
+<p>Taking the first open slot seems efficient.</p>
+<p>But taking every first open slot can erase the structure that future
+operations need.</p>
+<p>The generalized storage rule is:</p>
+<pre><code>Do not admit every mutation merely because it is mechanically possible.</code></pre>
+<p>The firebreak is a constitutional intuition in algorithmic form.</p>
+<hr />
+<h2 id="propositions">18. Propositions</h2>
+<h3 id="proposition-1-absence-is-state">Proposition 1: Absence Is
+State</h3>
+<p>A storage architecture that cannot explain its empty spaces cannot
+fully explain its occupied spaces.</p>
+<p>The constitution of things requires a constitution of holes.</p>
+<h3
+id="proposition-2-separation-of-things-and-spaces-dissolves-blind-allocation">Proposition
+2: Separation of Things and Spaces Dissolves Blind Allocation</h3>
+<p>If object lookup is performed through descriptors and allocation is
+performed through free-space extents, then artifact bodies need not be
+discoverable through their own placement geometry.</p>
+<p>This dissolves the full-parking-lot problem for artifact bodies.</p>
+<p>It does not dissolve the need for efficient descriptor indexes.</p>
+<h3
+id="proposition-3-fragmentation-becomes-governable-when-measured">Proposition
+3: Fragmentation Becomes Governable When Measured</h3>
+<p>If a storage constitution defines fragmentation metrics, thresholds,
+and repair obligations, then fragmentation can be admitted, denied,
+deferred, or repaired as a policy-governed state rather than an
+unclassified side effect.</p>
+<h3 id="proposition-4-batch-governance-amortizes-legibility">Proposition
+4: Batch Governance Amortizes Legibility</h3>
+<p>If small operations are aggregated under a verifiable batch receipt,
+governance overhead can be amortized without making individual
+operations unverifiable.</p>
+<h3
+id="proposition-5-fast-lanes-preserve-efficiency-only-when-scoped">Proposition
+5: Fast Lanes Preserve Efficiency Only When Scoped</h3>
+<p>A low-overhead lane remains constitutional only if its authority,
+jurisdiction, operation class, debt budget, reconciliation rule, and
+escalation rule are explicit.</p>
+<p>A fast lane without reconciliation is not a lane.</p>
+<p>It is an escape.</p>
+<h3
+id="proposition-6-dense-hashing-remains-a-local-primitive">Proposition
+6: Dense Hashing Remains a Local Primitive</h3>
+<p>Ultra-compact indexes remain useful inside fast lanes and descriptor
+layers. Constitutional Storage subsumes them architecturally but does
+not render their theory irrelevant.</p>
+<h3
+id="proposition-7-governance-does-not-remove-physical-costs">Proposition
+7: Governance Does Not Remove Physical Costs</h3>
+<p>Compaction, receipts, indexes, and audits consume resources.
+Constitutional Storage does not eliminate these costs. It makes them
+admissible, bounded, scheduled, and attributable.</p>
+<hr />
+<h2 id="limitations">19. Limitations</h2>
+<p>Constitutional Storage can become its own overhead if lane boundaries
+are too broad, receipts are too frequent, repair obligations are too
+strict, or trivial operations are misclassified as meaningful.</p>
+<p>The model therefore depends on disciplined granularity.</p>
+<p>Compact primitives remain necessary. Dense hash tables, bitmaps,
+slabs, caches, and specialized indexes should remain available where the
+constitution grants them authority. The purpose of Constitutional
+Storage is not to replace those primitives, but to prevent them from
+silently becoming the whole governance model.</p>
+<p>The architecture also depends on honest metrics. A poor fragmentation
+score, weak semantic-weight classifier, or vague fast-lane policy can
+create false legitimacy. Constitutional representation clarifies the
+questions; it does not answer them automatically.</p>
+<p>The constitution itself must be designed, audited, revised, and
+constrained.</p>
+<p>Otherwise the map becomes another maze.</p>
+<hr />
+<h2 id="conclusion">20. Conclusion</h2>
+<p>The full parking lot is not merely full.</p>
+<p>It is underdescribed.</p>
+<p>It lacks a constitutional account of why some spaces remain occupied,
+which absences remain available, which objects may move, which reserves
+may be consumed, and which transitions are legitimate.</p>
+<p>Constitutional Storage begins by refusing to let one structure answer
+all questions. It separates things from spaces, placement from identity,
+mutation from admissibility, and history from current authority. It
+treats fragmentation as debt, defragmentation as repayment, batching as
+amortized legitimacy, and fast lanes as authorized low-friction
+jurisdictions rather than lawless shortcuts.</p>
+<p>This does not make storage free.</p>
+<p>It makes storage accountable.</p>
+<p>Small artifacts still require careful granularity. Indexes still
+require efficient implementation. Compaction still costs writes.
+Concurrency still needs ordering. Crashes still require recovery. But
+these are no longer hidden ghosts in the machine. They are named
+constitutional conditions with policies, thresholds, receipts, and
+escalation paths.</p>
+<p>A trivial operation may move quickly.</p>
+<p>A meaningful operation must justify itself.</p>
+<p>A broken space must repair itself or confess its debt.</p>
+<p>The firebreak taught us that an empty slot can save the future.</p>
+<p>Constitutional Storage replies:</p>
+<p>so can a justified occupancy, a governed reserve, and a receipted
+transition.</p>
+<hr />
+<h2 id="appendix-a-minimal-data-model">Appendix A: Minimal Data
+Model</h2>
+<pre><code>ThingDescriptor {
+    key: Key
+    address: Address
+    length: Length
+    state_hash: Hash
+    content_hash: Optional&lt;Hash&gt;
+    meaning_hash: Optional&lt;Hash&gt;
+    admissibility_hash: Optional&lt;Hash&gt;
+    locality_hash: Optional&lt;Hash&gt;
+    version: Version
+    lane: LaneId
+    receipt_ref: ReceiptRef
+    flags: Flags
+}</code></pre>
+<pre><code>FreeExtent {
+    start: Address
+    length: Length
+    region: RegionId
+    class: SizeClass
+    mobility: MobilityClass
+    repair_status: RepairStatus
+}</code></pre>
+<pre><code>RepairObligation {
+    id: ObligationId
+    kind: RepairKind
+    affected_range: ExtentSet
+    created_by: ReceiptRef
+    deadline: LogicalTime
+    bound: RepairBound
+    priority: Priority
+}</code></pre>
+<pre><code>LanePolicy {
+    lane_id: LaneId
+    authority: Authority
+    jurisdiction: Scope
+    allowed_classes: OperationClass[]
+    max_size: Size
+    max_risk: Risk
+    max_semantic_weight: SemanticWeight
+    max_debt: Debt
+    reconciliation_interval: Interval
+    escalation_rule: Rule
+}</code></pre>
+<hr />
+<h2 id="appendix-b-storage-health-metrics">Appendix B: Storage Health
+Metrics</h2>
+<p>A constitution may define:</p>
+<pre><code>total_free(S)
+largest_free_extent(S)
+free_extent_count(S)
+mean_free_extent_size(S)
+fragmentation_score(S)
+pinned_fragmentation_score(S)
+descriptor_overhead_ratio(S)
+write_amplification(S)
+receipt_overhead_ratio(S)
+lane_debt(S)
+unrepaired_bytes(S)</code></pre>
+<p>Example:</p>
+<pre><code>fragmentation_score(S) =
+    1 - (largest_free_extent(S) / total_free(S))</code></pre>
+<p>This simple formula is not universal, but it captures the intuition
+that free space is healthier when concentrated rather than
+shattered.</p>
+<p>A more complete metric may include pinned objects:</p>
+<pre><code>effective_fragmentation_score(S) =
+    1 - (largest_movable_repairable_extent(S) / total_free(S))</code></pre>
+<p>This distinguishes ordinary fragmentation from fragmentation caused
+by immovable anchors.</p>
+<hr />
+<h2 id="appendix-c-admission-sketches">Appendix C: Admission
+Sketches</h2>
+<h3 id="c.1-create-admission">C.1 Create Admission</h3>
+<pre><code>function admit_create(key, bytes, state):
+    if !authorized(key, create):
+        deny
+
+    lane = choose_lane(key, bytes, state)
+
+    if lane == FAST:
+        if fast_admit(create, state):
+            admit_fast
+        else:
+            escalate
+
+    extent = find_extent(len(bytes), state.Spaces)
+
+    if extent == none:
+        repair_plan = plan_compaction(len(bytes), state)
+        if repair_plan.admissible:
+            admit_with_repair(repair_plan)
+        else:
+            deny
+
+    if fragmentation_after(create) &gt; F_max:
+        obligation = create_repair_obligation()
+        if obligation.bounded:
+            admit_with_obligation
+        else:
+            deny
+
+    admit_full</code></pre>
+<h3 id="c.2-defragmentation-admission">C.2 Defragmentation
+Admission</h3>
+<pre><code>function admit_defrag(plan, state):
+    require authorized(plan.actor, defrag)
+
+    require all moved objects are movable
+
+    require no extent overlap in plan.post_state
+
+    require descriptor_updates match moved objects
+
+    require content_hash_before == content_hash_after
+        for all placement-only moves
+
+    require post_fragmentation_score &lt;= pre_fragmentation_score
+        or plan.justification explains exception
+
+    require crash_recovery_path exists
+
+    emit MoveReceipts
+    emit DefragReceipt
+
+    admit</code></pre>
+<h3 id="c.3-fast-lane-reconciliation">C.3 Fast-Lane Reconciliation</h3>
+<pre><code>function reconcile_fast_lane(lane, state):
+    root = compute_lane_state_root(lane)
+
+    verify lane operations within scope
+
+    verify debt &lt;= max_debt
+
+    verify no promoted object lacks descriptor
+
+    verify no semantic object remained hidden in fast lane
+
+    if all checks pass:
+        emit ReconciliationReceipt
+
+    else:
+        quarantine lane
+        revoke or suspend lane authority
+        escalate unresolved operations
+        emit ViolationReceipt</code></pre>
+<hr />
+<h2 id="appendix-d-problem-to-solution-matrix">Appendix D:
+Problem-to-Solution Matrix</h2>
+<ul>
+<li><p><strong>Problem:</strong> Full parking lot for artifact
+bodies<br />
+<strong>Constitutional Solution:</strong> Separate Things lookup from
+Spaces allocation<br />
+<strong>Remaining Cost:</strong> Descriptor index still needed</p></li>
+<li><p><strong>Problem:</strong> Free-space discovery<br />
+<strong>Constitutional Solution:</strong> Spaces table with extent
+lengths<br />
+<strong>Remaining Cost:</strong> Spaces table maintenance</p></li>
+<li><p><strong>Problem:</strong> Free-space table bloat<br />
+<strong>Constitutional Solution:</strong> Coalescing, compaction,
+summaries, page maps<br />
+<strong>Remaining Cost:</strong> Repair overhead</p></li>
+<li><p><strong>Problem:</strong> Fragmentation<br />
+<strong>Constitutional Solution:</strong> Fragmentation metrics and
+repair obligations<br />
+<strong>Remaining Cost:</strong> Write amplification</p></li>
+<li><p><strong>Problem:</strong> Partial deletion<br />
+<strong>Constitutional Solution:</strong> Versioned mutation plus
+normalization<br />
+<strong>Remaining Cost:</strong> Descriptor churn</p></li>
+<li><p><strong>Problem:</strong> Moving artifacts<br />
+<strong>Constitutional Solution:</strong> Movement receipts and
+descriptor updates<br />
+<strong>Remaining Cost:</strong> Atomicity requirement</p></li>
+<li><p><strong>Problem:</strong> Small-artifact overhead<br />
+<strong>Constitutional Solution:</strong> Batching, slabs, inline
+values, fast lanes<br />
+<strong>Remaining Cost:</strong> Less per-object audit detail</p></li>
+<li><p><strong>Problem:</strong> Receipt bloat<br />
+<strong>Constitutional Solution:</strong> Batch receipts and Merkle
+inclusion<br />
+<strong>Remaining Cost:</strong> Proof complexity</p></li>
+<li><p><strong>Problem:</strong> Concurrency<br />
+<strong>Constitutional Solution:</strong> Ordering, locks, epochs,
+transactional claims<br />
+<strong>Remaining Cost:</strong> Coordination overhead</p></li>
+<li><p><strong>Problem:</strong> Crash inconsistency<br />
+<strong>Constitutional Solution:</strong> Prepare/commit/replay
+discipline<br />
+<strong>Remaining Cost:</strong> Log and recovery cost</p></li>
+<li><p><strong>Problem:</strong> Physical media wear<br />
+<strong>Constitutional Solution:</strong> Repair budgets and scheduled
+compaction<br />
+<strong>Remaining Cost:</strong> Slower repair</p></li>
+<li><p><strong>Problem:</strong> Ultra-compact use case<br />
+<strong>Constitutional Solution:</strong> Governed fast lane<br />
+<strong>Remaining Cost:</strong> Reconciliation burden</p></li>
+<li><p><strong>Problem:</strong> Adversarial fragmentation<br />
+<strong>Constitutional Solution:</strong> Allocation-class policy and
+workload quarantine<br />
+<strong>Remaining Cost:</strong> Policy complexity</p></li>
+<li><p><strong>Problem:</strong> Pinned objects<br />
+<strong>Constitutional Solution:</strong> Mobility classes and repair
+routing<br />
+<strong>Remaining Cost:</strong> Reduced compaction freedom</p></li>
+<li><p><strong>Problem:</strong> Greedy local mutation<br />
+<strong>Constitutional Solution:</strong> Health-aware admission and
+firebreak preservation<br />
+<strong>Remaining Cost:</strong> Policy computation</p></li>
+<li><p><strong>Problem:</strong> Hidden triviality<br />
+<strong>Constitutional Solution:</strong> Fast-lane classification and
+escalation<br />
+<strong>Remaining Cost:</strong> Classification burden</p></li>
+<li><p><strong>Problem:</strong> Unjustified occupancy<br />
+<strong>Constitutional Solution:</strong> Occupancy legitimacy checks
+and lifecycle authority<br />
+<strong>Remaining Cost:</strong> Policy complexity</p></li>
+<li><p><strong>Problem:</strong> Emergency reserve misuse<br />
+<strong>Constitutional Solution:</strong> Capacity jurisdictions and
+reserve admission rules<br />
+<strong>Remaining Cost:</strong> Reduced ordinary capacity</p></li>
+<li><p><strong>Problem:</strong> Mechanical recovery without
+legitimacy<br />
+<strong>Constitutional Solution:</strong> Recovery receipts and
+constitutional audit<br />
+<strong>Remaining Cost:</strong> Recovery overhead</p></li>
+<li><p><strong>Problem:</strong> Incomplete deletion<br />
+<strong>Constitutional Solution:</strong> Deletion semantics across
+replicas, indexes, snapshots, and receipts<br />
+<strong>Remaining Cost:</strong> Tombstone and audit cost</p></li>
+</ul>
+<hr />
+<h2 id="appendix-e-popular-frame-translation-table">Appendix E: Popular
+Frame Translation Table</h2>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr>
+<th>Popular Representation</th>
+<th>Constitutional Translation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filing cabinet</td>
+<td>Artifact arena plus descriptor index</td>
+</tr>
+<tr>
+<td>Full parking lot</td>
+<td>Undergoverned occupancy plus undergoverned absence under high
+density</td>
+</tr>
+<tr>
+<td>Greedy algorithm</td>
+<td>Local mutation without long-term health obligation</td>
+</tr>
+<tr>
+<td>Traffic jam / cluster</td>
+<td>Fragmentation or probe-path congestion</td>
+</tr>
+<tr>
+<td>Firebreak</td>
+<td>Strategic preserved emptiness</td>
+</tr>
+<tr>
+<td>Elastic Hashing</td>
+<td>Implicit governance of holes inside lookup geometry</td>
+</tr>
+<tr>
+<td>Things table</td>
+<td>Explicit governance of object identity and placement</td>
+</tr>
+<tr>
+<td>Spaces table</td>
+<td>Explicit governance of absence</td>
+</tr>
+<tr>
+<td>Defragmentation</td>
+<td>Repayment of constitutional debt</td>
+</tr>
+<tr>
+<td>Fast lane</td>
+<td>Licensed low-overhead jurisdiction for trivial state</td>
+</tr>
+<tr>
+<td>99% capacity</td>
+<td>Density regime requiring explicit absence governance</td>
+</tr>
+<tr>
+<td>Speed limit</td>
+<td>Bound produced by a constrained representation</td>
+</tr>
+<tr>
+<td>Edge efficiency</td>
+<td>Benefit of keeping expensive governance proportional to
+consequence</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-f-lane-taxonomy">Appendix F: Lane Taxonomy</h2>
+<h3 id="full-constitutional-lane">Full Constitutional Lane</h3>
+<p>Used for:</p>
+<pre><code>durable artifacts
+cross-jurisdictional objects
+semantic records
+authority-bearing state
+regulated workflows
+high-value writes</code></pre>
+<p>Properties:</p>
+<pre><code>per-operation admission
+full receipts
+strong replayability
+explicit semantic commitments</code></pre>
+<h3 id="batched-lane">Batched Lane</h3>
+<p>Used for:</p>
+<pre><code>many small writes
+micro-artifacts
+index updates
+short bursts
+repair summaries</code></pre>
+<p>Properties:</p>
+<pre><code>aggregate admission
+Merkleized suboperations
+batch receipt
+individual inclusion proofs</code></pre>
+<h3 id="fast-lane">Fast Lane</h3>
+<p>Used for:</p>
+<pre><code>tiny hot values
+transient cache entries
+compact indexes
+low-risk counters
+allocator internals</code></pre>
+<p>Properties:</p>
+<pre><code>pre-authorized scope
+low metadata
+periodic reconciliation
+strict escalation rules</code></pre>
+<h3 id="repair-lane">Repair Lane</h3>
+<p>Used for:</p>
+<pre><code>defragmentation
+compaction
+coalescing
+migration
+index rebuilding
+lane reconciliation</code></pre>
+<p>Properties:</p>
+<pre><code>state-preserving movement
+repair receipts
+bounded cost budgets
+health improvement requirements</code></pre>
+<hr />
+<h2 id="appendix-g-failure-classes">Appendix G: Failure Classes</h2>
+<pre><code>UnderRecordedAbsence:
+    Free-space state cannot explain available capacity.
+
+DescriptorDrift:
+    Thing descriptor no longer matches stored bytes.
+
+DoubleAllocation:
+    Two descriptors claim overlapping extents.
+
+SilentFragmentationDebt:
+    Fragmentation exceeds bounds without repair obligation.
+
+UnlicensedFastPath:
+    Operation used fast lane without lane authority.
+
+FastLaneEscape:
+    Operation exceeded fast-lane scope but did not escalate.
+
+UnreceiptedMove:
+    Artifact placement changed without movement receipt.
+
+SemanticMisclassification:
+    Meaningful object treated as trivial fast-lane state.
+
+RepairDefault:
+    Repair obligation exceeded deadline.
+
+PinnedCompactionFailure:
+    Repair plan required moving an immovable object.
+
+ReceiptStateDivergence:
+    Receipt ledger cannot replay current state.
+
+UnderGovernedDeletion:
+    Current absence exists without historical explanation.
+
+FalseTriviality:
+    Operation claimed fast-lane status despite semantic or authority
+    significance.
+
+OverGovernance:
+    Operation forced into full governance despite satisfying
+    trivial-lane criteria,
+    causing avoidable overhead.
+
+UnboundedRepair:
+    Repair obligation exists without deadline, budget, or escalation
+    rule.</code></pre>
+<hr />
+<h2 id="appendix-h-minimal-constitutional-rule-set">Appendix H: Minimal
+Constitutional Rule Set</h2>
+<p>A minimal Constitutional Storage constitution should specify:</p>
+<pre><code>1. Object descriptor format.
+2. Free-space representation.
+3. Allocation admission rule.
+4. Deletion admission rule.
+5. Movement admission rule.
+6. Fragmentation metrics.
+7. Repair thresholds.
+8. Receipt requirements.
+9. Lane taxonomy.
+10. Fast-lane admission rule.
+11. Fast-lane reconciliation rule.
+12. Escalation rule.
+13. Crash recovery rule.
+14. Concurrency ordering rule.
+15. Authority model for administrative repair.
+16. Occupancy legitimacy rule.
+17. Capacity jurisdiction rule.
+18. Recovery legitimacy rule.</code></pre>
+<p>Without these, the system may still store bytes.</p>
+<p>It cannot fully justify state.</p>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern storage systems already manage free
+space through free lists, allocators, compaction, tiering, garbage
+collection, replication, quotas, snapshots, reserves, and recovery logs.
+Its nearest external comparison fields are governance, storage,
+observation. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are
+cited as predecessor literature, adjacent standards, or counterpressure
+- not as evidence that they caused the Ableman framework or that they
+validate its novel claims. The comparison isolates where established
+work already supplies provenance, formal assurance, institutional
+constraint, empirical method, or engineering practice, and where this
+paper adds a distinct claim about admissibility, authority, semantic
+custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Fixity and preservation can keep bytes stable while representation
+dependencies, executability, interpretation, and institutional custody
+decay. Telemetry can be complete at the instrumented boundary while
+omitting the causal variable, real-world effect, or authority question
+that matters. These limits are not generic disclaimers: they identify
+the assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Consultative Committee for Space Data Systems.
+<em>Reference Model for an Open Archival Information System (OAIS)</em>.
+CCSDS 650.0-M-3, Issue 3, December 2024.
+https://ccsds.org/Pubs/650x0m3.pdf <strong>Relationship:</strong>
+Predecessor preservation model for information packages, representation
+information, and designated communities.</p>
+<p><strong>[E6]</strong> John Kunze et al. <em>The BagIt File Packaging
+Format (V1.0)</em>. RFC 8493, 2018.
+https://www.rfc-editor.org/rfc/rfc8493 <strong>Relationship:</strong>
+Adjacent custody and transfer format for payload manifests, fixity, and
+complete package movement.</p>
+<p><strong>[E7]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Cold Boot Continuity as a
+Deployment Primitive</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-3DB3470715D914D0</code>;<br />
+source SHA-256<br />
+<code>4CBB05E90E4ECA37EDA78C0E1FC1FDD180B2D6E0936831B57379AD7124776D4E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Semantic Custody</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20300952</code>;<br />
+source SHA-256<br />
+<code>E3887FE98E6369E39AC3FC2EAC63F2DF7C2AD18AD682B3A745C0CD0AD241D0F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<h3 id="hash-tables-and-open-addressing">Hash Tables and Open
+Addressing</h3>
+<p>Bender, Michael A., Kuszmaul, William, and Zhou, Renfei. 2024. “Tight
+Bounds for Classical Open Addressing.” <em>Proceedings of the 65th IEEE
+Symposium on Foundations of Computer Science (FOCS 2024)</em>,
+pp. 636-657. https://doi.org/10.1109/FOCS61266.2024.00047.
+arXiv:2409.11280. Companion result establishing tight bounds for
+classical open-addressing schemes via the rainbow-hashing construction,
+relevant to the present paper’s treatment of dense open-addressing
+failure modes.</p>
+<p>Farach-Colton, Martin, Krapivin, Andrew, and Kuszmaul, William. 2024.
+“Optimal Bounds for Open Addressing Without Reordering.” <em>Proceedings
+of the 65th IEEE Symposium on Foundations of Computer Science (FOCS
+2024)</em>, pp. 594-605. https://doi.org/10.1109/FOCS61266.2024.00045.
+arXiv:2501.02305. Result overturning the long-standing conjectural
+intuition that uniform probing was optimal for open-addressing hash
+tables, and the motivating impetus for the present paper’s treatment of
+empty space as governed state.</p>
+<p>Bender, Michael A., Conway, Alex, Farach-Colton, Martin, Kuszmaul,
+William, and Tagliavini, Guido. 2023. “Tiny Pointers.” <em>Proceedings
+of the 2023 ACM-SIAM Symposium on Discrete Algorithms (SODA 2023)</em>,
+pp. 477-508. https://doi.org/10.1137/1.9781611977554.ch21. Extended
+version: <em>ACM Transactions on Algorithms</em> 21(4), Article 38.
+https://doi.org/10.1145/3700594. arXiv:2111.12800. Part of the
+intellectual lineage from compact addressing to dense hash-table design
+that informs the present paper’s treatment of object descriptors as
+separable from object placement.</p>
+<p>Knuth, Donald E. 1998. <em>The Art of Computer Programming, Volume 3:
+Sorting and Searching</em>, 2nd ed. Addison-Wesley. Chapter 6.4.
+Foundational treatment of hashing techniques including open addressing,
+chaining, and load-factor analysis.</p>
+<p>Pagh, Rasmus, and Rodler, Flemming Friche. 2004. “Cuckoo Hashing.”
+<em>Journal of Algorithms</em> 51(2): 122-144.
+https://doi.org/10.1016/j.jalgor.2003.12.002. Alternative
+collision-resolution strategy using multiple hash functions and
+constant-time worst-case lookup, relevant to the paper’s discussion of
+separating lookup geometry from space allocation.</p>
+<p>Yao, Andrew C. 1985. “Uniform Hashing is Optimal.” <em>Journal of the
+ACM</em> 32(3): 687-693. https://doi.org/10.1145/3828.3835. Foundational
+analysis of hashing under uniform-probing assumptions whose
+long-standing conjecture about dense open addressing the Farach-Colton,
+Krapivin, and Kuszmaul (2024) result substantially revises.</p>
+<h3 id="storage-systems-allocators-and-file-systems">Storage Systems,
+Allocators, and File Systems</h3>
+<p>Knuth, Donald E. 1997. <em>The Art of Computer Programming, Volume 1:
+Fundamental Algorithms</em>, 3rd ed. Addison-Wesley. Section 2.5 on
+dynamic storage allocation. Foundational treatment of allocation,
+fragmentation, and free-list management whose concerns the present paper
+recasts as constitutional questions over Spaces tables.</p>
+<p>Litwin, Witold. 1980. “Linear Hashing: A New Tool for File and Table
+Addressing.” <em>Proceedings of the 6th International Conference on Very
+Large Data Bases</em>: 212-223. Foundational treatment of dynamic
+hash-table expansion under load, relevant to the paper’s discussion of
+how dense storage failures manifest as representation failures rather
+than fundamental capacity limits.</p>
+<p>McKusick, Marshall Kirk, Joy, William N., Leffler, Samuel J., and
+Fabry, Robert S. 1984. “A Fast File System for UNIX.” <em>ACM
+Transactions on Computer Systems</em> 2(3): 181-197.
+https://doi.org/10.1145/989.990. Foundational treatment of file-system
+layout, cylinder groups, and free-space management whose concerns the
+present paper generalizes to the constitutional layer.</p>
+<p>Rosenblum, Mendel, and Ousterhout, John K. 1992. “The Design and
+Implementation of a Log-Structured File System.” <em>ACM Transactions on
+Computer Systems</em> 10(1): 26-52.
+https://doi.org/10.1145/146941.146943. Treatment of storage as
+append-only history with derived current state, an architectural pattern
+that informs the present paper’s treatment of receipts as immutable
+history with derived current authority.</p>
+<p>Wilson, Paul R., Johnstone, Mark S., Neely, Michael, and Boles,
+David. 1995. “Dynamic Storage Allocation: A Survey and Critical Review.”
+<em>Proceedings of the International Workshop on Memory Management</em>:
+1-116. https://doi.org/10.1007/3-540-60368-9_19. Survey of allocator
+design choices, fragmentation, and compaction strategies relevant to the
+paper’s discussion of repair governance.</p>
+<h3 id="popular-coverage">Popular Coverage</h3>
+<p>Nadis, Steve. 2025. “Undergraduate Upends a 40-Year-Old Data Science
+Conjecture.” <em>Quanta Magazine</em>, February 10, 2025. <a
+href="https://www.quantamagazine.org/undergraduate-upends-a-40-year-old-data-science-conjecture-20250210/">quantamagazine.org
+source</a>. Popular coverage of the Farach-Colton, Krapivin, and
+Kuszmaul (2024) open-addressing result, including commentary from Guy
+Blelloch and Sepehr Assadi on the significance of the breakthrough. The
+Quanta article provided the motivating presentation that prompted the
+present paper’s reframing of empty space as constitutional state.</p>
+<h3
+id="companion-papers-in-the-constitutional-computing-research-series">Companion
+Papers in the Constitutional Computing Research Series</h3>
+<p>Adam Ableman. 2025. “Constitutional Computation: Computing Through
+Authorized Transformation.” Constitutional Computing Research
+Manuscript. https://doi.org/10.5281/zenodo.20624487</p>
+<p>Adam Ableman. 2025. “Constitutional Legends: Jurisdictional
+Projection Systems for Governed Semantic Participation.” Constitutional
+Computing Research Manuscript.
+https://doi.org/10.5281/zenodo.20330323</p>
+<p>Adam Ableman. In preparation. “The Three Hash Rule: Governance
+Completeness Through Independent Cryptographic Commitments.”
+Manuscript.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20788662">10.5281/zenodo.20788662</a></p>

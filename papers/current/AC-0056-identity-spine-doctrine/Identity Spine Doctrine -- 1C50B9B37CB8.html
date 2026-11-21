@@ -1,0 +1,744 @@
+<h1 id="identity-spine-doctrine">Identity Spine Doctrine</h1>
+<h2
+id="operational-governance-for-global-term-key-admission-separation-and-revision">Operational
+Governance for Global Term Key Admission, Separation, and Revision</h2>
+<h3
+id="the-revised-doctrine-separates-occurrence-surface-form-local-binding-corpus-identity-version-and-coordinate.">The
+revised doctrine separates occurrence, surface form, local binding,
+corpus identity, version, and coordinate.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Governed knowledge systems require a stricter distinction between
+semantic identity and similarity than ordinary retrieval graphs. The
+Identity Spine Doctrine specifies an operational profile for admitting
+and maintaining Global Term Keys (GTKs): corpus-wide anchors for
+disambiguated semantic bindings.</p>
+<p>The source doctrine requires a sparse, stable, evidence-bound
+identity layer; forbids intuitive merger; treats extractor term
+identifiers as mechanical facts; and uses graph topology to discover
+candidates rather than declare identity. This revision preserves those
+commitments while correcting several absolutes. A surface form can
+invoke many bindings. A term occurrence may remain unresolved among
+several candidates. Cross-artifact edges establish relatedness, not
+identity. Content hashes identify versions, not necessarily the
+continuing identity of an amended GTK.</p>
+<p>The revised doctrine separates occurrence, surface form, local
+binding, corpus identity, version, and coordinate. It defines an
+identity assertion, evidence classes, negative and polysemy tests,
+admission outcomes, revision and fork semantics, impact-weighted
+correction, and a measurable evaluation program. It positions the
+doctrine as a governance profile for the GTK architecture rather than a
+new foundational semantic primitive.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. The custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/identity-</code></p>
+<p><code>spine-doctrine/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>DCF6BB04DE5816D37A84E2DCB4E5F2A455DE59CEC3134C8B3AF51E04670568BE</code>.
+The source remains unchanged.</p>
+<p>The doctrine and its named failure patterns are author material.
+Formal schemas, qualifications, corpus routing, tests, and decisions
+added here are AI editorial or synthetic candidates until adopted. No
+GTK membership, identity merger, or corpus mutation occurs through this
+paper.</p>
+<h2 id="identity-is-not-labeling">1. Identity Is Not Labeling</h2>
+<p>A word, label, identifier, embedding neighborhood, shared topic,
+adjacency, or repeated mention does not by itself establish semantic
+identity. A GTK anchors one disambiguated binding under a declared
+namespace, profile, and lineage.</p>
+<p>The doctrine protects a simple invariant:</p>
+<blockquote>
+<p>Identity must not be promoted from resemblance without evidence that
+the same governed binding is intended and preserved.</p>
+</blockquote>
+<p>This does not imply that concepts possess context-free essences. A
+GTK may be scoped, revised, forked, contested, or retired. The invariant
+is procedural: the system must expose the basis and limits of every
+identity assertion.</p>
+<h2 id="six-objects-that-must-remain-distinct">2. Six Objects That Must
+Remain Distinct</h2>
+<p>The identity spine separates:</p>
+<ol type="1">
+<li><strong>Occurrence:</strong> one located use in an exact artifact
+version.</li>
+<li><strong>Surface form:</strong> the characters or token sequence used
+there.</li>
+<li><strong>Local binding:</strong> the meaning resolved or proposed in
+that context.</li>
+<li><strong>GTK identity:</strong> the corpus-wide governed binding, if
+admitted.</li>
+<li><strong>GTK version:</strong> one immutable state of that
+identity.</li>
+<li><strong>Semantic coordinate:</strong> a registry address or
+topological location used by SCIT.</li>
+</ol>
+<p>One surface form can name several bindings. Several surface forms can
+name one binding. One occurrence can remain ambiguous. A coordinate can
+be stable while its metadata changes only under declared lineage rules.
+Collapsing these objects creates the very identity drift the doctrine is
+meant to prevent.</p>
+<h2 id="identity-assertion">3. Identity Assertion</h2>
+<p>Represent a proposed cross-artifact identity as:</p>
+<p><span
+class="math display"><em>ι</em> = (<em>o</em><sub><em>a</em></sub>, <em>o</em><sub><em>b</em></sub>, <em>g</em>, <em>p</em>, <em>e</em><sup>−</sup>, <em>e</em><sup>+</sup>, <em>c</em>, <em>r</em>),</span></p>
+<p>where <span
+class="math inline"><em>o</em><sub><em>a</em></sub></span> and <span
+class="math inline"><em>o</em><sub><em>b</em></sub></span> are
+source-bound occurrences, <span class="math inline"><em>g</em></span>
+the candidate GTK, <span class="math inline"><em>p</em></span> the
+interpretation profile, <span
+class="math inline"><em>e</em><sup>+</sup></span> supporting evidence,
+<span class="math inline"><em>e</em><sup>−</sup></span> counterevidence,
+<span class="math inline"><em>c</em></span> confidence or adjudication
+posture, and <span class="math inline"><em>r</em></span> the responsible
+decision and receipt.</p>
+<p>An assertion should record exact artifact hash, span or stable
+locator, extractor version, local label, definition or use context,
+namespace, effective epoch, and dependencies. The compact source
+tuple<br />
+<code>(artifact_id, term_id, label)</code> is useful for display but
+insufficient for durable custody when artifacts or extractors
+change.</p>
+<h2 id="evidence-for-identity">4. Evidence for Identity</h2>
+<p>Evidence can include:</p>
+<ul>
+<li>explicit equivalence declared by an authorized source;</li>
+<li>shared definition with matching necessary commitments;</li>
+<li>bidirectional substitutability in the relevant claims without
+changing consequences;</li>
+<li>preserved invariants across transformations;</li>
+<li>compatible exclusions and refusal conditions;</li>
+<li>lineage showing rename, translation, or controlled revision;
+and</li>
+<li>independent adjudication against plausible competing bindings.</li>
+</ul>
+<p>Repeated labels, embedding proximity, shared assumptions, graph
+edges, co-citation, paraphrase, or family resemblance are
+candidate-generation signals only. Even explicit equivalence is bounded
+by the authority and scope of its source.</p>
+<p>An identity decision should survive a <strong>negative test</strong>:
+identify one observation that would establish difference, and search for
+it before admission.</p>
+<h2 id="sparse-not-arbitrarily-small">5. Sparse, Not Arbitrarily
+Small</h2>
+<p>GTK should grow more slowly than raw occurrences, terms, and local
+concepts because it represents reusable corpus identities. But no
+universal count proves health. A broad multilingual or multi-domain
+corpus may legitimately need many GTKs; an artificially small registry
+can erase real distinctions.</p>
+<p>Monitor promotion rate, merge reversal rate, unresolved ambiguity,
+duplicate-identity rate, maintenance cost, reuse, and downstream
+consequence. Sparsity is a discipline of justified promotion, not a
+fixed size target.</p>
+<h2 id="polysemy-and-ambiguity">6. Polysemy and Ambiguity</h2>
+<p>The source rule “one term, one identity” requires a typed reading.
+One <strong>resolved local binding</strong> should not simultaneously be
+asserted as two incompatible GTK identities under the same profile. A
+surface form may map to many GTKs, and an occurrence may remain
+unresolved among a candidate set.</p>
+<p>Allowed postures include <code>RESOLVED</code>,
+<code>AMBIGUOUS</code>, <code>CONTESTED</code>,
+<code>NEW_LOCAL_BINDING</code>,<br />
+<code>NO_GTK_REQUIRED</code>,<br />
+and<br />
+<code>INSUFFICIENT_EVIDENCE</code>. Forcing a hard assignment can be
+worse than preserving ambiguity.</p>
+<p>Polysemy is exposed through competing binding sets; it is not hidden
+by merger. Homonymy, metaphor, domain shift, historical change,
+translation, and deliberate equivocation should remain inspectable.</p>
+<h2 id="mechanical-term-identity">7. Mechanical Term Identity</h2>
+<p>Extractor TERM IDs are facts only relative to an artifact version and
+extractor run. Ordering, numbering, or stable labels must not be
+inferred across runs unless the extractor contract guarantees it.</p>
+<p>A durable occurrence reference should include at least:</p>
+<p><span
+class="math display">(<em>a</em><em>r</em><em>t</em><em>i</em><em>f</em><em>a</em><em>c</em><em>t</em>_<em>h</em><em>a</em><em>s</em><em>h</em>, <em>e</em><em>x</em><em>t</em><em>r</em><em>a</em><em>c</em><em>t</em><em>o</em><em>r</em>_<em>v</em><em>e</em><em>r</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>o</em><em>c</em><em>c</em><em>u</em><em>r</em><em>r</em><em>e</em><em>n</em><em>c</em><em>e</em>_<em>i</em><em>d</em>, <em>l</em><em>o</em><em>c</em><em>a</em><em>t</em><em>o</em><em>r</em>, <em>s</em><em>u</em><em>r</em><em>f</em><em>a</em><em>c</em><em>e</em>).</span></p>
+<p>Where byte spans are unstable under normalization, a locator can
+combine structural path, surrounding hash, and canonicalization profile.
+A human-readable label accompanies the reference but does not determine
+identity.</p>
+<h2 id="topology-generates-candidates-not-verdicts">8. Topology
+Generates Candidates, Not Verdicts</h2>
+<p>High cross-artifact connectivity, repeated terms, shared claims,
+shared refusals, and overlapping invariants can reveal GTK-null concept
+families. They justify review. They do not establish identity.</p>
+<p>Hub gravity is especially dangerous: a prominent GTK may attract
+related but non-identical concepts. Candidate generation should
+therefore include nearest alternatives, edge-type diversity, negative
+edges, namespace boundaries, and low-frequency outliers.</p>
+<p>Topology and embeddings optimize recall; governed adjudication
+protects precision.</p>
+<h2 id="gtk-admission-workflow">9. GTK Admission Workflow</h2>
+<p>A proposed GTK or membership proceeds through:</p>
+<ol type="1">
+<li>bind exact source occurrences and local definitions;</li>
+<li>generate candidate identities and competing bindings;</li>
+<li>compare invariants, exclusions, consequences, and scope;</li>
+<li>search for counterexamples and polysemy;</li>
+<li>classify as admit, defer, contest, split, fork, or refuse;</li>
+<li>record authority, evidence, confidence, dependencies, and
+receipt;</li>
+<li>test affected queries, claims, coordinates, and transformations;
+and</li>
+<li>expose appeal, correction, and rollback or compensating
+lineage.</li>
+</ol>
+<p>No automated resolver receives authorial or governance authority
+merely from accuracy or confidence.</p>
+<h2 id="version-amendment-and-fork">10. Version, Amendment, and
+Fork</h2>
+<p>A content hash identifies an immutable GTK version. Continuing
+identity across versions requires a separate lineage identity and
+amendment relation. Otherwise any metadata or invariant change would
+create either a new identity silently or a misleading stable hash.</p>
+<p>An amendment remains within a GTK only when the admitted identity
+criterion is preserved. If the invariant floor, scope, exclusions, or
+consequences change beyond that criterion, the system should fork or
+supersede rather than overwrite.</p>
+<p>Historical versions remain queryable. Consumers must declare whether
+they follow a fixed version, an approved lineage head, or an
+epoch-specific view.</p>
+<h2 id="correction-severity">11. Correction Severity</h2>
+<p>GTK errors can propagate widely, but not every correction has equal
+severity. Classify impact by affected claims, artifacts, coordinates,
+compiled outputs, decisions, effects, reversibility, and exposure
+time.</p>
+<p>A mislabeled unused candidate differs from a merger that authorized
+effects. Corrections should produce impact analysis, quarantined
+dependents where needed, a new lineage event, and a record of what
+cannot be automatically repaired.</p>
+<h2 id="failure-patterns">12. Failure Patterns</h2>
+<ul>
+<li><strong>Drift collapse:</strong> versions change binding while
+retaining apparent identity.</li>
+<li><strong>Hub gravity distortion:</strong> related concepts are
+absorbed by a prominent key.</li>
+<li><strong>Semantic smearing:</strong> dense association masquerades as
+stable identity.</li>
+<li><strong>Paraphrase identity:</strong> wording similarity is treated
+as equivalence.</li>
+<li><strong>Topology laundering:</strong> graph position is promoted
+into identity.</li>
+<li><strong>Authority laundering:</strong> a resolver’s output gains
+standing it was not granted.</li>
+<li><strong>Version laundering:</strong> a mutable definition is
+presented as one immutable object.</li>
+<li><strong>Ambiguity erasure:</strong> uncertain occurrences are forced
+into a single GTK.</li>
+</ul>
+<p>These are forms of ontology laundering when provisional
+classification becomes a corpus fact without sufficient evidence and
+authority.</p>
+<h2 id="corpus-role-and-compression">13. Corpus Role and
+Compression</h2>
+<p>The two <strong>Global Term Key</strong> papers define the lexical
+primitive, its binding identity, alias set, competing binding set,
+invariant floor, adjacency, and resolution mechanics.
+<strong>SCIT</strong> defines coordinate identity, topology, candidate
+generation, and runtime resolution. <strong>Meaning as Binding</strong>
+supplies the broader relational account. <strong>Ontology
+Laundering</strong> diagnoses unjustified semantic promotion.</p>
+<p>The <strong>Identity Spine Doctrine</strong> is the operational
+governance profile connecting those architectures. It should not be
+presented as a separate identity primitive or a replacement GTK
+theory.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> can custody exact
+occurrences, local bindings, GTK lineages, evidence, disputes, and
+revisions. The universal <strong>GSM</strong> can type identity, alias,
+competition, adjacency, derivation, version, and disagreement without
+converting an edge into equivalence.</p>
+<h2 id="realization-funnel">14. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate registry, local-first,
+centralized, federated, probabilistic, human, agent, and hybrid identity
+regimes.</li>
+<li><strong>Specification:</strong> define object types, identity
+evidence, postures, authority, lineage, correction, and receipts.</li>
+<li><strong>CM1:</strong> retain admissible policies, including
+conservative high-deferral and plural-namespace variants.</li>
+<li><strong>CM2:</strong> prefer configurations by precision, recall,
+reversibility, inspectability, cost, and downstream risk.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for one corpus and governance regime.</li>
+<li><strong>IR:</strong> produce an Instance Realization or
+Implementation Realization of extraction, resolution, registry,
+adjudication, and query interfaces.</li>
+<li><strong>Evidence:</strong> measure errors, ambiguity, reversals,
+drift, impact, and user comprehension.</li>
+<li><strong>Revision:</strong> amend policies, lineages, and
+implementations through explicit receipts.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 criteria. It
+does not select an IC, admit a GTK, or certify an IR. Realization-stage
+IR remains distinct from Intermediate Representation in MCIR and related
+compiler contexts.</p>
+<h2 id="evaluation-program">15. Evaluation Program</h2>
+<p>Construct an adjudicated sample across domains, languages, historical
+periods, paraphrases, homonyms, metaphors, and deliberate collisions.
+Compare label matching, embedding similarity, graph topology, GTK
+resolution, and human or hybrid adjudication.</p>
+<p>Measure identity precision and recall, ambiguous-case calibration,
+inter-adjudicator agreement, false merge and false split rates, reversal
+cost, lineage correctness, query consequence, propagation radius,
+latency, and maintenance burden. Report performance separately by domain
+and posture; do not hide deferrals inside accuracy.</p>
+<h2 id="identity-governance-without-duplicate-foundations">Identity
+Governance Without Duplicate Foundations</h2>
+<p>The completed P1 corpus supports a compressed role assignment:</p>
+<ul>
+<li><p><strong>Layer:</strong> Lexical identity and resolution<br />
+<strong>Responsible work:</strong> the two GTK papers<br />
+<strong>What it must not absorb:</strong> corpus admission authority,
+complete ontology, or storage authority</p></li>
+<li><p><strong>Layer:</strong> Admission, split, merge, amendment, and
+correction<br />
+<strong>Responsible work:</strong> Identity Spine Doctrine<br />
+<strong>What it must not absorb:</strong> a new concept identity or
+replacement GTK theory</p></li>
+<li><p><strong>Layer:</strong> General governed binding<br />
+<strong>Responsible work:</strong> Constitutional Binding Theory<br />
+<strong>What it must not absorb:</strong> automatic proof that two
+occurrences share an identity</p></li>
+<li><p><strong>Layer:</strong> Promotion-failure diagnosis<br />
+<strong>Responsible work:</strong> Ontology Laundering<br />
+<strong>What it must not absorb:</strong> the positive admission
+protocol itself</p></li>
+<li><p><strong>Layer:</strong> Custody, retrieval, standing, and
+lineage<br />
+<strong>Responsible work:</strong> Governed Meaning Base<br />
+<strong>What it must not absorb:</strong> authorship, truth, or identity
+merely from storage</p></li>
+</ul>
+<p>The Identity Spine Doctrine is therefore a <strong>governance profile
+over GTK membership and lineage</strong>. Its reusable product is an
+admission decision envelope:</p>
+<p><span class="math display">$$
+\begin{aligned}
+d= (&amp;subject, candidates, evidence, counterevidence, policy, \\
+&amp;authority, outcome, impact, receipt)
+\end{aligned}.
+$$</span></p>
+<p>Allowed outcomes include <code>ADMIT_NEW</code>,
+<code>LINK_EXISTING</code>, <code>DEFER</code>, <code>CONTEST</code>,
+<code>SPLIT</code>, <code>FORK</code>,<br />
+<code>SUPERSEDE</code>, <code>RETIRE</code>,<br />
+and <code>REFUSE</code>. A decision can be exact and well-receipted
+while still being wrong; its value is that the error can be located,
+contested, and propagated through dependent projections.</p>
+<p>Corpus-wide integration also exposes a missing dependency rule. When
+identity <span class="math inline"><em>g</em></span> is split, merged,
+or superseded, the system must enumerate affected aliases, occurrences,
+definitions, graph edges, retrieval indexes, compiled projections,
+claims, and decisions. Dependents are not automatically repaired by
+changing the registry. They enter a typed posture such as
+<code>UNAFFECTED</code>,<br />
+<code>RECOMPUTE_REQUIRED</code>, <code>CONTESTED</code>,
+<code>QUARANTINED</code>, or <code>MANUAL_REVIEW</code>.</p>
+<p>The universal GSM should distinguish <code>SAME_BINDING_AS</code>,
+<code>NAMES</code>, <code>TRANSLATES_AS</code>,<br />
+<code>PARAPHRASES</code>, <code>NARROWER_THAN</code>,
+<code>BROADER_THAN</code>, <code>ADJACENT_TO</code>,
+<code>FORKED_FROM</code>,<br />
+and <code>SUPERSEDES</code>. Only the first is an identity assertion,
+and it is still scope- and version-bound. The doctrine should reject
+generic <code>RELATED_TO</code> as sufficient evidence for
+promotion.</p>
+<p>This integration establishes four editorial commitments: whether to
+adopt the governance-profile description as the paper’s official corpus
+role; whether to use the decision envelope above; whether identity
+changes must trigger dependency posture computation; and whether the
+positive protocol should explicitly pair with Ontology Laundering as its
+adversarial diagnostic rather than duplicating that paper’s
+taxonomy.</p>
+<h2
+id="identity-change-propagation-and-laundering-audit">Identity-Change
+Propagation and Laundering Audit</h2>
+<p>The fixed-seed comparison with SLBC, enforcement mechanics,
+Governance Coverage Gaps, and Ontology Laundering turns identity
+governance into a dependency-wide transition rather than a registry
+edit:</p>
+<p><span class="math display">$$
+\begin{aligned}
+I= (&amp;predecessor, decision, successor, authority, evidence, \\
+&amp;dependents, propagation, coverage, counterevidence, \\
+&amp;effects, receipt, appeal)
+\end{aligned}.
+$$</span></p>
+<p>SLBC consumes identity decisions when assigning purpose-specific
+standing. Enforcement structures may encode identities in data,
+topology, procedures, caches, or compiled gates. Every split, merge,
+supersession, or correction should enumerate downstream artifacts and
+prove or qualify propagation rather than assuming the registry update
+repaired them.</p>
+<p>Governance Coverage Gaps applies to identity change paths as well as
+effect paths. Hidden indexes, model prompts, resolver caches, provider
+stores, generated code, archives, and external integrations can retain
+the predecessor or adopt the successor without passing through the
+declared spine. Closure is bounded to discovered dependents and must
+reopen on counterevidence.</p>
+<p>Ontology Laundering is the adversarial diagnostic. A formally valid
+identity decision can still obscure authority, beneficiaries, burdens,
+alternatives, or incompatibility so that legitimacy appears inherited.
+The positive spine protocol and negative laundering audit should share
+exact predecessor/successor custody without collapsing into one verdict
+system.</p>
+<p>The universal GSM can type<br />
+<code>PROPAGATES_IDENTITY_DECISION_TO_DEPENDENT</code>,<br />
+<code>RECOMPUTES_PURPOSE_STANDING</code>,
+<code>INVALIDATES_ENFORCEMENT_BINDING</code>,<br />
+<code>ESCAPES_IDENTITY_PROPAGATION</code>,
+<code>AUDITED_FOR_ONTOLOGY_LAUNDERING</code>,<br />
+<code>PRESERVES_INCOMPATIBLE_PREDECESSOR</code>, and<br />
+<code>APPEALS_IDENTITY_TRANSITION</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the dependency-wide identity-transition record; require bounded
+propagation coverage and reopenable closure; invalidate semantic
+standing and enforcement bindings when required; and pair the positive
+protocol with an independent Ontology Laundering audit.</p>
+<h2 id="the-layered-identity-bill-of-materials">The Layered Identity
+Bill of Materials</h2>
+<p>Nine downstream uses show that the Identity Spine is consumed at
+several different identity layers. CHC binds immutable commitments.
+Digital Gold needs asset and automaton continuity. GTK resolves lexical
+and semantic identity. Coverage and enforcement depend on current
+semantic subjects. Ontology Laundering challenges unjustified changes.
+Semantic attractors propose convergence. Project lineage binds exact
+generations. Semantic Legitimacy assigns purpose-specific standing.</p>
+<p>The downstream-stable identity bill of materials is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+S= (&amp;artifact, publication, logical\_work, version\_family, \\
+&amp;semantic\_concept, system, implementation\_instance, \\
+&amp;deployment, epoch, relations)
+\end{aligned}.
+$$</span></p>
+<p>Every dependent should state which layer it binds and how it follows
+change: <code>PINNED_VERSION</code>,<br />
+<code>APPROVED_HEAD</code>, <code>EPOCH_VIEW</code>,
+<code>RE_RESOLVE_ON_CHANGE</code>,<br />
+or <code>MANUAL_REVIEW</code>. A new artifact hash does not necessarily
+create a new logical work. A concept split does not automatically fork a
+system. A system successor does not silently replace a deployment. One
+identity transition can affect several layers, but it must not collapse
+them.</p>
+<p>Propagation should detect mixed epochs. Caches, prompts, indexes,
+compiled projections, commitments, enforcement structures, external
+integrations, and deployments may simultaneously point to predecessor
+and successor identities. The result is not automatically invalid, but
+it requires a compatibility posture, affected-use analysis, and an
+explicit decision about coexistence, migration, quarantine, or
+retirement.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_IDENTITY_LAYER</code>,
+<code>PINS_IDENTITY_VERSION</code>,<br />
+<code>FOLLOWS_APPROVED_HEAD</code>, <code>REQUIRES_RERESOLUTION</code>,
+<code>COEXISTS_ACROSS_IDENTITY_EPOCH</code>,<br />
+<code>DETECTS_MIXED_IDENTITY_EPOCH</code>,
+<code>MIGRATES_DEPENDENT_BINDING</code>,<br />
+and<br />
+<code>REFUSES_CROSS_LAYER_COLLAPSE</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the layered identity bill of materials; require every
+consumer to declare its follow policy; treat mixed epochs as a
+first-class propagation state; and prohibit changes at one layer from
+silently rewriting the others.</p>
+<h2 id="counterevidence-and-failure-modes">16. Counterevidence and
+Failure Modes</h2>
+<p>The doctrine should be narrowed or rejected where: (1) GTK is treated
+as a label; (2) surface and binding are conflated; (3) occurrence and
+term type are conflated; (4) local and corpus identity are conflated;
+(5) version hash and continuing identity are conflated; (6) coordinate
+and concept are conflated; (7) repeated labels prove identity; (8)
+shared edges prove identity; (9) paraphrases prove identity; (10)
+explicit equivalence exceeds source authority; (11) definitions omit
+consequences; (12) exclusions conflict; (13) negative evidence is not
+sought; (14) one-term-one-identity erases polysemy; (15) ambiguous
+occurrences are forced; (16) multilingual equivalence is presumed; (17)
+metaphor is collapsed into literal use; (18) TERM numbering is treated
+as stable; (19) extractors change silently; (20) locators cannot survive
+normalization; (21) GTK smallness erases valid distinctions; (22) GTK
+growth is unconstrained; (23) hubs absorb neighbors; (24) topology
+becomes a verdict; (25) embeddings become identity; (26) resolver
+confidence becomes authority; (27) amendments rewrite history; (28)
+identity-changing amendments avoid forks; (29) consumers cannot pin
+epochs; (30) corrections omit impact; (31) rollback cannot repair
+downstream effects; (32) GMB inclusion becomes truth; (33) GSM edges
+become equivalence; (34) corpus papers are merged; (35) a specification
+is presented as implemented; (36) measured error exceeds simpler
+methods; (37) maintenance costs exceed benefits; or (38) external
+research contradicts novelty or adequacy claims.</p>
+<h2
+id="sparse-identity-requires-evidence-plurality-and-reversible-correction">Sparse
+Identity Requires Evidence, Plurality, and Reversible Correction</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>The Identity Spine Doctrine is a governance profile for GTK admission
+and maintenance. It separates exact occurrences, surface forms, local
+bindings, corpus identities, immutable versions, and semantic
+coordinates. Graph topology and similarity generate candidates; they do
+not decide identity. Admission, separation, ambiguity, fork, retirement,
+and correction remain explicit outcomes.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Label-identity attack.</strong> Matching strings, acronyms,
+identifiers, titles, or extractor term IDs are treated as the same
+binding.</li>
+<li><strong>Similarity-merger attack.</strong> Embedding proximity,
+shared neighbors, co-occurrence, or topical overlap promotes identity
+without preservation evidence.</li>
+<li><strong>Sparse-elite attack.</strong> A small identity spine
+privileges dominant concepts, languages, disciplines, sources, or
+institutions and hides the governance of omission.</li>
+<li><strong>Essence-freeze attack.</strong> An invariant candidate
+becomes a context-free essence that blocks legitimate semantic
+development and plurality.</li>
+<li><strong>Hash-continuity attack.</strong> A content hash identifies
+one version and is treated as the continuing identity of amended or
+forked GTKs.</li>
+<li><strong>Coordinate-identity attack.</strong> A registry location or
+SCIT coordinate is treated as the semantic object rather than a
+versioned locator.</li>
+<li><strong>Correction-cascade attack.</strong> A mistaken identity
+propagates through relations and projections while impact-weighted
+correction misses hidden dependents.</li>
+<li><strong>Governance-capture attack.</strong> Admission and appeal
+power becomes centralized semantic sovereignty without affected-language
+and community recourse.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies an operational GTK identity-governance profile.
+It does not admit a GTK, merge identities, establish context-free
+essences, prove complete identity evidence, guarantee sparse neutrality,
+implement a registry, or grant canonical or author standing. The
+doctrine remains a profile of GTK rather than a duplicate foundational
+primitive.</p>
+<p>Validation requires multilingual polysemy and ambiguity sets,
+positive and negative identity pairs, source and author review, fork and
+successor cases, hidden-dependent propagation, governance and appeal
+evaluation, bias analysis, and current external research. None was
+performed in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The doctrine should make identity decisions rarer, better evidenced,
+easier to contest, and safer to reverse - while letting related concepts
+remain related without forcing them to become one thing.</p>
+<h2 id="conclusion">18. Conclusion</h2>
+<p>The identity spine is not a synonym table. It is the governed
+boundary at which a local, source-bound use may become a reusable corpus
+identity. Its quality depends less on how many concepts are connected
+than on how explicitly identity, difference, ambiguity, version,
+evidence, and authority are preserved.</p>
+<p>GTK supplies the primitive. The Identity Spine Doctrine supplies the
+discipline for using it without allowing similarity to become identity
+by accident.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires authorized primary-source review of word-sense
+disambiguation, lexicography, ontology alignment, entity resolution,
+knowledge graphs, persistent identifiers, content-addressed versioning,
+multilingual semantics, uncertainty representation, semantic versioning,
+and corpus adjudication methods.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that governed knowledge systems require a stricter
+distinction between semantic identity and similarity than ordinary
+retrieval graphs. Its nearest external comparison fields are crypto,
+provenance, semantic. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself. A
+complete provenance graph can faithfully record a false or unauthorized
+process; provenance is evidence about lineage, not automatic truth or
+legitimacy. Formal vocabularies and graph links make commitments
+explicit but cannot by themselves establish correct identity, shared
+interpretation, or lossless translation between contexts. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847975">10.5281/zenodo.23847975</a></p>

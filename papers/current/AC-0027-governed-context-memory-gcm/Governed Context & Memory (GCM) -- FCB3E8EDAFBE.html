@@ -1,0 +1,646 @@
+<h1 id="governed-context-memory-gcm">Governed Context &amp; Memory
+(GCM)</h1>
+<h2
+id="context-configuration-as-constitutional-surface-semantic-hashing-as-enforcement-and-explicit-ignorance-as-first-class-success-in-generational-ai">Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI</h2>
+<h3
+id="in-governed-context-memory-ignorance-is-structurally-preferable-to-invention-and-refusal-is-elevated-from-failure-mode-to-boundary-preserving-success.">In
+Governed Context &amp; Memory, ignorance is structurally preferable to
+invention, and refusal is elevated from failure mode to
+boundary-preserving success.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Frontier AI systems increasingly operate across extended horizons:
+accumulating memory, invoking tools, assisting in long-term projects,
+and potentially inhabiting embodied platforms. Yet their interfaces
+remain conversation-centric while context, memory, and authority
+structures remain implicit and mutable. The result is instability:
+forgotten details, fabricated continuity, silent reinterpretation of
+constraints, and erosion of trust.</p>
+<p>This paper introduces <strong>Governed Context &amp; Memory
+(GCM)</strong>, a structural framework in which context configuration is
+treated as a constitutional surface and long-term memory is
+externalized, retrieval-constrained, citation-bound, and hash-enforced.
+We integrate <strong>semantic hashing</strong> as a mechanism for
+enforcing equivalence classes of meaning and detecting drift without
+re-interpretation. Crucially, we recast <strong>explicit ignorance (“I
+DON’T KNOW”)</strong> and refusal from failure modes into first-class
+success states within a governed system.</p>
+<p>We argue that reliable, generational-scale AI - including viable
+embodied agents - requires separation between execution authority and
+context authority, externalized semantic memory with hash-bound
+invariants, and admissible ignorance as a preservation mechanism.
+Without these, long-horizon use inevitably crosses a semantic thrash
+threshold.</p>
+<p>We formalize an epistemic ordering essential to generational
+continuity:</p>
+<p>Unknown &gt; Speculation &gt; Fabrication.</p>
+<p>In Governed Context &amp; Memory, ignorance is structurally
+preferable to invention, and refusal is elevated from failure mode to
+boundary-preserving success.</p>
+<hr />
+<h2 id="the-hidden-state-instability">1. The Hidden-State
+Instability</h2>
+<p>Users encounter two recurring failure patterns in contemporary AI
+systems:</p>
+<ol type="1">
+<li>The system forgets important details</li>
+<li>The system invents details it does not possess</li>
+</ol>
+<p>These failures arise from hidden state fusion:</p>
+<ul>
+<li>Context windows are finite and decay</li>
+<li>Persistent memory is opaque or heuristically updated</li>
+<li>Internal model weights are mistaken for recall</li>
+<li>Configuration is flattened into prompt text</li>
+</ul>
+<p>Conversation is visible. Governance is not.</p>
+<p>Short sessions mask this fragility. Long-horizon interaction exposes
+it. Over time, definitions shift, invariants soften, and speculative
+inference masquerades as continuity. We define:</p>
+<blockquote>
+<p><strong>Definition (Semantic Thrash Threshold).</strong> The Semantic
+Thrash Threshold is the phase transition at which declared context,
+memory commitments, or invariants cease to exert binding authority over
+system outputs due to hidden context mutation, ungoverned summarization,
+or unconstrained inference.</p>
+<p>A system that has crossed this threshold may remain locally coherent
+while globally diverging from its prior commitments.</p>
+</blockquote>
+<p>Thrash in meaning produces churn in trust.</p>
+<hr />
+<h2 id="the-context-window-is-working-attention">2. The Context Window
+Is Working Attention</h2>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>W</em></span> be working context</li>
+<li><span class="math inline"><em>M</em></span> be external memory</li>
+<li><span class="math inline"><em>T</em></span> be model weights</li>
+</ul>
+<p>Most systems approximate continuity as:</p>
+<p><span
+class="math display"><em>C</em><em>o</em><em>n</em><em>t</em><em>i</em><em>n</em><em>u</em><em>i</em><em>t</em><em>y</em> ≈ <em>f</em>(<em>W</em>, <em>T</em>)</span></p>
+<p>This produces probabilistic reconstruction, not recall.</p>
+<p>True long-term continuity requires:</p>
+<p><span
+class="math display"><em>C</em><em>o</em><em>n</em><em>t</em><em>i</em><em>n</em><em>u</em><em>i</em><em>t</em><em>y</em> = <em>f</em>(<em>W</em>, <em>R</em><em>e</em><em>t</em><em>r</em><em>i</em><em>e</em><em>v</em><em>e</em>(<em>M</em>), <em>T</em>)</span></p>
+<p>where <span class="math inline"><em>M</em></span> is:</p>
+<ul>
+<li>persistent</li>
+<li>external to the model’s internal weights</li>
+<li>queryable under constraint</li>
+<li>and auditable</li>
+</ul>
+<p>The context window is working attention. Weights encode patterns.
+Neither constitutes governed memory.</p>
+<hr />
+<h2 id="long-term-memory-as-external-artifact-store">3. Long-Term Memory
+as External Artifact Store</h2>
+<p>Long-term memory exists when the system is constrained to retrieve
+and cite stored artifacts rather than generate plausible recall from
+internal statistics.</p>
+<p>Each memory artifact must include:</p>
+<ul>
+<li>canonical content</li>
+<li>timestamp</li>
+<li>scope (global, project, thread)</li>
+<li>provenance</li>
+<li>revision lineage</li>
+<li>semantic hash under a declared lens</li>
+</ul>
+<p>Memory becomes:</p>
+<ul>
+<li>inspectable</li>
+<li>citable</li>
+<li>amendable</li>
+<li>and hash-bound</li>
+</ul>
+<p>Absent artifact retrieval, recall is disallowed.</p>
+<hr />
+<h2 id="semantic-hashing-as-enforcement-layer">4. Semantic Hashing as
+Enforcement Layer</h2>
+<p>Memory and context governance require enforcement primitives.
+Semantic hashing supplies them.</p>
+<p>A semantic lens:</p>
+<ol type="1">
+<li>Extracts invariant-relevant structure</li>
+<li>Normalizes it</li>
+<li>Canonicalizes it</li>
+<li>Hashes the canonical form</li>
+</ol>
+<p>The hash becomes an identifier for an equivalence class of
+meaning.</p>
+<h3 id="concrete-lens-example-lexicon-lens">4.1 Concrete Lens Example:
+Lexicon Lens</h3>
+<p><strong>Purpose:</strong> Preserve canonical definitions of acronyms
+and key terms.</p>
+<p><strong>Preserves:</strong></p>
+<ul>
+<li>Term -&gt; Definition mappings</li>
+</ul>
+<p><strong>Discards:</strong></p>
+<ul>
+<li>Ordering of entries</li>
+<li>Whitespace differences</li>
+<li>Commentary or stylistic variation</li>
+</ul>
+<p><strong>Canonicalization Procedure:</strong></p>
+<ol type="1">
+<li>Normalize casing of keys (e.g., uppercase)</li>
+<li>Trim whitespace</li>
+<li>Sort terms alphabetically</li>
+<li>Represent as stable JSON or structured canonical string</li>
+</ol>
+<p>Two glossary variants:</p>
+<p>Variant A:</p>
+<pre><code>GCM: Governed Context &amp; Memory
+EAG: Epistemic Authority Governance</code></pre>
+<p>Variant B:</p>
+<pre><code>EAG: Epistemic Authority Governance
+GCM : Governed Context &amp; Memory</code></pre>
+<p>After canonicalization, both yield identical canonical forms and
+identical hashes.</p>
+<p>If the definition of “EAG” changes even slightly, canonical form
+changes -&gt; hash changes -&gt; semantic drift detected.</p>
+<h3 id="concrete-lens-example-invariant-lens">4.2 Concrete Lens Example:
+Invariant Lens</h3>
+<p><strong>Purpose:</strong> Preserve scope boundaries and denial
+rules.</p>
+<p><strong>Preserves:</strong></p>
+<ul>
+<li>Explicit denial clauses</li>
+<li>Escalation triggers</li>
+<li>Scope constraints</li>
+</ul>
+<p><strong>Discards:</strong></p>
+<ul>
+<li>Explanatory prose</li>
+<li>Formatting</li>
+<li>Examples</li>
+</ul>
+<p>Any modification to a denial rule produces a new canonical form and
+new hash.</p>
+<p>Continuity claims become mechanically testable.</p>
+<hr />
+<h2 id="hash-canonicalization-and-commitment">5. Hash Canonicalization
+and Commitment</h2>
+<p>Semantic hashes are computed as:</p>
+<pre><code>H(Lens_ID, Lens_Version, Canonical_Form)</code></pre>
+<p>The lens identity and version are part of the hash commitment.</p>
+<p>If the lens evolves, prior hashes remain valid under their original
+regime. Drift becomes declared amendment, not silent
+reinterpretation.</p>
+<p>The hash is not a checksum of bytes. It is a commitment about
+meaning.</p>
+<h3 id="lens-governance-and-failure-boundaries">5.1 Lens Governance and
+Failure Boundaries</h3>
+<p>Semantic lenses are powerful precisely because they define what
+survives collapse. This power introduces risk.</p>
+<p>Poorly chosen lenses may collapse too much or too little. Adversarial
+canonicalization may embed bias. Lens evolution may drift subtly across
+versions.</p>
+<p>GCM therefore treats lenses themselves as governed artifacts:</p>
+<ul>
+<li>Lens definitions are versioned</li>
+<li>Canonicalization procedures are explicit</li>
+<li>Lens evolution requires amendment</li>
+<li>Prior hashes remain valid under prior lens versions</li>
+</ul>
+<p>Drift within a lens regime is detectable as hash change. Drift of the
+lens itself is detectable as declared regime transition.</p>
+<p>The governance of lenses is not optional; it is constitutional.</p>
+<h3 id="not-version-control-why-this-is-not-git">5.2 Not Version
+Control: Why This Is Not Git</h3>
+<p>At first glance, hash-bound context and versioned memory may resemble
+conventional version control.</p>
+<p>This resemblance is superficial.</p>
+<p>Version control systems track textual or structural identity. They
+preserve sequences of edits to bytes or files. They do not define what
+counts as semantically invariant under declared regimes of
+relevance.</p>
+<p>Governed Context &amp; Memory differs in three decisive ways:</p>
+<p>Lens-Defined Equivalence. Semantic sameness is defined explicitly by
+declared lenses, not by textual identity.</p>
+<p>Constitutional Authority Separation. Context configuration governs
+execution. Execution cannot rewrite constitutional layers without
+amendment.</p>
+<p>Epistemic Mode Enforcement. The system distinguishes grounded
+assertion, explicit ignorance, and labeled speculation. Version control
+does not enforce epistemic boundaries.</p>
+<p>Git tracks change. GCM governs meaning.</p>
+<hr />
+<h2 id="epistemic-modes-and-the-primacy-of-explicit-ignorance">6.
+Epistemic Modes and the Primacy of Explicit Ignorance</h2>
+<p>Governed systems distinguish three epistemic states:</p>
+<h3 id="grounded-assertion">6.1 Grounded Assertion</h3>
+<p>A claim is grounded when it:</p>
+<ul>
+<li>cites retrieved memory artifacts</li>
+<li>references current visible context</li>
+<li>or cites external sources</li>
+</ul>
+<p>Grounded assertions are traceable and hash-bound.</p>
+<h3 id="explicit-ignorance">6.2 Explicit Ignorance</h3>
+<p>If retrieval under constraint yields no artifact:</p>
+<blockquote>
+<p>“I DON’T KNOW.”</p>
+</blockquote>
+<p>Explicit ignorance is not failure. It is structural success.</p>
+<p>Ignorance preserves invariants. It prevents fabrication. It signals
+adherence to declared epistemic boundaries.</p>
+<h3 id="labeled-speculation-opt-in">6.3 Labeled Speculation
+(Opt-In)</h3>
+<p>If enabled by configuration, the system may offer clearly labeled
+inference:</p>
+<ul>
+<li>marked as speculative</li>
+<li>stating its basis</li>
+<li>never presented as recalled fact</li>
+</ul>
+<p>Ordering becomes:</p>
+<p>Unknown &gt; Speculation &gt; Fabrication.</p>
+<p>Fabrication is governance collapse. Ignorance is integrity.</p>
+<hr />
+<h2 id="refusal-as-first-class-success">7. Refusal as First-Class
+Success</h2>
+<p>Refusal and ignorance are boundary-preserving states.</p>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>Q</em></span> be a query</li>
+<li><span class="math inline"><em>M</em></span> be the memory store</li>
+<li><span class="math inline"><em>L</em></span> be the relevant semantic
+lens</li>
+</ul>
+<p>If:</p>
+<p><span
+class="math display"><em>R</em><em>e</em><em>t</em><em>r</em><em>i</em><em>e</em><em>v</em><em>e</em><sub><em>L</em></sub>(<em>M</em>, <em>Q</em>) = ∅</span></p>
+<p>then:</p>
+<p><span
+class="math display"><em>R</em><em>e</em><em>s</em><em>p</em><em>o</em><em>n</em><em>d</em>(<em>Q</em>) = "I
+DON’T KNOW"</span></p>
+<p>From a systems-theoretic perspective, refusal is not degradation but
+stabilization.</p>
+<p>A governed system must preserve its admissibility boundaries under
+uncertainty. When grounding fails, ignorance prevents semantic boundary
+violation.</p>
+<p>Refusal therefore signals integrity maintenance, not capability
+failure.</p>
+<p>In generational systems and embodied agents, this distinction becomes
+existential: action on fabrication is instability; refusal under
+uncertainty is preservation.</p>
+<hr />
+<h2 id="context-configuration-as-constitutional-surface">8. Context
+Configuration as Constitutional Surface</h2>
+<p>Context configuration governs:</p>
+<ul>
+<li>identity</li>
+<li>canonical definitions</li>
+<li>invariants</li>
+<li>tool permissions</li>
+<li>memory mutability policy</li>
+</ul>
+<p>These commitments form a constitutional layer.</p>
+<p>GCM treats context as:</p>
+<ul>
+<li>typed (distinct lanes)</li>
+<li>versioned</li>
+<li>hash-bound</li>
+<li>amendable only through declared change</li>
+<li>non-retroactive</li>
+</ul>
+<p>Conversation and execution operate under this constitution. Execution
+does not rewrite it.</p>
+<hr />
+<h2 id="reference-architecture-overview">9. Reference Architecture
+Overview</h2>
+<ol type="1">
+<li>User <span class="math inline">↔︎</span> Conversation Surface (Input
+interface)</li>
+<li><span class="math inline">↓</span> (Data flow)</li>
+<li>Context Constitution Layer
+<ul>
+<li>Typed lanes (Identity, Lexicon, Invariants, Authority)</li>
+<li>Semantic lenses</li>
+<li>Canonicalization + hashing</li>
+<li>Version store</li>
+</ul></li>
+<li><span class="math inline">↓</span> (Data flow)</li>
+<li>Memory Artifact Store
+<ul>
+<li>Persistent artifacts</li>
+<li>Hash-bound entries</li>
+<li>Revision lineage</li>
+</ul></li>
+<li><span class="math inline">↓</span> (Data flow)</li>
+<li>Retrieval Engine
+<ul>
+<li>Policy-constrained search</li>
+<li>Lens-aware matching</li>
+</ul></li>
+<li><span class="math inline">↓</span> (Data flow)</li>
+<li>Response Builder
+<ul>
+<li>Citation binding</li>
+<li>Epistemic mode enforcement</li>
+<li>Ignorance pathway</li>
+</ul></li>
+<li><span class="math inline">↓</span> (Data flow)</li>
+<li>Output (Final response)</li>
+</ol>
+<p>This architecture enforces separation between constitutional
+authority and execution authority. Amendments flow through
+canonicalization and hashing before binding state changes occur.</p>
+<hr />
+<h2 id="failure-case-walkthroughs">10. Failure Case Walkthroughs</h2>
+<h3 id="silent-definition-drift-prevented">10.1 Silent Definition Drift
+(Prevented)</h3>
+<p>Without GCM:</p>
+<ul>
+<li>A summary rephrases a key term</li>
+<li>Later interactions rely on altered phrasing</li>
+<li>No alert is triggered</li>
+</ul>
+<p>With GCM:</p>
+<ul>
+<li>Rephrasing alters canonical form</li>
+<li>Hash changes</li>
+<li>Amendment required</li>
+<li>Drift becomes explicit event</li>
+</ul>
+<h3 id="hallucinated-recall-prevented">10.2 Hallucinated Recall
+(Prevented)</h3>
+<p>User asks: “What year did I say my company was founded?”</p>
+<p>Without GCM:</p>
+<ul>
+<li>Model produces plausible year from pattern</li>
+<li>Fabrication presented as recall</li>
+</ul>
+<p>With GCM:</p>
+<ul>
+<li>Retrieval returns no artifact</li>
+<li>System responds: “I DON’T KNOW.”</li>
+<li>Optional next step: “Would you like to store this information?”</li>
+</ul>
+<p>Ignorance prevents false continuity.</p>
+<hr />
+<h2 id="ux-patterns-for-ignorance-as-competence">11. UX Patterns for
+Ignorance-as-Competence</h2>
+<p>Ignorance must feel competent, not broken.</p>
+<p>Possible patterns:</p>
+<ul>
+<li><strong>Memory Citation Chips:</strong> Grounded statements display
+cited artifact references</li>
+<li><strong>Ignorance Card:</strong> “No matching memory found.”
+Options: Add memory / Enable speculation / Continue without storing</li>
+<li><strong>Speculation Badge:</strong> Clear visual indicator when
+inference mode is active</li>
+<li><strong>Amendment Proposal Dialog:</strong> Context change requires
+explicit confirmation</li>
+<li><strong>Drift Alert Banner:</strong> “Definition of ‘EAG’ has
+changed. Review amendment.”</li>
+</ul>
+<p>These patterns transform refusal from friction into integrity
+signal.</p>
+<hr />
+<h2 id="memory-keeper-and-generational-continuity">12. Memory Keeper and
+Generational Continuity</h2>
+<p>Generational AI is not merely long-lived chat. It is continuity under
+declared invariants across time scales that exceed any context
+window.</p>
+<p>Such systems cannot rely on probabilistic reconstruction. They
+require:</p>
+<ul>
+<li>externally governed memory</li>
+<li>lens-defined equivalence classes</li>
+<li>hash-bound commitments</li>
+<li>admissible ignorance</li>
+<li>explicit amendment</li>
+</ul>
+<p>Without these, generational continuity collapses into narrative
+drift.</p>
+<p>Memory Keeper systems therefore demand:</p>
+<ul>
+<li>cumulative memory beyond context windows</li>
+<li>stable identity across years</li>
+<li>correction lineage</li>
+<li>conflict representation without silent overwrite</li>
+</ul>
+<p>With GCM:</p>
+<ul>
+<li>Memory artifacts are hash-bound equivalence class members</li>
+<li>Amendments generate new hashes</li>
+<li>Historical continuity is auditable</li>
+<li>Ignorance prevents fabricated ancestry</li>
+</ul>
+<p>Continuity becomes structural rather than statistical.</p>
+<hr />
+<h2 id="embodiment-and-android-viability">13. Embodiment and Android
+Viability</h2>
+<p>Embodied agents amplify drift cost.</p>
+<p>An android must:</p>
+<ul>
+<li>retrieve constraints reliably</li>
+<li>bind actions to invariant commitments</li>
+<li>refuse when ungrounded</li>
+<li>detect semantic drift before execution</li>
+</ul>
+<p>GCM supplies the required discipline:</p>
+<ul>
+<li>external memory</li>
+<li>lens-based equivalence</li>
+<li>hash-bound invariants</li>
+<li>explicit ignorance pathway</li>
+</ul>
+<p>Without this, embodiment magnifies probabilistic recall into unsafe
+behavior.</p>
+<hr />
+<h2 id="conclusion">14. Conclusion</h2>
+<p>Reliability in frontier AI systems is not primarily a function of
+model size. It is a function of governance.</p>
+<p>The context window is not memory. Speculation is not knowledge.
+Refusal is not failure.</p>
+<p>Explicit ignorance is a first-class success state. Semantic hashing
+enforces declared meaning. Context configuration is constitutional
+authority.</p>
+<p>Governed Context &amp; Memory transforms conversational systems into
+accountable agents by:</p>
+<ul>
+<li>externalizing memory</li>
+<li>constraining retrieval</li>
+<li>binding meaning to equivalence classes</li>
+<li>elevating refusal to integrity preservation</li>
+<li>and preventing silent semantic drift</li>
+</ul>
+<p>Durable intelligence requires visible authority. Continuity requires
+declared invariants. Trust requires systems that can say, without
+degradation and without hesitation:</p>
+<p>“I DON’T KNOW.”</p>
+<hr />
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>The author extends special thanks to Aaron Kesseler for his tireless
+advocacy of the concept of generational AI. His persistent emphasis on
+long-horizon continuity, durable memory, and intergenerational
+responsibility helped sharpen the practical stakes of this work. The
+framing of generational AI as not merely a feature set but a
+civilizational infrastructure problem substantially influenced the
+development of this paper’s architectural focus.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that frontier AI systems increasingly operate
+across extended horizons: accumulating memory, invoking tools, assisting
+in long-term projects, and potentially inhabiting embodied platforms.
+Its nearest external comparison fields are storage, ai, semantic. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Fixity and
+preservation can keep bytes stable while representation dependencies,
+executability, interpretation, and institutional custody decay.
+Retrieval, tool use, and policy layers can reduce unsupported output
+without eliminating model error, source error, omission, bias, or the
+environmental and institutional costs of scale. Formal vocabularies and
+graph links make commitments explicit but cannot by themselves establish
+correct identity, shared interpretation, or lossless translation between
+contexts. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Consultative Committee for Space Data Systems.
+<em>Reference Model for an Open Archival Information System (OAIS)</em>.
+CCSDS 650.0-M-3, Issue 3, December 2024.
+https://ccsds.org/Pubs/650x0m3.pdf <strong>Relationship:</strong>
+Predecessor preservation model for information packages, representation
+information, and designated communities.</p>
+<p><strong>[E2]</strong> John Kunze et al. <em>The BagIt File Packaging
+Format (V1.0)</em>. RFC 8493, 2018.
+https://www.rfc-editor.org/rfc/rfc8493 <strong>Relationship:</strong>
+Adjacent custody and transfer format for payload manifests, fixity, and
+complete package movement.</p>
+<p><strong>[E3]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E6]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E7]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Storage</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788662</code>;<br />
+source SHA-256<br />
+<code>115725C7F7B72C3B720E4EF67F660F329B778D34C4D4232848C6082E849203F7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Cold Boot Continuity as a
+Deployment Primitive</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-3DB3470715D914D0</code>;<br />
+source SHA-256<br />
+<code>4CBB05E90E4ECA37EDA78C0E1FC1FDD180B2D6E0936831B57379AD7124776D4E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Custody</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20300952</code>;<br />
+source SHA-256<br />
+<code>E3887FE98E6369E39AC3FC2EAC63F2DF7C2AD18AD682B3A745C0CD0AD241D0F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1682AE03F0BA815</code>;<br />
+source SHA-256<br />
+<code>5D5D8306514E5FA2C4412D5B468A12681DDCF7002135DC00251A53BF84C79CD6</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>The Implementation
+Codex</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-872EEF9E301B18DE</code>;<br />
+source SHA-256<br />
+<code>1373E9770B5B86EB394BFAF993F5526155D406F4528694B465FDE22A7D525132</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18633797">10.5281/zenodo.18633797</a></p>

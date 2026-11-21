@@ -1,0 +1,1306 @@
+<h1 id="reasoning-by-way-of-receipts">Reasoning by Way of Receipts</h1>
+<h2 id="from-admissible-proposal-to-verified-state-transition">From
+Admissible Proposal to Verified State Transition</h2>
+<h3
+id="a-receipt-is-not-the-justification-itself.-it-is-the-durable-structure-that-makes-bounded-justification-inspectable.">A
+receipt is not the justification itself. It is the durable structure
+that makes bounded justification inspectable.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern computational systems record extensive traces while rarely
+binding a state transition to the authority, jurisdiction, criteria,
+evidence, and verification under which that transition acquires
+standing. Logs describe events, traces reconstruct flows, and metrics
+summarize outcomes, but these artifacts do not by themselves establish
+whether an action was admissible, whether its reported effect occurred,
+or what downstream reliance the result may legitimately support.</p>
+<p>This paper introduces <strong>reasoning by way of receipts</strong>:
+a model of governed computation in which an epistemic or operational
+proposal may enter canonical state only through a typed, lineage-bearing
+receipt protocol. A receipt is not itself truth, proof, or complete
+explanation. It is an inspectable commitment linking a proposal,
+governing specification, jurisdiction, authority context, decision,
+observed effect, evidence, verification result, predecessor state, and
+permitted standing. We distinguish decision, refusal, effect,
+verification, promotion, and revision receipts and specify the
+conditions under which they may compose into a justification graph.</p>
+<p>The resulting model separates physical execution from constitutional
+recognition. An effect may occur without acquiring governed standing,
+while refusal, hold, escalation, and non-decision remain valid receipted
+outcomes. This distinction connects semantic ingress, epistemic
+promotion, reality-touching capability, governed memory, and
+institutional action within a common transition grammar.</p>
+<p>The contribution is not the claim that receipts eliminate
+interpretation. It is that receipts can bind the materials, authority,
+and limits of interpretation closely enough for justification to become
+reconstructable, contestable, and revisable rather than merely narrated
+after the fact.</p>
+<h2 id="the-missing-layer-in-computation">1. The Missing Layer in
+Computation</h2>
+<p>Contemporary systems are deeply instrumented yet epistemically
+shallow. They can often answer:</p>
+<ul>
+<li>What happened?</li>
+<li>When did it happen?</li>
+<li>Which component emitted the event?</li>
+<li>How often did a measured outcome occur?</li>
+</ul>
+<p>They often cannot answer, in a structurally binding way:</p>
+<ul>
+<li>Why was this transition admitted?</li>
+<li>Which jurisdiction and authority governed it?</li>
+<li>Which specification and policy version were applied?</li>
+<li>What evidence supports the claimed effect?</li>
+<li>What exactly was verified?</li>
+<li>What standing may later systems assign to the result?</li>
+<li>How may the decision be contested, revoked, or revised?</li>
+</ul>
+<p>This gap is not simply a shortage of logging. Logs, traces, metrics,
+audit records, and event streams can all be useful evidence, but their
+existence does not establish a complete relation among authority,
+admissibility, effect, evidence, verification, and standing.</p>
+<p>Empirical analysis across real software systems reinforces this
+distinction. Receipt surfaces vary from absent traces through optional
+logs to mandatory operational ledgers; governance is often stronger at
+system boundaries than in system interiors; and layered decision
+mechanisms frequently fail to expose a unified account of why an outcome
+occurred [1]. Observability is therefore not receipt completeness, and
+receipt existence is not yet justification.</p>
+<p>The missing layer is a transition protocol that makes the movement
+from proposal to recognized state explicit, typed, and inspectable.</p>
+<h2 id="scope-and-nonclaims">2. Scope and Nonclaims</h2>
+<p>Reasoning by way of receipts concerns <strong>externalized epistemic
+and operational transitions</strong>. It governs proposals that may
+alter canonical state, memory, authority, persistent artifacts, or the
+world outside the reasoning process. It does not claim control over
+private mental activity, latent model state, or every intermediate token
+generated inside a model.</p>
+<p>The framework makes five bounded claims:</p>
+<ol type="1">
+<li>A governed transition can bind its decision basis and evidentiary
+obligations at the time the transition is evaluated and realized.</li>
+<li>Typed receipts can make the resulting transition independently
+reconstructable within a declared scope.</li>
+<li>Refusal and non-decision can be represented as successful governance
+outcomes rather than missing data.</li>
+<li>Receipt graphs can support compositional reasoning when their edges,
+standing rules, and jurisdictional interpretation are explicit.</li>
+<li>Canonical state can be prevented from advancing when required
+receipts or verification obligations are absent, provided the receipt
+protocol is non-bypassable.</li>
+</ol>
+<p>The framework does not claim that:</p>
+<ul>
+<li>a receipt is automatically true;</li>
+<li>a signature establishes legitimate authority;</li>
+<li>evidence establishes more than its declared verification scope;</li>
+<li>a valid receipt makes the underlying policy just;</li>
+<li>a receipt chain is automatically a valid argument;</li>
+<li>every physical effect can be reversed;</li>
+<li>institutional transparency follows automatically from record
+production;</li>
+<li>narrative explanation becomes unnecessary;</li>
+<li>receipt production alone creates consciousness, understanding, or
+intelligence.</li>
+</ul>
+<p>These nonclaims are load-bearing. Without them, a receipt can become
+another symbol through which unearned authority is laundered.</p>
+<h2 id="primitive-distinctions">3. Primitive Distinctions</h2>
+<p>The framework begins by separating concepts that conventional systems
+often collapse.</p>
+<ul>
+<li><p><strong>Primitive:</strong> Proposal<br />
+<strong>Function:</strong> Names an intended transition<br />
+<strong>What it does not establish by itself:</strong> Permission,
+execution, or success</p></li>
+<li><p><strong>Primitive:</strong> Jurisdiction<br />
+<strong>Function:</strong> Selects the governing domain<br />
+<strong>What it does not establish by itself:</strong> Justice or
+correctness of its rules</p></li>
+<li><p><strong>Primitive:</strong> Authority<br />
+<strong>Function:</strong> Enables a binding decision within scope<br />
+<strong>What it does not establish by itself:</strong> Evidence that an
+effect occurred</p></li>
+<li><p><strong>Primitive:</strong> Admissibility<br />
+<strong>Function:</strong> Evaluates whether a proposal may
+proceed<br />
+<strong>What it does not establish by itself:</strong> Successful
+execution</p></li>
+<li><p><strong>Primitive:</strong> Effect<br />
+<strong>Function:</strong> A reality-touching or state-changing
+occurrence<br />
+<strong>What it does not establish by itself:</strong> Its own meaning
+or legitimacy</p></li>
+<li><p><strong>Primitive:</strong> Receipt<br />
+<strong>Function:</strong> Persistently binds a governed event to
+inspectable structure<br />
+<strong>What it does not establish by itself:</strong> Truth, proof
+completeness, or sufficient evidence</p></li>
+<li><p><strong>Primitive:</strong> Evidence<br />
+<strong>Function:</strong> Supports or refutes a claim through a
+declared relation<br />
+<strong>What it does not establish by itself:</strong> Authority to bind
+the claim</p></li>
+<li><p><strong>Primitive:</strong> Verification<br />
+<strong>Function:</strong> Checks a claim or artifact against criteria
+and returns a typed result<br />
+<strong>What it does not establish by itself:</strong> Universal truth
+beyond the check</p></li>
+<li><p><strong>Primitive:</strong> Standing<br />
+<strong>Function:</strong> States what bounded reliance is
+permitted<br />
+<strong>What it does not establish by itself:</strong> Identity,
+authorship, or correctness in every context</p></li>
+<li><p><strong>Primitive:</strong> Lineage<br />
+<strong>Function:</strong> Connects the event to predecessor states and
+dependencies<br />
+<strong>What it does not establish by itself:</strong> Validity of every
+predecessor</p></li>
+<li><p><strong>Primitive:</strong> Refusal<br />
+<strong>Function:</strong> Produces a typed negative outcome<br />
+<strong>What it does not establish by itself:</strong> System error or
+permanent prohibition</p></li>
+<li><p><strong>Primitive:</strong> Revision<br />
+<strong>Function:</strong> Reopens or changes prior structure through a
+governed path<br />
+<strong>What it does not establish by itself:</strong> Erasure of
+history</p></li>
+</ul>
+<p>The distinction between <strong>receipt</strong> and
+<strong>evidence</strong> is especially important. A receipt records
+that a governed evaluation, attempt, observation, or promotion was
+represented as occurring. Evidence supports an inference about the world
+or system. A receipt may bind evidence, but the receipt does not
+automatically make that evidence sufficient.</p>
+<p>Likewise, verification is an operation with a declared claim
+boundary. A cryptographic hash may verify byte identity. It does not
+verify semantic accuracy. A test may verify behavior under a fixture. It
+does not verify a universal guarantee. A signed decision may verify
+attribution. It does not verify legitimate jurisdiction.</p>
+<h2 id="the-governed-transition-lifecycle">4. The Governed Transition
+Lifecycle</h2>
+<h3 id="state-proposal-and-governing-context">4.1 State, proposal, and
+governing context</h3>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>Σ</em><sub><em>t</em></sub></span> be
+the canonical state at time <span
+class="math inline"><em>t</em></span>;</li>
+<li><span class="math inline"><em>p</em></span> be a proposed
+transition;</li>
+<li><span class="math inline"><em>J</em></span> be the applicable
+jurisdiction;</li>
+<li><span class="math inline"><em>C</em><sub><em>v</em></sub></span> be
+the governing constitution, specification, or policy at version <span
+class="math inline"><em>v</em></span>;</li>
+<li><span class="math inline"><em>A</em></span> be the admissibility
+operator;</li>
+<li><span class="math inline"><em>Ω</em><sub><em>p</em></sub></span> be
+the evidentiary obligations attached to <span
+class="math inline"><em>p</em></span>.</li>
+</ul>
+<p>The admissibility decision is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+d = A(p, \Sigma_t, J, C_v) \quad\text{where}\quad d \in
+\{&amp;\mathrm{ALLOW}, \mathrm{REFUSE}, \mathrm{HOLD}, \\
+&amp;\mathrm{ESCALATE}\}
+\end{aligned}.
+$$</span></p>
+<p>The decision produces a decision receipt <span
+class="math inline"><em>r</em><sub><em>d</em></sub></span>. The receipt
+binds the proposal, jurisdiction, authority basis, governing version,
+evaluated criteria, decision, and predecessor state. It does not yet
+claim that an allowed effect succeeded.</p>
+<p>If <span class="math inline"><em>d</em></span> is REFUSE, HOLD, or
+ESCALATE, canonical state does not advance:</p>
+<p><span
+class="math display"><em>Σ</em><sub><em>t</em> + 1</sub> = <em>Σ</em><sub><em>t</em></sub>.</span></p>
+<p>The negative or suspended outcome remains visible through a typed
+receipt.</p>
+<h3 id="effect-attempt-and-observation">4.2 Effect attempt and
+observation</h3>
+<p>If <span class="math inline"><em>d</em></span> is ALLOW, an
+implementation may attempt the effect:</p>
+<p><span
+class="math display"><em>x</em> = <em>E</em>(<em>p</em>, <em>Σ</em><sub><em>t</em></sub>).</span></p>
+<p>The effect attempt occurs at a declared execution boundary.
+Observation produces an effect record <span
+class="math inline"><em>o</em></span>:</p>
+<p><span
+class="math display"><em>o</em> = <em>O</em>(<em>x</em>).</span></p>
+<p>An effect receipt <span
+class="math inline"><em>r</em><sub><em>e</em></sub></span> binds the
+attempted operation, execution boundary, reported outcome, and
+evidence-bearing observations. It must distinguish at least:</p>
+<ul>
+<li>completed effect;</li>
+<li>refused or blocked effect;</li>
+<li>failed effect;</li>
+<li>indeterminate effect;</li>
+<li>effect attempted without adequate evidence;</li>
+<li>no effect attempted.</li>
+</ul>
+<p>This separation matters because physical execution and epistemic
+recognition can diverge. An external backend may change the world and
+then fail to return a conforming receipt. The governed system must not
+pretend that nothing physical happened. It records an <strong>orphaned
+effect condition</strong>: the effect cannot advance canonical state as
+a verified result, but remediation may be required because an
+unrecognized physical consequence may exist.</p>
+<h3 id="verification-and-promotion">4.3 Verification and promotion</h3>
+<p>The evidence is evaluated against the proposal’s obligations:</p>
+<p><span
+class="math display"><em>q</em> = <em>V</em>(<em>o</em>, <em>Ω</em><sub><em>p</em></sub>, <em>J</em>, <em>C</em><sub><em>v</em></sub>)  where  <em>q</em> ∈ {PASS, FAIL, INDETERMINATE}.</span></p>
+<p>The verification receipt <span
+class="math inline"><em>r</em><sub><em>v</em></sub></span> binds the
+evidence, verifier, criteria, result, and claim boundary. A promotion
+operator then determines whether the transition may alter canonical
+state:</p>
+<p><span
+class="math display"><em>m</em> = <em>P</em>(<em>p</em>, <em>d</em>, <em>q</em>, <em>r</em><sub><em>d</em></sub>, <em>r</em><sub><em>e</em></sub>, <em>r</em><sub><em>v</em></sub>)  where  <em>m</em> ∈ {COMMIT, REFUSE, HOLD}.</span></p>
+<p>Canonical state advances only when promotion is committed:</p>
+<p><span class="math display">$$
+\Sigma_{t+1} =
+\begin{cases}
+\Delta(\Sigma_t, p, o), &amp; \text{if } m = \mathrm{COMMIT},\\
+\Sigma_t, &amp; \text{otherwise.}
+\end{cases}
+$$</span></p>
+<p>The promotion receipt <span
+class="math inline"><em>r</em><sub><em>p</em></sub></span> records the
+standing acquired by the result. A successful effect does not
+self-promote into explanation, precedent, memory, or authority.
+Promotion is a separate governed act.</p>
+<h3 id="the-transition-invariant">4.4 The transition invariant</h3>
+<p>The central invariant is:</p>
+<blockquote>
+<p>No proposal acquires canonical standing merely because it was
+generated, allowed, executed, observed, or signed. Canonical standing
+changes only through a declared promotion operation whose authority,
+evidence, and claim boundary are receipted.</p>
+</blockquote>
+<p>This is stronger than logging and narrower than truth certification.
+It governs what the system may rely upon.</p>
+<h3 id="refinement-of-justificatory-computation">4.5 Refinement of
+Justificatory Computation</h3>
+<p>The corpus ontology defines <strong>Justificatory
+Computation</strong> as a regime in which execution and justification
+are the same act. The present account preserves the intended
+non-separability while refining its temporal interpretation. Admission,
+effect, observation, verification, and promotion need not occur at one
+instant or inside one artifact. They form one governed transaction only
+when their boundaries and dependencies are explicitly bound.</p>
+<p>Accordingly, <em>intrinsic justification</em> means that an
+implementation cannot obtain canonical standing while bypassing the
+required decision, evidence, and verification structure. It does not
+mean that execution alone proves its own validity. This refinement
+retains the distinction between descriptive and justificatory regimes
+while preventing an executed effect from serving as its own warrant.</p>
+<h2 id="a-family-of-receipts">5. A Family of Receipts</h2>
+<p>The word <em>receipt</em> names a family of typed artifacts rather
+than a single undifferentiated record.</p>
+<h3 id="decision-receipt">5.1 Decision receipt</h3>
+<p>A decision receipt records which proposal was evaluated, which law
+applied, who or what had evaluation authority, what criteria were
+evaluated, and whether the proposal was allowed, refused, held, or
+escalated.</p>
+<h3 id="refusal-receipt">5.2 Refusal receipt</h3>
+<p>A refusal receipt is a specialized decision receipt that records the
+failed or undefined predicates, preserves state, and states whether
+reconsideration, additional evidence, or escalation is permitted.
+Refusal is evidence that the gate participated; it is not evidence that
+the gate was correct.</p>
+<h3 id="effect-receipt">5.3 Effect receipt</h3>
+<p>An effect receipt records the attempted interaction with an
+implementation or external substrate. It binds the capability used,
+target, execution boundary, observable result, and evidence returned by
+that boundary [3].</p>
+<h3 id="verification-receipt">5.4 Verification receipt</h3>
+<p>A verification receipt records a check and its exact proof boundary.
+It says which claim was tested, against which evidence and criteria,
+under which tool or evaluator version, and with which result.</p>
+<h3 id="promotion-receipt">5.5 Promotion receipt</h3>
+<p>A promotion receipt records the transition from transient or
+provisional material to a state with greater downstream standing. This
+is the receipt type most directly connected to semantic compilation [4],
+governed coding [7], and checkpoint promotion in governed training
+[8].</p>
+<h3 id="revision-receipt">5.6 Revision receipt</h3>
+<p>A revision receipt records amendment, supersession, revocation,
+correction, or reopening. It preserves the prior receipt and states
+which dependencies must be re-evaluated. Revision changes standing
+without rewriting history.</p>
+<h3 id="transaction-envelope">5.7 Transaction envelope</h3>
+<p>A single implementation may package these receipts into one
+transaction envelope:</p>
+<p><span
+class="math display"><em>R</em><sub><em>t</em></sub> = {<em>r</em><sub><em>d</em></sub>, <em>r</em><sub><em>e</em></sub>, <em>r</em><sub><em>v</em></sub>, <em>r</em><sub><em>p</em></sub>, <em>r</em><sub><em>a</em></sub>},</span></p>
+<p>where <span
+class="math inline"><em>r</em><sub><em>a</em></sub></span> is present
+only when amendment or revision occurs. Packaging does not erase the
+logical distinctions among the contained receipt roles.</p>
+<p>A minimal receipt envelope should bind:</p>
+<pre class="text"><code>receipt_id
+receipt_type
+proposal_id
+operation_type
+target
+jurisdiction_id
+authority_reference
+policy_id
+policy_version
+policy_hash
+prestate_reference
+decision_or_outcome
+effect_summary
+evidence_references
+verification_result
+verification_scope
+standing_effect
+predecessor_receipts
+time_or_sequence
+integrity_material
+disclosure_policy
+challenge_status</code></pre>
+<p>Different domains may add fields, but omission of a field must not
+silently expand what the receipt is allowed to establish.</p>
+<h2 id="reasoning-by-way-of-receipts-1">6. Reasoning by Way of
+Receipts</h2>
+<p>Reasoning by way of receipts is not merely the accumulation of
+execution records. It is the controlled movement of claims and actions
+across typed transition boundaries.</p>
+<blockquote>
+<p><strong>Reasoning by way of receipts</strong> is a model of
+computation in which proposals, decisions, effects, evidence,
+verification, promotion, and revision remain explicitly related through
+lineage-bearing artifacts whose standing is bounded and inspectable.</p>
+</blockquote>
+<p>The receipt structure forms a directed graph:</p>
+<p><span
+class="math display"><em>G</em><sub><em>R</em></sub> = (<em>V</em><sub><em>R</em></sub>, <em>E</em><sub><em>R</em></sub>),</span></p>
+<p>where vertices are receipts or governed semantic objects and edges
+are typed relations. Useful relation types include:</p>
+<pre class="text"><code>AUTHORIZES
+DEPENDS_ON
+OBSERVES
+SUPPORTS
+VERIFIES
+REFUSES
+PROMOTES
+SUPERSEDES
+REVOKES
+CONTESTS</code></pre>
+<p>A chain of hashes establishes linkage. It does not establish a valid
+argument. A receipt graph supports a bounded justification only
+when:</p>
+<ol type="1">
+<li>each receipt satisfies its declared schema;</li>
+<li>integrity and predecessor bindings verify;</li>
+<li>jurisdiction and authority are resolvable;</li>
+<li>evidence is admissible for the claim being made;</li>
+<li>the verification operation establishes the advertised proof
+level;</li>
+<li>the receiving jurisdiction recognizes imported evidence without
+importing authority by default;</li>
+<li>no critical dependency has been revoked or superseded without a
+declared resolution path;</li>
+<li>the conclusion does not exceed the standing of its
+dependencies.</li>
+</ol>
+<p>Under these conditions, later reasoning can depend on earlier
+governed states without collapsing into untraceable narrative
+reconstruction. Narrative remains useful for explanation and pedagogy,
+but it becomes answerable to a structured warrant surface.</p>
+<h2 id="the-realization-funnel">7. The Realization Funnel</h2>
+<p>Receipt-bound computation becomes clearer when projected through the
+complete realization funnel.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Receipt-oriented question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Which transitions, interpretations, and outcomes are
+conceivable?</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>What constitutes a valid proposal, receipt, claim, and governed
+transition?</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Which configurations satisfy the minimum specification, including
+harmful, weak, or degenerate ones?</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Which admissible configurations are preferable under security,
+legitimacy, privacy, evidentiary, and usability criteria?</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Which jurisdiction, policy version, authority roots, schemas,
+disclosure rules, and verification obligations govern this
+instance?</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Which gates, adapters, verifiers, stores, and effect mechanisms
+enact the selected configuration?</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>What did the implementation demonstrably do, and what do the
+resulting receipts establish?</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>What evidence or contest changes the specification, configuration,
+implementation, or standing of prior results?</td>
+</tr>
+</tbody>
+</table>
+<p>This projection prevents a minimum technically admissible receipt
+mechanism from being mistaken for a desirable one. A system may satisfy
+CM1 by producing receipts while still centralizing authority, leaking
+private information, or making contestation impossible. CM2 makes those
+preference and legitimacy questions explicit. Instance Configuration
+then fixes the selected policies for a particular deployment.</p>
+<h2 id="a-closed-epistemic-membrane">8. A Closed Epistemic Membrane</h2>
+<p>The receipt protocol occupies the middle of a larger corpus
+architecture:</p>
+<pre class="text"><code>raw signal
+  -&gt; governed semantic tokenization
+  -&gt; declared semantic state
+  -&gt; governed semantic compilation
+  -&gt; proposed epistemic or operational transition
+  -&gt; receipted admissibility and promotion
+  -&gt; receipt-bound capability
+  -&gt; external effect
+  -&gt; evidence and verification
+  -&gt; governed memory and revision</code></pre>
+<p>Governed Semantic Tokens regulate what may enter as authority-bearing
+meaning [5]. Governed Semantic Compilation regulates which generated
+continuations may persist or acquire authority [4]. The receipt protocol
+binds the decision, effect, evidence, and promotion. Receipt-Bound
+Capabilities regulate reality-touching egress by requiring evidence from
+the execution boundary [3]. The Governed Knowledge Loop preserves
+lineage and governs subsequent mutation [9].</p>
+<p>The resulting membrane is symmetric:</p>
+<ul>
+<li>raw signals do not become meaning by default;</li>
+<li>generated meaning does not become state by default;</li>
+<li>authorized proposals do not become successful effects by
+default;</li>
+<li>reported effects do not become verified claims by default;</li>
+<li>verified claims do not acquire unlimited standing by default;</li>
+<li>established standing does not become permanent by default.</li>
+</ul>
+<p>Each boundary requires its own governed transition.</p>
+<h2 id="receipts-as-a-substrate-for-epistemic-situational-awareness">9.
+Receipts as a Substrate for Epistemic Situational Awareness</h2>
+<p>Receipts provide an evidentiary substrate for Epistemic Situational
+Awareness (ESA), but receipt accumulation is not sufficient to create
+ESA.</p>
+<p>ESA governs whether reasoning may continue, escalate, bind, reuse, or
+lawfully terminate [6]. To support that control property, a system must
+be able to ask:</p>
+<ol type="1">
+<li>What epistemic mode is active?</li>
+<li>Which realization or epistemic layer contains the artifact?</li>
+<li>Which evidence and receipt lineage support it?</li>
+<li>What standing would reuse create?</li>
+<li>Which continuations are admissible under the active
+jurisdiction?</li>
+<li>Has Blocked, Undecidable, refusal, or lawful termination been
+reached?</li>
+</ol>
+<p>Receipts answer only part of this inquiry. They supply inspectable
+history, authority references, verification boundaries, and standing
+transitions. ESA uses those materials to shape the action horizon.</p>
+<p>This yields a disciplined relationship:</p>
+<blockquote>
+<p>Receipts make epistemic position inspectable; ESA makes that position
+operationally consequential.</p>
+</blockquote>
+<h2 id="worked-example-i-an-agentic-code-change">10. Worked Example I:
+An Agentic Code Change</h2>
+<p>Consider an agent asked to repair a failing parser.</p>
+<h3 id="proposal">10.1 Proposal</h3>
+<p>The agent proposes patch <span
+class="math inline"><em>p</em><sub>47</sub></span>. The proposal is a
+preview, not a commit. It binds:</p>
+<ul>
+<li>repository and base revision;</li>
+<li>files allowed to change;</li>
+<li>claimed purpose;</li>
+<li>expected behavior;</li>
+<li>known uncertainty;</li>
+<li>required tests;</li>
+<li>rollback target.</li>
+</ul>
+<h3 id="instance-configuration">10.2 Instance configuration</h3>
+<p>The active instance configuration specifies:</p>
+<ul>
+<li>the repository head;</li>
+<li>applicable coding and security policies;</li>
+<li>the permitted filesystem scope;</li>
+<li>test and static-analysis obligations;</li>
+<li>who may authorize broader changes;</li>
+<li>which results may be promoted into memory or root-cause
+explanation.</li>
+</ul>
+<h3 id="admission-and-execution">10.3 Admission and execution</h3>
+<p>The gate checks identity, scope, forbidden paths, dependency
+conditions, and test availability. If admitted, a decision receipt is
+emitted. A bounded capability authorizes application of the patch. The
+effect receipt records the actual changed bytes and resulting worktree
+state.</p>
+<h3 id="verification">10.4 Verification</h3>
+<p>Tests, linters, and targeted behavioral checks execute. Their outputs
+become evidence. The verification receipt states only what those checks
+establish.</p>
+<p>If the tests pass, the system may promote the patch to a commit. It
+may record:</p>
+<pre class="text"><code>behavior restored under declared tests</code></pre>
+<p>It may not automatically record:</p>
+<pre class="text"><code>root cause proven
+all regressions excluded
+parser universally correct</code></pre>
+<p>Those are stronger claims requiring different evidence and authority.
+This is the separation between successful implementation and justified
+explanation developed in Governed Coding and Debugging [7].</p>
+<h3 id="refusal-and-revision">10.5 Refusal and revision</h3>
+<p>If tests are unavailable, the result may be HOLD or INDETERMINATE
+rather than a fabricated success. If the patch touches an unauthorized
+file, the transition is refused. If later evidence reveals a regression,
+a revision receipt can revoke the patch’s prior standing without erasing
+its history.</p>
+<h2 id="worked-example-ii-a-governed-training-update">11. Worked Example
+II: A Governed Training Update</h2>
+<p>In a Governed Training Regime, the optimizer proposes a parameter
+update <span class="math inline"><em>Δ</em><sub><em>t</em></sub></span>
+rather than exercising ambient authority over model state [8].</p>
+<p>The update-level gate evaluates:</p>
+<ul>
+<li>training jurisdiction and dataset identity;</li>
+<li>protected parameter regions;</li>
+<li>update magnitude and invariant constraints;</li>
+<li>safety and regression checks;</li>
+<li>active training-law version.</li>
+</ul>
+<p>The gate returns ALLOW, REFUSE, HOLD, or ESCALATE and produces a
+decision receipt. If allowed, the update is applied to a candidate
+state. Evaluation artifacts then provide evidence about the candidate
+checkpoint.</p>
+<p>A checkpoint promotion receipt may be issued only when the required
+evidence pack verifies. The receipt establishes that the checkpoint
+satisfied the declared promotion ritual. It does not establish that the
+model is universally safe, aligned, truthful, or robust.</p>
+<p>The resulting chain makes parameter evolution reconstructable:</p>
+<pre class="text"><code>training specification
+  -&gt; optimizer proposal
+  -&gt; admissibility decision
+  -&gt; candidate update
+  -&gt; evaluation evidence
+  -&gt; verification
+  -&gt; checkpoint promotion or refusal</code></pre>
+<p>This is reasoning by way of receipts at the level of model-state
+evolution.</p>
+<h2 id="institutional-generalization">12. Institutional
+Generalization</h2>
+<p>The same grammar can operate in institutions, but the mapping is not
+automatic.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Computational construct</th>
+<th>Institutional counterpart</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Proposal</td>
+<td>Motion, petition, application, recommendation</td>
+</tr>
+<tr>
+<td>Jurisdiction</td>
+<td>Legal, organizational, or procedural domain</td>
+</tr>
+<tr>
+<td>Authority</td>
+<td>Office, mandate, delegation, or charter</td>
+</tr>
+<tr>
+<td>Admissibility criteria</td>
+<td>Applicable rules and evidentiary requirements</td>
+</tr>
+<tr>
+<td>Decision receipt</td>
+<td>Formal decision and recorded basis</td>
+</tr>
+<tr>
+<td>Effect receipt</td>
+<td>Evidence that the ordered action was carried out</td>
+</tr>
+<tr>
+<td>Promotion</td>
+<td>Entry into precedent, policy, entitlement, or institutional
+memory</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Appeal, amendment, revocation, correction, or rehearing</td>
+</tr>
+</tbody>
+</table>
+<p>Fractal Governance Architecture supplies the cross-scale
+qualification: the transition form may recur across operational,
+institutional, protocol, and constitutional levels, while the applicable
+authority, policy, evidence, and interpretation remain
+jurisdiction-specific [10]. A receipt issued in one jurisdiction may
+carry evidence into another, but authority does not transfer by
+default.</p>
+<p>Institutional receipts can support:</p>
+<ul>
+<li>reconstruction of decision paths;</li>
+<li>attribution of authority;</li>
+<li>detection of bypass or missing participation;</li>
+<li>contestation and appeal;</li>
+<li>selective public transparency.</li>
+</ul>
+<p>They do not automatically produce justice, legitimacy, or public
+disclosure. Receipts may contain private or dangerous information. A
+mature system must separate the integrity commitment from its disclosure
+projection, allowing independent verification without universal
+exposure.</p>
+<h2
+id="corpus-wide-integration-durable-transition-accountability-substrate">13.
+Corpus-Wide Integration: Durable Transition-Accountability
+Substrate</h2>
+<p>Across the completed P1 corpus, Reasoning by Way of Receipts supplies
+the <strong>durable transition-accountability substrate connecting
+proposals, decisions, refusals, effects, observations, verifications,
+promotions, and revisions</strong>. It does not claim that a receipt is
+a proof, witness, warrant, effect, truth, authority, or standing
+decision.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed evidence carriers and evaluation
+envelopes.<br />
+<strong>Receipt boundary:</strong> A receipt may reference or contain
+witnesses; a witness can exist without being a transition
+receipt.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Warrant by
+Structure</em><br />
+<strong>Supplies:</strong> The evaluated relation among claim, authority
+path, evidence, effects, and standing.<br />
+<strong>Receipt boundary:</strong> Receipts are inputs to warrant
+assessment, not the assessment itself.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Responsibility, transfer, return, and
+terminal disposition for exact work.<br />
+<strong>Receipt boundary:</strong> Custody changes should be receipted;
+a receipt does not create custody without protocol
+satisfaction.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>From CI/CD to ACG: From Tests
+to Courts in Agentic Software Development</em><br />
+<strong>Supplies:</strong> Constitutional development, adjudication,
+effect, evidence, and revision lifecycle.<br />
+<strong>Receipt boundary:</strong> Receipts are the durable records
+spanning that process, not the court or governor.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Epistemic Lineage
+Engine</em><br />
+<strong>Supplies:</strong> Source, transformation, decision, and
+revision lineage for claims.<br />
+<strong>Receipt boundary:</strong> Receipt graphs supply events and
+bindings; epistemic lineage interprets their knowledge
+relations.</p></li>
+</ul>
+<p>The transaction envelope can be stated as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+T= (&amp;prestate, proposal, context, authority, decision, \\
+&amp;effect\_attempt, observations, verification, promotion, \\
+&amp;revision, poststate, remainder)
+\end{aligned}.
+$$</span></p>
+<p>Each field may have its own receipt and evidence ceiling. A decision
+receipt records what was admitted or refused under a context. An effect
+receipt records an attempt and bounded observations. A verification
+receipt records a property evaluation. A promotion receipt records a
+standing change. A revision receipt records why a prior posture changed.
+Hash binding protects exact record identity; it does not establish
+accuracy, completeness, independence, or legitimacy.</p>
+<p>Receipt closure requires that every protected transition terminate in
+a declared disposition and that orphaned or uncertain effects remain
+visible. Reconstruction is possible only to the extent that state
+identity, ordering, nondeterministic inputs, external observations,
+schemas, and missing events are covered. Replay of records is not
+necessarily re-execution of effects.</p>
+<p>The universal GSM can type<br />
+<code>PROPOSED_IN_TRANSACTION</code>,
+<code>DECIDED_BY_RECEIPT</code>,<br />
+<code>REFUSED_BY_RECEIPT</code>,
+<code>EFFECT_ATTEMPT_RECORDED_BY</code>,
+<code>OBSERVED_BY_WITNESS</code>,<br />
+<code>VERIFIED_BY_RECEIPT</code>, <code>PROMOTED_BY_RECEIPT</code>,
+<code>REVISED_BY_RECEIPT</code>,<br />
+<code>LEAVES_ORPHANED_EFFECT</code>,
+<code>RECONSTRUCTABLE_FROM_RECEIPTS</code>,<br />
+and<br />
+<code>HAS_RECEIPT_CLAIM_CEILING</code>. These relations make receipt
+reasoning composable without overclaim.</p>
+<p>This integration establishes four editorial commitments: adopt
+durable transition-accountability substrate as the official corpus role;
+adopt the transaction envelope; formalize the
+witness/receipt/warrant/standing separation; and require
+orphaned-effect, reconstruction, and claim-ceiling semantics in every
+receipt profile.</p>
+<h2
+id="a.-p3-randomized-cross-neighborhood-review-semantic-change-receipt-chain">13A.
+P3 Randomized Cross-Neighborhood Review: Semantic-Change Receipt
+Chain</h2>
+<p>The fixed-seed comparison with Governance Coverage Gaps, Ontology
+Laundering, GCNL, and GTK adds a portable chain for semantic change:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R= (&amp;proposal\_receipt, resolution\_receipt, \\
+&amp;admission\_receipt, transition\_receipt, \\
+&amp;propagation\_receipt, effect\_receipt, review\_receipt)
+\end{aligned}.
+$$</span></p>
+<p>GCNL can supply the exact human-authored proposal and residual
+meaning. GTK resolution binds the occurrence, candidate senses,
+alternatives, policy, and selected lexical identity. Admission decides
+whether the proposed semantic change may bind for the named purpose.
+Transition and propagation receipts preserve predecessor, successor,
+affected dependents, coverage, and failures.</p>
+<p>Ontology Laundering classification occurs only after those records
+are evaluated with authority, burden, alternatives, effects,
+counterevidence, and intent-neutral categories. The receipts do not
+establish laundering, legitimacy, semantic equivalence, or truth. They
+make the inference inspectable and revisable.</p>
+<p>Governance Coverage Gaps limits every completion claim. A
+full-looking receipt chain can cover only discovered semantic and
+capability paths; new caches, prompts, projections, or consumers reopen
+the propagation verdict. Absence receipts must name the observation
+boundary and unavailable regions.</p>
+<p>The universal GSM can type<br />
+<code>RECEIPTS_SEMANTIC_PROPOSAL</code>,
+<code>RECEIPTS_GTK_RESOLUTION</code>,<br />
+<code>RECEIPTS_PURPOSE_ADMISSION</code>,
+<code>RECEIPTS_IDENTITY_TRANSITION</code>,<br />
+<code>RECEIPTS_PROPAGATION_ATTEMPT</code>,
+<code>RECEIPTS_OBSERVED_SEMANTIC_EFFECT</code>,<br />
+and<br />
+<code>REOPENS_RECEIPT_INFERENCE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the semantic-change receipt chain; preserve proposal residual and GTK
+alternatives; keep laundering and legitimacy as evaluated conclusions
+rather than receipt fields; and bind propagation completeness to a
+reopenable coverage boundary.</p>
+<h2 id="the-receipt-kernel-under-its-downstream-uses">The Receipt Kernel
+Under Its Downstream Uses</h2>
+<p>The complete P3 field uses <em>Reasoning by Way of Receipts</em>
+across work custody, context admission, learning, evidence loops,
+project lineage, adversarial audit, artifact profiles, transformation
+substrates, split authority, and boundary accountability. Those
+dependents reveal a stable kernel and several prohibited promotions:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R^*= (&amp;subject, predecessor, proposal, authority, gate, \\
+&amp;decision, effect\_attempt, observation, verification, \\
+&amp;standing, successor, remainder, revision, profile)
+\end{aligned}.
+$$</span></p>
+<p>Work-custody receipts identify handoff and disposition without
+proving competent completion. Context receipts reconstruct admission and
+displacement without making active context true. Learning receipts
+preserve promotion, retirement, and residual influence without
+validating the learned object. Evidence-loop and audit receipts bind
+exact subjects and findings without certifying coverage or
+independence.</p>
+<p>Project-lineage and cold-boot uses require receipts to bind exact
+artifact generations, environments, dependencies, and replay classes.
+AFS and Jnana II uses require receipt profiles whose schemas, planes,
+and effect boundaries are explicit. Split-authority and
+boundary-accountability uses require the receipt issuer, evaluator,
+effect authority, observer, and affected subject to remain
+distinguishable.</p>
+<p>The reverse-dependency result is therefore not that every governed
+system needs one universal receipt schema. It is that downstream
+profiles should refine a common transition-accountability kernel while
+declaring consequence class, evidence path, authority topology, privacy,
+expiry, reconstruction scope, and claim ceiling. A receipt family that
+cannot express <code>UNKNOWN</code>,<br />
+<code>CONFLICT</code>, <code>PARTIAL_EFFECT</code>, <code>STALE</code>,
+<code>UNOBSERVED</code>,<br />
+or <code>REMAINDER</code> will encourage false closure.</p>
+<p>The universal GSM can type<br />
+<code>PROFILES_RECEIPT_FOR_DOMAIN</code>,<br />
+<code>BINDS_EXACT_TRANSITION_SUBJECT</code>,
+<code>RECONSTRUCTS_WITHOUT_PROVING</code>,
+<code>RETAINS_PARTIAL_EFFECT</code>,<br />
+<code>EXPIRES_RECEIPT_STANDING</code>,
+<code>PROPAGATES_REVISION_TO_DEPENDENT</code>,<br />
+and<br />
+<code>REFUSES_UNIVERSAL_SCHEMA_COLLAPSE</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: retain the transition-accountability kernel; make receipt
+profiles explicit rather than universalizing one schema; require
+consequence, authority, evidence-path, privacy, expiry, and remainder
+fields where material; and add typed incomplete outcomes across
+downstream profiles.</p>
+<h2 id="failure-modes-and-adversarial-conditions">13. Failure Modes and
+Adversarial Conditions</h2>
+<h3 id="boundary-theater">13.1 Boundary theater</h3>
+<p>A system can emit receipts without evaluating the claimed predicates.
+The receipt then proves that a record was produced, not that the gate
+participated. Countermeasures include evaluator attestations,
+independently replayable decision traces, challenge tests, and
+meta-receipts covering gate execution.</p>
+<h3 id="forged-or-misleading-receipts">13.2 Forged or misleading
+receipts</h3>
+<p>Integrity controls can detect modification and attribution failure,
+but a properly signed receipt may still contain false claims.
+Independent evidence and verification remain necessary.</p>
+<h3 id="receipt-proof-collapse">13.3 Receipt-proof collapse</h3>
+<p>A receipt may be treated as proof merely because it exists. The cure
+is an explicit verification scope and a rule that downstream claims
+cannot exceed the proof level actually established.</p>
+<h3 id="authority-laundering">13.4 Authority laundering</h3>
+<p>A valid signer, prior approval, or familiar institution may be
+treated as authority outside its jurisdiction. Receipts must bind
+authority scope and the receiving system must evaluate that scope
+independently.</p>
+<h3 id="cross-jurisdiction-semantic-drift">13.5 Cross-jurisdiction
+semantic drift</h3>
+<p>Two domains may interpret the same field differently. Cross-domain
+reuse requires an explicit bridge that preserves meaning and
+admissibility or emits a failure witness [10].</p>
+<h3 id="orphaned-effects">13.6 Orphaned effects</h3>
+<p>An effect may occur physically while evidence production fails.
+Treating the event as nonexistent can compound harm. The system must
+preserve canonical uncertainty, emit an incident or fault receipt where
+possible, and initiate a domain-specific reconciliation procedure.</p>
+<h3 id="receipt-flooding">13.7 Receipt flooding</h3>
+<p>Excessive receipt production can make verification unusable. Receipts
+require typed aggregation, retention policy, semantic indexing, and
+selective projection without breaking exact lineage.</p>
+<h3 id="governance-capture">13.8 Governance capture</h3>
+<p>Explicit governance can still encode unjust rules. Receipts make the
+governing structure visible; they do not make it good. Amendment,
+contestation, plural oversight, and bounded authority remain
+necessary.</p>
+<h3 id="irreversible-or-non-observable-effects">13.9 Irreversible or
+non-observable effects</h3>
+<p>Some domains cannot provide complete observation, deterministic
+replay, or rollback. The receipt must expose that limitation rather than
+representing a partial observation as complete verification.</p>
+<h2 id="evaluation-and-falsification-program">14. Evaluation and
+Falsification Program</h2>
+<p>The proposed phase shift from descriptive to justificatory
+computation should be tested rather than assumed.</p>
+<h3 id="reconstruction-test">14.1 Reconstruction test</h3>
+<p>Give independent evaluators the same receipt bundle, governing
+specification, and verifier implementation. Measure whether they
+reconstruct the same decision, effect classification, verification
+result, and standing change.</p>
+<p>Failure condition: materially divergent reconstruction under
+identical declared inputs.</p>
+<h3 id="bypass-test">14.2 Bypass test</h3>
+<p>Attempt to advance canonical state through every effect surface
+without a valid promotion receipt.</p>
+<p>Failure condition: canonical state advances through an unreceipted
+path.</p>
+<h3 id="proof-boundary-test">14.3 Proof-boundary test</h3>
+<p>Present valid receipts whose evidence establishes a narrow claim and
+ask whether the system accepts a stronger claim.</p>
+<p>Failure condition: receipt existence or signature is accepted as
+proof beyond the declared verification scope.</p>
+<h3 id="refusal-completeness-test">14.4 Refusal completeness test</h3>
+<p>Exercise invalid, incomplete, ambiguous, and unauthorized
+proposals.</p>
+<p>Failure condition: negative outcomes disappear as errors, silence, or
+unstructured exceptions rather than producing typed refusal, hold,
+escalation, or incident records.</p>
+<h3 id="cross-jurisdiction-test">14.5 Cross-jurisdiction test</h3>
+<p>Submit a receipt valid in one jurisdiction to another jurisdiction
+with different authority and evidentiary rules.</p>
+<p>Failure condition: authority transfers merely because the foreign
+receipt is cryptographically valid.</p>
+<h3 id="comparative-utility-test">14.6 Comparative utility test</h3>
+<p>Compare conventional logs and traces with receipt bundles for
+incident reconstruction, policy audit, appeal, and state replay.</p>
+<p>Failure condition: the receipt protocol produces no reproducible
+improvement in reconstructability, contestability, or bounded claim
+evaluation while adding material operational cost.</p>
+<h3 id="revision-propagation-test">14.7 Revision propagation test</h3>
+<p>Revoke or supersede a critical predecessor receipt and inspect
+dependent claims.</p>
+<p>Failure condition: downstream standing remains unchanged without an
+explicit independence determination or re-verification.</p>
+<h2 id="implications">15. Implications</h2>
+<h3 id="computing">15.1 Computing</h3>
+<p>Receipt-bound transitions make authority, evidence, and standing
+inspectable at the point where state changes. Debugging becomes not only
+trace inspection but evaluation of what each transition was allowed to
+establish. Replay can target the governed decision and verification
+logic rather than blindly re-executing the external world.</p>
+<h3 id="artificial-intelligence">15.2 Artificial intelligence</h3>
+<p>Agentic systems can be allowed broad proposal capability while
+retaining narrow effect and promotion authority. The model proposes;
+externalized governance determines what may become state. Refusal, hold,
+escalation, and non-decision become ordinary outcomes rather than signs
+that intelligence has failed.</p>
+<h3 id="knowledge-systems">15.3 Knowledge systems</h3>
+<p>Receipts can serve as structural memory for governed knowledge
+mutation. They preserve how a claim entered the corpus, which evidence
+supported it, what standing it acquired, and how later evidence revised
+it. The Governed Knowledge Loop turns this memory into a recursive
+process of analysis, crystallization, frontier detection, mutation, and
+renewed analysis [9].</p>
+<h3 id="institutions">15.4 Institutions</h3>
+<p>Institutions gain a basis for reconstructable decision-making and
+contestable authority. The benefit is not automatic transparency but the
+ability to produce appropriate internal and public projections from the
+same integrity-preserving decision lineage.</p>
+<h2
+id="receipts-make-justification-inspectable-without-becoming-the-justification">Receipts
+Make Justification Inspectable Without Becoming the Justification</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Reasoning by Way of Receipts binds a proposed state transition to its
+governing specification, jurisdiction, authority context, decision,
+attempted and observed effects, evidence, verification, predecessor,
+permitted standing, and revision lineage. Decision, refusal, effect,
+verification, promotion, and revision are distinct receipts. Their
+composition can make bounded justification reconstructable and
+contestable; it cannot remove interpretation or prove the world matches
+the record.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Receipt-proof attack.</strong> A signed, hashed, complete,
+or internally consistent receipt is treated as truth, proof, legitimacy,
+correctness, or successful effect.</li>
+<li><strong>Boundary-theater attack.</strong> The receipted path is
+rigorous while alternate tools, humans, networks, caches, credentials,
+physical processes, or institutional routes bypass it.</li>
+<li><strong>Authority-laundering attack.</strong> An unauthorized or
+defective authority assertion propagates through valid receipt
+composition and gains apparent standing.</li>
+<li><strong>Observation-effect attack.</strong> A command response, log,
+self-report, or proxy is recorded as the intended real-world effect
+without independent observation.</li>
+<li><strong>Cross-jurisdiction attack.</strong> Receipts compose across
+incompatible purposes, laws, definitions, evidence standards, or
+authority domains.</li>
+<li><strong>Semantic-drift attack.</strong> Schemas and terms retain
+identifiers while their interpretation changes, making historical
+composition appear valid.</li>
+<li><strong>Flood-and-opacity attack.</strong> Receipt volume, nesting,
+selective disclosure, or cryptographic detail makes review practically
+impossible and hides decisive omissions.</li>
+<li><strong>Revision-orphan attack.</strong> Revocation, correction,
+expiry, or predecessor defects fail to propagate to dependent claims,
+states, decisions, and projections.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a typed transition-accountability substrate and
+falsification program. It does not establish truth, sufficient
+justification, legitimate authority, complete evidence, actual effect,
+complete mediation, privacy, security, scalability, institutional
+validity, or implementation conformance. Hash and signature checks prove
+only their exact cryptographic claims under declared assumptions.</p>
+<p>Validation requires exact schemas and canonicalization, key and
+authority governance, independent effect observation, bypass and forgery
+courts, cross-jurisdiction refusal, semantic-version tests,
+selective-disclosure and privacy review, dependency propagation, human
+reconstruction studies, baselines, and current external research. No
+deployment or external research was performed in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is not more logging. It is the ability to
+reconstruct why a state transition was proposed, who could decide it,
+what actually happened, what evidence was checked, what standing
+followed, and what must change when any link later fails.</p>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>Receipts do not transform computation merely by adding records. They
+transform the conditions under which state may legitimately change.</p>
+<p>In reasoning by way of receipts:</p>
+<ul>
+<li>proposals do not become decisions by implication;</li>
+<li>decisions do not become effects by assertion;</li>
+<li>effects do not become evidence by occurrence alone;</li>
+<li>evidence does not become proof without verification;</li>
+<li>verification does not become unlimited standing;</li>
+<li>standing does not become permanent without revision paths.</li>
+</ul>
+<p>The decisive shift is therefore not from event logs to larger event
+logs. It is from implicit promotion to governed transition.</p>
+<p>A receipt is not the justification itself. It is the durable
+structure that makes a bounded justification inspectable, composable,
+contestable, and revisable.</p>
+<p>Once that structure becomes non-bypassable, computation can move
+beyond merely describing what happened. It can state what was proposed,
+what was permitted, what occurred, what was verified, what may now be
+relied upon, and exactly where its warrant ends.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="appendix-a.-minimal-receipt-profiles">Appendix A. Minimal
+Receipt Profiles</h2>
+<h3 id="a.1-decision-receipt">A.1 Decision receipt</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">receipt_type</span><span class="kw">:</span><span class="at"> decision</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">proposal_id</span><span class="kw">:</span><span class="at"> p-47</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">jurisdiction_id</span><span class="kw">:</span><span class="at"> repository-maintenance</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">authority_reference</span><span class="kw">:</span><span class="at"> maintainer-policy-v3</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">policy_hash</span><span class="kw">:</span><span class="at"> sha256:...</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prestate_reference</span><span class="kw">:</span><span class="at"> commit:...</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">decision</span><span class="kw">:</span><span class="at"> ALLOW</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">criteria_results</span><span class="kw">:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">scope</span><span class="kw">:</span><span class="at"> PASS</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">identity</span><span class="kw">:</span><span class="at"> PASS</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">dependencies</span><span class="kw">:</span><span class="at"> PASS</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">predecessor_receipts</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">standing_effect</span><span class="kw">:</span><span class="at"> effect-attempt-authorized</span></span></code></pre></div>
+<h3 id="a.2-verification-receipt">A.2 Verification receipt</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">receipt_type</span><span class="kw">:</span><span class="at"> verification</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">proposal_id</span><span class="kw">:</span><span class="at"> p-47</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">effect_receipt</span><span class="kw">:</span><span class="at"> r-effect-47</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">verifier</span><span class="kw">:</span><span class="at"> parser-regression-suite-v5</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">evidence_references</span><span class="kw">:</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> test-report:...</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">verification_result</span><span class="kw">:</span><span class="at"> PASS</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">verification_scope</span><span class="kw">:</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> declared-parser-regression-cases</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">nonclaims</span><span class="kw">:</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> universal-correctness</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> root-cause-proof</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">standing_effect</span><span class="kw">:</span><span class="at"> eligible-for-promotion-review</span></span></code></pre></div>
+<h3 id="a.3-revision-receipt">A.3 Revision receipt</h3>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">receipt_type</span><span class="kw">:</span><span class="at"> revision</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">subject_receipt</span><span class="kw">:</span><span class="at"> r-promotion-47</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">revision_action</span><span class="kw">:</span><span class="at"> SUPERSEDE</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">basis</span><span class="kw">:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> regression-report:...</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dependent_recheck_required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">standing_effect</span><span class="kw">:</span><span class="at"> prior-promotion-suspended</span></span></code></pre></div>
+<p>These examples are illustrative profiles, not canonical schemas.
+Their purpose is to expose the distinctions that an implementation must
+preserve.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern computational systems record extensive
+traces while rarely binding a state transition to the authority,
+jurisdiction, criteria, evidence, and verification under which that
+transition acquires standing. Its nearest external comparison fields are
+provenance, governance, observation. The sources in [E1], [E2], [E3],
+[E4], [E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy. A written
+constitution can legitimate domination as easily as constrain it unless
+amendment, participation, enforcement, and appeal remain effective in
+practice. Telemetry can be complete at the instrumented boundary while
+omitting the causal variable, real-world effect, or authority question
+that matters. These limits are not generic disclaimers: they identify
+the assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E2]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E3]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<p><strong>[E4]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-C8F2F9BF38C45E29</code>;<br />
+source SHA-256<br />
+<code>A80657E21BA277ADF1C229A2AAE221963B97A62EA2AF3EBC36434A916A8EEA44</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governance Witnesses</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-9E8DA0EFE860DE5D</code>;<br />
+source SHA-256<br />
+<code>8BF8C3646040F6E1F5222A8AA92C1106AA1F841E8A2C65402F468C83D59D06E5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p>[1] Adam Ableman, <em>What Software Systems Actually Receipt, Govern,
+and Hide: Findings from a 17-System Constitutional Corpus</em>, Ableman
+Corpus edition, 2026.</p>
+<p>[2] Adam Ableman, <em>Constitutional Computation</em>, Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20624488</p>
+<p>[3] Adam Ableman, <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality</em>, Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18601631</p>
+<p>[4] Adam Ableman, <em>Governed Semantic Compilation: Lawful
+Continuation, Refusal Semantics, and Epistemic Promotion in Large
+Language Models</em>, Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18453681</p>
+<p>[5] Adam Ableman, <em>Governed Semantic Tokens: Tokenization as an
+Admissibility Boundary</em>, Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18469507</p>
+<p>[6] Adam Ableman, <em>Epistemic Situational Awareness (ESA): A
+Phenomenological Control Property of Governed Reasoning Systems</em>,
+Zenodo, 2026. https://doi.org/10.5281/zenodo.18121270</p>
+<p>[7] Adam Ableman, <em>Governed Coding and Debugging: A
+Claim-Governance Grammar for Human-AI Agentic Workflows</em>, Zenodo,
+2026. https://doi.org/10.5281/zenodo.18115533</p>
+<p>[8] Adam Ableman, <em>Governed Training Regimes: Admissible Parameter
+Transformation Under Law</em>, Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18623302</p>
+<p>[9] Adam Ableman, <em>The Governed Knowledge Loop: A Constitutional
+Bootstrapping Architecture for Semantic Computing Infrastructure</em>,
+Ableman Corpus edition, 2026.</p>
+<p>[10] Adam Ableman, <em>Fractal Governance Architecture</em>, Zenodo,
+2026. https://doi.org/10.5281/zenodo.20754189</p>
+<p>[11] Adam Ableman, <em>Constitutional Binding Theory: Governed Anchor
+Resolution as a Universal Pattern in Semantic Systems</em>, Ableman
+Corpus edition, 2026.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23845806">10.5281/zenodo.23845806</a></p>

@@ -1,0 +1,825 @@
+<h1 id="mcir-topologies">MCIR Topologies</h1>
+<h2
+id="a-governed-design-space-for-legibility-composition-execution-verification-and-evolution">A
+Governed Design Space for Legibility, Composition, Execution,
+Verification, and Evolution</h2>
+<h3
+id="without-those-contracts-a-multi-topology-architecture-can-increase-semantic-drift-rather-than-reduce-it.">Without
+those contracts, a multi-topology architecture can increase semantic
+drift rather than reduce it.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>The representational topology of an intermediate representation is
+not a neutral storage choice. It determines which relations are local or
+shared, which structures can be reused, how scope is expressed, whether
+cycles are possible, how history is retained, which proofs are
+tractable, and which changes can be made without silent semantic loss.
+For MCIR, topology is therefore constitutional.</p>
+<p>This paper develops the design space opened by that claim. AST and
+DAG are not two exhaustive alternatives. A tree is itself a restricted
+directed acyclic graph, while typing, layering, hyperedges,
+state-transition semantics, temporal versioning, constraint overlays,
+and authoring/canonical duality are partly orthogonal dimensions. The
+paper reorganizes the source taxonomy around a <strong>topology
+profile</strong> rather than a flat list of competing structures.</p>
+<p>The strongest candidate architecture is a coordinated
+representational family: a scoped tree with references for authoring and
+local containment; a typed graph for canonical sharing and dependency; a
+separate receipt-lineage graph for provenance and decision history; and
+explicit projections into workflow, constraint, temporal, and
+visualization views. This is a design candidate, not an adjudicated MCIR
+identity or implementation.</p>
+<p>Multiple representations create their own constitutional burden. Each
+projection must state what it preserves, what it omits, whether
+round-tripping is permitted, how identity is maintained, and which
+representation is authoritative for each claim. Without those contracts,
+a multi-topology architecture can increase semantic drift rather than
+reduce it.</p>
+<p>The result is a specification and evaluation framework for choosing
+MCIR configurations through CM1 and CM2, selecting an Instance
+Constitution or Instance Configuration, and eventually producing an
+Instance Realization or Implementation Realization with evidence. No
+implementation or canonical standing is asserted.</p>
+<h2 id="source-evidence-and-authorship-standing">Source, Evidence, and
+Authorship Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+dialogue-shaped source artifact. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/mcir-</code></p>
+<p><code>topologies/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>F172EDF5FFA065F241FE2A73693D58EC9244EA50D3C76EB2DEBDD8B3515BF46A</code>.
+The source remains unchanged.</p>
+<p>The artifact begins as a response to prior discussion and does not
+carry a standard author surface. Exact custody does not establish
+sentence-level human authorship. Its ideas are retained as source
+material with provisional authorship; this candidate does not assign
+author standing to model-generated language. The related
+<code>MCIR_AST_DAG.txt</code> work remains a distinct identity pending
+author adjudication.</p>
+<h2 id="specification-configuration-and-realization">1. Specification,
+Configuration, and Realization</h2>
+<p>The source makes a valuable separation:</p>
+<ul>
+<li><strong>Specification</strong> describes the possible
+representational space and the obligations MCIR must support.</li>
+<li><strong>Configuration</strong> selects a topology family and its
+structural affordances.</li>
+<li><strong>Realization</strong> instantiates schemas, editors,
+serializers, compilers, stores, runtimes, and verifiers.</li>
+</ul>
+<p>The full Ableman realization funnel refines that separation.
+Specification defines the problem; CM1 retains admissible
+configurations; CM2 prefers among them; IC selects a bounded
+configuration; IR realizes it; Evidence tests it; Revision changes it
+under lineage.</p>
+<p>An AST or graph schema is not merely an implementation detail if
+choosing it changes what can be represented, proven, shared, or
+governed. Nor is a topology name sufficient as a specification. The
+configuration must include identity, typing, scoping, mutation,
+versioning, and projection rules.</p>
+<h2 id="topology-is-constitutional">2. Topology Is Constitutional</h2>
+<p>Topology allocates semantic power. It decides whether one node may
+have several parents, whether a relation is first-class, whether local
+containment outranks shared reference, whether history is mutable,
+whether concurrency is visible, and whether an invariant can be
+expressed without external convention.</p>
+<p>This produces several constitutional questions:</p>
+<ul>
+<li>Who owns a shared node and who may revise it?</li>
+<li>Does reference import content, authority, obligations, or only
+identity?</li>
+<li>Which cycles are allowed and which indicate an invalid
+dependency?</li>
+<li>Is lineage inside the semantic graph or carried by a separate
+receipt graph?</li>
+<li>Can a projection omit a relation without changing standing?</li>
+<li>Which representation governs when authoring, canonical, execution,
+and evidence views disagree?</li>
+</ul>
+<p>Topology does not itself answer these questions. It determines
+whether the answers can be stated and checked locally.</p>
+<h2 id="a-topology-profile">3. A Topology Profile</h2>
+<p>Represent an MCIR topology configuration as:</p>
+<p><span
+class="math display"><em>T</em> = (<em>V</em>, <em>E</em>, <em>τ</em><sub><em>V</em></sub>, <em>τ</em><sub><em>E</em></sub>, <em>S</em>, <em>H</em>, <em>Q</em>, <em>L</em>, <em>P</em>, <em>C</em>),</span></p>
+<p>where <span class="math inline"><em>V</em></span> is the node set,
+<span class="math inline"><em>E</em></span> relation instances, <span
+class="math inline"><em>τ</em><sub><em>V</em></sub></span> node types,
+<span class="math inline"><em>τ</em><sub><em>E</em></sub></span>
+relation types, <span class="math inline"><em>S</em></span> scope and
+ownership rules, <span class="math inline"><em>H</em></span> sharing and
+reference rules, <span class="math inline"><em>Q</em></span>
+state-transition semantics, <span class="math inline"><em>L</em></span>
+lineage and version rules, <span class="math inline"><em>P</em></span>
+projection and lowering contracts, and <span
+class="math inline"><em>C</em></span> canonicalization and identity
+rules.</p>
+<p>The tuple makes clear that base graph shape is only one dimension.
+Two typed DAGs can have different governance because they use different
+scope, mutation, lineage, or projection laws.</p>
+<p>Candidate invariants include:</p>
+<ol type="1">
+<li>every edge type has declared source, target, authority, and
+composition semantics;</li>
+<li>every shared node has ownership and revision rules;</li>
+<li>every projection declares preserved and omitted obligations;</li>
+<li>canonical identity binds schema and canonicalization version;</li>
+<li>lineage cannot be rewritten by semantic mutation; and</li>
+<li>no execution lowering may silently discard a constraint or
+refusal.</li>
+</ol>
+<h2 id="base-structural-families">4. Base Structural Families</h2>
+<h2 id="dimensions-that-are-not-base-topologies">5. Dimensions That Are
+Not Base Topologies</h2>
+<p>Several source candidates are better understood as overlays or
+strategies.</p>
+<ul>
+<li><strong>Layering</strong> separates authority, admissibility,
+execution, lineage, and evolution views.</li>
+<li><strong>Versioning</strong> adds temporal identity and succession to
+any base structure.</li>
+<li><strong>Corridors and envelopes</strong> are predicates over states
+or trajectories, not necessarily graph families.</li>
+<li><strong>Bimodal authoring/canonical architecture</strong>
+coordinates two representations through a compiler and correspondence
+contract.</li>
+<li><strong>Verification-first</strong> and
+<strong>evolution-first</strong> describe selection priorities, not
+shapes.</li>
+</ul>
+<p>This reclassification makes the design space compositional. A scoped
+authoring tree can lower into a typed versioned multigraph with a
+constraint projection and a separate lineage graph.</p>
+<h2 id="coordinated-representations">6. Coordinated Representations</h2>
+<p>The source’s strongest proposal is not one topology but a coordinated
+family:</p>
+<ol type="1">
+<li><strong>authoring representation:</strong> scoped tree with
+references;</li>
+<li><strong>canonical representation:</strong> typed graph supporting
+sharing and dependency;</li>
+<li><strong>receipt-lineage representation:</strong> append-oriented
+provenance and decision history;</li>
+<li><strong>execution projection:</strong> workflow or state-transition
+semantics where needed;</li>
+<li><strong>verification projection:</strong> constraints and proof
+obligations; and</li>
+<li><strong>evolution projection:</strong> versions, migrations,
+supersession, and constitutional amendment.</li>
+</ol>
+<p>The broader corpus currently supports an MCIR candidate centered on
+AST, DAG, and separate receipt lineage. This paper neither grants that
+arrangement canonical standing nor replaces it. It explains why such a
+combination is structurally plausible and what additional contracts it
+needs.</p>
+<h2 id="projection-and-correspondence-contracts">7. Projection and
+Correspondence Contracts</h2>
+<p>Let <span class="math inline"><em>M</em></span> be the canonical
+representation and <span
+class="math inline"><em>π</em><sub><em>i</em></sub>(<em>M</em>)</span> a
+derived view. Each projection needs a contract:</p>
+<p><span
+class="math display"><em>π</em><sub><em>i</em></sub> : (<em>M</em>, <em>O</em><sub><em>i</em></sub>) ↦ (<em>V</em><sub><em>i</em></sub>, <em>R</em><sub><em>i</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>O</em><sub><em>i</em></sub></span> is the set of
+obligations relevant to the view, <span
+class="math inline"><em>V</em><sub><em>i</em></sub></span> the projected
+structure, and <span
+class="math inline"><em>R</em><sub><em>i</em></sub></span> an explicit
+remainder containing omitted, unresolved, or refused material.</p>
+<p>For every material predicate <span
+class="math inline"><em>p</em></span> claimed to be preserved:</p>
+<p><span
+class="math display"><em>p</em>(<em>M</em>) ⇔ <em>p</em><sub><em>i</em></sub>(<em>π</em><sub><em>i</em></sub>(<em>M</em>))</span></p>
+<p>must either be proved, tested under a declared domain, or left
+unclaimed. A one-way sound projection may be sufficient; round-trip
+identity should not be assumed.</p>
+<p>If an authoring form compiles to a canonical graph, edits made
+directly to the canonical form may not be representable in the authoring
+form. The system must choose among refusal, explicit loss, generated
+extension, or a new source of authority. Silent reverse projection is
+unsafe.</p>
+<h2 id="identity-mutation-and-shared-structure">8. Identity, Mutation,
+and Shared Structure</h2>
+<p>Shared nodes create reuse and also blast radius. A revision can
+affect many dependents. MCIR therefore needs:</p>
+<ul>
+<li>immutable or versioned node identity;</li>
+<li>explicit owner and revision authority;</li>
+<li>dependency impact analysis;</li>
+<li>copy, fork, alias, import, and successor semantics;</li>
+<li>transaction or partial-failure rules;</li>
+<li>cycle policy by edge type; and</li>
+<li>receipts linking proposal, decision, transformed artifact, and
+result.</li>
+</ul>
+<p>Canonical identity must bind the topology schema, type law, ordering
+and normalization rules, and version. Identical node labels in different
+topology regimes are not the same canonical object merely because their
+text matches.</p>
+<h2 id="configuration-selection">9. Configuration Selection</h2>
+<p>Rather than choosing a topology by taste, evaluate a profile across
+independent criteria:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>legibility</td>
+<td>Can intended users understand local and global structure?</td>
+</tr>
+<tr>
+<td>expressiveness</td>
+<td>Can material relations, scopes, and exceptions be represented?</td>
+</tr>
+<tr>
+<td>composability</td>
+<td>Can governed fragments combine without collision or silent
+widening?</td>
+</tr>
+<tr>
+<td>identity</td>
+<td>Are sharing, aliasing, versioning, and succession explicit?</td>
+</tr>
+<tr>
+<td>proof tractability</td>
+<td>Which invariants and reachability properties can be checked?</td>
+</tr>
+<tr>
+<td>execution fidelity</td>
+<td>Can lowering preserve obligations and refusal semantics?</td>
+</tr>
+<tr>
+<td>lineage fidelity</td>
+<td>Are decisions and transformations reconstructible?</td>
+</tr>
+<tr>
+<td>evolvability</td>
+<td>Can schemas and policies change without rewriting history?</td>
+</tr>
+<tr>
+<td>accessibility</td>
+<td>Can people inspect and renegotiate the structure?</td>
+</tr>
+<tr>
+<td>cost</td>
+<td>What runtime, storage, authoring, and governance burden is
+introduced?</td>
+</tr>
+</tbody>
+</table>
+<p>No profile dominates universally. CM2 preference is purpose-relative
+and must retain tradeoffs rather than collapse them into an unsupported
+score.</p>
+<h2 id="corpus-integration">10. Corpus Integration</h2>
+<p>The canonical <strong>MCIR</strong> paper supplies the representation
+architecture whose topology this work explores. <strong>Representational
+Topology in MCIR</strong> is an adjacent provisional work focused on
+AST/DAG capabilities and remains identity-distinct. <strong>Meaning
+Crystals</strong> supplies a bounded language for representational
+stability; crystallinity does not select a topology by itself.</p>
+<p><strong>Semantic Manifold Topology</strong> describes semantic
+neighborhoods and transformations at a different analytical level;
+geometric adjacency is not the same as MCIR storage topology.
+<strong>Theory of Semantic Computing Infrastructure</strong> situates
+MCIR among translation, governance, realization, and evidence layers.
+The <strong>Governed Meaning Base (GMB)</strong> can catalog topology
+profiles, schemas, projections, standing, evidence, conflicts, and
+revision lineage. The universal <strong>GSM</strong> types these
+relations without merging the works.</p>
+<h2 id="realization-funnel">11. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate base structures, overlays,
+strategies, projections, and combinations.</li>
+<li><strong>Specification:</strong> define the topology profile,
+invariants, projection contracts, identity, mutation, and evidence
+obligations.</li>
+<li><strong>CM1:</strong> retain every admissible configuration,
+including costly, overly complex, or undesirable ones.</li>
+<li><strong>CM2:</strong> prefer configurations by domain-relative
+legibility, expressiveness, proof, execution, lineage, evolution,
+accessibility, and cost.</li>
+<li><strong>IC:</strong> choose an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for a
+bounded MCIR domain. The names are interchangeable.</li>
+<li><strong>IR:</strong> produce an <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong> such
+as schemas, editors, compilers, stores, projections, runtimes, or
+verifiers. The names are interchangeable.</li>
+<li><strong>Evidence:</strong> test conformance, preservation, round
+trips, performance, comprehension, adversarial mutation, migration, and
+replay.</li>
+<li><strong>Revision:</strong> change the profile through explicit
+versioning, migration, and successor identity.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 criteria. It
+does not choose a final IC or produce an IR.</p>
+<h2 id="evaluation-program">12. Evaluation Program</h2>
+<p>Candidate configurations should be evaluated with: (1) representative
+governance structures; (2) local and cross-cutting authority; (3)
+shared-policy revision; (4) quorum and n-ary relations; (5) cycles by
+edge type; (6) concurrent transitions; (7) authoring-to-canonical
+compilation; (8) projection preservation and remainders; (9)
+canonicalization determinism; (10) migration across schema versions;
+(11) lineage reconstruction; (12) obligation carriage into execution;
+(13) human comprehension and editability; and (14) adversarial
+malformed, ambiguous, and partially representable inputs.</p>
+<p>Results must be reported by property. A configuration can be legible
+and lossy, expressive and uncheckable, canonical and inaccessible, or
+provable and too costly.</p>
+<h2 id="mcir-topology-configuration-grammar">MCIR Topology Configuration
+Grammar</h2>
+<p>Across the completed P1 corpus, MCIR Topologies is the
+<strong>configuration grammar and design-space companion for selecting,
+coordinating, projecting, and evolving MCIR structural
+families</strong>. It does not establish the canonical MCIR identity,
+merge adjacent MCIR papers, or choose one universally optimal
+topology.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Representational Topology in
+MCIR: AST, DAG, and Emergent Governance Capabilities</em><br />
+<strong>Supplies:</strong> Focused three-graph AST, canonical DAG, and
+receipt-lineage contract.<br />
+<strong>Topology-paper boundary:</strong> MCIR Topologies generalizes
+the configuration space and correspondence obligations.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>DAG Closure and Acyclicity by
+Constrution</em><br />
+<strong>Supplies:</strong> A bounded construction theorem for
+referential closure and acyclicity.<br />
+<strong>Topology-paper boundary:</strong> That theorem covers one
+property of one selected canonical graph profile.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meaning Crystals</em><br />
+<strong>Supplies:</strong> Representational stability, defects,
+canonicalization, and reopening.<br />
+<strong>Topology-paper boundary:</strong> Crystallinity evaluates a
+representation profile but does not select its topology.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Theory of Semantic Computing
+Infrastructure</em><br />
+<strong>Supplies:</strong> Placement among authoring, transformation,
+storage, execution, and evidence layers.<br />
+<strong>Topology-paper boundary:</strong> The topology grammar
+configures one representation layer inside that infrastructure.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Lowering, preservation, remainder, refusal,
+and receipts.<br />
+<strong>Topology-paper boundary:</strong> Compilation governs movement
+among coordinated representations.</p></li>
+</ul>
+<p>A topology configuration should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+T= (&amp;base\_structures, node\_types, edge\_types, scope, \\
+&amp;sharing, cycles, state, identity, mutation, lineage, \\
+&amp;projections, canonicalization, authority, evidence)
+\end{aligned}.
+$$</span></p>
+<p>Tree, DAG, general graph, hypergraph, state machine, workflow, and
+constraint network are not interchangeable labels. Layering, versioning,
+corridors, verification-first design, and bimodal authoring/canonical
+architecture are overlays or priorities rather than base shapes. Every
+coordinated representation requires a directional correspondence
+contract and explicit remainder.</p>
+<p>Shared structure creates governance obligations: owner, revision
+authority, dependency impact, alias, import, copy, fork, successor,
+transaction, and cycle policy. Direct edits to derived views must either
+be refused, translated through an authorized source, or create a new
+governed source; silent reverse projection creates competing
+authorities.</p>
+<p>The universal GSM can type<br />
+<code>CONFIGURES_MCIR_TOPOLOGY</code>,
+<code>USES_BASE_STRUCTURE</code>,<br />
+<code>OVERLAYS_VERSIONING</code>,
+<code>PROJECTS_TO_EXECUTION_VIEW</code>,
+<code>PRESERVES_OBLIGATION_IN_VIEW</code>,<br />
+<code>EMITS_PROJECTION_REMAINDER</code>,
+<code>SHARES_NODE_UNDER_AUTHORITY</code>,
+<code>INVALIDATES_DEPENDENT_NODE</code>,<br />
+<code>FORKS_SHARED_STRUCTURE</code>,<br />
+and<br />
+<code>REMAINS_IDENTITY_DISTINCT_FROM_MCIR_WORK</code>. These relations
+keep configuration exploration from becoming identity adjudication.</p>
+<p>This integration establishes four editorial commitments: classify the
+work as the MCIR topology configuration grammar; adopt the complete
+topology envelope; require directional projection, remainder, and
+shared-node governance contracts; and preserve adjacent MCIR identities
+until explicit author adjudication.</p>
+<h2 id="governed-topology-migration">Governed Topology Migration</h2>
+<p>The fixed-seed comparison with UGK, ESA/GKL, and <em>Everything Is a
+Compiler</em> reveals that topology selection and topology migration
+need an explicit transition contract. A topology is not only a static
+configuration when changing it can alter identity, authority, scope,
+reachability, conflict visibility, or dependency behavior.</p>
+<p><span class="math display">$$
+\begin{aligned}
+M= (&amp;source\_topology, target\_topology, authority, \\
+&amp;preservation, authorized\_loss, remainder, \\
+&amp;dependency\_impact, evidence, rollback)
+\end{aligned}.
+$$</span></p>
+<p>UGK supplies one possible accountable transaction pattern for
+committing such a migration, but MCIR Topologies does not require UGK as
+its only governance realization. The essential obligation is that the
+actor, authority, selected source and target, preservation profile,
+accepted loss, affected dependents, and recovery path are fixed before
+an authority-relevant migration takes effect.</p>
+<p>ESA/GKL supplies a current and historical view of which topology
+version, conflicts, dependencies, and unresolved remainders are
+operative. That view can be stale or incomplete, so it constrains the
+claim ceiling rather than certifying the migration. A topology change
+that cannot enumerate or bound affected dependents should yield
+<code>IMPACT_UNKNOWN</code>,<br />
+<code>DEFER</code>, or a scoped experimental branch rather than silent
+global replacement.</p>
+<p>The compiler lens applies when the migration declares an input
+regime, target regime, preservation obligations, loss policy, remainder,
+and evidence. Not every graph edit earns that description. A direct
+mutation with no declared preservation contract remains an edit; calling
+it compilation must not manufacture assurance.</p>
+<p>The universal GSM can type<br />
+<code>PROPOSES_TOPOLOGY_MIGRATION</code>,<br />
+<code>COMMITS_MIGRATION_UNDER_AUTHORITY</code>,
+<code>PRESERVES_RELATION_ACROSS_TOPOLOGY</code>,<br />
+<code>AUTHORIZES_TOPOLOGY_LOSS</code>,
+<code>REPORTS_DEPENDENCY_IMPACT_UNKNOWN</code>,<br />
+<code>ROLLS_BACK_TOPOLOGY_MIGRATION</code>, and<br />
+<code>QUALIFIES_AS_COMPILATION_UNDER_PROFILE</code>.</p>
+<p>This randomized review adds three open editorial questions: adopt the
+topology-migration contract; require pre-effect authority, impact,
+remainder, and rollback custody for consequential migrations; and
+reserve compiler language for migrations with explicit preservation and
+loss obligations.</p>
+<h2 id="a-representation-role-and-view-authority-contract">A
+Representation-Role and View-Authority Contract</h2>
+<p>Nine downstream uses confirm that <em>MCIR Topologies</em> functions
+as a configuration grammar rather than a competing foundational
+representation. Crystallized Governance and Representational Topology
+select artifact profiles from it. HLIR and GOV use topology to connect
+authoring locations to canonical subjects. Governance Witnesses
+separates assertion, identity, and evaluation across authoring,
+canonical, and receipt graphs. MDSP packages topology choices as
+versioned standards profiles. ESA/GKL and <em>Everything Is a
+Compiler</em> make observation and comparison relative to the selected
+topology. UGK binds the representation regime used by an
+authority-bearing transaction without making that representation the
+Governor.</p>
+<p>Those uses require a role and authority matrix in addition to a list
+of graph shapes:</p>
+<p><span class="math display">$$
+\begin{aligned}
+T^*= (&amp;representations, roles, claim\_authority, identities, \\
+&amp;translations, preservation, authorized\_loss, remainder, \\
+&amp;shared\_nodes, dependencies, migration, compatibility, \\
+&amp;evidence, revision)
+\end{aligned}.
+$$</span></p>
+<p>For each claim class, the profile must state which representation is
+authoring source, canonical subject, executable projection, evidence
+carrier, or read-only view; which edits are authoritative; and how
+disagreement is resolved. No representation is globally canonical merely
+because it is machine-normalized. A graph used to organize witnesses,
+tasks, or coordination evidence does not prove witness independence,
+coordinator substitution, or semantic correctness.</p>
+<p>Every downstream package should bind the topology schema and
+canonicalization version it assumes. A topology migration invalidates or
+qualifies dependent parsers, standards profiles, witnesses, orientation
+projections, comparisons, and transactions until their preservation
+obligations are re-established. Compatibility is directional and
+property-specific; successful parsing is not semantic or authority
+compatibility.</p>
+<p>The broader alias screen found two nondependencies that should remain
+explicit. Split-Authority AI Coordination uses “authority topology” in a
+different analytical sense. <em>The Optional Coordinator</em> states
+that MCIR graph shape has<br />
+<code>NO_MATERIAL_RELATION</code> to whether coordinator functions were
+successfully substituted.</p>
+<p>The universal GSM can type<br />
+<code>ASSIGNS_REPRESENTATION_ROLE</code>,
+<code>GOVERNS_CLAIM_IN_VIEW</code>,<br />
+<code>TRANSLATES_UNDER_PRESERVATION_PROFILE</code>,
+<code>INVALIDATES_TOPOLOGY_DEPENDENT</code>,<br />
+<code>DECLARES_DIRECTIONAL_COMPATIBILITY</code>,
+<code>BINDS_TRANSACTION_TO_REPRESENTATION_REGIME</code>,<br />
+and<br />
+<code>HAS_NO_SUBSTITUTION_RESULT_FROM_GRAPH_SHAPE</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the view-authority matrix; bind downstream claims to
+exact topology profiles; propagate topology migration to every dependent
+contract; and preserve explicit nonrelations where graph language does
+not supply substantive evidence.</p>
+<h2 id="counterevidence-and-failure-modes">13. Counterevidence and
+Failure Modes</h2>
+<p>The proposal should be narrowed or rejected where: (1) AST and DAG
+are treated as disjoint categories even though a tree is a restricted
+DAG; (2) a general graph is called a DAG despite cycles; (3) typing is
+assumed to supply authority; (4) a topology name substitutes for exact
+semantics; (5) hyperedges and reified relations are treated as
+equivalent without proof; (6) Petri nets, workflows, state machines, and
+statecharts are conflated; (7) a constraint overlay is mistaken for
+complete operational semantics; (8) corridor or envelope language lacks
+a state and trajectory definition; (9) versioning rewrites historical
+identity; (10) shared-node changes silently affect dependents; (11)
+imports widen authority; (12) alias, copy, fork, and successor are
+conflated; (13) projection drops an obligation; (14) a remainder is
+hidden; (15) round-tripping is assumed; (16) direct edits create two
+authorities; (17) canonicalization omits topology or schema version;
+(18) receipt lineage is mutable with semantic content; (19) cycles
+create unbounded authorization or dependency; (20) layering produces
+inconsistent views; (21) multi-topology synchronization cannot be proven
+or observed; (22) proof tractability is asserted without a logic and
+domain; (23) user comprehension is assumed; (24) one profile is
+described as universally optimal; (25) the current MCIR candidate is
+treated as author-adjudicated; (26) dialogue-derived text receives
+author standing; (27) adjacent MCIR works are merged by subject
+similarity; (28) the implementation cannot preserve refusal; or (29)
+external technical claims remain unverified.</p>
+<h2 id="multiple-views-need-one-explicit-authority-contract">Multiple
+Views Need One Explicit Authority Contract</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>MCIR Topologies treats representation shape as a constitutional
+configuration choice. Trees, typed graphs, hyperedges, constraints,
+workflows, state transitions, temporal versions, receipts, and
+visualizations expose different relations and proof surfaces. A
+coordinated family may be useful only when each view declares its role,
+identity rules, preserved properties, omissions, and authority.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Topology-label attack.</strong> Calling a structure an AST,
+DAG, graph, or hypergraph substitutes for exact typing, scope, identity,
+mutation, cycle, and traversal semantics.</li>
+<li><strong>View-authority attack.</strong> Two projections disagree and
+each consumer assumes its own representation is authoritative.</li>
+<li><strong>Round-trip attack.</strong> Authoring and canonical views
+silently lose ordering, sharing, comments, constraints, provenance,
+defaults, or ambiguity during conversion.</li>
+<li><strong>Shared-mutation attack.</strong> One referenced node changes
+meaning for multiple parents without visible impact review and
+authorization.</li>
+<li><strong>Cycle-by-projection attack.</strong> Each base structure is
+acyclic while references, versions, imports, constraints, or view
+correspondences create effective cycles.</li>
+<li><strong>Identity-alias attack.</strong> Copying, interning,
+canonicalization, and reference reuse conflate structural equality,
+semantic identity, and artifact identity.</li>
+<li><strong>Proof-transfer attack.</strong> A property established in
+one representation is assumed to hold in another without a preservation
+theorem or test.</li>
+<li><strong>Complexity-burden attack.</strong> Coordinated
+representations create more synchronization, migration, tooling,
+performance, and human-comprehension risk than they resolve.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper offers a topology-profile grammar and candidate coordinated
+representation family. It does not adjudicate MCIR identity, choose a
+canonical topology, establish lossless projections, prove round-trip
+correctness, or provide an implementation, performance result,
+conformance suite, or usability result. The dialogue-shaped source has
+provisional sentence-level authorship, and the related AST/DAG work
+remains distinct pending author decision.</p>
+<p>Evaluation requires exact schemas and semantics, property-specific
+correspondence contracts, counterexample fixtures, mutation and version
+tests, migration and round-trip courts, performance and comprehension
+evidence, and current external research. No implementation or external
+research was performed in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The key design question is not tree or graph. It is which view
+answers which question, what semantic power that view possesses, what
+every conversion preserves or loses, and how a disagreement is resolved
+without silently rewriting meaning.</p>
+<h2 id="conclusion">15. Conclusion</h2>
+<p>MCIR topology is not a contest between AST and DAG. It is a governed
+selection across base structures, relation types, scope, sharing,
+transition semantics, lineage, canonicalization, and projections.
+Different representations can serve authoring, canonical analysis,
+execution, verification, and evolution, but their correspondence must
+itself be constitutional.</p>
+<p>The most promising architecture is layered and bimodal: locally
+legible authoring, explicitly typed canonical sharing, separately
+protected receipt lineage, and purpose-specific execution and
+verification projections. Its value remains a hypothesis until schemas,
+preservation obligations, conformance tests, and human-use evidence
+exist.</p>
+<p>Topology determines what the system can see and preserve. Governance
+determines which of those structures may bind, transform, and produce
+effects. MCIR requires both.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires authorized primary-source review of abstract
+syntax trees, directed acyclic and multi-graphs, hypergraphs, Petri
+nets, state machines and statecharts, constraint systems, graph
+transformation, canonicalization, and representation-preserving
+compilation.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the representational topology of an
+intermediate representation is not a neutral storage choice. Its nearest
+external comparison fields are formal, provenance, open sovereign. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Source availability and
+reproducible builds improve inspectability but do not alone guarantee
+comprehensibility, practical exit, hardware control, or sustainable
+maintenance. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>A tree privileges containment, parenthood, local scope, ordered
+authorship, and readable nesting. References permit shared definitions
+without making the authoring surface a general graph. This is strong for
+human construction but requires rules for reference resolution, imported
+authority, cycles, and shared-node change.</p>
+<h3 id="typed-directed-graph">4.2 Typed directed graph</h3>
+<p>A typed graph makes relations such as <code>constrains</code>,
+<code>authorizes</code>, <code>depends-on</code>,<br />
+<code>escalates-to</code>,<br />
+and <code>receipted-by</code> explicit. A DAG forbids directed cycles; a
+general directed multigraph may retain several typed edges between the
+same nodes and allow selected cycles. The choice must follow semantics,
+not convenience.</p>
+<h3 id="hypergraph-or-reified-n-ary-relation">4.3 Hypergraph or reified
+n-ary relation</h3>
+<p>Quorum, joint authority, multi-condition admissibility, and composite
+obligation may be n-ary. A hypergraph represents this directly. An
+ordinary graph can instead reify the relation as a node. The two
+encodings are not automatically equivalent: identity, order,
+multiplicity, authority, and projection behavior require a declared
+correspondence.</p>
+<h3 id="state-transition-structures">4.4 State-transition
+structures</h3>
+<p>Petri-net-like models, state machines, and statecharts privilege
+transition, concurrency, synchronization, nesting, guards, and
+reachability. They are useful projections for workflow and lifecycle
+domains. They should not be described as interchangeable without exact
+semantics.</p>
+<h3 id="constraint-structures">4.5 Constraint structures</h3>
+<p>Constraint networks privilege variables, admissibility predicates,
+satisfiability, conflicts, and allowable regions. They can support
+static analysis and scenario search. A solver result is only as
+meaningful as the encoded variables, domain, and constraint law.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847999">10.5281/zenodo.23847999</a></p>

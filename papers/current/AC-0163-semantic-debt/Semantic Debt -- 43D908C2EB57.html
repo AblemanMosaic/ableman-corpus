@@ -1,0 +1,2005 @@
+<h1 id="semantic-debt">Semantic Debt</h1>
+<h2
+id="a-two-axis-ontology-of-meaning-failure-in-software-governance-and-agent-built-systems">A
+Two-Axis Ontology of Meaning Failure in Software, Governance, and
+Agent-Built Systems</h2>
+<h3
+id="the-system-may-still-speak-but-can-its-meanings-still-be-recovered">The
+system may still speak, but can its meanings still be recovered?</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Software systems do not only accumulate technical debt. They
+accumulate semantic debt: the future cost of meaning that is
+underdefined, misplaced, contradictory, stale, fragmented, opaque,
+overcoupled, overclaimed, inadmissible, or only recoverable through
+inference. Technical debt concerns the burden created by implementation
+shortcuts, architectural compromises, postponed refactoring, or quality
+degradation. Semantic debt concerns a different layer: the decay of
+recoverable meaning. A system may compile, pass tests, and remain
+operational while its terms drift, its categories collapse, its
+authority assumptions hide, its decisions vaporize, its evidence becomes
+inadmissible, and its claims outrun what its artifacts can support.</p>
+<p>This paper proposes a two-axis ontology of semantic debt. The first
+axis defines seven semantic subdomains: lexical debt, ontological debt,
+boundary debt, procedural debt, evidentiary debt, authority debt, and
+claim debt. The second axis defines nine debt modes: underdefinition,
+contradiction, fragmentation, staleness, opacity, overcoupling,
+inadmissibility, overclaim, and lossy translation. Together, these axes
+give semantic debt a coordinate system. A debt item is not merely named.
+It is located by what kind of meaning is failing and by how that failure
+manifests.</p>
+<p>The paper gives special attention to semantic fragmentation.
+Fragmentation is not a peer subdomain beside lexical, ontological,
+boundary, procedural, evidentiary, authority, and claim debt. It is a
+cross-cutting distribution failure that can affect any of them. The
+precise motivating subtype is semantic locality debt: the cost incurred
+when meaning exists somewhere in a system but not in a stable,
+canonical, locally recoverable home.</p>
+<p>The ontology is intended to be operational. The semantic debt matrix
+leads directly to governing artifacts: glossaries, non-claims files,
+claim ledgers, standing graphs, migration contracts, receipt schemas,
+and semantic debt ledgers. These artifacts turn semantic debt from an
+interpretive complaint into a governable engineering object. The
+framework is especially relevant to agent-built systems, where plausible
+automation can introduce acronym drift, status collapse, authority
+inference, claim inflation, and boundary leakage while preserving
+apparent functionality. This candidate also locates the ontology in the
+Governed Meaning Base and universal GSM, where debt can be attached to
+exact semantic objects, relations, projections, evidence dependencies,
+and revision obligations without confusing storage with standing.</p>
+<h2 id="introduction-the-hidden-debt-of-meaning">1. Introduction: The
+Hidden Debt of Meaning</h2>
+<p>A software system can continue functioning while its meaning
+decays.</p>
+<p>The tests still pass. The package still builds. The API still
+responds. The dashboard is still green. Yet the system may no longer be
+able to answer basic semantic questions:</p>
+<ul>
+<li>What does this status mean?</li>
+<li>Is this artifact validated, admitted, executed, or
+standing-bearing?</li>
+<li>What authority permitted this effect?</li>
+<li>What claim does this receipt support?</li>
+<li>What is explicitly not claimed?</li>
+<li>Which policy version governed this transition?</li>
+<li>Was this refusal an error, or successful boundary preservation?</li>
+<li>Did this refactor preserve meaning, or only behavior?</li>
+<li>Can this system be migrated without semantic loss?</li>
+</ul>
+<p>These are questions of semantic recoverability. When a system cannot
+answer them from stable artifacts, it has accumulated semantic debt.</p>
+<p>Technical debt has become a central metaphor in software engineering.
+Kruchten, Nord, and Ozkaya describe technical debt as a metaphor that
+moved beyond rhetoric into a practical framework for understanding
+tradeoffs, future change, and explicit management of development
+compromises. Modern technical debt research likewise emphasizes that
+unmanaged debt threatens long-lived and complex systems and requires
+explicit management.</p>
+<p>Semantic debt is adjacent to this tradition but points to a different
+layer. It is not primarily the cost of bad code. It is the cost of lost,
+unstable, scattered, or inadmissible meaning.</p>
+<p>A useful contemporary definition of semantic debt describes it as the
+accumulated cost created when terms, categories, entities, examples,
+translations, and relationships remain underdefined, contradictory,
+outdated, or weakly maintained, forcing readers and AI systems to infer
+structure that should have been declared. This paper generalizes that
+insight from interpretive corpora into software systems, governance
+artifacts, agentic development, and constitutional computing.</p>
+<p>The central claim is simple:</p>
+<blockquote>
+<p>A system may still run after its meaning has become expensive to
+recover.</p>
+</blockquote>
+<h2 id="hard-definitions">2. Hard Definitions</h2>
+<p>This paper uses several terms strictly. These definitions are
+introduced once here and used consistently afterward.</p>
+<h3 id="semantic-debt-1">2.1 Semantic Debt</h3>
+<p>Semantic debt is the accumulated future cost of meaning that is
+underdefined, misplaced, contradictory, stale, fragmented, opaque,
+overcoupled, overclaimed, inadmissible, or only recoverable through
+inference.</p>
+<p>A system has semantic debt when its semantic structure cannot be
+reliably recovered from its artifacts.</p>
+<p>Semantic debt is not reducible to technical debt. Technical debt
+concerns implementation and architectural compromises; semantic debt
+concerns failures of recoverable meaning. The two can overlap: one
+shortcut may create both, and some semantic debt may be reasonably
+modeled as a specialized technical-debt family for a particular
+engineering program. The analytical distinction matters more than a
+universal disjointness claim.</p>
+<p>Semantic debt is not documentation debt. Documentation debt concerns
+missing or stale explanatory material. Semantic debt concerns the
+system’s meanings themselves, whether those meanings are expressed in
+code, schema, tests, receipts, policies, names, claims, decisions,
+runtime traces, or documentation.</p>
+<p>Semantic debt is not ambiguity. Ambiguity is one possible mode of
+semantic debt. Semantic debt also includes category collapse, authority
+concealment, evidence gaps, claim inflation, policy drift, stale
+standing, and lossy migration.</p>
+<h3 id="semantic-fragmentation">2.2 Semantic Fragmentation</h3>
+<p>Semantic fragmentation is a cross-cutting debt mode in which meaning
+is scattered across multiple surfaces without a stable canonical
+home.</p>
+<p>Fragmentation can affect terms, categories, boundaries, procedures,
+evidence, authority, and claims. It is not one subdomain beside the
+others. It is a distribution failure that may appear inside any
+subdomain.</p>
+<h3 id="semantic-locality-debt">2.3 Semantic Locality Debt</h3>
+<p>Semantic locality debt is the cost incurred when meaning exists
+somewhere in a system but not in a stable, canonical, locally
+recoverable home.</p>
+<p>This is the precise motivating subtype behind the original concern
+about semantic fragmentation. The problem is not merely that meaning is
+distributed. The problem is that the system lacks an authoritative place
+where a future human, tool, or agent can recover that meaning without
+archaeology.</p>
+<p>The governing principle is:</p>
+<blockquote>
+<p>Every meaningful distinction should have a stable home.</p>
+</blockquote>
+<h3 id="semantic-recoverability">2.4 Semantic Recoverability</h3>
+<p>Semantic recoverability is the degree to which a system’s meanings
+can be reconstructed from stable artifacts without relying on unstated
+human memory, guesswork, or convention.</p>
+<p>A system has high semantic recoverability when a future reviewer can
+identify its terms, categories, boundaries, procedures, evidence,
+authority, claims, non-claims, and standing from canonical
+artifacts.</p>
+<p>A system has low semantic recoverability when those answers require
+scattered code reading, stale documents, runtime trace interpretation,
+historical chats, and developer memory.</p>
+<h3 id="governed-admissibility">2.5 Governed Admissibility</h3>
+<p>Governed admissibility is the property by which a semantic artifact
+may support a particular claim under explicit rules.</p>
+<p>An artifact is not admissible for a governed claim merely because it
+exists. A log, trace, test result, screenshot, receipt, manifest, or
+attestation must satisfy the claim’s declared identity, provenance,
+scope, authority, custody, and sufficiency requirements. An observation
+may be evidence in the ordinary epistemic sense while remaining
+inadmissible for a particular governed claim. Receipt binding improves
+reconstruction and integrity; it does not manufacture truth,
+independence, representativeness, or authority.</p>
+<p>In short:</p>
+<pre class="text"><code>non-binding trace != evidence
+artifact existence != admissibility
+receipt existence != standing</code></pre>
+<h3 id="standing">2.6 Standing</h3>
+<p>Standing is a governed status granted to a package, artifact,
+receipt, transition, claim, or subsystem under explicit rules.</p>
+<p>Standing is not confidence. Standing is not test success. Standing is
+not execution. Standing is a scoped status that persists or changes
+according to standing transition rules.</p>
+<p>A major source of semantic debt is the collapse of validation,
+admission, execution, and standing into one vague notion of “works.”</p>
+<h3 id="scope-obligation-and-unit-of-analysis">2.7 Scope, Obligation,
+and Unit of Analysis</h3>
+<p>Semantic debt is not every ambiguity, distribution, disagreement, or
+missing definition. It exists relative to a <strong>semantic recovery
+obligation</strong>: a future actor, claim, transition, migration, or
+effect requires a meaning that the relevant artifacts cannot recover at
+acceptable cost and standing.</p>
+<p>Let <span class="math inline"><em>o</em></span> be a declared
+recovery obligation and <span class="math inline"><em>m</em></span> a
+meaning required by it. A candidate debt condition exists when:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Required}(m,o) \\
+&amp;\land  \\
+&amp;\ne g \operatorname{Recoverable}(m,o,A) \\
+&amp;\land \operatorname{ExpectedFutureCost}(m,o,A) &gt; \tau_o
+\end{aligned},
+$$</span></p>
+<p>where <span class="math inline"><em>A</em></span> is the available
+artifact set and <span
+class="math inline"><em>τ</em><sub><em>o</em></sub></span> is the
+obligation-specific tolerance. The threshold is not universal: a private
+sketch, a public specification, a medical control, a migration contract,
+and an executable authority rule carry different recoverability
+requirements.</p>
+<p>The unit of analysis may be a term, concept, relation, category,
+boundary, procedure, evidence dependency, authority grant, claim,
+non-claim, translation edge, or complete semantic pathway. Debt can
+attach to the object itself, to its placement, or to the relation
+between an object and the obligation it is expected to satisfy.</p>
+<p>Plurality is not automatically debt. Two communities may legitimately
+use different definitions. Distribution is not automatically
+fragmentation. A meaning may have several synchronized projections. The
+debt arises when the plurality or distribution is unmarked,
+unrecoverable, falsely collapsed, or unable to support the required
+transition.</p>
+<h2 id="the-two-axis-ontology">3. The Two-Axis Ontology</h2>
+<p>The core contribution of this paper is a two-axis ontology.</p>
+<p>Semantic debt is classified along two axes:</p>
+<ol type="1">
+<li>Semantic subdomain: what layer of meaning is indebted?</li>
+<li>Debt mode: how is that layer indebted?</li>
+</ol>
+<p>The first axis identifies the kind of semantic material involved. The
+second identifies the failure pattern.</p>
+<pre class="text"><code>semantic debt item
+  = subdomain + mode + affected artifact + consequence + repayment
+  action</code></pre>
+<p>The seven subdomains are:</p>
+<pre class="text"><code>lexical
+ontological
+boundary
+procedural
+evidentiary
+authority
+claim</code></pre>
+<p>The nine modes are:</p>
+<pre class="text"><code>underdefinition
+contradiction
+fragmentation
+staleness
+opacity
+overcoupling
+inadmissibility
+overclaim
+lossy translation</code></pre>
+<p>Together they form a seven by nine diagnostic coordinate system. A
+single debt instance may occupy several cells, but the axes remain
+distinct.</p>
+<p>Examples:</p>
+<pre class="text"><code>Unexplained acronym GESD
+  = lexical debt + underdefinition
+
+Package admission treated as execution standing
+  = ontological debt + overclaim
+
+Policy check hidden inside filesystem adapter
+  = authority debt + opacity
+  = boundary debt + overcoupling
+
+Receipt exists but does not bind prior state
+  = evidentiary debt + inadmissibility
+
+Python-to-C migration loses refusal modes
+  = boundary debt + lossy translation
+  = procedural debt + inadmissibility</code></pre>
+<p>The matrix is the step from concept to discipline. It lets
+developers, reviewers, tools, and agents locate debt precisely enough to
+govern it.</p>
+<h2 id="axis-one-seven-semantic-subdomains">4. Axis One: Seven Semantic
+Subdomains</h2>
+<p>The seven subdomains are distinct in presentation even though real
+debt instances often occupy more than one.</p>
+<h3 id="lexical-debt">4.1 Lexical Debt</h3>
+<p>Lexical debt is debt in the naming layer: terms, acronyms, labels,
+identifiers, field names, and code names.</p>
+<p>Examples:</p>
+<ul>
+<li>one term has multiple meanings;</li>
+<li>multiple terms refer to the same concept without distinction;</li>
+<li>acronyms proliferate without a glossary;</li>
+<li>stale field names preserve old standing;</li>
+<li>deprecated names remain active without migration mapping;</li>
+<li>“evidence,” “log,” “trace,” and “receipt” are used
+interchangeably.</li>
+</ul>
+<p>Primary remedies:</p>
+<ul>
+<li>glossary;</li>
+<li>acronym registry;</li>
+<li>deprecated-name table;</li>
+<li>field-definition catalog;</li>
+<li>canonical term IDs;</li>
+<li>glossary coverage checks.</li>
+</ul>
+<p>Lexical debt is the first fog. If terms cannot be trusted, stronger
+structures built on them inherit mist.</p>
+<h3 id="ontological-debt">4.2 Ontological Debt</h3>
+<p>Ontological debt is debt in the category layer: types, entity
+boundaries, status distinctions, and kinds of things.</p>
+<p>Examples:</p>
+<ul>
+<li>validation is treated as admission;</li>
+<li>admission is treated as execution;</li>
+<li>execution is treated as standing;</li>
+<li>standing is treated as maturity;</li>
+<li>receipt existence is treated as evidence sufficiency;</li>
+<li>fixture-scoped status is treated as broad status;</li>
+<li>package status, execution status, and claim status are collapsed
+into a generic <code>status</code>.</li>
+</ul>
+<p>The critical distinction is:</p>
+<pre class="text"><code>validation != admission
+admission != execution
+execution != standing
+standing != broad maturity claim</code></pre>
+<p>Primary remedies:</p>
+<ul>
+<li>explicit type model;</li>
+<li>standing enum;</li>
+<li>status-transition graph;</li>
+<li>“this is not that” tables;</li>
+<li>schema-level category constraints;</li>
+<li>claim-to-standing mapping;</li>
+<li>migration records for category changes.</li>
+</ul>
+<p>Ontological debt is the debt of mistaken kinds.</p>
+<h3 id="boundary-debt">4.3 Boundary Debt</h3>
+<p>Boundary debt is debt in the jurisdiction layer: contexts, packages,
+adapters, domains, schemas, and substrates.</p>
+<p>Examples:</p>
+<ul>
+<li>a UI status label implies governance standing;</li>
+<li>a test fixture result implies package admission;</li>
+<li>a Python package claim leaks into C-D.MS receipt standing;</li>
+<li>local validation becomes global claim;</li>
+<li>a domain term crosses bounded contexts without translation;</li>
+<li>a port or adapter boundary is treated as a convenience seam rather
+than an authority boundary.</li>
+</ul>
+<p>Primary remedies:</p>
+<ul>
+<li>bounded contexts;</li>
+<li>ports and adapters;</li>
+<li>jurisdiction labels;</li>
+<li>context maps;</li>
+<li>translation records;</li>
+<li>substrate migration contracts;</li>
+<li>scope fields;</li>
+<li>non-claims.</li>
+</ul>
+<p>Boundary debt is the debt of unmarked crossings.</p>
+<h3 id="procedural-debt">4.4 Procedural Debt</h3>
+<p>Procedural debt is debt in the transition layer: state changes,
+decisions, migrations, repairs, admissions, refusals, and standing
+changes.</p>
+<p>Examples:</p>
+<ul>
+<li>a package becomes “admitted” without an admission decision
+record;</li>
+<li>a roadmap advances without a standing transition record;</li>
+<li>a repair changes evidence but does not distinguish repair standing
+from new standing;</li>
+<li>a migration changes data but not the semantic status of migrated
+fields;</li>
+<li>a README changes status while the canonical index remains
+stale;</li>
+<li>a policy refactor changes behavior without a migration record.</li>
+</ul>
+<p>Primary remedies:</p>
+<ul>
+<li>decision records;</li>
+<li>admission, refusal, and defer records;</li>
+<li>standing transition records;</li>
+<li>migration receipts;</li>
+<li>repair receipts;</li>
+<li>roadmap-to-index consistency checks.</li>
+</ul>
+<p>Procedural debt is the debt of unrecorded passage.</p>
+<h3 id="evidentiary-debt">4.5 Evidentiary Debt</h3>
+<p>Evidentiary debt is debt in the proof layer: receipts, manifests,
+traces, provenance, indexes, hashes, and auditability.</p>
+<p>Examples:</p>
+<ul>
+<li>logs exist but are not receipt-bound;</li>
+<li>test output is not tied to artifact hashes;</li>
+<li>a build result lacks source, environment, and policy binding;</li>
+<li>a receipt omits prior state or next state;</li>
+<li>a verification report is hash-stable but semantically stale;</li>
+<li>evidence artifacts exist but are not indexed;</li>
+<li>a claim references “the run” but no canonical run receipt
+exists.</li>
+</ul>
+<p>This paper distinguishes observations and traces from
+<strong>admissible claim-supporting evidence</strong>. Runtime logs,
+console output, screenshots, metrics, and ordinary traces may be
+relevant observations, but they do not support a governed claim until
+the declared admissibility profile is satisfied. Receipt binding is one
+important mechanism, not a universal truth condition.</p>
+<p>Primary remedies:</p>
+<ul>
+<li>receipts;</li>
+<li>manifests;</li>
+<li>hash seals;</li>
+<li>content addressing;</li>
+<li>provenance graphs;</li>
+<li>evidence chains;</li>
+<li>fixture replay;</li>
+<li>claim-to-evidence maps;</li>
+<li>admissibility predicates.</li>
+</ul>
+<p>Evidentiary debt is the debt of behavior without proof.</p>
+<h3 id="authority-debt">4.6 Authority Debt</h3>
+<p>Authority debt is debt in the permission layer: policy, capability,
+warrant, execution authority, and claim authority.</p>
+<p>Examples:</p>
+<ul>
+<li>a function writes to disk because it can;</li>
+<li>a subprocess launches because the script reached that line;</li>
+<li>a validator mutates state;</li>
+<li>a package executes because it passed validation;</li>
+<li>a tool infers permission from availability;</li>
+<li>a policy decision is hidden inside an adapter;</li>
+<li>a compiler is invoked without execution authority;</li>
+<li>a claim is made because an artifact exists, not because standing was
+granted.</li>
+</ul>
+<p>Primary remedies:</p>
+<ul>
+<li>explicit governed context;</li>
+<li>authority references;</li>
+<li>capability sets;</li>
+<li>policy surfaces;</li>
+<li>adapter mediation;</li>
+<li>least-authority execution;</li>
+<li>refusal codes;</li>
+<li>admission records.</li>
+</ul>
+<p>Authority debt is the debt of action without warrant.</p>
+<h3 id="claim-debt">4.7 Claim Debt</h3>
+<p>Claim debt is debt in the assertion layer: claims, non-claims,
+standing claims, maturity claims, equivalence claims, and scope.</p>
+<p>Examples:</p>
+<ul>
+<li>“validated” is presented as “admitted”;</li>
+<li>“fixture-scoped” is presented as general;</li>
+<li>“receipt exists” is presented as “schema-conformant receipt
+standing”;</li>
+<li>“runs locally” is presented as governed execution;</li>
+<li>“migration succeeded” is presented as equivalence;</li>
+<li>“one self-reference passed” is presented as self-hosting;</li>
+<li>a README implies a stronger status than the canonical index
+supports.</li>
+</ul>
+<p>Primary remedies:</p>
+<ul>
+<li>non-claims file;</li>
+<li>claim ledger;</li>
+<li>claim-to-evidence mapping;</li>
+<li>standing transition records;</li>
+<li>scope tags;</li>
+<li>active blocking claims;</li>
+<li>explicit revocation of non-claims.</li>
+</ul>
+<p>Claim debt is the debt of saying more than the system can
+support.</p>
+<h2 id="axis-two-nine-debt-modes">5. Axis Two: Nine Debt Modes</h2>
+<p>The seven subdomains identify what layer is indebted. The nine modes
+identify how the debt manifests.</p>
+<h3 id="underdefinition">5.1 Underdefinition</h3>
+<p>Underdefinition occurs when a semantic object exists but lacks
+sufficient definition.</p>
+<p>Examples:</p>
+<ul>
+<li>acronym without expansion;</li>
+<li>status without transition rules;</li>
+<li>refusal code without meaning;</li>
+<li>policy version without policy surface;</li>
+<li>receipt field without binding semantics.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>definitions;</li>
+<li>schemas;</li>
+<li>glossary entries;</li>
+<li>transition rules;</li>
+<li>field constraints;</li>
+<li>examples and counterexamples.</li>
+</ul>
+<h3 id="contradiction">5.2 Contradiction</h3>
+<p>Contradiction occurs when two or more semantic surfaces assert
+incompatible meanings.</p>
+<p>Examples:</p>
+<ul>
+<li>README says “preflight only” while a decision record grants
+standing;</li>
+<li>batch index says the next rung is the current rung;</li>
+<li>one schema treats <code>status</code> as validation while another
+treats it as standing;</li>
+<li>non-claims block a claim that another artifact asserts as
+granted;</li>
+<li>policy permits an effect that the authority model forbids.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>canonical source hierarchy;</li>
+<li>consistency checks;</li>
+<li>contradiction detector;</li>
+<li>claim ledger;</li>
+<li>standing graph validation;</li>
+<li>stale artifact retirement.</li>
+</ul>
+<h3 id="fragmentation">5.3 Fragmentation</h3>
+<p>Fragmentation occurs when meaning is scattered across multiple
+surfaces without a stable canonical home.</p>
+<p>Examples:</p>
+<ul>
+<li>authority rules split across code, README, tests, and operator
+memory;</li>
+<li>proof split across logs, reports, screenshots, and filenames;</li>
+<li>acronym meaning distributed across transcripts;</li>
+<li>standing status spread across roadmap, index, seal, and README;</li>
+<li>refusal semantics appear only in negative tests and comments.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>stable canonical homes;</li>
+<li>glossary entries;</li>
+<li>claim ledger;</li>
+<li>standing graph;</li>
+<li>receipt schema;</li>
+<li>non-claims file;</li>
+<li>artifact index;</li>
+<li>semantic debt ledger.</li>
+</ul>
+<p>Fragmentation is cross-cutting. Semantic locality debt is the
+specific form of fragmentation where the missing element is a stable
+canonical home.</p>
+<h3 id="staleness">5.4 Staleness</h3>
+<p>Staleness occurs when a semantic surface was once correct but no
+longer matches current standing, behavior, policy, schema, or
+evidence.</p>
+<p>Examples:</p>
+<ul>
+<li>README says the next milestone is a batch already completed;</li>
+<li>an index field preserves an old status name;</li>
+<li>a glossary definition survives after the term changes;</li>
+<li>a non-claim remains active after an admissible revocation but was
+not updated;</li>
+<li>a policy description references an obsolete capability model.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>freshness checks;</li>
+<li>canonical index comparison;</li>
+<li>standing timestamp validation;</li>
+<li>stale term detection;</li>
+<li>deprecation records;</li>
+<li>update obligations in release gates.</li>
+</ul>
+<h3 id="opacity">5.5 Opacity</h3>
+<p>Opacity occurs when meaning is present but hidden inside
+implementation details, conventions, or side effects.</p>
+<p>Examples:</p>
+<ul>
+<li>policy decision embedded in an adapter if statement;</li>
+<li>authority inferred from an environment variable;</li>
+<li>migration meaning encoded only in SQL;</li>
+<li>refusal code constructed dynamically with no registry;</li>
+<li>claim implied by a script name.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>extracted policy surfaces;</li>
+<li>explicit registries;</li>
+<li>typed models;</li>
+<li>static analysis;</li>
+<li>receipt emission;</li>
+<li>code-to-artifact mapping;</li>
+<li>decision records.</li>
+</ul>
+<h3 id="overcoupling">5.6 Overcoupling</h3>
+<p>Overcoupling occurs when meanings that should remain distinct are
+bound together so tightly that one cannot change without silently
+affecting the other.</p>
+<p>Examples:</p>
+<ul>
+<li>policy and execution share one function;</li>
+<li>state migration and standing migration are coupled;</li>
+<li>logging and evidence emission use the same path;</li>
+<li>validation and admission use the same status field;</li>
+<li>UI labels drive governance decisions;</li>
+<li>adapter availability implies authority.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>separation of core and adapters;</li>
+<li>typed status distinctions;</li>
+<li>policy interfaces;</li>
+<li>effect requests;</li>
+<li>standing transition records;</li>
+<li>claim layers;</li>
+<li>bounded contexts.</li>
+</ul>
+<h3 id="inadmissibility">5.7 Inadmissibility</h3>
+<p>Inadmissibility occurs when a semantic artifact cannot support the
+claim it is asked to support.</p>
+<p>Examples:</p>
+<ul>
+<li>receipt lacks state hashes;</li>
+<li>test report lacks artifact hashes;</li>
+<li>policy decision lacks authority reference;</li>
+<li>migration record lacks source and target hashes;</li>
+<li>claim references non-binding traces;</li>
+<li>standing transition lacks transition record;</li>
+<li>refusal has no typed code.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>admissibility predicates;</li>
+<li>schema checks;</li>
+<li>receipt binding;</li>
+<li>artifact hashes;</li>
+<li>authority references;</li>
+<li>claim-to-evidence validation.</li>
+</ul>
+<h3 id="overclaim">5.8 Overclaim</h3>
+<p>Overclaim occurs when a claim exceeds its evidence, standing, scope,
+or authority.</p>
+<p>Examples:</p>
+<ul>
+<li>local fixture success becomes broad reliability;</li>
+<li>package admission becomes execution standing;</li>
+<li>execution standing becomes execution occurred;</li>
+<li>schema validation becomes schema-conformant standing;</li>
+<li>migration success becomes equivalence;</li>
+<li>equivalence becomes self-hosting.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>non-claims;</li>
+<li>claim ledger;</li>
+<li>scope fields;</li>
+<li>standing graph;</li>
+<li>refusal of unsupported claims;</li>
+<li>maturity-level separation.</li>
+</ul>
+<h3 id="lossy-translation">5.9 Lossy Translation</h3>
+<p>Lossy translation occurs when software, data, schemas, policies, or
+receipts move across representations while losing semantic
+obligations.</p>
+<p>Examples:</p>
+<ul>
+<li>Python behavior is ported to C but refusal semantics disappear;</li>
+<li>JSON fields migrate to a database without preserving
+constraints;</li>
+<li>receipt schema changes but authority binding becomes optional;</li>
+<li>domain model becomes API contract but loses bounded-context
+assumptions;</li>
+<li>governance policy becomes prose and loses totality;</li>
+<li>natural-language claim becomes machine status without scope.</li>
+</ul>
+<p>Typical remedies:</p>
+<ul>
+<li>migration contracts;</li>
+<li>mapping functions;</li>
+<li>dual hashes;</li>
+<li>equivalence obligations;</li>
+<li>policy refinement checks;</li>
+<li>receipt preservation checks;</li>
+<li>loss reports.</li>
+</ul>
+<h2 id="the-semantic-debt-matrix">6. The Semantic Debt Matrix</h2>
+<p>The semantic debt matrix is the center of the ontology. It combines
+seven subdomains with nine modes. It is not a claim about empirical
+frequency. It is a diagnostic space: each cell names a possible kind of
+meaning failure and suggests a different remediation path.</p>
+<pre class="text"><code>                 Underdef Contra Frag Stale Opaque Coupled Inadm Overclaim Lossy
+Lexical x x x x x - - - x
+Ontological x x x x x x x x x
+Boundary x x x x x x x x x
+Procedural x x x x x x x x x
+Evidentiary x x x x x x x x x
+Authority x x x x x x x x x
+Claim x x x x x x x x x</code></pre>
+<p>The sparse cells are intentional. Some combinations are less natural
+than others. For example, lexical inadmissibility is usually mediated
+through evidentiary or claim debt rather than appearing as a primary
+cell. The matrix is not a taxonomy of all observed incidents. It is a
+map of diagnostic possibility.</p>
+<h3 id="high-value-matrix-examples">6.1 High-Value Matrix Examples</h3>
+<pre class="text"><code>Lexical + underdefinition
+  Example: GESD appears without expansion.
+  Risk: operators infer meaning from context.
+  Remedy: add glossary entry and link from roadmap.
+
+Lexical + staleness
+  Example: old field name preserves previous standing.
+  Risk: tools read obsolete meaning as current.
+  Remedy: add deprecation table and migration mapping.
+
+Ontological + overclaim
+  Example: validation is treated as admission.
+  Risk: local check becomes unauthorized status ascent.
+  Remedy: enforce validation/admission distinction in standing graph.
+
+Ontological + overcoupling
+  Example: one `status` field stores validation, admission, and
+  execution state.
+  Risk: category collapse.
+  Remedy: split status into typed fields.
+
+Boundary + lossy translation
+  Example: Python package is ported to C but refusal modes vanish.
+  Risk: behavior is preserved while governance semantics are lost.
+  Remedy: require migration contract with refusal mapping.
+
+Boundary + opacity
+  Example: adapter boundary hides policy decision.
+  Risk: authority crossing cannot be inspected.
+  Remedy: extract policy surface and effect request record.
+
+Procedural + contradiction
+  Example: README says preflight while decision record grants standing.
+  Risk: canonical transition cannot be identified.
+  Remedy: source hierarchy and consistency gate.
+
+Procedural + staleness
+  Example: roadmap next rung points to current rung.
+  Risk: process loops or false completion.
+  Remedy: roadmap/index cross-check.
+
+Evidentiary + inadmissibility
+  Example: receipt lacks prior-state hash.
+  Risk: claim cannot be supported.
+  Remedy: require receipt schema check.
+
+Evidentiary + fragmentation
+  Example: proof split across logs, screenshots, and filenames.
+  Risk: no claim-supporting evidence chain.
+  Remedy: bind artifacts into receipt or manifest.
+
+Authority + opacity
+  Example: filesystem write authority inferred from environment
+  variable.
+  Risk: hidden permission path.
+  Remedy: require explicit authority reference.
+
+Authority + overcoupling
+  Example: validation function also mutates state.
+  Risk: checking becomes acting.
+  Remedy: separate validator from executor.
+
+Claim + overclaim
+  Example: fixture success is described as self-hosting.
+  Risk: maturity inflation.
+  Remedy: active non-claim and standing gate.
+
+Claim + contradiction
+  Example: NONCLAIMS.md blocks a claim asserted by README.
+  Risk: incompatible claim surfaces.
+  Remedy: claim ledger evaluation.</code></pre>
+<p>A semantic debt review should classify each issue by matrix
+coordinate and assign a repayment action.</p>
+<h2 id="from-matrix-to-governing-artifacts">7. From Matrix to Governing
+Artifacts</h2>
+<p>The matrix becomes useful when each debt coordinate points to an
+artifact capable of preventing, detecting, or repaying it. These
+artifacts are not a second introduction to the theory. They are the
+enforcement layer implied by the matrix.</p>
+<h3 id="glossary">7.1 Glossary</h3>
+<p>Primary coverage:</p>
+<pre class="text"><code>lexical debt
+underdefinition
+fragmentation
+staleness
+lossy translation</code></pre>
+<p>The glossary defines terms, acronyms, standing states, refusal codes,
+policy names, claim names, and deprecated names. It prevents name drift
+and gives tools a canonical vocabulary.</p>
+<h3 id="non-claims-file">7.2 Non-Claims File</h3>
+<p>Primary coverage:</p>
+<pre class="text"><code>claim debt
+overclaim
+contradiction
+staleness
+standing confusion</code></pre>
+<p>The non-claims file records what the system does not currently
+assert. It blocks unsupported maturity claims and prevents evidence from
+being inflated into standing.</p>
+<h3 id="claim-ledger">7.3 Claim Ledger</h3>
+<p>Primary coverage:</p>
+<pre class="text"><code>claim debt
+evidentiary debt
+inadmissibility
+contradiction
+overclaim</code></pre>
+<p>The claim ledger maps claims to supporting receipts and blocking
+non-claims. It answers what the system may currently assert.</p>
+<h3 id="standing-graph">7.4 Standing Graph</h3>
+<p>Primary coverage:</p>
+<pre class="text"><code>ontological debt
+procedural debt
+claim debt
+overclaim
+staleness</code></pre>
+<p>The standing graph defines permissible standing transitions,
+revocations, downgrades, and scoped maturity claims. It prevents
+validation, admission, execution, and standing from collapsing into one
+status.</p>
+<h3 id="migration-contract">7.5 Migration Contract</h3>
+<p>Primary coverage:</p>
+<pre class="text"><code>boundary debt
+procedural debt
+lossy translation
+inadmissibility</code></pre>
+<p>The migration contract maps meanings across versions, schemas,
+languages, substrates, packages, and governance levels. It prevents
+behavior-preserving translations from becoming meaning-losing
+translations.</p>
+<h3 id="receipt-schema">7.6 Receipt Schema</h3>
+<p>Primary coverage:</p>
+<pre class="text"><code>evidentiary debt
+authority debt
+inadmissibility
+opacity
+fragmentation</code></pre>
+<p>The receipt schema defines what fields must be bound for a trace to
+become evidence. It binds state, policy, authority, artifacts, effects,
+refusals, and claims.</p>
+<h3 id="semantic-debt-ledger">7.7 Semantic Debt Ledger</h3>
+<p>Primary coverage:</p>
+<pre class="text"><code>all subdomains
+all modes</code></pre>
+<p>The semantic debt ledger records debt items by coordinate, risk,
+affected artifact, and repayment action. It turns the matrix into
+trackable engineering work.</p>
+<h2 id="semantic-debt-ledger-1">8. Semantic Debt Ledger</h2>
+<p>A semantic debt ledger records known semantic debt items.</p>
+<p>A minimal ledger entry should include:</p>
+<pre class="text"><code>debt_id
+title
+subdomain
+mode
+affected_artifacts
+description
+risk
+blocked_claims
+related_nonclaims
+severity
+repayment_action
+owner
+status
+introduced_by
+detected_by
+resolved_by</code></pre>
+<p>Example:</p>
+<pre class="text"><code>debt_id: SD-LEX-001
+title: GESD acronym undefined
+subdomain: lexical
+mode: underdefinition
+affected_artifacts: roadmap, verifier report
+risk: operator confusion; false standing inference
+repayment_action: add GESD to GLOSSARY.md and link from roadmap
+status: open</code></pre>
+<p>Example:</p>
+<pre class="text"><code>debt_id: SD-CLAIM-004
+title: Receipt existence implies schema standing
+subdomain: claim, ontological
+mode: overclaim, category collapse
+affected_artifacts: README
+risk: standing inflation
+blocked_claims: schema_conformant_receipt_standing
+repayment_action: add non-claim and require standing transition record
+status: open</code></pre>
+<p>The ledger turns semantic debt into governable work.</p>
+<h2 id="semantic-debt-interest">9. Semantic Debt Interest</h2>
+<p>Semantic debt interest is the increasing cost of future
+interpretation, change, migration, audit, or governance caused by
+unresolved semantic debt.</p>
+<p>Forms of interest include:</p>
+<ul>
+<li>longer onboarding time;</li>
+<li>agent confusion;</li>
+<li>incorrect refactors;</li>
+<li>false claims;</li>
+<li>unsafe automation;</li>
+<li>migration loss;</li>
+<li>duplicated terminology;</li>
+<li>evidence reconstruction cost;</li>
+<li>policy drift;</li>
+<li>audit failure;</li>
+<li>standing inflation;</li>
+<li>inability to admit or refuse artifacts mechanically.</li>
+</ul>
+<p>Semantic debt interest compounds when multiple debts interact.</p>
+<p>Examples:</p>
+<pre class="text"><code>lexical debt + claim debt
+  -&gt; ambiguous claims
+
+boundary debt + authority debt
+  -&gt; hidden authority leakage
+
+evidentiary debt + procedural debt
+  -&gt; unprovable transition
+
+ontological debt + overclaim
+  -&gt; false maturity ascent</code></pre>
+<p>The most expensive semantic debts are those that make future evidence
+impossible.</p>
+<h2 id="proper-and-improper-semantic-defragmentation">10. Proper and
+Improper Semantic Defragmentation</h2>
+<p>Semantic defragmentation is the act of reorganizing a system so its
+meanings become more locally recoverable, better bounded, and more
+admissible.</p>
+<p>Proper semantic defragmentation:</p>
+<ul>
+<li>moves terms into a glossary;</li>
+<li>separates validation, admission, execution, and standing;</li>
+<li>extracts policy from implementation;</li>
+<li>binds traces into receipts;</li>
+<li>restores non-claims;</li>
+<li>names refusal modes;</li>
+<li>adds standing records;</li>
+<li>creates migration mappings;</li>
+<li>updates stale indexes;</li>
+<li>separates effects from core logic.</li>
+</ul>
+<p>Improper semantic defragmentation is a refactor, cleanup,
+compression, abstraction, or migration that reduces apparent complexity
+while increasing semantic debt.</p>
+<p>Examples:</p>
+<ul>
+<li>merging policy and execution because it is shorter;</li>
+<li>deleting refusal tests because success tests pass;</li>
+<li>replacing receipts with logs;</li>
+<li>removing non-claims because they seem negative;</li>
+<li>collapsing multiple statuses into one field;</li>
+<li>renaming terms without migration table;</li>
+<li>moving authority checks into UI code;</li>
+<li>treating a fixture-specific result as general standing.</li>
+</ul>
+<p>Improper semantic defragmentation explains why some clean systems
+become less governable. They are cleaner in implementation shape and
+poorer in semantic shape.</p>
+<h2 id="detection-methods">11. Detection Methods</h2>
+<p>Semantic debt can be detected by human review, static tooling,
+dynamic checks, agent audits, and governance gates.</p>
+<h3 id="lexical-detection">11.1 Lexical Detection</h3>
+<p>Checks:</p>
+<ul>
+<li>glossary coverage;</li>
+<li>undefined acronyms;</li>
+<li>deprecated term usage;</li>
+<li>synonym collisions;</li>
+<li>overloaded field names;</li>
+<li>term-definition drift.</li>
+</ul>
+<h3 id="ontological-detection">11.2 Ontological Detection</h3>
+<p>Checks:</p>
+<ul>
+<li>status enum review;</li>
+<li>type hierarchy review;</li>
+<li>category-collapse detection;</li>
+<li>standing graph validation;</li>
+<li>“this is not that” invariant checks.</li>
+</ul>
+<h3 id="boundary-detection">11.3 Boundary Detection</h3>
+<p>Checks:</p>
+<ul>
+<li>context-map review;</li>
+<li>adapter/core separation;</li>
+<li>forbidden dependencies;</li>
+<li>cross-substrate claim checks;</li>
+<li>scope field validation.</li>
+</ul>
+<h3 id="procedural-detection">11.4 Procedural Detection</h3>
+<p>Checks:</p>
+<ul>
+<li>decision record coverage;</li>
+<li>roadmap/index consistency;</li>
+<li>standing transition records;</li>
+<li>migration receipt coverage;</li>
+<li>repair record distinction.</li>
+</ul>
+<h3 id="evidentiary-detection">11.5 Evidentiary Detection</h3>
+<p>Checks:</p>
+<ul>
+<li>receipt schema conformance;</li>
+<li>artifact hash coverage;</li>
+<li>evidence chain completeness;</li>
+<li>trace-to-receipt distinction;</li>
+<li>claim-to-evidence satisfiability.</li>
+</ul>
+<h3 id="authority-detection">11.6 Authority Detection</h3>
+<p>Checks:</p>
+<ul>
+<li>effect-without-authority detection;</li>
+<li>capability surface review;</li>
+<li>policy totality;</li>
+<li>adapter mediation;</li>
+<li>hidden subprocess/network/filesystem access in core.</li>
+</ul>
+<h3 id="claim-detection">11.7 Claim Detection</h3>
+<p>Checks:</p>
+<ul>
+<li>claim ledger evaluation;</li>
+<li>non-claim preservation;</li>
+<li>unsupported claim detection;</li>
+<li>maturity-level separation;</li>
+<li>scope mismatch detection.</li>
+</ul>
+<h2 id="semantic-debt-and-agentic-software-development">12. Semantic
+Debt and Agentic Software Development</h2>
+<p>Agentic development makes semantic debt easier to create and easier
+to detect.</p>
+<p>AI agents can generate code that passes local tests while violating
+project meanings. They may rename concepts, merge statuses, delete
+comments, infer missing authority, flatten domain distinctions, or treat
+natural-language instructions as optional style. The result can be high
+functional utility with low semantic integrity.</p>
+<p>Semantic debt theory gives agentic development a diagnostic target.
+It says not only “the agent violated instructions,” but which semantic
+subdomain was damaged and by what mode.</p>
+<h3 id="normative-failure-modes-for-agents">12.1 Normative Failure Modes
+for Agents</h3>
+<p>Agentic systems should treat the following as first-class semantic
+hazards.</p>
+<h4 id="acronym-drift">Acronym Drift</h4>
+<p>An agent introduces or reuses an acronym without a glossary
+entry.</p>
+<p>Debt coordinate:</p>
+<pre class="text"><code>lexical + underdefinition
+lexical + fragmentation</code></pre>
+<p>Required guard:</p>
+<pre class="text"><code>No new acronym, standing term, refusal code, claim kind, or verifier
+lane name without glossary update.</code></pre>
+<h4 id="status-collapse">Status Collapse</h4>
+<p>An agent collapses validation, admission, execution, and standing
+into a single status.</p>
+<p>Debt coordinate:</p>
+<pre class="text"><code>ontological + overcoupling
+claim + overclaim</code></pre>
+<p>Required guard:</p>
+<pre class="text"><code>Typed status fields and standing graph validation.</code></pre>
+<h4 id="authority-inference">Authority Inference</h4>
+<p>An agent infers permission from code reachability, filesystem access,
+API credentials, or prior success.</p>
+<p>Debt coordinate:</p>
+<pre class="text"><code>authority + opacity
+authority + overclaim</code></pre>
+<p>Required guard:</p>
+<pre class="text"><code>No effect admission without explicit authority reference and policy
+permit.</code></pre>
+<h4 id="claim-inflation">Claim Inflation</h4>
+<p>An agent describes a local result as a broader maturity claim.</p>
+<p>Debt coordinate:</p>
+<pre class="text"><code>claim + overclaim
+ontological + category collapse</code></pre>
+<p>Required guard:</p>
+<pre class="text"><code>Claim ledger check and active non-claim preservation.</code></pre>
+<h4 id="boundary-leakage">Boundary Leakage</h4>
+<p>An agent moves policy into adapters, imports substrate-specific
+behavior into core logic, or lets UI language imply governance
+standing.</p>
+<p>Debt coordinate:</p>
+<pre class="text"><code>boundary + overcoupling
+authority + opacity</code></pre>
+<p>Required guard:</p>
+<pre class="text"><code>Adapter isolation, context boundary checks, and migration contracts.</code></pre>
+<h4 id="evidence-substitution">Evidence Substitution</h4>
+<p>An agent treats logs, traces, summaries, or console output as
+evidence.</p>
+<p>Debt coordinate:</p>
+<pre class="text"><code>evidentiary + inadmissibility
+evidentiary + fragmentation</code></pre>
+<p>Required guard:</p>
+<pre class="text"><code>Only artifacts satisfying the declared claim-admissibility profile
+can support governed claims; receipts bind transitions but do not by
+themselves establish truth or sufficiency.</code></pre>
+<h3 id="agent-operating-rule">12.2 Agent Operating Rule</h3>
+<p>A coding agent operating under semantic debt governance should
+obey:</p>
+<pre class="text"><code>Do not introduce, rename, delete, merge, or promote a semantic
+object unless the corresponding governing artifact is updated.</code></pre>
+<p>Examples:</p>
+<pre class="text"><code>new term -&gt; glossary update
+new claim -&gt; claim ledger update
+new limitation -&gt; non-claim update
+new status -&gt; standing graph update
+new evidence -&gt; receipt schema or manifest update
+new migration -&gt; migration contract update
+new debt -&gt; semantic debt ledger update</code></pre>
+<p>Agentic development makes semantic debt easier to create and easier
+to detect. The difference is whether the project gives agents canonical
+surfaces to respect.</p>
+<h2 id="relationship-to-constitutional-semantic-engineering">13.
+Relationship to Constitutional Semantic Engineering</h2>
+<p>Semantic Debt and Constitutional Semantic Engineering are paired
+concepts.</p>
+<pre class="text"><code>Semantic Debt
+  diagnoses meaning failure
+
+Constitutional Semantic Engineering
+  builds systems to prevent, detect, and repay meaning failure</code></pre>
+<p>CSE repays semantic debt by making meaning, authority, effects,
+evidence, refusal, standing, and non-claims first-class artifacts.</p>
+<p>Semantic debt explains why CSE matters. CSE provides engineering
+mechanisms to keep semantic debt from compounding silently.</p>
+<h2 id="semantic-debt-in-the-governed-meaning-base">14. Semantic Debt in
+the Governed Meaning Base</h2>
+<p>The author-confirmed terminology lineage is
+<code>CCF -&gt; CMB -&gt; GMB</code>. <strong>Governed Meaning Base
+(GMB)</strong> is the current name. CCF and CMB remain historical names
+in exact titles, quotations, source descriptions, and lineage
+explanations; they are not separate present-day architectures.</p>
+<p>GMB gives the Semantic Debt ontology a corpus-scale operating
+surface. It can preserve stable identities, names and aliases,
+definitions, typed relations, boundaries, claims, non-claims, evidence
+dependencies, authority, standing, source custody, disputes,
+projections, and revisions. The universal Governed Semantic Model
+supplies the common representational grammar; GMB is the governed
+meaning architecture in which exact corpus material and reviewed
+semantic structures can be traversed and revised.</p>
+<p>A stable home does not require one physical file. It requires a
+recoverable identity and an explicit authority relation among
+representations. A canonical concept may therefore have an exact source
+expression, a compact token, a slug, a concise explanation, a full
+semantic neighborhood, and several pedagogical projections without
+incurring locality debt, provided their derivation and standing remain
+inspectable.</p>
+<p>Within the current Semantic Zoom tooling, RPZ surfaces illustrate
+this separation:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Semantic-debt function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RPZ0</td>
+<td>Supplies a compact retrieval token without pretending the token is
+the concept.</td>
+</tr>
+<tr>
+<td>RPZ1</td>
+<td>Supplies a stable slug and canonical display surface while retaining
+collision handling and aliases.</td>
+</tr>
+<tr>
+<td>RPZ2</td>
+<td>Supplies a portable concise explanation whose compression losses can
+be compared with the fuller record.</td>
+</tr>
+<tr>
+<td>RPZ3</td>
+<td>Supplies definition, role, provenance, standing, adjacency, and
+artifact context for deeper recovery.</td>
+</tr>
+</tbody>
+</table>
+<p>GMB does not eliminate semantic debt. It can accumulate stale
+aliases, unmarked contradictions, false identity merges, detached
+evidence, standing drift, overcompressed explanations, and misleading
+canonicalization. The debt matrix therefore becomes an audit layer over
+GMB nodes, relations, artifacts, and projections.</p>
+<p>The corpus interfaces are typed:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Corpus work or structure</th>
+<th>Relation to Semantic Debt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Semantic Legitimacy Before Context</em></td>
+<td>Prevents semantically indebted or standing-ambiguous material from
+silently becoming operative context.</td>
+</tr>
+<tr>
+<td><em>Reasoning by Way of Receipts</em></td>
+<td>Preserves bounded reasoning transitions, alternatives, decisions,
+debts, and revisions; a receipt provides reconstruction, not automatic
+truth.</td>
+</tr>
+<tr>
+<td><em>The Three Hash Rule</em></td>
+<td>Separates exact object state, admissibility configuration, and
+meaning commitment so matching one cannot conceal debt in another.</td>
+</tr>
+<tr>
+<td><em>A Formal Theory of Work Custody</em></td>
+<td>Makes the live responsibility for repayment or adjudication
+recoverable without turning custody into semantic correctness.</td>
+</tr>
+<tr>
+<td><em>Admissibility Engineering</em></td>
+<td>Turns debt-sensitive claim and transition requirements into
+inspectable schemas, gates, refusals, and bypass tests.</td>
+</tr>
+<tr>
+<td>Constitutional Semantic Engineering</td>
+<td>Provides preventive and reparative engineering mechanisms; Semantic
+Debt provides the diagnostic coordinate system.</td>
+</tr>
+<tr>
+<td>GMB and universal GSM</td>
+<td>Supply the governed corpus substrate and common semantic grammar
+against which locality, translation, standing, and claim debt can be
+inspected.</td>
+</tr>
+</tbody>
+</table>
+<p>These are interfaces, not automatic work-identity or system-identity
+mergers. Storage in GMB does not grant truth, author approval,
+publication status, or canonical standing.</p>
+<h2 id="minimal-governance-model">15. Minimal Governance Model</h2>
+<p>A semantic debt governance model should include seven artifacts:</p>
+<pre class="text"><code>glossary
+non-claims file
+claim ledger
+standing graph
+migration contract
+receipt schema
+semantic debt ledger</code></pre>
+<p>Together these artifacts provide a minimal discipline for semantic
+governance. They are a profile, not a universal requirement:
+lower-consequence contexts may need fewer surfaces, while
+high-consequence systems may need stronger identity, custody,
+independence, and review structures.</p>
+<h2 id="realization-funnel">16. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Semantic Debt content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Meaning failure can be treated as a governable future-cost structure
+rather than an unavoidable by-product of complexity.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define recovery obligations, units of analysis, subdomains, modes,
+debt records, consequences, repayment duties, standing, and closure
+conditions.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate admissible diagnostic coordinates, recovery surfaces,
+repayment strategies, intentional deferrals, exceptions, and non-action
+paths, including harmful or misleading repairs.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations that improve recoverability without erasing
+plurality, laundering authority, centralizing interpretation
+unnecessarily, or destroying exact source custody.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select scope, audience, obligations, thresholds, severity rules,
+canonical surfaces, claim dependencies, detectors, owners, and review
+cadence for a particular corpus or system.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Realize glossaries, GMB entries, semantic indexes, non-claims, claim
+ledgers, standing graphs, migration contracts, receipt profiles, debt
+ledgers, and verifiers.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Bind detected debt to exact artifacts, dependency paths, failures,
+reviewer observations, measurements, repayment changes, counterexamples,
+and residual limitations.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Admit, defer, repay, reopen, or reclassify debt while preserving
+prior meanings, reasons, affected claims, and migration
+consequences.</td>
+</tr>
+</tbody>
+</table>
+<p>The paper chiefly contributes Specification and CM1. Its preferred
+artifacts and anti-collapse rules contribute CM2. Any concrete debt
+scanner, GMB profile, severity metric, or admission gate is an Instance
+Configuration or Implementation Realization and requires separate
+evidence.</p>
+<h2 id="formal-sketch">17. Formal Sketch</h2>
+<p>Let a semantic debt item be:</p>
+<p><span
+class="math display"><em>d</em> = ⟨<em>A</em>, <em>M</em>, <em>X</em>, <em>r</em>, <em>c</em>⟩</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline"><em>A</em></span> is the affected semantic
+subdomain.</li>
+<li><span class="math inline"><em>M</em></span> is the debt mode.</li>
+<li><span class="math inline"><em>X</em></span> is the affected artifact
+set.</li>
+<li><span class="math inline"><em>r</em></span> is the risk or
+consequence.</li>
+<li><span class="math inline"><em>c</em></span> is the corrective
+obligation.</li>
+</ul>
+<p>Let the set of semantic subdomains be:</p>
+<p><span
+class="math display"><em>A</em> ∈ {<em>L</em><em>e</em><em>x</em>, <em>O</em><em>n</em><em>t</em>, <em>B</em><em>o</em><em>u</em><em>n</em><em>d</em>, <em>P</em><em>r</em><em>o</em><em>c</em>, <em>E</em><em>v</em><em>i</em><em>d</em>, <em>A</em><em>u</em><em>t</em><em>h</em>, <em>C</em><em>l</em><em>a</em><em>i</em><em>m</em>}</span></p>
+<p>Let the set of modes be:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M \in \{&amp;Underdef, Contra, Frag, Stale, Opaque, Coupled, Inadm, \\
+&amp;Overclaim, Lossy\}
+\end{aligned}
+$$</span></p>
+<p>A semantic debt ledger is then:</p>
+<p><span
+class="math display"><em>D</em> = {<em>d</em><sub>1</sub>, <em>d</em><sub>2</sub>, ..., <em>d</em><sub><em>n</em></sub>}</span></p>
+<p>A system is semantically admissible for a claim <span
+class="math inline"><em>k</em></span> only if:</p>
+<p><span
+class="math display"><em>s</em><em>u</em><em>p</em><em>p</em><em>o</em><em>r</em><em>t</em><em>s</em>(<em>k</em>) ∧ ¬<em>b</em><em>l</em><em>o</em><em>c</em><em>k</em><em>e</em><em>d</em>(<em>k</em>) ∧ ¬<em>c</em><em>r</em><em>i</em><em>t</em><em>i</em><em>c</em><em>a</em><em>l</em>_<em>d</em><em>e</em><em>b</em><em>t</em>(<em>k</em>, <em>D</em>)</span></p>
+<p>Where <span
+class="math inline"><em>c</em><em>r</em><em>i</em><em>t</em><em>i</em><em>c</em><em>a</em><em>l</em>_<em>d</em><em>e</em><em>b</em><em>t</em>(<em>k</em>, <em>D</em>)</span>
+holds when unresolved debt items affect the semantic surfaces needed to
+support <span class="math inline"><em>k</em></span>.</p>
+<p>For example, a claim of schema-conformant receipt standing is blocked
+if unresolved debt affects receipt schema definition, receipt binding,
+standing transition records, or active non-claims.</p>
+<p>Semantic debt is therefore not only descriptive. It can participate
+in claim evaluation.</p>
+<h3 id="claim-relative-criticality">17.1 Claim-Relative Criticality</h3>
+<p>The source formalization becomes operational when debt is evaluated
+against an explicit claim dependency set. Let <span
+class="math inline"><em>D</em><em>e</em><em>p</em>(<em>k</em>)</span> be
+the semantic artifacts and relations required to support claim <span
+class="math inline"><em>k</em></span>. Then:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{critical\_debt}(k,D) \\
+&amp;\iff \exists d \in D: \operatorname{Open}(d) \\
+&amp;\land \operatorname{Affected}(d) \cap Dep(k) \\
+&amp;\neq \emptyset \\
+&amp;\land \operatorname{Severity}(d,k) \ge \tau_k
+\end{aligned}.
+$$</span></p>
+<p>This rule avoids two opposite errors. It does not allow unrelated
+debt anywhere in a large corpus to block every claim, and it does not
+allow debt on a load-bearing dependency to be ignored because the claim
+has other support.</p>
+<p>A debt record should therefore preserve at least:</p>
+<p><span
+class="math display"><em>d</em> = ⟨<em>i</em><em>d</em>, <em>A</em>, <em>M</em>, <em>X</em>, <em>O</em>, <em>r</em>, <em>c</em>, <em>e</em>, <em>s</em>, <em>t</em>, <em>p</em>⟩,</span></p>
+<p>where <span class="math inline"><em>i</em><em>d</em></span> is stable
+identity; <span class="math inline"><em>A</em></span> and <span
+class="math inline"><em>M</em></span> are subdomain and mode; <span
+class="math inline"><em>X</em></span> is the affected artifact or
+semantic-object set; <span class="math inline"><em>O</em></span> is the
+recovery obligation; <span class="math inline"><em>r</em></span> is
+risk; <span class="math inline"><em>c</em></span> is corrective
+obligation; <span class="math inline"><em>e</em></span> is evidence;
+<span class="math inline"><em>s</em></span> is status and standing;
+<span class="math inline"><em>t</em></span> is temporal state; and <span
+class="math inline"><em>p</em></span> is provenance. This extends rather
+than invalidates the compact five-field sketch above.</p>
+<h3 id="interest-as-a-review-heuristic">17.2 Interest as a Review
+Heuristic</h3>
+<p>Semantic debt interest is not yet an empirically calibrated quantity.
+A useful review heuristic is:</p>
+<p><span
+class="math display"><em>I</em>(<em>d</em>, <em>t</em>) = <em>E</em><sub><em>d</em></sub> ⋅ <em>P</em><sub><em>d</em></sub> ⋅ <em>C</em><sub><em>d</em></sub>(<em>t</em>) ⋅ <em>U</em><sub><em>d</em></sub>,</span></p>
+<p>where <span
+class="math inline"><em>E</em><sub><em>d</em></sub></span> is exposure
+across claims or consumers, <span
+class="math inline"><em>P</em><sub><em>d</em></sub></span> is
+propagation potential, <span
+class="math inline"><em>C</em><sub><em>d</em></sub>(<em>t</em>)</span>
+is expected correction or recovery cost over time, and <span
+class="math inline"><em>U</em><sub><em>d</em></sub></span> is
+consequence weight. The expression orders questions; it does not
+establish commensurable measurements or predict realized cost.</p>
+<h2 id="maintenance-accounting-for-meaning-obligations">Maintenance
+Accounting for Meaning Obligations</h2>
+<p>The completed P1 corpus positions Semantic Debt as
+<strong>maintenance accounting and diagnostic taxonomy for meaning
+obligations whose recovery, interpretation, governance, or repair has
+become costly or unreliable</strong>. It does not replace the specific
+theories of fragmentation, binding, identity, authority, evidence, or
+transformation that diagnose why the obligation failed.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Transformation-Dominant
+Semantic Systems</em><br />
+<strong>Supplies:</strong> A diagnostic of transformation, required
+carriage, accepted and silent loss, recoverability, and cost.<br />
+<strong>Semantic-debt boundary:</strong> TDSS measures a change event or
+workflow; debt records the resulting unresolved burden across
+time.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Global Term Key:
+Constitutional Lexical Identity Through Disambiguated Semantic
+Binding</em><br />
+<strong>Supplies:</strong> Lexical identity and disambiguation
+contracts.<br />
+<strong>Semantic-debt boundary:</strong> GTK failures can create lexical
+debt; GTK is not the whole debt ledger.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Binding Quality
+(SBQ)</em><br />
+<strong>Supplies:</strong> Binding coherence, coverage, and
+fragility.<br />
+<strong>Semantic-debt boundary:</strong> Low SBQ may predict debt, but
+disagreement or low score is not automatically a debt entry.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>What Software Systems
+Actually Receipt, Govern, and Hide</em><br />
+<strong>Supplies:</strong> Visibility gaps among actions, governed
+surfaces, and recorded evidence.<br />
+<strong>Semantic-debt boundary:</strong> Hidden or unreceipted behavior
+can create procedural or evidentiary debt; the visibility analysis
+remains distinct.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Fragmentation and
+Constitutional Structure</em><br />
+<strong>Supplies:</strong> Structural fragmentation and possible
+constitutional responses.<br />
+<strong>Semantic-debt boundary:</strong> Fragmentation is one debt mode;
+some plurality is legitimate and some debt is not
+fragmentation.</p></li>
+</ul>
+<p>The accountable unit is a debt entry rather than a metaphorical
+total:</p>
+<p><span class="math display">$$
+\begin{aligned}
+DebtEntry= (&amp;obligation, subject, subdomain, mode, cause, \\
+&amp;affected\_claims, evidence, interest\_basis, remediation, \\
+&amp;custodian, status, revision)
+\end{aligned}.
+$$</span></p>
+<p>A <strong>defect</strong> is an observed failure against a
+requirement. A <strong>risk</strong> is a possible future loss. A
+<strong>disagreement</strong> may be legitimate plurality.
+<strong>Complexity</strong> may be irreducible. <strong>Debt</strong>
+exists when a declared semantic obligation is left unresolved or made
+materially more expensive to discharge, while continuation is permitted
+under an explicit posture. Conflating these categories manufactures debt
+and pressures unjustified normalization.</p>
+<p>Semantic interest must be reported as an evidence-linked maintenance
+heuristic, not a universal financial scalar. Observable indicators can
+include repeated reinterpretation, widening disagreement, repair time,
+migration failures, dependency propagation, lost provenance, delayed
+review, or increasing claim ceilings required to compensate for
+uncertainty. Weighting those indicators remains profile- and
+decision-relative.</p>
+<p>The universal GSM can type<br />
+<code>INCURS_SEMANTIC_DEBT</code>, <code>OWES_OBLIGATION</code>,
+<code>AFFECTS_CLAIM</code>,<br />
+<code>CAUSED_BY_LOSS</code>, <code>PROPAGATES_TO</code>,
+<code>ACCRUES_UNDER</code>, <code>CUSTODIED_BY</code>,
+<code>REMEDIATED_BY</code>,<br />
+<code>ACCEPTED_UNDER_CEILING</code>,
+<code>DISPUTED_AS_DEBT</code>,<br />
+and <code>REVISED_BY</code>. The ledger can coexist with plural
+semantics by representing contests and non-debt findings explicitly.</p>
+<p>This integration establishes four editorial commitments: adopt
+maintenance accounting for meaning obligations as the official corpus
+role; adopt the debt-entry object; enforce the
+defect/risk/disagreement/complexity/debt separation; and treat semantic
+interest as a bounded evidence-linked heuristic unless a validated
+metric is later established.</p>
+<h2 id="recoverable-infrastructure-obligations">Recoverable
+Infrastructure Obligations</h2>
+<p>The fixed-seed comparison with SBQ, Governed Semantic Cartography,
+Semantic Computing Infrastructure, and Cold Boot Continuity turns an
+isolated debt entry into a recoverable propagation record:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;entry, origin, affected\_bindings, views, services, \\
+&amp;capsules, interest\_observations, remediation, \\
+&amp;closure\_witnesses, reopen\_triggers)
+\end{aligned}.
+$$</span></p>
+<p>SBQ can supply bounded diagnostic evidence, including instability,
+distortion, or constraint misalignment. It does not decide that an
+obligation exists or that a finding is debt. The debt ledger must record
+the governing obligation, acceptance posture, custodian, affected
+dependents, and the evidence that distinguishes debt from defect, risk,
+disagreement, or irreducible complexity.</p>
+<p>Cartographic views can expose debt or hide it through projection and
+locality. Each affected coordinate or path should link to open entries
+and known remediation state. A pedagogical projection may simplify the
+debt explanation, but it must preserve recovery to the full entry and
+cannot display a clean map while silently dropping consequential
+unresolved obligations.</p>
+<p>Semantic infrastructure can propagate debt through shared identity,
+storage, compilation, navigation, cache, and interface services. The
+ledger should distinguish origin from propagation and name the
+dependency path rather than charging every consumer with the same cause.
+Infrastructure replacement does not retire debt unless closure witnesses
+show that the obligation was discharged or legitimately removed.</p>
+<p>Cold-boot capsules must carry applicable open debt, disputed
+classifications, and reopen triggers. Recovering artifacts while
+forgetting their semantic liabilities produces a false continuity claim.
+The universal GSM can type<br />
+<code>PROPAGATES_DEBT_THROUGH_SERVICE</code>,<br />
+<code>AFFECTS_ATLAS_VIEW</code>,
+<code>CARRIED_IN_CONTINUITY_CAPSULE</code>,
+<code>SUPPORTED_BY_SBQ_SIGNAL</code>,<br />
+<code>DISTINGUISHES_DEBT_ORIGIN</code>, <code>CLOSED_BY_WITNESS</code>,
+and<br />
+<code>REOPENED_BY_DEPENDENCY_CHANGE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the debt-propagation record; require atlas views and shared services to
+expose applicable entries; carry open debt and disputes through cold
+boot; and require closure witnesses rather than migration or
+disappearance alone.</p>
+<h2 id="obligation-bound-semantic-debt-accounting">Obligation-Bound
+Semantic Debt Accounting</h2>
+<p>Seventeen downstream uses apply Semantic Debt to cold boot, epistemic
+orientation and lineage, compilers, cartography, crystals, ontology
+laundering, migration, SBQ, semantic infrastructure, attractors,
+integrity enforcement, optional coordination, qualia research,
+transformation systems, MCIR engineering, and comparative software
+analysis. They confirm its corpus role as maintenance accounting for
+unresolved semantic obligations. Ambiguity, low quality, complexity,
+age, disagreement, or incompleteness is not automatically debt.</p>
+<p>The debt entry is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;obligation, subject, generation, beneficiaries, origin, \\
+&amp;domain, mode, principal, interest, criticality, evidence, \\
+&amp;dependencies, repair\_options, accepted\_risk, expiry, \\
+&amp;status, disposition)
+\end{aligned}.
+$$</span></p>
+<p>An entry requires a scoped obligation: something owed to a user,
+maintainer, interpreter, dependent claim, migration, authority boundary,
+evidence chain, or future reconstruction. <code>principal</code> records
+the unresolved semantic work or loss;</p>
+<p><code>interest</code> records additional burden or risk caused by
+deferral. Interest is a review heuristic unless its units, baseline, and
+observation method are measured. Debt can be knowingly accepted,
+disputed, transferred with consent, discharged, superseded, or declared
+unrecoverable; none of those outcomes may be inferred from silence.</p>
+<p>Debt propagation follows typed dependencies rather than lexical
+similarity. A changed definition may invalidate claims, profiles, tests,
+interfaces, translations, and decisions, but only where a binding is
+demonstrated. Repair can also destroy legitimate plurality, historical
+meaning, privacy, or compatibility. Defragmentation therefore requires a
+declared preservation and remainder contract.</p>
+<p>The universal GSM can type<br />
+<code>OWES_SEMANTIC_OBLIGATION</code>,
+<code>ACCRUES_SEMANTIC_INTEREST</code>,<br />
+<code>DEPENDS_ON_DEBTED_BINDING</code>,
+<code>ACCEPTS_SEMANTIC_RISK</code>,
+<code>DISPUTES_DEBT_ENTRY</code>,<br />
+<code>REPAIRS_WITH_REMAINDER</code>,
+<code>DISCHARGES_SEMANTIC_DEBT</code>,<br />
+and<br />
+<code>DOES_NOT_EQUATE_QUALITY_WITH_DEBT</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the obligation-bound debt entry; distinguish
+principal, interest, criticality, and accepted risk; require typed
+propagation and preservation contracts; and prohibit ambiguity, age, low
+SBQ, or complexity from becoming debt without an owed obligation.</p>
+<h2 id="counterexamples-failure-modes-and-limits">18. Counterexamples,
+Failure Modes, and Limits</h2>
+<p>The ontology can itself create semantic debt if applied without
+restraint.</p>
+<ol type="1">
+<li><strong>Legitimate plurality.</strong> Competing definitions may be
+necessary. Forcing one canonical term can erase domain or community
+differences.</li>
+<li><strong>Legitimate distribution.</strong> Meaning may be
+intentionally distributed across independent authorities or projections.
+One stable identity and derivation graph can be safer than one
+centralized file.</li>
+<li><strong>Premature closure.</strong> A glossary can freeze a concept
+whose meaning should remain contested or provisional.</li>
+<li><strong>Governance overhead.</strong> Receipts, ledgers, and
+standing graphs can cost more than the recovery obligation
+justifies.</li>
+<li><strong>False precision.</strong> Numerical severity or interest
+scores can conceal uncertain judgments and become targets of
+Goodharting.</li>
+<li><strong>Detector error.</strong> Acronym, contradiction, staleness,
+and claim checks can yield false positives or miss context-sensitive
+debt.</li>
+<li><strong>Canonical-source capture.</strong> Declaring a source
+canonical can launder the authority of the party that controls it.</li>
+<li><strong>Repair-induced loss.</strong> Renaming, merging,
+deduplicating, or compressing can destroy provenance, minority
+interpretations, refusal semantics, or historical meaning.</li>
+<li><strong>Infinite documentation regress.</strong> Every governing
+artifact introduces terms and relations that may themselves require
+governance.</li>
+<li><strong>Evidence category error.</strong> Receipt binding improves
+admissibility and reconstruction but does not create truth,
+independence, representativeness, or causal validity.</li>
+</ol>
+<p>The ontology has not yet been empirically validated as a complete
+classification, a predictor of maintenance cost, or a demonstrated
+improvement over alternative knowledge-governance methods. The
+seven-by-nine matrix is a proposal. Sparse cells, overlaps, and category
+boundaries require comparative cases and adversarial review.</p>
+<p>Debt repayment should therefore satisfy a proportionality rule:</p>
+<p><span
+class="math display">Repay (<em>d</em>) ⇒ ExpectedRecoveryGain (<em>d</em>) &gt; GovernanceCost (<em>d</em>)</span></p>
+<p>unless an overriding safety, legal, constitutional, or
+evidence-preservation obligation applies.</p>
+<h2 id="open-problems">19. Open Problems</h2>
+<p>Several problems remain open.</p>
+<h3 id="severity-metrics">19.1 Severity Metrics</h3>
+<p>How should semantic debt severity be measured? Possible factors
+include claim impact, authority impact, migration impact, evidence
+impact, agent confusion risk, and cost to repair.</p>
+<h3 id="automated-debt-detection">19.2 Automated Debt Detection</h3>
+<p>Which forms of semantic debt can be detected statically? Lexical
+underdefinition and stale references may be straightforward. Ontological
+collapse and claim inflation may require stronger semantic models.</p>
+<h3 id="semantic-debt-interest-1">19.3 Semantic Debt Interest</h3>
+<p>How should interest be estimated? Semantic debt may compound
+nonlinearly when lexical, ontological, evidentiary, and claim debts
+interact.</p>
+<h3 id="cross-system-debt-propagation">19.4 Cross-System Debt
+Propagation</h3>
+<p>How does semantic debt propagate through APIs, packages, schemas,
+model outputs, documentation, and agent instructions?</p>
+<h3 id="non-claim-synthesis">19.5 Non-Claim Synthesis</h3>
+<p>Can systems automatically infer appropriate non-claims from missing
+evidence, failed tests, incomplete migrations, or unsupported
+standings?</p>
+<h3 id="semantic-debt-in-machine-learning-systems">19.6 Semantic Debt in
+Machine Learning Systems</h3>
+<p>ML systems introduce additional semantic debt through dataset labels,
+prompt instructions, embeddings, latent representations, evaluation
+gaps, and benchmark overclaims.</p>
+<h3 id="formal-ontology-standard">19.7 Formal Ontology Standard</h3>
+<p>The proposed ontology may be developed into a machine-readable
+standard for debt ledgers, claim ledgers, and governance checks.</p>
+<h2 id="semantic-debt-is-not-a-universal-defect-score">Semantic Debt Is
+Not a Universal Defect Score</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Semantic debt is the future cost created when important meaning
+becomes unstable, scattered, stale, contradictory, overclaimed,
+inadmissible, or recoverable only by inference. Software may continue
+running while nobody can reliably say what a term, rule, decision, or
+artifact means. The concept is diagnostic; it is not a scalar verdict on
+a project or author.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Documentation-debt collapse.</strong> Missing prose is
+treated as the whole problem. Meaning may be encoded in schemas, tests,
+interfaces, data, policy, models, names, or social practice.</li>
+<li><strong>Technical-debt collapse.</strong> An implementation
+compromise is labeled semantic debt without an unstable meaning
+relation. The categories may interact but are not identical.</li>
+<li><strong>Metric-Goodhart attack.</strong> Teams optimize a debt score
+by adding definitions or links that do not improve recoverability or
+consistency. Metrics need sampled human and operational validation.</li>
+<li><strong>False-positive attack.</strong> Legitimate plurality,
+uncertainty, or local vocabulary is classified as debt. Disagreement and
+contextual variation require preservation, not forced
+normalization.</li>
+<li><strong>False-negative attack.</strong> A clean ontology hides stale
+evidence, authority conflicts, inaccessible sources, or projection loss.
+Surface coherence is insufficient.</li>
+<li><strong>Interest-metaphor overreach.</strong> Future cost is assumed
+to compound like finance. “Interest” requires a declared cost model,
+time horizon, dependency graph, and observation method.</li>
+<li><strong>Ownership laundering.</strong> A debt record assigns blame
+without reconstructing authority, constraints, or historical context.
+Custody and causal responsibility remain separate.</li>
+<li><strong>AI-cleanup attack.</strong> Generated harmonization silently
+replaces authored distinctions. AI suggestions remain proposals with
+provenance, diffs, reversibility, and author review.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper contributes a semantic-debt taxonomy, detection agenda, and
+relation to governed meaning. It does not establish a universal
+ontology, objective project ranking, causal link to failure, or
+validated economic cost. Automated detection yields leads, not
+adjudicated debt.</p>
+<p>Claims about prevalence, cost, productivity, incident risk, machine
+learning, or organizational outcomes require external evidence and
+measured studies. Internal corpus examples demonstrate applicability
+inside this architecture only. No external research was added in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public test is whether a future maintainer or agent can recover
+what a system’s important terms and decisions mean, why they have
+standing, where they conflict, and how they may be revised without
+reconstructing the answer from accidents.</p>
+<h2 id="publication-standing-and-evidence-limits">20. Publication
+Standing and Evidence Limits</h2>
+<h3 id="current-standing">20.1 Current Standing</h3>
+<p>This candidate presents a developed conceptual ontology, diagnostic
+matrix, governing-artifact mapping, agentic failure taxonomy, formal
+sketch, GMB integration, and research program. It does not present an
+empirical validation of completeness, inter-rater reliability,
+predictive power, detector accuracy, repayment effectiveness, or
+semantic-debt interest.</p>
+<p>The external bibliography is retained from the author source but was
+not externally revalidated in this closed-corpus pass. References dated
+2026, web resources, DOI metadata, quotations, priority claims, and
+characterizations of adjacent literature require primary-source
+verification for a future evidence-qualified revision readiness. No
+novelty claim should exceed that later review.</p>
+<p>PDF rendering remains deferred until textual and semantic saturation.
+The authorized baseline is ordinary Pandoc mode:</p>
+<pre class="text"><code>pandoc INPUT.md -o OUTPUT.pdf</code></pre>
+<h3 id="corpus-sources">20.3 Corpus Sources</h3>
+<ul>
+<li>Adam Ableman, <em>Semantic Debt</em>. Exact author source
+SHA-256<br />
+<code>36BAE578CF1926981488982AB8C406E0EACB662E25E8B5F18F187A6E53AF933F</code>.</li>
+<li>Adam Ableman, <em>Reasoning by Way of Receipts</em>. Exact reviewed
+source SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>.</li>
+<li>Adam Ableman, <em>A Formal Theory of Work Custody</em>. Exact
+reviewed source SHA-256<br />
+<code>49C38F60B95E107F8B3D864ACAFB4C49067A146C807E5248307DE7B009AD4696</code>.</li>
+<li>Adam Ableman, <em>Admissibility Engineering</em>. Exact reviewed
+source SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>.</li>
+<li>Adam Ableman, <em>Semantic Legitimacy Before Context</em>. Exact
+reviewed source SHA-256<br />
+<code>1E9058F212FCB00E42E35E927DF2E7F830BC9C9499AAFF469FE65FF8AE137B68</code>.</li>
+<li>Adam Ableman, <em>The Three Hash Rule</em>. Zenodo, 2026. DOI:<br />
+<code>10.5281/zenodo.20788617</code>; exact reviewed source
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</li>
+<li>Governed Meaning Base terminology ruling:
+<code>CCF -&gt; CMB -&gt; GMB</code>, with GMB current. This establishes
+terminology lineage only.</li>
+</ul>
+<p>The title correction, GMB/RPZ integration, corpus relations,
+realization-funnel placement, formal extensions, counterexamples, claim
+ceilings, and decision surface are AI-prepared editorial synthesis
+explicitly distinguished from the original author material. They grant
+no author, publication, canonical, identity, implementation, or
+conformance standing.</p>
+<h2 id="conclusion">21. Conclusion</h2>
+<p>Semantic debt is the debt of meaning that can no longer be safely
+recovered.</p>
+<p>It appears when terms drift, categories collapse, boundaries leak,
+procedures go unrecorded, evidence becomes inadmissible, authority
+hides, and claims outrun support. It is not merely poor documentation,
+nor merely technical debt under another name. It is the accumulated
+future cost of unstable meaning.</p>
+<p>The ontology proposed here separates semantic debt into seven
+subdomains: lexical, ontological, boundary, procedural, evidentiary,
+authority, and claim debt. It also identifies nine cross-cutting modes:
+underdefinition, contradiction, fragmentation, staleness, opacity,
+overcoupling, inadmissibility, overclaim, and lossy translation. This
+two-axis model clarifies why semantic fragmentation is not a peer
+subdomain but an orthogonal distribution failure. The more precise
+subtype originally motivating the framework is semantic locality debt:
+the loss of stable homes for meaningful distinctions.</p>
+<p>The matrix is the paper’s central instrument. It turns semantic debt
+into a coordinate system. The governing artifacts then turn that
+coordinate system into practice: glossary, non-claims file, claim
+ledger, standing graph, migration contract, receipt schema, and semantic
+debt ledger.</p>
+<p>The result is a proposed governance model. Semantic debt can be
+recorded, classified, prioritized, checked, repaid, and blocked from
+supporting claims when a concrete profile defines its obligations,
+thresholds, evidence, and authority. It can become part of admission,
+refactor, migration, corpus-integration, GMB, and agent-development
+workflows, but its benefit remains an empirical question.</p>
+<p>Semantic debt names the cost of unrecoverable meaning. Constitutional
+Semantic Engineering offers one path for refusing it before it
+compounds.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm2.</strong> Existing source passages use this stage only
+as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that software systems do not only accumulate
+technical debt. Its nearest external comparison fields are software,
+semantic, governance. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Modularity,
+secure-development practice, and reproducibility reduce classes of
+failure but do not guarantee architectural coherence or user
+sovereignty. Formal vocabularies and graph links make commitments
+explicit but cannot by themselves establish correct identity, shared
+interpretation, or lossless translation between contexts. A written
+constitution can legitimate domination as easily as constrain it unless
+amendment, participation, enforcement, and appeal remain effective in
+practice. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E2]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E3]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E6]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E7]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure in Software Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-B307F65B51C503DE</code>;<br />
+source SHA-256<br />
+<code>9D2A9D79DE8BC3F2F8ABECA073E4D3607F7623F4368E63F8036081E39B4C75C3</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governed Coding and
+Debugging</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18115533</code>;<br />
+source SHA-256<br />
+<code>2469EDA96DBC1E207855A9AD27314A7FAB59FA35E6EFEF9288C30F949376BF16</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Operating
+Systems</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F5FB8FA82270B989</code>;<br />
+source SHA-256<br />
+<code>E982E4D6BD4B519EED6A7438367844954D6D5F1C2C4CC0099AAAC4AB9A00D3AB</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The following bibliography is retained from the author source. It was
+not externally revalidated during this closed-corpus pass.</p>
+<p>Avgeriou, P., Ozkaya, I., Chatzigeorgiou, A., Ciolkowski, M., Ernst,
+N. A., Koontz, R. J., Poort, E., and Shull, F. (2024). Technical Debt
+Management: The Road Ahead for Successful Software Delivery. arXiv.
+https://arxiv.org/abs/2403.06484</p>
+<p>Cockburn, A. (2005). Hexagonal Architecture: The Original 2005
+Article. HaT Technical Report 2005.02.
+https://alistair.cockburn.us/hexagonal-architecture</p>
+<p>Dorval, G. (2026). Semantic Debt: Canonical Definition. <a
+href="https://gautierdorval.com/en/definitions/semantic-debt/">gautierdorval.com
+source</a></p>
+<p>Evans, E. (2003). Domain-Driven Design: Tackling Complexity in the
+Heart of Software. Addison-Wesley Professional.</p>
+<p>Jansen, A. G. J. (2008). Architectural Design Decisions. University
+of Groningen doctoral thesis. <a
+href="https://research.rug.nl/en/publications/architectural-design-decisions">research.rug.nl
+source</a></p>
+<p>Kruchten, P., Nord, R. L., and Ozkaya, I. (2012). Technical Debt:
+From Metaphor to Theory and Practice. IEEE Software, 29(6), 18-21. DOI:
+10.1109/MS.2012.167.</p>
+<p>Lebo, T., Sahoo, S., McGuinness, D., Belhajjame, K., Cheney, J.,
+Corsar, D., Garijo, D., Soiland-Reyes, S., Zednik, S., and Zhao, J.
+(2013). PROV-O: The PROV Ontology. W3C Recommendation.
+https://www.w3.org/TR/prov-o/</p>
+<p>Miller, M. S., Yee, K. P., and Shapiro, J. S. (2003). Capability
+Myths Demolished. Systems Research Laboratory, Johns Hopkins University.
+<a
+href="https://papers.agoric.com/papers/capability-myths-demolished/full-text/">papers.agoric.com
+source</a></p>
+<p>Nogueira, F., Silva, N., and Conte, T. (2026). One Size Fits All? An
+Empirical Comparison of ADR Templates regarding Comprehension,
+Usability, and Ease of Adoption. arXiv.
+https://arxiv.org/abs/2604.27333</p>
+<p>Ozkan, O., Babur, O., and van den Brand, M. (2023). Domain-Driven
+Design in Software Development: A Systematic Literature Review on
+Implementation, Challenges, and Effectiveness. arXiv.
+https://arxiv.org/abs/2310.01905</p>
+<p>Parnas, D. L. (1972). On the Criteria to Be Used in Decomposing
+Systems into Modules. Communications of the ACM, 15(12), 1053-1058. DOI:
+10.1145/361598.361623.</p>
+<p>Rios, N., Ribeiro, L. F., Caires, V., Mendes, T., and Spindola, R. O.
+(2014). Towards an Ontology of Terms on Technical Debt. IEEE
+International Workshop on Managing Technical Debt. DOI:
+10.1109/MTD.2014.9.</p>
+<p>Sharma, R. K. (2026). ContextCov: Deriving and Enforcing Executable
+Constraints from Agent Instruction Files. arXiv.
+https://arxiv.org/abs/2603.00822</p>
+<p>Tofan, D. (2015). Understanding and Supporting Software Architectural
+Decisions: For Reducing Architectural Knowledge Vaporization. University
+of Groningen doctoral thesis. <a
+href="https://research.rug.nl/en/publications/understanding-and-supporting-software-architectural-decisions-for">research.rug.nl
+source</a></p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.21111666">10.5281/zenodo.21111666</a></p>

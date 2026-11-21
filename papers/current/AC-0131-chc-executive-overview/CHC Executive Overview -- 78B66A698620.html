@@ -1,0 +1,716 @@
+<h1 id="chc-executive-overview">CHC Executive Overview</h1>
+<h2
+id="state-identity-semantic-identity-and-policy-relative-admissibility">State
+Identity, Semantic Identity, and Policy-Relative Admissibility</h2>
+<h3
+id="the-third-is-a-decision-evaluated-from-state-claims-evidence-authority-context-freshness-and-policy.">The
+third is a decision evaluated from state, claims, evidence, authority,
+context, freshness, and policy.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Cryptographic Homological Compilation (CHC) proposes that three
+questions be represented separately:</p>
+<pre class="text"><code>What exact state is this?
+What claims are bound to that state?
+May this state act here, now, under this policy and evidence?</code></pre>
+<p>The first two questions can be addressed by distinct, canonicalized
+cryptographic commitments. The third is a decision evaluated from state,
+claims, evidence, authority, context, freshness, and policy. A signature
+authenticates a statement relative to a key; it does not by itself
+establish that the signer has current authority, that the statement is
+true, or that the subject is admissible.</p>
+<p>CHC is therefore an architecture for keeping artifact identity,
+semantic-claim identity, and admissibility from collapsing into one
+apparent fact. This overview specifies that separation and its claim
+ceiling. It does not supply a cryptographic protocol, implementation, or
+security proof.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. The custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/chc-</code></p>
+<p><code>executive-overview/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>204E0C0991F10A908FC37A885AC10AC0E126CA0419F7E6B9C8A008E9EC8C9A43</code>.
+The source remains unchanged.</p>
+<p>The CHC name, three-domain separation, jurisdictions, two hashes,
+policy-relative admissibility, receipts, freshness, revocation example,
+recursive toolchain application, and comparison targets are author
+material. Canonicalization requirements, decision envelope, authority
+correction, threat model, corpus integration, funnel, countertests, and
+editorial alternatives are AI-assisted contributions explicitly
+distinguished from the original author material.</p>
+<p>No external research or cryptographic validation was performed.</p>
+<h2 id="the-separation">1. The Separation</h2>
+<h3 id="state-identity">1.1 State Identity</h3>
+<p>Let <span class="math inline"><em>J</em></span> be a declared
+<strong>State Jurisdiction</strong>: the exact boundary whose state is
+being identified. It may be a file, tree, binary, image, deployment
+snapshot, runtime capture, or knowledge artifact. Let <span
+class="math inline"><em>C</em><em>a</em><em>n</em><em>o</em><em>n</em><sub><em>s</em></sub></span>
+be its versioned canonicalization:</p>
+<p><span
+class="math display"><em>H</em><sub><em>s</em></sub> = <em>H</em><em>a</em><em>s</em><em>h</em>(<em>a</em><em>l</em><em>g</em><em>o</em><em>r</em><em>i</em><em>t</em><em>h</em><em>m</em><sub><em>s</em></sub>, <em>C</em><em>a</em><em>n</em><em>o</em><em>n</em><sub><em>s</em></sub>(<em>J</em>)).</span></p>
+<p>The tuple must bind the algorithm, canonicalization profile,
+jurisdiction rule, exclusions, and bytes or reconstructable state.
+<code>H_s</code> alone does not reveal the boundary and does not prove
+origin, safety, semantics, or behavior.</p>
+<h3 id="semantic-identity">1.2 Semantic Identity</h3>
+<p>Let <span class="math inline"><em>M</em></span> be a structured claim
+envelope referring to <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> and
+containing claims, schemas, issuers, provenance, scope, and expiry.
+Then:</p>
+<p><span
+class="math display"><em>H</em><sub><em>m</em></sub> = <em>H</em><em>a</em><em>s</em><em>h</em>(<em>a</em><em>l</em><em>g</em><em>o</em><em>r</em><em>i</em><em>t</em><em>h</em><em>m</em><sub><em>m</em></sub>, <em>C</em><em>a</em><em>n</em><em>o</em><em>n</em><sub><em>m</em></sub>(<em>M</em>)).</span></p>
+<p><code>H_m</code> commits to canonicalized claim material. It does not
+prove that the claims are true, complete, authorized, or semantically
+equivalent to another envelope. Any claim of semantic stability requires
+a declared equivalence regime and adversarial examples.</p>
+<h3 id="admissibility">1.3 Admissibility</h3>
+<p>At time <span class="math inline"><em>t</em></span>, an evaluator
+considers policy <span
+class="math inline"><em>P</em><sub><em>t</em></sub></span>, evidence
+<span class="math inline"><em>E</em><sub><em>t</em></sub></span>,
+authority state <span
+class="math inline"><em>A</em><sub><em>t</em></sub></span>, context
+<span class="math inline"><em>C</em><sub><em>t</em></sub></span>, and
+the two identities:</p>
+<p><span
+class="math display"><em>D</em><sub><em>t</em></sub> = <em>E</em><em>v</em><em>a</em><em>l</em>(<em>P</em><sub><em>t</em></sub>, <em>E</em><sub><em>t</em></sub>, <em>A</em><sub><em>t</em></sub>, <em>C</em><sub><em>t</em></sub>, <em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>).</span></p>
+<p>The result should be typed, for example:</p>
+<p><span
+class="math display"><em>D</em><sub><em>t</em></sub> ∈ {<em>A</em><em>D</em><em>M</em><em>I</em><em>T</em>, <em>R</em><em>E</em><em>F</em><em>U</em><em>S</em><em>E</em>, <em>D</em><em>E</em><em>F</em><em>E</em><em>R</em>, <em>U</em><em>N</em><em>K</em><em>N</em><em>O</em><em>W</em><em>N</em>, <em>C</em><em>O</em><em>N</em><em>F</em><em>L</em><em>I</em><em>C</em><em>T</em>, <em>E</em><em>X</em><em>P</em><em>I</em><em>R</em><em>E</em><em>D</em>}.</span></p>
+<p>Admissibility is not a third intrinsic identity unless a particular
+system hashes the complete decision envelope. It is a policy-relative
+judgment whose subject, inputs, evaluator, time, scope, result, and
+claim ceiling should be receipted.</p>
+<h2 id="authentication-authority-and-admissibility">2. Authentication,
+Authority, and Admissibility</h2>
+<p>The source’s useful normalization is:</p>
+<pre class="text"><code>signed = evidence</code></pre>
+<p>More precisely, a valid signature supports a bounded claim that a
+holder of a corresponding key signed particular bytes under a specified
+algorithm. Additional evidence is required to establish key custody,
+signer identity, delegated capability, current authority, jurisdiction,
+purpose, freshness, and non-revocation.</p>
+<p>Authority does not emerge from admissibility. Authority is an input
+and governed relation that the admissibility process evaluates. Nor does
+admissibility create truth. It decides whether a subject may proceed
+under one policy and context.</p>
+<h2 id="mutable-admissibility-over-stable-state">3. Mutable
+Admissibility Over Stable State</h2>
+<p>A software release may retain the same <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> and <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> while its
+signing key is revoked, a vulnerability is discovered, a jurisdiction
+changes, an approval expires, or new evidence conflicts with an earlier
+receipt. The current decision can change without rewriting history:</p>
+<p><span
+class="math display">(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>D</em><sub><em>t</em><sub>1</sub></sub> = <em>A</em><em>D</em><em>M</em><em>I</em><em>T</em>) → (<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>D</em><sub><em>t</em><sub>2</sub></sub> = <em>R</em><em>E</em><em>F</em><em>U</em><em>S</em><em>E</em>).</span></p>
+<p>Conversely, a policy change can admit an unchanged artifact. The
+receipt must therefore bind policy and evidence versions rather than
+treating admissibility as a permanent attribute of the artifact.</p>
+<h2 id="receipts-and-freshness">4. Receipts and Freshness</h2>
+<p>A CHC receipt should include:</p>
+<ul>
+<li>exact subject jurisdiction and <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>;</li>
+<li>semantic envelope identity <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>;</li>
+<li>policy, authority, trust-root, and evaluator versions;</li>
+<li>evidence set and exclusions;</li>
+<li>relevant time, epoch, or checkpoint;</li>
+<li>decision, reason codes, and scope;</li>
+<li>uncertainty, conflict, and missing inputs;</li>
+<li>expiry and reevaluation triggers;</li>
+<li>signer and signature where required;</li>
+<li>previous and superseding receipt links.</li>
+</ul>
+<p>Freshness is claim-relative. A recent timestamp does not prove fresh
+vulnerability information, non-revocation, current policy, or current
+deployment state. The evaluator must state what freshness means for each
+input.</p>
+<h2 id="recursive-toolchain-jurisdictions">5. Recursive Toolchain
+Jurisdictions</h2>
+<p>Applications, compilers, assemblers, linkers, build environments,
+signing services, and deployment controllers can each be treated as
+jurisdictions. This supports the question: <strong>what produced the
+producer?</strong></p>
+<p>Recursion does not eliminate trust. It exposes a finite trust base,
+bootstrap boundary, or unresolved premise. A complete CHC claim should
+identify where recursion stops and what evidence supports that stopping
+point.</p>
+<h2 id="the-three-hash-rule-interface">6. The Three Hash Rule
+Interface</h2>
+<p>The Two-Hash architecture in the source identifies exact state and a
+semantic-claim envelope; admissibility is evaluated separately. The
+Three Hash Rule warns against using one digest as a proxy for object
+state, governing or admissibility commitments, and meaning
+commitments.</p>
+<p>These views can be compatible if the system explicitly binds:</p>
+<ul>
+<li>an exact-state commitment;</li>
+<li>a semantic-meaning or claim commitment;</li>
+<li>a governing policy/admissibility commitment or decision-envelope
+commitment.</li>
+</ul>
+<p>That does not require exactly three physical hash fields in every
+serialization. It requires the commitments to remain independently
+addressable and non-interchangeable.</p>
+<h2 id="threat-model-and-failure-modes">7. Threat Model and Failure
+Modes</h2>
+<p>CHC must address ambiguous jurisdiction boundaries, canonicalization
+collisions, algorithm substitution, claim-envelope omission,
+equivocation, stale or revoked authority, rollback, freeze, replay,
+split views, missing transparency, compromised keys, confused deputies,
+policy downgrade, evidence laundering, evaluator compromise, time-source
+failure, dependency substitution, non-deterministic builds, hidden
+runtime state, and semantic overclaim from digest equality.</p>
+<p>Hashes can detect some changes to committed material. They cannot
+show that omitted material was irrelevant, that canonicalization
+preserved meaning, that a policy is legitimate, or that an observed
+execution corresponds to the committed artifact.</p>
+<h2 id="primitives-invariants-dimensions-and-adjacencies">8. Primitives,
+Invariants, Dimensions, and Adjacencies</h2>
+<p><strong>Primitives:</strong> jurisdiction, canonicalization profile,
+hash algorithm, state commitment, claim envelope, semantic commitment,
+policy, authority relation, evidence, receipt, epoch, decision, refusal,
+conflict, expiry, revocation, and appeal.</p>
+<p><strong>Invariants:</strong> jurisdiction is explicit; algorithms and
+canonicalizers are versioned; state and semantic commitments are not
+substituted for one another; signatures do not self-authorize; decisions
+bind exact inputs and scope; revocation cannot rewrite history; unknown
+is first-class; and a receipt cannot exceed its evidence.</p>
+<p><strong>Dimensions:</strong> jurisdiction granularity,
+canonicalization strictness, hash agility, semantic schema, authority
+model, freshness horizon, evidence independence, privacy, transparency,
+latency, availability, revocation propagation, and recursive depth.</p>
+<p><strong>Adjacencies:</strong> The Three Hash Rule supplies commitment
+separation; Reasoning by Way of Receipts supplies bounded decision
+evidence; Receipt-Bound Capabilities can connect admissibility to effect
+authority. These interfaces do not prove that a CHC implementation
+exists.</p>
+<h2 id="gmb-and-universal-gsm-projection">9. GMB and Universal GSM
+Projection</h2>
+<p>The Governed Meaning Base can retain jurisdictions, exact versions,
+commitments, claims, issuers, policies, authority grants, revocations,
+evidence, receipts, decisions, conflicts, and revisions. The universal
+GSM can type <code>IDENTIFIES_STATE</code>,<br />
+<code>CLAIMS_ABOUT</code>, <code>SIGNED_BY</code>,
+<code>AUTHORIZED_BY</code>, <code>EVALUATED_UNDER</code>,
+<code>ADMITTED_BY</code>,<br />
+<code>REFUSED_BY</code>, <code>REVOKED_BY</code>, and
+<code>SUPERSEDES</code>.</p>
+<p>Storage in GMB does not make a claim true or an artifact admissible.
+The current evaluator must resolve an exact projection under a declared
+policy.</p>
+<h2 id="realization-funnel">10. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate jurisdictions, commitment
+schemes, trust models, policy regimes, threats, and failure
+outcomes.</li>
+<li><strong>Specification:</strong> define canonicalization, identities,
+authority, evidence, decision, refusal, freshness, revocation, and
+receipt semantics.</li>
+<li><strong>CM1:</strong> retain all admissible cryptographic and
+operational configurations.</li>
+<li><strong>CM2:</strong> select preferable configurations under
+security, agility, privacy, availability, auditability, and cost
+criteria.</li>
+<li><strong>IC:</strong> bind an Instance Constitution or Instance
+Configuration selecting algorithms, schemas, roots, evaluators, clocks,
+policies, and recovery rules.</li>
+<li><strong>IR:</strong> build an Instance Realization or Implementation
+Realization.</li>
+<li><strong>Evidence:</strong> execute vectors, conformance tests,
+attacks, interoperability tests, revocation exercises, and recovery
+trials.</li>
+<li><strong>Revision:</strong> change algorithms, policies, schemas, or
+trust roots without conflating the new system with the old.</li>
+</ul>
+<p>Any compiler <code>IR</code> or named representation retains the
+separate meaning <strong>Intermediate Representation</strong>.
+Realization-stage</p>
+<p><code>IR</code> has the interchangeable expansions above.</p>
+<h2 id="cryptographic-commitment-separation-profile">Cryptographic
+Commitment-Separation Profile</h2>
+<p>Across the completed P1 corpus, CHC is the <strong>cryptographic
+commitment-separation profile that keeps exact state, claims about that
+state, and current policy-relative admissibility independently
+addressable</strong>. It is not a separate theory of truth, a source of
+authority, a security proof, or an implementation of the wider corpus
+merely because it uses hashes and receipts.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Durable decision, evidence, refusal, expiry,
+and revision records.<br />
+<strong>CHC boundary:</strong> A CHC receipt records an evaluation; it
+does not make a commitment accurate or authorized.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Identity Spine
+Doctrine</em><br />
+<strong>Supplies:</strong> Stable identity and lineage across artifacts,
+projections, and revisions.<br />
+<strong>CHC boundary:</strong> CHC supplies cryptographic state and
+claim commitments inside a larger identity spine.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em><br />
+<strong>Supplies:</strong> Resolved lexical and semantic identity
+records.<br />
+<strong>CHC boundary:</strong> A GTK identity can be referenced by a
+claim envelope; digest equality does not perform
+disambiguation.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meta-Binding as Operational
+Invariant</em><br />
+<strong>Supplies:</strong> Preservation of binding force across
+transformations.<br />
+<strong>CHC boundary:</strong> CHC commits to declared claims; it does
+not prove that transformations preserved their force.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Legitimacy Before
+Context</em><br />
+<strong>Supplies:</strong> Admission discipline before content becomes
+binding context.<br />
+<strong>CHC boundary:</strong> CHC provides exact commitment inputs to
+an admission decision, not the legitimacy of that decision.</p></li>
+</ul>
+<p>A CHC evaluation should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;state\_jurisdiction, state\_canonicalizer, \\
+&amp;state\_commitment, claim\_schema, claim\_canonicalizer, \\
+&amp;claim\_commitment, authority, policy, evidence, context, \\
+&amp;epoch, evaluator, decision, receipt)
+\end{aligned}.
+$$</span></p>
+<p>Each commitment is meaningful only with its jurisdiction,
+canonicalization profile, algorithm, exclusions, and reconstruction
+rules. The admissibility decision is mutable over stable commitments
+because authority, policy, evidence, vulnerability state, context, or
+freshness may change. A digest of the decision envelope can identify
+that decision but does not turn admissibility into an intrinsic property
+of the artifact.</p>
+<p>Recursive toolchain application terminates at an explicit bootstrap
+or trust boundary. Every recursive claim must expose the finite base,
+unresolved premises, unavailable evidence, and recovery plan. Algorithm
+agility, canonicalizer revision, authority revocation, and policy
+succession create linked successors rather than silently reusing prior
+identity.</p>
+<p>The universal GSM can type<br />
+<code>COMMITS_TO_EXACT_STATE</code>,
+<code>COMMITS_TO_CLAIM_ENVELOPE</code>,<br />
+<code>CANONICALIZED_UNDER_PROFILE</code>,
+<code>EVALUATED_FOR_ADMISSIBILITY</code>,
+<code>ADMITTED_AT_EPOCH</code>,<br />
+<code>REFUSED_AFTER_REVOCATION</code>,
+<code>EXPIRES_WITH_EVIDENCE</code>,
+<code>TERMINATES_AT_TRUST_BOUNDARY</code>,<br />
+<code>SUCCEEDED_BY_ALGORITHM_PROFILE</code>,<br />
+and<br />
+<code>DOES_NOT_PROVE_SEMANTIC_EQUIVALENCE</code>. These relations
+integrate CHC without conflating identity, meaning, authority, or
+standing.</p>
+<p>This integration establishes four editorial commitments: classify CHC
+as a cryptographic commitment-separation profile; adopt the complete
+evaluation envelope; require explicit recursive trust termination and
+successor handling; and prohibit state hashes, claim hashes, signatures,
+or decision hashes from self-establishing truth, authority, equivalence,
+or permanent admissibility.</p>
+<h2
+id="migration-commitments-live-infrastructure-limits-semantic-resolution-and-boundary-evidence">Migration
+Commitments, Live Infrastructure Limits, Semantic Resolution, and
+Boundary Evidence</h2>
+<p>The fixed-seed comparison with model-first legacy migration,
+constitutionally governed infrastructure, Constitutional Binding Theory,
+and The Path Was Open clarifies what cryptographic commitments can and
+cannot carry:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;jurisdiction, canonicalizer, algorithm, \\
+&amp;state\_commitment, claim\_commitment, binding\_profile, \\
+&amp;authority, policy, epoch, evidence, boundary\_coverage, \\
+&amp;evaluator, decision, receipt, successor)
+\end{aligned}.
+$$</span></p>
+<p>Migration can use separate commitments for legacy state, extracted
+descriptive models, normative decisions, selected IC, candidate IR,
+correspondence evidence, and promotion. Digest continuity does not
+establish behavioral or semantic equivalence, and an admitted successor
+does not inherit the predecessor’s authority or standing without an
+explicit rule.</p>
+<p>Constitutionally governed infrastructure supplies the
+live-performance counterexample: exact configuration and decision
+receipts can coexist with starvation, inaccessible remedies, hidden
+fallbacks, priority inversion, or bypass. CHC identifies what was
+evaluated; it does not prove that the committed surface was complete or
+practically usable.</p>
+<p>Constitutional Binding Theory supplies the resolution profile needed
+to interpret an anchor, claim, policy, key, or state identity.
+Canonicalization and deterministic resolution remain governed choices
+with exclusions and remainder. The Path Was Open adds boundary evidence:
+a committed declaration and passing receipt do not exclude unmodeled
+concrete effect routes.</p>
+<p>The universal GSM can type<br />
+<code>COMMITS_TO_MIGRATION_STAGE</code>,<br />
+<code>SUCCEEDED_BY_DISTINCT_ADMISSIBILITY</code>,
+<code>RESOLVES_COMMITMENT_ANCHOR_UNDER_PROFILE</code>,<br />
+<code>OMITS_LIVE_INFRASTRUCTURE_PROPERTY</code>,
+<code>WITNESSED_BY_BOUNDARY_GAP</code>,
+<code>EXPIRES_AT_EPOCH</code>,<br />
+and<br />
+<code>DOES_NOT_PROVE_COVERAGE_OR_EQUIVALENCE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+stage-specific migration commitments; record live infrastructure
+properties outside hash proof; bind commitment interpretation to an
+explicit anchor-resolution profile; and require boundary-coverage
+evidence and gap witnesses beside every admissibility receipt.</p>
+<h2
+id="commitment-separation-under-migration-infrastructure-binding-and-boundary-uses">Commitment
+Separation Under Migration, Infrastructure, Binding, and Boundary
+Uses</h2>
+<p>Four strong downstream uses in the frozen P3 field test CHC beyond
+its compact overview. Model-first migration uses separate commitments
+for predecessor state, descriptive models, normative decisions, selected
+configuration, realization evidence, and promotion. Constitutionally
+governed infrastructure shows that exact commitments can coexist with
+starvation, inaccessible remedy, hidden fallback, or bypass.</p>
+<p>Constitutional Binding Theory requires each commitment to be
+interpreted under a versioned canonicalization and anchor-resolution
+profile. <em>The Path Was Open</em> shows that a committed boundary
+declaration and valid receipt do not prove that all concrete effect
+routes were modeled or mediated.</p>
+<p>The compact object should therefore retain:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;jurisdiction, canonicalizer, algorithm, \\
+&amp;state\_commitment, claim\_commitment, binding\_profile, \\
+&amp;authority, policy, epoch, evidence, coverage, evaluator, \\
+&amp;decision, receipt, successor)
+\end{aligned}.
+$$</span></p>
+<p>The reverse dependencies confirm CHC’s useful role as commitment
+separation, while narrowing four likely overclaims: cryptographic
+identity is not semantic identity; a signed claim is not authority;
+policy-relative admission is not truth; and an exact decision receipt is
+not coverage or live-performance proof. Algorithm, canonicalizer,
+policy, authority, and evidence changes create linked successors rather
+than silent reinterpretation.</p>
+<p>The universal GSM can type<br />
+<code>COMMITS_TO_MIGRATION_STAGE</code>,<br />
+<code>INTERPRETED_UNDER_BINDING_PROFILE</code>,
+<code>OMITS_LIVE_PERFORMANCE_PROPERTY</code>,<br />
+<code>WITNESSED_BY_BOUNDARY_GAP</code>,
+<code>SUCCEEDED_BY_POLICY_EPOCH</code>, and<br />
+<code>DOES_NOT_PROVE_COVERAGE</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: preserve the commitment-separation role; add binding
+profile and coverage fields to the compact model; require stage-specific
+commitments and successor epochs; and state the live-performance and
+boundary-coverage proof limits in the executive summary.</p>
+<h2 id="counterevidence-and-failure-tests">11. Counterevidence and
+Failure Tests</h2>
+<p>CHC must narrow, revise, or fail if: (1) a jurisdiction is ambiguous;
+(2) excluded files affect behavior; (3) symlinks escape the boundary;
+(4) canonicalization is non-deterministic; (5) algorithm identifiers are
+omitted; (6) algorithm substitution passes; (7) two states collide under
+the operational profile; (8) semantic fields are omitted; (9) reordering
+changes meaning unexpectedly; (10) different meanings canonicalize
+identically; (11) identical meaning claims cannot survive benign
+serialization; (12) <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> is used as
+semantic proof; (13) <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> is used as
+truth proof; (14) a signature grants authority automatically; (15) key
+identity is confused with human identity; (16) revoked authority still
+admits; (17) stale policy still admits; (18) rollback restores revoked
+trust; (19) freeze suppresses updated metadata; (20) a receipt is
+replayed against another subject; (21) the evaluator omits its version;
+(22) evidence omissions are invisible; (23) <code>UNKNOWN</code>
+becomes</p>
+<p><code>ADMIT</code>; (24) conflict becomes absence; (25) refusal lacks
+a reason and recovery path; (26) clock failure creates false freshness;
+(27) transparency clients receive split views; (28) compromise cannot be
+recovered; (29) hash agility changes identity without lineage; (30)
+recursive verification hides its trust base; (31) build identity is
+confused with runtime identity; (32) a container digest is treated as
+deployment-state proof; (33) policy legitimacy is inferred from hashing;
+(34) admission is described as truth; (35) authority is said to emerge
+from a decision; (36) privacy-sensitive claims leak; (37) evidence is
+self-issued; (38) comparison systems are mischaracterized; (39)
+homological terminology is asserted without definition; (40) a two-hash
+profile contradicts the Three Hash Rule without explanation; (41) no
+reference implementation or vectors exist; or (42) publication proceeds
+without cryptographic review.</p>
+<h2
+id="two-commitments-and-a-decision-must-remain-three-different-claims">Two
+Commitments and a Decision Must Remain Three Different Claims</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>CHC separates exact state identity, semantic-claim identity, and
+policy-relative admissibility. A state commitment says which canonical
+bytes or reconstructable state are in scope. A semantic commitment says
+which claim set is bound under its own regime. Admissibility is a fresh
+decision over state, claims, evidence, authority, context, and policy.
+None can safely stand in for the others.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Boundary-ambiguity attack.</strong> The state hash omits
+files, metadata, dependencies, environment, runtime, mutable services,
+or physical state that matter to the claim.</li>
+<li><strong>Canonicalization-collision attack.</strong> Different
+meaningful states normalize to one canonical form, or equivalent states
+fail to normalize consistently across implementations.</li>
+<li><strong>Semantic-hash-truth attack.</strong> A committed claim set
+is treated as true, complete, correctly interpreted, or legitimately
+authored.</li>
+<li><strong>Signature-authority attack.</strong> A valid signature
+proves key control but is treated as current jurisdiction, delegation,
+competence, or lawful authority.</li>
+<li><strong>Freshness-replay attack.</strong> A previously admissible
+subject reuses old evidence, policy, authority, time, or revocation
+state.</li>
+<li><strong>Recursive-toolchain attack.</strong> Each compiler and
+verifier is hashed while the composition, bootstrap, hardware,
+environment, and effect boundary remain unclosed.</li>
+<li><strong>Policy-equivalence attack.</strong> Two policies return the
+same outcome and are treated as semantically or institutionally
+equivalent.</li>
+<li><strong>Cryptographic-aura attack.</strong> The CHC name, hashes,
+signatures, and receipts create a security-proof impression unsupported
+by a protocol and threat analysis.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The overview specifies a commitment-separation architecture and
+threat model. It does not supply a cryptographic protocol,
+implementation, proof, collision or preimage analysis, canonicalization
+correctness, key governance, complete jurisdiction, source authenticity,
+semantic truth, legitimate authority, or sound admissibility policy.
+Cryptographic Homological Compilation remains a name; no homological
+mathematical result is established here.</p>
+<p>Validation requires exact jurisdictions and exclusions,
+canonicalization specifications and cross-implementations, adversarial
+collisions, semantic-schema governance, key and delegation lifecycle,
+revocation and freshness tests, recursive toolchain closure, policy
+comparison, and current cryptographic and formal research. None occurred
+in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>CHC should help a reviewer ask three separate questions without
+cryptographic theater: what exact state is this, what exact claims are
+bound to it, and may it act here and now under independently justified
+authority, evidence, and policy?</p>
+<h2 id="chc-in-one-sentence">CHC in One Sentence</h2>
+<p>CHC keeps exact state, claims about that state, and the current
+permission to act separately addressable so that a change in one cannot
+silently masquerade as a change in the others.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>The exact internal comparison set inspected for this candidate
+includes <em>The Three Hash Rule</em>, <em>Reasoning by Way of
+Receipts</em>, and <em>Receipt-Bound Capabilities</em>. No external
+systems were inspected. Further evidentiary strengthening requires
+primary-source comparison with the external systems named in the source
+and independent review of the cryptographic and authorization
+claims.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Publication form.</strong> This work is retained as a
+standalone technical companion because its concrete migration method is
+useful independently; it remains subordinate to the architecture it
+explains.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that cryptographic Homological Compilation (CHC)
+proposes that three questions be represented separately: text What exact
+state is this?. Its nearest external comparison fields are crypto,
+provenance, observation. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself. A
+complete provenance graph can faithfully record a false or unauthorized
+process; provenance is evidence about lineage, not automatic truth or
+legitimacy. Telemetry can be complete at the instrumented boundary while
+omitting the causal variable, real-world effect, or authority question
+that matters. These limits are not generic disclaimers: they identify
+the assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847480">10.5281/zenodo.23847480</a></p>

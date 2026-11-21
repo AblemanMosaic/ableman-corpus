@@ -1,0 +1,697 @@
+<h1 id="token-parsimony">Token Parsimony</h1>
+<h2
+id="toward-semantic-compression-substrates-for-evidence-bearing-artificial-intelligence">Toward
+Semantic Compression Substrates for Evidence-Bearing Artificial
+Intelligence</h2>
+<h3
+id="why-future-ai-systems-will-spend-less-time-reading-and-more-time-remembering">Why
+Future AI Systems Will Spend Less Time Reading and More Time
+Remembering</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern large language model systems are operationally inefficient
+observers.</p>
+<p>Most contemporary agent architectures repeatedly ingest the same
+repositories, logs, transcripts, filesystems, and execution traces
+across reasoning cycles, reconstructing situational awareness from raw
+substrate exposure instead of preserving compact semantic continuity. As
+systems scale, the overwhelming majority of token expenditure shifts
+away from reasoning itself and toward repeated reacquisition of
+already-known operational state.</p>
+<p>Under hyperscale deployment conditions, redundant substrate
+reacquisition becomes a primary infrastructure burden. Token parsimony
+reduces not only inference expenditure, but also the upstream transport,
+synchronization, hydration, and storage costs associated with repeated
+semantic reconstruction. The result is reduced semantic input bloat
+across distributed inference substrates and data-center-scale
+orchestration systems — in practical terms, more computationally
+efficient AI infrastructure.</p>
+<p>This paper introduces <strong>Token Parsimony</strong> as a formal
+architectural principle for semantic systems. Token parsimony is the
+disciplined minimization of substrate exposure while preserving
+replay-relevant semantic continuity, inferential sufficiency, and
+governance integrity.</p>
+<p>We argue that the dominant inefficiency in current agent systems is
+not model inference itself, but repeated semantic reacquisition through
+raw token consumption. Governed semantic receipts, compact operational
+summaries, inferentially sufficient transition artifacts, and
+replay-oriented semantic state transitions can dramatically reduce
+operational token expenditure while simultaneously increasing
+auditability, replayability, and epistemic continuity.</p>
+<p>Rather than treating tokens as disposable context bandwidth, token
+parsimony treats them as a constrained thermodynamic resource within
+semantic reactors. Under this framing, raw output flooding becomes
+analogous to energy dissipation in physical systems: computationally
+expensive, destabilizing, and semantically redundant.</p>
+<p>The paper further argues that token parsimony naturally favors
+constitutional semantic architectures. Systems capable of compact
+semantic continuity require governed state transitions, semantic
+custody, replayable operational lineage, and substrate-aware closure
+guarantees. This leads toward a new class of systems in which agents
+reason primarily from semantic state transitions rather than repeated
+raw substrate observation.</p>
+<p>The result is a shift from <em>context accumulation</em> toward
+<em>semantic continuity engineering</em>.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>The dominant operational pattern in modern AI systems is profoundly
+wasteful.</p>
+<p>An agent receives a task. It searches a repository. It loads files.
+It scans logs. It reconstructs operational state. Then, in the next
+session, another agent performs nearly the same sequence again. The
+substrate may have changed only minimally, but the semantic acquisition
+process effectively restarts from zero.</p>
+<p>As repositories, operational corpora and histories grow, token
+expenditure increasingly shifts away from reasoning itself and toward
+repeated reacquisition of already-known substrate state. Systems
+repeatedly pay the observational cost of rebuilding situational
+awareness.</p>
+<p>The problem is not merely economic.</p>
+<p>Repeated raw observation produces:</p>
+<ul>
+<li>context flooding,</li>
+<li>replay instability,</li>
+<li>epistemic drift,</li>
+<li>semantic inconsistency,</li>
+<li>audit discontinuity,</li>
+<li>hallucination opportunities,</li>
+<li>and degraded operational coherence.</li>
+</ul>
+<p>Current architectures implicitly assume that intelligence consists
+primarily of repeatedly observing raw substrate.</p>
+<p>This paper argues the opposite.</p>
+<p>Scalable intelligence increasingly depends upon preserving compact
+semantic continuity across operations while minimizing repeated
+substrate exposure.</p>
+<p>This principle is termed <strong>Token Parsimony</strong>.</p>
+<h2 id="formal-model">2. Formal Model</h2>
+<p>Token parsimony can be described using a minimal operational
+formalism.</p>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>S</em><sub><em>t</em></sub></span>
+denote substrate state at time <span
+class="math inline"><em>t</em></span></li>
+<li><span
+class="math inline"><em>O</em>(<em>S</em><sub><em>t</em></sub>)</span>
+denote raw substrate observation</li>
+<li><span class="math inline"><em>R</em><sub><em>t</em></sub></span>
+denote a semantic receipt</li>
+<li><span class="math inline"><em>T</em></span> denote a semantic
+transition operator</li>
+<li><span class="math inline"><em>C</em>(<em>x</em>)</span> denote token
+cost of representation <span class="math inline"><em>x</em></span></li>
+</ul>
+<p>Let:</p>
+<p><span
+class="math display"><em>S</em><sub><em>t</em></sub><sup>𝒬</sup> ⊆ <em>S</em><sub><em>t</em></sub></span></p>
+<p>represent the minimal substrate subset required for task class <span
+class="math inline">𝒬</span>.</p>
+<p>Define:</p>
+<p><span
+class="math display"><em>T</em> : (<em>S</em><sub><em>t</em> − 1</sub>, <em>S</em><sub><em>t</em></sub>) → <em>R</em><sub><em>t</em></sub></span></p>
+<p>The transition operator <span class="math inline"><em>T</em></span>
+encodes both the state mutation and its receipt projection.</p>
+<p>Receipt generation must be deterministic with respect to declared
+normalization, environment, and capture semantics.</p>
+<p>A semantic receipt is therefore defined as:</p>
+<p><span
+class="math display"><em>R</em><sub><em>t</em></sub> = <em>T</em>(<em>S</em><sub><em>t</em> − 1</sub>, <em>S</em><sub><em>t</em></sub>)</span></p>
+<p>A receipt is valid iff it preserves inferential sufficiency over
+<span
+class="math inline"><em>S</em><sub><em>t</em></sub><sup>𝒬</sup></span>.</p>
+<p>Define the Parsimony Ratio:</p>
+<p><span class="math display">$$P = \frac{
+\sum_{i=1}^{n} C(O(S_i))
+}{
+\sum_{i=1}^{n} C(R_i)
+}$$</span></p>
+<p>where:</p>
+<ul>
+<li>numerator = cumulative token cost of raw substrate observation,</li>
+<li>denominator = cumulative token cost of semantic continuity
+artifacts.</li>
+</ul>
+<p>Parsimony is meaningful over operational horizons rather than single
+transitions.</p>
+<p>A parsimonious system therefore seeks to maximize <span
+class="math inline"><em>P</em></span> subject to inferential sufficiency
+and bounded escalation constraints.</p>
+<p>The objective is not arbitrary compression, but preservation of
+operationally necessary meaning with minimal substrate exposure.</p>
+<h2 id="inferential-sufficiency">3. Inferential Sufficiency</h2>
+<p>The central operational question of token parsimony is:</p>
+<blockquote>
+<p>“What is the minimum semantic artifact required to preserve future
+inferential validity?”</p>
+</blockquote>
+<p>This leads to the concept of <strong>inferential
+sufficiency</strong>.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>A</em><em>n</em><em>s</em><em>w</em><em>e</em><em>r</em>(<em>q</em> ∣ <em>x</em>)</span></p>
+<p>denote the system’s output for task <span
+class="math inline"><em>q</em></span> given representation <span
+class="math inline"><em>x</em></span>, including decisions, generated
+artifacts, or execution outcomes.</p>
+<p>A receipt <span class="math inline"><em>R</em></span> is
+inferentially sufficient for task class <span
+class="math inline">𝒬</span> iff:</p>
+<p><span
+class="math display">∀<em>q</em> ∈ 𝒬,  <em>A</em><em>n</em><em>s</em><em>w</em><em>e</em><em>r</em>(<em>q</em> ∣ <em>R</em>) = <em>A</em><em>n</em><em>s</em><em>w</em><em>e</em><em>r</em>(<em>q</em> ∣ <em>S</em>)</span></p>
+<p>or triggers bounded escalation.</p>
+<p>Equality may be exact or defined over a task-specific equivalence
+class (e.g., identical decisions, outputs, or bounded divergence).</p>
+<p>Bounded escalation means:</p>
+<ul>
+<li>the system detects insufficiency,</li>
+<li>selectively reacquires substrate,</li>
+<li>and limits additional token expenditure to a bounded retrieval
+scope.</li>
+</ul>
+<p>Formally:</p>
+<p><span
+class="math display"><em>C</em>(escalation) ≤ <em>ϵ</em> ⋅ <em>C</em>(<em>O</em>(<em>S</em><sub><em>t</em></sub>))</span></p>
+<p>for some policy-defined:</p>
+<p><span class="math display"><em>ϵ</em> ∈ (0, 1]</span></p>
+<p>Escalation policies therefore constrain worst-case token
+reacquisition relative to full substrate observation.</p>
+<p>Escalation retrieves additional portions of <span
+class="math inline"><em>S</em><sub><em>t</em></sub></span> not present
+in the current representation when required for <span
+class="math inline">𝒬</span>.</p>
+<p>Token parsimony does not eliminate substrate access.</p>
+<p>It governs escalation.</p>
+<p>The retrieval hierarchy becomes:</p>
+<ol type="1">
+<li>semantic receipt,</li>
+<li>compact operational summary,</li>
+<li>structured fetch,</li>
+<li>partial substrate exposure,</li>
+<li>full substrate exposure.</li>
+</ol>
+<p>Most current systems default immediately to level 5.</p>
+<p>Parsimonious systems attempt to remain at the lowest admissible
+level.</p>
+<h2 id="receipts-as-semantic-state-transitions">4. Receipts as Semantic
+State Transitions</h2>
+<p>The central insight of token parsimony is that most operations do not
+require reproduction of raw output.</p>
+<p>They require preservation of semantic state transitions.</p>
+<p>For example, a conventional write operation may emit:</p>
+<ul>
+<li>the full file,</li>
+<li>surrounding context,</li>
+<li>timestamps,</li>
+<li>path metadata,</li>
+<li>and verbose explanation.</li>
+</ul>
+<p>A parsimonious system instead emits:</p>
+<p><code>write:engine.py:hashA-&gt;hashB:+14/-2</code></p>
+<p>This compact representation preserves:</p>
+<ul>
+<li>object identity,</li>
+<li>mutation direction,</li>
+<li>mutation magnitude,</li>
+<li>replay relevance,</li>
+<li>and continuity lineage (the chain of receipts linking prior and
+current state).</li>
+</ul>
+<p>Similarly:</p>
+<p><code>run:smoke_test:exit0:stdout_</code></p>
+<p><code>hash manifest:src:241files:manifest_</code><br />
+<code>hash audit:98receipts:0open:3warnings</code></p>
+<p>These are not merely compressed outputs.</p>
+<p>They are governed semantic transition vectors.</p>
+<h2 id="receipt-taxonomy">5. Receipt Taxonomy</h2>
+<p>Receipts naturally partition into distinct operational classes.</p>
+<h3 id="state-receipts">5.1 State Receipts</h3>
+<p>Represent substrate snapshots or continuity anchors.</p>
+<p>Examples:</p>
+<ul>
+<li>manifests,</li>
+<li>directory snapshots,</li>
+<li>inventory hashes.</li>
+</ul>
+<h3 id="transition-receipts">5.2 Transition Receipts</h3>
+<p>Represent substrate mutations.</p>
+<p>Examples:</p>
+<ul>
+<li>writes,</li>
+<li>diffs,</li>
+<li>merges,</li>
+<li>state transitions.</li>
+</ul>
+<h3 id="execution-receipts">5.3 Execution Receipts</h3>
+<p>Represent runtime operations.</p>
+<p>Examples:</p>
+<ul>
+<li>command execution,</li>
+<li>exit codes,</li>
+<li>stdout hashes,</li>
+<li>elapsed time.</li>
+</ul>
+<h3 id="claim-receipts">5.4 Claim Receipts</h3>
+<p>Represent semantic assertions bound to evidence.</p>
+<p>Examples:</p>
+<ul>
+<li>audits,</li>
+<li>investigations,</li>
+<li>governed claims,</li>
+<li>refutations.</li>
+</ul>
+<p>This taxonomy becomes increasingly important as systems transition
+from observational architectures toward semantic operating
+environments.</p>
+<h2 id="end-to-end-example">6. End-to-End Example</h2>
+<p>Consider a conventional CI pipeline.</p>
+<p>A standard agentic workflow may repeatedly:</p>
+<ul>
+<li>scan the repository,</li>
+<li>load changed files,</li>
+<li>read full build logs,</li>
+<li>inspect test outputs,</li>
+<li>and reconstruct prior operational state.</li>
+</ul>
+<p>Suppose:</p>
+<ul>
+<li>repository size = 40 MB,</li>
+<li>build log = 300k tokens,</li>
+<li>test output = 80k tokens,</li>
+<li>repeated across multiple agents.</li>
+</ul>
+<p>Operational token cost rapidly becomes enormous.</p>
+<p>A parsimonious pipeline instead operates primarily through
+receipts.</p>
+<h3 id="step-1-repository-continuity">Step 1 — Repository
+Continuity</h3>
+<p>Instead of rescanning the repository:</p>
+<p><code>manifest:src:241files:manifest_hash</code></p>
+<p>If unchanged, no escalation occurs.</p>
+<h3 id="step-2-build-execution">Step 2 — Build Execution</h3>
+<p>Instead of ingesting full logs:</p>
+<p><code>run:build:exit0:stdout_hash</code></p>
+<p>Only failures trigger escalation.</p>
+<h3 id="step-3-test-verification">Step 3 — Test Verification</h3>
+<p><code>run:test_suite:exit1:stdout_hash</code></p>
+<p>Only the failing test shard is fetched during escalation (e.g., 2k
+tokens instead of 80k total output).</p>
+<h3 id="step-4-drift-analysis">Step 4 — Drift Analysis</h3>
+<p><code>write:parser.py:hashA-&gt;hashB:+6/-1</code></p>
+<p>Agents infer likely affected systems without reacquiring unrelated
+substrate.</p>
+<p>The result is a receipt-dominant execution regime in which substrate
+exposure becomes selective rather than default.</p>
+<p>Preliminary architectural analysis suggests reductions on the order
+of 1–3 magnitudes under receipt-dominant operational patterns.</p>
+<h2 id="hash-semantics">7. Hash Semantics</h2>
+<p>Token parsimony relies heavily on compact identity primitives such as
+hashes.</p>
+<p>However, hashes require careful semantic framing.</p>
+<p>A hash is not evidence.</p>
+<p>A hash is a governed pointer to evidence.</p>
+<p>Systems must explicitly define:</p>
+<ul>
+<li>what is hashed,</li>
+<li>normalization rules,</li>
+<li>collision assumptions,</li>
+<li>environmental stability guarantees,</li>
+<li>and capture semantics.</li>
+</ul>
+<p>Examples include:</p>
+<ul>
+<li>raw content hashes,</li>
+<li>normalized AST hashes,</li>
+<li>execution trace hashes,</li>
+<li>or manifest hashes.</li>
+</ul>
+<p>The following invariant must hold:</p>
+<p><span
+class="math display"><em>h</em><em>a</em><em>s</em><em>h</em>(<em>x</em>) = <em>h</em><em>a</em><em>s</em><em>h</em>(<em>y</em>) ⇒ <em>x</em> ≡ <em>y</em></span></p>
+<p>under the declared normalization regime.</p>
+<p>Equivalence is therefore defined by the hashing regime rather than
+raw byte identity.</p>
+<p>Execution hashes additionally require declared capture semantics:</p>
+<ul>
+<li>full stdout,</li>
+<li>filtered output,</li>
+<li>deterministic projections,</li>
+<li>environment normalization,</li>
+<li>and ordering guarantees.</li>
+</ul>
+<p>Adversarial or mis-specified hashing regimes can produce false
+equivalence; governance must therefore bind hashes to declared
+construction procedures.</p>
+<p>Failure to define hashing semantics creates false continuity
+risks.</p>
+<p>Two receipts with identical hashes imply continuity only within the
+declared hashing jurisdiction.</p>
+<h2 id="the-thermodynamics-of-context">8. The Thermodynamics of
+Context</h2>
+<p>Current AI systems behave thermodynamically poorly.</p>
+<p>They repeatedly dissipate computational energy through redundant
+substrate observation.</p>
+<p>Within the token parsimony model:</p>
+<ul>
+<li>energy corresponds to token expenditure,</li>
+<li>entropy corresponds to semantic uncertainty or loss,</li>
+<li>dissipation corresponds to redundant reacquisition of already-known
+substrate.</li>
+</ul>
+<p>Large context windows partially mask this inefficiency but do not
+solve it. Increasing context merely enlarges the reactor chamber while
+preserving inefficient operational physics.</p>
+<p>Under token parsimony:</p>
+<ul>
+<li>receipts replace repeated file reads,</li>
+<li>semantic transitions replace repeated state reconstruction,</li>
+<li>governed hashes replace repeated payload transmission,</li>
+<li>and inferential references replace observational flooding.</li>
+</ul>
+<p>The shift resembles the emergence of symbolic accounting systems
+within human civilization: compact semantic structures replace repeated
+physical enumeration.</p>
+<h2 id="governance-and-semantic-closure">9. Governance and Semantic
+Closure</h2>
+<p>Token parsimony cannot operate reliably without governance.</p>
+<p>A compact receipt is only useful if its semantic continuity is
+trusted.</p>
+<p>This creates a direct dependency between:</p>
+<ul>
+<li>token parsimony,</li>
+<li>semantic custody,</li>
+<li>replay integrity,</li>
+<li>governance closure,</li>
+<li>and constitutional continuity.</li>
+</ul>
+<p>A receipt lacking:</p>
+<ul>
+<li>provenance,</li>
+<li>admissibility,</li>
+<li>operational lineage,</li>
+<li>or replay guarantees</li>
+</ul>
+<p>cannot safely replace substrate observation.</p>
+<p>Receipts are assumed to reside in a durable, queryable store with
+append-only or governed mutation semantics.</p>
+<p>Receipt stores must preserve ordering or causal linkage sufficient to
+reconstruct transition lineage.</p>
+<p>Thus semantically parsimonious systems naturally favor governed
+semantic architectures.</p>
+<p>As semantic artifacts become smaller, the operational meaning carried
+by each artifact increases dramatically.</p>
+<p>This creates governance-compressed semantic state: small symbolic
+structures carrying disproportionately large operational authority.</p>
+<h2 id="failure-modes">10. Failure Modes</h2>
+<p>Token parsimony introduces new architectural risks.</p>
+<p>These include:</p>
+<ul>
+<li>semantic oversummarization,</li>
+<li>inferential insufficiency,</li>
+<li>phantom continuity,</li>
+<li>governance spoofing,</li>
+<li>substrate drift,</li>
+<li>and illegitimate semantic condensation.</li>
+</ul>
+<p>Consider a failure example.</p>
+<p>A manifest receipt reports:</p>
+<p><code>manifest:src:241files:manifest_hash</code></p>
+<p>A hidden deployment artifact was excluded from the hashing scope due
+to a configuration bug.</p>
+<p>Future reasoning assumes repository continuity and deploys stale
+infrastructure.</p>
+<p>The failure was not cryptographic.</p>
+<p>It was semantic.</p>
+<p>The continuity claim exceeded the actual hashing jurisdiction.</p>
+<p>This illustrates a central principle:</p>
+<blockquote>
+<p>Semantic continuity claims are bounded by declared substrate
+scope.</p>
+</blockquote>
+<p>Governance systems must therefore validate:</p>
+<ul>
+<li>receipt completeness,</li>
+<li>hashing jurisdiction,</li>
+<li>escalation correctness,</li>
+<li>continuity admissibility,</li>
+<li>and inferential scope.</li>
+</ul>
+<h2 id="escalation-policy">11. Escalation Policy</h2>
+<p>Token parsimony depends upon governed escalation.</p>
+<p>Receipts are not universally trusted. They are conditionally
+sufficient.</p>
+<p>An escalation policy determines:</p>
+<ul>
+<li>when semantic continuity is insufficient,</li>
+<li>which retrieval layer to escalate toward,</li>
+<li>maximum allowable escalation cost,</li>
+<li>replay admissibility requirements,</li>
+<li>and recovery behavior.</li>
+</ul>
+<p>Upon escalation failure, systems may invalidate dependent receipts
+and revert to a higher observation tier.</p>
+<p>Escalation transforms token parsimony from blind compression into
+adaptive semantic governance.</p>
+<p>Without escalation policy, parsimonious systems become brittle.</p>
+<p>With governed escalation, they become operationally scalable.</p>
+<h2 id="substrate-liveness">12. Substrate Liveness</h2>
+<p>A governance-complete semantic system can still fail operationally if
+its substrate loses liveness.</p>
+<p>This paper defines <strong>substrate liveness</strong> as the
+operational viability of the substrate required to sustain semantic
+state transitions.</p>
+<p>Examples include:</p>
+<ul>
+<li>lock contention,</li>
+<li>stalled subprocesses,</li>
+<li>deadlocked receipt stores,</li>
+<li>WAL starvation,</li>
+<li>exhausted descriptors,</li>
+<li>and recursive governance contention.</li>
+</ul>
+<p>Substrate liveness is orthogonal to semantic legitimacy.</p>
+<p>A constitutionally valid system may still become operationally
+frozen.</p>
+<p>This becomes especially important in recursive governance systems
+where:</p>
+<ul>
+<li>audit systems audit themselves,</li>
+<li>receipt stores recursively inspect receipts,</li>
+<li>and governance substrates recursively govern their own
+continuity.</li>
+</ul>
+<p>Semantic reactors therefore require not only constitutional
+legitimacy, but operational thermodynamics.</p>
+<h2 id="toward-semantic-operating-systems">13. Toward Semantic Operating
+Systems</h2>
+<p>Token parsimony ultimately implies a new class of operating
+environment.</p>
+<p>Conventional systems are:</p>
+<ul>
+<li>process-centric,</li>
+<li>file-centric,</li>
+<li>or message-centric.</li>
+</ul>
+<p>Semantically parsimonious systems become:</p>
+<ul>
+<li>transition-centric,</li>
+<li>receipt-centric,</li>
+<li>and continuity-centric.</li>
+</ul>
+<p>Meaning increasingly resides not in repeated substrate exposure, but
+in governed semantic transitions.</p>
+<p>Agents stop repeatedly rediscovering operational state and instead
+inherit compact semantic continuity through replayable receipt
+structures.</p>
+<p>This transforms semantic systems from observational machines into
+continuity-preserving semantic civilizations.</p>
+<p>These properties suggest a minimal execution model in which agents
+operate over receipt graphs rather than raw substrate.</p>
+<h2 id="conclusion">14. Conclusion</h2>
+<p>The future scalability limits of AI systems are unlikely to emerge
+primarily from model intelligence.</p>
+<p>They are more likely to emerge from semantic inefficiency.</p>
+<p>Current architectures repeatedly spend enormous computational
+resources reacquiring operational state that could instead persist as
+governed semantic continuity.</p>
+<p>Token parsimony reframes the problem fundamentally.</p>
+<p>The question is no longer:</p>
+<blockquote>
+<p>“How large can context windows become?”</p>
+</blockquote>
+<p>but:</p>
+<blockquote>
+<p>“How little substrate exposure is actually necessary?”</p>
+</blockquote>
+<p>This inversion changes the architecture of intelligent systems
+profoundly.</p>
+<p>It favors:</p>
+<ul>
+<li>semantic continuity,</li>
+<li>inferential sufficiency,</li>
+<li>governance closure,</li>
+<li>replayable operations,</li>
+<li>compact semantic transitions,</li>
+<li>and substrate-aware escalation.</li>
+</ul>
+<p>In such systems, intelligence increasingly shifts away from repeated
+observation and toward continuity-preserving semantic operation.</p>
+<p>The result is not merely cheaper computation.</p>
+<p>It is the emergence of systems capable of reasoning through governed
+semantic continuity rather than repeated reacquisition of already-known
+state.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern large language model systems are
+operationally inefficient observers. Its nearest external comparison
+fields are token, semantic, ai. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Statistical
+compression can improve efficiency while destroying distinctions needed
+for interpretation; semantic labels can conversely overstate stability
+that usage does not support. Formal vocabularies and graph links make
+commitments explicit but cannot by themselves establish correct
+identity, shared interpretation, or lossless translation between
+contexts. Retrieval, tool use, and policy layers can reduce unsupported
+output without eliminating model error, source error, omission, bias, or
+the environmental and institutional costs of scale. These limits are not
+generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Rico Sennrich, Barry Haddow, and Alexandra
+Birch. “Neural Machine Translation of Rare Words with Subword Units.”
+<em>ACL 2016</em>, pp. 1715-1725. DOI: 10.18653/v1/P16-1162.
+https://doi.org/10.18653/v1/P16-1162 <strong>Relationship:</strong>
+Predecessor subword tokenization method used as a contrast to
+semantically governed token boundaries.</p>
+<p><strong>[E2]</strong> Taku Kudo and John Richardson. “SentencePiece:
+A Simple and Language Independent Subword Tokenizer and Detokenizer for
+Neural Text Processing.” <em>EMNLP 2018: System Demonstrations</em>.
+DOI: 10.18653/v1/D18-2012. https://doi.org/10.18653/v1/D18-2012
+<strong>Relationship:</strong> Predecessor tokenizer implementation used
+to separate statistical segmentation from semantic admissibility.</p>
+<p><strong>[E3]</strong> Peter D. Grunwald. <em>The Minimum Description
+Length Principle</em>. MIT Press, 2007. <a
+href="https://mitpress.mit.edu/9780262072816/the-minimum-description-length-principle/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor theory of
+compression and model selection; compression is not assumed to preserve
+governance or meaning.</p>
+<p><strong>[E4]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E5]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E6]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E7]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Governed Semantic Tokens:
+Tokenization as an Admissibility Boundary</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18469507</code>;<br />
+source SHA-256<br />
+<code>5C44175B87C514892A0DC9743E09D03893E970AF5419F2E6D9171651BE2A9A54</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Legends</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20330324</code>;<br />
+source SHA-256<br />
+<code>440CE8A83C2F86C020D1E9E482759F71D08F694F1C2250B5B624AEA0A4237AA7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Controlled Natural
+Language (GCNL)</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-99C179FB694070D1</code>;<br />
+source SHA-256<br />
+<code>75A4AE13167785A0761E1F9CB67A9975138166A7B2B06B4FDF37C1A895178193</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20382825">10.5281/zenodo.20382825</a></p>

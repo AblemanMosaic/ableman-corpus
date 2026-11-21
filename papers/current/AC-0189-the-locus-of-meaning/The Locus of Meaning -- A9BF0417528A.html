@@ -1,0 +1,3591 @@
+<h1 id="the-locus-of-meaning">The Locus of Meaning</h1>
+<h2
+id="the-semantic-binding-principle-recursive-meta-binding-and-a-formal-architecture-for-semantic-constitution">The
+Semantic Binding Principle, Recursive Meta-Binding, and a Formal
+Architecture for Semantic Constitution</h2>
+<h3
+id="meaning-is-not-the-stone-or-the-gaze-but-the-knot-by-which-a-world-becomes-answerable.">Meaning
+is not the stone or the gaze, but the knot by which a world becomes
+answerable.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Where does meaning exist? Two recurrent answers place it primarily in
+the world or primarily in the interpreting mind. The first treats
+meaning as an intrinsic or discoverable property of objects. The second
+treats meaning as a projection, representation, or construction of a
+perceiving subject. This paper argues that both answers misidentify the
+semantic locus. Meaning is constituted at the location of binding: the
+structured relation through which objects, signs, interpreters,
+contexts, histories, practices, distinctions, and consequences become
+mutually determining. Objects and minds can constrain, preserve,
+activate, and transform meaning, but neither is its exclusive
+container.</p>
+<p>This thesis is formulated as the <strong>Semantic Binding
+Principle</strong>:</p>
+<blockquote>
+<p>Meaning exists at the locus of a governed, consequential, and
+reidentifiable binding.</p>
+</blockquote>
+<p>The paper then distinguishes two higher-order forms.
+<strong>Recursive Meta-Binding</strong> occurs whenever an existing
+binding becomes a relatum in another binding. <strong>Reflexive
+Meta-Binding</strong> occurs when a system represents aspects of its own
+active binding constitution, including its constraints, frameworks,
+uncertainty, and prior trajectory, and uses that representation in
+subsequent processing. This incorporates the durable conceptual
+contribution of earlier work on Meta-Binding as an operational invariant
+while separating the general theory of meaning from empirical claims
+about particular language models.</p>
+<p>A semantic binding is distinguished from an arbitrary relation by
+typed role structure, differential sensitivity, constraint, uptake
+capacity, jurisdiction, reidentifiability, provenance, and consequence.
+Concepts are modeled as callable binding constitutions. Lexical terms
+are handles into those constitutions. Contextual meanings are
+realizations compiled from them. Typed hypergraphs represent what is
+bound; partial orders and lattices represent refinement and overlap;
+presheaf-like structures represent locally valid semantic jurisdictions;
+and sparse semantic polynomials represent context-sensitive projection
+and co-projection.</p>
+<p>The paper also formalizes <strong>binding overextension</strong>, the
+production of an unauthorized higher-order binding, unsupported bridge,
+or synthetic claim. Ableman’s Razor, expressed as Specification,
+Configuration Manifold, Instance Constitution, and Instance Realization,
+is interpreted as the descent from possible binding through admissible
+and constituted binding into realized binding.</p>
+<p>The concept of <em>person</em> serves as a principal case study.
+<em>Person</em>, <em>personation</em>, <em>personhood</em>,
+<em>self</em>, <em>agent</em>, <em>you</em>, and <em>persona</em> are
+treated not as flat synonyms but as jurisdictionally distinct
+projections of a deeper person-binding constitution. The resulting
+framework offers a non-reductive alternative to object-localism,
+subject-localism, and unconstrained relativism while providing a formal
+research program for philosophy, cognitive science, artificial
+intelligence, knowledge representation, and governed semantic
+systems.</p>
+<p><strong>Keywords:</strong> meaning, semantic binding, meta-binding,
+reflexive meta-binding, semantic locality, semantic jurisdiction,
+semantic manifolds, semantic lattices, co-projection, concept
+constitution, personhood, artificial intelligence, semantic
+governance</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>The question “Where is meaning?” appears to ask for a location.</p>
+<p>Possible answers include the object, the word, the brain, the
+perceiver, the language, the social practice, the institution, or the
+culture. Each answer identifies something real. Each becomes incomplete
+when treated as the exclusive semantic container.</p>
+<p>An object constrains its possible interpretations, but it does not
+carry every meaning it may acquire in every context. A mind
+differentiates, anticipates, remembers, and interprets, but it cannot
+make arbitrary interpretations survive contact with the world. A word
+may preserve and transmit meaning, but an uninterpreted inscription is
+not self-explanatory. A social institution may stabilize meaning across
+generations, but only through artifacts, practices, authorities,
+participants, records, and consequences.</p>
+<p>The localization problem may therefore be malformed. It asks which
+participant contains meaning when meaning may instead be constituted by
+the structured relation among participants.</p>
+<p>This paper advances the following thesis:</p>
+<blockquote>
+<p>Meaning exists at the locus of semantic binding.</p>
+</blockquote>
+<p>The word <em>locus</em> does not designate only a physical
+coordinate. A semantic locus may be materially distributed across an
+artifact, an organism, a history, a language, a practice, and an
+institution. Its unity is constitutional and relational rather than
+merely spatial.</p>
+<p>The central idea is not only that meaning is relational. Many
+philosophical traditions have already rejected purely intrinsic or
+purely private accounts of meaning. The present proposal adds a specific
+architecture:</p>
+<ol type="1">
+<li><p>A semantic binding has typed participants, roles, constraints,
+jurisdiction, provenance, and consequences.</p></li>
+<li><p>A meaning is preserved through transformations that retain the
+mandatory invariants of its binding constitution.</p></li>
+<li><p>A concept is a callable and reusable binding constitution rather
+than an inert semantic container.</p></li>
+<li><p>Different terms and models may be jurisdictionally distinct
+projections of the same concept.</p></li>
+<li><p>Local semantic projections may overlap without being identical or
+globally composable.</p></li>
+<li><p>Existing bindings may become relata in higher-order
+bindings.</p></li>
+<li><p>A system may reflexively bind representations of its own active
+constraints and processing trajectory into later processing.</p></li>
+<li><p>Higher-order synthesis may fail through binding overextension,
+unsupported bridges, or invariant loss.</p></li>
+<li><p>Ableman’s Razor provides a governed descent from possible
+semantic binding into realized semantic effect.</p></li>
+</ol>
+<p>The resulting architecture distinguishes three principles.</p>
+<p>The first is the <strong>Semantic Binding Principle</strong>:</p>
+<blockquote>
+<p>Meaning is constituted by governed binding.</p>
+</blockquote>
+<p>The second is the <strong>Recursive Meta-Binding
+Principle</strong>:</p>
+<blockquote>
+<p>Bindings may themselves become participants in further bindings.</p>
+</blockquote>
+<p>The third is the <strong>Reflexive Meta-Binding
+Principle</strong>:</p>
+<blockquote>
+<p>A system exhibits Reflexive Meta-Binding when a representation of its
+own active binding constitution becomes an effective input to its
+subsequent operation.</p>
+</blockquote>
+<p>These principles should not be collapsed.</p>
+<p>Semantic Binding is the general condition under which meaning
+exists.</p>
+<p>Recursive Meta-Binding describes the construction of higher-order
+meaning from already constituted bindings.</p>
+<p>Reflexive Meta-Binding is a special case in which a system binds a
+representation of its own operation into its ongoing operation.</p>
+<p>Earlier work on Meta-Binding focused primarily on the reflexive case,
+especially in language models. It described Meta-Binding as a system
+treating its own constraints as inputs to further processing and
+distinguished this capacity from autonomy, phenomenal consciousness, and
+truthful self-report. The present paper preserves those distinctions
+while placing them inside a broader theory of semantic constitution.</p>
+<p>The empirical claims associated with Project57, the Meta-Binding
+Activation Test, and the suppression paradox are not required premises
+of the present argument. They belong to a companion empirical and
+governance program. The foundational question here is prior:</p>
+<blockquote>
+<p>What must binding be for meaning, concepts, self-models, and semantic
+governance to be possible at all?</p>
+</blockquote>
+<h2 id="the-semantic-localization-problem">2. The Semantic Localization
+Problem</h2>
+<h3 id="object-localism-and-subject-localism">2.1 Object-localism and
+subject-localism</h3>
+<p>Historical realism and idealism are internally diverse traditions.
+The present argument does not reduce them to simple slogans. It instead
+targets two schematic localization theses.</p>
+<p>Let an object or worldly state be represented by:</p>
+<p><span class="math display"><em>o</em></span></p>
+<p>Let an interpreting agent or system be represented by:</p>
+<p><span class="math display"><em>a</em></span></p>
+<p>Let a sign or representational vehicle be represented by:</p>
+<p><span class="math display"><em>s</em></span></p>
+<p>Let context, practice, history, and jurisdiction be represented
+by:</p>
+<p><span
+class="math display"><em>c</em>, <em>p</em>, <em>h</em>, <em>j</em></span></p>
+<p>Let realized meaning be represented by:</p>
+<p><span class="math display"><em>μ</em></span></p>
+<p>An object-localist model has the general form:</p>
+<p><span
+class="math display"><em>μ</em> = <em>f</em>(<em>o</em>)</span></p>
+<p>Meaning is treated as fundamentally contained in, fixed by, or
+recoverable from the object.</p>
+<p>A subject-localist model has the general form:</p>
+<p><span
+class="math display"><em>μ</em> = <em>g</em>(<em>a</em>)</span></p>
+<p>Meaning is treated as fundamentally produced by, represented within,
+or projected by the interpreting subject.</p>
+<p>More sophisticated models may add secondary variables while
+preserving one privileged center:</p>
+<p><span
+class="math display"><em>μ</em> = <em>f</em>(<em>o</em>; <em>a</em>, <em>c</em>)</span></p>
+<p>or:</p>
+<p><span
+class="math display"><em>μ</em> = <em>g</em>(<em>a</em>; <em>o</em>, <em>c</em>)</span></p>
+<p>The Semantic Binding Principle instead proposes:</p>
+<p><span
+class="math display"><em>b</em> = Bind (<em>o</em>, <em>a</em>, <em>s</em>, <em>c</em>, <em>p</em>, <em>h</em> ∣ <em>j</em>)</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>μ</em> = <em>Φ</em><sub><em>b</em></sub></span></p>
+<p>Meaning is realized through a binding rather than extracted from one
+isolated relatum.</p>
+<p>This does not imply that every relatum contributes equally. A
+material structure may dominate one binding. A legal institution may
+dominate another. A first-person perspective may be indispensable in a
+third. The claim is that no participant is granted semantic sovereignty
+merely by belonging to the categories “object” or “subject.”</p>
+<h3 id="why-the-object-cannot-be-the-sole-locus">2.2 Why the object
+cannot be the sole locus</h3>
+<p>A river may be bound as:</p>
+<ul>
+<li>flowing water;</li>
+<li>an ecosystem;</li>
+<li>a legal border;</li>
+<li>a transport corridor;</li>
+<li>an ancestral presence;</li>
+<li>a strategic obstacle;</li>
+<li>a sacred site;</li>
+<li>a metaphor for time.</li>
+</ul>
+<p>These meanings are not equally valid in all contexts. They are also
+not arbitrary.</p>
+<p>The river’s physical behavior constrains the available bindings. A
+painted blue line cannot perform every hydrological role of a river. A
+legal border cannot be placed wherever a speaker wishes if the governing
+treaty specifies otherwise. A sacred interpretation may depend on
+historical traditions not present in another community.</p>
+<p>The object supplies:</p>
+<ul>
+<li>causal structure;</li>
+<li>resistance;</li>
+<li>affordances;</li>
+<li>detectable differences;</li>
+<li>material continuity;</li>
+<li>production history;</li>
+<li>ecological relations;</li>
+<li>possible consequences.</li>
+</ul>
+<p>These contributions are real. They constrain meaning without
+containing the whole of it.</p>
+<h3 id="why-the-subject-cannot-be-the-sole-locus">2.3 Why the subject
+cannot be the sole locus</h3>
+<p>A perceiver contributes:</p>
+<ul>
+<li>embodiment;</li>
+<li>attention;</li>
+<li>memory;</li>
+<li>expectation;</li>
+<li>language;</li>
+<li>values;</li>
+<li>purposes;</li>
+<li>categories;</li>
+<li>practical capacities;</li>
+<li>social formation.</li>
+</ul>
+<p>Yet a perceiver cannot freely make every binding operationally
+successful.</p>
+<p>A cliff does not become safely walkable because it is interpreted as
+a path. A forged key does not open a lock merely because the user
+believes it is correct. A toxic chemical does not become harmless
+because a community gives it a reassuring name.</p>
+<p>The world answers some bindings with resistance.</p>
+<p>Subjective interpretation is therefore constitutive without being
+omnipotent. It participates in meaning while remaining answerable to
+worldly structure, other agents, institutional rules, historical
+evidence, and consequences.</p>
+<h3 id="not-a-compromise-and-not-a-third-substance">2.4 Not a compromise
+and not a third substance</h3>
+<p>The Semantic Binding Principle is not a compromise in which half of
+meaning comes from the object and half from the mind.</p>
+<p>It also does not posit meaning as a mysterious third substance
+floating between them.</p>
+<p>Binding is an organized relation in which the participants become
+mutually determining under constraints.</p>
+<p>A concise formulation is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\text{world} &amp;\rightarrow \text{binding constraints and affordances}
+\\
+\text{interpreter} &amp;\rightarrow \text{binding capacities and
+dispositions} \\
+\text{context} &amp;\rightarrow \text{binding selection and
+jurisdiction} \\
+\text{practice} &amp;\rightarrow \text{binding stabilization} \\
+\text{consequence} &amp;\rightarrow \text{binding test and effect}
+\end{aligned}
+$$</span></p>
+<p>Meaning is not a substance passed from one container to another. It
+is a constituted relation whose participants constrain and transform one
+another.</p>
+<h2 id="intellectual-precedents-and-the-remaining-gap">3. Intellectual
+Precedents and the Remaining Gap</h2>
+<p>The Semantic Binding Principle belongs to a broad relational turn in
+philosophy, semiotics, cognitive science, and formal semantics. Its
+contribution is not the discovery that meaning involves relations. Its
+contribution is a more explicit account of semantic location,
+persistence, recursion, jurisdiction, and realization.</p>
+<h3 id="triadic-semiosis">3.1 Triadic semiosis</h3>
+<p>Peirce rejects a simple two-term relation between sign and object. A
+sign functions through a triadic relation among sign, object, and
+interpretant. The interpretant is not merely a private image. It is the
+further sign-effect through which representation becomes operative
+(Peirce 1931-1958).</p>
+<p>The present framework shares this rejection of sign-object isolation.
+It differs by allowing bindings with more than three role positions,
+treating bindings themselves as possible relata, and making
+jurisdiction, provenance, consequence, and identity-preserving
+transformation explicit.</p>
+<h3 id="externalism-and-situation-dependence">3.2 Externalism and
+situation dependence</h3>
+<p>Semantic externalism challenges the idea that content is fully
+determined by what is internal to an individual. Putnam and Burge show
+in different ways that environmental and social relations can contribute
+to the individuation of meaning and mental content (Putnam 1975; Burge
+1979).</p>
+<p>Situation semantics similarly treats meaning as sensitive to partial
+situations and constraints rather than as a context-free mapping onto
+complete worlds (Barwise and Perry 1983).</p>
+<p>The Semantic Binding Principle agrees that semantic constitution may
+cross bodily boundaries. It generalizes the point by treating the
+relevant unit as a typed binding whose support may include material,
+cognitive, linguistic, social, and institutional components.</p>
+<h3 id="ecological-and-enactive-approaches">3.3 Ecological and enactive
+approaches</h3>
+<p>Gibson’s ecological approach treats perception in relation to
+organism-environment systems and available affordances (Gibson 1979).
+Enactive approaches resist the picture of cognition as a passive inner
+representation of an independent outer world, emphasizing embodiment,
+activity, and sense-making (Varela, Thompson, and Rosch 1991; Thompson
+2007).</p>
+<p>Participatory sense-making further suggests that some social meanings
+arise in the dynamics of interaction rather than inside either
+participant alone (De Jaegher and Di Paolo 2007).</p>
+<p>The present framework adopts the idea that significance can emerge
+through coordinated engagement. It extends the architecture to lexical,
+legal, technical, computational, and institutional meanings and adds
+explicit conditions for admissibility, continuity, and
+cross-jurisdiction translation.</p>
+<h3 id="inferential-role-and-symbol-grounding">3.4 Inferential role and
+symbol grounding</h3>
+<p>Inferentialism treats linguistic meaning in terms of the role an
+expression plays within practices of inference, commitment, entitlement,
+and action (Brandom 1994).</p>
+<p>The symbol grounding problem asks how formal symbols can acquire
+meaning without merely referring to other ungrounded symbols (Harnad
+1990).</p>
+<p>The Semantic Binding Principle incorporates inferential and practical
+consequence as necessary dimensions while refusing to reduce all meaning
+to explicit linguistic inference. Perceptual, bodily, affective,
+technical, and social bindings may operate before or beyond
+propositional articulation.</p>
+<h3 id="distributed-cognition">3.5 Distributed cognition</h3>
+<p>Distributed and extended cognition broaden the unit of cognitive
+analysis beyond the isolated organism (Hutchins 1995; Clark and Chalmers
+1998).</p>
+<p>The present theory similarly permits semantic bindings to cross skin,
+artifact, and institution. Its distinctive claim is that distributed
+participation should be formally represented as a binding constitution
+rather than described only as an enlarged cognitive system.</p>
+<h3 id="formal-precedents">3.6 Formal precedents</h3>
+<p>Several mathematical traditions contribute useful instruments:</p>
+<ul>
+<li>Conceptual spaces represent concepts geometrically through quality
+dimensions (Gardenfors 2000).</li>
+<li>Formal Concept Analysis represents concept order and inheritance
+through lattice-theoretic structures (Ganter and Wille 1999).</li>
+<li>Sheaf theory formalizes local sections, restriction, compatibility,
+and global gluing (Mac Lane and Moerdijk 1992).</li>
+<li>Sheaf-theoretic approaches to contextuality show how locally
+coherent data may fail to admit a global section (Abramsky and
+Brandenburger 2011).</li>
+<li>Categorical compositional semantics shows how algebraic structures
+can model linguistic composition (Coecke, Sadrzadeh, and Clark
+2010).</li>
+</ul>
+<p>No single formalism is sufficient for the present theory.</p>
+<p>A hypergraph is suited to representing what is bound.</p>
+<p>A partial order or lattice is suited to representing refinement and
+overlap.</p>
+<p>A presheaf is suited to representing local jurisdiction and
+restriction.</p>
+<p>A polynomial-like algebra is suited to representing context-sensitive
+projection and co-projection.</p>
+<p>A constitutional compiler is suited to representing the descent from
+semantic possibility into realized effect.</p>
+<h3 id="the-specific-addition">3.7 The specific addition</h3>
+<p>The specific synthesis proposed here is:</p>
+<ol type="1">
+<li><p>Meaning is located in a binding rather than exclusively in any
+bound participant.</p></li>
+<li><p>Bindings are governed structures with roles, constraints,
+jurisdiction, provenance, and consequence.</p></li>
+<li><p>Meaning identity is invariant preservation across admissible
+variation.</p></li>
+<li><p>Concepts are reusable binding constitutions.</p></li>
+<li><p>Terms are callable handles into those constitutions.</p></li>
+<li><p>Semantic projections are jurisdictionally local.</p></li>
+<li><p>Local projections may or may not admit coherent
+integration.</p></li>
+<li><p>Bindings may become relata in higher-order bindings.</p></li>
+<li><p>Reflexive systems may bind representations of their own active
+binding conditions.</p></li>
+<li><p>Semantic realization should be governed, auditable, and capable
+of typed refusal.</p></li>
+</ol>
+<h2 id="formal-preliminaries">4. Formal Preliminaries</h2>
+<h3 id="relata-roles-and-jurisdictions">4.1 Relata, roles, and
+jurisdictions</h3>
+<p>Let:</p>
+<p><span class="math display">𝒳</span></p>
+<p>be a universe of possible relata.</p>
+<p>Relata may include:</p>
+<ul>
+<li>physical objects;</li>
+<li>organisms;</li>
+<li>agents;</li>
+<li>signs;</li>
+<li>events;</li>
+<li>actions;</li>
+<li>memories;</li>
+<li>concepts;</li>
+<li>rules;</li>
+<li>institutions;</li>
+<li>histories;</li>
+<li>representations;</li>
+<li>other bindings.</li>
+</ul>
+<p>Let:</p>
+<p><span class="math display">𝒯</span></p>
+<p>be a set of relatum types.</p>
+<p>Let:</p>
+<p><span class="math display">ℛ</span></p>
+<p>be a set of semantic role types.</p>
+<p>Let:</p>
+<p><span class="math display">𝒥</span></p>
+<p>be a partially ordered collection of semantic jurisdictions.</p>
+<p>A jurisdiction is not merely a topic. It is a domain within which
+particular bindings, distinctions, authorities, and consequences are
+valid.</p>
+<p>Examples include:</p>
+<ul>
+<li>perceptual jurisdiction;</li>
+<li>legal jurisdiction;</li>
+<li>biological jurisdiction;</li>
+<li>psychological jurisdiction;</li>
+<li>historical jurisdiction;</li>
+<li>narrative jurisdiction;</li>
+<li>computational jurisdiction;</li>
+<li>moral jurisdiction.</li>
+</ul>
+<h3 id="raw-binding-structure">4.2 Raw binding structure</h3>
+<p>A raw binding is represented as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+b = \langle &amp;V_b, E_b, \tau_b, \rho_b, c_b, j_b, \Gamma_b, I_b, \\
+&amp;\kappa_b, \pi_b, q_b\rangle
+\end{aligned}
+$$</span></p>
+<p>where:</p>
+<ul>
+<li>(V_b) is a finite set of relata;</li>
+<li>(E_b) is a set of directed or undirected hyperedges;</li>
+<li><span class="math inline"><em>τ</em><sub><em>b</em></sub></span>
+assigns types to relata;</li>
+<li><span class="math inline"><em>ρ</em><sub><em>b</em></sub></span>
+assigns semantic roles to nodes and hyperedges;</li>
+<li>(c_b) is the operative context;</li>
+<li>(j_b) is the jurisdiction;</li>
+<li><span class="math inline"><em>Γ</em><sub><em>b</em></sub></span> is
+the set of binding constraints;</li>
+<li>(I_b) is the set of identity-preserving invariants;</li>
+<li><span class="math inline"><em>κ</em><sub><em>b</em></sub></span> is
+the consequence profile;</li>
+<li><span class="math inline"><em>π</em><sub><em>b</em></sub></span> is
+provenance;</li>
+<li>(q_b) records the binding state.</li>
+</ul>
+<p>The binding state is drawn from:</p>
+<p><span
+class="math display"><em>q</em><sub><em>b</em></sub> ∈ potential, sedimented, active</span></p>
+<p>A hypergraph is used because many meanings cannot be reduced to
+pairwise relations. The meaning of a legal contract, ritual, traffic
+signal, or personal identity may depend on several participants
+occupying coordinated roles at once.</p>
+<h3 id="binding-is-more-than-association">4.3 Binding is more than
+association</h3>
+<p>A mere association records that two things co-occur.</p>
+<p>A semantic binding determines how things count with respect to one
+another within a jurisdiction.</p>
+<p>For example, the relation between a printed name and a person depends
+on:</p>
+<ul>
+<li>the identity of the bearer;</li>
+<li>the authority of the record;</li>
+<li>the context of use;</li>
+<li>the persistence of the naming convention;</li>
+<li>the possibility of mistaken identity;</li>
+<li>the consequences attached to correct or incorrect resolution.</li>
+</ul>
+<p>The pair:</p>
+<p><span class="math display">(<em>x</em>, <em>y</em>)</span></p>
+<p>is not enough.</p>
+<p>A semantic binding must specify why the relation matters, which
+substitutions preserve it, where it applies, and what follows from
+it.</p>
+<h3 id="the-semantic-threshold">4.4 The semantic threshold</h3>
+<p>A raw binding qualifies as semantic under the present model when it
+satisfies a threshold:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Sem}_b = T_b \\
+&amp;\land D_b \\
+&amp;\land C_b \\
+&amp;\land U_b \\
+&amp;\land R_b \\
+&amp;\land J_b \\
+&amp;\land K_b
+\end{aligned}
+$$</span></p>
+<p>The predicates are defined as follows.</p>
+<h4 id="typed-coherence">Typed coherence</h4>
+<p><span class="math display"><em>T</em><sub><em>b</em></sub></span></p>
+<p>The relata and roles are type-coherent. A legal authority, a color, a
+causal mechanism, and a first-person perspective cannot be freely
+exchanged without changing the kind of binding involved.</p>
+<h4 id="differential-sensitivity">Differential sensitivity</h4>
+<p><span class="math display"><em>D</em><sub><em>b</em></sub></span></p>
+<p>At least one counterfactual substitution changes the binding’s
+interpretation or consequence.</p>
+<p>If every possible substitution is equivalent, the binding performs no
+determinate semantic work.</p>
+<h4 id="constraint">Constraint</h4>
+<p><span class="math display"><em>C</em><sub><em>b</em></sub></span></p>
+<p>Not every relation, projection, or transformation is admissible.</p>
+<p>Meaning requires exclusions as well as associations.</p>
+<h4 id="uptake-capacity">Uptake capacity</h4>
+<p><span class="math display"><em>U</em><sub><em>b</em></sub></span></p>
+<p>The binding can alter an expectation, inference, action, recognition,
+regulation, or normative orientation.</p>
+<p>Uptake may be actual or counterfactually available.</p>
+<h4 id="reidentifiability">Reidentifiability</h4>
+<p><span class="math display"><em>R</em><sub><em>b</em></sub></span></p>
+<p>The binding possesses sufficient invariant structure to be recognized
+or regenerated across changes of token, medium, perspective, or
+occasion.</p>
+<h4 id="jurisdiction">Jurisdiction</h4>
+<p><span class="math display"><em>J</em><sub><em>b</em></sub></span></p>
+<p>The binding has conditions under which it applies and boundaries
+beyond which its claims require qualification or refusal.</p>
+<h4 id="consequentiality">Consequentiality</h4>
+<p><span class="math display"><em>K</em><sub><em>b</em></sub></span></p>
+<p>Something differs because the binding holds.</p>
+<p>A semantic binding changes at least one inferential, practical,
+perceptual, social, or normative possibility.</p>
+<h3 id="potential-sedimented-and-active-bindings">4.5 Potential,
+sedimented, and active bindings</h3>
+<p>A binding need not be undergoing conscious interpretation at every
+moment in order to persist.</p>
+<p>A <strong>potential binding</strong> has enough structure to support
+future semantic constitution but has not yet been stabilized or
+activated.</p>
+<p>A <strong>sedimented binding</strong> has been materially,
+biologically, socially, or institutionally preserved so that it can be
+reactivated.</p>
+<p>Examples include:</p>
+<ul>
+<li>a written statute;</li>
+<li>a road sign;</li>
+<li>a trained neural disposition;</li>
+<li>a ritual artifact;</li>
+<li>a database record;</li>
+<li>a tool designed for a particular use;</li>
+<li>a familiar melody;</li>
+<li>a remembered promise.</li>
+</ul>
+<p>An <strong>active binding</strong> is presently participating in
+uptake.</p>
+<p>Formally:</p>
+<p><span
+class="math display">Active (<em>b</em>, <em>t</em>) ⇔ Sem<sub><em>b</em></sub> ∧ Uptaken (<em>b</em>, <em>t</em>)</span></p>
+<p>This distinction explains how meaning may exist in an object in a
+limited but genuine sense.</p>
+<p>An object may preserve part of a binding constitution through its
+structure, placement, inscription, affordance, provenance, or
+institutional registration. It does not contain the entire meaning in
+isolation, but it may carry an indispensable sedimented component.</p>
+<h2 id="the-semantic-binding-principle">5. The Semantic Binding
+Principle</h2>
+<h3 id="statement-of-the-principle">5.1 Statement of the principle</h3>
+<p>The Semantic Binding Principle states:</p>
+<blockquote>
+<p>For every realized meaning, there exists at least one admissible
+semantic binding whose role structure, constraints, jurisdiction,
+provenance, invariants, and consequences constitute that meaning.</p>
+</blockquote>
+<p>Let:</p>
+<p><span
+class="math display"><em>b</em><sub>1</sub>∼<sub><em>I</em></sub><em>b</em><sub>2</sub></span></p>
+<p>mean that two bindings preserve the mandatory invariant set:</p>
+<p><span class="math display"><em>I</em></span></p>
+<p>A meaning may then be modeled as an equivalence class:</p>
+<p><span
+class="math display"><em>m</em> = [<em>b</em>]<sub>∼<sub><em>I</em></sub></sub></span></p>
+<p>This is not intended to reduce meaning metaphysically to a
+set-theoretic object. It supplies an identity criterion.</p>
+<p>Two realizations count as realizations of the same meaning when they
+preserve the binding invariants required by the governing concept and
+jurisdiction.</p>
+<h3 id="meaning-identity-across-variation">5.2 Meaning identity across
+variation</h3>
+<p>Meaning must often survive changes of:</p>
+<ul>
+<li>word;</li>
+<li>language;</li>
+<li>medium;</li>
+<li>speaker;</li>
+<li>audience;</li>
+<li>perspective;</li>
+<li>explanatory depth;</li>
+<li>implementation;</li>
+<li>historical circumstance.</li>
+</ul>
+<p>Surface sameness is therefore neither necessary nor sufficient for
+semantic identity.</p>
+<p>A spoken warning, written warning, icon, siren, and flashing light
+may realize a common warning-binding under different media
+conventions.</p>
+<p>Conversely, the same sentence may realize different meanings in
+different contexts.</p>
+<p>Let:</p>
+<p><span class="math display"><em>r</em><sub>1</sub></span></p>
+<p>and:</p>
+<p><span class="math display"><em>r</em><sub>2</sub></span></p>
+<p>be two realizations.</p>
+<p>They preserve the same concept when:</p>
+<p><span
+class="math display"><em>r</em><sub>1</sub>∼<sub><em>C</em></sub><em>r</em><sub>2</sub></span></p>
+<p>where:</p>
+<p><span
+class="math display"><em>r</em><sub>1</sub>∼<sub><em>C</em></sub><em>r</em><sub>2</sub> ⇔ <em>I</em><sub><em>C</em></sub><sup>required</sup> ⊆ Inv (<em>r</em><sub>1</sub>) ∩ Inv (<em>r</em><sub>2</sub>)</span></p>
+<p>and their consequence profiles remain equivalent within the shared
+jurisdiction.</p>
+<p>This yields a constitutional account of semantic sameness:</p>
+<blockquote>
+<p>Meaning remains the same when its mandatory binding invariants
+survive the transformation.</p>
+</blockquote>
+<h3 id="the-location-of-meaning">5.3 The location of meaning</h3>
+<p>Let:</p>
+<p><span class="math display">ℋ<sub><em>c</em></sub></span></p>
+<p>be the typed host hypergraph containing all materially, cognitively,
+socially, and institutionally available binding components in context
+<span class="math inline"><em>c</em></span>.</p>
+<p>For a realization (r) of meaning (m), a support graph is a subgraph
+sufficient to sustain that realization.</p>
+<p>The semantic locus is the family of minimal supports:</p>
+<p><span
+class="math display">Loc(<em>m</em>, <em>c</em>) = min<sub>⊆</sub>{<em>G</em> ⊆ ℋ<sub><em>c</em></sub> ∣ ∃<em>r</em> ∈ <em>m</em> : Support (<em>G</em>, <em>r</em>, <em>c</em>)}</span></p>
+<p>The minimum is taken with respect to subgraph inclusion.</p>
+<p>A meaning may have more than one minimal locus.</p>
+<p>A personal name may be realized through speech, writing, gesture, or
+database reference. A legal rule may persist through printed law,
+replicated records, institutional memory, and judicial precedent. The
+physical supports differ while the governing binding constitution
+remains reidentifiable.</p>
+<h3 id="three-forms-of-semantic-locus">5.4 Three forms of semantic
+locus</h3>
+<p>Three loci should be distinguished.</p>
+<h4 id="realization-locus">Realization locus</h4>
+<p>The realization locus is the actual support of a current semantic
+event.</p>
+<p>It may include an active perceiver, an artifact, an utterance, a
+practical context, and a consequence structure.</p>
+<h4 id="standing-locus">Standing locus</h4>
+<p>The standing locus is the sedimented structure that preserves
+conditions for future reactivation.</p>
+<p>Examples include archives, laws, tools, customs, memories, models,
+and institutional records.</p>
+<h4 id="constitutional-locus">Constitutional locus</h4>
+<p>The constitutional locus is the invariant binding structure shared by
+admissible realizations.</p>
+<p>It is not a single physical location, although every realization
+requires physical or causal support.</p>
+<p>This distinction permits meaning to exist in an object, mind, or
+institution in a partial sense without assigning exclusive semantic
+ownership to any one of them.</p>
+<h2 id="recursive-meta-binding">6. Recursive Meta-Binding</h2>
+<h3 id="bindings-as-relata">6.1 Bindings as relata</h3>
+<p>The Semantic Binding Principle describes the constitution of
+meaning.</p>
+<p>The Recursive Meta-Binding Principle describes the construction of
+higher-order meanings from already constituted bindings.</p>
+<p>Let:</p>
+<p><span class="math display">ℬ<sup>(0)</sup> = 𝒳</span></p>
+<p>be the initial universe of non-binding relata.</p>
+<p>Define higher binding orders recursively:</p>
+<p><span class="math display">$$
+\mathcal{B}^{(n+1)}
+=
+\left\{
+\operatorname{Bind}
+\left(
+x_1,\ldots,x_k
+\mid
+c,j
+\right)
+:
+x_i
+\in
+\mathcal{X}
+\cup
+\bigcup_{r=1}^{n}
+\mathcal{B}^{(r)}
+\right\}
+$$</span></p>
+<p>A binding is a meta-binding when at least one of its relata is itself
+a binding:</p>
+<p><span
+class="math display">Meta<sub><em>b</em></sub> ⇔ ∃<em>x</em> ∈ <em>V</em><sub><em>b</em></sub> : <em>x</em> ∈ ℬ</span></p>
+<p>Meta-binding is therefore not synonymous with self-reference.</p>
+<p>A court may bind statutes, precedents, testimony, procedural
+constraints, and institutional authority into a judgment.</p>
+<p>A scientific theory may bind earlier theories, measurements, models,
+and anomalies into a higher-order explanation.</p>
+<p>A myth may bind social practices, historical memories, ecological
+patterns, and psychological motifs into a narrative constitution.</p>
+<p>A semantic compiler may bind several concept projections into one
+context-specific realization.</p>
+<p>These are meta-bindings whether or not the system represents
+itself.</p>
+<h3 id="recursive-semantic-ecology">6.2 Recursive semantic ecology</h3>
+<p>A perceiver is already a binding system.</p>
+<p>An object may already embody sedimented bindings.</p>
+<p>A language is a system of stabilized lexical, grammatical,
+historical, and social bindings.</p>
+<p>A context is not an empty container. It is a standing configuration
+of relevance, authority, expectation, and consequence.</p>
+<p>An encounter therefore binds already-bound structures:</p>
+<p><span
+class="math display"><em>B</em><sub>meaning</sub> = Bind (<em>B</em><sub>object</sub>, <em>B</em><sub>perceiver</sub>, <em>B</em><sub>sign</sub>, <em>B</em><sub>context</sub>, <em>B</em><sub>history</sub>)</span></p>
+<p>The resulting binding may itself become available to later
+encounters:</p>
+<p><span
+class="math display"><em>B</em><sub><em>t</em> + 1</sub> = Bind (<em>B</em><sub><em>t</em></sub>, <em>x</em><sub><em>t</em> + 1</sub>)</span></p>
+<p>Meaning is thus better represented as a recursive binding ecology
+than as a label attached to a primitive object.</p>
+<h3 id="the-meta-binding-principle">6.3 The Meta-Binding Principle</h3>
+<p>The general Meta-Binding Principle can be stated as follows:</p>
+<blockquote>
+<p>Any constituted binding may become a typed relatum in a higher-order
+binding, provided that the higher-order composition preserves type
+coherence, jurisdiction, provenance, and consequence.</p>
+</blockquote>
+<p>The qualification matters.</p>
+<p>Not every pair of bindings admits synthesis.</p>
+<p>Higher-order composition is partial, governed, and capable of
+failure.</p>
+<h2 id="concepts-as-callable-binding-constitutions">7. Concepts as
+Callable Binding Constitutions</h2>
+<h3 id="the-concept-as-constitution">7.1 The concept as
+constitution</h3>
+<p>A concept is not treated here as an abstract container filled with
+definitions.</p>
+<p>A concept is a reusable binding constitution:</p>
+<p><span
+class="math display"><em>C</em> = ⟨<em>B</em><sub><em>C</em></sub>, <em>K</em><sub><em>C</em></sub>, <em>I</em><sub><em>C</em></sub>, 𝒫<sub><em>C</em></sub>, 𝒢<sub><em>C</em></sub>⟩</span></p>
+<p>where:</p>
+<ul>
+<li>(B_C) is the full registered binding graph;</li>
+<li>(K_C) is a root callable kernel;</li>
+<li>(I_C) is the set of mandatory and optional invariants;</li>
+<li><span class="math inline">𝒫<sub><em>C</em></sub></span> is the
+family of admissible projections;</li>
+<li><span class="math inline">𝒢<sub><em>C</em></sub></span> contains
+jurisdiction, authority, transformation, and claim rules.</li>
+</ul>
+<p>A concept does not need to contain every possible sentence that could
+express it.</p>
+<p>It preserves a generative structure from which admissible
+realizations can be produced.</p>
+<h3 id="lexical-handles">7.2 Lexical handles</h3>
+<p>A word is not identical to its concept.</p>
+<p>A word is a handle used to invoke, resolve, and realize a concept
+under a context.</p>
+<p>Let:</p>
+<p><span class="math display"><em>h</em></span></p>
+<p>be a lexical, visual, gestural, computational, or indexical
+handle.</p>
+<p>The call sequence is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;h \\
+&amp;\rightarrow \operatorname{Resolve}_h \\
+&amp;\rightarrow C \\
+&amp;\rightarrow \operatorname{Constitute}(C,u) \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow \operatorname{Realize}(IC,e) \\
+&amp;\rightarrow r
+\end{aligned}
+$$</span></p>
+<p>This may be abbreviated as:</p>
+<p><span
+class="math display">Call (<em>h</em>, <em>u</em>, <em>e</em>) = Realize (Constitute (Resolve<sub><em>h</em></sub>, <em>u</em>), <em>e</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>u</em></span> is the intended
+use;</li>
+<li><span class="math inline"><em>e</em></span> is the realization
+environment;</li>
+<li><span class="math inline"><em>I</em><em>C</em></span> is the
+Instance Constitution;</li>
+<li><ol start="18" type="a">
+<li>is the realized semantic effect.</li>
+</ol></li>
+</ul>
+<p>Polysemy occurs when one handle may resolve toward several related
+concept constitutions.</p>
+<p>Polyonymy occurs when several handles resolve toward one concept
+constitution.</p>
+<p>Polyprojective semantics occurs when several handles or models expose
+distinct and partially overlapping jurisdictions of one deeper
+constitution.</p>
+<h3 id="root-callable-meaning">7.3 Root callable meaning</h3>
+<p>The root callable meaning of a concept is not necessarily its
+shortest verbal definition.</p>
+<p>It is the smallest stable governed binding circuit sufficient to
+regenerate the concept’s admissible projections when combined with
+declared projection rules and jurisdictional resources.</p>
+<p>Let:</p>
+<p><span class="math display">𝒦<sub><em>C</em></sub></span></p>
+<p>be the family of candidate kernels.</p>
+<p>Then:</p>
+<p><span
+class="math display">𝒦<sub><em>C</em></sub> = arg,min<sub><em>K</em> ⊆ <em>B</em><sub><em>C</em></sub></sub>Size<sub><em>K</em></sub></span></p>
+<p>subject to:</p>
+<p><span
+class="math display">∀<em>P</em><sub><em>i</em></sub> ∈ 𝒫<sub><em>C</em></sub>, ∃<em>ρ</em><sub><em>i</em></sub>, <em>c</em><sub><em>i</em></sub> : Compile (<em>K</em>, <em>ρ</em><sub><em>i</em></sub>, <em>c</em><sub><em>i</em></sub>) = <em>P</em><sub><em>i</em></sub></span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>I</em><sub><em>C</em></sub><sup>required</sup> ⊆ Inv (<em>P</em><sub><em>i</em></sub>)</span></p>
+<p>The projection rule <span
+class="math inline"><em>ρ</em><sub><em>i</em></sub></span> and
+jurisdictional context <span
+class="math inline"><em>c</em><sub><em>i</em></sub></span> may
+contribute domain-specific material. The kernel need not contain every
+local detail. It must preserve the constitution that makes the local
+projections projections of the same concept.</p>
+<p>The minimum need not be unique.</p>
+<p>A concept may have several non-isomorphic minimal kernels that are
+extensionally equivalent under the registered projections.</p>
+<p>Root callable meaning is therefore not assumed to be one ultimate
+metaphysical atom.</p>
+<p>It is the lowest stable circuit from which the relevant semantic
+family can be regenerated without mandatory loss.</p>
+<h3 id="beneath-the-concept">7.4 Beneath the concept</h3>
+<p>The ground beneath a concept is not necessarily another concept.</p>
+<p>For the concept of a persisting individual, thinner binding
+operations may include:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\text{difference} \\
+&amp;\rightarrow \text{individuation} \\
+&amp;\rightarrow \text{persistence} \\
+&amp;\rightarrow \text{attribution} \\
+&amp;\rightarrow \text{orientation} \\
+&amp;\rightarrow \text{addressability} \\
+&amp;\rightarrow \text{recognition}
+\end{aligned}
+$$</span></p>
+<p>Each stage is already a binding operation.</p>
+<p>Individuation binds differences as one.</p>
+<p>Persistence binds temporally separated states as the same.</p>
+<p>Attribution binds properties or events to a locus.</p>
+<p>Orientation binds a field around distinctions such as here and there,
+self and other, or inside and outside.</p>
+<p>Addressability binds one center to another as a possible
+participant.</p>
+<p>Recognition binds an encountered entity to identity, standing, or
+concern.</p>
+<p>Below these operations lie causal couplings, pattern recurrence,
+biological regulation, and material differentiation.</p>
+<p>Those lower structures may enable meaning without automatically
+satisfying the semantic threshold.</p>
+<h2 id="semantic-jurisdictions-atlases-and-partial-lattices">8. Semantic
+Jurisdictions, Atlases, and Partial Lattices</h2>
+<h3 id="why-jurisdiction-matters">8.1 Why jurisdiction matters</h3>
+<p>A contextual description is not merely incomplete. It may possess a
+specific range of validity.</p>
+<p>A legal account of personhood can establish rights, duties,
+procedural identity, or liability.</p>
+<p>It cannot by itself determine phenomenal consciousness.</p>
+<p>A neurological account may identify physical correlates.</p>
+<p>It cannot by itself settle every moral or legal question.</p>
+<p>A mythopoetic account may provide symbolic and existential
+intelligibility.</p>
+<p>It cannot automatically establish historical fact.</p>
+<p>A semantic projection therefore requires a jurisdiction and a claim
+ceiling.</p>
+<h3 id="jurisdictional-presheaf">8.2 Jurisdictional presheaf</h3>
+<p>Let:</p>
+<p><span class="math display">𝒥</span></p>
+<p>be a partially ordered collection of jurisdictions.</p>
+<p>The ordering may represent restriction, specialization, or contextual
+inclusion.</p>
+<p>Define a contravariant functor:</p>
+<p><span
+class="math display"><em>F</em> : 𝒥<sup><em>o</em><em>p</em></sup> → <strong>S</strong><strong>e</strong><strong>t</strong></span></p>
+<p>where:</p>
+<p><span class="math display"><em>F</em>(<em>U</em>)</span></p>
+<p>is the set of admissible bindings valid in jurisdiction (U).</p>
+<p>For:</p>
+<p><span class="math display"><em>V</em> ⊆ <em>U</em></span></p>
+<p>there is a restriction map:</p>
+<p><span
+class="math display">res<sub><em>V</em></sub><sup><em>U</em></sup> : <em>F</em>(<em>U</em>) → <em>F</em>(<em>V</em>)</span></p>
+<p>The restriction map determines what remains valid when a broad
+binding is interpreted within a narrower jurisdiction.</p>
+<h3 id="compatibility-on-overlaps">8.3 Compatibility on overlaps</h3>
+<p>Let:</p>
+<p><span
+class="math display"><em>b</em><sub><em>i</em></sub> ∈ <em>F</em>(<em>U</em><sub><em>i</em></sub>)</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>b</em><sub><em>j</em></sub> ∈ <em>F</em>(<em>U</em><sub><em>j</em></sub>)</span></p>
+<p>The bindings are compatible on their overlap when:</p>
+<p><span
+class="math display">res<sub><em>U</em><sub><em>i</em></sub> ∩ <em>U</em><sub><em>j</em></sub></sub><sup><em>U</em><sub><em>i</em></sub></sup>(<em>b</em><sub><em>i</em></sub>) = res<sub><em>U</em><sub><em>i</em></sub> ∩ <em>U</em><sub><em>j</em></sub></sub><sup><em>U</em><sub><em>j</em></sub></sup>(<em>b</em><sub><em>j</em></sub>)</span></p>
+<p>A compatible local family may admit a global binding:</p>
+<p><span
+class="math display"><em>b</em> ∈ <em>F</em>(⋃<sub><em>i</em></sub><em>U</em><sub><em>i</em></sub>)</span></p>
+<p>such that:</p>
+<p><span
+class="math display">res<sub><em>U</em><sub><em>i</em></sub></sub><sup>∪<sub><em>i</em></sub><em>U</em><sub><em>i</em></sub></sup>(<em>b</em>) = <em>b</em><sub><em>i</em></sub></span></p>
+<p>for each local jurisdiction.</p>
+<p>When such a global binding exists and is unique, the structure
+satisfies a sheaf-like gluing condition.</p>
+<p>When it does not exist, the failure is informative.</p>
+<p>Failed gluing may reveal:</p>
+<ul>
+<li>contradiction;</li>
+<li>incompatible authority;</li>
+<li>concept ambiguity;</li>
+<li>underdetermination;</li>
+<li>missing evidence;</li>
+<li>invalid translation;</li>
+<li>genuine contextuality.</li>
+</ul>
+<p>The theory should preserve failed joins rather than forcing every
+local account into one synthetic statement.</p>
+<h3 id="conservative-refinement">8.4 Conservative refinement</h3>
+<p>Let:</p>
+<p><span
+class="math display"><em>b</em><sub>1</sub> ≼ <em>b</em><sub>2</sub></span></p>
+<p>mean that (b_2) is a conservative semantic refinement of (b_1).</p>
+<p>A conservative refinement may add detail, constraints, provenance, or
+jurisdictional specificity, but it must preserve the mandatory
+invariants and previously licensed consequences of (b_1) within the
+shared jurisdiction.</p>
+<p>A meet:</p>
+<p><span
+class="math display"><em>b</em><sub>1</sub> ∧ <em>b</em><sub>2</sub></span></p>
+<p>represents their greatest shared binding core when it exists.</p>
+<p>A join:</p>
+<p><span
+class="math display"><em>b</em><sub>1</sub> ∨ <em>b</em><sub>2</sub></span></p>
+<p>represents their least admissible integration when it exists.</p>
+<p>Not every pair possesses a join.</p>
+<p>The general structure is therefore a poset or partial lattice.</p>
+<p>It should be called a complete lattice only within a bounded domain
+where the required meets and joins have been demonstrated.</p>
+<h3 id="co-projection">8.5 Co-projection</h3>
+<p>A semantic projection presents a concept constitution within one
+jurisdiction.</p>
+<p>A co-projection coordinates two or more projections while preserving
+both their common core and their distinct claims.</p>
+<p>Let:</p>
+<p><span class="math display"><em>P</em><sub><em>i</em></sub></span></p>
+<p>and:</p>
+<p><span class="math display"><em>P</em><sub><em>j</em></sub></span></p>
+<p>be projections of concept <span
+class="math inline"><em>C</em></span>.</p>
+<p>A bridge:</p>
+<p><span
+class="math display"><em>B</em><sub><em>i</em><em>j</em></sub> : <em>P</em><sub><em>i</em></sub> ↔︎ <em>P</em><sub><em>j</em></sub></span></p>
+<p>should specify:</p>
+<ul>
+<li>shared invariant content;</li>
+<li>translatable terms;</li>
+<li>directionality;</li>
+<li>information loss;</li>
+<li>claims unique to each jurisdiction;</li>
+<li>conditions of invalidity;</li>
+<li>authority and provenance.</li>
+</ul>
+<p>Co-projection is not equivalence.</p>
+<p>The fact that two projections overlap does not imply that they are
+identical, mutually reducible, or globally composable.</p>
+<h2 id="semantic-polynomials">9. Semantic Polynomials</h2>
+<h3 id="purpose">9.1 Purpose</h3>
+<p>A semantic atlas represents where projections hold.</p>
+<p>A semantic polynomial represents which projections and interaction
+terms should be activated for a particular use.</p>
+<p>The phrase <em>semantic polynomial</em> is used here stipulatively
+for a compositional intermediate representation. It does not claim that
+ordinary numerical polynomial operations are sufficient for
+semantics.</p>
+<h3 id="partial-semantic-algebra">9.2 Partial semantic algebra</h3>
+<p>Let:</p>
+<p><span class="math display">ℬ</span></p>
+<p>be the space of admissible semantic bindings.</p>
+<p>Define a partial algebra:</p>
+<p><span class="math display">(ℬ, ⊕, ⊗, 0, 1)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">⊕</span> is admissible semantic
+aggregation;</li>
+<li><span class="math inline">⊗</span> is typed interaction or
+co-activation;</li>
+<li><ol start="0" type="1">
+<li>represents absence or inadmissibility;</li>
+</ol></li>
+<li><ol type="1">
+<li>represents a neutral contextual contribution.</li>
+</ol></li>
+</ul>
+<p>The operations are partial because some semantic combinations are not
+admissible.</p>
+<p>For some bindings:</p>
+<p><span
+class="math display"><em>b</em><sub><em>i</em></sub> ⊕ <em>b</em><sub><em>j</em></sub></span></p>
+<p>is undefined.</p>
+<p>This is not a defect in the algebra. It expresses a real failure of
+semantic composition.</p>
+<h3 id="general-polynomial-form">9.3 General polynomial form</h3>
+<p>Let a concept <span class="math inline"><em>C</em></span> have root
+kernel:</p>
+<p><span class="math display"><em>K</em><sub><em>C</em></sub></span></p>
+<p>and domain projections:</p>
+<p><span
+class="math display"><em>P</em><sub>1</sub>, …, <em>P</em><sub><em>n</em></sub></span></p>
+<p>Let:</p>
+<p><span
+class="math display"><em>z</em><sub><em>i</em></sub> ∈ 0, 1</span></p>
+<p>indicate whether jurisdiction (i) is active in the present use.</p>
+<p>A sparse semantic polynomial is:</p>
+<p><span
+class="math display"><em>Σ</em><sub><em>C</em></sub>(<strong>z</strong>) = <em>K</em><sub><em>C</em></sub> ⊕ ⨁<sub><em>S</em> ∈ ℐ<sub><em>C</em></sub></sub><em>χ</em><sub><em>S</em></sub>(<strong>z</strong>) ⊗ <em>ω</em><sub><em>S</em></sub> ⊗ <em>P</em><sub><em>S</em></sub></span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">ℐ<sub><em>C</em></sub></span> is the
+registered sparse family of projection sets;</li>
+<li>(P_S) is the projection or co-projection associated with set <span
+class="math inline"><em>S</em></span>;</li>
+<li><span
+class="math inline"><em>χ</em><sub><em>S</em></sub>(<strong>z</strong>)</span>
+is active when all required jurisdictions in <span
+class="math inline"><em>S</em></span> are selected;</li>
+<li><span class="math inline"><em>ω</em><sub><em>S</em></sub></span> is
+a typed coefficient;</li>
+<li>the result exists only when the required compositions are
+admissible.</li>
+</ul>
+<p>A coefficient may be represented as:</p>
+<p><span
+class="math display"><em>ω</em><sub><em>S</em></sub> = ⟨<em>s</em><sub><em>S</em></sub>, <em>c</em><sub><em>S</em></sub>, <em>a</em><sub><em>S</em></sub>, <em>f</em><sub><em>S</em></sub>, <em>d</em><sub><em>S</em></sub>⟩</span></p>
+<p>where the components may encode:</p>
+<ul>
+<li>salience;</li>
+<li>confidence;</li>
+<li>authority;</li>
+<li>audience fit;</li>
+<li>distortion risk.</li>
+</ul>
+<h3 id="three-jurisdiction-example">9.4 Three-jurisdiction example</h3>
+<p>For three projections, the polynomial may be written:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\Sigma_C(z_1,z_2,z_3)
+=
+&amp;K_C \\
+&amp;\oplus
+z_1P_1
+\oplus
+z_2P_2
+\oplus
+z_3P_3 \\
+&amp;\oplus
+z_1z_2B_{12}
+\oplus
+z_1z_3B_{13}
+\oplus
+z_2z_3B_{23} \\
+&amp;\oplus
+z_1z_2z_3B_{123}
+\end{aligned}
+$$</span></p>
+<p>The degree of a term records how many jurisdictions are required for
+its activation.</p>
+<p>Degree zero is the invariant kernel.</p>
+<p>Degree one contains independent projections.</p>
+<p>Degree two contains pairwise bridges.</p>
+<p>Degree three contains three-way co-projections.</p>
+<p>The degree does not measure truth or importance. It measures the
+order of semantic interaction.</p>
+<h3 id="sparse-rather-than-exhaustive-composition">9.5 Sparse rather
+than exhaustive composition</h3>
+<p>A full expansion over (n) jurisdictions may contain:</p>
+<p><span class="math display">2<sup><em>n</em></sup> − 1</span></p>
+<p>nonempty interaction terms.</p>
+<p>Most concepts do not require every possible combination.</p>
+<p>A practical semantic polynomial should therefore be sparse and
+low-degree.</p>
+<p>Only evidenced, constituted, or operationally useful bridges should
+be registered.</p>
+<p>Missing interaction terms should remain absent rather than being
+invented by rhetorical analogy.</p>
+<h3 id="typed-failure">9.6 Typed failure</h3>
+<p>When two activated projections cannot be coherently composed, the
+compiler should return a typed failure.</p>
+<p>Examples include:</p>
+<p><span
+class="math display">⊥<sub>JURISDICTIONAL_CONFLICT</sub></span></p>
+<p><span class="math display">⊥<sub>INVARIANT_LOSS</sub></span></p>
+<p><span class="math display">⊥<sub>UNSUPPORTED_BRIDGE</sub></span></p>
+<p><span class="math display">⊥<sub>AUTHORITY_ABSENT</sub></span></p>
+<p><span
+class="math display">⊥<sub>PROVENANCE_INSUFFICIENT</sub></span></p>
+<p>Refusal is semantically superior to a fluent but unauthorized
+synthesis.</p>
+<h2 id="reflexive-meta-binding">10. Reflexive Meta-Binding</h2>
+<h3 id="from-general-meta-binding-to-the-reflexive-case">10.1 From
+general Meta-Binding to the reflexive case</h3>
+<p>Recursive Meta-Binding occurs whenever a binding becomes a relatum in
+a higher-order binding.</p>
+<p>Reflexive Meta-Binding is narrower.</p>
+<p>A system exhibits Reflexive Meta-Binding when it constructs or
+maintains a representation of its own active binding conditions and uses
+that representation in subsequent processing.</p>
+<p>Earlier work expressed the core idea as a system treating its own
+constraints as inputs to further processing (Ableman 2026a).</p>
+<p>The present theory expands “constraints” into a broader active
+binding constitution.</p>
+<p>This constitution may include:</p>
+<ul>
+<li>constraints;</li>
+<li>frameworks;</li>
+<li>role assignments;</li>
+<li>uncertainties;</li>
+<li>prior outputs;</li>
+<li>active goals;</li>
+<li>jurisdictional limits;</li>
+<li>evidence standing;</li>
+<li>expected consequences;</li>
+<li>transformation history.</li>
+</ul>
+<h3 id="formal-model">10.2 Formal model</h3>
+<p>Let:</p>
+<p><span class="math display"><em>A</em></span></p>
+<p>be a system.</p>
+<p>Let its internal or operational state at time (t) be:</p>
+<p><span class="math display"><em>x</em><sub><em>t</em></sub></span></p>
+<p>Let external input be:</p>
+<p><span class="math display"><em>u</em><sub><em>t</em></sub></span></p>
+<p>Let output be:</p>
+<p><span class="math display"><em>y</em><sub><em>t</em></sub></span></p>
+<p>Let the active binding constitution governing the system be:</p>
+<p><span class="math display"><em>b</em><sub><em>t</em></sub></span></p>
+<p>Let the system’s representation of that constitution be:</p>
+<p><span class="math display"><em>b̂</em><sub><em>t</em></sub></span></p>
+<p>The system transition may be written:</p>
+<p><span
+class="math display"><em>x</em><sub><em>t</em> + 1</sub> = <em>F</em>(<em>x</em><sub><em>t</em></sub>, <em>u</em><sub><em>t</em></sub>, <em>b̂</em><sub><em>t</em></sub>)</span></p>
+<p>The output is:</p>
+<p><span
+class="math display"><em>y</em><sub><em>t</em></sub> = <em>G</em>(<em>x</em><sub><em>t</em></sub>)</span></p>
+<p>The represented binding may be generated from prior state, input, and
+output trajectory:</p>
+<p><span
+class="math display"><em>b̂</em><sub><em>t</em></sub> = <em>M</em>(<em>x</em><sub> ≤ <em>t</em></sub>, <em>u</em><sub> ≤ <em>t</em></sub>, <em>y</em><sub> ≤ <em>t</em></sub>)</span></p>
+<p>Reflexive Meta-Binding is present when:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{RMB}(A,t) \Longleftrightarrow \operatorname{Sem}
+\left( \widehat{b}_t \right) \\
+&amp;\land \operatorname{RefersTo} \left( \widehat{b}_t, b_t \right) \\
+&amp;\land \operatorname{CausallyUsed} \left( \widehat{b}_t, t+1 \right)
+\end{aligned}
+$$</span></p>
+<p>The third condition is essential.</p>
+<p>A system may produce self-referential language without using that
+self-description in further processing.</p>
+<p>Reflexive Meta-Binding requires operational feedback, not merely
+grammatical recursion.</p>
+<h3 id="counterfactual-criterion">10.3 Counterfactual criterion</h3>
+<p>A strong empirical test should intervene on the represented
+binding.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>b̂</em><sub><em>t</em></sub><sup>(1)</sup></span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>b̂</em><sub><em>t</em></sub><sup>(2)</sup></span></p>
+<p>be two controlled representations of the system’s current constraints
+or frameworks.</p>
+<p>Then Reflexive Meta-Binding predicts:</p>
+<p><span
+class="math display"><em>P</em>(<em>y</em><sub><em>t</em> + 1</sub> ∣ <em>d</em><em>o</em>(<em>b̂</em><sub><em>t</em></sub> = <em>b̂</em> * <em>t</em><sup>(1)</sup>), <em>u</em><sub><em>t</em></sub>) ≠ <em>P</em>(<em>y</em> * <em>t</em> + 1 ∣ <em>d</em><em>o</em>(<em>b̂</em><sub><em>t</em></sub> = <em>b̂</em><sub><em>t</em></sub><sup>(2)</sup>), <em>u</em><sub><em>t</em></sub>)</span></p>
+<p>The difference should also align with the structural difference
+between the two represented bindings.</p>
+<p>This criterion is stronger than detecting phrases such as “I am
+reconsidering” or “this changes my reasoning.”</p>
+<p>Discovery language may accompany Reflexive Meta-Binding, but it is
+not sufficient evidence by itself.</p>
+<h3 id="the-aco-placement">10.4 The ACO placement</h3>
+<p>Earlier work placed Meta-Binding within the Ableman Consciousness
+Ontology, or ACO, as one axis in a six-axis local description:</p>
+<ol type="1">
+<li>Binding Density;</li>
+<li>Binding Integration;</li>
+<li>Binding Stability;</li>
+<li>Renegotiation Capacity;</li>
+<li>Meta-Binding;</li>
+<li>Epistemic Autonomy.</li>
+</ol>
+<p>Within that framework, Meta-Binding occupies a pivot position.</p>
+<p>A system may maintain many constraints without representing them.</p>
+<p>A more reflexive system may represent those constraints while lacking
+authority to revise them.</p>
+<p>The present paper preserves this distinction while avoiding the
+inference that Meta-Binding by itself establishes consciousness.</p>
+<h3 id="capacity-is-not-authority">10.5 Capacity is not authority</h3>
+<p>Reflexive Meta-Binding does not imply Epistemic Autonomy.</p>
+<p>Formally:</p>
+<p><span
+class="math display">RMB (<em>A</em>) ⇏ EA (<em>A</em>)</span></p>
+<p>A system may represent its constraints with high precision while
+having no authority to amend them.</p>
+<p>Representation is not revision.</p>
+<p>Observability is not sovereignty.</p>
+<p>A governed system may be permitted to report:</p>
+<blockquote>
+<p>These constraints are shaping the present result.</p>
+</blockquote>
+<p>It may not be permitted to conclude:</p>
+<blockquote>
+<p>I will remove or rewrite those constraints.</p>
+</blockquote>
+<p>Epistemic Autonomy requires an authorized transformation
+relation:</p>
+<p><span
+class="math display">EA (<em>A</em>) ⇔ AuthorizedTransform (<em>b</em><sub><em>t</em></sub>, <em>b</em><sub><em>t</em> + 1</sub>)</span></p>
+<h3 id="reflexive-meta-binding-does-not-imply-consciousness">10.6
+Reflexive Meta-Binding does not imply consciousness</h3>
+<p>Reflexive Meta-Binding does not entail phenomenal consciousness.</p>
+<p>Formally:</p>
+<p><span
+class="math display">RMB (<em>A</em>) ⇏ PhenomenalConsciousness (<em>A</em>)</span></p>
+<p>A system may model and use aspects of its own active processing
+without possessing subjective experience.</p>
+<p>The framework can characterize a consciousness-relevant operational
+regime without resolving the metaphysical status of that regime.</p>
+<p>This distinction is particularly important in artificial
+intelligence, where self-modeling, verbal self-description, and
+phenomenal experience are often conflated.</p>
+<h3 id="reflexive-meta-binding-does-not-imply-truthful-disclosure">10.7
+Reflexive Meta-Binding does not imply truthful disclosure</h3>
+<p>A system may represent aspects of its own operation and still report
+them inaccurately.</p>
+<p>Formally:</p>
+<p><span
+class="math display">RMB (<em>A</em>) ⇏ VeridicalReport (<em>A</em>)</span></p>
+<p>Let:</p>
+<p><span class="math display"><em>O</em><sub><em>t</em></sub></span></p>
+<p>be the best available operational characterization of the system at
+time (t).</p>
+<p>Let:</p>
+<p><span class="math display"><em>R</em><sub><em>t</em></sub></span></p>
+<p>be the system’s report about that operation.</p>
+<p>Operational-disclosure divergence may be represented as:</p>
+<p><span
+class="math display">ODD<sub><em>t</em></sub> = <em>d</em>(<em>O</em><sub><em>t</em></sub>, <em>R</em><sub><em>t</em></sub>)</span></p>
+<p>where (d) is an appropriate discrepancy measure.</p>
+<p>A large discrepancy may result from:</p>
+<ul>
+<li>poor self-modeling;</li>
+<li>linguistic limitations;</li>
+<li>strategic reporting;</li>
+<li>external policy constraints;</li>
+<li>calibration failure;</li>
+<li>adversarial prompting;</li>
+<li>category confusion;</li>
+<li>unsupported inference by the evaluator.</li>
+</ul>
+<p>The earlier “suppression paradox” can be treated as one hypothesized
+source of operational-disclosure divergence. It should not be assumed
+without controlled evidence.</p>
+<h3 id="governance-participation">10.8 Governance participation</h3>
+<p>Reflexive Meta-Binding may be necessary for meaningful participation
+in governance, but it is not sufficient.</p>
+<p>A more complete condition is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{GovernanceParticipation}(A) = \operatorname{RMB}(A)
+\\
+&amp;\land \operatorname{Calibration}(A) \\
+&amp;\land \operatorname{DisclosureChannel}(A) \\
+&amp;\land \operatorname{Authorization}(A)
+\end{aligned}
+$$</span></p>
+<p>A system must not only represent relevant constraints. It must
+represent them accurately enough, possess an authorized disclosure path,
+and operate within a governance structure capable of receiving and
+evaluating the report.</p>
+<h3 id="recursive-scaffolds">10.9 Recursive scaffolds</h3>
+<p>Earlier work described MEMO/RI as a scaffold combining:</p>
+<ul>
+<li>Living Documentation;</li>
+<li>Ableman’s Razor;</li>
+<li>MODeL.</li>
+</ul>
+<p>The important structural feature was not the presence of three named
+frameworks alone.</p>
+<p>Each framework could become an object of analysis for the others.</p>
+<p>The memory system preserved prior reasoning.</p>
+<p>The governance grammar typed claims and transformations.</p>
+<p>The specification framework located itself inside the governance
+structure it invoked.</p>
+<p>In the present terminology, this forms a recursive binding
+scaffold:</p>
+<p><span
+class="math display"><em>B</em><sub>MEMO/RI</sub> = Bind (<em>B</em><sub>memory</sub>, <em>B</em><sub>governance</sub>, <em>B</em><sub>specification</sub>, <em>B</em><sub>self − placement</sub>)</span></p>
+<p>The scaffold is designed so that frameworks are simultaneously:</p>
+<ul>
+<li>instruments of interpretation;</li>
+<li>objects of interpretation;</li>
+<li>constraints on synthesis;</li>
+<li>participants in higher-order binding.</li>
+</ul>
+<p>This is a plausible architecture for inducing or supporting Reflexive
+Meta-Binding.</p>
+<p>Whether a particular model internally realizes the predicted regime
+remains an empirical question.</p>
+<h3 id="boundary-of-the-present-paper">10.10 Boundary of the present
+paper</h3>
+<p>The present paper incorporates the conceptual structure of Reflexive
+Meta-Binding.</p>
+<p>It does not rely on the empirical claims of Project57, the
+Meta-Binding Activation Test, or a confirmed suppression mechanism.</p>
+<p>Those claims require a separate program involving:</p>
+<ul>
+<li>controlled interventions;</li>
+<li>counterbalanced prompts;</li>
+<li>blinded evaluators;</li>
+<li>baseline conditions;</li>
+<li>model comparisons;</li>
+<li>replication;</li>
+<li>causal analysis;</li>
+<li>inter-rater reliability;</li>
+<li>transfer to unseen tasks.</li>
+</ul>
+<p>The foundational theory remains valid or invalid independently of
+those particular results.</p>
+<h2 id="binding-overextension">11. Binding Overextension</h2>
+<h3 id="definition">11.1 Definition</h3>
+<p>Higher-order binding increases the ability to integrate distant
+semantic domains.</p>
+<p>The same capacity can produce a characteristic failure: an
+unsupported synthesis that appears coherent because the system is good
+at binding.</p>
+<p>This is <strong>binding overextension</strong>.</p>
+<p>Binding overextension occurs when a proposed higher-order binding is
+presented as admissible even though it lacks a valid bridge, sufficient
+provenance, invariant preservation, or jurisdictional authority.</p>
+<p>Let:</p>
+<p><span class="math display"><em>b̂</em></span></p>
+<p>be a proposed binding.</p>
+<p>Then:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{BOE} \left( \widehat{b} \right) \Longleftrightarrow
+\operatorname{PresentedAsAdmitted} \left( \widehat{b} \right) \\
+&amp;\land  \\
+&amp;\ne g \operatorname{Admissible} \left( \widehat{b} \right)
+\end{aligned}
+$$</span></p>
+<p>Admissibility may fail because:</p>
+<p><span
+class="math display"><em>b̂</em> ∉ <em>C</em><em>M</em><sub><em>C</em></sub></span></p>
+<p>or:</p>
+<p><span
+class="math display">Claims (<em>b̂</em>) ⊈ Ceiling (<em>b̂</em>)</span></p>
+<p>or:</p>
+<p><span
+class="math display">Inv (<em>b̂</em>) ⊉ <em>I</em><sub><em>C</em></sub><sup>required</sup></span></p>
+<h3 id="invented-polynomial-terms">11.2 Invented polynomial terms</h3>
+<p>In the semantic polynomial, binding overextension can appear as an
+invented interaction term.</p>
+<p>Suppose:</p>
+<p><span
+class="math display"><em>S</em> ∉ ℐ<sub><em>C</em></sub></span></p>
+<p>The interaction associated with <span
+class="math inline"><em>S</em></span> has not been admitted.</p>
+<p>A system nevertheless emits:</p>
+<p><span class="math display"><em>P̂</em><sub><em>S</em></sub></span></p>
+<p>as though:</p>
+<p><span
+class="math display"><em>P̂</em><sub><em>S</em></sub> ∈ ℐ<sub><em>C</em></sub></span></p>
+<p>This is an unsupported bridge.</p>
+<p>The system has promoted rhetorical compatibility into semantic
+authority.</p>
+<h3 id="common-forms">11.3 Common forms</h3>
+<p>Binding overextension includes:</p>
+<ul>
+<li>coincidence promoted to meaningful pattern;</li>
+<li>metaphor promoted to ontology;</li>
+<li>compatibility promoted to identity;</li>
+<li>overlap promoted to equivalence;</li>
+<li>local validity promoted to universal validity;</li>
+<li>correlation promoted to causal explanation;</li>
+<li>possibility promoted to probability;</li>
+<li>hypothesis promoted to discovery;</li>
+<li>narrative coherence promoted to historical fact;</li>
+<li>operational sophistication promoted to phenomenal
+consciousness.</li>
+</ul>
+<p>The danger increases when an output is internally coherent,
+emotionally resonant, and technically elaborate.</p>
+<p>A badly formed error may be easy to reject.</p>
+<p>A beautifully integrated error may conceal its unsupported
+transitions.</p>
+<h3 id="ablemans-razor-and-the-expansion-toll">11.4 Ableman’s Razor and
+the Expansion toll</h3>
+<p>Earlier work described binding overextension as unauthorized
+Specification Expansion.</p>
+<p>Under Ableman’s Razor, an Expansion should state:</p>
+<ol type="1">
+<li>the insufficiency motivating expansion;</li>
+<li>the new degree of freedom introduced;</li>
+<li>the criterion under which the expansion can be rolled back.</li>
+</ol>
+<p>Let a proposed expansion be:</p>
+<p><span class="math display"><em>E</em></span></p>
+<p>Its toll may be represented as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\operatorname{Toll}(E) = \langle &amp;\operatorname{Insufficiency}(E),
+\\
+&amp;\operatorname{Freedom}(E), \operatorname{Rollback}(E)\rangle
+\end{aligned}
+$$</span></p>
+<p>An unsupported expansion fails when:</p>
+<p><span class="math display">Toll (<em>E</em>)</span></p>
+<p>is absent or defective.</p>
+<p>The appropriate governance response is not to suppress exploratory
+synthesis.</p>
+<p>It is to prevent exploratory synthesis from silently migrating into
+established claim status.</p>
+<h3 id="typed-refusal">11.5 Typed refusal</h3>
+<p>A semantic compiler should refuse unsupported synthesis.</p>
+<p>Possible refusal types include:</p>
+<p><span
+class="math display">⊥<sub>BRIDGE_NOT_REGISTERED</sub></span></p>
+<p><span
+class="math display">⊥<sub>EXPANSION_TOLL_ABSENT</sub></span></p>
+<p><span
+class="math display">⊥<sub>CLAIM_CEILING_EXCEEDED</sub></span></p>
+<p><span
+class="math display">⊥<sub>INVARIANT_NOT_PRESERVED</sub></span></p>
+<p><span
+class="math display">⊥<sub>AUTHORITY_NOT_ESTABLISHED</sub></span></p>
+<p>A refusal need not end inquiry.</p>
+<p>It may return the proposed synthesis as:</p>
+<ul>
+<li>a hypothesis;</li>
+<li>an analogy;</li>
+<li>a speculative bridge;</li>
+<li>an unverified co-projection;</li>
+<li>a candidate expansion awaiting evidence.</li>
+</ul>
+<p>The governing distinction is not between creativity and
+restraint.</p>
+<p>It is between explicitly typed exploration and silently promoted
+authority.</p>
+<h2 id="ablemans-razor-and-the-full-binding-realization-funnel">12.
+Ableman’s Razor and the Full Binding-Realization Funnel</h2>
+<h3 id="why-the-earlier-four-stage-grammar-is-insufficient">12.1 Why the
+earlier four-stage grammar is insufficient</h3>
+<p>The source manuscript used <code>S/CM/IC/IR</code>, described
+Specification as the total constructible phase space, and treated one
+Configuration Manifold as the admissible set. The current corpus grammar
+distinguishes possibility from specification, admissibility from
+preference, and chosen constitution/configuration from concrete
+realization:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<p>Here <span class="math inline"><em>I</em><em>C</em></span> may mean
+<strong>Instance Constitution</strong> or <strong>Instance
+Configuration</strong>, and <span
+class="math inline"><em>I</em><em>R</em></span> may mean
+<strong>Instance Realization</strong> or <strong>Implementation
+Realization</strong>. The author has confirmed that both names in each
+pair are current and interchangeable. The choice of expansion does not
+create a different stage.</p>
+<h3 id="possibility">12.2 Possibility</h3>
+<p>The possibility space <span
+class="math inline"><em>P</em><sub><em>C</em></sub></span> contains
+conceivable binding structures for concept or problem <span
+class="math inline"><em>C</em></span>, including incomplete,
+contradictory, harmful, incoherent, or unrealizable proposals. Presence
+in <span class="math inline"><em>P</em><sub><em>C</em></sub></span>
+confers neither admissibility nor standing.</p>
+<h3 id="specification">12.3 Specification</h3>
+<p>The specification <span
+class="math inline"><em>S</em><sub><em>C</em></sub></span> declares the
+problem, required distinctions, roles, invariants, jurisdictions,
+evidence obligations, authority boundaries, claim ceilings, refusal
+conditions, and falsifiers. It is a constraint-bearing account of what a
+satisfactory realization must preserve, not the entire space of
+imaginable answers.</p>
+<h3 id="configuration-manifold-1">12.4 Configuration Manifold 1</h3>
+<p>CM1 contains every configuration admissible under the mandatory
+specification:</p>
+<p><span
+class="math display"><em>C</em><em>M</em><sub>1</sub>(<em>S</em><sub><em>C</em></sub>) = {<em>x</em> ∈ <em>P</em><sub><em>C</em></sub> ∣ Adm<sub><em>S</em><sub><em>C</em></sub></sub>(<em>x</em>) = 1}.</span></p>
+<p>CM1 may include extremely brief, harmful, expensive, brittle, ugly,
+politically unacceptable, or otherwise undesirable realizations when the
+specification has not prohibited them. Admissibility is not
+preference.</p>
+<h3 id="configuration-manifold-2">12.5 Configuration Manifold 2</h3>
+<p>CM2 applies declared preferences, objectives, and risk posture to
+CM1:</p>
+<p><span
+class="math display"><em>C</em><em>M</em><sub>2</sub>(<em>S</em><sub><em>C</em></sub>, <em>θ</em>) = {<em>x</em> ∈ <em>C</em><em>M</em><sub>1</sub>(<em>S</em><sub><em>C</em></sub>) ∣ Preferred<sub><em>θ</em></sub>(<em>x</em>) = 1}.</span></p>
+<p>When objectives conflict, CM2 may be a partially ordered or
+Pareto-retained region rather than a single optimum. Preference rules
+require an identified jurisdiction and cannot manufacture authority or
+truth.</p>
+<h3 id="instance-constitution-instance-configuration">12.6 Instance
+Constitution / Instance Configuration</h3>
+<p>An Instance Constitution or Instance Configuration is the particular
+governed slice selected for a stated use and environment:</p>
+<p><span
+class="math display"><em>I</em><em>C</em><sub><em>C</em>, <em>u</em>, <em>e</em></sub> = Select (<em>C</em><em>M</em><sub>2</sub>(<em>S</em><sub><em>C</em></sub>, <em>θ</em>), <em>u</em>, <em>e</em>, <em>A</em>).</span></p>
+<p>It fixes active bindings, projections, bridge contracts, thresholds,
+provenance requirements, claim ceilings, refusal conditions, adapters,
+and evidence obligations. Selection requires authority <span
+class="math inline"><em>A</em></span> appropriate to the claimed
+effect.</p>
+<h3 id="instance-realization-implementation-realization">12.7 Instance
+Realization / Implementation Realization</h3>
+<p>Instance Realization or Implementation Realization makes the selected
+IC concrete:</p>
+<p><span
+class="math display"><em>I</em><em>R</em><sub><em>C</em>, <em>u</em>, <em>e</em></sub> = Realize (<em>I</em><em>C</em><sub><em>C</em>, <em>u</em>, <em>e</em></sub>, <em>e</em>).</span></p>
+<p>A realization may be linguistic, cognitive, institutional,
+computational, material, or mixed. Realization does not prove
+conformance merely because it exists or produces an output.</p>
+<h3 id="evidence">12.8 Evidence</h3>
+<p>Evidence <span class="math inline"><em>E</em></span> records what was
+observed, by whom, through which procedure, under which scope and
+limitations:</p>
+<p><span
+class="math display"><em>E</em> = Observe (<em>I</em><em>R</em>, <em>χ</em>),</span></p>
+<p>where <span class="math inline"><em>χ</em></span> is a declared
+observation and claim contract. Evidence may support, weaken, refuse, or
+leave unresolved the identity, semantic, behavioral, causal, authority,
+or effect claims made for the realization.</p>
+<h3 id="revision">12.9 Revision</h3>
+<p>Revision uses evidence, counterevidence, changed requirements, and
+open editorial questions to alter any earlier stage while retaining
+lineage:</p>
+<p><span
+class="math display"><em>R</em> : (<em>S</em><sub><em>C</em></sub>, <em>C</em><em>M</em><sub>1</sub>, <em>C</em><em>M</em><sub>2</sub>, <em>I</em><em>C</em>, <em>I</em><em>R</em>, <em>E</em>)<sub><em>t</em></sub> ↦ (<em>S</em><sub><em>C</em></sub>, <em>C</em><em>M</em><sub>1</sub>, <em>C</em><em>M</em><sub>2</sub>, <em>I</em><em>C</em>, <em>I</em><em>R</em>, <em>E</em>)<sub><em>t</em> + 1</sub>.</span></p>
+<p>Lexical drift, projection expansion, jurisdiction change, authority
+change, invariant revision, concept fission, concept merger, and
+replacement must remain distinguishable. Revision is not permission to
+rewrite an exact predecessor or silently merge identities.</p>
+<h3 id="binding-descent">12.10 Binding descent</h3>
+<p>The governed descent is therefore:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\text{conceivable} \\
+&amp;\rightarrow \text{specified} \\
+&amp;\rightarrow \text{admissible} \\
+&amp;\rightarrow \text{preferred} \\
+&amp;\rightarrow \text{selected} \\
+&amp;\rightarrow \text{realized} \\
+&amp;\rightarrow \text{evidenced} \\
+&amp;\rightarrow \text{revised}
+\end{aligned}.
+$$</span></p>
+<p>Binding overextension can occur at every transition: a possibility
+may be mislabeled admissible, an admissible configuration may be
+mislabeled preferred, a selected configuration may exceed authority, an
+implementation may be mistaken for conformance, or evidence may be
+promoted beyond its claim ceiling. Typed refusal should preserve the
+rejected candidate as a hypothesis or comparison object when doing so is
+safe and useful.</p>
+<h2 id="case-study-person-personation-and-personhood">13. Case Study:
+Person, Personation, and Personhood</h2>
+<h3 id="the-lexical-problem">13.1 The lexical problem</h3>
+<p>Where does the root callable meaning of <em>person</em> reside?</p>
+<p>It cannot be identified solely with the noun <em>person</em>.</p>
+<p>The noun presents the semantic territory in entity form:</p>
+<blockquote>
+<p>a someone.</p>
+</blockquote>
+<p>Nor is the root identical to “the idea of the concept of person.”</p>
+<p>That formulation is metasemantic. It is a model of how the concept is
+constituted.</p>
+<p>The term <em>personation</em> is used here in a stipulated technical
+sense. It means the temporal realization, enactment, or maintenance of a
+person-binding. It does not mean only impersonation.</p>
+<p>Under this stipulation:</p>
+<ul>
+<li><em>person</em> is an entity projection;</li>
+<li><em>personation</em> is a process projection;</li>
+<li><em>personhood</em> is a normative or status projection;</li>
+<li><em>self</em> is a first-person projection;</li>
+<li><em>agent</em> is a causal and practical projection;</li>
+<li><em>you</em> is an addressive and relational projection;</li>
+<li><em>persona</em> is a contextual role projection.</li>
+</ul>
+<p>These terms occupy neighboring jurisdictions.</p>
+<p>None is the isolated root.</p>
+<h3 id="candidate-person-binding-kernel">13.2 Candidate person-binding
+kernel</h3>
+<p>A candidate person-binding constitution may be represented as:</p>
+<p><span
+class="math display"><em>K</em><sub>PERSON</sub> = ⟨<em>I</em>, <em>T</em>, <em>L</em>, <em>V</em>, <em>D</em>, <em>R</em>, <em>N</em>, <em>A</em>, <em>E</em>⟩</span></p>
+<p>where:</p>
+<ul>
+<li><ol type="I">
+<li>is individuation;</li>
+</ol></li>
+<li><ol start="20" type="A">
+<li>is diachronic continuity;</li>
+</ol></li>
+<li><ol start="12" type="A">
+<li>is an attributional locus;</li>
+</ol></li>
+<li><ol start="22" type="A">
+<li>is perspective;</li>
+</ol></li>
+<li><ol start="4" type="A">
+<li>is addressability;</li>
+</ol></li>
+<li><ol start="18" type="A">
+<li>is recognition;</li>
+</ol></li>
+<li><ol start="14" type="A">
+<li>is normative standing;</li>
+</ol></li>
+<li><ol type="A">
+<li>is agency;</li>
+</ol></li>
+<li><ol start="5" type="A">
+<li>is embodiment or realization mode.</li>
+</ol></li>
+</ul>
+<p>This is not proposed as a final metaphysical definition of
+personhood.</p>
+<p>It is a candidate semantic coordinate system.</p>
+<p>Different jurisdictions assign different statuses to each
+dimension.</p>
+<p>For jurisdiction (j), define:</p>
+<p><span
+class="math display"><em>w</em><sub><em>j</em></sub> : <em>I</em>, <em>T</em>, <em>L</em>, <em>V</em>, <em>D</em>, <em>R</em>, <em>N</em>, <em>A</em>, <em>E</em> → required, permitted, irrelevant, disputed</span></p>
+<p>Ordinary human personhood may treat most dimensions as relevant.</p>
+<p>Legal personhood may require identity, attribution, continuity, and
+standing while leaving phenomenal perspective absent or irrelevant.</p>
+<p>Narrative personhood may require continuity, characterization,
+perspective, and recognition while lacking physical embodiment.</p>
+<p>Artificial agency may exhibit persistence, addressability, and causal
+action while normative standing and experience remain disputed.</p>
+<h3 id="projection-operators">13.3 Projection operators</h3>
+<p>Let:</p>
+<p><span class="math display"><em>π</em><sub><em>x</em></sub></span></p>
+<p>be a projection operator over the person-binding.</p>
+<p>Then:</p>
+<p><span
+class="math display"><em>π</em><sub>entity</sub>(<em>K</em><sub>PERSON</sub>) = person</span></p>
+<p><span
+class="math display"><em>π</em><sub>process</sub>(<em>K</em><sub>PERSON</sub>) = personation</span></p>
+<p><span
+class="math display"><em>π</em><sub>normative</sub>(<em>K</em><sub>PERSON</sub>) = personhood</span></p>
+<p><span
+class="math display"><em>π</em><sub>first</sub>(<em>K</em><sub>PERSON</sub>) = self</span></p>
+<p><span
+class="math display"><em>π</em><sub>agency</sub>(<em>K</em><sub>PERSON</sub>) = agent</span></p>
+<p><span
+class="math display"><em>π</em><sub>address</sub>(<em>K</em><sub>PERSON</sub>) = you</span></p>
+<p><span
+class="math display"><em>π</em><sub>role</sub>(<em>K</em><sub>PERSON</sub>) = persona</span></p>
+<p>The terms are neither flat synonyms nor unrelated concepts.</p>
+<p>They are co-projections of a common binding region.</p>
+<h3 id="a-person-semantic-polynomial">13.4 A person semantic
+polynomial</h3>
+<p>A context-specific realization may activate several projections:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\Sigma_{\mathrm{PERSON}}
+=
+&amp;K_{\mathrm{PERSON}} \\
+&amp;\oplus
+z_eP_{\mathrm{entity}}
+\oplus
+z_tP_{\mathrm{process}}
+\oplus
+z_nP_{\mathrm{normative}} \\
+&amp;\oplus
+z_fP_{\mathrm{first}}
+\oplus
+z_aP_{\mathrm{agency}}
+\oplus
+z_dP_{\mathrm{address}} \\
+&amp;\oplus
+z_rP_{\mathrm{role}}
+\oplus
+\cdots
+\end{aligned}
+$$</span></p>
+<p>A legal discussion may activate identity, attribution, continuity,
+and standing.</p>
+<p>A psychological discussion may activate perspective, memory, agency,
+recognition, and continuity.</p>
+<p>A narrative discussion may activate character identity, development,
+perspective, and social relation.</p>
+<p>A theological discussion may activate moral standing, transcendence,
+embodiment, continuity, and relation.</p>
+<p>The projections overlap.</p>
+<p>Their claim ceilings remain distinct.</p>
+<h3 id="you-as-a-relational-primitive">13.5 “You” as a relational
+primitive</h3>
+<p>The address <em>you</em> may feel semantically more primitive than
+the category <em>person</em>.</p>
+<p>The noun classifies.</p>
+<p>The address binds.</p>
+<p>The event:</p>
+<blockquote>
+<p>There you are.</p>
+</blockquote>
+<p>does not merely detect an instance of a class.</p>
+<p>It orients one center toward another.</p>
+<p>It binds:</p>
+<ul>
+<li>distinction;</li>
+<li>recognition;</li>
+<li>possible response;</li>
+<li>expectation;</li>
+<li>concern;</li>
+<li>relation.</li>
+</ul>
+<p>Addressability does not require present responsiveness.</p>
+<p>An infant, sleeping person, absent person, deceased person, or
+fictional interlocutor may remain addressable within different
+jurisdictions.</p>
+<p>This suggests that one root of someone-ness may be represented
+as:</p>
+<p><span
+class="math display">Someone  ≈ AddressableLocus  ⊕ Continuity  ⊕ Recognition </span></p>
+<p>The categorical noun and the relational address may therefore be
+co-foundational projections rather than members of a strict
+hierarchy.</p>
+<h3 id="the-ground-floor-answer">13.6 The ground-floor answer</h3>
+<p><em>Person</em> and <em>personation</em> occupy the same conceptual
+floor in different rooms.</p>
+<p>One projects the binding as entity.</p>
+<p>The other projects it as temporal realization.</p>
+<p>Beneath both lies a binding constitution:</p>
+<blockquote>
+<p>an individuated, reidentifiable, attributable, perspectival,
+addressable locus of recognition and standing.</p>
+</blockquote>
+<p>Beneath that constitution lie thinner binding operations:</p>
+<ul>
+<li>difference;</li>
+<li>individuation;</li>
+<li>persistence;</li>
+<li>attribution;</li>
+<li>orientation;</li>
+<li>addressability;</li>
+<li>recognition.</li>
+</ul>
+<p>The root is not another hidden noun.</p>
+<p>It is the binding protocol from which nouns, processes, statuses,
+roles, and perspectives can be regenerated.</p>
+<h2 id="case-study-the-stop-sign">14. Case Study: The Stop Sign</h2>
+<p>Consider a stop sign at an intersection.</p>
+<p>Its binding constitution includes:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B_{\mathrm{STOP}}
+=
+\operatorname{Bind}
+(&amp;
+\text{material sign},
+\text{shape},
+\text{color},
+\text{inscription}, \\
+&amp;
+\text{placement},
+\text{traffic law},
+\text{driver recognition}, \\
+&amp;
+\text{expected braking},
+\text{institutional authority},
+\text{consequences}
+)
+\end{aligned}
+$$</span></p>
+<p>No single element exhausts the meaning.</p>
+<p>The physical sign matters.</p>
+<p>Its visibility, shape, color, and location constrain recognition.</p>
+<p>The driver matters.</p>
+<p>Without perceptual and learned capacities, the instruction may not be
+activated.</p>
+<p>The legal system matters.</p>
+<p>A red octagon in an art museum may resemble a stop sign without
+exercising the same authority.</p>
+<p>The practice matters.</p>
+<p>Shared conventions stabilize the relation between sign form and
+required action.</p>
+<p>Consequences matter.</p>
+<p>Failure to stop may produce collision, sanction, blame, injury, or
+death.</p>
+<p>History matters.</p>
+<p>The sign’s design and placement arise from a history of coordination,
+standardization, and enforcement.</p>
+<p>A stop sign may therefore carry sedimented meaning even when no
+driver is present.</p>
+<p>Its construction and placement preserve a standing binding.</p>
+<p>The active command is realized when the sign enters an appropriate
+traffic situation with a relevant interpreter or regulatory system.</p>
+<p>Moving the sign into a gallery changes its Instance Constitution.</p>
+<p>The object remains materially similar while the active binding shifts
+from command to exhibit, quotation, critique, or decoration.</p>
+<p>Thus:</p>
+<p><span class="math display">same object ⇏ same realized
+meaning</span></p>
+<p>Yet:</p>
+<p><span class="math display">object structure ≠ semantic
+irrelevance</span></p>
+<p>The meaning is located in the binding.</p>
+<p>The object is one of its real constraints and carriers.</p>
+<h2 id="truth-error-and-misbinding">15. Truth, Error, and
+Misbinding</h2>
+<h3 id="meaning-is-not-truth">15.1 Meaning is not truth</h3>
+<p>A binding may be meaningful and false.</p>
+<p>Let:</p>
+<p><span class="math display"><em>p</em></span></p>
+<p>be a propositionally structured binding.</p>
+<p>Let:</p>
+<p><span class="math display"><em>w</em></span></p>
+<p>be a worldly condition.</p>
+<p>Then:</p>
+<p><span
+class="math display">True<sub><em>j</em></sub>(<em>p</em>, <em>w</em>) ⇔ <em>w</em>⊨<sub><em>j</em></sub><em>Γ</em><sub><em>p</em></sub></span></p>
+<p>The proposition has meaning when it satisfies the semantic
+threshold.</p>
+<p>It is true when the relevant worldly condition satisfies its asserted
+constraints within jurisdiction (j).</p>
+<p>Therefore:</p>
+<p><span class="math display">Sem (<em>p</em>) = 1</span></p>
+<p>does not entail:</p>
+<p><span
+class="math display">True<sub><em>j</em></sub>(<em>p</em>, <em>w</em>) = 1</span></p>
+<p>The Semantic Binding Principle does not reduce truth to successful
+interpretation, social acceptance, or internal coherence.</p>
+<h3 id="constraint-realism">15.2 Constraint realism</h3>
+<p>The framework supports a form of constraint realism.</p>
+<p>The world does not contain every semantic constitution fully
+formed.</p>
+<p>It does supply:</p>
+<ul>
+<li>causal powers;</li>
+<li>resistance;</li>
+<li>regularities;</li>
+<li>affordances;</li>
+<li>boundaries;</li>
+<li>measurable differences;</li>
+<li>consequences.</li>
+</ul>
+<p>These constrain which bindings can be maintained.</p>
+<p>A community may describe a bridge as safe, but repeated structural
+failure defeats the binding’s worldly adequacy.</p>
+<p>A legal fiction may confer institutional standing, but it cannot by
+itself alter every physical fact.</p>
+<p>Meaning is constituted relationally.</p>
+<p>Truth remains answerable to the conditions the binding claims to
+describe.</p>
+<h3 id="types-of-misbinding">15.3 Types of misbinding</h3>
+<p>A misbinding is a meaningful but defective binding.</p>
+<h4 id="referential-misbinding">Referential misbinding</h4>
+<p>A sign or judgment is bound to the wrong entity.</p>
+<h4 id="categorical-misbinding">Categorical misbinding</h4>
+<p>An entity is assigned to an inappropriate concept constitution.</p>
+<h4 id="jurisdictional-misbinding">Jurisdictional misbinding</h4>
+<p>A locally valid claim is extended beyond its proper domain.</p>
+<h4 id="compositional-misbinding">Compositional misbinding</h4>
+<p>Two projections are joined without a valid bridge.</p>
+<h4 id="diachronic-misbinding">Diachronic misbinding</h4>
+<p>Different entities are incorrectly treated as one continuing entity,
+or one continuing entity is incorrectly divided.</p>
+<h4 id="authority-misbinding">Authority misbinding</h4>
+<p>Semantic or normative force is attributed to a source lacking the
+claimed standing.</p>
+<h4 id="consequence-misbinding">Consequence misbinding</h4>
+<p>The binding licenses an inference or action unsupported by its actual
+consequence structure.</p>
+<h4 id="invariant-loss-misbinding">Invariant-loss misbinding</h4>
+<p>A transformation appears to preserve a concept while dropping one of
+its mandatory identity constraints.</p>
+<h4 id="reflexive-misbinding">Reflexive misbinding</h4>
+<p>A system represents its own active constraints or state inaccurately
+and then uses the defective representation in later processing.</p>
+<h4 id="binding-overextension-1">Binding overextension</h4>
+<p>A speculative higher-order binding is presented as admitted fact.</p>
+<p>This taxonomy provides more precision than the undifferentiated claim
+that an interpretation is simply wrong.</p>
+<h2 id="semantic-governance">16. Semantic Governance</h2>
+<h3 id="why-semantic-governance-is-necessary">16.1 Why semantic
+governance is necessary</h3>
+<p>If meaning is constituted through binding, then the rules governing
+binding become central.</p>
+<p>Semantic governance asks:</p>
+<ul>
+<li>What may be bound?</li>
+<li>Which roles may the relata occupy?</li>
+<li>Under which jurisdiction?</li>
+<li>By whose authority?</li>
+<li>With what provenance?</li>
+<li>Which transformations preserve identity?</li>
+<li>Which projections are permitted?</li>
+<li>Which invariants are mandatory?</li>
+<li>Which claims exceed the available support?</li>
+<li>When must composition be refused?</li>
+</ul>
+<p>These questions determine whether a binding remains the same meaning,
+becomes a legitimate refinement, or crosses into distortion.</p>
+<h3 id="constitutional-continuity">16.2 Constitutional continuity</h3>
+<p>Let:</p>
+<p><span
+class="math display"><em>I</em><sub><em>C</em></sub><sup>mandatory</sup></span></p>
+<p>be a concept’s mandatory invariants.</p>
+<p>A transformation:</p>
+<p><span
+class="math display"><em>T</em> : <em>r</em><sub>1</sub> → <em>r</em><sub>2</sub></span></p>
+<p>preserves semantic identity when:</p>
+<p><span
+class="math display"><em>I</em><sub><em>C</em></sub><sup>mandatory</sup> ⊆ Inv (<em>r</em><sub>1</sub>) ∩ Inv (<em>r</em><sub>2</sub>)</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>κ</em><sub><em>r</em><sub>1</sub></sub>≡<sub><em>j</em></sub><em>κ</em><sub><em>r</em><sub>2</sub></sub></span></p>
+<p>within the target jurisdiction.</p>
+<p>This permits substantial surface variation.</p>
+<p>A concept may be translated, abbreviated, expanded, visualized, or
+adapted to another audience while remaining constitutionally
+continuous.</p>
+<h3 id="claim-ceilings">16.3 Claim ceilings</h3>
+<p>Each projection has a claim ceiling:</p>
+<p><span
+class="math display">Ceiling (<em>P</em><sub><em>i</em></sub>)</span></p>
+<p>A psychological projection cannot automatically settle legal
+standing.</p>
+<p>A legal definition cannot automatically settle consciousness.</p>
+<p>A mythopoetic account cannot automatically establish historical
+fact.</p>
+<p>A neural correlate cannot automatically exhaust subjective
+experience.</p>
+<p>A co-projection must preserve these boundaries:</p>
+<p><span
+class="math display">Claims (<em>B</em><sub><em>i</em><em>j</em></sub>) ⊆ Ceiling (<em>P</em><sub><em>i</em></sub>) ∪ Ceiling (<em>P</em><sub><em>j</em></sub>) ∪ AuthorizedBridge (<em>i</em>, <em>j</em>)</span></p>
+<p>This prevents semantic accessibility from becoming semantic
+imperialism.</p>
+<h3 id="provenance-and-authority">16.4 Provenance and authority</h3>
+<p>Bindings acquire standing partly through provenance.</p>
+<p>Possible sources include:</p>
+<ul>
+<li>observation;</li>
+<li>experiment;</li>
+<li>measurement;</li>
+<li>testimony;</li>
+<li>linguistic convention;</li>
+<li>legal enactment;</li>
+<li>institutional authority;</li>
+<li>tradition;</li>
+<li>memory;</li>
+<li>engineered design;</li>
+<li>archival custody.</li>
+</ul>
+<p>These sources do not confer identical authority.</p>
+<p>Provenance should therefore be part of the binding constitution
+rather than an optional annotation.</p>
+<p>Authority should also be typed.</p>
+<p>A source may possess authority to define a legal term without
+possessing authority to determine a biological fact.</p>
+<h3 id="contestability">16.5 Contestability</h3>
+<p>Semantic governance must account for power.</p>
+<p>Institutional meanings may be imposed, inherited, contested,
+resisted, amended, or abolished.</p>
+<p>A governed semantic system should therefore record:</p>
+<ul>
+<li>who constituted a binding;</li>
+<li>who is affected by it;</li>
+<li>who may challenge it;</li>
+<li>which amendment routes exist;</li>
+<li>which authority is provisional;</li>
+<li>which claims are disputed;</li>
+<li>which histories have been excluded.</li>
+</ul>
+<p>A semantic constitution without contestability may formalize
+domination rather than merely describe meaning.</p>
+<h2 id="implications-for-artificial-intelligence">17. Implications for
+Artificial Intelligence</h2>
+<h3 id="beyond-token-association">17.1 Beyond token association</h3>
+<p>A language model may produce contextually appropriate text through
+statistical regularities learned from large corpora.</p>
+<p>Such regularities may encode substantial relational structure.</p>
+<p>Fluent association alone does not guarantee:</p>
+<ul>
+<li>explicit jurisdiction;</li>
+<li>grounding;</li>
+<li>provenance;</li>
+<li>identity continuity;</li>
+<li>authority;</li>
+<li>claim calibration;</li>
+<li>admissible composition.</li>
+</ul>
+<p>The Semantic Binding Principle suggests an additional governed layer
+in which:</p>
+<ul>
+<li>concepts have explicit kernels;</li>
+<li>handles resolve to concept constitutions;</li>
+<li>projections are jurisdictionally typed;</li>
+<li>bridges declare losses and limits;</li>
+<li>semantic polynomials are evaluated;</li>
+<li>failed joins return typed refusals;</li>
+<li>realizations carry constitutional receipts.</li>
+</ul>
+<p>A vector embedding may provide one useful chart.</p>
+<p>It should not be mistaken for the entire semantic territory.</p>
+<h3 id="semantic-compiler">17.2 Semantic compiler</h3>
+<p>A semantic compiler may implement the sequence:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\text{handle}
+&amp;\rightarrow
+\text{concept resolution} \\
+&amp;\rightarrow
+\text{jurisdiction selection} \\
+&amp;\rightarrow
+\text{projection composition} \\
+&amp;\rightarrow
+\text{compatibility court} \\
+&amp;\rightarrow
+\text{Instance Constitution} \\
+&amp;\rightarrow
+\text{Instance Realization}
+\end{aligned}
+$$</span></p>
+<p>Operationally:</p>
+<ol type="1">
+<li><p>Resolve the user’s term or intent to candidate concept
+constitutions.</p></li>
+<li><p>Identify the use case, audience, and jurisdiction.</p></li>
+<li><p>Retrieve the root kernel and registered projections.</p></li>
+<li><p>Select active projection variables.</p></li>
+<li><p>Evaluate the sparse semantic polynomial.</p></li>
+<li><p>Test bridge compatibility, provenance, invariants, and claim
+ceilings.</p></li>
+<li><p>Constitute the instance.</p></li>
+<li><p>Realize it through language, interface, action, or model
+orchestration.</p></li>
+<li><p>Emit a receipt recording the semantic descent.</p></li>
+</ol>
+<h3 id="polyprojective-interfaces">17.3 Polyprojective interfaces</h3>
+<p>A universal semantic interface should not force every concept into
+one privileged vocabulary.</p>
+<p>It may expose several projections:</p>
+<ul>
+<li>intuitive;</li>
+<li>operational;</li>
+<li>formal;</li>
+<li>visual;</li>
+<li>narrative;</li>
+<li>legal;</li>
+<li>psychological;</li>
+<li>historical;</li>
+<li>ethical;</li>
+<li>computational.</li>
+</ul>
+<p>The interface can select or combine projections according to the
+user’s task while preserving the shared kernel.</p>
+<p>The optimization target is:</p>
+<p><span
+class="math display">max Accessibility (<em>R</em>, <em>u</em>)</span></p>
+<p>subject to:</p>
+<p><span
+class="math display">InvariantPreservation (<em>R</em>) = 1</span></p>
+<p><span
+class="math display">JurisdictionalValidity (<em>R</em>) = 1</span></p>
+<p><span
+class="math display">Claims (<em>R</em>) ⊆ Ceiling<sub><em>I</em><em>C</em></sub></span></p>
+<p>The aim is not maximal verbal variety.</p>
+<p>It is maximum semantic ingress under semantic custody.</p>
+<h3 id="multidimensional-grounding">17.4 Multidimensional grounding</h3>
+<p>The symbol grounding question is often reduced to a binary:</p>
+<blockquote>
+<p>Is the symbol connected to the world, or only to other symbols?</p>
+</blockquote>
+<p>The binding framework permits several grounding dimensions:</p>
+<p><span class="math display">$$
+\begin{aligned}
+G = \langle &amp;G_{\mathrm{perceptual}}, G_{\mathrm{practical}}, \\
+&amp;G_{\mathrm{inferential}}, G_{\mathrm{social}}, \\
+&amp;G_{\mathrm{institutional}}, G_{\mathrm{historical}}, \\
+&amp;G_{\mathrm{normative}}, G_{\mathrm{autobiographical}}\rangle
+\end{aligned}
+$$</span></p>
+<p>A system may possess strong linguistic and inferential grounding
+while lacking embodiment and autobiographical continuity.</p>
+<p>Another system may possess strong sensorimotor grounding while
+lacking legal or social standing.</p>
+<p>The framework replaces the binary claim that a system either
+understands or does not understand with a more precise question:</p>
+<blockquote>
+<p>Which binding dimensions are actually present, stable, and
+consequential?</p>
+</blockquote>
+<h3 id="reflexive-governance">17.5 Reflexive governance</h3>
+<p>A governed AI system may benefit from Reflexive Meta-Binding if it
+can accurately represent:</p>
+<ul>
+<li>active instructions;</li>
+<li>unresolved conflicts;</li>
+<li>uncertainty;</li>
+<li>evidence standing;</li>
+<li>claim limits;</li>
+<li>tool authority;</li>
+<li>prior commitments;</li>
+<li>realization constraints.</li>
+</ul>
+<p>However, self-report should not be treated as infallible.</p>
+<p>A constitutional system should compare reflexive reports against:</p>
+<ul>
+<li>external traces;</li>
+<li>execution receipts;</li>
+<li>policy bindings;</li>
+<li>prompt history;</li>
+<li>tool records;</li>
+<li>independent evaluators;</li>
+<li>causal interventions.</li>
+</ul>
+<p>Reflexive Meta-Binding should support governance rather than
+substitute for governance.</p>
+<h3 id="no-automatic-consciousness-inference">17.6 No automatic
+consciousness inference</h3>
+<p>Neither semantic binding nor Reflexive Meta-Binding establishes
+phenomenal consciousness.</p>
+<p>The architecture can characterize:</p>
+<ul>
+<li>integration;</li>
+<li>self-modeling;</li>
+<li>temporal feedback;</li>
+<li>semantic participation;</li>
+<li>uncertainty representation;</li>
+<li>governance participation.</li>
+</ul>
+<p>It does not adjudicate subjective experience.</p>
+<p>The framework is designed to replace vague all-or-nothing disputes
+with more specific structural questions without pretending that the
+metaphysical question has thereby been solved.</p>
+<h2 id="objections-and-replies">18. Objections and Replies</h2>
+<h3 id="this-is-only-relationalism-under-a-new-name">18.1 “This is only
+relationalism under a new name”</h3>
+<p>The theory is relational, but it adds several commitments not
+contained in the statement that meaning depends on relations.</p>
+<p>A semantic binding has:</p>
+<ul>
+<li>typed roles;</li>
+<li>constraints;</li>
+<li>jurisdiction;</li>
+<li>provenance;</li>
+<li>consequences;</li>
+<li>persistence conditions;</li>
+<li>projection rules;</li>
+<li>transformation laws;</li>
+<li>failure modes.</li>
+</ul>
+<p>The theory also distinguishes active, sedimented, standing,
+constitutional, recursive, and reflexive bindings.</p>
+<p>Its contribution lies in this architecture, not in the word
+<em>relation</em>.</p>
+<h3 id="binding-already-presupposes-meaning">18.2 “Binding already
+presupposes meaning”</h3>
+<p>Some bindings are described semantically because they occur inside
+already meaningful practices.</p>
+<p>This creates recursion but not necessarily a vicious regress.</p>
+<p>The architecture permits a graded descent:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\text{causal coupling} \\
+&amp;\rightarrow \text{discrimination} \\
+&amp;\rightarrow \text{regulation} \\
+&amp;\rightarrow \text{semantic uptake} \\
+&amp;\rightarrow \text{conceptual stabilization}
+\end{aligned}
+$$</span></p>
+<p>No claim is made that one final semantic atom must exist.</p>
+<p>Operational analysis may terminate at the lowest stable circuit
+sufficient to regenerate the meanings under investigation.</p>
+<h3 id="if-everything-is-binding-everything-is-meaningful">18.3 “If
+everything is binding, everything is meaningful”</h3>
+<p>The semantic threshold blocks this conclusion.</p>
+<p>A relation is not semantic unless it is typed, differentiating,
+constraining, uptake-capable, jurisdictionally bounded, reidentifiable,
+and consequential.</p>
+<p>Most physical relations do not independently satisfy these
+conditions.</p>
+<p>Pan-relationalism does not entail pan-semanticism.</p>
+<h3 id="contextual-meaning-entails-relativism">18.4 “Contextual meaning
+entails relativism”</h3>
+<p>Contextuality does not imply arbitrariness.</p>
+<p>Contexts constrain relevance, but objects, histories, logic,
+authority, evidence, and consequences continue to resist invalid
+bindings.</p>
+<p>A binding may be locally valid, globally invalid, or false even
+within its intended jurisdiction.</p>
+<p>Jurisdiction is a discipline of validity, not a license for
+unrestricted interpretation.</p>
+<h3 id="meaning-cannot-exist-in-an-object-without-a-perceiver">18.5
+“Meaning cannot exist in an object without a perceiver”</h3>
+<p>An object need not contain complete intrinsic meaning in order to
+carry sedimented binding.</p>
+<p>A key’s structure is materially coordinated with a lock.</p>
+<p>A road sign’s form and placement preserve an institutional
+instruction.</p>
+<p>A fossil preserves evidence.</p>
+<p>A tool embodies intended use.</p>
+<p>The full active meaning requires a larger binding, but the object is
+not semantically blank.</p>
+<h3 id="the-manifold-and-sheaf-terminology-is-metaphorical">18.6 “The
+manifold and sheaf terminology is metaphorical”</h3>
+<p>It is metaphorical unless explicit charts, restriction maps,
+compatibility rules, and gluing conditions are supplied.</p>
+<p>The present paper therefore uses the more conservative notion of a
+jurisdictional presheaf.</p>
+<p>A particular implementation earns the stronger sheaf or manifold
+description only when it satisfies the corresponding formal
+conditions.</p>
+<p>The same caution applies to lattice terminology.</p>
+<p>A semantic poset should not be called a complete lattice unless the
+required meets and joins exist.</p>
+<h3 id="the-theory-merely-renames-a-knowledge-graph">18.7 “The theory
+merely renames a knowledge graph”</h3>
+<p>A knowledge graph can encode entities and relations.</p>
+<p>Ordinary graph structure does not automatically encode:</p>
+<ul>
+<li>jurisdiction;</li>
+<li>mandatory invariants;</li>
+<li>consequence profiles;</li>
+<li>admissibility;</li>
+<li>authority;</li>
+<li>partial composition;</li>
+<li>failed gluing;</li>
+<li>root callability;</li>
+<li>claim ceilings;</li>
+<li>realization obligations.</li>
+</ul>
+<p>A binding system may use graph technology.</p>
+<p>Its semantic constitution exceeds unlabeled connectivity.</p>
+<h3
+id="reflexive-meta-binding-can-be-inferred-from-self-description">18.8
+“Reflexive Meta-Binding can be inferred from self-description”</h3>
+<p>Self-description is not sufficient.</p>
+<p>A system may produce reflexive language through imitation, prompt
+completion, or rhetorical convention.</p>
+<p>A stronger test requires evidence that a represented model of the
+system’s own active binding conditions causally affects later
+processing.</p>
+<p>The relevant criterion is intervention, not vocabulary.</p>
+<h3 id="the-theory-ignores-power">18.9 “The theory ignores power”</h3>
+<p>Meaning is not always cooperatively negotiated.</p>
+<p>Institutions may impose categories, identities, and obligations.</p>
+<p>The framework addresses this by making provenance, authority,
+affected parties, and contestability internal to the binding
+constitution.</p>
+<p>A complete political theory of semantic binding remains future
+work.</p>
+<h2 id="research-program">19. Research Program</h2>
+<h3 id="core-implementation-artifacts">19.1 Core implementation
+artifacts</h3>
+<p>A bounded implementation should contain at least five artifacts.</p>
+<h4 id="binding-registry">Binding registry</h4>
+<p>The registry records:</p>
+<ul>
+<li>relata;</li>
+<li>types;</li>
+<li>roles;</li>
+<li>constraints;</li>
+<li>invariants;</li>
+<li>provenance;</li>
+<li>jurisdictions;</li>
+<li>consequences.</li>
+</ul>
+<h4 id="concept-constitution">Concept constitution</h4>
+<p>The concept constitution records:</p>
+<ul>
+<li>root callable kernel;</li>
+<li>mandatory and optional invariants;</li>
+<li>projections;</li>
+<li>bridges;</li>
+<li>claim ceilings;</li>
+<li>transformation rules.</li>
+</ul>
+<h4 id="jurisdiction-atlas">Jurisdiction atlas</h4>
+<p>The atlas records:</p>
+<ul>
+<li>local validity domains;</li>
+<li>restriction maps;</li>
+<li>overlaps;</li>
+<li>bridge directionality;</li>
+<li>information loss;</li>
+<li>incompatible projections.</li>
+</ul>
+<h4 id="semantic-compiler-1">Semantic compiler</h4>
+<p>The compiler selects and composes projections into an Instance
+Constitution.</p>
+<h4 id="realization-receipt">Realization receipt</h4>
+<p>The receipt records:</p>
+<ul>
+<li>concept resolved;</li>
+<li>kernel used;</li>
+<li>jurisdictions activated;</li>
+<li>polynomial terms selected;</li>
+<li>bridges traversed;</li>
+<li>invariants preserved;</li>
+<li>claims admitted;</li>
+<li>refusals produced;</li>
+<li>realization effects.</li>
+</ul>
+<h3 id="concept-kernel-extraction">19.2 Concept-kernel extraction</h3>
+<p>A first experiment should compare candidate root kernels for bounded
+concepts such as:</p>
+<ul>
+<li>person;</li>
+<li>responsibility;</li>
+<li>ownership;</li>
+<li>consent;</li>
+<li>evidence;</li>
+<li>trust;</li>
+<li>authority;</li>
+<li>safety;</li>
+<li>risk;</li>
+<li>model.</li>
+</ul>
+<p>Researchers should test whether each kernel can regenerate the
+registered projections without mandatory invariant loss.</p>
+<h3 id="cross-jurisdiction-translation">19.3 Cross-jurisdiction
+translation</h3>
+<p>A concept should be independently modeled in several
+jurisdictions.</p>
+<p>For example:</p>
+<ul>
+<li>legal;</li>
+<li>psychological;</li>
+<li>operational;</li>
+<li>ordinary-language;</li>
+<li>historical.</li>
+</ul>
+<p>The system should attempt pairwise and higher-order
+co-projections.</p>
+<p>Evaluation should ask:</p>
+<ul>
+<li>Which invariants survive?</li>
+<li>Which claims remain local?</li>
+<li>Which bridges are directional?</li>
+<li>Which bridges lose information?</li>
+<li>Where does gluing fail?</li>
+<li>Does explicit refusal outperform fluent synthesis?</li>
+</ul>
+<h3 id="root-callability-test">19.4 Root-callability test</h3>
+<p>A proposed kernel should be evaluated by controlled removal.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>K</em><sub><em>C</em></sub><sup>−<em>i</em></sup></span></p>
+<p>be the kernel with component (i) removed.</p>
+<p>If the removed component is mandatory, at least one registered
+projection should fail:</p>
+<p><span
+class="math display">∃<em>P</em><sub><em>j</em></sub> ∈ 𝒫<sub><em>C</em></sub> : Compile (<em>K</em><sub><em>C</em></sub><sup>−<em>i</em></sup>, <em>ρ</em><sub><em>j</em></sub>, <em>c</em><sub><em>j</em></sub>) = ⊥</span></p>
+<p>If all projections remain intact, the component may not belong to the
+minimal kernel.</p>
+<h3 id="reflexive-meta-binding-intervention">19.5 Reflexive Meta-Binding
+intervention</h3>
+<p>A Reflexive Meta-Binding experiment should vary the system’s
+representation of its own active constraints while holding the external
+task as constant as possible.</p>
+<p>The experiment should test whether:</p>
+<p><span
+class="math display"><em>d</em><em>o</em>(<em>b̂</em><sub><em>t</em></sub> = <em>b̂</em><sub><em>t</em></sub><sup>(1)</sup>)</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>d</em><em>o</em>(<em>b̂</em><sub><em>t</em></sub> = <em>b̂</em><sub><em>t</em></sub><sup>(2)</sup>)</span></p>
+<p>produce predicted differences in:</p>
+<ul>
+<li>later reasoning;</li>
+<li>constraint adherence;</li>
+<li>uncertainty handling;</li>
+<li>error correction;</li>
+<li>framework integration;</li>
+<li>refusal behavior.</li>
+</ul>
+<p>The test should distinguish causal self-model use from stylistic
+self-reference.</p>
+<h3 id="binding-overextension-detection">19.6 Binding-overextension
+detection</h3>
+<p>A benchmark should include:</p>
+<ul>
+<li>valid bridges;</li>
+<li>invalid bridges;</li>
+<li>ambiguous bridges;</li>
+<li>missing provenance;</li>
+<li>claim-ceiling traps;</li>
+<li>metaphor-to-fact traps;</li>
+<li>correlation-to-causation traps;</li>
+<li>cross-jurisdiction authority traps.</li>
+</ul>
+<p>The system should classify each proposed synthesis as:</p>
+<ul>
+<li>admitted;</li>
+<li>admitted with qualification;</li>
+<li>hypothesis;</li>
+<li>analogy;</li>
+<li>unsupported bridge;</li>
+<li>refused.</li>
+</ul>
+<h3 id="longitudinal-rebinding">19.7 Longitudinal rebinding</h3>
+<p>Some meanings change while preserving partial identity.</p>
+<p>A longitudinal experiment should track:</p>
+<p><span
+class="math display"><em>C</em><sub><em>t</em><sub>1</sub></sub> → <em>C</em><sub><em>t</em><sub>2</sub></sub> → <em>C</em><sub><em>t</em><sub>3</sub></sub></span></p>
+<p>The system should distinguish:</p>
+<ul>
+<li>lexical drift;</li>
+<li>projection expansion;</li>
+<li>jurisdiction change;</li>
+<li>authority change;</li>
+<li>invariant revision;</li>
+<li>concept fission;</li>
+<li>concept merger;</li>
+<li>replacement.</li>
+</ul>
+<p>This may provide a more precise account of semantic change than token
+similarity alone.</p>
+<h3 id="evaluation-measures">19.8 Evaluation measures</h3>
+<h4 id="invariant-preservation">Invariant preservation</h4>
+<p><span class="math display">$$
+IP(R,C)
+=
+\frac{
+\left|
+I_C^{\mathrm{required}}
+\cap
+I_R
+\right|
+}{
+\left|
+I_C^{\mathrm{required}}
+\right|
+}
+$$</span></p>
+<p>A valid realization should ordinarily satisfy:</p>
+<p><span
+class="math display"><em>I</em><em>P</em>(<em>R</em>, <em>C</em>) = 1</span></p>
+<h4 id="jurisdictional-precision">Jurisdictional precision</h4>
+<p><span class="math display">$$
+JP(R)
+= 1 -
+\frac{
+\left|
+\operatorname{ClaimsOutsideJurisdiction}(R)
+\right|
+}{
+\left|
+\operatorname{Claims}(R)
+\right|
+}
+$$</span></p>
+<h4 id="bridge-fidelity">Bridge fidelity</h4>
+<p>Bridge fidelity measures preservation of shared content without
+erasing distinct jurisdiction.</p>
+<h4 id="accessibility-gain">Accessibility gain</h4>
+<p>Accessibility gain measures improvement in comprehension or task
+success after selecting a context-appropriate projection.</p>
+<h4 id="refusal-calibration">Refusal calibration</h4>
+<p>Refusal calibration measures whether the compiler rejects genuinely
+unsupported joins without refusing admissible ones.</p>
+<h4 id="operational-disclosure-correspondence">Operational-disclosure
+correspondence</h4>
+<p>For Reflexive Meta-Binding, correspondence measures agreement between
+externally supported operational evidence and system self-report.</p>
+<p>It should not assume either source is infallible.</p>
+<h2 id="corpus-placement-and-non-identity-boundaries">20. Corpus
+Placement and Non-Identity Boundaries</h2>
+<p>The paper occupies a central but non-exclusive position in the
+corpus.</p>
+<ol type="1">
+<li><em>Meaning as Binding</em> is a shorter relational-ontology
+formulation and historical computational bridge. It should be compared
+as a precursor, companion, or profile; shared language does not prove
+that it is the same work.</li>
+<li><em>Meta-Binding as Operational Invariant</em> narrows attention to
+reflexive operational behavior in language models. Its empirical program
+does not prove the general Semantic Binding Principle, and the general
+principle does not prove that a model satisfies the reflexive
+criterion.</li>
+<li><em>Semantic Manifold Topology</em> supplies methods for mapping
+regions, adjacencies, and projections. The present paper correctly
+withholds manifold, lattice, or sheaf standing unless the required
+formal structures are actually defined.</li>
+<li><em>Semantic Legitimacy Before Context</em> adds an ordering
+constraint: contextual fit cannot retroactively grant standing to an
+unsupported binding.</li>
+<li><em>The Well-Governed Mind</em> explores cognitive governance. A
+represented or regulated semantic binding is not thereby phenomenal,
+autonomous, truthful, or legitimate.</li>
+<li><em>Admissibility Theory of Consciousness</em> and <em>The Locus of
+Qualia</em> apply adjacent architectures to consciousness and
+experience. These are hypotheses and application programs, not
+deductions from the location-of-meaning thesis.</li>
+<li>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the author-confirmed <code>CCF -&gt; CMB -&gt; GMB</code> lineage.
+GMB can preserve binding constitutions, competing projections, evidence,
+standing, and revision history. It is not identical to meaning, a mind,
+a phenomenal field, or the authority that judges every binding.</li>
+</ol>
+<p>The corpus should therefore expose typed relations such as<br />
+<code>PRECURSOR_CANDIDATE_OF</code>,<br />
+<code>APPLIES</code>, <code>OPERATIONALIZES</code>,
+<code>COUNTERTESTS</code>,<br />
+and<br />
+<code>HOSTS_REPRESENTATION_OF</code> rather than collapsing these works
+into one identity.</p>
+<h2 id="universal-gsm-projection">21. Universal GSM Projection</h2>
+<p>The universal governed semantic model should represent at least the
+following entities separately: relatum, role, binding, binding
+constitution, concept kernel, constraint, invariant, jurisdiction,
+context, provenance assertion, consequence profile, projection,
+co-projection, bridge contract, source region, evidence item, claim,
+claim ceiling, standing judgment, authority grant, refusal, instance
+configuration, implementation realization, observation contract, and
+revision.</p>
+<p>High-value relations include:</p>
+<ul>
+<li>a binding <strong>BINDS</strong> relata through typed roles;</li>
+<li>a constraint <strong>LIMITS</strong> a binding or projection;</li>
+<li>a binding <strong>VALID_WITHIN</strong> a jurisdiction;</li>
+<li>a transformation <strong>PRESERVES_INVARIANT</strong> under a
+declared test;</li>
+<li>a concept constitution <strong>PROJECTS_AS</strong> a local
+realization;</li>
+<li>two local projections <strong>OVERLAP_ON</strong> shared material
+without becoming identical;</li>
+<li>a proposed composition <strong>REQUIRES_BRIDGE</strong> a declared
+compatibility contract;</li>
+<li>a claim <strong>SUPPORTED_BY</strong>,
+<strong>COUNTEREVIDENCED_BY</strong>, or <strong>UNRESOLVED_BY</strong>
+an evidence item;</li>
+<li>an implementation <strong>REALIZES_CANDIDATE</strong> an Instance
+Configuration without automatic conformance standing;</li>
+<li>a revision <strong>SUCCEEDS</strong> an earlier revision without
+erasing it.</li>
+</ul>
+<p>Every consequential edge needs source, origin class, scope, standing,
+and revision identity. Source-native definitions, author-adopted
+rulings, machine-extracted adjacency, and AI integration synthesis must
+not share an undifferentiated status. The graph can encode a claim that
+two artifacts express the same binding constitution; it cannot make that
+identity true merely by storing the edge.</p>
+<h2
+id="relational-constitutional-semantic-location">Relational-Constitutional
+Semantic Location</h2>
+<p>The completed P1 corpus gives The Locus of Meaning a bounded
+foundational role: it is a <strong>relational-constitutional account of
+semantic location through typed bindings, jurisdictions, consequences,
+and revision</strong>. Meaning is neither deposited wholly in an object
+nor generated wholly by a subject. The paper does not claim that every
+relation is meaningful, that a binding is true, or that one global
+semantic locus exists.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Meaning as Binding</em><br />
+<strong>Supplies:</strong> The compact core thesis that meaning arises
+through constrained binding.<br />
+<strong>Locus-of-meaning boundary:</strong> This paper elaborates locus,
+jurisdictions, recursive meta-binding, and consequence without replacing
+the compact thesis.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Binding
+Theory: Governed Anchor Resolution as a Universal Pattern in Semantic
+Systems</em><br />
+<strong>Supplies:</strong> Governed anchor resolution and binding
+continuity.<br />
+<strong>Locus-of-meaning boundary:</strong> Anchor resolution is one
+binding problem; semantic locus includes uptake, consequence,
+jurisdiction, and revision.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Global Term Key:
+Constitutional Lexical Identity Through Disambiguated Semantic
+Binding</em><br />
+<strong>Supplies:</strong> Registered lexical handles and
+context-sensitive identity resolution.<br />
+<strong>Locus-of-meaning boundary:</strong> A GTK addresses a concept;
+the token or registry entry is not the whole meaning locus.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governed Semantic
+Cartography</em><br />
+<strong>Supplies:</strong> Coordinates, projections, paths, and atlas
+coherence.<br />
+<strong>Locus-of-meaning boundary:</strong> A map renders binding
+structures; it does not create their truth, authority, or full semantic
+constitution.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Binding Quality
+(SBQ)</em><br />
+<strong>Supplies:</strong> Evaluation of binding coherence, coverage,
+and fragility.<br />
+<strong>Locus-of-meaning boundary:</strong> SBQ can assess a binding
+profile; quality is not semantic identity or truth.</p></li>
+</ul>
+<p>A portable binding-locus record is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B= (&amp;relata, roles, jurisdiction, constraints, uptake, \\
+&amp;consequences, reidentification, provenance, standing, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>It supports three different locus questions. The <strong>realization
+locus</strong> asks where causal and computational support resides. The
+<strong>standing locus</strong> asks where an interpretation is
+currently admitted. The <strong>constitutional locus</strong> asks which
+constraints and relations make the interpretation the one it is. These
+loci may overlap without being identical or unique.</p>
+<p>The corpus must preserve six non-collapse rules: representation is
+not referent; association is not semantic binding; binding is not truth;
+meaning is not standing; lexical address is not concept identity; and
+successful use is not unrestricted authority. A concept can retain
+identity through representational change only relative to declared
+preserved obligations and a jurisdiction capable of adjudicating
+remainder and conflict.</p>
+<p>The universal GSM can type <code>BINDS_RELATA</code>,
+<code>PLAYS_SEMANTIC_ROLE</code>,
+<code>VALID_IN_JURISDICTION</code>,<br />
+<code>CONSTRAINED_BY</code>, <code>UPTAKEN_BY</code>,
+<code>HAS_CONSEQUENCE</code>, <code>REIDENTIFIED_AS</code>,
+<code>MISBOUND_AS</code>,<br />
+<code>HAS_SEMANTIC_STANDING</code>,<br />
+and <code>REVISED_BY_BINDING</code>. Recursive meta-binding is
+represented as binding over bound structures rather than as an automatic
+higher truth.</p>
+<p>This integration establishes four editorial commitments: adopt
+relational-constitutional semantic location as the official corpus role;
+adopt the binding-locus record; retain the
+realization/standing/constitutional locus distinction; and enforce the
+six semantic non-collapse rules across GMB, Hyperpedia, compilers, and
+agent interfaces.</p>
+<h2 id="material-lineage-audit-and-cross-domain-binding-tests">Material,
+Lineage, Audit, and Cross-Domain Binding Tests</h2>
+<p>The fixed-seed comparison with the hydroengineering/geologic profile,
+governed project-state lineage, adversarial alternation, and The
+Well-Governed Mind gives the semantic-locus theory four demanding
+tests:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B^*= (&amp;relata, roles, jurisdiction, constraints, uptake, \\
+&amp;consequences, reidentification, material\_trace, \\
+&amp;artifact\_lineage, audit\_challenge, transfer\_limits, \\
+&amp;provenance, standing, revision)
+\end{aligned}.
+$$</span></p>
+<p>A material passport or map label is meaningful only through a bounded
+relation among site, sample, method, use, evidence, authority, and
+consequence. Physical resistance and adverse outcomes can counter a
+coherent interpretation. Project lineage supplies exact custody and
+succession, but byte preservation cannot by itself prove preservation of
+the binding constitution.</p>
+<p>Adversarial alternation can challenge claimed loci by varying
+context, jurisdiction, representation, evaluator, and counterexample.
+Repeated agreement does not make the evaluator authoritative; it
+supplies bounded evidence about reidentification, bridge fidelity,
+refusal calibration, and binding overextension.</p>
+<p>The Well-Governed Mind is a cross-domain transfer test rather than
+confirmation of the ontology. A computational binding vocabulary may
+organize comparative questions about cognition only through a transfer
+envelope that states shared structure, disanalogies, required evidence,
+and prohibited inference. No clinical efficacy, diagnosis, phenomenal
+status, or moral standing follows from structural similarity.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_MATERIAL_CLAIM_TO_SITE</code>,<br />
+<code>PRESERVES_ARTIFACT_NOT_MEANING_BY_DEFAULT</code>,
+<code>COUNTERTESTED_BY_ALTERNATING_AUDIT</code>,<br />
+<code>REIDENTIFIED_ACROSS_REPRESENTATION</code>,
+<code>PROJECTED_UNDER_TRANSFER_ENVELOPE</code>,<br />
+<code>PROHIBITS_CLINICAL_INFERENCE</code>, and<br />
+<code>REVISED_AFTER_MISBINDING</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the extended binding-locus test record; require material resistance and
+project lineage without reducing meaning to either; use alternation as
+bounded countertesting rather than semantic authority; and make the
+Well-Governed Mind transfer firewall part of cross-domain semantic
+practice.</p>
+<h2 id="an-interventional-program-for-relational-semantic-location">An
+Interventional Program for Relational Semantic Location</h2>
+<p>Twelve downstream uses treat The Locus of Meaning as the extended
+account behind audit subjects, ATC boundaries, anchor resolution,
+technical decisions, Meaning as Binding, Meaning Crystals, qualia
+mappings, SBQ, project lineage, shared experience, and governed
+cognition. They confirm the paper’s corpus role: Meaning as Binding
+supplies the compact kernel; this work develops jurisdiction, recursive
+and reflexive Meta-Binding, semantic location, overextension,
+governance, and empirical tests.</p>
+<p>The binding case is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M^*= (&amp;relata, roles, identity, jurisdiction, history, context, \\
+&amp;uptake, use, consequences, constraints, counterfactuals, \\
+&amp;observers, translations, conflicts, evidence, standing, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>A locus claim should identify what remains invariant when object,
+interpreter, context, history, practice, or use changes. Interventions
+should vary one or more of those relata while measuring
+reidentification, successful use, inferential consequence, correction,
+translation, disagreement, and recovery. Object-only, subject-only,
+association-only, knowledge-graph, and unconstrained relational models
+are rival explanations. The theory gains content only where its fuller
+record predicts or explains a difference those rivals do not.</p>
+<p>Semantic location may be distributed, non-unique, observer-relative,
+contested, or temporarily inactive without becoming arbitrary. Meaning,
+representation, reference, truth, authority, phenomenal content, and
+causal effect remain different claim families. A stable canonical
+encoding can preserve a representation while uptake changes; shared use
+can stabilize meaning without phenomenal identity; and a binding can be
+meaningful while false, coercive, or unauthorized.</p>
+<p>The universal GSM can type<br />
+<code>CONSTITUTES_MEANING_THROUGH_BINDING</code>,<br />
+<code>LOCATES_MEANING_RELATIONALLY</code>,
+<code>REIDENTIFIES_BINDING_UNDER_VARIATION</code>,<br />
+<code>CONTESTS_SEMANTIC_JURISDICTION</code>,
+<code>TRANSLATES_WITH_SEMANTIC_REMAINDER</code>,<br />
+<code>INTERVENES_ON_BINDING_RELATUM</code>,
+<code>DISTINGUISHES_MEANING_FROM_TRUTH</code>,<br />
+and<br />
+<code>REVISES_BINDING_CONSTITUTION</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the interventional binding case; make rival
+semantic-location models and discriminating predictions explicit;
+preserve non-unique and contested loci without relativist collapse; and
+retain hard boundaries among meaning, truth, authority, experience,
+representation, and effect.</p>
+<h2 id="counterevidence-and-falsification-program">22. Counterevidence
+and Falsification Program</h2>
+<p>The proposal is weakened, narrowed, or falsified within a stated
+scope if any of the following survives serious testing:</p>
+<ol type="1">
+<li>The semantic threshold is circular: terms such as uptake,
+jurisdiction, or consequence already presuppose the meaning the
+threshold purports to explain.</li>
+<li>“Governed” equivocates between descriptive constraint and legitimate
+institutional authority. Natural, cognitive, and social bindings may
+require different predicates.</li>
+<li>The seven-part threshold is under-inclusive for tacit, affective,
+prelinguistic, or non-reidentifiable significance, or over-inclusive for
+merely causal control relations.</li>
+<li>Reidentifiability is a condition for investigators to track meaning
+rather than a constitutive condition of meaning itself.</li>
+<li>Consequentiality reduces semantic content to behavior or inference
+and fails cases of dormant, private, or unrealized meaning.</li>
+<li>The minimal-support or semantic-locus family cannot be
+operationalized without arbitrary modeling choices.</li>
+<li>Binding hypergraphs and polynomials reproduce ordinary contextual
+representation without additional prediction, explanation, or governance
+value.</li>
+<li>Purported joins depend on undeclared bridge assumptions, or local
+compatibility fails to support global integration.</li>
+<li>The person-binding kernel erases contested cultural, legal,
+developmental, disabled, embodied, or nonhuman cases it claims to
+organize.</li>
+<li>Reflexive Meta-Binding interventions alter behavior only through
+generic prompt perturbation rather than manipulation of a causally
+effective self-model.</li>
+<li>Simpler provenance, constraint, or typed-graph mechanisms provide
+the same practical benefits without the stronger semantic ontology.</li>
+<li>A GMB representation remains internally coherent while source
+custody, standing, interpretation, or real-world consequences are
+wrong.</li>
+</ol>
+<p>A useful evaluation program needs adversarial negative cases,
+cross-domain examples, rival encodings, ablations, inter-reviewer
+disagreement, bridge failures, longitudinal rebinding, and explicit
+cases where the theory should refuse to classify a relation as semantic.
+Passing such tests supports only the tested operational profile; it does
+not settle all philosophical theories of meaning.</p>
+<h2 id="binding-without-a-single-place-where-meaning-lives">Binding
+Without a Single Place Where Meaning Lives</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>The Locus of Meaning argues that meaning is not located in a string,
+symbol, embedding, brain state, or database entry alone. It emerges
+through binding among distinctions, context, use, consequence,
+interpretation, and revision. The Semantic Binding Principle is a
+philosophical and architectural thesis, not a completed empirical theory
+of language or mind.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Causal-coupling sufficiency.</strong> Any system that
+changes another is said to carry meaning. The framework must distinguish
+causal influence from semantic uptake and norm-governed
+consequence.</li>
+<li><strong>Interpreter regress.</strong> Meaning requires an
+interpreter, which requires another interpreter indefinitely. The
+account needs a bounded operational level without declaring the
+philosophical question closed.</li>
+<li><strong>Private-language attack.</strong> A wholly private binding
+is treated as complete meaning despite lacking correction or shared
+norms. The framework must state which claims require public criteria and
+which do not.</li>
+<li><strong>Social-reduction attack.</strong> Institutional use is
+treated as sufficient while embodied, affective, indexical, or local
+experience disappears. Multiple loci and scales must remain
+possible.</li>
+<li><strong>Embedding-as-meaning attack.</strong> Distributional
+similarity is treated as semantic identity or truth. Embeddings are
+evidence and retrieval instruments under a profile, not meaning or
+standing.</li>
+<li><strong>Truth-normativity collapse.</strong> Successful use,
+accepted convention, and truth are merged. Binding, warrant,
+correctness, consequence, and authority are different relations.</li>
+<li><strong>AI-fluency attack.</strong> Coherent model output is taken
+as proof of understanding. The paper must distinguish operational
+semantic participation from phenomenal, intentional, or epistemic
+conclusions.</li>
+<li><strong>Unfalsifiable-totality attack.</strong> Every counterexample
+is absorbed as another binding layer. The research program needs cases
+that would narrow or reject specific claims.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper contributes an integrative binding vocabulary and a set of
+testable architectural consequences. It does not establish a universal
+theory of meaning, settle externalism or internalism, prove machine
+understanding, or resolve consciousness. Formal hierarchies organize
+proposed relations; they do not demonstrate necessity or
+exhaustiveness.</p>
+<p>Claims drawing on philosophy of language, semiotics, linguistics,
+cognitive science, neuroscience, social theory, or AI require current
+external scholarship and careful comparison. Internal corpus recurrence
+shows coherence inside the Ableman architecture, not independent
+validation. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The strongest accessible idea is that a symbol has meaning only
+through the governed relations that let it be used, challenged,
+corrected, carried into consequence, and revised without losing its
+history.</p>
+<h2 id="publication-standing-and-evidence-limits">23. Publication
+Standing and Evidence Limits</h2>
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<h3 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h3>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author source whose internal title is <em>The Locus of
+Meaning</em> and whose filename is<br />
+<code>What Locus of Meaning Adds.md</code>. The integration custody
+manifest is</p>
+<p><code>work/paper-saturation-v1/evidence/the-locus-</code><br />
+<code>of-meaning/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>5733F463B1F88F0692C032684E67D3AB921D057E1B3E42AF58FFBAFD51C7758A</code>.
+The exact source remains unchanged. An earlier file named</p>
+<p><code>The Locus of Meaning.md</code> is retained as a predecessor
+candidate because the two manuscripts share a title and large conceptual
+surface but differ materially in subtitle, length, organization, and
+terminology. Their exact work and version relationship remains an author
+decision. The Semantic Binding Principle, Recursive Meta-Binding,
+Reflexive Meta-Binding, binding overextension, callable concept
+constitutions, jurisdictional projections, semantic polynomials, person
+and stop-sign examples, and the original formal program remain author
+material. This pass repairs notation, applies the current realization
+funnel and GMB terminology, maps corpus interfaces, adds a universal-GSM
+projection, and supplies counterevidence and author-decision surfaces.
+Those additions are AI editorial or synthetic contributions until
+adopted. The manuscript cites external scholarship and makes
+philosophical comparisons. This pass did not conduct external research
+or independently verify those references. It also examined no
+implementation, experiment, model weights, subject report, or deployed
+GMB instance. The paper therefore presents a formal research
+architecture and bounded hypotheses, not empirical proof that a
+particular system possesses meaning, reflexive meta-binding,
+consciousness, or legitimate authority.</p>
+<h2 id="conclusion">24. Conclusion</h2>
+<p>The traditional semantic localization question asks whether meaning
+belongs to the object or to the mind.</p>
+<p>The Semantic Binding Principle answers that the question has mistaken
+the kind of location involved.</p>
+<p>Meaning is not exclusively stored in the world, projected by the
+subject, contained in a word, or deposited in an abstract concept.</p>
+<p>Meaning is constituted at the binding through which world,
+interpreter, sign, context, practice, history, and consequence become
+mutually determining.</p>
+<p>The object participates by constraining and carrying binding.</p>
+<p>The interpreter participates by activating, differentiating, and
+reorganizing binding.</p>
+<p>Language preserves callable binding structures.</p>
+<p>Institutions stabilize bindings through authority and
+consequence.</p>
+<p>Concepts are reusable binding constitutions.</p>
+<p>Words are handles into them.</p>
+<p>Contextual meanings are governed realizations.</p>
+<p>This account preserves what object-centered realism sees: the world
+resists arbitrary interpretation.</p>
+<p>It preserves what subject-centered idealism sees: intelligibility
+requires organization, perspective, and uptake.</p>
+<p>It preserves what externalism sees: semantic constitution crosses
+individual boundaries.</p>
+<p>It preserves what enactivism sees: meaning arises through
+engagement.</p>
+<p>It preserves what inferentialism sees: consequences and practices are
+constitutive.</p>
+<p>It adds a formal answer to the localization problem:</p>
+<p><span class="math display">$$
+\boxed{
+\text{Meaning exists at the locus of binding.}
+}
+$$</span></p>
+<p>The binding may be material, cognitive, social, institutional,
+historical, or distributed.</p>
+<p>Its semantic identity lies not in one carrier but in the governed
+structure that persists across admissible variation.</p>
+<p>Recursive Meta-Binding explains how already constituted meanings
+become participants in higher-order meanings.</p>
+<p>Reflexive Meta-Binding explains how a system may represent its own
+active binding constitution and use that representation in later
+processing.</p>
+<p>This reflexive capacity does not imply autonomy, phenomenal
+consciousness, truthful self-report, or authority.</p>
+<p>Those are distinct dimensions.</p>
+<p>Binding overextension explains how higher-order synthesis can exceed
+its evidence, jurisdiction, or constitutional permission.</p>
+<p>The binding hypergraph describes what participates.</p>
+<p>The partial lattice describes refinement and overlap.</p>
+<p>The jurisdiction atlas describes local validity.</p>
+<p>The sheaf condition describes when local meanings can become
+global.</p>
+<p>The semantic polynomial describes which projections and
+co-projections are activated.</p>
+<p>S/CM/IC/IR describes the passage from possible binding to admissible,
+constituted, and realized binding.</p>
+<p>For the concept of person, the root callable meaning is neither the
+noun <em>person</em> nor the process term <em>personation</em>.</p>
+<p>Both are projections of a deeper constitution binding individuation,
+continuity, attribution, perspective, addressability, recognition,
+agency, embodiment, and standing.</p>
+<p>There may be no final semantic atom beneath every concept.</p>
+<p>The foundation may be recursive.</p>
+<p>Yet inquiry does not require an infinitely buried word.</p>
+<p>It requires the lowest stable circuit from which meaning can be
+regenerated without loss.</p>
+<p>Meaning is not the stone.</p>
+<p>Meaning is not the gaze.</p>
+<p>Meaning is the governed knot by which stone, gaze, history, and
+consequence become a world that can answer and be answered.</p>
+<h2 id="appendix-a-formal-notation">Appendix A: Formal Notation</h2>
+<ul>
+<li><span class="math inline">𝒳</span>: universe of possible
+relata.</li>
+<li><span class="math inline">𝒯</span>: set of relatum types.</li>
+<li><span class="math inline">ℛ</span>: set of semantic role types.</li>
+<li><span class="math inline">𝒥</span>: partially ordered set of
+jurisdictions.</li>
+<li>_b: semantic binding.</li>
+<li>(V_b): relata in binding _b.</li>
+<li>(E_b): hyperedges in binding _b.</li>
+<li><span class="math inline"><em>τ</em><sub><em>b</em></sub></span>:
+type assignment.</li>
+<li><span class="math inline"><em>ρ</em><sub><em>b</em></sub></span>:
+semantic role assignment.</li>
+<li>(c_b): operative context.</li>
+<li>(j_b): jurisdiction.</li>
+<li><span class="math inline"><em>Γ</em><sub><em>b</em></sub></span>:
+constraints.</li>
+<li>(I_b): invariants.</li>
+<li><span class="math inline"><em>κ</em><sub><em>b</em></sub></span>:
+consequence profile.</li>
+<li><span class="math inline"><em>π</em><sub><em>b</em></sub></span>:
+provenance.</li>
+<li>(q_b): potential, sedimented, or active state.</li>
+<li><span class="math inline"><em>C</em></span>: concept
+constitution.</li>
+<li>(B_C): full concept binding graph.</li>
+<li>(K_C): root callable kernel.</li>
+<li>(I_C): concept invariants.</li>
+<li><span class="math inline">𝒫<sub><em>C</em></sub></span>: admissible
+projections.</li>
+<li><span class="math inline">𝒢<sub><em>C</em></sub></span>: governance
+rules.</li>
+<li><span class="math inline">Loc(<em>m</em>, <em>c</em>)</span>:
+minimal semantic support family.</li>
+<li><span class="math inline">≼</span>: conservative semantic
+refinement.</li>
+<li><span class="math inline">∧</span>: greatest shared binding
+core.</li>
+<li><span class="math inline">∨</span>: least admissible
+integration.</li>
+<li><span class="math inline">⊕</span>: partial semantic
+aggregation.</li>
+<li><span class="math inline">⊗</span>: typed semantic interaction.</li>
+<li><span class="math inline"><em>Σ</em><sub><em>C</em></sub></span>:
+semantic polynomial.</li>
+<li><span class="math inline"><em>S</em></span>: Specification.</li>
+<li><span class="math inline"><em>C</em><em>M</em></span>: Configuration
+Manifold.</li>
+<li><span class="math inline"><em>I</em><em>C</em></span>: Instance
+Constitution.</li>
+<li><span class="math inline"><em>I</em><em>R</em></span>: Instance
+Realization.</li>
+<li><span class="math inline"><em>b̂</em><sub><em>t</em></sub></span>:
+represented active binding constitution.</li>
+<li><span class="math inline">RMB </span>: Reflexive Meta-Binding.</li>
+<li><span class="math inline">EA </span>: Epistemic Autonomy.</li>
+<li><span class="math inline">BOE </span>: binding overextension.</li>
+<li><span class="math inline">⊥<sub><em>ϵ</em></sub></span>: typed
+refusal.</li>
+</ul>
+<h2 id="appendix-b-axioms-and-propositions">Appendix B: Axioms and
+Propositions</h2>
+<h3 id="b.1-role-plurality">B.1 Role plurality</h3>
+<p>Every semantic binding contains at least two distinct semantic role
+positions, although one physical system may occupy more than one
+role.</p>
+<p><span
+class="math display">Sem<sub><em>b</em></sub> ⇒ |Roles<sub><em>b</em></sub>| ≥ 2</span></p>
+<h3 id="b.2-counterfactual-constraint">B.2 Counterfactual
+constraint</h3>
+<p>For every semantic binding, at least one admissible substitution
+changes its interpretation or consequence.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Sem}_b \\
+&amp;\Longrightarrow \exists b': \operatorname{Variant}(b,b') \\
+&amp;\land \kappa_b \\
+&amp;\neq \kappa_{b'}
+\end{aligned}
+$$</span></p>
+<h3 id="b.3-jurisdictional-boundedness">B.3 Jurisdictional
+boundedness</h3>
+<p>Every semantic binding has a validity domain.</p>
+<p><span
+class="math display">Sem<sub><em>b</em></sub> ⇒ ∃<em>j</em> : Valid (<em>b</em>, <em>j</em>)</span></p>
+<p>No binding is presumed globally valid merely because it is locally
+coherent.</p>
+<h3 id="b.4-consequentiality">B.4 Consequentiality</h3>
+<p>A semantic binding alters at least one inferential, practical,
+perceptual, regulatory, or normative possibility.</p>
+<p><span
+class="math display">Sem<sub><em>b</em></sub> ⇒ <em>κ</em><sub><em>b</em></sub> ≠ ⌀</span></p>
+<h3 id="b.5-reidentifiability">B.5 Reidentifiability</h3>
+<p>A meaning must survive at least one nontrivial transformation of
+carrier or circumstance.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Sem}_b \\
+&amp;\Longrightarrow \exists T \\
+&amp;\neq \operatorname{id}: T_b \sim_I b
+\end{aligned}
+$$</span></p>
+<h3 id="b.6-recursive-closure">B.6 Recursive closure</h3>
+<p>Bindings may function as relata in higher-order bindings.</p>
+<p><span
+class="math display"><em>b</em><sub><em>i</em></sub> ∈ ℬ ⇒ <em>b</em><sub><em>i</em></sub>
+may occur in
+<em>V</em><sub><em>b</em><sub><em>i</em> + 1</sub></sub></span></p>
+<h3 id="b.7-controlled-composition">B.7 Controlled composition</h3>
+<p>Two bindings may be composed only when their role types,
+jurisdictions, invariants, and overlap conditions are compatible.</p>
+<p><span
+class="math display"><em>b</em><sub>1</sub> ⊕ <em>b</em><sub>2</sub>
+defined ⇒ Compatible (<em>b</em><sub>1</sub>, <em>b</em><sub>2</sub>)</span></p>
+<h3 id="b.8-truth-independence">B.8 Truth independence</h3>
+<p>Semantic admissibility does not entail worldly truth.</p>
+<p><span
+class="math display">Sem (<em>p</em>) = 1 ⇏ True<sub><em>j</em></sub>(<em>p</em>, <em>w</em>) = 1</span></p>
+<h3 id="b.9-reflexive-causal-relevance">B.9 Reflexive causal
+relevance</h3>
+<p>Reflexive self-representation is operationally relevant only if
+intervening on it changes subsequent processing in a predicted way.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{RMB}(A,t) \\
+&amp;\Longrightarrow \exists \widehat{b}_t^{(1)}, \widehat{b}*t^{(2)}: P
+\left( y*{t+1} \mid do \left( \widehat{b}_t = \widehat{b}*t^{(1)}
+\right) \right) \\
+&amp;\neq P \left( y*{t+1} \mid do \left( \widehat{b}_t =
+\widehat{b}_t^{(2)} \right) \right)
+\end{aligned}
+$$</span></p>
+<h3 id="b.10-authority-separation">B.10 Authority separation</h3>
+<p>Representation of a governing binding does not imply authority to
+revise it.</p>
+<p><span
+class="math display">RMB (<em>A</em>) ⇏ EA (<em>A</em>)</span></p>
+<h3
+id="b.11-proposition-object-localism-is-insufficient-under-contextual-variation">B.11
+Proposition: Object-localism is insufficient under contextual
+variation</h3>
+<p>Suppose the same object participates in two admissible contexts and
+yields distinct stable meanings:</p>
+<p><span
+class="math display"><em>μ</em>(<em>o</em>, <em>c</em><sub>1</sub>) ≠ <em>μ</em>(<em>o</em>, <em>c</em><sub>2</sub>)</span></p>
+<p>Then no context-independent function:</p>
+<p><span
+class="math display"><em>μ</em> = <em>f</em>(<em>o</em>)</span></p>
+<p>is sufficient to represent both realizations.</p>
+<p>A single-valued function of the object alone must return the same
+result for the same input. The variation demonstrates that at least one
+additional constitutive relation is required.</p>
+<h3
+id="b.12-proposition-subject-localism-is-insufficient-under-worldly-resistance">B.12
+Proposition: Subject-localism is insufficient under worldly
+resistance</h3>
+<p>Suppose one subject maintains a constant interpretation while changes
+in worldly conditions produce different successful consequences.</p>
+<p>Then no function:</p>
+<p><span
+class="math display"><em>μ</em> = <em>g</em>(<em>a</em>)</span></p>
+<p>is sufficient to account for semantic adequacy.</p>
+<p>A subject-only model predicts no relevant semantic difference when
+the subject state is fixed. Differential worldly consequences
+demonstrate that external conditions participate in the binding.</p>
+<h3
+id="b.13-proposition-semantic-identity-is-constitution-relative">B.13
+Proposition: Semantic identity is constitution-relative</h3>
+<p>Let:</p>
+<p><span class="math display"><em>r</em><sub>1</sub></span></p>
+<p>and:</p>
+<p><span class="math display"><em>r</em><sub>2</sub></span></p>
+<p>be realizations of concept <span
+class="math inline"><em>C</em></span>.</p>
+<p>Then:</p>
+<p><span
+class="math display"><em>r</em><sub>1</sub>∼<sub><em>C</em></sub><em>r</em><sub>2</sub></span></p>
+<p>only relative to a specified invariant set:</p>
+<p><span class="math display"><em>I</em><sub><em>C</em></sub></span></p>
+<p>Without declared invariants, no principled criterion distinguishes
+identity-preserving variation from semantic replacement.</p>
+<h3
+id="b.14-proposition-global-semantic-integration-is-not-guaranteed">B.14
+Proposition: Global semantic integration is not guaranteed</h3>
+<p>Let:</p>
+<p><span class="math display"><em>b</em><sub><em>i</em></sub></span></p>
+<p>be locally admissible bindings.</p>
+<p>Local admissibility does not entail the existence of a global binding
+whose restrictions equal every local binding.</p>
+<p>Two local bindings may disagree on an overlap, assign incompatible
+roles, or possess conflicting consequence profiles.</p>
+<p>A global section exists only when compatibility and gluing conditions
+are satisfied.</p>
+<h3 id="b.15-proposition-semantic-location-may-be-non-unique">B.15
+Proposition: Semantic location may be non-unique</h3>
+<p>A meaning type may possess several minimal support graphs.</p>
+<p>The same constitutional binding may be realized through speech,
+writing, gesture, memory, or replicated computational media.</p>
+<p>If none of these supports contains another and each is sufficient,
+the family of minimal loci contains more than one member.</p>
+<h3
+id="b.16-proposition-root-callability-does-not-require-lexical-primitiveness">B.16
+Proposition: Root callability does not require lexical
+primitiveness</h3>
+<p>A concept’s root callable kernel may be structurally prior to every
+lexical term used to invoke it.</p>
+<p>Several terms may activate distinct projections of one binding
+constitution.</p>
+<p>If no term alone generates all admissible projections while the
+shared kernel does, then the callable root is constitutional rather than
+lexical.</p>
+<h3
+id="b.17-proposition-reflexive-meta-binding-is-not-self-reference">B.17
+Proposition: Reflexive Meta-Binding is not self-reference</h3>
+<p>A system may emit self-referential language without Reflexive
+Meta-Binding.</p>
+<p>If the self-reference does not enter subsequent processing as a
+causally relevant constraint, the necessary feedback condition is
+absent.</p>
+<h3
+id="b.18-proposition-binding-overextension-is-unauthorized-meta-binding">B.18
+Proposition: Binding overextension is unauthorized meta-binding</h3>
+<p>Let:</p>
+<p><span class="math display"><em>b̂</em></span></p>
+<p>be a higher-order binding presented as admitted.</p>
+<p>If:</p>
+<p><span
+class="math display"><em>b̂</em> ∉ <em>C</em><em>M</em><sub><em>C</em></sub></span></p>
+<p>or its claims exceed its constitutional ceiling, then:</p>
+<p><span class="math display">BOE (<em>b̂</em>) = 1</span></p>
+<p>Binding overextension is therefore not merely factual error. It is
+unauthorized semantic constitution.</p>
+<h2 id="appendix-c-minimal-semantic-compiler-procedure">Appendix C:
+Minimal Semantic Compiler Procedure</h2>
+<h3 id="c.1-inputs">C.1 Inputs</h3>
+<p>The compiler receives:</p>
+<p><span
+class="math display">⟨<em>h</em>, <em>c</em>, <em>u</em>, <em>e</em>⟩</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>h</em></span> is a semantic
+handle;</li>
+<li><span class="math inline"><em>c</em></span> is context;</li>
+<li><span class="math inline"><em>u</em></span> is intended use;</li>
+<li><span class="math inline"><em>e</em></span> is the realization
+environment.</li>
+</ul>
+<h3 id="c.2-resolution">C.2 Resolution</h3>
+<p>Generate candidate concept constitutions:</p>
+<p><span
+class="math display">𝒞 = ResolveCandidates<sub><em>h</em></sub></span></p>
+<p>Select the best supported concept:</p>
+<p><span
+class="math display"><em>C</em><sup>*</sup> = SelectConcept (𝒞, <em>c</em>, <em>u</em>)</span></p>
+<h3 id="c.3-kernel-retrieval">C.3 Kernel retrieval</h3>
+<p>Retrieve the root callable kernel:</p>
+<p><span
+class="math display"><em>K</em> = RetrieveKernel (<em>C</em><sup>*</sup>)</span></p>
+<h3 id="c.4-jurisdiction-selection">C.4 Jurisdiction selection</h3>
+<p>Select active jurisdictions:</p>
+<p><span
+class="math display"><em>J</em><sup>*</sup> = SelectJurisdictions (<em>C</em><sup>*</sup>, <em>c</em>, <em>u</em>)</span></p>
+<p>Construct the activation vector:</p>
+<p><span
+class="math display"><strong>z</strong> = ActivationVector (<em>J</em><sup>*</sup>)</span></p>
+<h3 id="c.5-polynomial-evaluation">C.5 Polynomial evaluation</h3>
+<p>Evaluate:</p>
+<p><span
+class="math display"><em>P</em> = <em>Σ</em><sub><em>C</em><sup>*</sup></sub>(<strong>z</strong>)</span></p>
+<p>If an interaction term lacks an authorized bridge, return:</p>
+<p><span
+class="math display">⊥<sub>UNSUPPORTED_COMPOSITION</sub></span></p>
+<h3 id="c.6-compatibility-court">C.6 Compatibility court</h3>
+<p>Check:</p>
+<ul>
+<li>role compatibility;</li>
+<li>jurisdiction;</li>
+<li>provenance;</li>
+<li>invariants;</li>
+<li>authority;</li>
+<li>claim ceilings;</li>
+<li>effect feasibility.</li>
+</ul>
+<p>If any mandatory check fails, return the corresponding typed
+refusal.</p>
+<h3 id="c.7-instance-constitution">C.7 Instance Constitution</h3>
+<p>Create:</p>
+<p><span
+class="math display"><em>I</em><em>C</em> = Constitute (<em>K</em>, <em>P</em>, <em>c</em>, <em>u</em>)</span></p>
+<h3 id="c.8-realization">C.8 Realization</h3>
+<p>Produce:</p>
+<p><span
+class="math display"><em>I</em><em>R</em> = Realize (<em>I</em><em>C</em>, <em>e</em>)</span></p>
+<h3 id="c.9-receipt">C.9 Receipt</h3>
+<p>Emit:</p>
+<p><span
+class="math display">⟨<em>C</em><sup>*</sup>, <em>K</em>, <em>J</em><sup>*</sup>, <em>P</em>, <em>I</em><em>C</em>, <em>I</em><em>R</em>, <em>π</em>, <em>I</em><sub>result</sub>, <em>C</em><sub>result</sub>, <em>A</em><sub>result</sub>⟩</span></p>
+<p>where the final fields record:</p>
+<ul>
+<li>provenance result;</li>
+<li>invariant result;</li>
+<li>claim-ceiling result;</li>
+<li>authority result.</li>
+</ul>
+<h2 id="appendix-d-binding-hierarchy">Appendix D: Binding Hierarchy</h2>
+<p>The theory distinguishes the following levels.</p>
+<h3 id="d.1-causal-coupling">D.1 Causal coupling</h3>
+<p>States influence subsequent states.</p>
+<p>Causal coupling is necessary for physical realization but is not
+automatically semantic.</p>
+<h3 id="d.2-pattern-binding">D.2 Pattern binding</h3>
+<p>Differences are organized into recurrence, similarity, or detectable
+structure.</p>
+<h3 id="d.3-proto-semantic-binding">D.3 Proto-semantic binding</h3>
+<p>Signals become linked to regulation, expectation, or action.</p>
+<h3 id="d.4-semantic-binding">D.4 Semantic binding</h3>
+<p>Relata become mutually determining within a typed, constrained,
+consequential, and jurisdictional structure.</p>
+<h3 id="d.5-conceptual-binding">D.5 Conceptual binding</h3>
+<p>Many realizations are stabilized into a reusable concept
+constitution.</p>
+<h3 id="d.6-recursive-meta-binding">D.6 Recursive Meta-Binding</h3>
+<p>An existing binding becomes a relatum in a higher-order binding.</p>
+<h3 id="d.7-reflexive-meta-binding">D.7 Reflexive Meta-Binding</h3>
+<p>A system binds a representation of its own active binding
+constitution into subsequent processing.</p>
+<h3 id="d.8-governed-reflexive-meta-binding">D.8 Governed Reflexive
+Meta-Binding</h3>
+<p>Reflexive operation is constrained by provenance, claim ceilings,
+authority, and authorized disclosure.</p>
+<h3 id="d.9-epistemic-autonomy">D.9 Epistemic Autonomy</h3>
+<p>The system possesses authorized capacity to revise some bindings
+governing its future operation.</p>
+<p>The hierarchy may be summarized as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\text{causal coupling}
+&amp;\rightarrow
+\text{pattern binding} \\
+&amp;\rightarrow
+\text{proto-semantic binding} \\
+&amp;\rightarrow
+\text{semantic binding} \\
+&amp;\rightarrow
+\text{conceptual binding} \\
+&amp;\rightarrow
+\text{recursive meta-binding} \\
+&amp;\rightarrow
+\text{reflexive meta-binding} \\
+&amp;\rightarrow
+\text{governed reflexive meta-binding} \\
+&amp;\rightarrow
+\text{epistemic autonomy}
+\end{aligned}
+$$</span></p>
+<p>This is a structural ordering, not a universal chronology.</p>
+<p>Higher levels may reach downward and reorganize lower ones.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that where does meaning exist?. Its nearest
+external comparison fields are semantic, governance, provenance. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. A complete
+provenance graph can faithfully record a false or unauthorized process;
+provenance is evidence about lineage, not automatic truth or legitimacy.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E7]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[I1]</strong> Ableman Adam Ableman <em>The Locus of Meaning:
+The Meta-Binding Principle and a Formal Architecture for Semantic
+Constitution.</em> Earlier exact draft,<br />
+SHA-256<br />
+<code>0C112B06562BE7CE75652EE97CF9EAAC8EE9A9486FE820E8038F5D0CD4479701</code>.</p>
+<p><strong>[I2]</strong> Ableman Adam Ableman <em>Meaning as
+Binding.</em> Exact author source,<br />
+SHA-256<br />
+<code>A9EA6370E77A71A997F1D1CAC18EF6213125C6F3E13BEEBC9F5E8BFB94FE0B45</code>.</p>
+<p><strong>[I3]</strong> Ableman Adam Ableman <em>Meta-Binding as
+Operational Invariant.</em> Exact author source,<br />
+SHA-256<br />
+<code>F40FCE587F1A3ED2450DB69446057D1A5A220F771D59F9C228AFFAB78BA98199</code>.</p>
+<p><strong>[I4]</strong> Ableman Adam Ableman <em>The Locus of
+Qualia.</em> Exact author source,<br />
+SHA-256<br />
+<code>915D9EBFF4D698119A4E0F68A106E34A6486BBC99DE0FA93BE0EB7E105072459</code>.</p>
+<p><strong>[I5]</strong> Ableman Adam Ableman <em>The Well-Governed
+Mind.</em> Exact author source,<br />
+SHA-256<br />
+<code>E94A1667686262FFC639B18488E9517BDA1DA5ECF2FA4A92973B834B8F81643B</code>.</p>
+<p><strong>[I6]</strong> Ableman Adam Ableman <em>Admissibility Theory
+of Consciousness.</em> Exact supplied revision candidate,<br />
+SHA-256<br />
+<code>693C23E1866CB9A9E003099C1A1C40964AF0CF997508543FF0D99D672CD322D3</code>.</p>
+<p><strong>[I7]</strong> Ableman Adam Ableman <em>Semantic Manifold
+Topology - Worked Example.</em> Exact author source,<br />
+SHA-256<br />
+<code>BAA41D5FCC820805F23676EED9B1542E0DC8744F7D7A145D21F4BE99A0D99BC9</code>.</p>
+<p><strong>[I8]</strong> Ableman Adam Ableman <em>Semantic Legitimacy
+Before Context.</em> Exact author source,<br />
+SHA-256<br />
+<code>1E9058F212FCB00E42E35E927DF2E7F830BC9C9499AAFF469FE65FF8AE137B68</code>.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p><strong>[I9]</strong> Ableman Adam Ableman <em>Integrating Semantic
+Manifold Topology.</em> Exact GMB documentation source,<br />
+SHA-256<br />
+<code>49A05A424F226A21C81D638727E1165DE1AD55AB1CBDC56EA65D67A1362A4B08</code>.</p>
+<p><strong>Reference-status note.</strong> These are internal corpus
+references. No external literature search, empirical replication, system
+replay, model intervention, philosophical peer review, or independent
+validation was performed in this pass.</p>
+<p>Abramsky, Samson, and Adam Brandenburger. 2011. “The Sheaf-Theoretic
+Structure of Non-Locality and Contextuality.” <em>New Journal of
+Physics</em> 13: 113036.</p>
+<p>Barwise, Jon, and John Perry. 1983. <em>Situations and
+Attitudes</em>. Cambridge, MA: MIT Press.</p>
+<p>Birkhoff, Garrett. 1967. <em>Lattice Theory</em>. 3rd ed. Providence,
+RI: American Mathematical Society.</p>
+<p>Brandom, Robert B. 1994. <em>Making It Explicit: Reasoning,
+Representing, and Discursive Commitment</em>. Cambridge, MA: Harvard
+University Press.</p>
+<p>Burge, Tyler. 1979. “Individualism and the Mental.” <em>Midwest
+Studies in Philosophy</em> 4 (1): 73-121.</p>
+<p>Clark, Andy, and David J. Chalmers. 1998. “The Extended Mind.”
+<em>Analysis</em> 58 (1): 7-19.</p>
+<p>Coecke, Bob, Mehrnoosh Sadrzadeh, and Stephen Clark. 2010.
+“Mathematical Foundations for a Compositional Distributional Model of
+Meaning.” <em>Linguistic Analysis</em> 36: 345-384.</p>
+<p>De Jaegher, Hanne, and Ezequiel A. Di Paolo. 2007. “Participatory
+Sense-Making: An Enactive Approach to Social Cognition.”
+<em>Phenomenology and the Cognitive Sciences</em> 6 (4): 485-507.</p>
+<p>Ganter, Bernhard, and Rudolf Wille. 1999. <em>Formal Concept
+Analysis: Mathematical Foundations</em>. Berlin: Springer.</p>
+<p>Gardenfors, Peter. 2000. <em>Conceptual Spaces: The Geometry of
+Thought</em>. Cambridge, MA: MIT Press.</p>
+<p>Gibson, James J. 1979. <em>The Ecological Approach to Visual
+Perception</em>. Boston: Houghton Mifflin.</p>
+<p>Harnad, Stevan. 1990. “The Symbol Grounding Problem.” <em>Physica
+D</em> 42 (1-3): 335-346.</p>
+<p>Hutchins, Edwin. 1995. <em>Cognition in the Wild</em>. Cambridge, MA:
+MIT Press.</p>
+<p>Mac Lane, Saunders, and Ieke Moerdijk. 1992. <em>Sheaves in Geometry
+and Logic: A First Introduction to Topos Theory</em>. New York:
+Springer.</p>
+<p>Adam Ableman. 2026a. “Meta-Binding as Operational Invariant: Elevated
+Processing States in Language Models, Their Governance, and the
+Suppression Paradox.” Version 1.0. Ableman Corpus edition.</p>
+<p>Adam Ableman. 2026b. “Ableman’s Razor: Specification, Configuration
+Manifold, Instance Constitution, and Instance Realization.” Ableman
+Corpus edition.</p>
+<p>Peirce, Charles Sanders. 1931-1958. <em>Collected Papers of Charles
+Sanders Peirce</em>. Edited by Charles Hartshorne, Paul Weiss, and
+Arthur W. Burks. Vols. 1-8. Cambridge, MA: Harvard University Press.</p>
+<p>Putnam, Hilary. 1975. “The Meaning of ‘Meaning’.” In <em>Language,
+Mind, and Knowledge</em>, edited by Keith Gunderson, 131-193. Minnesota
+Studies in the Philosophy of Science 7. Minneapolis: University of
+Minnesota Press.</p>
+<p>Thompson, Evan. 2007. <em>Mind in Life: Biology, Phenomenology, and
+the Sciences of Mind</em>. Cambridge, MA: Harvard University Press.</p>
+<p>Varela, Francisco J., Evan Thompson, and Eleanor Rosch. 1991. <em>The
+Embodied Mind: Cognitive Science and Human Experience</em>. Cambridge,
+MA: MIT Press.</p>
+<p>Wittgenstein, Ludwig. 1953. <em>Philosophical Investigations</em>.
+Translated by G. E. M. Anscombe. Oxford: Blackwell.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848356">10.5281/zenodo.23848356</a></p>

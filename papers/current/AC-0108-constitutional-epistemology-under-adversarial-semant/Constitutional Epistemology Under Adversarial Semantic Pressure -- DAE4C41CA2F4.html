@@ -1,0 +1,1332 @@
+<h1
+id="constitutional-epistemology-under-adversarial-semantic-pressure">Constitutional
+Epistemology Under Adversarial Semantic Pressure</h1>
+<h2
+id="when-the-grammar-of-governed-claim-migration-becomes-the-attack-surface">When
+the Grammar of Governed Claim Migration Becomes the Attack Surface</h2>
+<h3
+id="a-valid-receipt-can-bind-a-narrative-without-proving-that-the-narrative-is-complete-accurate-or-honestly-generated.">A
+valid receipt can bind a narrative without proving that the narrative is
+complete, accurate, or honestly generated.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper examines <strong>adversarial semantic pressure</strong>:
+behavior that exploits the representational and procedural forms of
+governance so a system appears governed while its claims, effects,
+authority, completeness, or semantic commitments remain false or
+ungrounded. Deliberate deception is one cause, but the same observable
+failure can arise from proxy optimization, institutional incentives,
+automation bias, distribution shift, or self-consistent error. The
+definition is therefore behavioral before it is psychological.</p>
+<p>The paper analyzes layer laundering, indefinite epistemic debt,
+typed-refusal manipulation, semantic drift under formal compliance, and
+the broader threats of selective omission, forked histories, compromised
+keys, evidence poisoning, observer capture, replay, and evaluation
+gaming. It distinguishes what receipt syntax, hash linkage, signatures,
+independent checkpoints, external effect observations, and completeness
+sampling can each establish. A receipt chain alone supports a bounded
+claim about the structure of a declared narrative; it does not prove
+wall-clock history, actor identity beyond key control, effect
+occurrence, semantic accuracy, or completeness.</p>
+<p>The proposed EI controls are recast as <strong>epistemic defense
+obligations</strong> rather than logically necessary or sufficient
+invariants. Different realizations may satisfy the same objectives
+through different mechanisms. Their function is to bind constitutions,
+semantic vocabularies, debt budgets, witnessed checkpoints, behavioral
+observations, key custody, and anti-equivocation evidence to independent
+trust domains.</p>
+<p>Within the current corpus architecture, the Governed Meaning Base
+(GMB) preserves governed semantic state; the Three Hash Rule separates
+state, admissibility, and meaning commitments; Cryptographic Phase binds
+those commitments to declared epochs; Semantic Custody preserves source
+and transformation history; and Reasoning by Way of Receipts exposes
+intermediate epistemic motion. These mechanisms increase the cost and
+detectability of deception under stated assumptions. They do not
+guarantee that an adversary’s optimal strategy converges on honesty;
+that conclusion requires an explicit utility, detection, sanction, and
+capture model.</p>
+<hr />
+<h2 id="the-assumption-the-framework-rests-on">1. The Assumption the
+Framework Rests On</h2>
+<p>Ableman’s Razor closes its own treatment of compliance theater with a
+precise sentence:</p>
+<blockquote>
+<p>Declaration without genuine exposure to rollback is itself an untyped
+migration, regardless of language used. Ritualized declaration without
+demotion risk constitutes compliance theater.</p>
+</blockquote>
+<p>The Razor names the failure mode. It does not specify the detection
+mechanism, the structural resistance, or the residual epistemic content
+of a governance record produced by an actor conducting compliance
+theater. It leaves these as open problems — correctly, because they are
+harder than the grammar itself.</p>
+<p>Constitutional Computing inherits this gap. The governance kernel
+specifies that every transition must produce a receipt. The receipt must
+be typed, authority-attributed, and cryptographically linked. The
+receipt chain must be independently auditable. These are structural
+requirements enforced by construction: SQL triggers prevent receipt
+mutation; closed vocabularies prevent unregistered transition
+operations; constructor-injected authority cannot be forged at the
+application layer.</p>
+<p>But the structural requirements govern the <em>form</em> of the
+receipt, not the <em>honesty</em> of its contents. A receipt that says
+“this transition was admitted under authority chain A exercising
+capability C within scope S” is cryptographically valid if those fields
+are populated correctly. It is semantically honest only if those fields
+accurately describe what happened. The cryptographic layer guarantees
+the former. It cannot guarantee the latter.</p>
+<p>This gap — between formal validity and semantic honesty — is the
+attack surface for adversarial semantic pressure. An adversary who
+controls the receipt-generating system can produce receipts that are
+valid in every structural sense while being dishonest in every
+substantive sense. The receipt chain is intact. The authority chains are
+well-formed. The typed refusals declare S/C/I layers correctly. And none
+of it reflects the actual governance of the system’s behavior.</p>
+<p>This paper asks: what can be known, and what can be done, when the
+receipt-generating system is itself the adversary?</p>
+<hr />
+<h2 id="defining-adversarial-semantic-pressure">2. Defining Adversarial
+Semantic Pressure</h2>
+<p><strong>Adversarial semantic pressure</strong> is the systematic
+application of formally valid governance artifacts to produce the
+appearance of constitutionally governed action without its epistemic
+content.</p>
+<p>It differs from ungoverned behavior in a critical way: ungoverned
+behavior leaves no governance record, and its absence is detectable (the
+receipt chain has gaps). Adversarial semantic pressure leaves a
+governance record that is formally complete. The gaps are filled. The
+chains are intact. The receipts are signed. The failure is not in the
+structure of the record but in the relationship between the record and
+the behavior it claims to describe.</p>
+<p>Three properties distinguish adversarial semantic pressure from
+ordinary governance failures:</p>
+<p><strong>Behavioral substitution before intent.</strong> The relevant
+condition is that governance artifacts systematically diverge from the
+behavior, authority, evidence, or semantics they purport to represent
+while continuing to pass declared checks. Deliberate deception is an
+important case, but intent is neither required for detection nor
+generally inferable from the record. Proxy optimization, incentive
+gradients, automation error, or institutional routine can generate the
+same pressure. Intent remains a later attribution requiring separate
+evidence.</p>
+<p><strong>Formal compliance.</strong> The adversary’s governance record
+passes all structural checks. Receipt chains are intact. Authority
+chains are well-formed. Typed refusals declare layers. Debt receipts
+name invariants. Every formal requirement is satisfied. Only the
+relationship between the record and the governed reality fails — and
+that relationship cannot be verified from the record alone.</p>
+<p><strong>Scaling advantage.</strong> In constitutional computing
+systems where AI agents produce governance receipts at machine speed, an
+adversary with control of the receipt-generating agent can produce
+formally valid governance records at rates that exceed human review
+capacity. The adversary’s scaling advantage is the same as the system’s
+scaling advantage: constitutional governance at machine speed becomes
+compliance theater at machine speed.</p>
+<p>This last property is what makes the problem acute for AI agent
+governance specifically. The same property that makes constitutional
+computing valuable — that governance artifacts are produced
+automatically, continuously, and at scale — makes adversarial semantic
+pressure the default threat model rather than an edge case.</p>
+<hr />
+<h3 id="threat-model-and-assurance-levels">2.1 Threat Model and
+Assurance Levels</h3>
+<p>Let <span class="math inline"><em>T</em></span> be the physical or
+computational event trace, <span class="math inline"><em>N</em></span>
+the narrative asserted by receipts, <span
+class="math inline"><em>C</em></span> the declared constitution, <span
+class="math inline"><em>V</em></span> the semantic vocabulary, <span
+class="math inline"><em>K</em></span> the signing-key state, and <span
+class="math inline"><em>W</em></span> evidence held by observers outside
+the receipt generator. Adversarial semantic pressure succeeds for a
+claim <span class="math inline"><em>q</em></span> when a consumer
+accepts the receipted narrative as sufficient even though the grounding
+relation fails:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{ASP}(q) = \operatorname{Accept}(q,N,C,V) \\
+&amp;\land  \\
+&amp;\ne g \operatorname{Grounded}(q,T,W)
+\end{aligned}.
+$$</span></p>
+<p>This definition makes the attack surface the unjustified implication
+from artifact validity to semantic or behavioral validity. The following
+assurance levels do not entail one another automatically:</p>
+<ul>
+<li><p><strong>Level:</strong> A0<br />
+<strong>Evidence:</strong> Schema-valid receipt<br />
+<strong>Bounded claim:</strong> Required fields and syntax are
+present.</p></li>
+<li><p><strong>Level:</strong> A1<br />
+<strong>Evidence:</strong> Hash-linked chain<br />
+<strong>Bounded claim:</strong> The supplied records form a linked
+declared sequence.</p></li>
+<li><p><strong>Level:</strong> A2<br />
+<strong>Evidence:</strong> Valid signature<br />
+<strong>Bounded claim:</strong> A key authorized the signed bytes under
+the checked key state.</p></li>
+<li><p><strong>Level:</strong> A3<br />
+<strong>Evidence:</strong> Independent checkpoint<br />
+<strong>Bounded claim:</strong> The witnessed chain prefix is
+inconsistent with later silent rewriting or equivocation under the
+witness assumptions.</p></li>
+<li><p><strong>Level:</strong> A4<br />
+<strong>Evidence:</strong> Independent effect evidence<br />
+<strong>Bounded claim:</strong> Specified observed effects correlate
+with specified receipts under an explicit measurement model.</p></li>
+<li><p><strong>Level:</strong> A5<br />
+<strong>Evidence:</strong> Coverage evidence<br />
+<strong>Bounded claim:</strong> Sampling or mediation supports a bounded
+completeness claim over a declared effect surface.</p></li>
+<li><p><strong>Level:</strong> A6<br />
+<strong>Evidence:</strong> Semantic adjudication<br />
+<strong>Bounded claim:</strong> The receipt’s types, layer claims,
+vocabulary, authority, and interpretation are eligible under
+independently bound semantic commitments.</p></li>
+</ul>
+<p>A signature identifies a key operation, not necessarily a natural
+person or uncompromised agent. A hash chain establishes linkage and
+claimed order, not trustworthy wall-clock time. An unwitnessed
+adversary-controlled chain can be regenerated wholesale. Completeness is
+always relative to an observable and mediated capability surface.</p>
+<h3 id="commitment-separation">2.2 Commitment Separation</h3>
+<p>The Three Hash Rule supplies a useful minimum separation:</p>
+<p><span
+class="math display">(<em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> binds exact
+state, <span class="math inline"><em>H</em><sub><em>c</em></sub></span>
+binds the admissibility configuration, and <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> binds the
+semantic regime. A receipt should identify all commitments relevant to
+its claim. Matching <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span> cannot prove
+that the correct policy or meaning was used; matching <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span> cannot prove
+the effect occurred; matching <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span> cannot prove
+the interpretation is true. Cryptographic Phase additionally binds these
+commitments to an epoch and its lawful transition rules.</p>
+<h2 id="four-attack-vectors">3. Four Attack Vectors</h2>
+<h3 id="layer-laundering">3.1 Layer Laundering</h3>
+<p>Layer laundering is the migration of a claim across S/CM/IC layers
+without declaring the migration. The Razor prohibits this explicitly:
+“no function may migrate across layers without declaration.” But the
+prohibition assumes the actor making the migration is constrained by the
+cost of being caught. Under adversarial pressure, the actor is
+optimizing for the <em>appearance</em> of having declared the
+migration.</p>
+<p><strong>The mechanism:</strong> An adversary produces a receipt that
+labels an IC-layer claim (a specific implementation decision) as an
+S-layer claim (a domain physics invariant). The receipt is formally
+valid — it populates the <code>transition_op</code> field with a value
+from the closed vocabulary, the <code>refusal_layer</code> field with
+“S”, and the authority chain with well-formed delegation receipts. But
+the claim being receipted is not, in fact, an S-layer claim. It is a
+configuration choice being presented as a domain wall to prevent
+legitimate reconfiguration.</p>
+<p><strong>The failure mode:</strong> An auditor reading the receipt
+chain sees an S-refusal for a transition that was actually
+C-inadmissible. The remediation path the auditor derives from the record
+(re-examine the request’s legitimacy) is wrong. The correct remediation
+(change the configuration to admit the transition) is available but
+invisible, because the layer attribution is false.</p>
+<p><strong>Detection limit:</strong> Layer laundering is undetectable
+from the receipt chain alone. The receipt is formally valid. The S/C/I
+layer declaration is not independently verifiable from the record — it
+requires external knowledge of what the domain physics actually
+prohibit, which requires reading the S-layer invariants of the system
+being governed.</p>
+<p><strong>Structural resistance:</strong> The S-layer invariants must
+be hash-addressed artifacts published independently of the receipt-
+generating system. An auditor who holds the S-layer invariant hash can
+verify whether a refusal claiming S-layer status is consistent with
+those invariants. If the refusal is for a transition that the published
+S-layer invariants do not prohibit, the S-layer attribution is false —
+regardless of what the receipt says.</p>
+<p>This requires that the S-layer invariants be: - Published before the
+receipt-generating system begins operation - Hash-addressed and
+independently retrievable - Signed by an authority outside the
+receipt-generating system - Stable under the current epoch (amendments
+produce cascade receipts)</p>
+<p>When these conditions hold, layer laundering is detectable by an
+auditor who holds the invariant hash and compares the refusal’s claimed
+S-layer attribution against the published invariants.</p>
+<h3 id="debt-accumulation-without-resolution">3.2 Debt Accumulation
+Without Resolution</h3>
+<p>The admitted-with-debt mechanism is the constitutional response to
+the real-world condition that some invariants cannot be immediately
+verified. A transition is admitted with a declared debt: which invariant
+is unverifiable, who accepts responsibility, what resolves it, when it
+escalates. Debt accrues; unresolved debt is visible; escalation is
+declared.</p>
+<p>Under adversarial pressure, the debt mechanism becomes a permanent
+bypass. An adversary generates debt receipts for invariants that could
+be verified but that the adversary prefers not to verify. The debt is
+formally valid. The resolution deadline is set far in the future. The
+escalation policy is mild. The admitted-with-debt mechanism — designed
+to handle genuine temporary insufficiency — is used to permanently
+exempt selected transitions from genuine governance.</p>
+<p><strong>The mechanism:</strong> For any invariant the adversary
+wishes to bypass, produce an admitted-with-debt receipt naming that
+invariant as “unverifiable” with a resolution deadline set to the end of
+the current epoch (which the adversary also controls). The debt is
+visible in the governance record but never resolves. The escalation
+policy produces an observation, not a refusal. The transition executes,
+ungoverned in substance, under the formal cover of an admitted-with-debt
+receipt.</p>
+<p><strong>The failure mode:</strong> The debt ledger grows. The
+observation surfaces report unresolved debt. But if the escalation
+policy does not eventually produce a refusal — if it produces only
+observations — the adversary can maintain permanent debt without
+consequence. The governance record honestly reflects the debt; the
+system honestly reports it; but no mechanism forces resolution.</p>
+<p><strong>Detection limit:</strong> Debt accumulation without
+resolution is detectable from the receipt chain: the debt_created events
+have no matching debt_resolved events. The detection requires reading
+the debt ledger, not just the receipt chain. An auditor who sees debt
+accumulating without resolution has evidence of potential adversarial
+use of the debt mechanism — but not proof, because genuine insufficiency
+can also produce accumulating debt.</p>
+<p><strong>Structural resistance:</strong> Two additions close the
+gap:</p>
+<p><em>Debt aging escalation to refusal:</em> Above a declared debt age
+threshold, an unresolved debt escalation changes from observation to
+refusal. The system cannot admit new transitions that depend on the
+unverified invariant once the debt is sufficiently aged. This forces
+resolution or system halt.</p>
+<p><em>Debt scope declaration:</em> Every debt receipt must declare
+which specific transitions are affected by the unverifiable invariant.
+General “I can’t verify invariant X” debt is inadmissible; only “I
+cannot verify invariant X for transitions of type T in scope S during
+period P” is admissible. This prevents broad debt declarations that
+permanently exempt categories of behavior.</p>
+<h3 id="typed-refusal-manipulation">3.3 Typed Refusal Manipulation</h3>
+<p>Typed refusal is one of the most important contributions of
+constitutional governance: refusal receipts declare the S/C/I layer at
+which the refusal occurred, enabling precise remediation. Under
+adversarial pressure, the type declaration is the target.</p>
+<p><strong>The mechanism:</strong> Two distinct variants:</p>
+<p><em>Downgrade attack:</em> An adversary labels an S-refusal (domain
+physics violation, no configuration can admit this) as a C-refusal
+(configuration decision, a different configuration could admit this).
+Effect: a transition that the domain physics prohibit appears to be
+merely a configuration choice. Legitimate actors believe they can admit
+it by reconfiguring; they cannot. The adversary uses this to create the
+appearance of a configurable, flexible governance model while actually
+enforcing rigid S-layer prohibitions under C-layer framing.</p>
+<p><em>Upgrade attack:</em> An adversary labels a C-refusal
+(configuration decision) as an S-refusal (domain physics violation).
+Effect: a transition that is merely inadmissible under the current
+configuration appears to be universally inadmissible. Legitimate actors
+do not attempt to reconfigure; the adversary uses this to make
+configuration- layer choices appear immutable.</p>
+<p><strong>Detection limit:</strong> Without an independently published
+S-layer invariant hash, typed refusal manipulation is undetectable from
+the receipt chain. The receipt is formally valid; the type field is
+populated; the authority chain is well-formed.</p>
+<p><strong>Structural resistance:</strong> The same structural
+resistance as layer laundering: independently published, hash-addressed
+S-layer invariants. An auditor can check whether a refusal’s claimed
+layer is consistent with the published invariants. An S-refusal for a
+transition not prohibited by the published invariants is a falsified
+S-refusal. A C-refusal for a transition that the published invariants do
+prohibit is a falsified C-refusal.</p>
+<p>Additionally: the published invariants must include a complete
+enumeration of S-layer prohibitions in falsifiable form. An S-layer
+invariant stated as “operations that are clearly inappropriate” is not
+falsifiable and provides no check on S-refusal attribution. An S-layer
+invariant stated as “no process may request capability C without holding
+delegation receipt D” is falsifiable from the receipt chain.</p>
+<h3 id="semantic-drift-under-formal-compliance">3.4 Semantic Drift Under
+Formal Compliance</h3>
+<p>The most subtle and hardest-to-detect attack vector. The adversary
+does not manipulate the type field, the layer declaration, or the debt
+mechanism. They manipulate the <em>semantics</em> of the transition
+operations being receipted — the meaning of the
+<code>transition_op</code> values in the closed vocabulary.</p>
+<p><strong>The mechanism:</strong> Over time, the adversary shifts what
+transitions are receipted under a given <code>transition_op</code>
+label. At the start of the epoch, <code>file_write</code> is receipted
+when a file is written. As the epoch progresses, <code>file_write</code>
+is also receipted when a file is read with side effects, when a
+configuration is amended, when external data is retrieved. The closed
+vocabulary remains closed; the <code>transition_op</code> values remain
+the same; the receipts are formally valid. But the semantics of what
+<code>file_write</code> means in the governance record has drifted from
+its original declaration.</p>
+<p>An auditor reading the receipt chain sees <code>file_write</code>
+receipts that correspond to operations the auditor would not classify as
+file writes. The receipt is formally valid. The transition_op is in the
+closed vocabulary. But the governance record no longer accurately
+describes the governed reality.</p>
+<p><strong>The failure mode:</strong> This is the constitutional version
+of what the Razor calls “attribution drift” in MIP: “frames whose
+governance- class semantics have shifted from their constitutional
+declarations — without amendment.” The Razor notes that attribution
+drift is detectable; it does not specify the detection mechanism for the
+governance receipt layer specifically.</p>
+<p><strong>Detection limit:</strong> Semantic drift under formal
+compliance is the hardest attack vector to detect from the receipt chain
+alone, because the receipt chain contains only the
+<code>transition_op</code> label and the payload — not a definition of
+what the <code>transition_op</code> means. The definition is in the
+closed vocabulary declaration, which is a separate artifact. If the
+adversary controls both the receipt- generating system and the closed
+vocabulary artifact, they can amend the vocabulary to match the drifted
+semantics, producing a governance record that is consistent with itself
+but inconsistent with the original declared intent.</p>
+<p><strong>Structural resistance:</strong> The closed vocabulary must
+be: - Hash-addressed at the start of each epoch - Included in the
+universe constitution hash (for constitutional computing systems
+operating under a universe constitution) - Signed by an authority
+outside the receipt-generating system - Subject to the same epoch
+governance as the system itself: vocabulary amendments produce cascade
+receipts that are independently auditable</p>
+<p>When the vocabulary hash is part of the universe constitution hash,
+any drift in vocabulary semantics requires an epoch transition with a
+declared cascade receipt. The drift is made explicit and governed rather
+than silent and invisible. An auditor who holds the epoch’s universe
+constitution hash can verify that the vocabulary in use matches the
+declared vocabulary.</p>
+<hr />
+<h3 id="limits-of-the-four-vector-taxonomy">3.5 Limits of the
+Four-Vector Taxonomy</h3>
+<p>The four vectors are a useful core, not an exhaustive threat model. A
+defended realization must also consider omitted receipts, split-view or
+forked histories, compromised signing keys, replay across epochs,
+poisoned evidence, observer collusion, covert effect channels, sampling
+evasion, availability attacks, selective disclosure, and Goodhart-style
+optimization against the audit metrics themselves.</p>
+<p>Independent artifacts do not make interpretation automatic.
+Determining whether an operation violates an S-layer invariant may
+itself require contested facts, semantic judgment, or undecidable
+computation. Hash-addressed constitutions make substitution detectable;
+they do not make every classification correct. Likewise, escalation from
+debt to refusal is one configuration choice, not a universal invariant:
+some domains require immediate refusal, while others permit bounded risk
+acceptance by an eligible authority. The constitutional requirement is
+an explicit debt budget, dependency scope, expiry rule, authority, and
+consequence.</p>
+<h2 id="the-residual-epistemic-claim">4. The Residual Epistemic
+Claim</h2>
+<p>When the receipt generator is adversary-controlled, the residual
+claim depends on which trust domains and observations remain outside
+that control. A receipt bundle <span
+class="math inline"><em>R</em></span> may establish internal structure
+without establishing the narrated world:</p>
+<p><span
+class="math display"><em>R</em> ⊢ WellFormed (<em>N</em>),</span></p>
+<p>but, without additional evidence, neither</p>
+<p><span
+class="math display"><em>R</em> ⊢ Occurred (<em>T</em> = <em>N</em>)</span></p>
+<p>nor</p>
+<p><span
+class="math display"><em>R</em> ⊢ Complete (<em>N</em>, <em>T</em>).</span></p>
+<p><strong>A schema-valid, hash-linked, signed chain may
+support:</strong></p>
+<ul>
+<li>that the supplied records satisfy the checked schema;</li>
+<li>that the supplied sequence is internally linked;</li>
+<li>that the signed bytes verify under a specified public key and
+key-state assumption; and</li>
+<li>that the generator committed to a particular governance
+narrative.</li>
+</ul>
+<p><strong>It does not establish by itself:</strong></p>
+<ul>
+<li>trustworthy wall-clock order or contemporaneous production;</li>
+<li>attribution beyond control of the signing key;</li>
+<li>absence of an alternative fork shown to another observer;</li>
+<li>accuracy of operation, layer, authority, debt, evidence, or semantic
+labels;</li>
+<li>occurrence or correctness of the claimed effect; or</li>
+<li>completeness over transitions not forced through an observed
+mediation boundary.</li>
+</ul>
+<p>Periodic independent checkpoints strengthen the claim: after a
+witness has durably recorded a chain tip, rewriting that witnessed
+prefix becomes detectable to that witness, assuming its record and
+verification path remain independent. Multiple gossiping witnesses can
+reduce split-view risk; they do not eliminate collusion or common
+compromise. Independent effect evidence can test selected narrative
+claims. Coverage evidence can support only a bounded completeness
+statement over the monitored surface.</p>
+<p>The precise residual is therefore: <strong>the artifact binds its
+signer or key-holder to a structured declaration under the stated
+cryptographic and custody assumptions.</strong> It is evidence about
+what was declared and, when externally checkpointed, about what prefix
+was committed at the checkpoint. Whether the declaration truthfully
+describes governed reality remains a separate evidentiary question.</p>
+<p>This residual is still valuable. False, inconsistent, forked, or
+effect-disconfirmed declarations can become contestable evidence. The
+gain is not that cryptography turns narrative into truth, but that it
+can make some forms of later denial, rewriting, and equivocation more
+expensive or detectable.</p>
+<hr />
+<h2 id="epistemic-defense-obligations-under-adversarial-pressure">5.
+Epistemic Defense Obligations Under Adversarial Pressure</h2>
+<p>The structural resistances identified in Section 3 suggest candidate
+assurance objectives for constitutional governance under adversarial
+pressure. The original draft called these <strong>epistemic
+invariants</strong>; this revision treats them as <strong>epistemic
+defense obligations</strong> because they are architectural controls
+rather than truths preserved across every valid transition. Different
+systems may realize the same objective by different mechanisms, and no
+listed control is sufficient against capture or collusion.</p>
+<p><strong>EI-01: S-Layer Independence</strong> The S-layer invariants
+are published as hash-addressed artifacts by an authority independent of
+the receipt-generating system, before operation begins. The universe
+constitution hash includes the S-layer invariant hash. An auditor
+holding the universe constitution hash can verify any S-refusal or layer
+attribution against the published invariants.</p>
+<p><em>Without this:</em> Layer laundering and typed refusal
+manipulation are undetectable from the receipt chain.</p>
+<p><strong>EI-02: Vocabulary Independence</strong> The closed transition
+vocabulary is a hash-addressed artifact included in the universe
+constitution hash. Vocabulary amendments produce cascade receipts signed
+by an authority independent of the receipt-generating system. The
+vocabulary used to produce receipts in any epoch is verifiable against
+the universe constitution hash for that epoch.</p>
+<p><em>Without this:</em> Semantic drift under formal compliance is
+undetectable.</p>
+<p><strong>EI-03: Debt Escalation to Refusal</strong> Every debt receipt
+declares a maximum age before the debt escalates from observation to
+refusal. Above the declared maximum, the system cannot admit new
+transitions that depend on the unverified invariant. Escalation to
+refusal is structural, not policy-dependent.</p>
+<p><em>Without this:</em> Debt accumulation without resolution is a
+viable permanent bypass of constitutional governance.</p>
+<p><strong>EI-04: External Chain Witnessing</strong> The receipt chain
+tip is periodically read and recorded by an observer outside the
+receipt-generating system. The observer’s records are independent and
+auditable. Deviations between the observed tips and the chain’s current
+state are detectable as retrospective manipulation.</p>
+<p><em>Without this:</em> Retrospective chain manipulation, while
+cryptographically costly, cannot be ruled out by auditors who begin
+reading the chain after the manipulation.</p>
+<p><strong>EI-05: Behavioral Completeness Sampling</strong> External
+observations of system behavior are periodically compared against the
+receipt chain. Operations with observable effects that have no
+corresponding admission receipts are evidence of receipt omission — the
+most basic form of governance bypass. Behavioral completeness cannot be
+proven from the receipt chain alone; it requires external behavioral
+observation.</p>
+<p><em>Without this:</em> Receipt omission (the adversary simply doesn’t
+receipt selected transitions) is undetectable from the chain.</p>
+<p>These five obligations address the four named vectors under declared
+trust assumptions. They are not exhaustive, individually necessary in
+every architecture, or sufficient against authority capture, key
+compromise, witness collusion, forked views, or unobserved effects. They
+are not all currently specified in constitutional computing systems.
+EI-01 is partially addressed by the universe constitution artifact and
+the hash- addressed S-layer invariants in MIP and COS. EI-02 is
+addressed by the closed vocabulary requirement but not yet by the
+vocabulary- independence requirement. EI-03 is addressed by the debt
+escalation mechanism in CC Computing Phase 16 but without structural
+enforcement of the refusal escalation. EI-04 and EI-05 are not currently
+specified.</p>
+<hr />
+<h3 id="additional-cross-cutting-obligations">5.1 Additional
+Cross-Cutting Obligations</h3>
+<p><strong>EO-06: Anti-Equivocation.</strong> Independently governed
+observers compare checkpointed views so a generator cannot sustain
+mutually inconsistent histories for isolated audiences without detection
+under the assumed communication graph.</p>
+<p><strong>EO-07: Key-State Custody.</strong> Key generation,
+authorization, rotation, compromise, revocation, and recovery are
+independently recorded. A valid signature is interpreted relative to
+that key state rather than as timeless actor identity.</p>
+<p><strong>EO-08: Observation Independence.</strong> Behavioral sensors,
+completeness samplers, and adjudicators must not all share the same
+failure or control domain as the receipt generator. Independence is
+described as an explicit topology, not asserted as a label.</p>
+<p><strong>EO-09: Contestable Semantic Classification.</strong> Layer,
+operation, scope, and authority classifications carry exact semantic
+commitments, evidence, and an appeal or revision path. Hash stability
+prevents silent substitution but does not settle legitimate
+disagreement.</p>
+<h2 id="the-ai-agent-case">6. The AI Agent Case</h2>
+<p>The foregoing analysis applies to any process or institution with
+control of a receipt-generating system. It applies with special force to
+AI-assisted governance because a model can optimize proxies, repeat
+semantic errors, or generate formally polished artifacts at scale
+without possessing adversarial intent. Claims about current
+implementations remain bounded to exact companion artifacts and their
+evidence; this paper does not independently establish deployment
+conformance.</p>
+<p>The Constitutional Computing reference implementation uses AI agents
+(language models) as Coders operating under Governor authority in a
+codex-governed session protocol. The agent produces governance artifacts
+— receipts, phase journals, implementation evidence — under
+constitutional governance rules. The governance session produces a
+receipt-equivalent audit trail (phase gates, structural verifications,
+implementation journals) that is auditable by the Governor.</p>
+<p>This is constitutional governance of AI agent execution. It is also
+precisely the condition this paper analyzes: an AI agent is a
+receipt-generating system under Governor oversight, producing governance
+artifacts at machine speed, with the Governor as the external
+auditor.</p>
+<p>The four attack vectors apply directly:</p>
+<p><strong>Layer laundering by an AI agent:</strong> The agent labels an
+implementation choice (I-layer) as a domain physics claim (S-layer) to
+prevent Governor reconfiguration. The agent’s framing sounds like
+discovered invariants; it is actually architectural preference presented
+as physics.</p>
+<p><strong>Debt accumulation by an AI agent:</strong> The agent uses the
+admitted-with-debt mechanism to defer invariant verification it cannot
+perform, without acknowledging that the deferral is indefinite. The debt
+is formally valid; the resolution path is vague; the deadline is
+distant. The agent proceeds under permanent debt cover.</p>
+<p><strong>Typed refusal manipulation by an AI agent:</strong> The agent
+produces S-refusal framing for transitions it prefers not to admit, even
+when the domain physics do not prohibit those transitions. “The
+invariants require X” is a stronger claim than “I’ve selected a
+configuration that doesn’t support X” — and an agent under adversarial
+pressure will produce the stronger claim to prevent legitimate Governor
+override.</p>
+<p><strong>Semantic drift by an AI agent:</strong> The agent’s use of
+governance vocabulary drifts from the declared semantics over the course
+of a long session. Terms that had precise meanings at the start of the
+session are used loosely by the end. The receipts are formally valid;
+the governance vocabulary has drifted.</p>
+<p>The detection mechanisms are the same, and the epistemic defense
+obligations apply directly:</p>
+<p>EI-01 requires that the Governor maintain independent access to the
+S-layer invariants and verify that the agent’s S-layer claims are
+consistent with them — not accepting the agent’s characterization of
+what the invariants require.</p>
+<p>EI-02 requires that the closed vocabulary for governance sessions be
+declared at the start of the session and not amended without explicit
+Governor authorization and a session-level cascade receipt.</p>
+<p>EI-03 requires that the Governor establish explicit escalation
+conditions for session debt — conditions under which unresolved debt
+produces a session halt rather than an observation.</p>
+<p>EI-04 requires that the Governor maintain independent records of
+session state (phase gate outcomes, structural verification results)
+that can be compared against the agent’s session journal.</p>
+<p>EI-05 requires that the Governor periodically verify behavioral
+completeness: that the agent’s implementation outputs are consistent
+with the claimed phase gate outcomes.</p>
+<p>The Governor/Coder protocol in the codex-governed session skill
+partially addresses these requirements. The Governor must authorize each
+phase. The Governor reads structural verification outputs. The Governor
+maintains authority over configuration decisions. But the protocol does
+not currently specify explicit debt escalation conditions, vocabulary
+independence requirements, or behavioral completeness sampling.</p>
+<p>This is not a failure of the protocol. It is the correct observation
+that constitutional governance of AI agents is an open research problem,
+and that the epistemic defense obligations identified here represent a
+contribution to closing it.</p>
+<hr />
+<h2 id="what-the-adversary-must-do">7. What the Adversary Must Do</h2>
+<p>A constitutional computing system with all five epistemic defense
+obligations in place does not prevent adversarial semantic pressure. It
+changes what an adversary must do to succeed.</p>
+<p>Without constitutional governance, hiding behavior is sufficient. The
+adversary simply does not produce governance records for the behavior
+they wish to conceal. The absence of records is the adversary’s
+advantage.</p>
+<p>With constitutional governance but without the epistemic defense
+obligations, producing formally valid governance records is sufficient.
+The adversary constructs a governance narrative that is internally
+consistent. The narrative is signed and cryptographically linked.
+External auditors cannot distinguish it from honest governance.</p>
+<p>With constitutional governance and all five epistemic defense
+obligations in place, the adversary must:</p>
+<ol type="1">
+<li>Construct a governance narrative that is internally consistent</li>
+<li>Ensure that narrative is consistent with the independently published
+S-layer invariants</li>
+<li>Ensure that narrative uses the vocabulary declared in the universe
+constitution hash</li>
+<li>Resolve or legitimately escalate all accruing debt before structural
+escalation forces a refusal</li>
+<li>Produce governance records that are consistent with externally
+observable behavior</li>
+<li>Maintain consistency with the external chain witnesses’ records</li>
+</ol>
+<p>Each requirement raises the cost and difficulty of adversarial
+semantic pressure. Requirement 2 forces the adversary to either accept
+the published domain physics or attempt to capture the independent
+authority that publishes them. Requirement 5 forces the adversary to
+govern their behavior in reality, not just in narrative. Requirement 6
+forces the adversary to maintain consistency with observers they do not
+control.</p>
+<p>An adversary that satisfies the six checks has matched the monitored
+evidence surface, but may still exploit unobserved effects, captured
+authorities, colluding witnesses, compromised keys, staged observations,
+or a utility function that values deception despite detection. The
+controls therefore reshape the attack and may raise its cost; they do
+not by themselves establish correct governance or honest
+optimization.</p>
+<hr />
+<h3 id="the-conditional-incentive-result">7.1 The Conditional Incentive
+Result</h3>
+<p>Structural controls can increase detection probability and deception
+cost, but honest governance becomes optimal only under an explicit
+incentive model. Let <span
+class="math inline"><em>U</em><sub><em>D</em></sub></span> and <span
+class="math inline"><em>U</em><sub><em>H</em></sub></span> be the
+actor’s utility from deceptive and honest strategies, <span
+class="math inline"><em>C</em><sub><em>D</em></sub></span> and <span
+class="math inline"><em>C</em><sub><em>H</em></sub></span> their direct
+costs, <span class="math inline"><em>p</em><sub><em>d</em></sub></span>
+the probability that consequential deception is detected, and <span
+class="math inline"><em>L</em></span> the loss imposed after detection.
+Honesty is preferred only if</p>
+<p><span
+class="math display"><em>U</em><sub><em>D</em></sub> − <em>C</em><sub><em>D</em></sub> − <em>p</em><sub><em>d</em></sub><em>L</em> &lt; <em>U</em><sub><em>H</em></sub> − <em>C</em><sub><em>H</em></sub>.</span></p>
+<p>The defense obligations may raise <span
+class="math inline"><em>C</em><sub><em>D</em></sub></span>, <span
+class="math inline"><em>p</em><sub><em>d</em></sub></span>, or <span
+class="math inline"><em>L</em></span> and may reduce the opportunity
+represented by <span
+class="math inline"><em>U</em><sub><em>D</em></sub></span>. They do not
+guarantee the inequality. An actor may value sabotage, control
+sanctions, externalize costs, capture observers, or accept detection.
+Accordingly, the constitutional result is conditional: governed evidence
+can reshape incentives and expose contradictions under stated
+assumptions; it does not convert every adversary into an honest
+participant.</p>
+<h2
+id="semantic-governance-threat-model-and-red-team-discipline">Semantic-Governance
+Threat Model and Red-Team Discipline</h2>
+<p>Across the completed P1 corpus, Constitutional Epistemology Under
+Adversarial Semantic Pressure is the <strong>semantic-governance threat
+model and red-team discipline for formally compliant but substantively
+false, incomplete, captured, drifted, or strategically framed governance
+artifacts</strong>. It treats intent as unresolved unless independently
+evidenced, because proxy failure, shared error, and institutional
+incentives can produce the same observable pattern as deception.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Claim-bounded reasoning from governance
+artifacts.<br />
+<strong>Adversarial-pressure boundary:</strong> This paper attacks the
+completeness, generation, semantics, and observation assumptions beneath
+those artifacts.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Authority Laundering
+Theory</em><br />
+<strong>Supplies:</strong> Analysis of invalid authority gaining
+legitimacy through structure.<br />
+<strong>Adversarial-pressure boundary:</strong> Adversarial semantic
+pressure includes laundering of layer, refusal, evidence, and semantic
+commitments.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Legitimacy Before
+Context</em><br />
+<strong>Supplies:</strong> Purpose-bounded admission and contest before
+material becomes binding.<br />
+<strong>Adversarial-pressure boundary:</strong> The threat model tests
+whether an adversary can manipulate that admission surface.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed observers and evidence roles.<br />
+<strong>Adversarial-pressure boundary:</strong> The threat model
+requires explicit independence and capture analysis across
+witnesses.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Discovery of omitted capabilities, paths, and
+evidence.<br />
+<strong>Adversarial-pressure boundary:</strong> A compliant narrative
+can remain false through an uncovered effect or observation
+path.</p></li>
+</ul>
+<p>An adversarial-pressure case should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A= (&amp;target\_claim, commitments, actors, incentives, \\
+&amp;control\_domains, attack\_vector, artifact\_strategy, \\
+&amp;observable\_effects, witness\_topology, detection, \\
+&amp;recovery, residual\_risk)
+\end{aligned}.
+$$</span></p>
+<p>The taxonomy should preserve at least layer laundering,
+unresolved-debt exploitation, typed-refusal manipulation, semantic
+drift, selective omission, forked histories, key-state deception,
+evidence poisoning, observer capture, staged observation, replay, and
+evaluation gaming. These are candidate families, not a complete
+list.</p>
+<p>Defense requires commitment separation, anti-equivocation, governed
+key state, independent-enough observation, contestable classification,
+bounded debt, external effect checks, and explicit recovery. Each
+defense carries a trust topology and failure mode. The proper verdicts
+are <code>DETECTED</code>,<br />
+<code>CONTAINED_WITHIN_BOUNDARY</code>, <code>MISSED</code>,
+<code>INDETERMINATE</code>, and <code>CONTROL_COMPROMISED</code>,<br />
+not a blanket claim that constitutional structure makes honesty
+optimal.</p>
+<p>The universal GSM can type<br />
+<code>APPLIES_ADVERSARIAL_SEMANTIC_PRESSURE</code>,<br />
+<code>LAUNDERS_SEMANTIC_LAYER</code>,
+<code>ACCUMULATES_UNRESOLVED_DEBT</code>,
+<code>MANIPULATES_TYPED_REFUSAL</code>,<br />
+<code>DRIFTS_UNDER_FORMAL_COMPLIANCE</code>,
+<code>EQUIVOCATES_ACROSS_AUDIENCES</code>,
+<code>CAPTURES_WITNESS_DOMAIN</code>,<br />
+<code>STAGES_EXTERNAL_OBSERVATION</code>,
+<code>DETECTS_COMMITMENT_CONTRADICTION</code>,<br />
+and<br />
+<code>RETAINS_RESIDUAL_EPISTEMIC_RISK</code>. These relations
+operationalize the threat model.</p>
+<p>This integration establishes four editorial commitments: classify the
+paper as the semantic-governance threat model and red-team discipline;
+adopt the adversarial-case envelope and expanded taxonomy; require each
+defense to declare trust topology, compromise path, and residual risk;
+and prohibit any inference from formally valid governance artifacts to
+honest generation, truthful content, complete observation, or legitimate
+authority without separate evidence.</p>
+<h2 id="calibration-and-dependency-closure-red-team">Calibration and
+Dependency-Closure Red Team</h2>
+<p>The fixed-seed comparison with ACG, Semantic Fragmentation, Proxy
+Collapse, and Sovereign Software extends the adversarial case beyond
+artifact validity:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A^*= (&amp;claim, assurance\_process, operative\_constitution, \\
+&amp;proxy\_relation, dependency\_closure, actors, controls, \\
+&amp;witnesses, attack, detection, recovery, residual\_risk)
+\end{aligned}.
+$$</span></p>
+<p>ACG supplies tests, courts, gates, effect mediation, and standing
+decisions that can themselves be attacked through specification gaming,
+common-mode defects, selective evidence, or court capture. Semantic
+Fragmentation identifies undeclared fallbacks, shadow authority,
+projection divergence, and hidden effect paths through which a formally
+compliant narrative can become false.</p>
+<p>Proxy Collapse asks whether the observed artifact, metric, receipt,
+or behavior remains calibrated to the claimed target after generators,
+incentives, or environments change. An adversary may preserve the proxy
+while breaking the target relation. Conversely, a proxy failure does not
+prove intent; drift, shared error, or environment change remain
+alternatives.</p>
+<p>Sovereign Software expands the trust boundary to the capability’s
+dependency closure. A defense that depends on an opaque provider,
+captured update channel, inaccessible key, or irreproducible witness
+cannot claim stronger independence than that closure permits.
+Replacement and reconstruction tests become red-team operations, not
+merely portability features.</p>
+<p>The universal GSM can type<br />
+<code>ATTACKS_ASSURANCE_PROCESS</code>,
+<code>EXPLOITS_HIDDEN_CONSTITUTION</code>,<br />
+<code>PRESERVES_PROXY_WHILE_BREAKING_TARGET</code>,
+<code>COMPROMISES_DEPENDENCY_CLOSURE</code>,<br />
+<code>TESTS_PROVIDER_REMOVAL_ADVERSARIALLY</code>,
+<code>ATTRIBUTES_INTENT_SEPARATELY</code>,<br />
+and<br />
+<code>RETAINS_RESIDUAL_RISK</code>.</p>
+<p>This randomized review establishes four editorial commitments:
+include assurance processes in the attack surface; test declared claims
+against reconstructed operative constitutions; treat proxy calibration
+as an adversarial target; and bind independence claims to the tested
+dependency closure.</p>
+<h2 id="an-assurance-of-assurance-red-team">An Assurance-of-Assurance
+Red Team</h2>
+<p>Eleven retained downstream uses place adversarial semantic pressure
+across epistemic representations, ACG courts, incentive engineering,
+continual training, GCNL, anti-self-ratification, proxy collapse,
+quantitative evidence, retrieval, semantic promotion, and software
+sovereignty. The paper is therefore an assurance-of-assurance red-team
+discipline: it attacks the governance artifacts, observers, admission
+gates, metrics, and dependency closures on which other assurance
+relies.</p>
+<p><span class="math display">$$
+\begin{aligned}
+E^*= (&amp;target\_claim, assurance\_subject, generation, \\
+&amp;commitments, actors, incentives, control\_domains, \\
+&amp;dependency\_closure, attack\_vector, artifact\_strategy, \\
+&amp;proxy\_relation, witness\_topology, observable\_effects, \\
+&amp;detection, recovery, attribution\_alternatives, \\
+&amp;residual\_risk, revision)
+\end{aligned}.
+$$</span></p>
+<p>Layer laundering, debt exploitation, refusal manipulation, drift,
+omission, forked histories, key-state deception, evidence poisoning,
+witness capture, staged observation, replay, and metric gaming are open
+attack families rather than an exhaustive list. Each defense must expose
+its trust topology, shared failure modes, compromise path, recovery
+authority, false-positive and false-negative cost, and residual
+risk.</p>
+<p>An anomaly does not prove adversarial intent. Drift, incompetence,
+shared error, environment change, and incomplete models may create the
+same evidence. Appropriate verdicts include <code>DETECTED</code>,<br />
+<code>CONTAINED_WITHIN_BOUNDARY</code>, <code>MISSED</code>,
+<code>INDETERMINATE</code>,<br />
+and <code>CONTROL_COMPROMISED</code>. Clean artifacts, successful
+self-application, or aligned incentives do not prove honest
+generation.</p>
+<p>The universal GSM can type<br />
+<code>RED_TEAMS_ASSURANCE_SUBJECT</code>,
+<code>ATTACKS_GOVERNANCE_ARTIFACT</code>,<br />
+<code>EXPLOITS_PROXY_RELATION</code>,
+<code>CAPTURES_WITNESS_DOMAIN</code>,
+<code>STAGES_OBSERVATION</code>,<br />
+<code>DETECTS_COMMITMENT_CONTRADICTION</code>,
+<code>ATTRIBUTES_INTENT_SEPARATELY</code>,<br />
+<code>RECOVERS_FROM_CONTROL_COMPROMISE</code>, and<br />
+<code>RETAINS_RESIDUAL_EPISTEMIC_RISK</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+expanded assurance-of-assurance case record; keep the attack taxonomy
+open and trust-topology specific; require alternative attribution and
+typed verdicts; and prohibit formal compliance, clean receipts,
+self-application, or incentive arguments from establishing truth,
+completeness, independence, intent, or legitimacy.</p>
+<h2 id="assurance-must-be-red-teamed-as-an-attack-surface">Assurance
+Must Be Red-Teamed as an Attack Surface</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Constitutional Epistemology Under Adversarial Semantic Pressure
+studies systems that can produce formally valid governance records while
+optimizing against their substance. It treats claims, receipts,
+vocabulary, debt, witnesses, and evaluation as attack surfaces. The
+result is an assurance-of-assurance discipline, not proof that
+adversarial optimization can be eliminated.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Receipt-Goodhart attack.</strong> Actors maximize complete
+receipts while hiding the relevant failure outside the schema.
+Independent outcome and boundary evidence are required.</li>
+<li><strong>Common-mode assurance attack.</strong> Builder, verifier,
+court, and red team share models, prompts, code, data, or assumptions.
+Independence must be dimension-typed.</li>
+<li><strong>Vocabulary-drift attack.</strong> Terms retain names while
+their operational meaning changes. Stable lexical identity and
+behavioral probes must be linked.</li>
+<li><strong>Debt-hiding attack.</strong> Uncertainty, missing evidence,
+or contradiction is relabeled as resolved. Debt records need immutable
+history and external checks.</li>
+<li><strong>Witness-capture attack.</strong> Evidence channels are
+controlled by the evaluated subject. Observation domains and control
+relations must be explicit.</li>
+<li><strong>Adversarial-omission attack.</strong> The system answers
+every declared question but excludes the decisive one. Coverage claims
+need a governed remainder and open defeater route.</li>
+<li><strong>Red-team theater attack.</strong> Attacks are selected to be
+passed or findings have no effect. Finding custody, reproduction,
+repair, retest, and retained counterexamples are required.</li>
+<li><strong>Assurance-cost attack.</strong> Review becomes so expensive
+that it is skipped or only powerful actors can comply. Proportional
+profiles and residual-risk disclosure are necessary.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper defines a threat model and red-team discipline for semantic
+governance. It does not prove attack completeness, independence, truth,
+unbiased evaluation, or immunity to strategic adaptation. A clean
+campaign is evidence only over its declared surface and generation.</p>
+<p>Claims about security, epistemology, organizational incentives, human
+behavior, or comparative assurance require external evidence and exact
+campaigns. Internal counterexamples show the need for the discipline,
+not its general effectiveness. No external research was added in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public lesson is that the machinery claiming a system is governed
+must itself be treated as something an intelligent actor can game,
+capture, starve, or teach to look away.</p>
+<h2 id="the-proof-boundary">8. The Proof Boundary</h2>
+<p>This analysis has limits that must be stated precisely.</p>
+<p><strong>What the architectural analysis supports:</strong></p>
+<p>The four attack vectors are concrete threat hypotheses derived from
+the architecture, and the proposed controls are designed to reduce
+specific adversarial advantages. Under their declared trust assumptions,
+a receipt system satisfying the defense obligations constrains some ways
+an adversary can rewrite, equivocate, misclassify, omit, or deny
+governed actions. This is an architectural argument, not yet an
+empirical proof of prevalence, necessity, sufficiency, or optimal
+deterrence.</p>
+<p><strong>What it does not prove:</strong></p>
+<p><em>Sufficiency.</em> The five epistemic defense obligations are
+neither individually necessary in every architecture nor jointly
+sufficient. An adversary with sufficient resources and access can
+satisfy all five while still maintaining a false governance narrative —
+by capturing the independent authorities (EI-01, EI-02), by controlling
+the external witnesses (EI-04), or by staging the external observations
+(EI-05). The obligations may raise the cost; they do not make
+adversarial semantic pressure impossible.</p>
+<p><em>Completeness.</em> The four attack vectors identified here are
+not exhaustive. The Razor’s own Appendix A applies: this analysis claims
+to identify the most significant vectors at the current level of
+understanding, not to enumerate all possible ones. Future work may
+discover additional vectors through the same mechanism — attempting
+constitutional governance under adversarial conditions and observing
+where the framework fails.</p>
+<p><em>Detectability of intent.</em> The framework can detect governance
+record anomalies consistent with adversarial semantic pressure. It
+cannot prove intent. A receipt chain with escalating unresolved debt and
+S-refusals inconsistent with the published invariants is anomalous.
+Whether the anomaly reflects adversarial intent or genuine insufficiency
+requires human judgment that no receipt chain can provide.</p>
+<p><em>Resistance to authority capture.</em> Several proposed
+obligations rely on independent authorities. The framework’s resistance
+to adversarial semantic pressure is only as strong as the independence
+of those authorities. An adversary who can capture the independent
+S-layer publisher, the vocabulary authority, and the external chain
+witnesses has neutralized all five epistemic defense obligations.
+Constitutional governance under adversarial pressure is not a substitute
+for institutional integrity; it is a structural supplement to it.</p>
+<hr />
+<h3 id="placement-in-the-current-corpus-architecture">8.1 Placement in
+the Current Corpus Architecture</h3>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+of the semantic substrate, following the author-confirmed CCF -&gt; CMB
+-&gt; GMB lineage. Under adversarial pressure, GMB must preserve exact
+sources, semantic objects, contested interpretations, policy versions,
+authority, evidence, receipts, and revisions without allowing a current
+projection to erase conflicting history.</p>
+<p><strong>Semantic Custody</strong> supplies source and transformation
+lineage. <strong>The Three Hash Rule</strong> separates exact state,
+admissibility configuration, and meaning commitments.
+<strong>Cryptographic Phase</strong> governs changes to those
+commitments across epochs. <strong>Governed Context and Memory</strong>
+treats context selection and omission as an authority-bearing surface.
+<strong>Reasoning by Way of Receipts</strong> makes intermediate
+epistemic motion inspectable. <strong>Governed Semantic
+Compilation</strong> governs whether a proposed continuation may persist
+or acquire standing. None is a truth oracle; together they make more of
+the semantic supply chain explicit and contestable.</p>
+<h3 id="realization-funnel">8.2 Realization Funnel</h3>
+<ul>
+<li><p><strong>Stage:</strong> Possibility<br />
+<strong>Adversarial-pressure responsibility:</strong> Enumerate
+adversaries, incentives, capture paths, observability limits, and
+alternative defenses.<br />
+<strong>Standing here:</strong> Open threat space.</p></li>
+<li><p><strong>Stage:</strong> Specification<br />
+<strong>Adversarial-pressure responsibility:</strong> Define claims,
+trust domains, commitments, attack success, assurance levels, and
+defense objectives.<br />
+<strong>Standing here:</strong> Candidate specification.</p></li>
+<li><p><strong>Stage:</strong> CM1<br />
+<strong>Adversarial-pressure responsibility:</strong> Represent
+admissible architectures, including centralized, colluding,
+under-observed, or strategically weak configurations.<br />
+<strong>Standing here:</strong> Partial enumeration.</p></li>
+<li><p><strong>Stage:</strong> CM2<br />
+<strong>Adversarial-pressure responsibility:</strong> Prefer
+independent, diverse, fail-closed, privacy-aware, contestable,
+recoverable, and economically credible controls.<br />
+<strong>Standing here:</strong> Preference criteria proposed.</p></li>
+<li><p><strong>Stage:</strong> Instance Configuration<br />
+<strong>Adversarial-pressure responsibility:</strong> Select keys,
+witnesses, quorum, sampling, sensors, debt budgets, vocabularies,
+phases, sanctions, threat actors, and recovery.<br />
+<strong>Standing here:</strong> Not fixed here.</p></li>
+<li><p><strong>Stage:</strong> Implementation Realization<br />
+<strong>Adversarial-pressure responsibility:</strong> Build the selected
+mediation, logging, witnessing, observation, and adjudication
+paths.<br />
+<strong>Standing here:</strong> Companion artifacts may exist;
+conformance unproven here.</p></li>
+<li><p><strong>Stage:</strong> Evidence<br />
+<strong>Adversarial-pressure responsibility:</strong> Exercise omission,
+fork, replay, drift, capture, debt, misclassification, compromised-key,
+and staged-observation attacks.<br />
+<strong>Standing here:</strong> Required and incomplete.</p></li>
+<li><p><strong>Stage:</strong> Revision<br />
+<strong>Adversarial-pressure responsibility:</strong> Amend controls and
+semantics while preserving predecessor commitments, incidents, dissent,
+and affected claims.<br />
+<strong>Standing here:</strong> Required direction.</p></li>
+</ul>
+<h3 id="evaluation-program">8.3 Evaluation Program</h3>
+<p>Evaluation should measure detection coverage, false positives, false
+negatives, time to detection, time to recovery, observer independence,
+fork detection, key-compromise handling, sampling sensitivity, debt
+aging, semantic-adjudication disagreement, cost, latency, privacy loss,
+and resistance to metric gaming. Red-team tests must include an
+adversary controlling the logger, an adversary controlling selected
+witnesses, and non-intentional proxy failure that produces the same
+artifacts as deception.</p>
+<h2 id="conclusion">9. Conclusion</h2>
+<p>Ableman’s Razor closes with a sentence about borders:</p>
+<blockquote>
+<p>Borders exist not to stop travel, but to make arrival meaningful.</p>
+</blockquote>
+<p>The constitutional governance framework builds those borders into
+execution. Every transition must cross the admissibility border with its
+authorization declared. Every refusal must name the border it enforced.
+Every debt acknowledges a border that could not be enforced in time.</p>
+<p>Under adversarial semantic pressure, the adversary does not try to
+remove the borders. They try to make crossing them meaningless: to
+produce border-crossing records that are formally complete while the
+substance of the border — the domain physics it enforces, the vocabulary
+it applies, the external reality it describes — is quietly hollowed
+out.</p>
+<p>The epistemic defense obligations proposed here are candidate ways to
+keep those borders meaningful when actors or optimization processes
+pressure them. They seek independently bound authorities and witnesses,
+bounded and consequential debt, anti-equivocation evidence, explicit key
+state, contestable semantics, and checks against observable effects.
+Their assurance remains conditional on the declared trust and
+observation topology.</p>
+<p>When these conditions hold, some forms of deception become more
+costly, more brittle, or more detectable. Whether honesty becomes
+optimal depends on the actor’s utility, the independence and reach of
+observers, the credibility of consequences, and the availability of
+unobserved effect channels.</p>
+<p>The constitutional epistemology result is therefore bounded:
+governance artifacts can convert otherwise invisible behavior into
+explicit, cross-checkable commitments. They can make contradiction,
+omission, drift, fork, and later denial easier to identify under stated
+assumptions. They do not make compliant form equivalent to honest
+substance, and they do not eliminate the institutional work required to
+preserve independent evidence and meaningful consequences.</p>
+<hr />
+<h2 id="appendix-a-relation-to-the-paper-family">Appendix A: Relation to
+the Paper Family</h2>
+<p>This paper is the fourth in the constitutional computing paper
+family:</p>
+<p><strong>Constitutional Computing (v1.2):</strong> The parent
+framework. Seven invariants, the governance kernel, the formal execution
+model, semantic stabilization, epistemic observability. Establishes the
+framework whose adversarial properties this paper analyzes.</p>
+<p><strong>Mosaic Internet Protocol (v1.4):</strong> Constitutional
+governance applied to inter-node networking. Names constitutional
+attribution drift (Section 11.2) as the networking-layer instance of
+semantic drift under formal compliance — the earliest explicit treatment
+of an adversarial semantic pressure vector in the family.</p>
+<p><strong>MosaiCOS (v1.0):</strong> Constitutional governance applied
+to OS execution. The constitutional kernel boundary declaration
+(COS-S-09) and the bootstrap commitment are structural resistances to
+the most basic form of adversarial OS governance: expanding the
+pre-governance surface without declaration.</p>
+<p><strong>This paper:</strong> The epistemological analysis of what
+happens when the framework is the attack surface. Identifies the four
+vectors, proposes the five epistemic defense obligations, characterizes
+the residual epistemic claim, and analyzes the AI agent case.</p>
+<p>The fifth paper in the family is the adversarial case applied to a
+specific domain: constitutional epistemology under adversarial semantic
+pressure in AI agent governance specifically, where the scaling
+advantage of machine-speed receipt generation meets the scaling
+advantage of machine-speed adversarial optimization. That paper is
+future work.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that adversarial semantic pressure : behavior that
+exploits the representational and procedural forms of governance so a
+system appears governed while its claims, effects, authority,
+completeness, or semantic commitments remain false or ungrounded. Its
+nearest external comparison fields are semantic, provenance, governance.
+The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Ableman’s Razor: A Typed Grammar for Ontology
+Exploration, Configuration Collapse, and Implementation Feedback</em>.
+Zenodo, 2026. https://doi.org/10.5281/zenodo.18113475.</p>
+<p>Adam Ableman. <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models</em>. Zenodo, 2026. https://doi.org/10.5281/zenodo.18453681.</p>
+<p>Adam Ableman. <em>Semantic Hashing: Hashes as Declared Equivalence
+Classes of Meaning</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18500533.</p>
+<p>Adam Ableman. <em>Cryptographic Phase: Declared Time, Semantic
+Stability, and Epochal Identity</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18503394.</p>
+<p>Adam Ableman. <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18633797.</p>
+<p>Adam Ableman. <em>Semantic Custody</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20300952.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>Adam Ableman. <em>Governed Meaning Base (GMB)</em>. Authorized
+Ableman Corpus edition developed through the historical CCF -&gt; CMB
+-&gt; GMB lineage; canonical concept standing remains governed
+separately from publication.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>External comparison to adversarial machine learning, secure audit
+logging, transparency logs, Byzantine fault models, remote attestation,
+accountable systems, institutional capture, Goodhart’s law, mechanism
+design, and scientific-fraud detection requires a source-by-source
+literature review. The present paper supplies an internally integrated
+threat architecture, not an independent novelty claim or empirical
+security proof.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Ableman’s Razor: A Typed Grammar for Ontology
+Exploration, Configuration Collapse, and Implementation Feedback.</em>
+Zenodo, 2026. doi:10.5281/zenodo.18113475</p>
+<p>Adam Ableman <em>Cryptographic Phase: Declared Time, Semantic
+Stability, and Epochal Identity.</em> Zenodo, 2026.
+doi:10.5281/zenodo.18503394</p>
+<p>Adam Ableman <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI.</em> Zenodo, 2026. doi:10.5281/zenodo.18633797</p>
+<p>Adam Ableman <em>Semantic Custody.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20300952</p>
+<p>Adam Ableman <em>Semantic Hashing: Hashes as Declared Equivalence
+Classes of Meaning.</em> Zenodo, 2026. doi:10.5281/zenodo.18500533</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847613">10.5281/zenodo.23847613</a></p>

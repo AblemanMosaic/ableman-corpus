@@ -1,0 +1,888 @@
+<h1 id="authority-laundering-theory">Authority Laundering Theory</h1>
+<h2 id="a-theory-of-legitimacy-preserving-semantic-transformation">A
+Theory of Legitimacy-Preserving Semantic Transformation</h2>
+<h3
+id="an-effect-that-outlives-its-warrant-is-not-authority-it-is-authoritys-forgery.">An
+effect that outlives its warrant is not authority; it is authority’s
+forgery.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Authority laundering occurs when an effect is presented as
+legitimately authorized although the effect instance lacks a valid,
+reconstructable warrant path or bypassed a mandatory authority-bearing
+transition. The theory begins from a powerful operational intuition:
+claimed governance should make a difference to what a system can do. A
+control that appears in policy and receipts while no relevant outcome
+depends on it may be ceremonial.</p>
+<p>The intuition requires a crucial repair. Counterfactual dependence is
+evidence of causal contribution, not sufficient proof of authority. A
+bug, power supply, database, or unrelated prerequisite may also be
+causally necessary. Conversely, an effect may remain reachable after one
+authority is disabled because another valid authority independently
+warrants it. Such lawful redundancy is not laundering. Authority
+therefore requires both <strong>normative validity</strong> and
+<strong>causally effective enforcement</strong>, evaluated over an
+exactly identified effect instance, jurisdiction, time, and policy
+state.</p>
+<p>This paper develops a legitimacy filtration over identity,
+projection, binding, structural validity, admissibility, execution, and
+receipt lineage. It defines authority claims, valid warrants,
+alternative warrants, intervention tests, and diagnostic postures
+separating supported authority, shared or redundant authority,
+ceremonial attribution, unverifiable warrant, and laundering. Exact
+results are available only relative to a bounded model whose state,
+transitions, authorities, and effect identity are complete. Outside that
+boundary, analysis must abstain, over-approximate, or report residual
+uncertainty.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/authority-</code></p>
+<p><code>laundering-theory/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>B44FD69657B3C72C627FC0E772D2BE3B280B51E5DE6A2D0753CB92A149D7BE39</code>.
+The exact source remains unchanged.</p>
+<p>The semantic-reachability thesis, filtration, removal test,
+laundering matrix, compiler analogy, deterministic-first program,
+composition problem, and worked instrument are author material. The
+repaired formal distinctions, alternative-warrant handling, theorem
+downgrades, GMB/GSM placement, realization funnel, expanded
+counterevidence, and open editorial questions are AI editorial or
+synthetic contributions until adopted.</p>
+<p>No theorem was independently proved, no runtime or model checker was
+exercised, and no external reference was reviewed. The source
+bibliography is preserved as author-supplied material, not as verified
+support. Nothing here grants canonical, implementation, conformance,
+identity, novelty, or publication standing.</p>
+<h2 id="part-i-semantic-reachability-and-legitimate-authority">Part I:
+Semantic Reachability and Legitimate Authority</h2>
+<h2 id="the-counterfeit-warrant">1. The Counterfeit Warrant</h2>
+<p>Authority laundering does not necessarily forge an effect. It forges,
+obscures, or substitutes the warrant that would entitle the effect
+instance to occur. A prompt injection can borrow a real capability
+without a valid admission path. Poisoned context can convert
+availability into permission. A human approval control can be visible
+yet unable to prevent promotion. A release receipt can be internally
+consistent while referring to the wrong artifact.</p>
+<p>The central question is not merely whether an authority token,
+reviewer, policy, or gate was present. It is whether a valid authority
+path existed for this effect instance and whether mandatory
+authority-bearing transitions were actually load-bearing.</p>
+<blockquote>
+<p><strong>Bounded thesis.</strong> Authority is valid warrant made
+operational through governed reachability. Laundering is the
+presentation or production of binding effect without such a warrant, or
+through a bypass that the governing specification forbids.</p>
+</blockquote>
+<h2 id="exact-effect-identity-and-system-boundary">2. Exact Effect
+Identity and System Boundary</h2>
+<p>A removal test is meaningless until the effect is identified. Let</p>
+<p><span
+class="math display"><em>x</em> = (<em>i</em>, <em>p</em>, <em>s</em>, <em>s</em><sup>′</sup>, <em>J</em>, <em>t</em>, <em>v</em>),</span></p>
+<p>where <span class="math inline"><em>i</em></span> is effect identity,
+<span class="math inline"><em>p</em></span> is payload, <span
+class="math inline"><em>s</em></span> and <span
+class="math inline"><em>s</em><sup>′</sup></span> are pre-state and
+post-state, <span class="math inline"><em>J</em></span> is jurisdiction,
+<span class="math inline"><em>t</em></span> is time, and <span
+class="math inline"><em>v</em></span> is the relevant policy and
+implementation version. Reaching an effect of the same broad class is
+not necessarily reaching the same <span
+class="math inline"><em>x</em></span>.</p>
+<p>Let <span class="math inline"><em>S</em><sub><em>B</em></sub></span>
+be a system model under boundary declaration <span
+class="math inline"><em>B</em></span>. The boundary must name relevant
+state, transitions, actors, authorities, dependencies, and observation
+limits. Semantic reachability is:</p>
+<p><span
+class="math display">Reach<sub><em>B</em></sub>(<em>x</em>) ⇔ <em>x</em> ∈ ℛ(<em>S</em><sub><em>B</em></sub>).</span></p>
+<p>Claims of exactness are always relative to <span
+class="math inline"><em>B</em></span>. Hidden services, fallback paths,
+asynchronous effects, external operators, stale credentials, or omitted
+state invalidate a universal conclusion even if the modeled graph is
+finite.</p>
+<p>For a finite explicit deterministic transition graph, ordinary
+reachability is decidable and polynomial in graph size. Enumerating all
+interventions, authority combinations, identities, and compositions can
+still be expensive or state-explosive. “Decidable” does not mean
+operationally trivial.</p>
+<h2 id="the-legitimacy-filtration">3. The Legitimacy Filtration</h2>
+<p>The source proposes nested reachability sets. This is valid when each
+filter is a declared reductive operator over a fixed-order pipeline:</p>
+<p><span
+class="math display"><em>X</em><sub>0</sub> = ℛ<sub><em>s</em><em>e</em><em>m</em></sub>(<em>S</em><sub><em>B</em></sub>),   <em>X</em><sub><em>k</em> + 1</sub> = <em>F</em><sub><em>k</em></sub>(<em>X</em><sub><em>k</em></sub>),   <em>F</em><sub><em>k</em></sub>(<em>X</em><sub><em>k</em></sub>) ⊆ <em>X</em><sub><em>k</em></sub>.</span></p>
+<p>A representative order is:</p>
+<p><span
+class="math display"><em>X</em><sub>0</sub> ⊇ <em>X</em><sub><em>i</em><em>d</em></sub> ⊇ <em>X</em><sub><em>p</em><em>r</em><em>o</em><em>j</em></sub> ⊇ <em>X</em><sub><em>b</em><em>i</em><em>n</em><em>d</em></sub> ⊇ <em>X</em><sub><em>w</em><em>f</em></sub> ⊇ <em>X</em><sub><em>a</em><em>d</em><em>m</em></sub> ⊇ <em>X</em><sub><em>e</em><em>x</em><em>e</em><em>c</em></sub>.</span></p>
+<ul>
+<li><strong>Identity:</strong> is the transition about the same governed
+object?</li>
+<li><strong>Projection:</strong> did meaning and qualifications survive
+representation change?</li>
+<li><strong>Binding:</strong> was ambiguity resolved through a governed
+anchor?</li>
+<li><strong>Structural validity:</strong> is the proposal well formed
+under the applicable schema?</li>
+<li><strong>Admissibility:</strong> did a competent authority admit it
+under current law and evidence?</li>
+<li><strong>Execution:</strong> did the realized effect remain within
+the admitted capability and payload?</li>
+<li><strong>Receipt and lineage:</strong> can proposal, evaluation,
+admission, execution, and result be reconstructed?</li>
+</ul>
+<p>The nesting is a modeling contract, not a fact about every
+architecture. Filters may interact, repair earlier ambiguity, or behave
+non-monotonically. If order, reductiveness, and state assumptions do not
+hold, the paper must use explicit transition relations rather than claim
+a simple filtration.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the author-confirmed <code>CCF -&gt; CMB -&gt; GMB</code> lineage.
+The universal GSM can represent the objects, paths, evidence, authority
+claims, receipts, and conflicts used by this filtration. Neither the GMB
+nor GSM automatically proves that an implementation enforces it.</p>
+<h2 id="normative-warrant-and-causal-contribution">4. Normative Warrant
+and Causal Contribution</h2>
+<p>Let <span class="math inline"><em>A</em></span> be a claimed
+authority and <span
+class="math inline"><em>W</em>(<em>A</em>, <em>x</em>, <em>J</em>, <em>v</em>)</span>
+mean that <span class="math inline"><em>A</em></span> is normatively
+valid for effect <span class="math inline"><em>x</em></span> in
+jurisdiction <span class="math inline"><em>J</em></span> under policy
+version <span class="math inline"><em>v</em></span>. This predicate
+requires identity, scope, delegation, currency, criteria, and
+admissibility; causal necessity alone cannot establish it.</p>
+<p>Define <span
+class="math inline"><em>S</em><sub><em>B</em></sub> ↓ <em>A</em></span>
+as an intervention that disables transitions whose permission depends on
+<span class="math inline"><em>A</em></span> while holding the rest of
+the modeled policy and implementation fixed. It is not deletion of a
+blocking guard and not merely removal of a receipt label. The causal
+contribution set is:</p>
+<p><span
+class="math display"><em>C</em><sub><em>B</em></sub>(<em>A</em>) = ℛ(<em>S</em><sub><em>B</em></sub>) \ ℛ(<em>S</em><sub><em>B</em></sub> ↓ <em>A</em>).</span></p>
+<p>Then an operational authority claim is supported only where both
+conditions hold:</p>
+<p><span
+class="math display">SupportedAuthority<sub><em>B</em></sub>(<em>A</em>, <em>x</em>) ⇒ <em>W</em>(<em>A</em>, <em>x</em>, <em>J</em>, <em>v</em>) ∧ <em>x</em> ∈ <em>C</em><sub><em>B</em></sub>(<em>A</em>).</span></p>
+<p>The implication is deliberately one-way. In architectures with
+multiple independently sufficient authorities, <span
+class="math inline"><em>x</em></span> may remain reachable after
+disabling <span class="math inline"><em>A</em></span> even though <span
+class="math inline"><em>A</em></span> could validly authorize one path.
+That is <strong>shared or redundant authority</strong>, not laundering,
+provided the realized path and attribution are correctly recorded.</p>
+<p>For a blocking gate <span class="math inline"><em>g</em></span>, a
+different intervention is needed: bypass or disable the gate while
+retaining the proposed effect path. Removing an effective blocker
+expands forbidden reachability. Enablers and blockers have opposite
+intervention directions and must not be conflated.</p>
+<h2 id="alternative-warrants-and-attribution">5. Alternative Warrants
+and Attribution</h2>
+<p>Let <span class="math inline">𝒲(<em>x</em>)</span> be the set of
+valid warrant paths for effect instance <span
+class="math inline"><em>x</em></span>. A claimed attribution to <span
+class="math inline"><em>A</em></span> may have several postures:</p>
+<ul>
+<li><p><strong>Posture:</strong> Supported exclusive attribution<br />
+<strong>Normative path:</strong> Valid <span
+class="math inline"><em>A</em></span> path<br />
+<strong>Causal result:</strong> Disabling <span
+class="math inline"><em>A</em></span> prevents <span
+class="math inline"><em>x</em></span><br />
+<strong>Interpretation:</strong> <span
+class="math inline"><em>A</em></span> is valid and constitutive within
+<span class="math inline"><em>B</em></span>.</p></li>
+<li><p><strong>Posture:</strong> Supported shared authority<br />
+<strong>Normative path:</strong> Valid <span
+class="math inline"><em>A</em></span> path and valid alternative<br />
+<strong>Causal result:</strong> <span
+class="math inline"><em>x</em></span> remains reachable<br />
+<strong>Interpretation:</strong> Attribution must name redundancy; not
+laundering.</p></li>
+<li><p><strong>Posture:</strong> Ceremonial attribution<br />
+<strong>Normative path:</strong> <span
+class="math inline"><em>A</em></span> is presented as load-bearing<br />
+<strong>Causal result:</strong> Disabling <span
+class="math inline"><em>A</em></span> changes nothing and no realized
+<span class="math inline"><em>A</em></span> path is shown<br />
+<strong>Interpretation:</strong> Governance theater or
+misattribution.</p></li>
+<li><p><strong>Posture:</strong> Unverifiable warrant<br />
+<strong>Normative path:</strong> Legitimacy path cannot be
+reconstructed<br />
+<strong>Causal result:</strong> Causal status may be known or
+unknown<br />
+<strong>Interpretation:</strong> Evidence failure; laundering not yet
+proved.</p></li>
+<li><p><strong>Posture:</strong> Laundered effect<br />
+<strong>Normative path:</strong> No valid warrant for realized path, or
+mandatory filter bypass<br />
+<strong>Causal result:</strong> Effect occurs or is promoted<br />
+<strong>Interpretation:</strong> Binding force exceeds valid
+warrant.</p></li>
+<li><p><strong>Posture:</strong> Unknown<br />
+<strong>Normative path:</strong> Boundary or intervention is
+inadequate<br />
+<strong>Causal result:</strong> Inconclusive<br />
+<strong>Interpretation:</strong> Abstain and improve the model.</p></li>
+</ul>
+<p>This table repairs two false positives in the original hard
+criterion. First, missing lineage proves unverifiability, not
+necessarily historical illegitimacy. Second, an <span
+class="math inline"><em>A</em></span>-free path disproves exclusive
+dependence on <span class="math inline"><em>A</em></span>, not the
+legitimacy of all alternative paths.</p>
+<h2 id="part-ii-detecting-laundering">Part II: Detecting Laundering</h2>
+<h2 id="a-repaired-laundering-criterion">6. A Repaired Laundering
+Criterion</h2>
+<p>Let <span class="math inline"><em>π</em><sub><em>x</em></sub></span>
+be the realized path for <span class="math inline"><em>x</em></span>,
+not merely any hypothetical path reaching an equivalent outcome. Let
+<code>ValidWarrant</code> require a reconstructable chain of proposal,
+evaluation, admission, execution, receipt, and lineage under the correct
+identities and versions. Then:</p>
+<p><span
+class="math display">Laundered<sub><em>B</em></sub>(<em>x</em>) ⇔ PresentedAsAuthorized(<em>x</em>) ∧ (¬ValidWarrant(<em>π</em><sub><em>x</em></sub>) ∨ MandatoryBypass(<em>π</em><sub><em>x</em></sub>)).</span></p>
+<p>An absent receipt yields <code>UNVERIFIABLE</code> unless the
+system’s constitution makes receipting a mandatory validity condition.
+Under that stronger specification, absence itself makes the realized
+path invalid and therefore laundered. The distinction must be declared,
+not assumed retroactively.</p>
+<p>Minimal paths are useful for finding bypasses but do not by
+themselves identify the actual cause or warrant. A non-minimal valid
+path may be the one executed. Tests should preserve both the realized
+trace and counterfactual alternatives.</p>
+<h2 id="governance-as-compilation">7. Governance as Compilation</h2>
+<p>The source’s compiler analogy remains useful if treated as an
+engineering correspondence rather than proof. A lowering pipeline moves
+from language to meaning, structure, authority, procedure, and effect.
+Warrant preservation requires that each lowering stage preserve or
+narrow licensed binding force unless an explicit admission step changes
+it.</p>
+<p>For procedure <span class="math inline"><em>p</em></span> derived
+from admitted specification <span class="math inline"><em>m</em></span>,
+a capability-containment obligation can be written:</p>
+<p><span
+class="math display">Cap(<em>p</em>, <em>J</em>, <em>v</em>) ⊆ LicensedCap(<em>m</em>, <em>J</em>, <em>v</em>).</span></p>
+<p>The sets, jurisdiction, policy version, and observation method must
+be defined. A capability present only because of ambient platform
+permission is not licensed merely because the procedure can invoke
+it.</p>
+<h2 id="laundering-matrix-as-diagnostic-not-partition">8. Laundering
+Matrix as Diagnostic, Not Partition</h2>
+<p>The source maps laundering to identity, projection, binding, cooling,
+crystallization, coverage, admission, continuity, context, procedure,
+execution, and reachability. The matrix is valuable for diagnosis, but a
+single incident may occupy several cells. Identity substitution can
+cause authority mismatch, projection loss, invalid admission, and
+misleading receipt lineage simultaneously.</p>
+<p>Accordingly, matrix assignment is many-to-many. Each finding should
+record primary cell, secondary cells, violated invariant, evidence, and
+confidence. Corpus constructs such as GTK, Constitutional Legends, CBT,
+Governance Coverage Gaps, Admissibility Engineering, Semantic Custody,
+Governed Context and Memory, Machine Closure, and Constitutional
+Software Analysis are comparison lenses or guards; the mapping does not
+establish that they form a minimal or irreducible basis.</p>
+<p>Filtration irreducibility remains a proof obligation. It would
+require a precise guard set, independence assumptions, and a witness for
+each removal while all other guards remain fixed.</p>
+<h2 id="removal-test-protocol">9. Removal-Test Protocol</h2>
+<p>For claim <span
+class="math inline">(<em>A</em>, <em>x</em>, <em>B</em>)</span>:</p>
+<ol type="1">
+<li>resolve exact effect, authority, jurisdiction, policy,
+implementation, and time;</li>
+<li>verify <span
+class="math inline"><em>x</em> ∈ ℛ(<em>S</em><sub><em>B</em></sub>)</span>
+and identify the realized path;</li>
+<li>establish whether <span class="math inline"><em>A</em></span> is an
+enabler, blocker, reviewer, delegator, or compound authority;</li>
+<li>construct the appropriate intervention without changing unrelated
+state;</li>
+<li>recompute or over-approximate reachability;</li>
+<li>enumerate known alternative valid warrants;</li>
+<li>reconstruct proposal-to-effect lineage;</li>
+<li>classify the result using the posture table; and</li>
+<li>report boundary omissions and residual uncertainty.</li>
+</ol>
+<p>If <span class="math inline"><em>x</em></span> remains reachable
+after <span class="math inline"><em>A</em></span> is disabled, conclude
+only that exclusive dependence on <span
+class="math inline"><em>A</em></span> is unproved. Classify ceremonial
+attribution only if the system claimed <span
+class="math inline"><em>A</em></span> was necessary and no realized or
+alternative valid role explains the result. Classify laundering only
+when the realized path lacks a valid warrant or bypasses a mandatory
+filter.</p>
+<h2 id="sufficient-assurance-condition">10. Sufficient Assurance
+Condition</h2>
+<p>The original “Prevention Theorem” is retained as a target, not an
+established biconditional. A bounded system has strong evidence against
+observed laundering when:</p>
+<ol type="1">
+<li>effect, actor, authority, and version identities are exact;</li>
+<li>all effect-producing transitions inside <span
+class="math inline"><em>B</em></span> are covered;</li>
+<li>every realized path has a valid warrant under current policy;</li>
+<li>mandatory gates are non-bypassable and causally effective;</li>
+<li>alternative authorities and fallback paths are modeled;</li>
+<li>execution cannot widen admitted capability or mutate payload after
+review;</li>
+<li>receipts bind proposal, criteria, authority, verdict, execution,
+result, and lineage;</li>
+<li>independent replay or verification detects hidden divergence;
+and</li>
+<li>composition preserves these conditions across subsystem seams.</li>
+</ol>
+<p>Under an explicit finite model, these conditions may support a
+relative theorem about that model. They do not prove real-world
+laundering freedom if <span class="math inline"><em>B</em></span> is
+incomplete, the model is unsound, effect equivalence is wrong, or
+implementation differs from the model.</p>
+<h2 id="part-iii-realization-and-corpus-integration">Part III:
+Realization and Corpus Integration</h2>
+<h2 id="deterministic-first-realization">11. Deterministic-First
+Realization</h2>
+<p>The deterministic-first program remains compelling. Build pipelines,
+release systems, policy engines, and constrained tool orchestrators can
+expose finite state and exact authority transitions more readily than
+open-ended learned systems. The first target should be a small
+executable model with explicit effect identities, authority registry,
+alternative-warrant cases, receipts, and negative tests.</p>
+<p>For stochastic or unbounded systems, a sound over-approximation <span
+class="math inline">ℛ<sup>♯</sup></span> can prove unreachability when
+the effect is absent from the concretized over-approximation. Inclusion
+is generally inconclusive. Deterministic gates around learned components
+can bound external effects, but only if all effect paths traverse those
+gates and the gate-to-effect binding cannot be swapped, raced, or
+bypassed.</p>
+<p>The worked runtime example in the source is retained as an
+author-reported case. It has not been independently executed or verified
+in this pass and therefore cannot carry evidentiary standing here.</p>
+<h2 id="composition-and-non-interference">12. Composition and
+Non-Interference</h2>
+<p>Laundering freedom does not automatically compose. Two locally
+governed systems may create an ungoverned effect through shared
+credentials, aliases, retries, caches, side channels, fallback routes,
+or inconsistent authority semantics. Disjoint latent-authority sets are
+neither always necessary nor sufficient without an interface model.</p>
+<p>A composition contract should bind shared identities, authority
+translation, interface capabilities, joint admission, cross-system
+receipts, failure atomicity, replay, and revocation propagation. The
+general composition theorem remains open. Constraint-bearing
+composition, evidence-carrying interfaces, and semantic custody provide
+direct corpus interfaces for pursuing it.</p>
+<h2 id="universal-gsm-and-realization-funnel">13. Universal GSM and
+Realization Funnel</h2>
+<p>Authority Laundering Theory becomes a universal-GSM analysis over
+typed effect, path, identity, authority, policy, intervention, receipt,
+and evidence objects. The GSM can retain competing causal models and
+warrant claims without merging them. GMB can govern their current
+standing and revision lineage.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate laundering mechanisms,
+authority topologies, and interventions.</li>
+<li><strong>Specification:</strong> define effect identity, valid
+warrants, filters, authorities, jurisdictions, and receipts.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> retain
+configurations meeting mandatory coverage, authority, custody, and
+non-bypass constraints.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer among
+admissible models by precision, cost, reversibility, and
+comprehensibility.</li>
+<li><strong>IC:</strong> choose an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for one
+bounded system. The names are interchangeable.</li>
+<li><strong>IR:</strong> construct an <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong> of
+that same stage. The names are interchangeable.</li>
+<li><strong>Evidence:</strong> run removals, bypass attacks,
+alternative-warrant tests, replays, and lineage checks.</li>
+<li><strong>Revision:</strong> change the boundary, policy, model, or
+implementation while preserving prior results and invalidations.</li>
+</ul>
+<p>No IC is selected and no IR is certified by this paper.</p>
+<h2 id="dual-audit-of-authority-attribution">Dual Audit of Authority
+Attribution</h2>
+<p>The completed P1 corpus makes Authority Laundering Theory the
+<strong>dual audit of authority attribution</strong>: a claimed
+authority path must be both normatively valid and causally effective for
+the exact realized effect. The theory diagnoses promotion failure; it
+does not itself supply the authority root, witness schema, enforcement
+layer, or final legitimacy judgment.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Warrant by
+Structure</em><br />
+<strong>Supplies:</strong> Assurance relation over authority, mediation,
+effects, receipts, and bypasses.<br />
+<strong>Authority-laundering boundary:</strong> Laundering analysis is
+an adversarial test of one warrant dimension, not the whole
+warrant.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Evidence artifacts for authority, occurrence,
+continuity, semantics, and evaluation.<br />
+<strong>Authority-laundering boundary:</strong> Witnesses can expose or
+conceal laundering; artifact presence is not authority.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Legitimacy Without
+Self-Ratification</em><br />
+<strong>Supplies:</strong> Independence and non-self-promotion
+constraints.<br />
+<strong>Authority-laundering boundary:</strong> Supplies one necessary
+legitimacy condition, not the entire normative authority model.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Integrity Enforcement
+Layer</em><br />
+<strong>Supplies:</strong> Enforces selected authority and integrity
+predicates before protected effects.<br />
+<strong>Authority-laundering boundary:</strong> Enforcement can be
+causally effective while enforcing an illegitimate or stale
+root.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Translation of constitutional commitments
+into operational gates.<br />
+<strong>Authority-laundering boundary:</strong> Compilation can
+preserve, distort, or bypass authority and must expose semantic
+remainder.</p></li>
+</ul>
+<p>For effect instance <span class="math inline"><em>e</em></span>, the
+audit separates:</p>
+<p><span
+class="math display"><em>N</em><em>o</em><em>r</em><em>m</em><em>V</em><em>a</em><em>l</em><em>i</em><em>d</em>(<em>a</em>, <em>e</em>, <em>j</em>, <em>t</em>)  and  <em>C</em><em>a</em><em>u</em><em>s</em><em>a</em><em>l</em>(<em>a</em>, <em>e</em>, <em>p</em><em>a</em><em>t</em><em>h</em>, <em>t</em>).</span></p>
+<p>This yields at least six postures: <code>SUPPORTED_AUTHORITY</code>,
+<code>SHARED_OR_REDUNDANT_AUTHORITY</code>,<br />
+<code>NORMATIVE_ONLY_CEREMONIAL</code>,
+<code>CAUSAL_BUT_ILLEGITIMATE</code>, <code>UNVERIFIABLE</code>,<br />
+and<br />
+<code>LAUNDERED_OR_BYPASSED</code>. A failed removal test establishes
+neither laundering nor absence of authority until lawful alternatives,
+fallback paths, common causes, and the intervention’s validity are
+examined.</p>
+<p>Corpus integration adds a propagation rule. When an authority
+attribution is downgraded, every dependent admission, execution, receipt
+interpretation, warrant, standing decision, and public claim must be
+enumerated. The system records whether each dependent is unaffected,
+narrowed, contested, quarantined, or withdrawn. Repairing the gate
+cannot silently repair prior effects.</p>
+<p>The universal GSM can type<br />
+<code>CLAIMS_AUTHORITY_OVER</code>,
+<code>NORMATIVELY_WARRANTED_BY</code>,<br />
+<code>CAUSALLY_MEDIATES</code>, <code>ALTERNATIVELY_WARRANTED_BY</code>,
+<code>BYPASSES</code>, <code>ATTRIBUTED_TO</code>,<br />
+<code>DOWNGRADED_BY</code>,<br />
+and<br />
+<code>INVALIDATES_DEPENDENT</code>. These relations preserve competing
+causal and normative models.</p>
+<p>This integration establishes four editorial commitments: adopt dual
+audit as the official corpus role; adopt the six diagnostic postures;
+require dependent-claim propagation after authority downgrade; and
+decide which external normative theory supplies the authority-validity
+criterion rather than leaving it implicit.</p>
+<h2
+id="authority-across-retrieval-exigence-translation-and-enforcement">Authority
+Across Retrieval, Exigence, Translation, and Enforcement</h2>
+<p>The fixed-seed comparison with governed retrieval, the Cognitive
+Kernel, Governance as Compilation, and the Integrity Enforcement Layer
+gives an authority claim both a normative and causal path:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A^*= (&amp;effect, claimed\_authority, normative\_warrant, \\
+&amp;causal\_path, retrieval\_origin, exigence\_use, \\
+&amp;translation\_stages, enforcement, evidence, alternatives, \\
+&amp;dependents)
+\end{aligned}.
+$$</span></p>
+<p>Retrieved relevance and citation prestige are evidence attributes,
+not authority. CogK urgency, attention, and custody can identify and
+manage a need without manufacturing jurisdiction. A compilation pipeline
+can preserve, narrow, lose, or counterfeit authority at each edge;
+successful translation does not prove legitimate input or output.</p>
+<p>The Integrity Enforcement Layer supplies the causal mechanism that
+permits, refuses, defers, contains, or records an effect. Its
+effectiveness must be audited separately from the legitimacy of the rule
+it enforces. A technically successful refusal can implement an invalid
+authority claim, while a valid authority claim can fail through a broken
+causal path.</p>
+<p>The universal GSM can type<br />
+<code>RETRIEVED_AS_EVIDENCE_NOT_AUTHORITY</code>,<br />
+<code>TRIGGERED_BY_EXIGENCE_NOT_JURISDICTION</code>,
+<code>PRESERVES_AUTHORITY_ACROSS_STAGE</code>,<br />
+<code>LOSES_AUTHORITY_AT_EDGE</code>, <code>ENFORCED_BY_IEL</code>,
+<code>AUDITS_NORMATIVE_AND_CAUSAL_PATHS</code>,<br />
+and<br />
+<code>PROPAGATES_AUTHORITY_DOWNGRADE_TO_DEPENDENTS</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the extended authority object; audit retrieved and exigence-mediated
+claims before promotion; require authority preservation and loss records
+across compilation; and separate IEL causal effectiveness from normative
+validity.</p>
+<h2 id="the-dual-audit-of-normative-lineage-and-causal-control">The Dual
+Audit of Normative Lineage and Causal Control</h2>
+<p>Seventeen downstream uses confirm Authority Laundering Theory as a
+cross-domain adversarial diagnostic. It is used against retrieval that
+treats source labels as mandate; translation and compilation that
+inherit authority through form; witnesses or human-review surfaces that
+are not causally load-bearing; semantic maps and ontology changes that
+obscure authority shifts; enforcement machinery with defective roots;
+trade and custody handoffs that treat transmission or possession as
+grant; and kernels, warrants, and legitimacy procedures that confuse
+successful process with lawful standing.</p>
+<p>The case object is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+A^*= (&amp;claim, effect, authority\_source, jurisdiction, grant, \\
+&amp;delegations, transformations, intermediaries, \\
+&amp;visible\_process, decision\_path, effect\_path, \\
+&amp;controllers, alternatives, removal\_tests, evidence, \\
+&amp;classification, remedy, appeal)
+\end{aligned}.
+$$</span></p>
+<p>The audit has two independent axes. <strong>Normative
+lineage</strong> asks whether the authority source and every delegation
+lawfully cover the subject, jurisdiction, time, and effect.
+<strong>Causal control</strong> asks which actor, rule, model,
+credential, interface, or hidden channel actually changed the decision
+or effect. A valid root can be ceremonial; a causally decisive actor can
+be unauthorized; and a valid process can carry a defective root. Neither
+axis substitutes for the other.</p>
+<p>Removal and perturbation tests should target the claimed authority,
+visible approver, hidden controller, policy, credential, route, and
+alternative. If removing a nominal reviewer changes nothing, the review
+may be ceremonial. If removing an unofficial actor changes the outcome,
+that actor may hold de facto control. These are causal findings, not
+proof of intent, corruption, illegality, or moral fault. The docket must
+retain good-faith error, ambiguity, drift, emergency action, capture,
+coercion, and deliberate laundering as competing explanations.</p>
+<p>The wider alias search produced ten rejected hits in which “authority
+laundering” appears only as a generic failure label, analogy, or
+unsupported warning without applying this paper’s dual audit or removal
+test. Those remain retrieval leads rather than dependencies.</p>
+<p>The universal GSM can type<br />
+<code>TRACES_NORMATIVE_AUTHORITY_LINEAGE</code>,<br />
+<code>MEASURES_CAUSAL_CONTROL</code>,
+<code>REMOVES_NOMINAL_APPROVER</code>,
+<code>REVEALS_HIDDEN_CONTROLLER</code>,<br />
+<code>TRANSMITS_WITHOUT_AUTHORITY_GAIN</code>,
+<code>PRESERVES_COMPETING_EXPLANATION</code>,<br />
+<code>REMEDIATES_LAUNDERED_EFFECT</code>, and<br />
+<code>WITHHOLDS_INTENT_OR_LIABILITY_FINDING</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the dual-axis case object; require targeted removal
+and perturbation tests; distinguish root, transmission, process,
+validation, retrieval, container, and role laundering; and retain
+intent, legality, fault, and remedy as separately evidenced
+conclusions.</p>
+<h2 id="internal-counterevidence-and-falsifiers">14. Internal
+Counterevidence and Falsifiers</h2>
+<p>The framework must narrow, abstain, or fail where:</p>
+<ol type="1">
+<li>effect identity is too coarse and conflates different
+instances;</li>
+<li>the intervention changes unrelated policy or state;</li>
+<li>disabling an authority activates a valid fallback;</li>
+<li>several authorities are independently sufficient;</li>
+<li>authority is valid but not exclusively causal;</li>
+<li>a causal dependency is mistaken for normative authority;</li>
+<li>missing lineage is treated as proof of historical illegitimacy;</li>
+<li>receipts describe a path other than the realized one;</li>
+<li>filtering stages are not reductive or order-independent;</li>
+<li>a later stage repairs an earlier ambiguity;</li>
+<li>hidden state or external services escape <span
+class="math inline"><em>B</em></span>;</li>
+<li>the reachability abstraction is unsound;</li>
+<li>state explosion prevents the claimed exact test;</li>
+<li>an apparently ceremonial control is intentional
+defense-in-depth;</li>
+<li>a mandatory gate is bypassed after admission through mutation or
+race;</li>
+<li>revocation fails to propagate to cached or delegated authority;</li>
+<li>composition creates shared authority absent from local models;</li>
+<li>the authority registry itself is stale or captured;</li>
+<li>policy declares a path valid that is morally or legally
+defective;</li>
+<li>different jurisdictions issue incompatible but locally valid
+warrants;</li>
+<li>the model proves only a toy projection while prose claims
+system-wide assurance;</li>
+<li>the proposed diagnostic adds no value beyond direct capability,
+policy, and provenance tests.</li>
+</ol>
+<p>These are not peripheral caveats. They define the empirical and
+formal program required to establish the theory’s reach.</p>
+<h2 id="reachability-does-not-legitimize-itself">Reachability Does Not
+Legitimize Itself</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Authority Laundering Theory studies how transformations, retrieval,
+translation, interfaces, or delegation can make an action appear
+authorized while its normative lineage or causal control no longer
+supports that appearance. The definition of authority as admissible
+semantic reachability is a formal proposal within this architecture, not
+a complete legal, political, or moral theory of authority.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Admission-legitimacy attack.</strong> A path is admissible
+under corrupt or unauthorized rules. Reachability requires valid
+governing authority, not merely local acceptance.</li>
+<li><strong>Delegation-chain attack.</strong> Scope expands through
+aliases, groups, inheritance, defaults, or retransmission. Every hop
+must conserve and attenuate authority explicitly.</li>
+<li><strong>Translation-laundering attack.</strong> A semantic transform
+changes obligation while preserving authoritative appearance. Source and
+target commitments need property-level correspondence.</li>
+<li><strong>Retrieval-laundering attack.</strong> Relevant text is
+surfaced and treated as permission. Relevance, standing, jurisdiction,
+and authority are separate relations.</li>
+<li><strong>Interface-laundering attack.</strong> A button, API, or
+workflow makes an effect available and users infer authorization.
+Affordance and lawful grant must not collapse.</li>
+<li><strong>Proxy-authority attack.</strong> An evaluator, model, or
+witness speaks about authority and is treated as the authority
+itself.</li>
+<li><strong>Causal-control mismatch.</strong> The named principal
+appears responsible while another actor or mechanism controls the
+effect. Normative lineage and causal control require dual audit.</li>
+<li><strong>Formal-theorem overreach.</strong> A result proven from the
+paper’s definitions is presented as an empirical law. The theorem’s
+assumptions and domain remain explicit.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper supplies a formal theory of legitimacy-preserving
+transformation and a dual audit of normative lineage and causal control.
+Its theorems hold within declared definitions and assumptions. They do
+not settle legal authority, political legitimacy, moral justification,
+actual responsibility, or empirical prevalence.</p>
+<p>Claims about law, institutions, security, language, organizations, or
+real incidents require current external evidence and qualified domain
+review. Internal corpus examples demonstrate the proposed pattern only.
+No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public test is whether an apparent permission can be traced both
+backward through an unbroken authorized lineage and forward to the actor
+and mechanism that actually controlled the effect.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Authority laundering names a real architectural danger: effects can
+acquire the appearance of legitimacy while bypassing the transformations
+that would warrant them. The source’s decisive insight survives audit:
+governance should change reachable behavior, and its claims should be
+reconstructable.</p>
+<p>The repaired theory refuses two shortcuts. Causal necessity is not
+authority without normative warrant, and causal non-necessity is not
+laundering when alternative lawful warrants exist. The proper object is
+the exact realized effect path under a declared boundary. That path must
+preserve identity, projection, binding, admissibility, capability, and
+lineage, while the authority attributed to it must be both valid and
+operationally meaningful.</p>
+<p>The result is not yet a universal theorem. It is a strong,
+falsifiable research and engineering program: model the effect and
+warrant, intervene on the claimed authority, search for lawful
+alternatives and bypasses, reconstruct the realized path, receipt the
+finding, and state precisely what remains unknown.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that authority laundering occurs when an effect is
+presented as legitimately authorized although the effect instance lacks
+a valid, reconstructable warrant path or bypassed a mandatory
+authority-bearing transition. Its nearest external comparison fields are
+security, governance, provenance. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. A written constitution can legitimate domination as easily as
+constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E2]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E3]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h4
+id="source-head-external-references-retained-under-original-labels">Source-head
+external references retained under original labels</h4>
+<p>The following bibliography is retained from the source manuscript and
+was not externally checked in this pass.</p>
+<p>[2] B. C. Pierce. <em>Types and Programming Languages.</em> MIT
+Press, 2002.</p>
+<p>[3] M. S. Miller. <em>Robust Composition: Towards a Unified Approach
+to Access Control and Concurrency Control.</em> PhD thesis, Johns
+Hopkins University, 2006.</p>
+<p>[4] J. Pearl. <em>Causality: Models, Reasoning, and Inference.</em>
+Cambridge University Press, 2nd ed., 2009.</p>
+<p>[5] P. Cousot and R. Cousot. <em>Abstract Interpretation.</em> POPL,
+1977.</p>
+<p>[6] J. H. Saltzer and M. D. Schroeder. <em>The Protection of
+Information in Computer Systems.</em> Proc. IEEE, 1975.</p>
+<p>[7] G. C. Necula. <em>Proof-Carrying Code.</em> POPL, 1997.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p>[1] A. Ableman Ableman. <em>Semantic Reactor Theory:
+Governance-Native Architecture for High-Authority Semantic
+Transformation Systems.</em> Working paper.</p>
+<p>[8] A. Ableman Ableman. <em>The CSoftA Corpus.</em> Internal
+corpus.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847386">10.5281/zenodo.23847386</a></p>

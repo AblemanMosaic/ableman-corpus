@@ -1,0 +1,1225 @@
+<h1 id="governed-controlled-natural-language-gcnl">Governed Controlled
+Natural Language (GCNL)</h1>
+<h2
+id="human-authorable-semantic-commitments-before-admission-and-execution">Human-Authorable
+Semantic Commitments Before Admission and Execution</h2>
+<h3
+id="natural-language-can-express-nuance-ambiguity-implication-rhetoric-and-context-that-executable-systems-cannot-safely-treat-as-determinate-instruction.">Natural
+language can express nuance, ambiguity, implication, rhetoric, and
+context that executable systems cannot safely treat as determinate
+instruction.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Natural language can express nuance, ambiguity, implication,
+rhetoric, and context that executable systems cannot safely treat as
+determinate instruction. This paper develops <strong>Governed Controlled
+Natural Language (GCNL)</strong> as a human-authorable representation
+layer that constrains grammar, resolves or exposes references, separates
+epistemic posture from normative force, records asserted authority and
+provenance, closes scope, preserves residual ambiguity, and produces a
+canonical semantic candidate for downstream evaluation.</p>
+<p>GCNL does not make a statement true, legitimate, authorized, or
+executable. Governance metadata is a claim about authority, not
+authority itself. A GCNL compiler may parse, resolve, type,
+canonicalize, and refuse malformed input; a separately identified law
+and admission boundary determines whether the resulting candidate may
+acquire standing or be lowered into GSOL, GOML, MCIR, GCML, PEIR, or
+another realization profile. This separation keeps a language tool from
+becoming an undeclared sovereign.</p>
+<p>The paper retains the source’s <strong>crystallization
+gradient</strong> and cooling metaphor while treating them as
+architectural metaphors rather than thermodynamic measurements. It adds
+a typed statement model, partial compilation semantics, loss and
+residual records, preservation invariants, a worked example,
+configuration selection through CM1/CM2/Instance Configuration,
+adversarial tests, and explicit authorial-compression criteria. The
+result is a proposal for governable semantic drafting, not a completed
+language implementation or a proof that controlled prose eliminates
+interpretation.</p>
+<h2 id="why-direct-natural-language-execution-is-unsafe">1. Why Direct
+Natural-Language Execution Is Unsafe</h2>
+<p>Natural language permits polysemy, implicit reference,
+context-dependent scope, unmarked modality, ellipsis, rhetorical
+emphasis, and contested authority. These are not defects in human
+communication. They become hazards when a system silently converts one
+interpretation into an effect.</p>
+<p>A direct path from prose to execution can conceal several
+transitions:</p>
+<ul>
+<li>a description becomes a factual assertion;</li>
+<li>an assertion becomes a requirement;</li>
+<li>a proposal becomes an admitted rule;</li>
+<li>a named speaker becomes an authorized principal;</li>
+<li>a likely referent becomes a canonical identity;</li>
+<li>an omitted condition becomes an unconditional default;</li>
+<li>a parser’s selected reading becomes institutional intent;</li>
+<li>a machine-capable action becomes a permitted action.</li>
+</ul>
+<p>The central problem is therefore not merely ambiguity. It is
+<strong>unmarked semantic and authority escalation</strong>.</p>
+<p>GCNL inserts an inspectable boundary between fluid prose and formal
+semantic artifacts. Its job is to make candidate commitments explicit
+enough to be challenged, refused, deferred, admitted under external law,
+or lowered with declared gaps.</p>
+<h2 id="definition-and-nonclaims">2. Definition and Nonclaims</h2>
+<p><strong>Governed Controlled Natural Language (GCNL)</strong> is a
+versioned family of constrained, human-authorable languages whose
+statements have deterministic syntactic parses under a declared grammar
+and explicit fields for semantic identity, scope, epistemic posture,
+normative force, asserted authority, provenance, evidence, conditions,
+exceptions, standing, and nonclaims.</p>
+<p>GCNL is <strong>controlled</strong> because a profile limits grammar,
+vocabulary, reference forms, and statement acts. It is
+<strong>governed</strong> because it represents the information required
+for downstream governance and refuses or gaps structurally inadequate
+candidates. The adjective does not mean that the language itself
+possesses governing authority.</p>
+<p>GCNL does not by definition provide:</p>
+<ul>
+<li>truth or empirical validation;</li>
+<li>legal, moral, institutional, or constitutional legitimacy;</li>
+<li>actual authority merely because an authority identifier is
+present;</li>
+<li>proof that a reference resolution matches author intent;</li>
+<li>complete elimination of ambiguity or interpretive disagreement;</li>
+<li>admission under any particular law;</li>
+<li>permission to execute or perform external effects;</li>
+<li>a production grammar, parser, compiler, runtime, or conformance
+suite;</li>
+<li>a new foundational representation merely because the profile has a
+name.</li>
+</ul>
+<p>The source’s cooling metaphor remains useful: prose is progressively
+constrained before it can become a formal candidate. Terms such as
+<em>entropy</em>, <em>annealing</em>, and <em>crystallization</em> are
+not physical or information-theoretic claims unless a future profile
+defines and validates a corresponding metric.</p>
+<h2 id="do-not-collapse-the-statement-axes">3. Do Not Collapse the
+Statement Axes</h2>
+<p>The source table places observations, assumptions, derivations,
+decisions, requirements, prohibitions, refusals, and deferrals on one
+posture axis. These are not the same kind of thing. A GCNL statement
+should separate at least six dimensions.</p>
+<ul>
+<li><p><strong>Dimension:</strong> statement act<br />
+<strong>Examples:</strong> DEFINE, ASSERT, REPORT, PROPOSE, REQUIRE,
+FORBID, DECIDE, QUERY, MAP<br />
+<strong>Question answered:</strong> What communicative or formal act is
+attempted?</p></li>
+<li><p><strong>Dimension:</strong> epistemic posture<br />
+<strong>Examples:</strong> OBSERVED, REPORTED, ASSUMED, ESTIMATED,
+DERIVED, DISPUTED, UNKNOWN<br />
+<strong>Question answered:</strong> How is the content claimed to be
+known?</p></li>
+<li><p><strong>Dimension:</strong> normative force<br />
+<strong>Examples:</strong> NONE, PERMITTED, RECOMMENDED, REQUIRED,
+FORBIDDEN<br />
+<strong>Question answered:</strong> What normative force is
+asserted?</p></li>
+<li><p><strong>Dimension:</strong> authority claim<br />
+<strong>Examples:</strong> issuer, role, credential, delegation,
+jurisdiction, validity interval<br />
+<strong>Question answered:</strong> Who is claimed to have what
+authority where and when?</p></li>
+<li><p><strong>Dimension:</strong> lifecycle disposition<br />
+<strong>Examples:</strong> CANDIDATE, ADMITTED, REFUSED, DEFERRED, GAP,
+REVOKED, SUPERSEDED<br />
+<strong>Question answered:</strong> What happened under a named
+procedure?</p></li>
+<li><p><strong>Dimension:</strong> standing and claim ceiling<br />
+<strong>Examples:</strong> lexical, syntactic, resolved, typed,
+admissible, evidenced, executable<br />
+<strong>Question answered:</strong> What may safely be concluded from
+the current record?</p></li>
+</ul>
+<p><code>REQUIRED</code> and</p>
+<p><code>FORBIDDEN</code> are normative forces, not evidence postures.
+<code>REFUSED</code> and <code>DEFERRED</code> are procedural outcomes,
+not contents of the original claim. <code>DECIDE</code> is an act whose
+validity depends on external authority and procedure.
+<code>DERIVED</code> identifies a derivation relation; the compiler that
+checks the derivation does not thereby become the source of its premises
+or institutional authority.</p>
+<p>This product-of-fields prevents a syntactically valid line from
+acquiring force through tag confusion.</p>
+<h2 id="statement-and-profile-model">4. Statement and Profile Model</h2>
+<p>A GCNL profile is bound to a grammar, schema, vocabulary,
+canonicalization rule, identity-resolution policy, validation policy,
+and declared downstream interfaces:</p>
+<p><span
+class="math display"><em>P</em> = ⟨<em>G</em>, <em>V</em>, <em>Σ</em>, <em>K</em>, <em>I</em>, <em>T</em>, <em>C</em>, <em>D</em>⟩</span></p>
+<p>where <span class="math inline"><em>G</em></span> is grammar, <span
+class="math inline"><em>V</em></span> vocabulary, <span
+class="math inline"><em>Σ</em></span> schema, <span
+class="math inline"><em>K</em></span> canonicalization, <span
+class="math inline"><em>I</em></span> identity resolution, <span
+class="math inline"><em>T</em></span> typing rules, <span
+class="math inline"><em>C</em></span> constraint validation, and <span
+class="math inline"><em>D</em></span> declared downstream targets.</p>
+<p>A statement candidate is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+S = \langle &amp;id, act, content, refs, scope, epi, norm, auth, prov,
+ev, \\
+&amp;time, cond, exc, standing, nonclaims\rangle
+\end{aligned}
+$$</span></p>
+<p>The minimum fields are profile-dependent, but omission may not
+silently widen scope or force. Unknown and disputed values must be
+representable. Every authority claim should identify its source and
+validity conditions rather than merely naming a class.</p>
+<p>The source’s initial act vocabulary remains a useful seed:</p>
+<pre class="text"><code>DEFINE(entity, properties)
+REFER(identifier)
+ASSERT(claim)
+OBSERVE(record)
+ASSUME(hypothesis)
+REQUIRE(condition)
+FORBID(condition)
+DECIDE(proposal)
+DEFER(topic)
+REFUSE(candidate)
+MAP(source, target)</code></pre>
+<p>The grammar should distinguish the <em>quoted or proposed act</em>
+from the <em>compiler or admission disposition</em>. For example, an
+author may write a candidate <code>REQUIRE</code> statement; the parser
+may accept its syntax; an admission procedure may still refuse its
+authority or scope.</p>
+<p>Free pronouns need not be prohibited universally. A profile may admit
+controlled anaphora when it produces one reviewable referent. What is
+prohibited is silent reliance on unresolved or multiply resolved
+identity.</p>
+<h2 id="compilation-and-admission-are-different-operations">5.
+Compilation and Admission Are Different Operations</h2>
+<p>The source pipeline can be decomposed into partial functions:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Parse}_{P}(text) \\
+&amp;\rightarrow AST \\
+&amp;\mid \operatorname{SyntaxRefusal}
+\end{aligned}
+$$</span></p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Resolve}_{P}(AST,context) \\
+&amp;\rightarrow R \\
+&amp;\mid \operatorname{ReferenceGap} \\
+&amp;\mid \operatorname{ReferenceRefusal}
+\end{aligned}
+$$</span></p>
+<p><span
+class="math display">Type<sub><em>P</em></sub>(<em>R</em>) → <em>T</em> ∣ TypeRefusal </span></p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Canon}_{P}(T) \\
+&amp;\rightarrow G \\
+&amp;\mid \operatorname{CanonicalizationGap}
+\end{aligned}
+$$</span></p>
+<p>Here <span class="math inline"><em>G</em></span> is a canonical
+governed semantic candidate, not an admitted law or executable
+artifact.</p>
+<p>A separate, versioned admission function evaluates the candidate:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Admit}_{L}(G,context) \\
+&amp;\rightarrow \operatorname{Admitted}(A) \\
+&amp;\mid \operatorname{Refused}(R) \\
+&amp;\mid \operatorname{Deferred}(D) \\
+&amp;\mid \operatorname{Gap}(X)
+\end{aligned}
+$$</span></p>
+<p>Only an admitted artifact may proceed to a declared lowering
+relation:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Lower}_{E}(A,target) \\
+&amp;\rightarrow artifact \\
+&amp;\mid \operatorname{Gap}(X) \\
+&amp;\mid \operatorname{Refused}(R)
+\end{aligned}
+$$</span></p>
+<p>This replaces the source rule based only on membership in
+<code>TrustedRoots</code>. A root identifier is insufficient: authority
+can be scoped, delegated, time-bounded, revoked, conditional,
+role-specific, and procedure-dependent. A compiler may validate an
+authority claim against supplied evidence and current law; it does not
+create the authority.</p>
+<p>The resulting architecture is:</p>
+<pre class="text"><code>natural-language source
+        |
+        v
+GCNL profile and text
+        |
+        v
+AST -&gt; reference resolution -&gt; typed semantic candidate
+        |
+        v
+canonical candidate + residual/loss record
+        |
+        v
+external law and admission decision
+        |
+        v
+declared semantic or realization targets
+        |
+        v
+effects only through separately authorized boundaries
+        |
+        v
+receipts, observations, gaps, and revision</code></pre>
+<p>Refusal can be a correct result. It is not automatically a success:
+an overbroad refusal policy can suppress legitimate expression, conceal
+parser weakness, or centralize power. Refusal quality must itself be
+evaluated.</p>
+<h2 id="canonicalization-must-preserve-residual-meaning">6.
+Canonicalization Must Preserve Residual Meaning</h2>
+<p>Deterministic parsing does not prove semantic completeness. A
+sentence can have one AST while remaining underspecified,
+context-dependent, normatively disputed, or lossy when projected into a
+target representation.</p>
+<p>Every compilation should retain:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B = \langle &amp;source, profile, AST, resolution, typed, canonical, \\
+&amp;residual, gaps, nonclaims, revision\rangle
+\end{aligned}
+$$</span></p>
+<p>The <strong>residual</strong> contains source material or
+distinctions not represented in the canonical candidate. A
+<strong>gap</strong> identifies a missing type, unresolved reference,
+unsupported modality, authority defect, or target limitation. A
+<strong>nonclaim</strong> states what the compiler result does not
+establish.</p>
+<p>No rhetorical residue should be discarded merely because MCIR, GSOL,
+or another target cannot carry it. The system may refuse the lowering,
+attach a sidecar, preserve the exact source, or require author
+adjudication. Silent omission is not cooling; it is semantic loss.</p>
+<h2 id="gcnl-preservation-invariants">7. GCNL Preservation
+Invariants</h2>
+<ol type="1">
+<li><strong>Exact-source binding.</strong> Every candidate binds the
+exact source text, profile, parser, vocabulary, schema, and
+canonicalization revision.</li>
+<li><strong>Axis separation.</strong> Epistemic posture, normative
+force, authority claim, disposition, and standing remain distinct
+fields.</li>
+<li><strong>Authority non-creation.</strong> Parsing, validation, and
+canonicalization cannot create authority absent from the external
+regime.</li>
+<li><strong>Scope non-widening.</strong> Missing or ambiguous scope
+cannot become a universal default.</li>
+<li><strong>Reference honesty.</strong> Each relevant reference resolves
+uniquely, remains explicitly ambiguous, or causes a typed
+gap/refusal.</li>
+<li><strong>Posture preservation.</strong> Observation, report,
+assumption, estimate, derivation, dispute, and unknown status cannot
+silently collapse.</li>
+<li><strong>Normative preservation.</strong> Descriptive material cannot
+silently become permission, requirement, or prohibition.</li>
+<li><strong>Residual custody.</strong> Unrepresented source meaning and
+target loss remain recoverable and reviewable.</li>
+<li><strong>Refusal specificity.</strong> A refusal names the violated
+rule, evidence, scope, and repair or escalation route when one
+exists.</li>
+<li><strong>Lowering conservation.</strong> Downstream transformations
+preserve identity, scope, force, authority claims, evidence, conditions,
+exceptions, gaps, and nonclaims or emit an explicit loss
+certificate.</li>
+<li><strong>Effect separation.</strong> A machine-legible candidate does
+not authorize external effects.</li>
+<li><strong>Revision lineage.</strong> Changes to language profile,
+source, law, admission, target, or evidence create successors rather
+than rewriting the prior record.</li>
+</ol>
+<h2 id="worked-example-from-safety-prose-to-a-governed-candidate">8.
+Worked Example: From Safety Prose to a Governed Candidate</h2>
+<p>Consider the prose statement:</p>
+<blockquote>
+<p>The model is safe and may be deployed.</p>
+</blockquote>
+<p>The statement contains at least four unresolved issues: which model
+revision, what safety property, which deployment context, and who may
+authorize deployment.</p>
+<p>A GCNL candidate might state:</p>
+<pre class="text"><code>ASSERT claim_id=safety-observation-17
+  subject=model:sha256:EXAMPLE
+  content=&quot;No severity-1 failure occurred in evaluation run run-17.&quot;
+  epistemic=OBSERVED
+  scope=&quot;frozen run-17 under profile eval-3&quot;
+  evidence=receipt:run-17
+  authority_claim=&quot;evaluation recorder may report run results&quot;
+  standing=&quot;candidate empirical record&quot;
+  nonclaims=&quot;not a general safety or deployment authorization&quot;
+
+PROPOSE proposal_id=deploy-17
+  subject=model:sha256:EXAMPLE
+  action=&quot;limited canary deployment&quot;
+  normative_force=PERMITTED_REQUESTED
+  scope=&quot;jurisdiction j; population p; interval t&quot;
+  depends_on=safety-observation-17
+  authority_claim=&quot;operator role proposes; release authority not
+  supplied&quot;</code></pre>
+<p>Both statements may parse and canonicalize. The second should not be
+admitted as a deployment permission because the supplied authority claim
+does not include release authority and one evaluation run cannot
+discharge the broader safety burden. A correct result is therefore a
+candidate plus an authority gap and an evidence gap, not an executable
+deployment artifact.</p>
+<p>This example exposes GCNL’s value: it makes the hidden escalation
+visible. It also exposes its limit: the language does not decide what
+evidence is enough or who legitimately governs deployment.</p>
+<h2 id="configuration-manifold-and-the-specification-razor">9.
+Configuration Manifold and the Specification Razor</h2>
+<p>The source correctly treats GCNL as a configuration family rather
+than one fixed language. Relevant axes include:</p>
+<ul>
+<li>linguistic restriction: structured prose to formal grammar;</li>
+<li>vocabulary closure: open terms to enumerated domain lexicon;</li>
+<li>reference discipline: controlled anaphora to explicit identifiers
+only;</li>
+<li>epistemic granularity: coarse postures to typed evidence
+models;</li>
+<li>normative granularity: recommendations to explicit deontic
+relations;</li>
+<li>authority representation: source annotation to signed, scoped
+delegation chains;</li>
+<li>canonicalization strength: stable AST to canonical semantic
+graph;</li>
+<li>admission coupling: separate review to mechanically enforced
+law;</li>
+<li>refusal policy: warnings, typed gaps, hard refusal, or human
+escalation;</li>
+<li>target distance: documentation, GSOL/GOML, MCIR, GCML/PEIR, or
+effect systems.</li>
+</ul>
+<p>The <strong>Specification Configuration Razor</strong> should select
+the least restrictive profile that still makes the required ambiguities,
+authority claims, loss, and failure modes explicit for the intended
+downstream use. Least restrictive does not mean easiest to parse; it
+means no extra constraint lacking a demonstrated preservation or
+assurance role.</p>
+<p>The configuration stages are:</p>
+<ul>
+<li><strong>CM1:</strong> all admissible profiles satisfying the
+declared semantic, governance, authorability, and target constraints,
+including profiles that are cumbersome, centralized, brittle, or
+exclusionary;</li>
+<li><strong>CM2:</strong> preferred profiles that minimize semantic
+loss, authoring burden, authority concentration, refusal error, profile
+proliferation, and downstream ambiguity while maximizing accessibility,
+inspectability, substitution, and evidence quality;</li>
+<li><strong>Instance Configuration:</strong> the selected grammar,
+lexicon, schemas, identity service, posture taxonomy, authority
+evidence, law head, compiler, target mappings, error policy, and
+conformance suite for a particular use.</li>
+</ul>
+<p>The claim that GCNL is a stable attractor in language-design space
+remains a hypothesis until comparative evidence shows that this region
+reliably outperforms simpler structured prose and more formal languages
+for declared tasks.</p>
+<h2 id="application-profiles">10. Application Profiles</h2>
+<p>GCNL can be investigated in domains where prose may influence machine
+action, but every domain needs its own authority and evidence
+regime.</p>
+<ul>
+<li><p><strong>Profile:</strong> scientific method<br />
+<strong>Candidate contribution:</strong> distinguish observation,
+assumption, estimate, derivation, and procedure<br />
+<strong>Required qualification:</strong> structure does not validate
+data, methods, or inference</p></li>
+<li><p><strong>Profile:</strong> software change<br />
+<strong>Candidate contribution:</strong> bind requested change,
+invariants, dependencies, and nonclaims<br />
+<strong>Required qualification:</strong> commit prose does not prove
+implementation conformance</p></li>
+<li><p><strong>Profile:</strong> infrastructure policy<br />
+<strong>Candidate contribution:</strong> expose scope, authority claim,
+preconditions, effects, and refusals<br />
+<strong>Required qualification:</strong> compilation does not authorize
+deployment</p></li>
+<li><p><strong>Profile:</strong> AI safety case<br />
+<strong>Candidate contribution:</strong> separate measurements, risk
+models, mitigations, and decisions<br />
+<strong>Required qualification:</strong> tags do not make the model safe
+or the decision legitimate</p></li>
+<li><p><strong>Profile:</strong> standards drafting<br />
+<strong>Candidate contribution:</strong> stabilize terms, modalities,
+exceptions, and dependency links<br />
+<strong>Required qualification:</strong> formalization cannot erase
+interpretive or political dispute</p></li>
+<li><p><strong>Profile:</strong> legal or regulatory drafting<br />
+<strong>Candidate contribution:</strong> expose actors, jurisdiction,
+conditions, provenance, and ambiguity<br />
+<strong>Required qualification:</strong> GCNL is a drafting aid, not
+enactment, adjudication, or legal validity</p></li>
+<li><p><strong>Profile:</strong> knowledge base<br />
+<strong>Candidate contribution:</strong> type claims, evidence,
+standing, conflict, and revision<br />
+<strong>Required qualification:</strong> admission does not establish
+truth or identity</p></li>
+</ul>
+<p>Claims about automatic legal encoding, smart-contract enforcement,
+legislation, medical decisions, or public authority require domain
+experts, independent review, rights analysis, and explicit effect
+authorization. A GCNL profile should make those dependencies visible
+rather than imply that linguistic control resolves them.</p>
+<h2 id="relation-to-existing-and-corpus-machinery">11. Relation to
+Existing and Corpus Machinery</h2>
+<h3 id="external-comparison-targets">11.1 External comparison
+targets</h3>
+<p>The source names controlled natural languages such as Attempto and
+Gellish; legal markup such as LegalRuleML and LegalXML; normative
+standards vocabulary; formal languages such as TLA+, Alloy, and Coq;
+epistemic logic; proof-carrying code; scientific reporting; and DevOps
+conventions. These are plausible comparison targets, not established
+novelty findings in this revision. Further evidentiary strengthening
+requires current primary-source, feature-by-feature comparison of
+grammar, semantics, authority, provenance, refusal, canonicalization,
+and implementation maturity.</p>
+<h3 id="representation-stack">11.2 Representation stack</h3>
+<p>GCNL is upstream of formal object, operation, and realization
+representations, but the exact route is not yet author-adjudicated.</p>
+<ul>
+<li><strong>GOML</strong> is a candidate home for governed object, role,
+institution, authority, identity, and state representations
+[GOORRT].</li>
+<li><strong>GSOL</strong> is a candidate home for governed operations,
+transitions, effects, refusals, gaps, receipts, standing, and time
+[GSOL].</li>
+<li><strong>MCIR</strong> carries canonical machine-legible
+constitutional or compilation commitments; admission law must remain
+distinct from mere serialization.</li>
+<li><strong>GCML</strong> proposes a machine-facing procedural contract.
+Its placement relative to MCIR and PEIR is unresolved and should not be
+used to force GCNL into one premature pipeline [GCML].</li>
+<li><strong>PEIR</strong> or other execution IRs carry execution-ready
+structure; they must not recover authority through reachability or
+compiler capability.</li>
+</ul>
+<p>A provisional non-collapsing view is:</p>
+<pre class="text"><code>human source -&gt; GCNL canonical candidate
+              -&gt; GOML object/state profile and/or GSOL operation profile
+              -&gt; external admission under declared law
+              -&gt; MCIR and declared procedural/execution projections
+              -&gt; effects through explicit membranes
+              -&gt; receipts, observations, gaps, and revision</code></pre>
+<p>This diagram is a comparison hypothesis, not an identity merger or
+canonical stack ruling.</p>
+<h3 id="corpus-integrations">11.3 Corpus integrations</h3>
+<ul>
+<li><strong>Global Term Key</strong> provides collision-resistant
+semantic identity candidates and explicit sense disambiguation for GCNL
+references [GTK].</li>
+<li><strong>Meaning as Binding</strong> explains why a label acquires
+meaning through relations, source overlays, context, and lineage rather
+than string equality [MAB].</li>
+<li><strong>Admissibility Engineering</strong> separates candidate
+construction from the conditions under which a statement may count or
+proceed [AE].</li>
+<li><strong>A Constitution for the Context Window</strong> supplies
+source, role, scope, standing, and compilation-boundary discipline for
+agent-readable context [CCW].</li>
+<li><strong>Semantic Fragmentation Analysis</strong> can detect when
+authority, evidence, exception, or identity remains distributed outside
+a superficially complete GCNL statement [SFA].</li>
+<li><strong>Constraint-Bearing Composability</strong> requires the
+obligations of statements and modules to survive composition and exposes
+assumptions exported to context [CBC].</li>
+<li><strong>Reasoning by Way of Receipts</strong> provides
+evidence-bearing intermediate decisions without treating receipts as
+self-proving [RWR].</li>
+<li><strong>The Three Hash Rule</strong> separates exact artifact
+custody, admissibility commitments, and meaning commitments [THR].</li>
+<li><strong>Constitutional Epistemology Under Adversarial Semantic
+Pressure</strong> supplies a threat model for omission, provenance
+laundering, posture forgery, and authority smuggling [CESP].</li>
+<li><strong>Governed Meaning Base (GMB)</strong> is the current name in
+the historical <code>CCF -&gt; CMB -&gt; GMB</code> lineage. It can
+retain GCNL sources, canonical candidates, conflicts, admissions,
+refusals, gaps, evidence, and revision. GMB does not make a candidate
+true or executable.</li>
+<li><strong>Hyperpedia</strong> can expose human-readable projections
+and source-linked navigation over this material. A presentation layer
+must preserve standing and nonclaims rather than flattening every
+structured sentence into fact.</li>
+</ul>
+<h2 id="authorial-compression-test">12. Authorial Compression Test</h2>
+<p>GCNL deserves a distinct language identity only if it supplies a
+normative grammar, abstract syntax, canonicalization, validation
+semantics, typed failure behavior, and conformance profile not
+adequately represented as:</p>
+<ul>
+<li>a controlled-authoring profile for GSOL or GOML;</li>
+<li>a schema for governed semantic records;</li>
+<li>a front end for MCIR;</li>
+<li>a policy-as-code authoring convention;</li>
+<li>a bundle of posture and authority annotations.</li>
+</ul>
+<p>If those existing mechanisms can express and validate every GCNL
+obligation, the name should identify a profile or method rather than
+another foundational language. If GCNL demonstrates a distinct
+human-authorable semantic layer with stable round-trip behavior and
+loss-aware lowering across targets, a separate language family may be
+justified.</p>
+<p>This is an author decision. The current candidate preserves GCNL
+provisionally and makes its distinctness testable.</p>
+<h2 id="human-authorable-proposal-language">Human-Authorable Proposal
+Language</h2>
+<p>The completed P1 corpus gives GCNL a bounded role: it is the
+<strong>human-authorable proposal language for expressing typed semantic
+commitments before admission, lowering, or execution</strong>. GCNL
+makes ambiguity, authority, evidence, scope, refusal, and residual
+meaning inspectable. It is not unrestricted natural language, MCIR,
+GCML, an admission decision, executable code, or effect authority.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Ableman Format
+Specification (AFS)</em><br />
+<strong>Supplies:</strong> Format families, profiles, schema and
+conformance obligations.<br />
+<strong>GCNL boundary:</strong> GCNL can be an AFS language profile; AFS
+is the wider family.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governed Controlled Machine
+Language (GCML)</em><br />
+<strong>Supplies:</strong> A candidate machine-facing procedural
+representation.<br />
+<strong>GCNL boundary:</strong> GCNL is human-facing proposal syntax;
+lowering to GCML requires a declared correspondence contract.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Staged parsing, translation, admission,
+lowering, and semantic remainder.<br />
+<strong>GCNL boundary:</strong> GCNL supplies one source language; the
+compilation architecture supplies the governed process.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Cognitive ABI for
+Capability-Centered Computing</em><br />
+<strong>Supplies:</strong> Capability contracts, qualification,
+substitution, and effect ceilings.<br />
+<strong>GCNL boundary:</strong> A GCNL statement can request a
+capability but cannot grant or qualify it.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governed Semantic
+Cartography</em><br />
+<strong>Supplies:</strong> Coordinates, projections, paths, and atlas
+views.<br />
+<strong>GCNL boundary:</strong> GCNL may address coordinates and propose
+traversals; it does not establish their identity or
+admissibility.</p></li>
+</ul>
+<p>A statement envelope should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+S= (&amp;profile, grammar, identity, claim, scope, modality, \\
+&amp;authority\_reference, evidence\_reference, \\
+&amp;effect\_intent, refusal, residual, source)
+\end{aligned}.
+$$</span></p>
+<p>Parsing establishes syntactic structure. Canonicalization establishes
+identity under exact rules. Binding resolves references under a
+registry. Admission evaluates the proposal under a policy. Lowering
+creates a machine-facing representation. Execution attempts an
+authorized effect. Evidence evaluates what occurred. No successful
+earlier stage implies the next.</p>
+<p>Compilation must preserve unresolved or inexpressible source meaning
+as typed residual rather than deleting it to obtain a valid form. Two
+statements that canonicalize alike under one profile may differ under
+another; two distinct statements may be admitted as equivalent only
+under an explicit relation and evidence. Human readability does not
+guarantee shared interpretation.</p>
+<p>The universal GSM can type <code>AUTHORED_AS_GCNL</code>,
+<code>PARSED_UNDER_GRAMMAR</code>,<br />
+<code>CANONICALIZED_UNDER_PROFILE</code>, <code>BINDS_IDENTITY</code>,
+<code>PROPOSES_CLAIM</code>, <code>REFERENCES_AUTHORITY</code>,<br />
+<code>REFERENCES_EVIDENCE</code>, <code>REQUESTS_EFFECT</code>,
+<code>LEAVES_RESIDUAL</code>, <code>ADMITTED_BY</code>,<br />
+<code>LOWERED_TO_GCML</code>,<br />
+and <code>REFUSED_WITH_REASON</code>. These relations keep expression,
+decision, realization, and effect separate.</p>
+<p>This integration establishes four editorial commitments: adopt
+human-authorable proposal language as GCNL’s official corpus role; adopt
+the statement envelope; publish the
+parse/canonicalize/bind/admit/lower/execute/evidence stage separation;
+and require typed residual preservation for every non-lossless
+compilation.</p>
+<h2 id="semantic-proposal-diff-and-quality-non-authority">Semantic
+Proposal Diff and Quality Non-Authority</h2>
+<p>The fixed-seed comparison with Ontology Laundering, receipt
+reasoning, GTK, and SBQ gives a consequential GCNL proposal an explicit
+semantic-diff contract:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;statement, term\_bindings, predecessor, \\
+&amp;proposed\_successor, changed\_claims, changed\_burdens, \\
+&amp;residual, evidence, authority\_reference, \\
+&amp;quality\_profile)
+\end{aligned}.
+$$</span></p>
+<p>GTK resolves the terms and candidate senses used by the statement.
+The proposal must disclose which predecessor meanings, classifications,
+admissibility rules, obligations, or effects would change.
+Canonicalization that erases this diff or its residual is a compilation
+failure even if the resulting statement is syntactically valid.</p>
+<p>Stage receipts should preserve parsing, identity binding, diff
+construction, admission, lowering, refusal, and later effect evidence
+separately. A receipt can show that the proposal was processed under a
+rule; it cannot establish that the proposal is legitimate or that the
+successor ontology is true.</p>
+<p>SBQ can evaluate coherence, stability, alignment, generativity, and
+distortion of proposed bindings. Its vector may inform review, but a
+high profile cannot admit the proposal, establish identity, erase
+minority meanings, or defeat an Ontology Laundering inquiry.
+Optimization against SBQ can itself hide changed burdens and
+residuals.</p>
+<p>The universal GSM can type<br />
+<code>PROPOSES_SEMANTIC_DIFF_IN_GCNL</code>,
+<code>BINDS_TERM_THROUGH_GTK</code>,<br />
+<code>CHANGES_ONTOLOGY_BURDEN</code>,
+<code>PRESERVES_PROPOSAL_RESIDUAL</code>,
+<code>RECEIPTS_GCNL_STAGE</code>,<br />
+<code>ASSESSED_BY_SBQ_WITHOUT_ADMISSION</code>, and<br />
+<code>TRIGGERS_ONTOLOGY_LAUNDERING_REVIEW</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the semantic-diff contract; require changed claims and burdens to remain
+visible through canonicalization; receipt each stage independently; and
+prohibit SBQ results from conferring admission or semantic standing.</p>
+<h2
+id="human-authorable-proposal-language-with-residual-meaning">Human-Authorable
+Proposal Language with Residual Meaning</h2>
+<p>Twelve downstream uses place GCNL between human prose and Cognitive
+ABI, GMB admission, Epistemic IR, both GTK papers, governance
+compilation, GOORRT, GCML, cartography, ontology-change review,
+receipts, and SBQ. This supports a bounded role: GCNL expresses
+inspectable semantic proposals before admission and execution. It is not
+natural-language programming with inherited authority and not a lossless
+replacement for unrestricted language.</p>
+<p><span class="math display">$$
+\begin{aligned}
+N^*= (&amp;text, profile, term\_bindings, claim\_types, scope, \\
+&amp;epistemic\_posture, authority\_references, conditions, \\
+&amp;exceptions, refusals, residual\_meaning, provenance, \\
+&amp;version, expiry)
+\end{aligned}.
+$$</span></p>
+<p>Canonicalization must preserve the original text, binding decisions,
+unresolved ambiguity, alternatives, culturally or contextually dependent
+remainder, and versioned registry. Compilation checks representation and
+declared obligations; admission separately evaluates policy, authority,
+evidence, consequence, and standing. No sentence can grant its own
+authority merely by naming an authorized role or compliant form.</p>
+<p>Round-trip and differential tests should compare author intent
+reports, independent readers, canonical form, MCIR output, GCML or
+operation proposals, refusals, and residual meaning. Profile conformance
+establishes only the properties tested by the exact grammar, registry,
+canonicalizer, and vectors.</p>
+<p>The universal GSM can type<br />
+<code>AUTHORS_GCNL_PROPOSAL</code>, <code>BINDS_GCNL_TERM</code>,<br />
+<code>PRESERVES_RESIDUAL_MEANING</code>,
+<code>COMPILES_GCNL_CANDIDATE</code>,<br />
+<code>ADMITS_SEPARATELY_FROM_COMPILATION</code>,
+<code>REFUSES_GCNL_SELF_GRANT</code>,<br />
+and<br />
+<code>INVALIDATES_GCNL_PROFILE_RESULT</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+proposal record; preserve original prose, ambiguity, alternatives, and
+residual meaning; separate compilation, admission, and execution; and
+require versioned profile, round-trip, differential, and self-grant
+tests.</p>
+<h2 id="failure-modes-counterevidence-and-threats">13. Failure Modes,
+Counterevidence, and Threats</h2>
+<p>GCNL’s claims should be narrowed or rejected when:</p>
+<ul>
+<li>constrained authors routinely misunderstand or misuse the
+profile;</li>
+<li>profiles fragment into incompatible dialects faster than they
+stabilize meaning;</li>
+<li>one deterministic parse still supports materially different
+interpretations;</li>
+<li>required fields create performative metadata that users fill
+inaccurately;</li>
+<li>authority identifiers are mistaken for valid authority;</li>
+<li>evidence links are stale, circular, forged, inaccessible, or
+irrelevant;</li>
+<li>residual meaning is lost during canonicalization;</li>
+<li>a simpler schema or form provides equal assurance with lower
+burden;</li>
+<li>a formal language provides better correctness and comparable
+authorability;</li>
+<li>refusal rates disproportionately exclude nonstandard language,
+disabled users, multilingual authors, or legitimate novelty;</li>
+<li>interpreters game tags to launder assumptions into observations or
+proposals into requirements;</li>
+<li>downstream systems ignore gaps, exceptions, revocation, or
+nonclaims;</li>
+<li>admission policy becomes centralized, opaque, or politically
+unchallengeable;</li>
+<li>round-trip projection changes meaning without detection;</li>
+<li>LLM-generated GCNL is treated as valid merely because it is well
+formed.</li>
+</ul>
+<p>Adversarial cases include identifier collision, scope shadowing,
+Unicode confusables, hidden negation, quotation-versus-assertion
+confusion, modality laundering, stale delegation, revoked credentials,
+cyclic derivation, evidence substitution, parser differentials, schema
+downgrade, canonicalization collision, target-specific semantic loss,
+and denial by pathological refusal.</p>
+<p>The strongest alternative hypothesis is that explicit structured
+forms plus ordinary review provide most of the benefit, while a GCNL
+language adds costly ceremony and false confidence. Evaluation must
+compare against that baseline.</p>
+<h2 id="conformance-and-evaluation-program">14. Conformance and
+Evaluation Program</h2>
+<p>A language proposal needs observable conformance, not only examples.
+A minimum program includes:</p>
+<ol type="1">
+<li>a versioned grammar and machine-readable schema;</li>
+<li>canonical encoding rules and test vectors;</li>
+<li>a reference parser plus an independently implemented parser;</li>
+<li>positive, negative, boundary, malformed, ambiguous, adversarial, and
+accessibility fixtures;</li>
+<li>reference-resolution, type, scope, posture, force, authority,
+residual, and loss tests;</li>
+<li>stable refusal and gap codes;</li>
+<li>round-trip tests from source to canonical form and back to a human
+projection;</li>
+<li>cross-profile migration tests;</li>
+<li>lowering tests into at least two downstream representation
+families;</li>
+<li>semantic-difference tests proving that meaningful changes alter
+canonical commitments;</li>
+<li>false-refusal and false-admission measurement;</li>
+<li>authoring studies comparing GCNL with structured prose and formal
+specification baselines;</li>
+<li>threat tests for laundering, confusables, stale authority, evidence
+substitution, and parser disagreement;</li>
+<li>independent review of domain profiles before any high-consequence
+use.</li>
+</ol>
+<p>A candidate may earn syntactic, resolved, typed, canonical, admitted,
+lowered, or executed standing separately. Passing one level cannot imply
+the next.</p>
+<h2 id="realization-funnel">15. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>GCNL role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore grammar families, statement acts, posture taxonomies,
+normative types, authority models, reference policies, refusal
+strategies, targets, and domain profiles, including harmful or unusable
+configurations.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define the exact grammar, vocabulary, schema, identity rules, types,
+canonicalization, loss model, law interface, failure codes, target
+mappings, evidence obligations, and nonclaims.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate all admissible GCNL profiles satisfying the specification
+and target constraints, including overconstrained, centralized,
+inaccessible, costly, or brittle profiles.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer profiles minimizing semantic loss, false refusal, author
+burden, authority concentration, dialect drift, and target coupling
+while maximizing accessibility, auditability, substitution, and
+correction.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select the exact profile, lexicon, schemas, source, identity
+service, law head, parser, compiler, targets, environment, authority
+evidence, error policy, and conformance suite.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build and run editors, parsers, resolvers, validators,
+canonicalizers, admission adapters, lowerers, human projections, and
+receipt paths for that configuration.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Execute conformance, adversarial, accessibility, authorability,
+round-trip, loss, refusal, lowering, and independent-implementation
+tests; retain disagreement and unexplained remainder.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Create successors when grammar, vocabulary, identity, law,
+authority, evidence, targets, or findings change; preserve migrations,
+incompatibilities, and invalidated claims.</td>
+</tr>
+</tbody>
+</table>
+<p>The source supplies a rich Specification and sketches multiple
+Implementation Realizations. It does not supply a conformance
+implementation or empirical evidence that GCNL improves outcomes.</p>
+<h2 id="research-and-implementation-agenda">16. Research and
+Implementation Agenda</h2>
+<ol type="1">
+<li>Adjudicate whether GCNL is a distinct language family or a governed
+authoring profile over existing representations.</li>
+<li>Separate the six statement dimensions in a normative schema.</li>
+<li>Define a minimal grammar and canonical encoding for one
+low-consequence domain.</li>
+<li>Define exact source, residual, gap, refusal, nonclaim, and revision
+records.</li>
+<li>Specify the external admission interface without embedding
+sovereignty in the compiler.</li>
+<li>Build independent parsers and adversarial conformance fixtures.</li>
+<li>Compare controlled anaphora with identifier-only profiles.</li>
+<li>Compare GCNL against structured forms, ordinary controlled prose,
+and a formal specification language.</li>
+<li>Test lowering to GSOL/GOML and one computational representation
+while measuring semantic loss.</li>
+<li>Evaluate accessibility, multilingual use, false refusal, and dialect
+fragmentation.</li>
+<li>Conduct current primary-source research across controlled natural
+languages, legal knowledge representation, deontic and epistemic logic,
+policy languages, formal methods, proof-carrying code, semantic parsing,
+requirements engineering, and human-computer interaction.</li>
+<li>Keep every implementation and external-effect decision behind a
+separate authorization gate.</li>
+</ol>
+<h2 id="controlled-language-must-preserve-residual-meaning">Controlled
+Language Must Preserve Residual Meaning</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>GCNL offers a human-authorable layer in which ambiguous intent can
+acquire explicit reference, posture, authority, refusal, and
+admissibility structure before it reaches constitutional execution. A
+GCNL statement is a governed proposal. It is not executable law, proof
+of shared understanding, or permission to act merely because it
+parses.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Parser-authority attack.</strong> The parser’s
+interpretation becomes binding without author confirmation. Parsing,
+semantic proposal, adjudication, and execution must remain separate
+stages.</li>
+<li><strong>Residual-loss attack.</strong> Ambiguity, nuance, emotion,
+exception, or unresolved reference is dropped to obtain a clean form.
+Residue must be returned, typed, and visible.</li>
+<li><strong>Controlled-language exclusion.</strong> Required syntax
+disadvantages non-experts, disabled users, multilingual authors, or
+domain communities. Accessibility and alternate authoring interfaces
+need evaluation.</li>
+<li><strong>False-precision attack.</strong> A well-formed sentence
+appears more certain or complete than its evidence. Syntax, semantic
+standing, evidence, and authority are independent.</li>
+<li><strong>Injection and quotation attack.</strong> Embedded text,
+references, code, or instructions cross interpretation boundaries.
+Literal, quoted, delegated, and operative content need explicit
+modes.</li>
+<li><strong>Version-drift attack.</strong> Grammar or term bindings
+change while old statements are reinterpreted silently. Every parse
+binds grammar, lexicon, policy, and resolver versions.</li>
+<li><strong>Refusal-erasure attack.</strong> The system forces a best
+guess instead of returning ambiguity, conflict, out-of-scope, or
+insufficient-authority outcomes.</li>
+<li><strong>Round-trip illusion.</strong> Natural language -&gt; GCNL
+-&gt; natural language appears equivalent while obligations or residual
+meaning changed. Round-trip tests need property-level comparison.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a proposal language and conformance agenda. It
+does not establish that GCNL eliminates ambiguity, preserves all
+authorial meaning, improves safety or usability, or works across
+languages and domains. Grammar acceptance is not semantic adequacy.</p>
+<p>Claims about controlled natural languages, requirements engineering,
+accessibility, translation, parser security, or user performance require
+external comparison and evaluation. Internal corpus connections show
+architectural placement only. No external research was added in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public promise is a language in which people can state
+consequential intent more precisely while seeing what the machine
+inferred, what it could not carry, and why a proposal was admitted,
+refused, or returned for clarification.</p>
+<h2 id="conclusion">17. Conclusion</h2>
+<p>GCNL identifies a real missing boundary. Natural language can carry
+intention, evidence, proposals, and rules, but machine systems should
+not silently decide which interpretation or authority gets to bind. A
+governed controlled language can make candidate commitments explicit
+before they enter formal semantic and computational machinery.</p>
+<p>The strongest architecture is not <code>language -&gt; law</code> as
+an automatic gradient. It is:</p>
+<pre class="text"><code>language -&gt; governed candidate -&gt; external admission -&gt; bounded
+realization -&gt; evidence and revision</code></pre>
+<p>GCNL can improve this path by separating statement act, epistemic
+posture, normative force, authority claim, procedural disposition, and
+standing; by preserving exact source and residual meaning; and by
+refusing unsupported lowering. It cannot supply truth, legitimacy, or
+permission merely through well-formed syntax.</p>
+<p>Meaning need not become cold to become meaningful. It must become
+explicit enough that a machine cannot mistake interpretive power for
+legitimate authority.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm2.</strong> Existing source passages use this stage only
+as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that natural language can express nuance,
+ambiguity, implication, rhetoric, and context that executable systems
+cannot safely treat as determinate instruction. Its nearest external
+comparison fields are token, formal, semantic. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Statistical
+compression can improve efficiency while destroying distinctions needed
+for interpretation; semantic labels can conversely overstate stability
+that usage does not support. Formal assurance remains relative to the
+encoded model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. Formal
+vocabularies and graph links make commitments explicit but cannot by
+themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Rico Sennrich, Barry Haddow, and Alexandra
+Birch. “Neural Machine Translation of Rare Words with Subword Units.”
+<em>ACL 2016</em>, pp. 1715-1725. DOI: 10.18653/v1/P16-1162.
+https://doi.org/10.18653/v1/P16-1162 <strong>Relationship:</strong>
+Predecessor subword tokenization method used as a contrast to
+semantically governed token boundaries.</p>
+<p><strong>[E2]</strong> Taku Kudo and John Richardson. “SentencePiece:
+A Simple and Language Independent Subword Tokenizer and Detokenizer for
+Neural Text Processing.” <em>EMNLP 2018: System Demonstrations</em>.
+DOI: 10.18653/v1/D18-2012. https://doi.org/10.18653/v1/D18-2012
+<strong>Relationship:</strong> Predecessor tokenizer implementation used
+to separate statistical segmentation from semantic admissibility.</p>
+<p><strong>[E3]</strong> Peter D. Grunwald. <em>The Minimum Description
+Length Principle</em>. MIT Press, 2007. <a
+href="https://mitpress.mit.edu/9780262072816/the-minimum-description-length-principle/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor theory of
+compression and model selection; compression is not assumed to preserve
+governance or meaning.</p>
+<p><strong>[E4]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E5]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E6]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E7]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Governed Semantic Tokens:
+Tokenization as an Admissibility Boundary</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18469507</code>;<br />
+source SHA-256<br />
+<code>5C44175B87C514892A0DC9743E09D03893E970AF5419F2E6D9171651BE2A9A54</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Token Parsimony</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.20382825</code>;<br />
+source SHA-256<br />
+<code>EC3AA22D32E2BBA21CFCB6D1FA2AE6EA8AC11B7781D19C51530A2F6D924B2E91</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutional Legends</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20330324</code>;<br />
+source SHA-256<br />
+<code>440CE8A83C2F86C020D1E9E482759F71D08F694F1C2250B5B624AEA0A4237AA7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[GOORRT]</strong> Adam Ableman. <em>GOORRT: The Governed
+Object-Operation-Realization Representation Triad</em>. Exact reviewed
+source SHA-256<br />
+<code>152AB6781AA827519858E0BD8A1811CB1F2C08F56599CD2A61896115742D1399</code>;
+unpublished technical companion, with no publication or canonical
+standing granted here.</p>
+<p><strong>[GSOL]</strong> Adam Ableman. <em>GSOL v0.1: Governed
+Semantic Operation Language</em>. Exact reviewed source SHA-256<br />
+<code>44F8689BF2FD50670CD25347FB2363491115CA7C049C2BBF71D7286A226DD1AC</code>.
+The source identifies itself as a pre-release specification.</p>
+<p><strong>[GCML]</strong> Adam Ableman. <em>Governed Controlled Machine
+Language</em>. Exact reviewed source SHA-256<br />
+<code>D4E5D935108BDA55157CADDEAD84B94F14868CEDD5CBF72F5184994983AFFB9A</code>;
+unpublished source with unresolved identity and stack placement.</p>
+<p><strong>[GTK]</strong> Adam Ableman. <em>Global Term Key:
+Constitutional Lexical Identity Through Disambiguated Semantic
+Binding</em>. Exact reviewed source SHA-256<br />
+<code>5F4A36BE1B9CB7DA3A174FCA32AEE74974678D628950F9E2600C647045BD24BB</code>;
+separately custodied reviewed source.</p>
+<p><strong>[MAB]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Exact reviewed source SHA-256<br />
+<code>A9EA6370E77A71A997F1D1CAC18EF6213125C6F3E13BEEBC9F5E8BFB94FE0B45</code>;
+separately custodied reviewed source.</p>
+<p><strong>[AE]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Exact reviewed source SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CCW]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Exact reviewed source SHA-256<br />
+<code>C4F6CC466FA4306C595AFF66D9EBD4F396E45B91876E1D32A5027FCF465312EE</code>;
+separately custodied reviewed source.</p>
+<p><strong>[SFA]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure</em>. Exact reviewed source SHA-256<br />
+<code>4048182A492E8ED731505426801D7A89074DE7311C0B3D975ECD2A2478D845F8</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CBC]</strong> Adam Ableman. <em>Constraint-Bearing
+Composability</em>. Exact reviewed source SHA-256<br />
+<code>BEEA0B56DBF7DC5274307E95E08AF0576A9F91A729C1962765361ADA34488B62</code>;
+supplied Zenodo title match, with exact publication identity to be
+finalized separately.</p>
+<p><strong>[RWR]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Exact reviewed source SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>;
+separately custodied reviewed source.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.20788617</code>. Exact reviewed Markdown source
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<p><strong>[CESP]</strong> Adam Ableman. <em>Constitutional Epistemology
+Under Adversarial Semantic Pressure</em>. Exact reviewed source
+SHA-256<br />
+<code>909F67AD82D8D8C6119FFEABCC8F885EF8C0A095DE79BFA29A65FDB1DC9E64C3</code>;
+separately custodied reviewed source.</p>
+<p>The source paper names Attempto Controlled English, Gellish,
+LegalRuleML, LegalXML, RFC normative vocabulary, TLA+, Alloy, Coq,
+epistemic logic, proof-carrying code, policy-as-code, and
+cross-disciplinary stabilization analogies. No complete external
+bibliography was supplied, and no external research was conducted in
+this pass. Primary-source comparison is required for a future
+evidence-qualified revision readiness or novelty claims.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Governed Semantic Operation Language.</em> Zenodo,
+2026. doi:10.5281/zenodo.21214886</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847882">10.5281/zenodo.23847882</a></p>

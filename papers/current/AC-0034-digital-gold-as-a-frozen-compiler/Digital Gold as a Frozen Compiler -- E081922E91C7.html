@@ -1,0 +1,1233 @@
+<h1 id="digital-gold-as-a-frozen-compiler">Digital Gold as a Frozen
+Compiler</h1>
+<h2
+id="automaton-jnana-and-a-constitution-bound-store-of-value">Automaton,
+Jnana, and a Constitution-Bound Store-of-Value</h2>
+<h3
+id="whether-the-resulting-asset-is-secure-valuable-decentralized-energy-proportionate-legitimate-or-competitive-remains-an-empirical-and-institutional-question.">Whether
+the resulting asset is secure, valuable, decentralized,
+energy-proportionate, legitimate, or competitive remains an empirical
+and institutional question.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper develops a constitutional-commitment architecture for a
+digital store-of-value. Its central proposal is that the validity and
+issuance law of a named asset can be expressed as a bounded semantic
+artifact, lowered into a deterministic verification kernel, committed at
+genesis, and denied any predecessor-preserving in-protocol amendment
+path. A changed law may found a successor or competing asset, but it
+does not silently retain the original constitutional identity.</p>
+<p>The source names the proposed Proof-of-Work system
+<strong>Automaton</strong> and places it within Jnana’s separation of
+canonical meaning, admissibility law, procedural execution, external
+effect, and receipt lineage. The integrated paper sharpens the claim. A
+frozen kernel can stabilize one technical identity relation; it cannot
+eliminate social choice, implementation defects, cryptographic breakage,
+hardware and network dependencies, market coordination, naming disputes,
+or political power. A content hash proves exact commitment under a
+declared scheme, not monetary legitimacy or semantic correctness.
+Independent implementations need demonstrated conformance to the same
+transition relation; byte-identical compilation is one configuration,
+not a universal requirement.</p>
+<p>The revision also separates block proposal, ordering pressure,
+validation, issuance, fee formation, identity, and finality. It
+withdraws unsupported numerical energy estimates and replaces them with
+an explicit economic model. It treats MosaicID as a key-derived
+identifier rather than proof of uniqueness, Sybil resistance, operator
+identity, or software execution. It treats quorum finality as an
+additional trust and liveness regime whose authority, membership,
+rotation, collusion, and recovery rules must themselves be
+constitutionalized.</p>
+<p>The resulting thesis is architectural and conditional: a frozen,
+reproducible, minimal verification constitution can make rule change
+explicit as an identity split and reduce one class of governance
+ambiguity. Whether the resulting asset is secure, valuable,
+decentralized, energy-proportionate, legitimate, or competitive remains
+an empirical and institutional question.</p>
+<h2 id="scope-and-central-claim">1. Scope and Central Claim</h2>
+<p>A store-of-value is not defined by one property. Scarcity,
+durability, divisibility, transferability, security, liquidity, legal
+treatment, social recognition, and credible commitment can all matter.
+This paper isolates one architectural contribution:
+<strong>constitutional continuity</strong>.</p>
+<p>The proposal does not establish investment value, financial
+suitability, price stability, or superiority to any existing asset. It
+asks a narrower systems question:</p>
+<blockquote>
+<p>Can the rule set that defines a digital asset be made explicit enough
+that any change to its validity or issuance law is mechanically
+recognizable as a different constitutional identity rather than a silent
+continuation?</p>
+</blockquote>
+<p>The source answer is the Frozen Constitution Principle. The
+integrated answer preserves it with a claim ceiling.</p>
+<h2 id="frozen-constitution-principle">2. Frozen Constitution
+Principle</h2>
+<h3 id="definition">2.1 Definition</h3>
+<p>Let <span class="math inline"><em>C</em><sub>0</sub></span> be the
+genesis constitutional artifact, <span
+class="math inline"><em>V</em><sub>0</sub></span> the admitted
+verification kernel, <span
+class="math inline"><em>G</em><sub>0</sub></span> the genesis parameters
+and state, and <span
+class="math inline"><em>S</em><sub><em>v</em></sub></span> the exact
+schemas and canonicalization rules. Define a technical constitutional
+identity commitment:</p>
+<p><span
+class="math display"><em>I</em><sub>0</sub> = <em>H</em>(<em>S</em><sub><em>v</em></sub> ∥ <em>C</em><sub>0</sub> ∥ <em>V</em><sub>0</sub> ∥ <em>G</em><sub>0</sub>).</span></p>
+<p>For chain identity <span
+class="math inline"><em>I</em><sub>0</sub></span>, block admission is
+determined by the predecessor-bound transition relation encoded by <span
+class="math inline"><em>V</em><sub>0</sub></span>:</p>
+<p><span
+class="math display">Accept<sub><em>I</em><sub>0</sub></sub>(<em>s</em>, <em>b</em>) = <em>V</em><sub>0</sub>(<em>C</em><sub>0</sub>, <em>s</em>, <em>b</em>) ∈ {0, 1}.</span></p>
+<p>The <strong>Frozen Constitution Principle (FCP)</strong> is:</p>
+<blockquote>
+<p>The state machine of <span
+class="math inline"><em>I</em><sub>0</sub></span> contains no transition
+that replaces or widens <span
+class="math inline"><em>C</em><sub>0</sub></span> or <span
+class="math inline"><em>V</em><sub>0</sub></span> while claiming
+uninterrupted constitutional identity <span
+class="math inline"><em>I</em><sub>0</sub></span>.</p>
+</blockquote>
+<p>An alternative constitution <span
+class="math inline"><em>C</em><sub>1</sub></span> or verifier <span
+class="math inline"><em>V</em><sub>1</sub></span> can be published and
+used. Under FCP it receives a distinct identity commitment <span
+class="math inline"><em>I</em><sub>1</sub></span>, unless an equivalence
+relation explicitly admitted by <span
+class="math inline"><em>C</em><sub>0</sub></span> proves that the
+difference is representational rather than constitutional.</p>
+<h3 id="what-is-frozen">2.2 What is frozen</h3>
+<p>The design must state what belongs to the frozen surface:</p>
+<ul>
+<li>canonical serialization and parsing;</li>
+<li>cryptographic algorithms and domain separation;</li>
+<li>state transition and validity predicates;</li>
+<li>issuance and fee accounting;</li>
+<li>ordering and finality predicates;</li>
+<li>numeric ranges, overflow, time, and difficulty semantics;</li>
+<li>genesis state and identity derivation;</li>
+<li>permitted implementation equivalence;</li>
+<li>network messages that affect consensus;</li>
+<li>error and refusal behavior; and</li>
+<li>any validator, oracle, or attestation regime used by validity.</li>
+</ul>
+<p>Leaving one of these surfaces implicit can recreate amendment through
+interpretation.</p>
+<h3 id="what-fcp-does-not-freeze">2.3 What FCP does not freeze</h3>
+<p>FCP does not freeze:</p>
+<ul>
+<li>which people choose to run the system;</li>
+<li>market price, liquidity, legal status, or cultural meaning;</li>
+<li>operating systems, hardware, networking, or user interfaces;</li>
+<li>cryptographic security against future attacks;</li>
+<li>the absence of undiscovered implementation defects;</li>
+<li>names, tickers, exchanges, or public narratives; or</li>
+<li>social decisions about which fork, implementation, or history
+receives attention.</li>
+</ul>
+<p>Constitutional finality is therefore a bounded technical relation,
+not the end of politics.</p>
+<h2 id="jnana-and-the-compilation-boundary">3. Jnana and the Compilation
+Boundary</h2>
+<p>Jnana separates canonical semantic commitment, admissibility law,
+procedural lowering, domain effect, and receipt lineage [JNANA]
+[JNANA-II]. Applied here:</p>
+<ol type="1">
+<li><strong>MCIR</strong> represents the bounded monetary constitution:
+state types, validity, issuance, authority, invariants, refusal, and
+nonclaims.</li>
+<li><strong>MCIR-Law</strong> determines whether a proposed artifact,
+compiler, kernel, or transition is admissible under that
+constitution.</li>
+<li><strong>PEIR</strong> is a lowered procedural form used to realize
+the transition relation.</li>
+<li><strong>Domain Effects</strong> are ledger-state and network
+consequences admitted through the kernel.</li>
+<li><strong>ReceiptLog</strong> preserves exact inputs, roots,
+decisions, outcomes, and predecessor relations.</li>
+</ol>
+<p>The constitution is not merely prose, but neither is every executable
+artifact a constitution. It acquires standing only through a declared
+founding authority, schema, admission process, genesis commitment, and
+public claim boundary. The compiler is not sovereign, and the compiled
+verifier is not self-legitimating. Authority derives from the founding
+constitution and the participants who knowingly adopt its exact
+identity; execution enforces only the rules it actually contains.</p>
+<h3 id="completeness-is-relative">3.1 Completeness is relative</h3>
+<p>The source calls MCIR complete with respect to validity. The stronger
+formulation is:</p>
+<blockquote>
+<p><span class="math inline"><em>C</em><sub>0</sub></span> is closed
+only relative to a declared consensus-relevant input and effect
+surface.</p>
+</blockquote>
+<p>If parsing, cryptography, time, networking, resource exhaustion,
+storage, or external attestations can change validity, they are part of
+the surface and cannot be omitted from the completeness claim.</p>
+<h2 id="reproducibility-diversity-and-the-trusted-computing-base">4.
+Reproducibility, Diversity, and the Trusted Computing Base</h2>
+<h3 id="byte-identity-versus-conformance-equivalence">4.1 Byte identity
+versus conformance equivalence</h3>
+<p>Multiple compilers need not always produce byte-identical machine
+artifacts to implement the same transition relation. Byte identity is
+valuable when a canonical toolchain, target, and build environment are
+deliberately fixed. Diverse implementations may instead provide
+resilience against common-mode compiler defects.</p>
+<p>The required claim should be explicit:</p>
+<ul>
+<li><strong>Reproducible-build claim:</strong> identical declared inputs
+and environment produce identical bytes.</li>
+<li><strong>Conformance claim:</strong> distinct implementations accept
+and reject the same defined input domain and produce equivalent
+successor states.</li>
+<li><strong>Semantic-equivalence claim:</strong> two artifacts preserve
+the same declared constitutional meaning under a governed lens.</li>
+</ul>
+<p>These claims require different evidence. The Three Hash Rule and
+semantic-hashing work prevent an artifact hash from standing in for
+constitutional or semantic equivalence [THR] [SH].</p>
+<h3 id="minimal-kernel-non-minimal-environment">4.2 Minimal kernel,
+non-minimal environment</h3>
+<p>The conceptual interface is:</p>
+<pre class="text"><code>VerifyBlock(previous_state, block) -&gt; accept | reject,
+successor_state, receipt</code></pre>
+<p>The transition code can be small while the effective trusted
+computing base remains larger. It may include:</p>
+<ul>
+<li>parser and serialization library;</li>
+<li>cryptographic implementations;</li>
+<li>compiler and linker;</li>
+<li>runtime, operating system, and hardware behavior;</li>
+<li>storage integrity;</li>
+<li>network input handling;</li>
+<li>build and distribution custody; and</li>
+<li>any attestation or oracle verifier.</li>
+</ul>
+<p>The architecture should minimize and independently test these
+dependencies rather than claiming they disappear.</p>
+<h3 id="determinism-contract">4.3 Determinism contract</h3>
+<p>A consensus-critical implementation should specify canonical
+serialization, bounded arithmetic, overflow behavior, ordering, time,
+resource bounds, cryptographic domains, error outcomes, and version
+identifiers. Floating point is not automatically forbidden if an exact
+portable semantics is specified, but avoiding it may reduce the
+conformance surface.</p>
+<h2 id="separating-monetary-and-consensus-functions">5. Separating
+Monetary and Consensus Functions</h2>
+<p>The source identifies security, validation, and issuance as distinct.
+Integration yields a more exact decomposition:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Function</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transaction proposal</td>
+<td>Which candidate state changes enter the mempool or block?</td>
+</tr>
+<tr>
+<td>Block production</td>
+<td>Who proposes an ordered batch?</td>
+</tr>
+<tr>
+<td>Ordering pressure</td>
+<td>How are competing histories weighted?</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Which blocks and state transitions satisfy <span
+class="math inline"><em>V</em><sub>0</sub></span>?</td>
+</tr>
+<tr>
+<td>Issuance</td>
+<td>How are new units created and assigned?</td>
+</tr>
+<tr>
+<td>Fee formation</td>
+<td>How are scarce inclusion resources priced?</td>
+</tr>
+<tr>
+<td>Propagation</td>
+<td>How do proposals and blocks reach peers?</td>
+</tr>
+<tr>
+<td>Finality</td>
+<td>When does the system treat reversal as outside the admitted
+history?</td>
+</tr>
+<tr>
+<td>Identity</td>
+<td>Which constitution and history does a node claim to follow?</td>
+</tr>
+</tbody>
+</table>
+<p>In common Proof-of-Work systems, miners propose and order blocks,
+while independently operated full nodes also validate them. The
+functions are coupled by protocol and incentives, but mining does not
+possess exclusive validation authority. Automaton’s contribution is
+better stated as <strong>contractual separation and explicit
+coupling</strong>, not as discovery that all existing systems literally
+collapse every function into one actor.</p>
+<h2 id="proof-of-work-and-proof-of-useful-work">6. Proof-of-Work and
+Proof-of-Useful-Work</h2>
+<h3 id="proof-of-work-as-a-configured-ordering-mechanism">6.1
+Proof-of-Work as a configured ordering mechanism</h3>
+<p>Proof-of-Work can provide a mechanically checkable cost signal and
+history-selection rule. It is not institution-free. Its security depends
+on hardware markets, energy access, network topology, mining
+concentration, software, economics, jurisdiction, and the assumed
+behavior of participants.</p>
+<p>Automaton may choose PoW because its verification predicate is
+bounded and relatively independent of the semantic content of external
+tasks. This is a CM2 preference within the design, not proof that PoW is
+uniquely minimal or optimal.</p>
+<h3 id="useful-work-is-not-categorically-inadmissible">6.2 Useful work
+is not categorically inadmissible</h3>
+<p>Proof-of-Useful-Work adds questions about task definition, result
+verification, data rights, benchmark change, fraud, and who receives
+benefit. If validity depends on mutable institutional judgments, FCP is
+weakened. But a useful-work predicate could remain constitutionally
+admissible if its task generation, verification, cost, ownership, and
+update rules are completely inside the frozen and mechanically checkable
+surface.</p>
+<p>The defensible conclusion is conditional:</p>
+<blockquote>
+<p>Useful work is incompatible with this frozen-constitution profile
+when its validity or reward depends on unbounded, mutable, or
+institutionally adjudicated semantics not already committed by <span
+class="math inline"><em>C</em><sub>0</sub></span>.</p>
+</blockquote>
+<p>AI training and inference commonly present exactly those difficult
+surfaces, but publication-level comparison requires current external
+evidence.</p>
+<h2 id="forks-continuity-and-asset-identity">7. Forks, Continuity, and
+Asset Identity</h2>
+<p>FCP makes one identity split technically explicit. If <span
+class="math inline"><em>I</em><sub>1</sub> ≠ <em>I</em><sub>0</sub></span>,
+the artifacts are not the same constitutional commitment. This does not
+settle every asset-identity question.</p>
+<p>A fork may inherit history, balances, users, brand, ticker, exchange
+listings, or social recognition. Market participants may call the
+successor the original, or reject the technical root as insufficient.
+The architecture can say:</p>
+<ul>
+<li>which genesis constitution a node claims;</li>
+<li>which transition relation a block satisfies;</li>
+<li>which predecessor chain a state derives from; and</li>
+<li>whether a rule change occurred under the configured identity
+scheme.</li>
+</ul>
+<p>It cannot force the public to use one name or assign one economic
+value. Technical identity, publication identity, social identity, and
+market identity remain distinct.</p>
+<h2 id="energy-and-security-economics">8. Energy and Security
+Economics</h2>
+<p>The source gives numerical estimates for Automaton energy consumption
+and relative hash rate. No exact model, data, code, date, market
+assumptions, or sensitivity analysis is bound to those figures. They are
+withdrawn from the current claim set.</p>
+<p>Let miner revenue per period be:</p>
+<p><span
+class="math display"><em>R</em><sub><em>m</em></sub> = <em>P</em><sub><em>a</em></sub>(<em>S</em><sub><em>m</em></sub> + <em>F</em><sub><em>m</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>P</em><sub><em>a</em></sub></span> is asset
+price, <span class="math inline"><em>S</em><sub><em>m</em></sub></span>
+is miner-directed subsidy, and <span
+class="math inline"><em>F</em><sub><em>m</em></sub></span> is fee
+revenue. A stylized equilibrium hash rate can be written:</p>
+<p><span
+class="math display"><em>Q</em><sup>*</sup> = <em>f</em>(<em>R</em><sub><em>m</em></sub>, <em>p</em><sub><em>e</em></sub>, <em>η</em><sub><em>h</em></sub>, <em>C</em><sub><em>h</em></sub>, <em>r</em>, <em>κ</em>),</span></p>
+<p>where <span
+class="math inline"><em>p</em><sub><em>e</em></sub></span> is energy
+price, <span class="math inline"><em>η</em><sub><em>h</em></sub></span>
+hardware efficiency, <span
+class="math inline"><em>C</em><sub><em>h</em></sub></span> capital cost,
+<span class="math inline"><em>r</em></span> financing and risk, and
+<span class="math inline"><em>κ</em></span> captures concentration,
+curtailment, jurisdiction, and strategic behavior.</p>
+<p>Setting <span
+class="math inline"><em>S</em><sub><em>m</em></sub> = 0</span> can
+reduce miner revenue relative to a counterfactual with the same price
+and fees. It does not by itself determine a 30-50 percent ratio. Price,
+fee demand, hardware, difficulty, attack incentives, treasury issuance,
+and participant expectations can change endogenously.</p>
+<p>An energy claim requires at least:</p>
+<ul>
+<li>exact issuance and fee model;</li>
+<li>transaction and settlement assumptions;</li>
+<li>asset-price scenarios;</li>
+<li>miner hardware and energy-price distributions;</li>
+<li>difficulty adjustment and entry/exit dynamics;</li>
+<li>validator, node, storage, network, oracle, and finality
+overhead;</li>
+<li>attack and recovery scenarios;</li>
+<li>sensitivity and uncertainty intervals; and</li>
+<li>reproducible code and data with dated sources.</li>
+</ul>
+<p>Lower honest hash expenditure generally lowers the contemporaneous
+cost of acquiring a competing hash majority, all else equal. Any
+compensating finality mechanism introduces its own trust and failure
+assumptions.</p>
+<h2 id="bitcoin-comparison-as-a-research-program">9. Bitcoin Comparison
+as a Research Program</h2>
+<p>The source argues that soft forks, dominant clients, economic
+coalitions, and changing fee economics leave interpretive surfaces in
+Bitcoin. These are plausible comparison hypotheses, not established
+facts within the evidence available to this pass.</p>
+<p>For a future evidence-qualified revision, each comparison should be
+rebuilt from current primary sources and exact cases:</p>
+<ol type="1">
+<li>Which changes count as consensus rule tightening, implementation
+correction, policy change, or chain split?</li>
+<li>Which actors possessed proposal, implementation, signaling,
+adoption, and enforcement power?</li>
+<li>What did non-upgraded validating nodes accept or reject?</li>
+<li>Did a claimed semantic change preserve, narrow, or replace the
+original validity set?</li>
+<li>How were branding, economic majority, and technical lineage
+related?</li>
+<li>What counterexamples show successful resistance to concentrated
+influence?</li>
+</ol>
+<p>The paper’s internal contribution is the analytical lens: mutation
+can be distinguished from continuity by binding a technical identity to
+exact constitutional roots and an explicit equivalence rule. It does not
+establish that Bitcoin is captured, that one implementation is
+sovereign, or that Automaton eliminates economic power.</p>
+<h2 id="mosaicid-what-a-key-derived-identifier-can-and-cannot-prove">10.
+MosaicID: What a Key-Derived Identifier Can and Cannot Prove</h2>
+<p>Suppose a MosaicID is defined as:</p>
+<p><span class="math display">MID = <em>H</em>(public_key).</span></p>
+<p>This can supply a stable identifier for a cryptographic key. A signed
+declaration can bind that key to a claim about constitution <span
+class="math inline"><em>I</em><sub>0</sub></span>. It can support
+authentication, message attribution to the key, equivocation evidence,
+and revocation or succession rules if those rules are specified
+[MIP].</p>
+<p>It does <strong>not</strong> by itself prove:</p>
+<ul>
+<li>one key per person, organization, machine, or miner;</li>
+<li>resistance to creating many keys;</li>
+<li>the legal or social identity of the operator;</li>
+<li>that the operator controls no other keys;</li>
+<li>that software actually executes <span
+class="math inline"><em>V</em><sub>0</sub></span>;</li>
+<li>that a message was the first network broadcast;</li>
+<li>that a pool label identifies all contributing miners; or</li>
+<li>that the key remains uncompromised.</li>
+</ul>
+<p>Peer-layer Sybil resistance therefore requires scarce capabilities,
+admission policy, resource tests, topology controls, rate limits,
+reputational cost, or another mechanism beyond a cheap key hash.
+Execution claims require measured boot, reproducible attestation,
+challenge-response, or behavioral evidence, each with its own trusted
+base.</p>
+<p>A genesis artifact published in a sealed DKN dimension can preserve
+custody if the dimension, publication time, membership, key destruction,
+replication, and verification rules are independently evidenced. Key
+burning is not self-proving, and a signed declaration does not establish
+that a constitution predates all later alternatives without a trusted
+time or ordering relation.</p>
+<h2 id="quorum-finality-as-an-additional-constitution">11. Quorum
+Finality as an Additional Constitution</h2>
+<p>The source proposes MosaicID-signed quorum attestations from a
+founding validator set. This is not merely a remedy added outside FCP.
+If quorum determines validity or irreversibility, its membership,
+threshold, message schema, equivocation rule, expiry, rotation,
+recovery, and failure semantics belong inside <span
+class="math inline"><em>C</em><sub>0</sub></span>.</p>
+<p>Let <span class="math inline"><em>W</em><sub>0</sub></span> be the
+founding validator set, <span
+class="math inline"><em>w</em><sub><em>i</em></sub></span> a declared
+weight, and <span class="math inline"><em>θ</em></span> the threshold. A
+configured finality predicate may be:</p>
+<p><span
+class="math display">Final<sub><em>I</em><sub>0</sub></sub>(<em>b</em>, <em>h</em>) = 1  iff  ∑<sub><em>i</em> ∈ <em>A</em>(<em>b</em>, <em>h</em>)</sub><em>w</em><sub><em>i</em></sub> ≥ <em>θ</em></span></p>
+<p>and every attestation in <span
+class="math inline"><em>A</em>(<em>b</em>, <em>h</em>)</span> is valid,
+non-expired, non-equivocating under the exact schema, and bound to <span
+class="math inline"><em>I</em><sub>0</sub></span>, block <span
+class="math inline"><em>b</em></span>, and height <span
+class="math inline"><em>h</em></span>.</p>
+<p>This establishes finality only for clients whose constitution
+recognizes that predicate. It does not make the block metaphysically
+irreversible. A later implementation can ignore the quorum rule, but
+under FCP it is a different constitutional identity.</p>
+<h3 id="new-failure-surfaces">11.1 New failure surfaces</h3>
+<p>Quorum finality adds:</p>
+<ul>
+<li>validator capture or key compromise;</li>
+<li>censorship and selective non-attestation;</li>
+<li>liveness failure when threshold cannot be reached;</li>
+<li>correlated infrastructure and jurisdiction;</li>
+<li>founding-set entrenchment;</li>
+<li>unsafe key loss;</li>
+<li>equivocation detection without effective consequence;</li>
+<li>disagreement about time, height, or eligible membership;</li>
+<li>validator-miner ownership overlap; and</li>
+<li>pressure for emergency rotation or recovery that conflicts with
+freezing.</li>
+</ul>
+<p>Hash majority, validator compromise, and timing are not automatically
+independent. The same capital, infrastructure, providers, jurisdictions,
+or actors may influence several. Security claims need an explicit
+dependency graph and attack-cost model rather than multiplying nominal
+surfaces.</p>
+<h3 id="exclusion-is-governance">11.2 Exclusion is governance</h3>
+<p>Removing federation access after equivocation is an externally
+consequential sanction. The system must specify evidence, adjudication,
+false-positive handling, appeal, proportionality, key succession, and
+the exact authority that enforces exclusion. Calling the consequence
+protocol-level does not remove its governance character.</p>
+<h2 id="automaton-identity-across-the-corpus">12. Automaton Identity
+Across the Corpus</h2>
+<p>The source paper uses <strong>Automaton</strong> for a PoW
+digital-gold design with a frozen verifier. A later <em>Automaton
+Constitutional Assets Domain Codex</em> expands the name to a
+three-currency monetary semantic reactor containing Sovereigns,
+Governors, Commons, and three frozen functions [ACA-CODEX].</p>
+<p>This paper should therefore be read provisionally as one of the
+following:</p>
+<ol type="1">
+<li>the original Automaton architecture;</li>
+<li>the Sovereigns or store-of-value component of the later ACA
+architecture;</li>
+<li>a predecessor work whose name was broadened by a successor codex;
+or</li>
+<li>a distinct frozen-compiler proposal sharing the Automaton
+label.</li>
+</ol>
+<p>The corpus contains evidence for evolution but not an
+author-adjudicated identity merger. This revision does not decide among
+the four. Any public version should state the relation explicitly.</p>
+<h2 id="corpus-integration">13. Corpus Integration</h2>
+<h3 id="jnana-and-mcir">13.1 Jnana and MCIR</h3>
+<p>Jnana supplies the semantic-to-procedural layering and insists that
+transformation legitimacy be governed alongside execution [JNANA]
+[JNANA-II]. The frozen-compiler paper is a domain profile of that stack,
+not evidence that Automaton implements every Jnana layer.</p>
+<h3 id="three-hash-rule-and-semantic-hashing">13.2 Three Hash Rule and
+Semantic Hashing</h3>
+<p>The Three Hash Rule separates object state, admissibility, and
+meaning commitments [THR]. Semantic Hashing adds a declared equivalence
+lens [SH]. Automaton should therefore avoid using one genesis hash to
+claim exact state, constitutional admissibility, and semantic continuity
+simultaneously.</p>
+<h3 id="admissibility-and-constraint-carriage">13.3 Admissibility and
+constraint carriage</h3>
+<p>Admissibility Engineering supplies <code>ADMIT</code>,
+<code>DEFER</code>, <code>REFUSE</code>,<br />
+and <code>GAP</code> rather than a binary claim that every environmental
+condition is reducible to <code>accept|reject</code> [AE].
+Constraint-Bearing Composability requires constitutional obligations to
+survive compilers, clients, network messages, receipts, and finality
+interfaces [CBC].</p>
+<h3 id="receipts-and-work-custody">13.4 Receipts and work custody</h3>
+<p>Receipts bind exact inputs, decision rules, outcomes, and claim
+ceilings [RBC] [FTC]. They do not make a false decision true. Build,
+compiler, artifact, genesis, block, attestation, and exclusion custody
+should remain distinct.</p>
+<h3 id="mip-and-dkn">13.5 MIP and DKN</h3>
+<p>MIP supplies candidate identity and network-governance mechanisms
+[MIP]. DKN can preserve genesis and evidence artifacts. Neither lexical
+connection proves that a particular MIP or DKN implementation realizes
+Automaton, and custody-only excluded systems are not semantic
+evidence.</p>
+<h2 id="realization-funnel">14. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Frozen-compiler work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore monetary constitutions, consensus families, amendment
+models, no-update forms, useful-work predicates, identity rules, failure
+recovery, harmful lock-in, and plural asset forks.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define state, validity, issuance, serialization, cryptography,
+ordering, identity, finality, authority, evidence, privacy, nonclaims,
+and failure semantics.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate admissible configurations, including insecure,
+centralized, energy-intensive, illiquid, surveillance-heavy, brittle,
+captured, or unusable forms.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations with minimal authority, exact identity splits,
+bounded semantics, diverse verification, recoverable custody, explicit
+dependencies, and evidence proportional to risk.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Bind exact MCIR, compiler and toolchain, kernel, genesis,
+algorithms, parameters, network, validator set, thresholds, clients,
+hardware assumptions, economic model, and courts.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build and independently implement the kernel, node, compiler,
+custody, receipts, network, identity, finality, recovery, and user
+interfaces.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Execute differential, adversarial, economic, cryptographic,
+networking, liveness, safety, fork, custody, reproducibility, privacy,
+and cold-boot tests.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Publish successor analyses, implementations, or assets with explicit
+new roots; never present a changed constitution as the old exact
+identity.</td>
+</tr>
+</tbody>
+</table>
+<p>The source provides a domain proposal and portions of Specification.
+It does not establish an operational currency, evidence-qualified
+implementation, or financial claim.</p>
+<h2 id="evidence-and-conformance-program">15. Evidence and Conformance
+Program</h2>
+<p>A bounded frozen-compiler conformance claim should require:</p>
+<ol type="1">
+<li>exact roots for source constitution, schema, canonicalization,
+compiler, dependencies, kernel, genesis, tests, and receipts;</li>
+<li>a closed enumeration of consensus-relevant input and effect
+surfaces;</li>
+<li>formal or executable state-transition semantics with total error
+behavior;</li>
+<li>reproducible-build evidence for any byte-identity claim;</li>
+<li>multiple independent implementations and differential testing for
+any conformance-equivalence claim;</li>
+<li>adversarial serialization, arithmetic, cryptography, resource,
+storage, and network fixtures;</li>
+<li>proof that no admitted state transition changes the frozen
+constitutional roots;</li>
+<li>explicit fork and identity-split tests;</li>
+<li>chain safety and liveness under declared network and adversary
+models;</li>
+<li>economic simulations with code, data, dates, sensitivity, and
+uncertainty;</li>
+<li>MosaicID tests that distinguish key authentication from uniqueness,
+Sybil resistance, execution attestation, and human identity;</li>
+<li>quorum safety, liveness, equivocation, key-loss, collusion,
+censorship, and correlation tests;</li>
+<li>custody and replay of genesis publication, DKN storage, build,
+block, attestation, and sanction receipts;</li>
+<li>privacy, surveillance, contest, exit, and fork analysis;</li>
+<li>operational recovery without silent constitutional amendment;</li>
+<li>current primary-source comparison for Bitcoin, PoW, PoUW, finality,
+energy, and other systems;</li>
+<li>a fresh-environment cold boot; and</li>
+<li>explicit nonclaims about value, investment suitability,
+decentralization, legitimacy, superiority, and universal security.</li>
+</ol>
+<h2 id="constitution-bound-monetary-automaton-thesis">Constitution-Bound
+Monetary Automaton Thesis</h2>
+<p>Across the completed P1 corpus, Digital Gold as a Frozen Compiler is
+a <strong>constitution-bound monetary automaton thesis</strong>:
+selected monetary and ordering rules are compiled into a deliberately
+narrow, reproducible transition system whose identity and amendment
+boundaries are explicit. It is not a demonstrated currency, an empirical
+superiority claim over Bitcoin, or proof that code can eliminate
+governance.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Jnana</em><br />
+<strong>Supplies:</strong> The wider constitutional compilation and
+execution architecture.<br />
+<strong>Digital-gold boundary:</strong> The monetary automaton is one
+proposed domain realization, not Jnana itself.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Everything Is a
+Compiler</em><br />
+<strong>Supplies:</strong> The general account of systems as
+transformations under implicit or explicit rules.<br />
+<strong>Digital-gold boundary:</strong> The frozen compiler is a
+deliberately constrained application of that lens.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Identity Spine
+Doctrine</em><br />
+<strong>Supplies:</strong> Separation of artifact, work, version,
+semantic, system, and deployment identities.<br />
+<strong>Digital-gold boundary:</strong> Asset and automaton continuity
+require explicit identity rules beyond matching code or keys.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Governed translation, admission, lowering,
+and remainder.<br />
+<strong>Digital-gold boundary:</strong> Freezing narrows post-admission
+discretion; it does not remove the governance of specification and
+amendment.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Sovereign Software</em><br />
+<strong>Supplies:</strong> Inspectability, reconstruction, delegation,
+provider removal, and effective exit.<br />
+<strong>Digital-gold boundary:</strong> A monetary system’s
+reproducibility supports but does not establish user or community
+sovereignty.</p></li>
+</ul>
+<p>A monetary automaton claim should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M= (&amp;constitution, compiler, transition\_system, state, \\
+&amp;ordering, issuance, finality, identity, amendment, \\
+&amp;evidence, threat\_model)
+\end{aligned}.
+$$</span></p>
+<p>“Frozen” must identify which rules, compiler stages, parameters, and
+authority surfaces are immutable and which remain configurable or
+amendable. Source reproducibility, byte-identical builds, transition
+conformance, consensus agreement, economic security, asset continuity,
+and social acceptance are different claims.</p>
+<p>Forks expose this distinction. Two successors may preserve code while
+diverging in history, authority, community recognition, liquidity, or
+claims. A key-derived identifier establishes only the identity relation
+specified by its scheme. Quorum finality adds a governance constitution
+with exclusion, capture, availability, and correlated-control risks.</p>
+<p>The universal GSM can type<br />
+<code>GOVERNED_BY_MONETARY_CONSTITUTION</code>,
+<code>COMPILED_AS_AUTOMATON</code>,<br />
+<code>ORDERS_TRANSITIONS_BY</code>, <code>ISSUES_UNDER</code>,
+<code>FINALIZES_UNDER</code>, <code>IDENTIFIES_AS_ASSET</code>,<br />
+<code>FORKS_FROM_HISTORY</code>, <code>AMENDABLE_UNDER</code>,
+<code>REPRODUCED_BY_BUILD</code>,
+<code>CONFORMS_ON_TRANSITIONS</code>,<br />
+and<br />
+<code>SUPPORTED_BY_ECONOMIC_EVIDENCE</code>. Each claim remains
+separately testable.</p>
+<p>This integration establishes four editorial commitments: adopt
+constitution-bound monetary automaton thesis as the official corpus
+role; adopt the monetary-claim envelope; publish a precise
+frozen-versus-amendable surface; and separate reproduction, transition,
+consensus, economic, identity, and social-standing evidence.</p>
+<h2
+id="domain-specific-possibility-system-and-distributed-topology-boundary">Domain-Specific
+Possibility System and Distributed-Topology Boundary</h2>
+<p>The fixed-seed comparison with a reflective-context profile, the
+Classified Earthworks brief, Dynatology, and CCOO separates a monetary
+automaton from superficial neighboring analogies:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M^*= (&amp;constitution, state, transitions, admission, ordering, \\
+&amp;finality, identity, participants, topology, amendment, \\
+&amp;evidence, threat\_model)
+\end{aligned}.
+$$</span></p>
+<p>Context-compiled reflective behavior and physical earthworks routes
+have no direct evidentiary relation to monetary validity, security,
+asset continuity, or social acceptance. Their shared use of compilation
+or realization vocabulary is not a basis for integration beyond the
+general GSM.</p>
+<p>Dynatology can model the automaton as one domain-specific possibility
+and transition system, provided its states, admissibility predicate,
+realization map, observations, and viability criteria are explicitly
+bound. The mapping contributes a grammar; it does not prove economic
+security or ontological primacy.</p>
+<p>CCOO offers a separate experimental architecture for local
+constitutional participants and optional aggregation. It may provide
+comparison questions about topology, local operators, concentrated
+coordination, and displaced function. It is not the monetary protocol,
+and its toy results do not support monetary or consensus claims.</p>
+<p>The universal GSM can type<br />
+<code>MODELED_AS_DOMAIN_DYNATOLOGICAL_SYSTEM</code>,<br />
+<code>DISTRIBUTED_ACROSS_MONETARY_PARTICIPANTS</code>,
+<code>COMPARED_WITH_OPTIONAL_AGGREGATION_TOPOLOGY</code>,<br />
+<code>PRESERVES_ASSET_IDENTITY_RULE</code>,
+<code>WITHHOLDS_ECONOMIC_STANDING</code>,<br />
+and<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_REFLECTIVE_OR_</code><br />
+<code>EARTHWORKS_EVIDENCE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the expanded monetary-system object; use Dynatology only as a typed
+domain grammar; compare CCOO topology without identity merger or
+evidence transfer; and retain explicit nonrelations to
+reflective-context and earthworks claims.</p>
+<h2 id="a-bounded-monetary-automaton-thesis">A Bounded
+Monetary-Automaton Thesis</h2>
+<p>Only two downstream papers use this work directly, and both use it as
+a disciplined comparison rather than a monetary foundation: the
+Classified Earthworks brief tests physical analogy, and Context-Compiled
+Consciousness Mode tests reflective-context analogy. This limited
+dependency surface supports a bounded research thesis about a
+constitution-bound monetary automaton. It does not support claims of
+economic superiority, Bitcoin equivalence, asset legitimacy, deployment,
+or universal compiler ontology.</p>
+<p><span class="math display">$$
+\begin{aligned}
+A^*= (&amp;constitution, version, state, transition, \\
+&amp;implementation\_set, consensus, ordering, finality, \\
+&amp;issuance, identity, fork, security\_economics, \\
+&amp;dependencies, evidence, governance\_remainder)
+\end{aligned}.
+$$</span></p>
+<p>The frozen object must be named. Rules can be frozen while
+implementations, networks, hardware, cryptography, social recognition,
+markets, energy costs, or emergency practice change. Byte identity,
+deterministic execution, conformance equivalence, consensus agreement,
+economic finality, and asset continuity are different claims. A
+key-derived identifier proves only the declared derivation under its
+cryptographic assumptions; it does not establish a person, ownership,
+legitimacy, uniqueness beyond scope, or continuing control.</p>
+<p>Forks expose the constitutional remainder: formal continuity, social
+adoption, exchange recognition, shared history, and asset identity may
+diverge. Proof-of-work, useful work, quorum finality, and other ordering
+mechanisms require separate incentive, capture, exclusion, liveness, and
+security analysis.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_MONETARY_CONSTITUTION</code>,<br />
+<code>IMPLEMENTS_FROZEN_TRANSITION_RULE</code>,
+<code>CONFORMS_WITHOUT_BYTE_IDENTITY</code>,<br />
+<code>ORDERS_MONETARY_EVENT</code>, <code>FORKS_ASSET_HISTORY</code>,
+<code>DISPUTES_ASSET_CONTINUITY</code>,<br />
+and<br />
+<code>RETAINS_MONETARY_GOVERNANCE_REMAINDER</code>.</p>
+<p>This review establishes four editorial commitments: retain bounded
+monetary-automaton standing; adopt the exact automaton record; separate
+rule, implementation, consensus, finality, identity, and legitimacy; and
+require explicit fork, energy, exclusion, capture, and
+governance-remainder analysis.</p>
+<h2 id="failure-modes-and-counterevidence">16. Failure Modes and
+Counterevidence</h2>
+<p>The proposal is weakened or fails when:</p>
+<ul>
+<li>an omitted environmental behavior can change validity;</li>
+<li>the frozen kernel contains an exploitable defect with no safe
+recovery path;</li>
+<li>one compiler and implementation create common-mode failure;</li>
+<li>byte reproducibility is confused with semantic correctness;</li>
+<li>users cannot tell which constitution or history they are
+running;</li>
+<li>brand and market coordination override the claimed technical
+identity;</li>
+<li>no-update design prevents repair of cryptographic or safety
+failures;</li>
+<li>PoW becomes concentrated, censorable, or economically insecure;</li>
+<li>fee-only security cannot fund the desired attack resistance;</li>
+<li>useful external work can be mechanically verified after all,
+weakening the categorical PoUW objection;</li>
+<li>MosaicID creates unlimited cheap identities or falsely implies
+software attestation;</li>
+<li>the validator quorum centralizes power, loses keys, stalls,
+colludes, or shares dependencies with miners;</li>
+<li>sanction and exclusion rules deny due process or create coercive
+governance;</li>
+<li>DKN custody, key destruction, or publication ordering cannot be
+independently proven;</li>
+<li>the later three-currency Automaton architecture contradicts the
+original no-dependency thesis through oracle or bridge governance;</li>
+<li>energy or security benefits disappear under a complete economic
+model; or</li>
+<li>a simpler genesis-committed state machine provides the same
+assurance without the additional terminology.</li>
+</ul>
+<p>The strongest counterexample is catastrophic immutability: a defect
+or cryptographic break makes the original kernel unsafe, yet the
+architecture’s defining property forbids in-place repair. FCP can
+preserve exact identity only by accepting abandonment, containment above
+the kernel, or explicit successor identity. That is a real cost, not an
+implementation detail.</p>
+<h2 id="authorial-compression">17. Authorial Compression</h2>
+<p>This paper’s novel contribution should be stated as a
+<strong>monetary frozen-constitution profile of Jnana and constitutional
+computing</strong>, not as proof that every named supporting system is
+newly foundational.</p>
+<ul>
+<li>MCIR and PEIR come from Jnana.</li>
+<li>exact object, admissibility, and meaning commitments come from the
+Three Hash Rule and Semantic Hashing;</li>
+<li>no-silent transition and explicit refusal come from Admissibility
+Engineering;</li>
+<li>cross-boundary obligation preservation comes from Constraint-Bearing
+Composability;</li>
+<li>receipts and lineage come from receipt-bound capabilities and work
+custody;</li>
+<li>MosaicID, MIP, DKN, and quorum finality are optional realization
+candidates with independent proof burdens; and</li>
+<li>Automaton is the domain system or profile that composes them for a
+monetary constitution.</li>
+</ul>
+<p>The phrase <strong>frozen compiler</strong> remains useful because it
+names the decisive configuration: the constitutional transition relation
+is executable, genesis-bound, and denied a predecessor-preserving
+amendment path. The compiler is a construction boundary; the frozen
+verifier and identity rule are the runtime commitment.</p>
+<h2
+id="frozen-rules-stabilize-an-identity-claim-not-monetary-legitimacy">Frozen
+Rules Stabilize an Identity Claim, Not Monetary Legitimacy</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Digital Gold as a Frozen Compiler proposes that a named digital asset
+commit at genesis to an exact validity and issuance constitution. A rule
+change would create a successor or competitor rather than silently
+preserve the original technical constitutional identity. This can make
+one class of rule change explicit. It cannot freeze social meaning,
+eliminate governance, secure an implementation, or create value.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Hash-legitimacy attack.</strong> Exact commitment to bytes
+is treated as proof that the constitution is correct, fair, lawful,
+intelligible, or economically sound.</li>
+<li><strong>Frozen-defect attack.</strong> A bug, ambiguity,
+cryptographic weakness, unsafe parameter, or exploit is permanently
+protected as identity rather than safely containable.</li>
+<li><strong>Environment-closure attack.</strong> The kernel is frozen
+while compilers, hardware, networks, cryptography, time, dependencies,
+clients, and operational practices change its effective behavior.</li>
+<li><strong>Fork-naming attack.</strong> Technical lineage alone
+determines which community, market, custodian, exchange, court, or user
+may retain the original asset name.</li>
+<li><strong>Conformance-divergence attack.</strong> Independent
+implementations pass convenient vectors but diverge on serialization,
+arithmetic, resource limits, error handling, ordering, or adversarial
+states.</li>
+<li><strong>Consensus-finality attack.</strong> Proof of Work, quorum
+signatures, economic weight, or longest-chain selection is treated as
+truth, legitimacy, irreversibility, or protection against coordinated
+capture.</li>
+<li><strong>Useful-work attack.</strong> Claimed useful computation is
+unverifiable, gameable, market-distorting, or weakly coupled to the
+security objective.</li>
+<li><strong>Investment-promotion attack.</strong> Architectural language
+implies scarcity, safety, decentralization, sustainability, price
+support, financial suitability, or superiority to existing assets.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper offers a conditional technical identity architecture and
+research program. It does not establish a working network, asset value,
+investment suitability, security, decentralization, liveness, finality,
+energy proportionality, legal treatment, Sybil resistance, operator
+identity, software execution, novelty, or superiority to Bitcoin or any
+other system. Automaton remains a proposal.</p>
+<p>Evaluation requires an exact semantics and threat model, multiple
+conforming implementations, adversarial state and fork tests, recovery
+analysis, cryptographic agility, network and incentive simulation,
+energy and economic measurement, legal and institutional review, and
+current prior-art research. No implementation, issuance, financial
+action, or external research occurred in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The defensible promise is narrow: everyone can know when the validity
+law changed enough that the old technical identity no longer applies.
+Whether anyone should trust, use, value, regulate, or preserve the
+resulting asset remains a separate question.</p>
+<h2 id="research-agenda-and-open-questions">18. Research Agenda and Open
+Questions</h2>
+<ol type="1">
+<li>Confirm whether constitutional finality means no in-protocol
+predecessor-preserving amendment, or a stronger claim.</li>
+<li>Define exactly what is frozen and which environmental behaviors are
+consensus relevant.</li>
+<li>Choose byte-identical reproducibility, conformance-equivalent
+diverse implementations, or both, and state their evidence
+contracts.</li>
+<li>Decide whether PoW is required by Automaton or one CM2 configuration
+among several.</li>
+<li>Withdraw, replace, or substantiate every energy, hash-rate,
+security-cost, and Bitcoin comparison with reproducible current
+evidence.</li>
+<li>Define the relationship between the original Automaton PoW proposal,
+Automaton Sovereigns, and the later three-currency Automaton
+Constitutional Assets architecture.</li>
+<li>Decide whether MosaicID is only a key identifier or also part of a
+separately specified admission, Sybil, attestation, and
+operator-identity regime.</li>
+<li>Define quorum membership, threshold, rotation, key loss, liveness,
+equivocation, sanction, appeal, expiry, and recovery inside the frozen
+constitution.</li>
+<li>Define the acceptable response to catastrophic bugs and
+cryptographic breakage: abandonment, upper-layer containment, or
+explicit successor asset.</li>
+<li>Select any implementation or live economic test only under separate
+implementation and effect authority.</li>
+<li>Authorize external primary-source and quantitative research for a
+future evidence-qualified revision readiness.</li>
+</ol>
+<h2 id="conclusion">19. Conclusion</h2>
+<p>Digital gold as a frozen compiler is strongest when read as a
+disciplined identity and transition claim, not as a promise that
+politics, economics, or implementation risk disappear.</p>
+<p>A bounded MCIR can state the monetary law. A governed compiler can
+lower it. A minimal verifier can enforce one exact transition relation.
+Genesis commitments can bind the constitution, kernel, and initial
+state. A no-amendment rule can ensure that a changed law receives a
+changed technical identity. Jnana, semantic hashing, admissibility,
+constraint carriage, receipts, and custody make each boundary
+inspectable.</p>
+<p>The same discipline exposes the costs. A frozen defect stays frozen.
+A key hash is not a person, a scarce identity, or proof of execution. A
+founding quorum is a constitutional authority with capture and liveness
+risks. Lower miner revenue can lower hash security. Social actors remain
+free to coordinate around a successor, reuse a name, or abandon the
+system. Market value is not compiled.</p>
+<p>The defensible thesis is therefore:</p>
+<blockquote>
+<p>A genesis-bound executable constitution can make monetary rule
+mutation mechanically explicit as an identity split, provided the
+complete validity surface, implementation equivalence, supporting
+authority, and evidence contracts are themselves declared and
+tested.</p>
+</blockquote>
+<p>That is more precise than saying governance vanishes. Governance is
+moved into founding specification, explicit adoption, bounded operation,
+evidence, and successor choice. The compiler freezes a constitution; it
+does not freeze the world.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that a constitutional-commitment architecture for a
+digital store-of-value. Its nearest external comparison fields are
+crypto, formal, governance. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself.
+Formal assurance remains relative to the encoded model, trusted base,
+and refinement chain; proof does not remove specification error or
+unmodeled environmental behavior. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. These limits are
+not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E6]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E7]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[DGFC-SOURCE]</strong> Adam Ableman. <em>Digital Gold as a
+Frozen Compiler</em>. Exact author source SHA-256<br />
+<code>7177232C1F8EC845A818A7408F1169EB8DF8CA355DF2E408D1FEF1F614B580E9</code>;
+unpublished source revised here as an AI-assisted integrated
+edition.</p>
+<p><strong>[DGFC-CODEX-COPY]</strong> Adam Ableman. <em>Digital Gold as
+a Frozen Compiler v1.1</em>. Exact canonical-codex artifact
+SHA-256<br />
+<code>7D33E96C953E821E3CD359ABF1388D7B92EE7DA6F0BC3B5D6C2424A39821112A</code>;
+retained as a distinct exact artifact without automatic version-family
+effect.</p>
+<p><strong>[ACA-CODEX]</strong> Adam Ableman. <em>Automaton
+Constitutional Assets Domain Codex v1.0</em>. Exact source SHA-256<br />
+<code>86B75825F3C706A93E49832191C7E89A532A12237420CA0FC30F3A976573C5D3</code>;
+later architecture evidence, not automatic identity adjudication.</p>
+<p><strong>[JNANA]</strong> Adam Ableman. <em>Jnana</em>. Exact reviewed
+source SHA-256<br />
+<code>B5238D73BA03320D0D331A3D40AEEAB4264F41EA0DF50DA0AF61F769307F109D</code>;
+separately custodied reviewed source.</p>
+<p><strong>[JNANA-II]</strong> Adam Ableman. <em>Jnana II:
+Constitutional Transformation Substrate</em>. Exact reviewed source
+SHA-256<br />
+<code>7F66DCD868229A4DFED7E91DD5A4647A1C54159B77128F464BFF5A9962634AF0</code>;
+separately custodied reviewed source.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.20788617</code>. Exact reviewed source
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<p><strong>[SH]</strong> Adam Ableman. 2026. <em>Semantic Hashing:
+Hashes as Declared Equivalence Classes of Meaning</em>. Zenodo.
+DOI:<br />
+<code>10.5281/zenodo.18500533</code>. Exact reviewed source
+SHA-256<br />
+<code>0AD135E1A89CE3EE136F36C703C3A415E1209B02FB16A59182F8E29F69127061</code>.</p>
+<p><strong>[AE]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Exact reviewed source SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CBC]</strong> Adam Ableman. <em>Constraint-Bearing
+Composability</em>. Exact reviewed source SHA-256<br />
+<code>BEEA0B56DBF7DC5274307E95E08AF0576A9F91A729C1962765361ADA34488B62</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p><strong>[RBC]</strong> Adam Ableman. 2026. <em>Receipt-Bound
+Capabilities: Membrane Tokens for Governed Interaction with
+Reality</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.18601631</code>. Exact reviewed source
+SHA-256<br />
+<code>404EE1CCAFB63359190E45846852B8584C915EC9E76D55140024C537359D815C</code>.</p>
+<p><strong>[FTC]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Exact reviewed source SHA-256<br />
+<code>49C38F60B95E107F8B3D864ACAFB4C49067A146C807E5248307DE7B009AD4696</code>;
+separately custodied reviewed source.</p>
+<p><strong>[MIP]</strong> Adam Ableman. <em>Mosaic Internet
+Protocol</em>. Exact reviewed source SHA-256<br />
+<code>0E8274185D0DACD0D0F01FE292FA854EBAAFDDEEC8F8AF70AF3194F3ED3C05DB</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p><strong>[CC]</strong> Adam Ableman. <em>Constitutional
+Computing</em>. Exact reviewed source SHA-256<br />
+<code>A1EF0D1F7B5DF84A107E986421EAA95827AEDCB801B7DA63F72BEECA6047BE8D</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p>No external research was conducted in this pass. All claims about
+current cryptocurrency protocols, energy use, market behavior, security
+economics, and comparative novelty require current primary-source
+verification for a future evidence-qualified revision readiness.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847633">10.5281/zenodo.23847633</a></p>

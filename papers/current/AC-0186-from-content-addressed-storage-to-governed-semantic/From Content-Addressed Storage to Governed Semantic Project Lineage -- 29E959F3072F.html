@@ -1,0 +1,1791 @@
+<h1
+id="from-content-addressed-storage-to-governed-semantic-project-lineage">From
+Content-Addressed Storage to Governed Semantic Project Lineage</h1>
+<h2
+id="prior-art-architectural-differentiation-and-a-novelty-thesis-for-an-ai-operable-project-substrate">Prior
+Art, Architectural Differentiation, and a Novelty Thesis for an
+AI-Operable Project Substrate</h2>
+<h3
+id="exact-bytes-are-not-yet-a-project-and-a-project-history-is-not-yet-an-authority-model.">Exact
+bytes are not yet a project, and a project history is not yet an
+authority model.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper examines whether the proposed Semantic Project Lineage
+System represents a genuinely new computing architecture or primarily
+recombines established mechanisms.</p>
+<p>The proposed system is a local-first, content-addressed,
+transtemporal substrate for storing, reconstructing, governing, and
+navigating evolving digital projects. It represents projects through
+exact content objects, persistent file-state lineages, version-scoped
+path maps, provenance and authority relationships, and reconstructible
+external projections such as ZIP archives and working directories.</p>
+<p>The system is designed in particular for human–AI project workflows.
+An AI agent may repeatedly emit a complete project artifact under the
+same visible filename. Before that artifact replaces the prior visible
+version, the substrate independently verifies continuity, identifies
+every predecessor-file disposition, refuses unexplained losses, commits
+newly admitted content, and preserves exact reconstruction of prior
+states.</p>
+<p>The review finds substantial prior art for nearly every primitive
+involved:</p>
+<ul>
+<li>content-addressed immutable storage;</li>
+<li>global chunk deduplication;</li>
+<li>snapshot-based version control;</li>
+<li>mutable objects formed from immutable claims;</li>
+<li>semantic filesystem indexing;</li>
+<li>data provenance;</li>
+<li>reproducible derivation;</li>
+<li>versioned data repositories;</li>
+<li>staged agent filesystem mutation;</li>
+<li>Git-like agent memory and rollback.</li>
+</ul>
+<p>However, the reviewed systems do not appear to combine these
+mechanisms into the same authority model and operating workflow.</p>
+<p>The strongest differentiation is not a new hashing, chunking, graph,
+or delta algorithm. It is an architectural unification:</p>
+<blockquote>
+<p>The ordinary filesystem, project archive, and agent workspace become
+projections of a governed semantic-temporal graph whose authoritative
+state includes exact content, file ancestry, project membership,
+provenance, authority, causality, and reconstructible external
+representations.</p>
+</blockquote>
+<p>The paper therefore concludes that the proposed system is best
+characterized as a <strong>plausibly novel systems synthesis built from
+established primitives</strong>. Its strongest research contribution
+would be a governed correspondence model connecting exact storage,
+semantic project history, safe agent publication, and ordinary
+filesystem usability. The novelty claim remains review-bounded: it
+describes the comparison set represented in this draft, not universal
+priority, patentability, or the absence of other systems. The paper also
+supplies a formal object model and proof obligations so that the
+synthesis can be evaluated as more than a feature list.</p>
+<hr />
+<h2 id="scope-and-method">1. Scope and Method</h2>
+<p>This paper compares the proposed architecture with major relevant
+families of prior work:</p>
+<ol type="1">
+<li>Content-addressed archival storage</li>
+<li>Deduplicating backup systems</li>
+<li>Distributed content-addressed object graphs</li>
+<li>Source version control</li>
+<li>Versioned filesystem-tree deployment</li>
+<li>Stable identities over immutable claims</li>
+<li>Semantic filesystems</li>
+<li>Data-versioning platforms</li>
+<li>Provenance standards</li>
+<li>Functional package management and reproducible derivation</li>
+<li>Agent memory versioning</li>
+<li>Agent-native filesystem safety</li>
+</ol>
+<p>The comparison is architectural rather than exhaustive. It draws
+primarily from original papers, standards, and official
+documentation.</p>
+<p>It does not establish:</p>
+<ul>
+<li>patent novelty;</li>
+<li>freedom to operate;</li>
+<li>the absence of unpublished systems;</li>
+<li>the absence of obscure academic prototypes;</li>
+<li>the absence of claims hidden within broader patents.</li>
+</ul>
+<p>The proper claim is therefore limited:</p>
+<blockquote>
+<p>Within the systems and literature reviewed here, no single prior
+system was found that realizes the complete proposed combination.</p>
+</blockquote>
+<hr />
+<h2 id="the-proposed-system">2. The Proposed System</h2>
+<p>The Semantic Project Lineage System represents an evolving project
+using six principal layers.</p>
+<h3 id="exact-content-custody">2.1 Exact content custody</h3>
+<p>Every admitted byte sequence receives a cryptographic identity and a
+recoverable storage representation.</p>
+<p>A content state may be stored as:</p>
+<ul>
+<li>a complete object;</li>
+<li>content-defined chunks;</li>
+<li>a delta from an earlier state;</li>
+<li>a compound recipe;</li>
+<li>a format-specific representation plus an exact residual;</li>
+<li>an opaque fallback object.</li>
+</ul>
+<p>Exact reconstruction remains the final authority.</p>
+<h3 id="persistent-file-state-lineage">2.2 Persistent file-state
+lineage</h3>
+<p>A logical file may possess many content states over time.</p>
+<p>The system records relationships such as:</p>
+<ul>
+<li>unchanged;</li>
+<li>modified;</li>
+<li>copied;</li>
+<li>renamed;</li>
+<li>removed;</li>
+<li>restored;</li>
+<li>derived;</li>
+<li>generated;</li>
+<li>split;</li>
+<li>merged.</li>
+</ul>
+<p>Exact identity and inferred semantic relationship remain
+distinct.</p>
+<h3 id="project-state-maps">2.3 Project-state maps</h3>
+<p>A project generation is a complete map from normalized paths to file
+states.</p>
+<p>The project map, not an archive byte stream, becomes the primary
+semantic representation of the project.</p>
+<h3 id="semantic-and-governance-relationships">2.4 Semantic and
+governance relationships</h3>
+<p>Files and project states may carry relationships concerning:</p>
+<ul>
+<li>role;</li>
+<li>dependency;</li>
+<li>provenance;</li>
+<li>causality;</li>
+<li>authority;</li>
+<li>work items;</li>
+<li>findings;</li>
+<li>tests;</li>
+<li>generation;</li>
+<li>derivation.</li>
+</ul>
+<p>These relationships possess explicit evidence classes.</p>
+<h3 id="exact-external-projections">2.5 Exact external projections</h3>
+<p>A project state may be materialized as:</p>
+<ul>
+<li>a folder tree;</li>
+<li>a ZIP or TAR archive;</li>
+<li>an APK or JAR;</li>
+<li>a document container;</li>
+<li>a disk image;</li>
+<li>a working directory;</li>
+<li>a bounded AI context package.</li>
+</ul>
+<p>Where historical exactness is promised, packaging metadata and
+residual objects preserve the exact original byte stream.</p>
+<h3 id="governed-publication">2.6 Governed publication</h3>
+<p>A proposed successor is not admitted merely because it is newer.</p>
+<p>Every predecessor path must receive a disposition such as:</p>
+<ul>
+<li>unchanged;</li>
+<li>modified;</li>
+<li>renamed;</li>
+<li>copied;</li>
+<li>intentionally removed;</li>
+<li>replaced;</li>
+<li>generated differently;</li>
+<li>missing without authority.</li>
+</ul>
+<p>An unexplained disappearance refuses publication.</p>
+<p>This permits a human or agent to repeatedly emit
+<code>project-latest.zip</code> while the hidden substrate preserves all
+admitted generations.</p>
+<h3 id="formal-correspondence-contract">2.7 Formal Correspondence
+Contract</h3>
+<p>The architecture distinguishes five objects that are often
+collapsed:</p>
+<ol type="1">
+<li>A content object <span
+class="math inline"><em>C</em><sub><em>h</em></sub> = (<em>h</em>, <em>b</em>)</span>
+binds bytes <span class="math inline"><em>b</em></span> to digest <span
+class="math inline"><em>h</em></span>.</li>
+<li>A file state <span
+class="math inline"><em>F</em><sub><em>i</em></sub> = (<em>i</em>, <em>h</em>, <em>r</em>, <em>e</em>)</span>
+binds persistent file identity <span
+class="math inline"><em>i</em></span> to content <span
+class="math inline"><em>h</em></span>, typed relations <span
+class="math inline"><em>r</em></span>, and evidence class <span
+class="math inline"><em>e</em></span>.</li>
+<li>A project state <span
+class="math inline"><em>P</em><sub><em>g</em></sub></span> is a complete
+generation-scoped map from normalized paths to file-state
+identifiers.</li>
+<li>A projection <span
+class="math inline"><em>X</em><sub><em>g</em></sub> = (<em>P</em><sub><em>g</em></sub>, <em>q</em><sub><em>g</em></sub>, <em>z</em><sub><em>g</em></sub>)</span>
+binds a project state to packaging recipe <span
+class="math inline"><em>q</em><sub><em>g</em></sub></span> and any exact
+residual <span
+class="math inline"><em>z</em><sub><em>g</em></sub></span> needed to
+reconstruct the external representation.</li>
+<li>An admission record <span
+class="math inline"><em>A</em><sub><em>g</em></sub></span> binds
+predecessor state, proposal, disposition map, authority basis, verifier
+result, and resulting standing.</li>
+</ol>
+<p>For an external byte artifact <span
+class="math inline"><em>B</em><sub><em>g</em></sub></span>, exact replay
+requires</p>
+<p><span
+class="math display">reconstruct (<em>X</em><sub><em>g</em></sub>) = <em>B</em><sub><em>g</em></sub>.</span></p>
+<p>For every predecessor path, complete successor admission requires
+exactly one typed disposition:</p>
+<p><span
+class="math display">∀<em>p</em> ∈ dom (<em>P</em><sub><em>g</em> − 1</sub>),  |{<em>d</em> ∈ <em>D</em><sub><em>g</em></sub> : <em>d</em>.predecessor  = <em>p</em>}| = 1.</span></p>
+<p>An admissible disposition does not by itself prove that the successor
+is correct. It proves only that predecessor treatment is explicit and
+satisfies the configured admission policy. Likewise, a content hash
+proves byte identity under the chosen digest; it does not prove
+authority, semantic equivalence, causal provenance, or publication
+standing.</p>
+<p>The architecture therefore carries separate commitments for state,
+admissibility, and meaning, with optional jurisdictional locality. In
+the terminology of <em>The Three Hash Rule</em>, these are <span
+class="math inline"><em>H</em><sub><em>s</em></sub></span>, <span
+class="math inline"><em>H</em><sub><em>c</em></sub></span>, <span
+class="math inline"><em>H</em><sub><em>m</em></sub></span>, and
+optionally <span
+class="math inline"><em>H</em><sub><em>j</em></sub></span>. Project
+admission may depend on all four, but no commitment substitutes for
+another.</p>
+<h3 id="corpus-position">2.8 Corpus Position</h3>
+<p>The system is a storage-and-project realization of several
+corpus-level abstractions:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Corpus construct</th>
+<th>Project-lineage role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Semantic Custody</td>
+<td>Keeps exact artifact, logical work, version family, concept, and
+standing distinct.</td>
+</tr>
+<tr>
+<td>Constitutional Storage</td>
+<td>Makes retention, deletion, reconstruction, and authority inspectable
+storage operations.</td>
+</tr>
+<tr>
+<td>The Three Hash Rule</td>
+<td>Separates object state, admissibility, meaning, and jurisdictional
+locality.</td>
+</tr>
+<tr>
+<td>Governed Semantic Compilation</td>
+<td>Compiles a bounded semantic and authority state into an admissible
+projection or refusal.</td>
+</tr>
+<tr>
+<td>Reasoning by Way of Receipts</td>
+<td>Makes admission, refusal, effect, verification, promotion, and
+revision inspectable as different records.</td>
+</tr>
+<tr>
+<td>Governed Context and Memory</td>
+<td>Produces bounded agent context from project state without treating
+model memory as project authority.</td>
+</tr>
+</tbody>
+</table>
+<p>These are architectural relations, not claims that every corpus
+system is implemented by the project substrate or that the substrate
+grants standing to the records it stores.</p>
+<hr />
+<h2 id="empirical-origin-in-mosaic-lineage-archive">3. Empirical Origin
+in Mosaic Lineage Archive</h2>
+<p>The architecture emerged from a concrete archive-lineage program
+rather than from an abstract design exercise.</p>
+<p>Mosaic Lineage Archive established:</p>
+<ul>
+<li>exact archive-byte custody;</li>
+<li>deterministic package construction;</li>
+<li>reversible historical reconstruction;</li>
+<li>complete source disposition;</li>
+<li>explicit historical gaps;</li>
+<li>preservation of non-lineage objects;</li>
+<li>release-append automation;</li>
+<li>typed verification refusals;</li>
+<li>deletion-eligibility evidence;</li>
+<li>lineage-global temporal object reuse.</li>
+</ul>
+<p>On the 16-release GSOL corpus, the program measured:</p>
+<table>
+<thead>
+<tr>
+<th>Representation</th>
+<th style="text-align: right;">Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Original ZIP collection</td>
+<td style="text-align: right;">25.13 MB</td>
+</tr>
+<tr>
+<td>Adjacent paired-delta representation</td>
+<td style="text-align: right;">19.27 MB</td>
+</tr>
+<tr>
+<td>Global temporal-object representation</td>
+<td style="text-align: right;">11.83 MB</td>
+</tr>
+</tbody>
+</table>
+<p>Every original ZIP was reconstructed exactly.</p>
+<p>That experiment established that content could remain in lineage
+custody while disappearing from active project states and later return
+by reference.</p>
+<p>The proposed system generalizes that result from ZIP-level objects to
+persistent logical files and arbitrary compound digital objects.</p>
+<hr />
+<h2 id="content-addressed-archival-storage">4. Content-Addressed
+Archival Storage</h2>
+<h3 id="venti">4.1 Venti</h3>
+<p>Venti is an important foundational predecessor.</p>
+<p>It identifies immutable blocks by hashes of their contents, applies a
+write-once model, coalesces duplicate blocks, and serves as a building
+block for backup and snapshot systems.</p>
+<p>Venti establishes several central principles reused by the proposed
+system:</p>
+<ul>
+<li>content identity independent of location;</li>
+<li>immutability;</li>
+<li>deduplication;</li>
+<li>durable historical storage;</li>
+<li>higher-level structures assembled from immutable blocks.</li>
+</ul>
+<h3 id="differentiation">4.2 Differentiation</h3>
+<p>Venti does not itself model:</p>
+<ul>
+<li>persistent logical file identities;</li>
+<li>file-state ancestry;</li>
+<li>semantic roles;</li>
+<li>project completeness;</li>
+<li>AI successor admission;</li>
+<li>authority standing;</li>
+<li>exact reconstruction of arbitrary external packaging conventions as
+governed projections.</li>
+</ul>
+<p>Venti supplies a storage substrate. The proposed system adds a
+project and governance model above such a substrate.</p>
+<hr />
+<h2 id="deduplicating-backup-systems">5. Deduplicating Backup
+Systems</h2>
+<h3 id="restic-and-borg">5.1 Restic and Borg</h3>
+<p>Restic uses content-defined chunking to recognize unchanged regions
+even when bytes shift within a large file. This enables deduplication
+between files and across backups.</p>
+<p>Borg similarly divides files into variable-length chunks and
+deduplicates across the entire repository. Its reuse does not depend on
+stable filenames, complete-file identity, timestamps, or fixed chunk
+positions.</p>
+<p>These systems are close to the proposed storage mechanics because
+they already provide:</p>
+<ul>
+<li>whole-repository chunk reuse;</li>
+<li>cross-snapshot deduplication;</li>
+<li>efficient handling of slightly modified large files;</li>
+<li>exact file restoration;</li>
+<li>rename-insensitive storage efficiency.</li>
+</ul>
+<h3 id="differentiation-1">5.2 Differentiation</h3>
+<p>Backup systems generally answer:</p>
+<blockquote>
+<p>Can the files from this snapshot be restored?</p>
+</blockquote>
+<p>The proposed system additionally asks:</p>
+<blockquote>
+<p>What is the persistent identity of this file? How did its states
+evolve? Why did it change? What standing does this state possess? Did an
+agent have authority to remove it? Which external artifacts are
+projections of this state?</p>
+</blockquote>
+<p>Backup metadata may record paths and snapshots, but it generally does
+not elevate semantic file ancestry, project-state admission, and
+authority correspondence into the central model.</p>
+<hr />
+<h2 id="git-and-snapshot-based-version-control">6. Git and
+Snapshot-Based Version Control</h2>
+<h3 id="gits-object-model">6.1 Git’s object model</h3>
+<p>Git is a content-addressed storage system built from blobs, trees,
+and commits.</p>
+<p>Blobs represent content, trees map names to blobs or subtrees, and
+commits identify complete project snapshots along with parent commits
+and authorship information.</p>
+<p>This provides major precedents for:</p>
+<ul>
+<li>content-addressed files;</li>
+<li>snapshot trees;</li>
+<li>project-state roots;</li>
+<li>parent relationships;</li>
+<li>branching;</li>
+<li>merging;</li>
+<li>reproducible historical checkout.</li>
+</ul>
+<p>Git also uses packfiles and delta compression to reduce storage costs
+among related objects.</p>
+<h3 id="rename-and-copy-semantics">6.2 Rename and copy semantics</h3>
+<p>Git does not ordinarily store rename identity as an authoritative
+history edge. Rename and copy detection are diff-time operations that
+can be enabled, disabled, limited, and tuned.</p>
+<p>This distinction is important.</p>
+<p>Git authoritatively stores snapshots and content identities. A
+statement that one path was renamed into another is typically derived
+later from similarities between snapshots.</p>
+<h3 id="differentiation-2">6.3 Differentiation</h3>
+<p>The proposed system overlaps Git heavily at the content and
+project-map layers, but differs in scope and authority.</p>
+<p>It is intended to handle:</p>
+<ul>
+<li>arbitrary project artifacts, not only source repositories;</li>
+<li>exact historical container bytes;</li>
+<li>files not organized through explicit commits;</li>
+<li>complete archives emitted by AI sessions;</li>
+<li>same-name visible artifact replacement;</li>
+<li>unexplained omission refusal;</li>
+<li>preserved rejected and auxiliary objects;</li>
+<li>explicit authority classes;</li>
+<li>exact recursive container reconstruction;</li>
+<li>working directories as non-authoritative projections;</li>
+<li>download routing and local artifact custody.</li>
+</ul>
+<p>Git is probably the nearest general predecessor to the project-state
+map. The proposed contribution lies in extending that concept beyond
+source history into governed project custody and agent publication.</p>
+<hr />
+<h2 id="ostree-and-versioned-filesystem-trees">7. OSTree and Versioned
+Filesystem Trees</h2>
+<p>OSTree describes itself as a userspace content-addressed versioning
+filesystem inspired by Git. It stores commits, directory trees,
+directory metadata, content objects, and extended attributes, and is
+designed for atomic deployment of complete filesystem trees.</p>
+<p>OSTree is particularly relevant because it demonstrates:</p>
+<ul>
+<li>content-addressed complete filesystem states;</li>
+<li>deployment as a projection of repository state;</li>
+<li>metadata-aware file objects;</li>
+<li>atomic upgrade and rollback;</li>
+<li>separation of content from deployment.</li>
+</ul>
+<h3 id="differentiation-3">Differentiation</h3>
+<p>OSTree focuses on deployable operating-system trees and assumes that
+certain data may be regenerated from source. The proposed system instead
+emphasizes:</p>
+<ul>
+<li>general project artifacts;</li>
+<li>preservation rather than regeneration assumptions;</li>
+<li>semantic file lineages;</li>
+<li>exact external package reconstruction;</li>
+<li>AI-authored successor admission;</li>
+<li>project-specific causality and authority.</li>
+</ul>
+<p>OSTree is a strong precedent for the claim that an ordinary
+filesystem can be a projection of a deeper content-addressed state.</p>
+<p>It does not appear to implement the full semantic-governance layer
+proposed here.</p>
+<hr />
+<h2 id="ipfs-and-generalized-merkle-dags">8. IPFS and Generalized Merkle
+DAGs</h2>
+<p>IPFS combines content-addressed block storage with content-addressed
+links, producing a generalized Merkle DAG capable of supporting
+versioned filesystems and other persistent data structures.</p>
+<p>IPFS establishes that arbitrary compound objects can be represented
+as graphs of immutable, hash-addressed components whose branches may
+share subobjects.</p>
+<h3 id="differentiation-4">Differentiation</h3>
+<p>IPFS primarily addresses distributed naming, transport, persistence,
+and retrieval.</p>
+<p>The proposed system adds a much more opinionated application
+model:</p>
+<ul>
+<li>persistent file identity;</li>
+<li>project completeness;</li>
+<li>semantic change classes;</li>
+<li>authority and evidence standing;</li>
+<li>exact packaging projections;</li>
+<li>agent publication verifiers;</li>
+<li>local workflow integration.</li>
+</ul>
+<p>IPFS could plausibly serve as a distributed object backend for the
+system, but it does not supply the proposed project semantics by
+itself.</p>
+<hr />
+<h2 id="perkeep-and-mutable-objects-from-immutable-claims">9. Perkeep
+and Mutable Objects from Immutable Claims</h2>
+<p>Perkeep is one of the closest conceptual predecessors.</p>
+<p>At its lowest layer, it treats stored data as arbitrary bytes. Its
+upper layers define schemas for files, directories, static sets, signed
+claims, and permanodes. A permanode is an immutable anchor for a mutable
+object whose changing state is described by claims.</p>
+<p>This closely resembles the proposed separation between:</p>
+<ul>
+<li>immutable content states;</li>
+<li>stable logical object identity;</li>
+<li>historical mutations;</li>
+<li>retention claims;</li>
+<li>documentary assertions.</li>
+</ul>
+<h3 id="differentiation-5">Differentiation</h3>
+<p>Perkeep demonstrates that mutable objects can be represented through
+immutable historical claims, but it does not appear to center:</p>
+<ul>
+<li>complete project-state correspondence;</li>
+<li>file-state delta selection;</li>
+<li>exact historical archive packaging;</li>
+<li>AI omission courts;</li>
+<li>ratification standing;</li>
+<li>agent context compilation;</li>
+<li>same-name governed publication.</li>
+</ul>
+<p>Perkeep may be the closest predecessor to the proposed persistent
+file identity model.</p>
+<p>The proposed system’s distinction is the integration of that model
+with project-level snapshots, exact reconstruction, semantic relations,
+and governed agent operation.</p>
+<hr />
+<h2 id="semantic-filesystems">10. Semantic Filesystems</h2>
+<p>The 1991 Semantic File Systems work proposed automatically extracting
+file attributes through format-specific transducers and supporting
+associative access to files through virtual directories and
+content-derived queries.</p>
+<p>This is direct prior art for:</p>
+<ul>
+<li>format-aware file interpretation;</li>
+<li>semantic metadata extraction;</li>
+<li>associative retrieval;</li>
+<li>filesystem views generated from meaning rather than only physical
+paths.</li>
+</ul>
+<h3 id="differentiation-6">Differentiation</h3>
+<p>Traditional semantic filesystems primarily improve how stored files
+are found and organized.</p>
+<p>They generally do not make semantic attributes part of an exact
+historical custody and project-publication mechanism.</p>
+<p>The proposed system combines semantic indexing with:</p>
+<ul>
+<li>versioned file states;</li>
+<li>exact content ancestry;</li>
+<li>project maps;</li>
+<li>historical disappearance and restoration;</li>
+<li>governed inference standing;</li>
+<li>exact external reconstruction.</li>
+</ul>
+<p>The semantic filesystem supplies meaning over files.</p>
+<p>The proposed system supplies meaning, time, custody, authority, and
+reconstruction together.</p>
+<hr />
+<h2 id="data-versioning-lakefs-and-pachyderm">11. Data Versioning:
+lakeFS and Pachyderm</h2>
+<p>lakeFS applies Git-like repositories, commits, branches, merges, and
+zero-copy branches to object-storage data. Branches initially point to
+existing commits rather than duplicating stored objects, and validations
+can be connected to commit or merge workflows.</p>
+<p>Pachyderm versions data through repositories, branches, and commits,
+and connects data lineage to pipeline provenance. Its branch and commit
+relationships can capture dependencies between input and output
+datasets.</p>
+<p>These systems establish:</p>
+<ul>
+<li>version control beyond source code;</li>
+<li>zero-copy branching;</li>
+<li>data-state commits;</li>
+<li>validation gates;</li>
+<li>pipeline provenance;</li>
+<li>atomic or governed publication patterns.</li>
+</ul>
+<h3 id="differentiation-7">Differentiation</h3>
+<p>They are primarily oriented toward object stores, datasets,
+pipelines, analytics, and machine-learning workflows.</p>
+<p>The proposed system is more granular and local-project-oriented:</p>
+<ul>
+<li>persistent identities for ordinary files;</li>
+<li>exact reconstruction of original user-facing containers;</li>
+<li>path-level successor completeness;</li>
+<li>recursive archive abstraction;</li>
+<li>Explorer and terminal workspace projection;</li>
+<li>stable visible artifact slots;</li>
+<li>human and AI local workflow.</li>
+</ul>
+<p>These systems show that Git-like semantics can be applied to
+arbitrary data. They do not appear to provide the same exact
+file/container and operator-governance synthesis.</p>
+<hr />
+<h2 id="provenance-standards">12. Provenance Standards</h2>
+<p>The W3C PROV family defines a general model for describing entities,
+activities, people, derivation, attribution, procedures, versioning, and
+provenance itself. Its purpose is to support interoperable provenance
+exchange and assessments of reliability and trustworthiness.</p>
+<p>W3C PROV is strong prior art for the proposed provenance and causal
+graph.</p>
+<p>The proposed relations:</p>
+<pre class="text"><code>generated_by
+derived_from
+associated_with_agent
+introduced_by_work_item
+governed_by_decision</code></pre>
+<p>can often be expressed or mapped into PROV concepts.</p>
+<h3 id="differentiation-8">Differentiation</h3>
+<p>PROV is an information model, not a complete storage, publication,
+reconstruction, and agent filesystem.</p>
+<p>The proposed system could adopt PROV-compatible representations while
+adding:</p>
+<ul>
+<li>content-addressed custody;</li>
+<li>exact file-state reconstruction;</li>
+<li>project-state admission;</li>
+<li>path correspondence;</li>
+<li>storage deduplication;</li>
+<li>workspace projection;</li>
+<li>enforcement.</li>
+</ul>
+<p>The contribution is not a new definition of provenance. It is making
+provenance operational inside an exact project substrate.</p>
+<hr />
+<h2 id="nix-and-reproducible-derivation">13. Nix and Reproducible
+Derivation</h2>
+<p>Nix and functional package management treat build outputs as results
+of declared inputs and derivations. This supports isolation,
+reproducibility, rollback, and parallel coexistence of multiple package
+versions.</p>
+<p>Recent large-scale work rebuilding historical Nix packages found high
+rebuildability and substantial–though incomplete–bitwise reproducibility
+across hundreds of thousands of packages.</p>
+<p>Nix supplies powerful prior art for:</p>
+<ul>
+<li>derivation identity;</li>
+<li>immutable outputs;</li>
+<li>input-to-output causality;</li>
+<li>coexistence of historical versions;</li>
+<li>rollback;</li>
+<li>reproducible construction.</li>
+</ul>
+<h3 id="differentiation-9">Differentiation</h3>
+<p>Nix is fundamentally derivation-centered: outputs should be recreated
+from declared build inputs.</p>
+<p>The proposed system is custody-centered:</p>
+<ul>
+<li>it preserves exact outputs even when their production process is
+unavailable or irreproducible;</li>
+<li>it distinguishes generated derivations from externally supplied
+artifacts;</li>
+<li>it preserves documentary and rejected states;</li>
+<li>it models ordinary mutable project files and archives.</li>
+</ul>
+<p>The proposed architecture would benefit from Nix-like derivation
+records, but it cannot rely solely on regeneration.</p>
+<hr />
+<h2 id="emerging-agent-memory-and-agent-filesystems">14. Emerging Agent
+Memory and Agent Filesystems</h2>
+<h3 id="git-context-controller">14.1 Git-Context-Controller</h3>
+<p>Git-Context-Controller structures an agent’s memory as a persistent
+filesystem with commit, branch, merge, and context operations. It is
+intended to support long-horizon reasoning, recovery, architectural
+experimentation, and handoff between sessions or agents.</p>
+<p>This is direct emerging prior art for:</p>
+<ul>
+<li>Git-like agent memory;</li>
+<li>persistent reasoning artifacts;</li>
+<li>branchable agent context;</li>
+<li>long-horizon continuity.</li>
+</ul>
+<h3 id="agentgit">14.2 AgentGit</h3>
+<p>AgentGit applies commit, revert, and branch semantics to multi-agent
+workflow state, enabling agents to compare and explore alternative
+trajectories.</p>
+<h3 id="yolofs">14.3 YoloFS</h3>
+<p>YoloFS argues that agent safety and autonomy should be supported by
+the filesystem itself. It uses staged mutations, snapshots, and
+progressive permissions so that agent effects remain reviewable and
+recoverable.</p>
+<p>YoloFS is especially close to the proposed safe publication
+model:</p>
+<ul>
+<li>mutations are staged;</li>
+<li>effects remain reviewable;</li>
+<li>snapshots permit recovery;</li>
+<li>the filesystem mediates agent authority.</li>
+</ul>
+<h3 id="gitlake">14.4 GitLake</h3>
+<p>The emerging GitLake design applies repository-wide commits,
+temporary branches, and atomic publication to an agent-first lakehouse.
+Agents work in isolated branches and publish only through final
+merge.</p>
+<h3 id="differentiation-10">14.5 Differentiation</h3>
+<p>These systems show that agent state, context, data, and filesystem
+mutations are rapidly converging on version-control semantics.</p>
+<p>However, their central objects differ:</p>
+<ul>
+<li>GCC versions agent context and reasoning artifacts.</li>
+<li>AgentGit versions agent workflow trajectories.</li>
+<li>YoloFS governs filesystem mutations and recovery.</li>
+<li>GitLake versions lakehouse data states.</li>
+</ul>
+<p>The proposed system’s central object is the <strong>complete governed
+project</strong>, connecting:</p>
+<ul>
+<li>exact arbitrary bytes;</li>
+<li>logical file histories;</li>
+<li>project maps;</li>
+<li>packaging projections;</li>
+<li>authority;</li>
+<li>semantic relationships;</li>
+<li>human workspace;</li>
+<li>agent publication.</li>
+</ul>
+<p>This broader integration remains the principal differentiation.</p>
+<hr />
+<h2 id="comparative-matrix">15. Comparative Matrix</h2>
+<ul>
+<li><p><strong>System:</strong> Venti<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> Client-defined<br />
+<strong>Persistent logical identity:</strong> No<br />
+<strong>Semantic relationships:</strong> No<br />
+<strong>Provenance:</strong> No<br />
+<strong>Agent-safe staging:</strong> No<br />
+<strong>Exact external container replay:</strong> Client-defined<br />
+<strong>Authority/completeness courts:</strong> No</p></li>
+<li><p><strong>System:</strong> Borg/restic<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> Snapshot-oriented<br />
+<strong>Persistent logical identity:</strong> Weak/path metadata<br />
+<strong>Semantic relationships:</strong> No<br />
+<strong>Provenance:</strong> Limited<br />
+<strong>Agent-safe staging:</strong> No<br />
+<strong>Exact external container replay:</strong> File restore<br />
+<strong>Authority/completeness courts:</strong> No</p></li>
+<li><p><strong>System:</strong> Git<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> Yes<br />
+<strong>Persistent logical identity:</strong> Blob identity; path
+history inferred<br />
+<strong>Semantic relationships:</strong> Limited<br />
+<strong>Provenance:</strong> Commit metadata<br />
+<strong>Agent-safe staging:</strong> Through workflow<br />
+<strong>Exact external container replay:</strong> Not arbitrary original
+containers<br />
+<strong>Authority/completeness courts:</strong> Hooks/policy, not
+intrinsic</p></li>
+<li><p><strong>System:</strong> OSTree<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> Yes<br />
+<strong>Persistent logical identity:</strong> Content objects<br />
+<strong>Semantic relationships:</strong> Limited<br />
+<strong>Provenance:</strong> Commit metadata<br />
+<strong>Agent-safe staging:</strong> Atomic deployment<br />
+<strong>Exact external container replay:</strong> Filesystem-tree
+deployment<br />
+<strong>Authority/completeness courts:</strong> Limited</p></li>
+<li><p><strong>System:</strong> IPFS<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> DAG-defined<br />
+<strong>Persistent logical identity:</strong> Through higher
+layers<br />
+<strong>Semantic relationships:</strong> Application-defined<br />
+<strong>Provenance:</strong> Application-defined<br />
+<strong>Agent-safe staging:</strong> No<br />
+<strong>Exact external container replay:</strong>
+Application-defined<br />
+<strong>Authority/completeness courts:</strong> No</p></li>
+<li><p><strong>System:</strong> Perkeep<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> Object claims<br />
+<strong>Persistent logical identity:</strong> Yes, through
+permanodes<br />
+<strong>Semantic relationships:</strong> Claim-defined<br />
+<strong>Provenance:</strong> Signed claims<br />
+<strong>Agent-safe staging:</strong> No<br />
+<strong>Exact external container replay:</strong> Not central<br />
+<strong>Authority/completeness courts:</strong> Claim
+authorization</p></li>
+<li><p><strong>System:</strong> Semantic FS<br />
+<strong>Exact content custody:</strong> Filesystem-dependent<br />
+<strong>Versioned project tree:</strong> Not central<br />
+<strong>Persistent logical identity:</strong> Usually path/object
+based<br />
+<strong>Semantic relationships:</strong> Yes<br />
+<strong>Provenance:</strong> Possible<br />
+<strong>Agent-safe staging:</strong> No<br />
+<strong>Exact external container replay:</strong> No<br />
+<strong>Authority/completeness courts:</strong> No</p></li>
+<li><p><strong>System:</strong> lakeFS<br />
+<strong>Exact content custody:</strong> Object-storage based<br />
+<strong>Versioned project tree:</strong> Dataset namespace<br />
+<strong>Persistent logical identity:</strong> Object/path based<br />
+<strong>Semantic relationships:</strong> Limited<br />
+<strong>Provenance:</strong> Commit lineage<br />
+<strong>Agent-safe staging:</strong> Branch/merge workflow<br />
+<strong>Exact external container replay:</strong> Object state<br />
+<strong>Authority/completeness courts:</strong> Hooks</p></li>
+<li><p><strong>System:</strong> Pachyderm<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> Data repositories<br />
+<strong>Persistent logical identity:</strong> Data/path based<br />
+<strong>Semantic relationships:</strong> Pipeline DAG<br />
+<strong>Provenance:</strong> Strong<br />
+<strong>Agent-safe staging:</strong> Transactional workflow<br />
+<strong>Exact external container replay:</strong> Dataset state<br />
+<strong>Authority/completeness courts:</strong> Pipeline policy</p></li>
+<li><p><strong>System:</strong> Nix<br />
+<strong>Exact content custody:</strong> Store-path exactness<br />
+<strong>Versioned project tree:</strong> Package closure<br />
+<strong>Persistent logical identity:</strong> Derivation/output
+identity<br />
+<strong>Semantic relationships:</strong> Dependency graph<br />
+<strong>Provenance:</strong> Strong derivation<br />
+<strong>Agent-safe staging:</strong> Build isolation<br />
+<strong>Exact external container replay:</strong> Reproduced
+output<br />
+<strong>Authority/completeness courts:</strong> Build policy</p></li>
+<li><p><strong>System:</strong> GCC/AgentGit<br />
+<strong>Exact content custody:</strong> Artifact/context dependent<br />
+<strong>Versioned project tree:</strong> Agent-state tree<br />
+<strong>Persistent logical identity:</strong> Agent artifact based<br />
+<strong>Semantic relationships:</strong> Reasoning/workflow<br />
+<strong>Provenance:</strong> Agent history<br />
+<strong>Agent-safe staging:</strong> Branch/revert<br />
+<strong>Exact external container replay:</strong> No<br />
+<strong>Authority/completeness courts:</strong>
+Workflow-dependent</p></li>
+<li><p><strong>System:</strong> YoloFS<br />
+<strong>Exact content custody:</strong> Snapshot dependent<br />
+<strong>Versioned project tree:</strong> Filesystem state<br />
+<strong>Persistent logical identity:</strong> Filesystem objects<br />
+<strong>Semantic relationships:</strong> Limited<br />
+<strong>Provenance:</strong> Mutation history<br />
+<strong>Agent-safe staging:</strong> Yes<br />
+<strong>Exact external container replay:</strong> Filesystem
+recovery<br />
+<strong>Authority/completeness courts:</strong> Permission
+policy</p></li>
+<li><p><strong>System:</strong> Proposed system<br />
+<strong>Exact content custody:</strong> Yes<br />
+<strong>Versioned project tree:</strong> Yes<br />
+<strong>Persistent logical identity:</strong> Yes<br />
+<strong>Semantic relationships:</strong> Yes<br />
+<strong>Provenance:</strong> Yes<br />
+<strong>Agent-safe staging:</strong> Yes<br />
+<strong>Exact external container replay:</strong> Yes<br />
+<strong>Authority/completeness courts:</strong> Yes</p></li>
+</ul>
+<p>The proposed system does not introduce each column independently.</p>
+<p>Its differentiation is that all columns are part of one
+correspondence model.</p>
+<hr />
+<h2 id="the-strongest-differentiating-elements">16. The Strongest
+Differentiating Elements</h2>
+<h3 id="exactness-and-semantics-share-one-substrate">16.1 Exactness and
+semantics share one substrate</h3>
+<p>Many systems choose one primary truth:</p>
+<ul>
+<li>exact storage;</li>
+<li>source history;</li>
+<li>backup snapshots;</li>
+<li>semantic indexing;</li>
+<li>provenance;</li>
+<li>agent memory.</li>
+</ul>
+<p>The proposed system binds these together.</p>
+<p>A file may simultaneously possess:</p>
+<ul>
+<li>exact-byte identity;</li>
+<li>content ancestry;</li>
+<li>path membership;</li>
+<li>semantic role;</li>
+<li>dependency edges;</li>
+<li>derivation history;</li>
+<li>authority standing;</li>
+<li>packaging representations;</li>
+<li>agent-context relevance.</li>
+</ul>
+<h3 id="the-filesystem-is-a-projection">16.2 The filesystem is a
+projection</h3>
+<p>The authoritative project is not necessarily the currently visible
+directory or ZIP file.</p>
+<p>The visible filesystem is a materialized view of a deeper
+project-state graph.</p>
+<p>This idea has precedents in Git, OSTree, semantic filesystems, and
+content-addressed stores. The proposed distinction is that the
+projection is also:</p>
+<ul>
+<li>semantically indexed;</li>
+<li>authority-governed;</li>
+<li>exactly reconstructible;</li>
+<li>agent-operable;</li>
+<li>format-recursive.</li>
+</ul>
+<h3 id="same-name-successor-publication">16.3 Same-name successor
+publication</h3>
+<p>The stable filename:</p>
+<pre class="text"><code>project-latest.zip</code></pre>
+<p>is treated as a visible slot rather than an artifact identity.</p>
+<p>Each replacement becomes a new committed generation only after
+correspondence verification.</p>
+<p>This supports a practical AI workflow that conventional source
+control does not directly model:</p>
+<ol type="1">
+<li>Receive a complete candidate archive.</li>
+<li>Compare it against the current project generation.</li>
+<li>Require complete predecessor disposition.</li>
+<li>Refuse unexplained omission.</li>
+<li>Commit new file and content states.</li>
+<li>Verify the external artifact.</li>
+<li>Atomically replace the visible slot.</li>
+<li>Retain all historical states internally.</li>
+</ol>
+<h3 id="completeness-as-an-admission-requirement">16.4 Completeness as
+an admission requirement</h3>
+<p>Most version-control systems permit deletion as an ordinary state
+change.</p>
+<p>The proposed system can require an explicit explanation for every
+missing predecessor file.</p>
+<p>This is particularly important when a generative agent emits a
+complete replacement artifact. The system does not assume that absence
+is intentional.</p>
+<h3 id="recursive-container-abstraction">16.5 Recursive container
+abstraction</h3>
+<p>If a project contains historical project archives, the system can
+recognize them as materializations of states already represented in the
+same lineage.</p>
+<p>Instead of storing a nested archive opaquely, it can represent it
+through:</p>
+<ul>
+<li>known file states;</li>
+<li>a known project-state reference;</li>
+<li>packaging metadata;</li>
+<li>a compact exact residual.</li>
+</ul>
+<p>This generalizes deduplication across representation layers.</p>
+<h3 id="evidence-class-separation">16.6 Evidence-class separation</h3>
+<p>The proposed system explicitly distinguishes:</p>
+<ul>
+<li>reconstructed facts;</li>
+<li>hash-verified documentary claims;</li>
+<li>governed semantic inference;</li>
+<li>externally authenticated attestations.</li>
+</ul>
+<p>This prevents a stored document from creating its own authority
+merely because it is present in a valid package.</p>
+<h3 id="semantic-context-compilation">16.7 Semantic context
+compilation</h3>
+<p>The project graph can generate bounded context for an AI based
+on:</p>
+<ul>
+<li>target files;</li>
+<li>dependencies;</li>
+<li>relevant historical states;</li>
+<li>associated tests;</li>
+<li>causal findings;</li>
+<li>authority standing;</li>
+<li>unresolved decisions.</li>
+</ul>
+<p>This connects storage architecture directly to machine cognition
+without making the model’s memory the sole project authority.</p>
+<h3 id="failure-modes-the-synthesis-must-refuse-or-expose">16.8 Failure
+Modes the Synthesis Must Refuse or Expose</h3>
+<p>The unification creates failure modes that no individual primitive
+automatically solves:</p>
+<ul>
+<li><strong>Hash sufficiency error:</strong> treating byte identity as
+proof of semantic identity or authority.</li>
+<li><strong>Disposition laundering:</strong> supplying a syntactically
+complete but false explanation for a deletion, rename, or
+derivation.</li>
+<li><strong>Projection drift:</strong> reconstructing a semantically
+equivalent tree while failing an exact-container promise.</li>
+<li><strong>Inference promotion:</strong> promoting a similarity-based
+file relation to authoritative lineage without adequate evidence.</li>
+<li><strong>Authority laundering:</strong> allowing a valid package or
+signed record to manufacture authority it did not possess.</li>
+<li><strong>Partial-project admission:</strong> accepting a successor
+whose comparison boundary silently excludes predecessor material.</li>
+<li><strong>Residual opacity:</strong> using an opaque residual so
+broadly that semantic decomposition becomes nominal.</li>
+<li><strong>Context overreach:</strong> compiling agent context that
+exceeds the authority, privacy, or relevance boundary of the task.</li>
+<li><strong>Garbage-collection overclaim:</strong> deleting an object
+because it is unreachable in one projection while it remains required by
+another lineage or standing claim.</li>
+<li><strong>Verifier self-trust:</strong> allowing the component
+proposing or applying a successor to confer its own final standing.</li>
+</ul>
+<p>Each failure implies a negative test. A credible implementation must
+demonstrate refusal or bounded qualification, not merely successful
+reconstruction on cooperative examples.</p>
+<hr />
+<h2 id="what-is-not-novel">17. What Is Not Novel</h2>
+<p>The following should not be presented as original inventions:</p>
+<ul>
+<li>hashing content to derive object identifiers;</li>
+<li>immutable object stores;</li>
+<li>Merkle trees or DAGs;</li>
+<li>content-defined chunking;</li>
+<li>cross-snapshot deduplication;</li>
+<li>binary or semantic deltas;</li>
+<li>file snapshots;</li>
+<li>project trees;</li>
+<li>commits and branches;</li>
+<li>provenance graphs;</li>
+<li>semantic metadata extraction;</li>
+<li>virtual filesystem views;</li>
+<li>staged agent writes;</li>
+<li>filesystem snapshots;</li>
+<li>rollback;</li>
+<li>reproducible derivations;</li>
+<li>stable mutable identities constructed from immutable events.</li>
+</ul>
+<p>Any technical claim should acknowledge those precedents directly.</p>
+<hr />
+<h2 id="plausible-research-contributions">18. Plausible Research
+Contributions</h2>
+<p>The system may support several narrower, defensible research
+contributions.</p>
+<h3 id="contribution-1-governed-project-correspondence">Contribution 1:
+Governed project correspondence</h3>
+<p>A formal model establishing correspondence among:</p>
+<ul>
+<li>exact content;</li>
+<li>file-state lineage;</li>
+<li>project-state maps;</li>
+<li>external package bytes;</li>
+<li>workspace projections;</li>
+<li>authority standing.</li>
+</ul>
+<h3
+id="contribution-2-complete-successor-admission-for-generative-agents">Contribution
+2: Complete successor admission for generative agents</h3>
+<p>A method by which a complete AI-generated project replacement is
+admitted only when every predecessor object receives a valid
+disposition.</p>
+<h3 id="contribution-3-transtemporal-semantic-file-storage">Contribution
+3: Transtemporal semantic file storage</h3>
+<p>A storage model in which changed file states may derive from the most
+economical valid ancestor anywhere in their lineage, while project
+generations reference persistent file states by identity.</p>
+<h3
+id="contribution-4-recursive-lineage-aware-container-deduplication">Contribution
+4: Recursive lineage-aware container deduplication</h3>
+<p>A method for recognizing embedded archives or compound files as
+representations of already-custodied states and storing only
+representation-specific residuals.</p>
+<h3
+id="contribution-5-evidence-class-aware-project-verification">Contribution
+5: Evidence-class-aware project verification</h3>
+<p>A verifier that distinguishes reconstructed facts, documentary
+metadata, semantic inference, and external attestation in its output
+standing.</p>
+<h3
+id="contribution-6-unified-human-and-agent-workspace-projection">Contribution
+6: Unified human and agent workspace projection</h3>
+<p>A local-first project substrate that materializes ordinary folders,
+archives, terminals, editor workspaces, and bounded AI contexts from the
+same governed project graph.</p>
+<p>These contributions should be evaluated independently. The
+architecture does not need every one to be unprecedented for the overall
+system to be valuable.</p>
+<hr />
+<h2 id="novelty-thesis">19. Novelty Thesis</h2>
+<p>The strongest novelty thesis is:</p>
+<blockquote>
+<p>Existing systems separately provide content-addressed storage,
+snapshot history, semantic indexing, provenance, reproducible
+derivation, data branching, or agent filesystem safety. The proposed
+system integrates these capabilities into a single local-first project
+substrate whose authoritative object is a governed semantic-temporal
+project graph and whose filesystems, archives, workspaces, and agent
+contexts are exact or bounded projections of that graph.</p>
+</blockquote>
+<p>A second, more operational thesis is:</p>
+<blockquote>
+<p>The system enables a generative agent to publish complete same-name
+successor artifacts while an independent substrate preserves predecessor
+custody, verifies every file disposition, refuses unexplained loss, and
+commits only a correspondingly valid project generation.</p>
+</blockquote>
+<p>A third thesis concerns representation:</p>
+<blockquote>
+<p>Exact archive history and semantic file history need not be competing
+stores. Exact external containers can be represented as governed
+packaging projections of a persistent logical file lineage, with opaque
+residuals preserving any representation details not derivable from
+semantic state.</p>
+</blockquote>
+<p>These are stronger and more defensible than claiming invention of
+content addressing or version control.</p>
+<hr />
+<h2 id="governed-project-state-lineage-substrate">Governed Project-State
+Lineage Substrate</h2>
+<p>Across the completed P1 corpus, this paper’s non-duplicative
+contribution is a <strong>governed project-state lineage substrate that
+binds exact content custody, file-state history, semantic and governance
+relations, admission, and external projections</strong>. It does not
+claim that content addressing alone creates project identity, that a
+filesystem projection is canonical state, or that the prior-art
+comparison has been externally completed.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Identity Spine
+Doctrine</em><br />
+<strong>Supplies:</strong> Layered identity across artifacts, works,
+versions, concepts, and systems.<br />
+<strong>Project-lineage boundary:</strong> The lineage substrate
+realizes project-state identities without collapsing those
+layers.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Cold Boot Continuity as a
+Deployment Primitive</em><br />
+<strong>Supplies:</strong> Resumption envelopes and revalidation across
+runtime loss.<br />
+<strong>Project-lineage boundary:</strong> A project snapshot can
+support cold boot; it does not carry live authority or external state by
+itself.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governed Meaning Base
+(GMB)</em><br />
+<strong>Supplies:</strong> Governed semantic state, standing, disputes,
+and revision.<br />
+<strong>Project-lineage boundary:</strong> GMB can store project
+semantics; project lineage additionally binds exact file and projection
+state.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Sovereign Software</em><br />
+<strong>Supplies:</strong> Reconstructability, migration, provider
+removal, and effective exit.<br />
+<strong>Project-lineage boundary:</strong> Lineage supports
+reconstruction evidence but does not prove operational
+sovereignty.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Epistemic Lineage
+Engine</em><br />
+<strong>Supplies:</strong> Source, transformation, decision, and
+revision lineage for claims and knowledge.<br />
+<strong>Project-lineage boundary:</strong> Epistemic lineage and
+project/file lineage interoperate while retaining different subjects and
+evidence.</p></li>
+</ul>
+<p>A project-state record should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+P= (&amp;project\_id, snapshot, parents, file\_states, \\
+&amp;content\_objects, semantic\_relations, \\
+&amp;governance\_relations, admission, projection\_specs, \\
+&amp;receipts, standing)
+\end{aligned}.
+$$</span></p>
+<p>Exact content identity, file-state identity, project-state identity,
+logical work identity, named successor identity, and publication
+identity remain separate. Rename, copy, split, merge, regeneration, and
+same-name successor relations require explicit evidence. Neither path
+continuity nor byte identity settles all of them.</p>
+<p>An external filesystem, archive, website, or release is a projection
+under a bound specification. Round-trip reproducibility supports
+correspondence only for declared preserved properties. Publication is a
+governed effect with its own authority, completeness, and evidence; a
+project state does not become published or authoritative merely because
+it can render a release tree.</p>
+<p>The universal GSM can type<br />
+<code>HAS_PROJECT_SNAPSHOT</code>,
+<code>DESCENDS_FROM_SNAPSHOT</code>,<br />
+<code>CONTAINS_FILE_STATE</code>, <code>CONTENT_IDENTICAL_TO</code>,
+<code>RENAMED_FROM</code>, <code>COPIED_FROM</code>,<br />
+<code>SEMANTICALLY_RELATED_TO</code>,
+<code>ADMITTED_AS_SUCCESSOR</code>,
+<code>PROJECTED_AS_FILESYSTEM</code>,<br />
+<code>PUBLISHED_AS_EFFECT</code>, <code>RECONSTRUCTED_FROM</code>,<br />
+and<br />
+<code>HAS_PROJECT_STANDING</code>. Each edge carries its own evidence
+class.</p>
+<p>This integration establishes four editorial commitments: adopt
+governed project-state lineage substrate as the official corpus role;
+adopt the project-state record; preserve six independent identity
+layers; and treat every filesystem, archive, and publication output as a
+governed projection rather than canonical state.</p>
+<h2
+id="learning-state-physical-decision-semantic-identity-and-audit-lineage">Learning-State,
+Physical-Decision, Semantic-Identity, and Audit Lineage</h2>
+<p>The fixed-seed comparison with governed continual training, the
+hydroengineering/geologic profile, The Locus of Meaning, and adversarial
+alternation shows why project lineage must preserve several different
+succession claims at once:</p>
+<p><span class="math display">$$
+\begin{aligned}
+P^*= (&amp;project\_id, snapshot, parents, file\_states, \\
+&amp;content\_objects, semantic\_bindings, \\
+&amp;governance\_relations, learning\_state, decision\_state, \\
+&amp;audit\_state, admission, projections, receipts, standing, \\
+&amp;remainder)
+\end{aligned}.
+$$</span></p>
+<p>GCTR creates dataset, retrieval, router, adapter, evaluator, model,
+and standing successors whose exact predecessors and residual influence
+must remain reconstructable. The hydroengineering/geologic profile
+supplies a physical stress case in which sample, batch, passport, site
+model, design, placement, monitoring, and decommissioning histories
+cannot be collapsed into file ancestry.</p>
+<p>The Locus of Meaning explains why a content hash, pathname, or
+file-state identity does not settle semantic identity. A governed
+successor claim must state which binding constitution, jurisdiction,
+obligations, and consequences are preserved, changed, disputed, or left
+unresolved.</p>
+<p>Adversarial alternation adds audit lineage: each exact subject,
+finding, reproduction, repair, regression, counterexample, adjudication,
+and remaining defect must be bound to the campaign generation it
+actually concerns. A newer clean report does not overwrite an older
+failure or inherit its standing automatically.</p>
+<p>The universal GSM can type<br />
+<code>HAS_LEARNING_STATE_SUCCESSOR</code>,<br />
+<code>BINDS_PHYSICAL_DECISION_LINEAGE</code>,
+<code>PRESERVES_SEMANTIC_BINDING_CONSTITUTION</code>,<br />
+<code>CHANGES_BINDING_WITH_REMAINDER</code>,
+<code>AUDITED_IN_CAMPAIGN_GENERATION</code>,
+<code>REPAIRS_EXACT_SUBJECT</code>,<br />
+<code>RETAINS_PRIOR_FAILURE</code>, and<br />
+<code>PROJECTS_WITH_DECLARED_PRESERVATION</code>.</p>
+<p>This randomized review establishes four editorial commitments: extend
+project-state records with learning, physical-decision,
+semantic-binding, and audit state; preserve residual influence and
+off-file physical history; require binding-constitution evidence for
+semantic succession; and retain exact campaign generations and prior
+failures across audit repair.</p>
+<h2
+id="a-multi-layer-project-identity-and-governed-projection-substrate">A
+Multi-Layer Project Identity and Governed Projection Substrate</h2>
+<p>Fifteen retained downstream uses place project lineage across context
+compilation, work custody, quant development, admissibility, audit
+alternation, cold boot, epistemic lineage, continual training, domain
+standards, legacy migration, MosaiCOS, MCIR topology, physical-decision
+histories, observability, and implementation codices. They confirm a
+substrate joining exact content custody to persistent file, project,
+semantic, governance, learning, physical-decision, and audit lineage
+without collapsing those identities.</p>
+<p><span class="math display">$$
+\begin{aligned}
+P^*= (&amp;project\_id, generation, parents, file\_states, \\
+&amp;content\_objects, path\_bindings, semantic\_bindings, \\
+&amp;governance\_relations, learning\_state, \\
+&amp;physical\_decision\_state, audit\_state, admission, \\
+&amp;projection\_specs, retention, deletion, receipts, \\
+&amp;standing, remainder, successor)
+\end{aligned}.
+$$</span></p>
+<p>Byte identity, file-state identity, project-state identity, logical
+work identity, same-name successor identity, and publication identity
+are separate. Rename, copy, split, merge, regeneration, deletion,
+restoration, and generated-artifact relations require evidence. A clean
+successor cannot overwrite an earlier failure, and source removal cannot
+erase a dependent semantic or physical history.</p>
+<p>Filesystem trees, archives, sites, releases, and publications are
+governed projections under explicit completeness, preservation,
+redaction, residual, authority, and round-trip contracts.
+Reconstructability establishes only the properties actually replayed.
+Publication remains a separate external effect. The paper’s novelty
+thesis remains provisional until authorized current prior-art and patent
+review.</p>
+<p>The universal GSM can type<br />
+<code>HAS_PROJECT_GENERATION</code>,
+<code>DESCENDS_FROM_PROJECT_STATE</code>,<br />
+<code>BINDS_FILE_STATE</code>, <code>RENAMED_WITH_EVIDENCE</code>,
+<code>PRESERVES_SEMANTIC_LINEAGE</code>,<br />
+<code>RETAINS_PHYSICAL_DECISION_HISTORY</code>,
+<code>RETAINS_PRIOR_AUDIT_FAILURE</code>,<br />
+<code>PROJECTS_AS_EXTERNAL_TREE</code>,
+<code>DELETES_UNDER_RETENTION_RULE</code>,<br />
+and<br />
+<code>PUBLISHES_AS_SEPARATE_EFFECT</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+expanded multi-layer project record; preserve six identity layers and
+off-file state; govern deletion, retention, restoration, completeness,
+and prior failures; and keep reconstruction, projection, publication,
+implementation, and novelty standing separate.</p>
+<h2 id="falsification-criteria">20. Falsification Criteria</h2>
+<p>The novelty thesis should be rejected or narrowed if a prior system
+is found that already combines all or most of the following:</p>
+<ol type="1">
+<li>Arbitrary exact content custody</li>
+<li>Persistent logical file identities</li>
+<li>File-state ancestry across removal, restoration, rename, and
+copy</li>
+<li>Complete project-state maps</li>
+<li>Exact historical container reconstruction</li>
+<li>Recursive container decomposition</li>
+<li>Explicit authority and evidence classes</li>
+<li>Complete predecessor-disposition admission</li>
+<li>Same-name agent successor publication</li>
+<li>Ordinary workspace materialization</li>
+<li>Semantic context compilation for agents</li>
+<li>Governed retention and deletion</li>
+</ol>
+<p>Finding a system with five or six elements would not eliminate
+differentiation, but it might significantly narrow the claim.</p>
+<hr />
+<h2
+id="exact-project-history-is-not-yet-semantic-or-political-authority">Exact
+Project History Is Not Yet Semantic or Political Authority</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Governed Semantic Project Lineage joins exact content custody,
+persistent file and project identities, semantic and governance
+relations, agent-safe successor admission, and reconstructible external
+projections. Its differentiation lies in the combined workflow, not a
+new hash, graph, archive, delta, or version-control primitive. The
+novelty thesis remains bounded to the reviewed comparison set.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Hash-identity collapse.</strong> Byte identity is treated as
+file identity, logical-work identity, semantic identity, project
+identity, or publication identity.</li>
+<li><strong>Same-name-successor attack.</strong> An agent output with
+the expected filename silently replaces a predecessor despite missing,
+split, merged, or semantically changed contents.</li>
+<li><strong>Projection-authority attack.</strong> A reconstructed tree,
+ZIP, site, or release is treated as authoritative merely because it
+round-trips.</li>
+<li><strong>Clean-successor erasure attack.</strong> A later successful
+generation overwrites failed attempts, audit findings, rejected states,
+or physical-decision history.</li>
+<li><strong>Deletion-and-privacy attack.</strong> Permanent lineage
+conflicts with lawful deletion, sensitive material, revocation,
+minimization, or community restrictions.</li>
+<li><strong>Availability attack.</strong> A durable identifier or
+manifest survives while required content, dependencies, keys, resolvers,
+or interpretation are unavailable.</li>
+<li><strong>Novelty-overreach attack.</strong> A reviewed feature
+combination is presented as universal priority, patent novelty, or
+absence of obscure and unpublished systems.</li>
+<li><strong>Agent-safety attack.</strong> Complete predecessor
+disposition is checked at the archive boundary while tools, generated
+files, external state, symlinks, or runtime effects escape it.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper offers a plausibly differentiated systems synthesis and a
+multi-layer project identity model. It does not establish universal
+novelty, patentability, freedom to operate, complete semantic
+continuity, publication identity, privacy compliance, safe deletion, or
+implementation correctness. Reconstruction proves only the properties
+exercised under the bound projection and environment.</p>
+<p>The prior-art and novelty analysis must be refreshed through
+authorized current primary-source and patent research for a future
+evidence-qualified revision. Systems claims require an exact
+implementation, adversarial successor cases, deletion and restoration
+tests, projection round trips, off-file-state coverage, and scale
+evaluation. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is that an evolving project can retain exact
+ancestry and explain every successor-file disposition without confusing
+a recoverable archive with the project’s meaning, authority, publication
+status, or right to persist forever.</p>
+<h2 id="research-and-validation-agenda">21. Research and Validation
+Agenda</h2>
+<h3 id="expand-the-prior-art-corpus">21.1 Expand the prior-art
+corpus</h3>
+<p>Further review should include:</p>
+<ul>
+<li>patent databases;</li>
+<li>archival and digital-preservation systems;</li>
+<li>event-sourced filesystems;</li>
+<li>persistent object databases;</li>
+<li>artifact registries;</li>
+<li>software-supply-chain ledgers;</li>
+<li>scientific workflow stores;</li>
+<li>model and dataset lineage platforms;</li>
+<li>IDE history systems;</li>
+<li>enterprise content-management systems;</li>
+<li>digital forensics systems.</li>
+</ul>
+<h3 id="formalize-the-correspondence-model">21.2 Formalize the
+correspondence model</h3>
+<p>Define canonical objects and proof obligations for:</p>
+<ul>
+<li>content state;</li>
+<li>file state;</li>
+<li>path binding;</li>
+<li>project state;</li>
+<li>semantic relation;</li>
+<li>packaging projection;</li>
+<li>agent proposal;</li>
+<li>admission decision.</li>
+</ul>
+<h3 id="build-the-semantic-first-gsol-experiment">21.3 Build the
+semantic-first GSOL experiment</h3>
+<p>Compare:</p>
+<ul>
+<li>adjacent archive deltas;</li>
+<li>global exact ZIP objects;</li>
+<li>file-payload deltas layered over ZIP objects;</li>
+<li>semantic-first file states with exact packaging residuals.</li>
+</ul>
+<p>Measure:</p>
+<ul>
+<li>package size;</li>
+<li>object count;</li>
+<li>graph overhead;</li>
+<li>reconstruction time;</li>
+<li>verification time;</li>
+<li>nested-archive reuse;</li>
+<li>copy and rename recognition;</li>
+<li>project-growth explainability.</li>
+</ul>
+<h3 id="test-agent-publication">21.4 Test agent publication</h3>
+<p>Provide an agent with a stable output name and deliberately
+induce:</p>
+<ul>
+<li>accidental file omission;</li>
+<li>intentional deletion;</li>
+<li>rename;</li>
+<li>duplicate copy;</li>
+<li>generated-cache inclusion;</li>
+<li>nested prior archive inclusion;</li>
+<li>restoration of an old file;</li>
+<li>modification of a large binary;</li>
+<li>malformed output;</li>
+<li>attempted authority escalation.</li>
+</ul>
+<p>The substrate should classify or refuse each case
+deterministically.</p>
+<h3 id="compare-with-yolofs-style-staging">21.5 Compare with
+YoloFS-style staging</h3>
+<p>The project should distinguish its proposal from filesystem safety
+alone by measuring the additional value of:</p>
+<ul>
+<li>semantic lineage;</li>
+<li>exact container reconstruction;</li>
+<li>project completeness;</li>
+<li>context compilation;</li>
+<li>authority standing.</li>
+</ul>
+<h3 id="realization-funnel-and-current-standing">21.6 Realization Funnel
+and Current Standing</h3>
+<ul>
+<li><p><strong>Stage:</strong> Possibility<br />
+<strong>Project-lineage work:</strong> Explore whether exact custody,
+semantic lineage, and governed agent publication can share one
+substrate.<br />
+<strong>Current status:</strong> Demonstrated as a coherent
+possibility.</p></li>
+<li><p><strong>Stage:</strong> Specification<br />
+<strong>Project-lineage work:</strong> Define content, file, project,
+projection, admission, evidence, and standing objects.<br />
+<strong>Current status:</strong> Candidate specification; this revision
+makes the core explicit.</p></li>
+<li><p><strong>Stage:</strong> CM1<br />
+<strong>Project-lineage work:</strong> Enumerate admissible
+realizations: opaque storage, chunk stores, deltas, recursive
+containers, centralized or distributed backends, strict or permissive
+admission policies.<br />
+<strong>Current status:</strong> Partially enumerated.</p></li>
+<li><p><strong>Stage:</strong> CM2<br />
+<strong>Project-lineage work:</strong> Prefer realizations that preserve
+exactness, refuse unexplained loss, bound inference, preserve exit, and
+separate standing.<br />
+<strong>Current status:</strong> Criteria proposed, not exhaustively
+adjudicated.</p></li>
+<li><p><strong>Stage:</strong> Instance Configuration<br />
+<strong>Project-lineage work:</strong> Choose hashes, schemas, path
+normalization, evidence classes, limits, policy, and threat model for
+one deployment.<br />
+<strong>Current status:</strong> Not specified by this paper.</p></li>
+<li><p><strong>Stage:</strong> Implementation Realization<br />
+<strong>Project-lineage work:</strong> Build and operate one bounded
+system.<br />
+<strong>Current status:</strong> Mosaic Lineage Archive supplies partial
+predecessor evidence, not the complete proposed system.</p></li>
+<li><p><strong>Stage:</strong> Evidence<br />
+<strong>Project-lineage work:</strong> Replay artifacts, adversarial
+admission tests, measure storage and latency, and compare alternative
+systems.<br />
+<strong>Current status:</strong> Partial archive evidence; broader
+claims unvalidated.</p></li>
+<li><p><strong>Stage:</strong> Revision<br />
+<strong>Project-lineage work:</strong> Change objects, proofs,
+preferences, and claims while preserving prior lineage.<br />
+<strong>Current status:</strong> Required after prior-art and
+implementation results.</p></li>
+</ul>
+<p>The paper is therefore a specification and research-program artifact
+with a partial empirical predecessor. It is not evidence that the
+complete architecture already exists or has been independently
+validated.</p>
+<hr />
+<h2 id="conclusion">22. Conclusion</h2>
+<p>The proposed Semantic Project Lineage System is not unprecedented at
+the level of algorithms or elementary data structures.</p>
+<p>Its foundations are clearly visible in prior work:</p>
+<ul>
+<li>Venti provides immutable content-addressed archival blocks.</li>
+<li>Borg and restic provide global content-defined deduplication.</li>
+<li>Git provides content-addressed project snapshots and history.</li>
+<li>OSTree provides deployable versioned filesystem trees.</li>
+<li>IPFS provides generalized content-addressed DAGs.</li>
+<li>Perkeep provides stable mutable objects expressed through immutable
+claims.</li>
+<li>semantic filesystems provide meaning-derived access.</li>
+<li>lakeFS and Pachyderm provide versioned arbitrary data and
+provenance.</li>
+<li>W3C PROV provides a general provenance model.</li>
+<li>Nix provides derivation-centered reproducibility.</li>
+<li>GCC, AgentGit, YoloFS, and GitLake demonstrate emerging convergence
+between version control, persistent context, agent workflows, and
+filesystem safety.</li>
+</ul>
+<p>The proposed architecture’s significance lies in combining these
+lines of development around a different central object:</p>
+<blockquote>
+<p>a governed, exact, semantically navigable project lineage.</p>
+</blockquote>
+<p>Under this model:</p>
+<ul>
+<li>content is stored once;</li>
+<li>files retain identity through time;</li>
+<li>project states are explicit;</li>
+<li>archives are reconstructible projections;</li>
+<li>semantic relationships remain evidence-bounded;</li>
+<li>agent mutations are staged and governed;</li>
+<li>unexplained loss is refused;</li>
+<li>history can be queried, restored, routed, and compiled into
+context;</li>
+<li>the operator retains ordinary files, folders, archives, Explorer
+windows, terminals, and editors.</li>
+</ul>
+<p>The appropriate novelty claim is therefore neither trivial nor
+absolute.</p>
+<p>It is not:</p>
+<blockquote>
+<p>No one has previously built content-addressed storage or a semantic
+filesystem.</p>
+</blockquote>
+<p>It is:</p>
+<blockquote>
+<p>The reviewed prior art does not appear to unify exact digital
+custody, semantic file lineage, project-state governance,
+reconstructible container projections, and safe AI successor publication
+into one local-first operational substrate.</p>
+</blockquote>
+<p>That proposition is sufficiently differentiated to justify continued
+formalization, implementation experiments, and a deeper prior-art
+review. Publication and any patent-oriented conclusion remain separate
+decisions requiring complete, resolvable sources and appropriate expert
+review.</p>
+<p>The system should presently be described as:</p>
+<p><strong>a novel candidate architecture and systems synthesis,
+constructed from established primitives, with its strongest original
+contribution residing in the governed correspondence among exact
+storage, semantic project memory, and agent action.</strong></p>
+<hr />
+<h2 id="references-and-review-boundary">23. References and Review
+Boundary</h2>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm1.</strong> Existing source passages use this stage only
+as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that whether the proposed Semantic Project Lineage
+System represents a genuinely new computing architecture or primarily
+recombines established mechanisms. Its nearest external comparison
+fields are storage, crypto, semantic. The sources in [E1], [E2], [E3],
+[E4], [E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Fixity and
+preservation can keep bytes stable while representation dependencies,
+executability, interpretation, and institutional custody decay. A valid
+hash, signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself.
+Formal vocabularies and graph links make commitments explicit but cannot
+by themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Consultative Committee for Space Data Systems.
+<em>Reference Model for an Open Archival Information System (OAIS)</em>.
+CCSDS 650.0-M-3, Issue 3, December 2024.
+https://ccsds.org/Pubs/650x0m3.pdf <strong>Relationship:</strong>
+Predecessor preservation model for information packages, representation
+information, and designated communities.</p>
+<p><strong>[E2]</strong> John Kunze et al. <em>The BagIt File Packaging
+Format (V1.0)</em>. RFC 8493, 2018.
+https://www.rfc-editor.org/rfc/rfc8493 <strong>Relationship:</strong>
+Adjacent custody and transfer format for payload manifests, fixity, and
+complete package movement.</p>
+<p><strong>[E3]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E6]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E7]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Storage</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788662</code>;<br />
+source SHA-256<br />
+<code>115725C7F7B72C3B720E4EF67F660F329B778D34C4D4232848C6082E849203F7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Cold Boot Continuity as a
+Deployment Primitive</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-3DB3470715D914D0</code>;<br />
+source SHA-256<br />
+<code>4CBB05E90E4ECA37EDA78C0E1FC1FDD180B2D6E0936831B57379AD7124776D4E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Custody</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20300952</code>;<br />
+source SHA-256<br />
+<code>E3887FE98E6369E39AC3FC2EAC63F2DF7C2AD18AD682B3A745C0CD0AD241D0F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>The Implementation
+Codex</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-872EEF9E301B18DE</code>;<br />
+source SHA-256<br />
+<code>1373E9770B5B86EB394BFAF993F5526155D406F4528694B465FDE22A7D525132</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models</em>. Zenodo, 2026. https://doi.org/10.5281/zenodo.18453681.</p>
+<p>Adam Ableman. <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18601631.</p>
+<p>Adam Ableman. <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18633797.</p>
+<p>Adam Ableman. <em>Semantic Custody</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20300952.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>Adam Ableman. <em>Constitutional Storage</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788662.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<h3 id="external-prior-art-boundary">External prior-art boundary</h3>
+<p>This draft names Venti, restic, Borg, Git, OSTree, IPFS, Perkeep,
+semantic filesystems, lakeFS, Pachyderm, W3C PROV, Nix,
+Git-Context-Controller, AgentGit, YoloFS, and GitLake. A publication
+candidate must add a resolvable primary-source reference for every
+comparison and recheck the feature matrix against those exact versions.
+This pass does not invent bibliographic metadata or convert a remembered
+comparison into verified novelty evidence.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Constitutional Storage.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788662</p>
+<p>Adam Ableman <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI.</em> Zenodo, 2026. doi:10.5281/zenodo.18633797</p>
+<p>Adam Ableman <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality.</em> Zenodo, 2026.
+doi:10.5281/zenodo.18601631</p>
+<p>Adam Ableman <em>Semantic Custody.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20300952</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847752">10.5281/zenodo.23847752</a></p>

@@ -1,0 +1,1103 @@
+<h1 id="what-software-systems-actually-receipt-govern-and-hide">What
+Software Systems Actually Receipt, Govern, and Hide</h1>
+<h2 id="findings-from-a-17-system-constitutional-corpus">Findings from a
+17-System Constitutional Corpus</h2>
+<h3
+id="second-accountability-surfaces-are-stratified-rather-than-binary-ranging-from-mandatory-operational-ledgers-to-complete-absence-of-receipts.">Second,
+accountability surfaces are stratified rather than binary, ranging from
+mandatory operational ledgers to complete absence of receipts.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern software systems execute with authority, yet provide only
+partial accounts of how that authority is established, exercised, and
+constrained. This paper presents findings from a 17-system
+constitutional corpus spanning command-line tools, runtimes, databases,
+container platforms, orchestration systems, and a compiler. Using SFA, a
+ten-phase structural analysis method whose exact expansion remains an
+author decision, we examine how systems receipt actions, govern
+capabilities, and obscure internal decision processes.</p>
+<p>Across the corpus, three stable findings emerge. First, authority is
+frequently derived from execution paths rather than fully declared in
+advance, though systems with explicit authority specification mechanisms
+provide counterexamples. Second, accountability surfaces are stratified
+rather than binary, ranging from mandatory operational ledgers to
+complete absence of receipts. Third, governance tends to concentrate at
+system boundaries while remaining fragmented in interiors, particularly
+in extension mechanisms and multi-layer policy compositions.</p>
+<p>We replace binary claims with typed distinctions, demonstrate the
+method through contrasting examples, and show how adversarial analysis
+forced refinement of the claims. The paper concludes with concrete
+design implications and a defined next-stage falsification program.</p>
+<hr />
+<h2 id="source-method-and-evidence-standing">Source, Method, and
+Evidence Standing</h2>
+<p>The exact paper source remains unchanged. This candidate binds its
+empirical claims to one supplied SFA corpus root containing the
+ten-phase methodology, the 17-system post-adversarial synthesis, and
+seventeen per-system <code>ANALYSIS.md</code> records. The exact custody
+manifest is</p>
+<p><code>work/paper-saturation-v1/evidence/what-</code><br />
+<code>software-systems-actually-receipt-govern-and-</code><br />
+<code>hide/sfa-17-corpus-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>3108754C519D0BA248C868E77818C386C5F78BA0A6700EA76DEF8CFAFA8E59BD</code>.</p>
+<p>The reviewed methodology names SFA <strong>Semantic Defragmentation
+Analysis</strong>. The source paper names it <strong>Structural
+Fragmentation Analysis</strong>, and another related paper uses
+<strong>Semantic Fragmentation Analysis</strong>. The current semantic
+index places SFA inside a wider Constitutional Software Analysis family.
+This candidate uses the acronym <code>SFA</code> without silently
+resolving those name and work-identity differences; the author must
+adjudicate them.</p>
+<p>The evidence is internally authored and source-bounded. Exact hashes
+establish which artifacts were reviewed, not that their claims are
+correct, complete, independent, current, published, peer reviewed, or
+reproduced. This pass did not consult current vendor documentation or
+externally re-run the seventeen analyses. Product names and observations
+should therefore be read as corpus-time findings subject to version and
+environment drift.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>Software systems continuously make authorization decisions: what code
+runs, what data is accessed, what actions are permitted. These decisions
+are often difficult to explain, reproduce, or audit, even when systems
+expose configuration, logging, and policy mechanisms.</p>
+<p>This paper asks:</p>
+<p>What do software systems actually receipt, govern, and hide?</p>
+<p>We answer empirically, using a corpus of 17 systems and a method -
+Structural Fragmentation Analysis (SFA) - designed to reveal how
+authority and accountability are distributed across real
+implementations.</p>
+<p>The central result is not a universal theory, but a disciplined
+shift: binary claims fail. Typed distinctions are required.</p>
+<h3 id="operative-terms-and-claim-geometry">1.1 Operative terms and
+claim geometry</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning in this study</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>authority surface</td>
+<td>a declared or implementation-derived locus that determines whether
+an actor or operation may produce an effect</td>
+</tr>
+<tr>
+<td>authority specification mechanism</td>
+<td>a dedicated language or structure that declares authority separately
+from ordinary execution behavior</td>
+</tr>
+<tr>
+<td>receipt surface</td>
+<td>a record-producing surface that supports reconstruction of an
+operation, decision, provenance path, or effect within a stated
+scope</td>
+</tr>
+<tr>
+<td>receipt coverage vector</td>
+<td>the tuple of emission, operation scope, decision provenance, effect
+linkage, integrity, retention, correlation, and failure behavior; not a
+single yes/no property</td>
+</tr>
+<tr>
+<td>governance boundary</td>
+<td>a point at which a system explicitly mediates entry, authority,
+admissibility, or effects across a trust domain</td>
+</tr>
+<tr>
+<td>interior governance</td>
+<td>mediation of operations after entry rather than reliance on boundary
+admission alone</td>
+</tr>
+<tr>
+<td>resolution cascade</td>
+<td>an ordered or interacting set of precedence, lookup, default,
+override, or policy-selection rules</td>
+</tr>
+<tr>
+<td>composition opacity</td>
+<td>inability to reconstruct why the combined cascades and governance
+layers produced one observed outcome</td>
+</tr>
+<tr>
+<td>extension surface</td>
+<td>a hook, plugin, script, macro, module, recipe, or other mechanism
+that introduces externally authored behavior</td>
+</tr>
+<tr>
+<td>bypass</td>
+<td>a declared or implementation-derived mechanism that relaxes a named
+authority constraint; bypasses differ in scope and remaining
+controls</td>
+</tr>
+<tr>
+<td>projection divergence</td>
+<td>a scoped difference between a system’s public or documented model
+and the operational structure found by the analysis</td>
+</tr>
+</tbody>
+</table>
+<p>A finding should be represented as:</p>
+<p><span
+class="math display"><em>F</em> = ⟨<em>s</em>, <em>v</em>, <em>q</em>, <em>k</em>, <em>e</em><sup>+</sup>, <em>e</em><sup>−</sup>, <em>b</em>, <em>σ</em>⟩,</span></p>
+<p>where <span class="math inline"><em>s</em></span> is the system,
+<span class="math inline"><em>v</em></span> the analyzed version or
+snapshot, <span class="math inline"><em>q</em></span> the question and
+scope, <span class="math inline"><em>k</em></span> the finding kind,
+<span class="math inline"><em>e</em><sup>+</sup></span> supporting
+evidence, <span class="math inline"><em>e</em><sup>−</sup></span>
+counterevidence, <span class="math inline"><em>b</em></span> the
+boundary conditions, and <span class="math inline"><em>σ</em></span> the
+standing such as candidate, supported-within-corpus, weakened, replaced,
+or retired. This prevents a cross-system summary from outliving the
+scope and evidence that gave it meaning.</p>
+<hr />
+<h2 id="methodology">2. Methodology</h2>
+<h3 id="sfa-procedure">2.1 SFA Procedure</h3>
+<p>Each system was analyzed using five steps:</p>
+<ol type="1">
+<li>Identify authority surfaces</li>
+<li>Identify receipt surfaces</li>
+<li>Trace resolution chains</li>
+<li>Evaluate extension mechanisms</li>
+<li>Compare projection vs execution</li>
+</ol>
+<p>The source corpus applies these operations through documentation,
+source or architectural inspection, configuration, maps, and selected
+evidence excerpts. This candidate did not independently repeat every
+inspection against a live or current product version.</p>
+<h3 id="corpus-enumeration-and-evidence-boundary">2.1.1 Corpus
+enumeration and evidence boundary</h3>
+<p>The seventeen analyses are: ripgrep, fzf, bat, uv, GNU Make, Cargo,
+npm, pytest, FastAPI, Neovim, Docker, Kubernetes, PostgreSQL, Vault,
+rustc, Git, and Deno. They span CLI tools, build and package systems,
+frameworks, an editor, infrastructure platforms, multi-user authority
+systems, a compiler, version control, and a capability-oriented runtime.
+They are not a random or representative sample of all software.</p>
+<p>The exact SFA methodology is SHA-256<br />
+<code>E3F9526FDBD53ADA39F6A77310FF1EE9B55B42C2C7B90C76AD7F56616F123770</code>.
+The exact post-adversarial synthesis is SHA-256<br />
+<code>BAC6B926B910B644D460128E8B4EC97DCF3120E527FA544AD1D0C1FF616AEBBA</code>.
+The custody manifest lists each analysis path, byte length, and
+SHA-256.</p>
+<p>The per-system records combine documentation, configuration, source
+or architectural inspection, maps, and selected evidence excerpts. Their
+methods and depth vary by system. The paper is therefore a
+source-bounded comparative study, not a controlled experiment,
+systematic review, benchmark, or security audit. Claims are strongest
+when they quote an exact analysis and name its scope; they weaken as
+they move toward universal software statements.</p>
+<hr />
+<h3 id="worked-example-vault-strong-governance-case">2.2 Worked Example:
+Vault (Strong Governance Case)</h3>
+<p>Vault exposes both authority and accountability explicitly.</p>
+<p><strong>Step 1 - Authority surfaces</strong> Authority is defined
+through policies attached to tokens. Each request is evaluated against
+policy rules specifying allowed capabilities on paths.</p>
+<p><strong>Step 2 - Receipt surfaces</strong> Vault produces mandatory
+audit logs. Each request generates a structured record including:</p>
+<ul>
+<li>request path and operation</li>
+<li>token identity</li>
+<li>policy evaluation
+(<code>policy_results.granting_policies</code>)</li>
+<li>response outcome</li>
+</ul>
+<p>This is the strongest authorization-level receipt surface in the
+reviewed corpus, but it is not complete without qualification:
+root-token bypass, unseal/bootstrap, HMAC verification indirection,
+external audit-device trust, retention, and effects beyond the reviewed
+API scope remain separate.</p>
+<p><strong>Step 3 - Resolution chain</strong> The decision path is
+externally visible: request -&gt; token -&gt; policies -&gt; capability
+match -&gt; decision</p>
+<p><strong>Step 4 - Extension mechanisms</strong> Vault governs plugin
+registration and process placement, but the corpus does not find
+per-plugin capability declarations or complete extension-effect
+receipts. It is the closest observed case, not a fully governed
+extension model.</p>
+<p><strong>Step 5 - Projection vs execution</strong> Vault’s model
+(“policies govern access”) aligns with actual execution.</p>
+<p><strong>Result</strong> Vault demonstrates:</p>
+<ul>
+<li>declared authority</li>
+<li>mandatory API request/response audit within the analyzed scope</li>
+<li>authorizing-policy provenance for reviewed operations</li>
+<li>relatively low projection divergence</li>
+<li>explicit but still material bootstrap, bypass, plugin, and
+audit-device boundaries</li>
+</ul>
+<hr />
+<h3 id="contrasting-example-npm-weak-governance-case">2.3 Contrasting
+Example: npm (Weak Governance Case)</h3>
+<p>Applying the same steps to npm produces a fundamentally different
+structure.</p>
+<p><strong>Authority surfaces</strong> Authority emerges from execution:
+lifecycle scripts (<code>preinstall</code>,</p>
+<p><code>postinstall</code>) run arbitrary code with user
+privileges.</p>
+<p><strong>Receipt surfaces</strong> No unified mandatory
+authorization-and-effect receipt records which lifecycle scripts
+executed and what system effects they produced; resolution artifacts and
+console output are only partial surfaces.</p>
+<p><strong>Resolution chain</strong> Execution is implicit: dependency
+resolution -&gt; script execution -&gt; system effects, with no unified
+trace.</p>
+<p><strong>Extension mechanisms</strong> The analyzed lifecycle-script
+surface executes with ambient build-user authority and lacks a
+capability declaration or complete effect receipt.</p>
+<p><strong>Projection vs execution</strong> The interface suggests
+“install dependencies,” but execution includes arbitrary code.</p>
+<p><strong>Result</strong> npm demonstrates:</p>
+<ul>
+<li>implementation-derived authority</li>
+<li>absent receipts</li>
+<li>ungoverned extensions</li>
+<li>high projection divergence</li>
+</ul>
+<p>This contrast shows the dynamic range of SFA: the same procedure
+reveals radically different governance structures.</p>
+<hr />
+<h3 id="adversarial-refinement">2.4 Adversarial Refinement</h3>
+<p>The analysis evolved through adversarial testing.</p>
+<p>Initial claims (12 systems):</p>
+<ul>
+<li>configuration is authority</li>
+<li>receipts are incomplete</li>
+<li>authority chains follow resolution topology</li>
+</ul>
+<p>Batch-3 introduced systems designed to falsify these claims.</p>
+<p><strong>Failures:</strong></p>
+<ul>
+<li>“Configuration is authority” -&gt; replaced with three typed
+relationships</li>
+<li>“Receipts are incomplete” -&gt; replaced with four receipt
+tiers</li>
+<li>“Authority chains follow resolution topology” -&gt; invalidated</li>
+</ul>
+<p><strong>Survivors:</strong></p>
+<ul>
+<li>Implementation-derived authority (with boundary conditions)</li>
+<li>Projection divergence</li>
+<li>Resolution cascade opacity (strengthened)</li>
+</ul>
+<p>The method is validated not by initial correctness, but by its
+capacity to refine under falsification pressure.</p>
+<hr />
+<h2 id="authority-declared-vs-enacted">3. Authority: Declared vs
+Enacted</h2>
+<p>In 12 of the 17 analyzed systems, authority is substantially
+implementation-derived:</p>
+<ul>
+<li>npm lifecycle scripts</li>
+<li>Docker runtime configuration</li>
+<li>CLI tools combining flags and environment</li>
+</ul>
+<p>Explicit authority appears only with dedicated mechanisms:</p>
+<ul>
+<li>Deno permissions (<code>--allow-read</code>,
+<code>--allow-net</code>) with audit mode
+(<code>DENO_AUDIT_PERMISSIONS</code>)</li>
+<li>PostgreSQL privilege system</li>
+<li>Vault policies</li>
+<li>rustc type system and <code>unsafe</code> boundaries</li>
+</ul>
+<p><strong>Boundary condition</strong> Authority is explicit only when a
+system provides a dedicated specification surface.</p>
+<hr />
+<h2 id="accountability-receipt-surface-stratification">4.
+Accountability: Receipt Surface Stratification</h2>
+<p>Receipt surfaces fall into four tiers:</p>
+<ul>
+<li><p><strong>Tier:</strong> Mandatory ledger<br />
+<strong>Description:</strong> Reviewed API operations produce
+request/response audit records with policy provenance; audit failure
+blocks service<br />
+<strong>Evidence:</strong> Vault audit logs
+(<code>policy_results.granting_policies</code>)</p></li>
+<li><p><strong>Tier:</strong> Opt-in ledger<br />
+<strong>Description:</strong> Full logging available but disabled<br />
+<strong>Evidence:</strong> Kubernetes audit
+(<code>authorization.k8s.io/reason</code>)</p></li>
+<li><p><strong>Tier:</strong> Gate-only<br />
+<strong>Description:</strong> Failures explained, successes silent<br />
+<strong>Evidence:</strong> rustc diagnostics</p></li>
+<li><p><strong>Tier:</strong> Absent<br />
+<strong>Description:</strong> Minimal or no receipts<br />
+<strong>Evidence:</strong> CLI tools, npm</p></li>
+</ul>
+<p><strong>Observation</strong> Within this selected corpus, receipt
+completeness correlates with external accountability pressure more than
+with system complexity. This is a corpus hypothesis, not an established
+causal law.</p>
+<hr />
+<h2 id="governance-boundary-vs-interior">5. Governance: Boundary vs
+Interior</h2>
+<p>Governance concentrates at boundaries:</p>
+<ul>
+<li>Docker: a default seccomp profile blocks a version-dependent subset
+of system calls</li>
+<li>Kubernetes: API server enforces RBAC and admission</li>
+<li>Git: remote operations governed</li>
+</ul>
+<p>Interior execution is weaker:</p>
+<ul>
+<li>containers run broadly privileged processes</li>
+<li>Kubernetes workloads require additional policies for
+restriction</li>
+<li>build systems execute arbitrary code</li>
+</ul>
+<p><strong>Implication</strong> In the analyzed cases, boundary
+enforcement can coexist with interior zones whose authority and effects
+require separate evidence. The generality of this pattern remains under
+test, and the strongest interior-governance contrast is based mainly on
+Vault and PostgreSQL.</p>
+<hr />
+<h2 id="resolution-cascade-opacity">6. Resolution Cascade Opacity</h2>
+<p>The Kubernetes analysis provides an illustrative
+configuration-derived failure path. It is not presented here as an
+independently replayed exploit.</p>
+<p>Scenario:</p>
+<p>A Pod is created with <code>hostNetwork: true</code>.</p>
+<ul>
+<li>RBAC allows the user to create Pods</li>
+<li>Mutating webhooks do not modify the request</li>
+<li>Pod Security Standards are not enforced in the namespace</li>
+<li>No NetworkPolicy restricts the Pod</li>
+</ul>
+<p>The Pod runs with host network access.</p>
+<p><strong>Question:</strong> which layer should have prevented
+this?</p>
+<p>The audit log records only: <code>authorization.k8s.io/</code><br />
+<code>reason = "allowed by RBAC"</code></p>
+<p>It does not explain:</p>
+<ul>
+<li>absence of admission enforcement</li>
+<li>lack of network policy</li>
+<li>interaction between layers</li>
+</ul>
+<p><strong>Finding</strong> When governance is distributed across
+independent mechanisms, no unified explanation exists for outcomes.</p>
+<p><strong>Implication</strong> Systems require composable introspection
+surfaces capable of reconstructing full decision paths across
+layers.</p>
+<hr />
+<h2 id="configuration-and-authority">7. Configuration and Authority</h2>
+<p>Three relationships replace the binary claim:</p>
+<ul>
+<li>Accidental entanglement: CLI flags encode authority implicitly</li>
+<li>Structural separation: PostgreSQL separates config and
+authorization</li>
+<li>Inherent entanglement: Kubernetes Pod specs define capabilities</li>
+</ul>
+<p>This enables comparison without collapsing distinct system
+structures.</p>
+<hr />
+<h2 id="extension-surfaces">8. Extension Surfaces</h2>
+<p>Extension mechanisms:</p>
+<ul>
+<li>Ungoverned: npm scripts, Rust <code>build.rs</code></li>
+<li>Perimeter-governed: Deno modules</li>
+<li>Fully governed: none observed</li>
+</ul>
+<p><strong>Critical observation</strong> Across the four analyzed
+build-time ecosystems–npm lifecycle scripts, Rust build scripts and
+procedural macros, Make recipes, and Git hooks–no fully governed
+extension surface was observed.</p>
+<p><strong>Implication</strong> Language-level guarantees alone do not
+govern these ambient build-time processes. A separate enforcement
+boundary–for example OS isolation, a capability runtime, or another
+independently enforced sandbox–is required for the claimed restriction,
+and its own bypass and receipt behavior must be tested.</p>
+<hr />
+<h2 id="authority-bypass-spectrum">9. Authority Bypass Spectrum</h2>
+<p>All six analyzed systems with non-trivial authority models include a
+bypass mechanism:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unbounded</td>
+<td>PostgreSQL SUPERUSER, Vault root token</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>Docker <code>--privileged</code>, Deno <code>--allow-all</code></td>
+</tr>
+<tr>
+<td>Scoped</td>
+<td>Rust <code>unsafe</code></td>
+</tr>
+</tbody>
+</table>
+<p>Within this six-system subcorpus, the distinction lies in scope and
+remaining controls, not mere presence. Six examples do not establish a
+universal invariant.</p>
+<hr />
+<h2 id="projection-divergence">10. Projection Divergence</h2>
+<p>All seventeen analyses record some projection divergence, but only
+about ten classify it as structurally significant for governance
+reasoning; near-minimal cases include PostgreSQL, Vault, and rustc.</p>
+<p>Examples:</p>
+<ul>
+<li>npm hides lifecycle execution</li>
+<li>Kubernetes exposes partial reasoning</li>
+<li>CLI tools obscure resolution chains</li>
+</ul>
+<p>The divergence is universal but varies in impact.</p>
+<hr />
+<h2 id="structural-causes-of-hiding">11. Structural Causes of
+Hiding</h2>
+<p>Systems obscure:</p>
+<ul>
+<li>execution paths</li>
+<li>authority derivation</li>
+<li>layered decision composition</li>
+<li>extension behavior</li>
+</ul>
+<p>These arise from structural pressures:</p>
+<ul>
+<li>cost of recording vs value of accountability</li>
+<li>performance constraints</li>
+<li>compositional complexity</li>
+<li>developer ergonomics</li>
+</ul>
+<p><strong>Proto-theoretical direction</strong> Accountability is
+consequence-shaped: systems expose what is costly to ignore and hide
+what is costly to explain.</p>
+<hr />
+<h2 id="public-findings-with-corpus-scope">12. Public Findings with
+Corpus Scope</h2>
+<ol type="1">
+<li>Implementation-derived authority appears in 12/17 systems; all five
+counterexamples use a dedicated authority specification mechanism.</li>
+<li>Receipt surfaces form four observed tiers, from one mandatory-ledger
+exemplar to absent or partial surfaces.</li>
+<li>Clear resolution-cascade opacity appears in 7/17 systems; no
+analyzed multi-layer case provides one unified explanation surface.</li>
+<li>Governance tends to concentrate at trust-domain boundaries in the
+observed corpus; interior-governance generalization remains based on
+limited exemplars.</li>
+<li>Configuration-authority relations separate into accidental
+entanglement, inherent entanglement, and structural separation.</li>
+<li>No fully governed extension surface was observed; four analyzed
+build-time ecosystems retain ambient execution authority.</li>
+<li>Projection divergence appears in all 17 analyses but is structurally
+significant in about 10.</li>
+<li>Bypass mechanisms appear in all six analyzed authority-bearing
+systems and range from unbounded to scoped and partially governed.</li>
+</ol>
+<hr />
+<h2 id="universal-gsm-gmb-and-corpus-integration">13. Universal GSM,
+GMB, and Corpus Integration</h2>
+<h3
+id="governed-semantic-records-for-comparative-software-analysis">13.1
+Governed semantic records for comparative software analysis</h3>
+<p>The universal governed semantic model should keep these entities
+distinct: analyzed system, version or snapshot, entry/exit surface,
+authority source, admissibility rule, capability, transformation,
+receipt, boundary, extension, bypass, projected claim, observed
+structure, evidence item, counterexample, finding, claim movement, and
+revision. A lexical mention of the same product or mechanism is not an
+identity relation between analyses.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the author-confirmed lineage <code>CCF -&gt; CMB -&gt; GMB</code>.
+GMB can retain each finding with exact evidence, limits,
+counterexamples, and standing movement. For example, a binary claim
+should not be overwritten when falsified; it should remain linked to its
+typed successor and the counterexample that forced revision. GMB
+admission does not make the finding true, current, or independently
+verified.</p>
+<h3 id="direct-corpus-interfaces">13.2 Direct corpus interfaces</h3>
+<ul>
+<li><em>Reasoning by Way of Receipts</em> clarifies that a receipt binds
+a claim to reasoning, evidence, and scope; it does not turn a log entry
+into a complete account of effects.</li>
+<li><em>Semantic Debt</em> names the future burden created when decision
+paths, precedence, extension authority, or cross-layer composition
+remain implicit.</li>
+<li><em>Semantic Legitimacy Before Context</em> requires evidence and
+version context to be admissible before it can support a system
+claim.</li>
+<li><em>A Formal Theory of Work Custody</em> keeps product, analyzed
+artifact, analysis record, synthesis, paper, and publication identities
+separate.</li>
+<li><em>Admissibility Engineering</em> turns proposed remedies into
+selectable profiles rather than assuming every system should adopt one
+universal governance shape.</li>
+<li><em>The Integrity Enforcement Layer</em> provides a candidate
+enforcement vocabulary for validation, corruption, read-only inspection,
+refusal, and atomic or classified effects; it is not inferred to exist
+in the seventeen systems.</li>
+</ul>
+<p>These interfaces deepen the analysis model. They are not additional
+observations of the seventeen products.</p>
+<h2 id="design-implications">14. Design Implications</h2>
+<p><strong>Unified receipt surfaces</strong> Layered systems should
+expose composable queries that reconstruct full decision paths.</p>
+<p><strong>Explicit authority declaration</strong> Separate authority
+from execution wherever possible.</p>
+<p><strong>Governed extension models</strong> Build-time execution must
+be sandboxed or explicitly governed.</p>
+<p><strong>Scoped bypass mechanisms</strong> Replace global overrides
+with constrained capabilities.</p>
+<p><strong>Interior governance alignment</strong> Extend boundary
+controls into execution contexts.</p>
+<hr />
+<h2 id="realization-funnel-for-an-sfa-study">15. Realization Funnel for
+an SFA Study</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Generate candidate system classes, versions, deployment modes,
+authority models, receipt types, extensions, bypasses, counterexamples,
+and harmful or null cases.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Freeze the SFA phases, taxonomy, corpus question, sampling rule,
+system/version identities, evidence requirements, scoring rules, claim
+statuses, and falsifiers.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate admissible study designs and corpora, including biased,
+uneven-depth, costly, obsolete, weakly reproducible, or low-information
+configurations.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer diverse falsification targets, reproducible versions,
+comparable evidence depth, independent checks, explicit uncertainty, and
+minimal unsupported generalization.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select the exact seventeen systems, snapshots, source roots, method
+version, analyst instructions, evidence files, analysis depth, and
+synthesis procedure.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Perform the ten analysis phases, produce maps and evidence indices,
+adjudicate findings, run adversarial cases, and compile the
+synthesis.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Preserve system records, source excerpts, maps, counterexamples,
+retired claims, case-level uncertainties, cross-system counts, and
+review outcomes.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Add or replace system cases, correct evidence, split categories,
+narrow claims, and retain the lineage from failed binary claims to typed
+distinctions.</td>
+</tr>
+</tbody>
+</table>
+<p>The current paper has evidence from one Instance Configuration. It
+does not establish that its configuration is CM2-optimal or that its
+results transport to other software populations.</p>
+<h2 id="constitutional-software-evidence-study">Constitutional Software
+Evidence Study</h2>
+<p>Across the completed P1 corpus, What Software Systems Actually
+Receipt, Govern, and Hide is the <strong>constitutional software
+evidence study over one frozen seventeen-system configuration</strong>.
+It operationalizes SFA categories against exact internal analyses,
+records where binary hypotheses broke, and returns bounded comparative
+findings. It is neither the SFA method itself nor a population estimate
+about software in general.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Field
+Analysis</em><br />
+<strong>Supplies:</strong> A general procedure for mapping entities,
+authority, transformations, receipts, boundaries, projections, and
+hidden structure.<br />
+<strong>Study boundary:</strong> This paper is one empirical application
+and evidence corpus.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Fragmentation and
+Constitutional Structure</em><br />
+<strong>Supplies:</strong> A structural theory of why authority,
+meaning, state, and evidence separate across software layers.<br />
+<strong>Study boundary:</strong> The seventeen-system study supplies
+scoped observations rather than universal proof.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Claim-bounded evidence records and revision
+lineage.<br />
+<strong>Study boundary:</strong> The study distinguishes logs, traces,
+proofs, explanations, and effect evidence rather than counting all as
+receipts.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Detection of consequential capabilities and
+effects outside declared governance.<br />
+<strong>Study boundary:</strong> SFA locates concrete gap patterns
+inside selected software structures.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Role-aware projection of operational and
+evidentiary state.<br />
+<strong>Study boundary:</strong> A projection can expose an analysis
+without repairing the system it describes.</p></li>
+</ul>
+<p>Each case should be recoverable as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;system, version, deployment, question, method, evidence, \\
+&amp;authority\_map, receipt\_map, governance\_map, \\
+&amp;extension\_map, bypass\_map, projection\_map, findings, \\
+&amp;uncertainty, review)
+\end{aligned}.
+$$</span></p>
+<p>Cross-system synthesis should derive only from case fields that meet
+a declared comparability rule. A missing surface can mean absence,
+insufficient instrumentation, inaccessible evidence, or analysis
+failure; these outcomes must not be counted alike. Unequal analysis
+depth, version drift, product-family variance, and internally correlated
+reviewers remain threats to every aggregate.</p>
+<p>The study’s most valuable result is methodological revision under
+counterexample: implementation-derived authority, receipt
+stratification, configuration entanglement, bypass scope, and projection
+divergence replaced earlier binary language. Later studies should
+preserve those claim movements and test them against deliberately
+selected falsification cases rather than treating 17 as a representative
+denominator.</p>
+<p>The universal GSM can type <code>APPLIES_SFA_METHOD</code>,
+<code>ANALYZES_SOFTWARE_SNAPSHOT</code>,<br />
+<code>OBSERVES_AUTHORITY_SOURCE</code>,
+<code>CLASSIFIES_RECEIPT_SURFACE</code>,
+<code>LOCATES_GOVERNANCE_BOUNDARY</code>,<br />
+<code>FINDS_BYPASS_PATH</code>,
+<code>MEASURES_PROJECTION_DIVERGENCE</code>,
+<code>RETIRES_BINARY_FINDING</code>,<br />
+<code>LIMITS_AGGREGATE_TO_CORPUS</code>,<br />
+and<br />
+<code>REQUIRES_PRIMARY_REVALIDATION</code>. These relations make the
+evidence study reusable without inflating its scope.</p>
+<p>This integration establishes four editorial commitments: classify the
+paper as the seventeen-system constitutional software evidence study;
+adopt the recoverable case envelope and explicit missing-evidence
+outcomes; bind every aggregate to comparability and exact corpus scope;
+and preserve SFA method, fragmentation theory, this study, and any later
+79-system study as separate linked works.</p>
+<h2 id="versioned-evidence-cases-without-structural-overclaim">Versioned
+Evidence Cases Without Structural Overclaim</h2>
+<p>The fixed-seed comparison with CCOO, the Epistemic Lineage Engine,
+the MCIR DAG theorem, and Semantic Field Analysis separates the study’s
+real interfaces from accidental adjacency:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;case\_identity, system\_head, method\_version, \\
+&amp;evidence\_cut, analysis\_operations, findings, \\
+&amp;alternatives, review, successor, aggregate\_eligibility, \\
+&amp;remainder)
+\end{aligned}.
+$$</span></p>
+<p>ELE should preserve changes to each case, its source snapshot,
+analysis method, category decisions, counterexamples, and aggregate
+inclusion. This permits later reanalysis without rewriting the original
+finding or treating a new system version as the same observation.</p>
+<p>An MCIR DAG can make internal case references closed and acyclic
+under a profile. That structural property does not establish source
+adequacy, correct classification, reviewer independence, or
+generalizability. SFA remains the diagnostic method; this paper remains
+one bounded evidence application whose claims depend on exact cases and
+comparability rules.</p>
+<p>CCOO is an experimental collective architecture and has no direct
+evidentiary relation to the seventeen-system software corpus. The random
+neighborhood does not license importing its topology or toy results into
+the study.</p>
+<p>The universal GSM can type<br />
+<code>LINEAGES_SOFTWARE_CASE</code>,
+<code>REANALYZES_SYSTEM_HEAD</code>,<br />
+<code>REFERENTIALLY_CLOSES_CASE_PACKAGE</code>,
+<code>APPLIES_SFA_UNDER_VERSION</code>,<br />
+<code>ELIGIBLE_FOR_BOUNDED_AGGREGATE</code>,
+<code>RETAINS_CASE_REMAINDER</code>,<br />
+and<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_CCOO</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the versioned case object; preserve case and method lineage; keep DAG
+closure below evidentiary standing; and record the CCOO nonrelation.</p>
+<h2 id="a-reproducible-comparative-evidence-case">A Reproducible
+Comparative Evidence Case</h2>
+<p>Five downstream uses rely on this study for ACG scope, quantitative
+evaluation, semantic debt, fragmentation analysis, and sovereignty
+barriers. The work should therefore publish its findings as versioned
+comparative evidence cases rather than timeless rankings of named
+systems.</p>
+<p><span class="math display">$$
+\begin{aligned}
+E^*= (&amp;corpus\_generation, system\_identity, version, \\
+&amp;environment, question, method, observer, \\
+&amp;evidence\_surface, declared\_path, operative\_path, \\
+&amp;receipts, hidden\_region, findings, counterexamples, \\
+&amp;uncertainty, expiry, reproduction)
+\end{aligned}.
+$$</span></p>
+<p>Absence from an observed receipt or governance surface is not
+evidence of global absence unless coverage and denominator are known.
+Conversely, a declared policy or receipt cannot establish that a
+consequential path is mediated. Product names, version families,
+plugins, hosted services, and local builds require separate identity
+bindings. Comparative labels must remain claim-specific: one system can
+expose authority well while hiding resolution, or govern mutation while
+poorly evidencing effects.</p>
+<p>Reproduction needs the exact corpus snapshot, collection method,
+query set, classification rules, evidence excerpts, reviewer decisions,
+counterexamples, and known inaccessible surfaces. Later versions form
+successors; they do not silently overwrite earlier findings.</p>
+<p>The universal GSM can type<br />
+<code>OBSERVES_SOFTWARE_EVIDENCE_CASE</code>,
+<code>COMPARES_CLAIM_SURFACE</code>,<br />
+<code>HIDES_RESOLUTION_REGION</code>,
+<code>LACKS_KNOWN_DENOMINATOR</code>,
+<code>EXPIRES_SYSTEM_FINDING</code>,<br />
+<code>REPRODUCES_COMPARATIVE_CASE</code>, and<br />
+<code>DOES_NOT_RANK_SYSTEM_GLOBALLY</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+versioned evidence-case record; bind findings to exact versions and
+environments; prohibit global absence and ranking inferences from
+partial surfaces; and require reproducible excerpts, rules,
+counterexamples, and inaccessible-region disclosure.</p>
+<h2 id="limitations">16. Limitations</h2>
+<p>The corpus is limited to 17 systems and excludes:</p>
+<ul>
+<li>formally verified kernels</li>
+<li>large-scale IAM systems</li>
+<li>financial transaction platforms</li>
+</ul>
+<p>Findings are constrained to observed domains, selected open-source
+systems, corpus-time versions and documentation, uneven per-system
+evidence depth, and one internally authored analysis program. The corpus
+omits proprietary, medical, embedded, mobile, financial, cloud-IAM,
+formally verified, and effect-tracked systems. The authority-bearing
+subset contains six systems; the strongest interior-governance
+comparison contains two; rustc is the only compiler. Counts describe
+this Instance Configuration and are not population estimates.</p>
+<hr />
+<h2
+id="publish-versioned-evidence-cases-not-timeless-product-rankings">Publish
+Versioned Evidence Cases, Not Timeless Product Rankings</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>This paper compares seventeen internally analyzed software systems to
+ask where authority is declared, where actions are receipted, and where
+resolution remains hidden. The corpus is real and exactly custodied, but
+it is selected, uneven, internally authored, and tied to corpus-time
+versions and environments. Its strongest contribution is a reproducible
+set of scoped evidence cases, not a universal ranking of current
+products.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Version-drift attack.</strong> Product behavior, defaults,
+plugins, hosted services, documentation, and authority mechanisms
+changed after the analyzed snapshot.</li>
+<li><strong>Absence-denominator attack.</strong> No receipt or policy
+was observed and the paper infers global absence without knowing all
+relevant paths.</li>
+<li><strong>Declaration-effect attack.</strong> A documented control is
+counted as governance without testing whether consequential paths
+actually traverse it.</li>
+<li><strong>Selection-bias attack.</strong> Seventeen mostly open-source
+developer and infrastructure systems are treated as representative of
+software generally.</li>
+<li><strong>Depth-variance attack.</strong> Uneven per-system methods
+and evidence are compared as though every finding had equal coverage and
+confidence.</li>
+<li><strong>Method-identity attack.</strong> Semantic Defragmentation,
+Semantic Fragmentation, and Structural Fragmentation Analysis are
+silently merged under SFA.</li>
+<li><strong>Reputation-harm attack.</strong> Scoped historical findings
+are read as current security judgments, vendor evaluations, or claims of
+intentional opacity.</li>
+<li><strong>Count-inflation attack.</strong> Instance counts such as
+12/17 or 6/6 are presented as population estimates, causal results, or
+independent replication.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper provides internally authored comparative evidence cases
+over one exact seventeen-system corpus. It is not a current vendor
+audit, security assessment, representative sample, independent
+replication, benchmark, controlled experiment, or global ranking.
+Product-specific findings expire outside their bound identity, version,
+environment, question, method, and observation surface.</p>
+<p>Further evidentiary strengthening requires resolution of the SFA name
+and work relation, exact version and environment freezing,
+claim-by-claim source validation, current primary vendor documentation,
+reproduction rules and excerpts, counterexamples, inaccessible-region
+disclosure, and careful non-disparaging language. No external research
+was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The valuable public result is a way to compare exactly what selected
+software versions disclosed about authority and effects, while showing
+the evidence and unknown regions for every case instead of issuing a
+single trust score.</p>
+<h2 id="publication-standing-and-evidence-limits">17. Publication
+Standing and Evidence Limits</h2>
+<p>This paper has a real internal evidence corpus, but it remains an
+internally authored comparative analysis of seventeen selected
+open-source systems. It is not an independent replication,
+current-vendor audit, representative sample, peer-reviewed software
+study, or universal theory. Product behavior, defaults, and
+documentation may have changed since the recorded analyses.</p>
+<h2 id="conclusion">18. Conclusion</h2>
+<p>Software systems do not uniformly declare, receipt, or govern their
+behavior. They do so selectively, under structural pressure, and with
+consistent patterns of omission.</p>
+<p>Typed distinctions make these patterns visible.</p>
+<p>They allow precise statements: where authority is declared or
+derived, where accountability exists or collapses, where governance
+concentrates or fragments.</p>
+<p>This replaces vague critique with actionable structure.</p>
+<p>The next step is explicit: test these findings against systems
+designed to falsify them. Future analysis will target:</p>
+<ul>
+<li>Linux kernel MAC frameworks</li>
+<li>Cloud IAM systems</li>
+<li>mobile permission platforms</li>
+<li>formally verified systems</li>
+</ul>
+<p>If the distinctions hold, they strengthen. If they break, they
+refine.</p>
+<p>That is the discipline that produced these results - and the one
+required to extend them.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern software systems execute with
+authority, yet provide only partial accounts of how that authority is
+established, exercised, and constrained. Its nearest external comparison
+fields are provenance, software, open sovereign. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy.
+Modularity, secure-development practice, and reproducibility reduce
+classes of failure but do not guarantee architectural coherence or user
+sovereignty. Source availability and reproducible builds improve
+inspectability but do not alone guarantee comprehensibility, practical
+exit, hardware control, or sustainable maintenance. These limits are not
+generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E2]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E3]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<p><strong>[E4]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E5]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E6]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h4
+id="source-head-external-references-retained-under-original-labels">Source-head
+external references retained under original labels</h4>
+<p><strong>[E1]</strong> <em>SFA Methodology: Semantic Defragmentation
+Analysis - Analytical Procedure</em>, Version 1.0, Directive
+SFA-STRUCTURE-1. Exact reviewed SHA-256<br />
+<code>E3F9526FDBD53ADA39F6A77310FF1EE9B55B42C2C7B90C76AD7F56616F123770</code>.</p>
+<p><strong>[E2]</strong> <em>SFA-SYNTHESIS-4: Post-Adversarial
+Consolidation</em>, March 17, 2026. Exact reviewed SHA-256<br />
+<code>BAC6B926B910B644D460128E8B4EC97DCF3120E527FA544AD1D0C1FF616AEBBA</code>.</p>
+<p><strong>[E3]</strong> <em>SFA 17-System Corpus Custody
+Manifest</em>.<br />
+<code>work/paper-saturation-v1/evidence/what-</code></p>
+<p><code>software-systems-actually-receipt-govern-and-</code><br />
+<code>hide/sfa-17-corpus-manifest.v0.1.json</code>; SHA-256<br />
+<code>3108754C519D0BA248C868E77818C386C5F78BA0A6700EA76DEF8CFAFA8E59BD</code>.
+It binds all seventeen reviewed</p>
+<p><code>ANALYSIS.md</code> files by path, size, and hash.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-C8F2F9BF38C45E29</code>;<br />
+source SHA-256<br />
+<code>A80657E21BA277ADF1C229A2AAE221963B97A62EA2AF3EBC36434A916A8EEA44</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Governance Witnesses</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-9E8DA0EFE860DE5D</code>;<br />
+source SHA-256<br />
+<code>8BF8C3646040F6E1F5222A8AA92C1106AA1F841E8A2C65402F468C83D59D06E5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p><strong>[E4]</strong> Adam Ableman <em>Semantic Fragmentation and
+Constitutional Structure</em>. Current reviewed head SHA-256<br />
+<code>4048182A492E8ED731505426801D7A89074DE7311C0B3D975ECD2A2478D845F8</code>.</p>
+<p><strong>Reference-status note.</strong> These are internal corpus
+sources, not independent scholarly corroboration. The current paper
+contains product-specific claims that require exact version and
+primary-source revalidation for a future evidence-qualified revision. No
+external research was conducted during this pass.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848564">10.5281/zenodo.23848564</a></p>

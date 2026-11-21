@@ -1,0 +1,1107 @@
+<h1 id="theory-of-semantic-computing-infrastructure">Theory of Semantic
+Computing Infrastructure</h1>
+<h2
+id="a-missing-layer-between-operating-systems-and-artificial-intelligence">A
+Missing Layer Between Operating Systems and Artificial Intelligence</h2>
+<h3
+id="the-thesis-is-architectural-modern-computing-lacks-a-stable-layer-for-meaning.">The
+thesis is architectural: modern computing lacks a stable layer for
+meaning.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern computing systems exhibit a structural discontinuity between
+two domains: the execution substrate of operating systems and the
+reasoning substrate of artificial intelligence. Operating systems manage
+computational resources such as memory, processes, and storage, while AI
+systems operate primarily on unstructured linguistic or symbolic
+representations of meaning. Between these domains lies an unformalized
+layer: the infrastructure required to represent, govern, and compute
+over meaning itself.</p>
+<p>This paper introduces the concept of <strong>Semantic Computing
+Infrastructure (SCI)</strong> as the missing architectural layer between
+physical computation and cognitive systems. SCI provides mechanisms for
+representing meaning as executable structures, enforcing semantic
+governance, canonicalizing conceptual identity, and preserving lineage
+across semantic transformations.</p>
+<p>The paper proposes that the absence of shared governed semantic
+infrastructure can contribute to unsupported generation, reasoning
+drift, provenance gaps, and fragile integration, while recognizing that
+these failures have additional model, data, interface, evaluation, and
+institutional causes. By introducing structured services for semantic
+representation, identity, governance, and transformation, SCI aims to
+make identified knowledge representations a more explicit operational
+domain.</p>
+<p>The thesis is architectural: modern computing lacks a stable layer
+for meaning. Semantic Computing Infrastructure proposes a way to address
+this gap, allowing cognitive systems to query and transform governed
+knowledge representations while remaining bounded by their evidence and
+authority.</p>
+<hr />
+<h2 id="scope-of-the-architectural-thesis">Scope of the Architectural
+Thesis</h2>
+<p>SCI is best read as a <strong>capability fabric hypothesis</strong>,
+not necessarily one software layer located literally between an
+operating system and an AI model. Its functions may be distributed
+across databases, registries, knowledge graphs, policy engines,
+provenance stores, compilers, agent interfaces, local applications,
+network services, and human institutions. The architectural claim is
+that these functions need explicit common contracts if meaning is to
+remain identifiable, governable, traceable, and revisable across
+systems.</p>
+<p>The paper’s three-layer diagram is therefore a pedagogical
+macro-view. Physical computation is not wholly deterministic; operating
+systems already carry names, schemas, permissions, types, and
+institutional conventions; AI systems can use structured tools and
+databases; and strings, records, and APIs can participate in meaningful
+practices. Their bytes and syntax simply do not settle semantic
+identity, authority, truth, or intended use by themselves.</p>
+<p>SCI also does not eliminate probabilistic inference. It can provide
+better identity, retrieval, evidence, provenance, constraints, refusal,
+and revision surfaces. Models may still misunderstand context, invent
+unsupported claims, misuse valid evidence, or fail outside the governed
+boundary. Reliability improvement is an empirical question relative to a
+defined task and baseline.</p>
+<h2 id="introduction-the-missing-layer-in-computing">1. Introduction:
+The Missing Layer in Computing</h2>
+<p>Computing systems have evolved through several foundational
+architectural layers:</p>
+<ol type="1">
+<li>Hardware execution substrates</li>
+<li>Operating systems</li>
+<li>Networking infrastructure</li>
+<li>Cloud orchestration</li>
+<li>Artificial intelligence models</li>
+</ol>
+<p>Each layer expands the abstraction boundary of computation. However,
+contemporary AI systems reveal a structural discontinuity between the
+operating system layer and the cognitive systems built above it.</p>
+<p>Operating systems manage:</p>
+<ul>
+<li>CPU scheduling</li>
+<li>memory allocation</li>
+<li>process management</li>
+<li>file systems</li>
+<li>device interaction</li>
+</ul>
+<p>AI systems, by contrast, manipulate:</p>
+<ul>
+<li>language</li>
+<li>concepts</li>
+<li>knowledge structures</li>
+<li>reasoning chains</li>
+<li>inference patterns</li>
+</ul>
+<p>These domains already intersect through tools, schemas, retrieval
+systems, databases, and application contracts, but their shared semantic
+obligations are often implicit or fragmented.</p>
+<p>The operating system answers the question:</p>
+<blockquote>
+<p>How does computation run?</p>
+</blockquote>
+<p>AI systems attempt to answer:</p>
+<blockquote>
+<p>What should be done with knowledge?</p>
+</blockquote>
+<p>Between them lies an unstructured space where meaning exists only
+implicitly.</p>
+<p>Semantic Computing Infrastructure addresses this gap by introducing a
+new architectural layer responsible for <strong>representing, governing,
+and executing meaning structures</strong>.</p>
+<hr />
+<h2 id="the-three-layer-computing-stack">2. The Three-Layer Computing
+Stack</h2>
+<p>When viewed from a systems perspective, the long-term architecture of
+computing may stabilize around three macro layers.</p>
+<h3 id="physical-computation-layer">Physical Computation Layer</h3>
+<p>This layer includes:</p>
+<ul>
+<li>hardware</li>
+<li>kernels</li>
+<li>operating systems</li>
+<li>memory management</li>
+<li>process scheduling</li>
+</ul>
+<p>Its function includes resource mediation and program execution under
+hardware, software, and operational constraints.</p>
+<p>It answers:</p>
+<blockquote>
+<p>How is computation performed?</p>
+</blockquote>
+<hr />
+<h3 id="semantic-infrastructure-layer">Semantic Infrastructure
+Layer</h3>
+<p>This is the missing layer.</p>
+<p>It manages:</p>
+<ul>
+<li>semantic identity</li>
+<li>knowledge graphs</li>
+<li>ontology structures</li>
+<li>admissibility rules</li>
+<li>semantic lineage</li>
+<li>reasoning constraints</li>
+</ul>
+<p>Its function is meaning stabilization.</p>
+<p>It answers:</p>
+<blockquote>
+<p>What does computation mean?</p>
+</blockquote>
+<hr />
+<h3 id="cognitive-systems-layer">Cognitive Systems Layer</h3>
+<p>This layer contains:</p>
+<ul>
+<li>large language models</li>
+<li>autonomous agents</li>
+<li>reasoning engines</li>
+<li>planning systems</li>
+<li>research assistants</li>
+</ul>
+<p>Its function is semantic reasoning.</p>
+<p>It answers:</p>
+<blockquote>
+<p>What should be done with meaning?</p>
+</blockquote>
+<hr />
+<p>These layers form the following architectural relationship:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware / Operating Systems</td>
+<td>Execute instructions</td>
+</tr>
+<tr>
+<td>Semantic Computing Infrastructure</td>
+<td>Structure and govern meaning</td>
+</tr>
+<tr>
+<td>Cognitive Systems</td>
+<td>Reason and plan over meaning</td>
+</tr>
+</tbody>
+</table>
+<p>Without an explicit shared semantic fabric, some AI workflows depend
+too heavily on transient symbolic context or implicit conventions even
+when structured tools are also present.</p>
+<hr />
+<h2 id="syntax-dominant-computing">3. Syntax-Dominant Computing</h2>
+<p>Most modern computing infrastructure is syntactic rather than
+semantic.</p>
+<p>Systems operate on structures such as:</p>
+<ul>
+<li>strings</li>
+<li>files</li>
+<li>database rows</li>
+<li>network packets</li>
+<li>API payloads</li>
+</ul>
+<p>These structures can participate in meaningful conventions, but their
+syntax alone does not settle conceptual identity, authority, truth, or
+intended use.</p>
+<p>Examples illustrate the limitation:</p>
+<ul>
+<li>A filename implies content but does not describe its semantic
+role.</li>
+<li>A database schema defines structure but not conceptual
+identity.</li>
+<li>APIs transmit structured fields but rarely express semantic
+intent.</li>
+</ul>
+<p>As a result, modern computing environments rely on human
+interpretation to reconstruct meaning from syntactic signals.</p>
+<p>This gap produces several structural problems:</p>
+<ul>
+<li>brittle integrations</li>
+<li>semantic drift</li>
+<li>inconsistent interpretation</li>
+<li>knowledge silos</li>
+<li>instability in AI reasoning</li>
+</ul>
+<p>Semantic Computing Infrastructure attempts to close this gap by
+introducing explicit structures for meaning.</p>
+<hr />
+<h2 id="semantic-objects-as-computational-primitives">4. Semantic
+Objects as Computational Primitives</h2>
+<p>Traditional computing primitives include:</p>
+<ul>
+<li>integers</li>
+<li>strings</li>
+<li>pointers</li>
+<li>files</li>
+<li>processes</li>
+</ul>
+<p>SCI proposes treating <strong>semantic objects</strong> as explicit
+computational and governance primitives, while recognizing that
+knowledge representation and database traditions already model many
+related structures.</p>
+<p>Examples include:</p>
+<pre><code>Concept
+Claim
+Observation
+Evidence
+Artifact
+Relationship
+Hypothesis
+Model</code></pre>
+<p>These objects carry metadata describing their semantic
+properties:</p>
+<ul>
+<li>provenance</li>
+<li>authority</li>
+<li>conceptual identity</li>
+<li>admissibility constraints</li>
+<li>lineage history</li>
+</ul>
+<p>Computation can therefore operate directly on knowledge atoms rather
+than raw data.</p>
+<hr />
+<h2 id="semantic-canonicalization">5. Semantic Canonicalization</h2>
+<p>A core challenge in semantic systems is identity stability.</p>
+<p>Different expressions may refer to the same concept:</p>
+<pre><code>car
+automobile
+vehicle(type=car)</code></pre>
+<p>Without canonicalization, systems fragment into incompatible semantic
+clusters.</p>
+<p>Semantic canonicalization may bind multiple representations to a
+shared identity only under explicit evidence and scope; it must also
+preserve collisions, polysemy, dispute, and non-equivalence.</p>
+<p>Canonicalization enables:</p>
+<ul>
+<li>stable concept references</li>
+<li>graph consistency</li>
+<li>reasoning reliability</li>
+<li>cross-domain integration</li>
+</ul>
+<p>Without governed identity and disambiguation, semantic
+infrastructures risk fragmentation; over-aggressive canonicalization
+creates an equal risk of false merger.</p>
+<hr />
+<h2 id="governance-of-meaning">6. Governance of Meaning</h2>
+<p>Meaning systems are vulnerable to fragmentation unless governed.</p>
+<p>Without constraints, semantic systems accumulate:</p>
+<ul>
+<li>contradictory claims</li>
+<li>ambiguous identities</li>
+<li>inconsistent relationships</li>
+<li>unverifiable assertions</li>
+</ul>
+<p>Semantic Computing Infrastructure therefore requires governance
+mechanisms.</p>
+<p>Examples include:</p>
+<ul>
+<li>admissibility checks</li>
+<li>contradiction detection</li>
+<li>provenance verification</li>
+<li>authority constraints</li>
+<li>ontology rules</li>
+</ul>
+<p>Governance functions similarly to constitutional law within a
+knowledge ecosystem.</p>
+<p>Meaning is not merely stored. Governance-bearing profiles can require
+candidate records and transitions to satisfy declared admissibility
+conditions before receiving specified standing, while raw observations,
+disputes, and rejected candidates may still be retained under distinct
+postures.</p>
+<hr />
+<h2 id="semantic-computation">7. Semantic Computation</h2>
+<p>Once semantic representations are sufficiently identified and typed,
+computation can operate over their graphs while remaining distinct from
+the meanings and realities represented.</p>
+<p>Possible operations include:</p>
+<ul>
+<li>semantic inference</li>
+<li>contradiction detection</li>
+<li>graph traversal</li>
+<li>structural discovery</li>
+<li>conceptual clustering</li>
+<li>bridge detection between domains</li>
+</ul>
+<p>Knowledge systems begin to resemble <strong>semantic
+manifolds</strong>, where nodes represent conceptual entities and edges
+represent relationships.</p>
+<p>Topological analysis can reveal:</p>
+<ul>
+<li>central concepts</li>
+<li>structural gaps</li>
+<li>conceptual bridges</li>
+<li>contradiction zones</li>
+</ul>
+<p>Knowledge representations become navigable structures linked back to
+their source documents and evidence rather than replacements for
+them.</p>
+<hr />
+<h2 id="semantic-memory">8. Semantic Memory</h2>
+<p>Traditional computing memory systems include:</p>
+<ul>
+<li>RAM</li>
+<li>filesystems</li>
+<li>databases</li>
+</ul>
+<p>Semantic Computing Infrastructure introduces <strong>semantic
+memory</strong>.</p>
+<p>Semantic memory consists of:</p>
+<ul>
+<li>knowledge graphs</li>
+<li>lineage graphs</li>
+<li>authority maps</li>
+<li>conceptual dependency networks</li>
+</ul>
+<p>Where a filesystem answers:</p>
+<blockquote>
+<p>Where is the file?</p>
+</blockquote>
+<p>Semantic memory answers:</p>
+<blockquote>
+<p>What does this knowledge mean and how does it relate to everything
+else?</p>
+</blockquote>
+<p>This can turn retained semantic representations from passive storage
+into an actively queried structure without making the store identical to
+knowledge itself.</p>
+<hr />
+<h2 id="semantic-navigation">9. Semantic Navigation</h2>
+<p>Once knowledge exists as a structured manifold, navigation changes
+fundamentally.</p>
+<p>Traditional navigation involves directory structures:</p>
+<pre><code>Documents/
+Projects/
+Notes/</code></pre>
+<p>Semantic navigation involves conceptual traversal:</p>
+<pre><code>Concept -&gt; Evidence -&gt; Debate -&gt; Refinement -&gt; Model</code></pre>
+<p>Search can combine graph traversal with lexical, vector, symbolic,
+and document retrieval rather than assuming one technique replaces all
+others.</p>
+<p>Users and AI agents explore knowledge spaces through relationships
+rather than locations.</p>
+<hr />
+<h2 id="semantic-compilation">10. Semantic Compilation</h2>
+<p>A further implication emerges: knowledge may be compiled.</p>
+<p>Just as programming languages compile into machine code, human
+reasoning can compile into structured semantic representations.</p>
+<p>A conceptual pipeline might appear as:</p>
+<pre><code>Human statement
+
+Controlled semantic language
+
+Semantic representation
+
+Knowledge graph artifact
+
+Executable reasoning structure</code></pre>
+<p>This proposed process transforms informal statements into structured
+candidate artifacts suitable for governed computational use; it does not
+guarantee preservation, truth, authority, or executability without
+further evidence and admission.</p>
+<p>Computation therefore becomes a transformation of meaning structures
+rather than a manipulation of raw symbols.</p>
+<hr />
+<h2 id="knowledge-operating-systems">11. Knowledge Operating
+Systems</h2>
+<p>A mature Semantic Computing Infrastructure could evolve into a new
+class of systems: <strong>knowledge operating systems</strong>.</p>
+<p>Such systems would manage:</p>
+<ul>
+<li>semantic objects</li>
+<li>reasoning agents</li>
+<li>epistemic authority structures</li>
+<li>lineage of ideas</li>
+<li>contradiction resolution</li>
+</ul>
+<p>These systems would not merely execute processes.</p>
+<p>They would govern <strong>knowledge ecosystems</strong>.</p>
+<hr />
+<h2 id="implications-for-artificial-intelligence">12. Implications for
+Artificial Intelligence</h2>
+<p>Modern AI systems operate primarily on unstructured text streams.</p>
+<p>This leads to instability:</p>
+<ul>
+<li>hallucinations</li>
+<li>reasoning drift</li>
+<li>lack of provenance</li>
+<li>inconsistent knowledge representation</li>
+</ul>
+<p>Semantic Computing Infrastructure may improve the stability and
+auditability of selected AI workflows by providing:</p>
+<ul>
+<li>canonical knowledge objects</li>
+<li>semantic governance rules</li>
+<li>persistent knowledge graphs</li>
+<li>traceable lineage of reasoning</li>
+</ul>
+<p>AI systems can be required to cite, query, and remain bounded by a
+structured semantic substrate for selected claims, while residual model
+and interface failures remain.</p>
+<hr />
+<h2 id="historical-context">13. Historical Context</h2>
+<p>Computing has repeatedly evolved through the introduction of new
+infrastructural layers.</p>
+<p>Major transitions include:</p>
+<ol type="1">
+<li>Hardware abstraction</li>
+<li>Operating systems</li>
+<li>Networking</li>
+<li>Cloud infrastructure</li>
+<li>Machine learning systems</li>
+</ol>
+<p>The next transition may involve the introduction of a semantic
+layer.</p>
+<p>This layer stabilizes meaning within computational systems.</p>
+<p>If the architecture works, AI systems can combine probabilistic
+linguistic inference with governed knowledge spaces whose identities,
+evidence, and limits are more explicit.</p>
+<hr />
+<h2 id="sci-as-a-capability-fabric">14. SCI as a Capability Fabric</h2>
+<p>A compact SCI profile can be represented as:</p>
+<p><span
+class="math display"><em>S</em><em>C</em><em>I</em> = (<em>I</em>, <em>N</em>, <em>M</em>, <em>L</em>, <em>A</em>, <em>E</em>, <em>T</em>, <em>Q</em>, <em>R</em>),</span></p>
+<p>where <span class="math inline"><em>I</em></span> is semantic
+identity, <span class="math inline"><em>N</em></span> governed naming
+and disambiguation, <span class="math inline"><em>M</em></span> typed
+meaning and relation models, <span class="math inline"><em>L</em></span>
+provenance and lineage, <span class="math inline"><em>A</em></span>
+authority and admissibility, <span class="math inline"><em>E</em></span>
+evidence and standing, <span class="math inline"><em>T</em></span>
+governed transformation or compilation, <span
+class="math inline"><em>Q</em></span> query/navigation/refusal, and
+<span class="math inline"><em>R</em></span> revision and recovery. This
+tuple is an AI-prepared synthesis candidate, not an adopted schema.</p>
+<p>An implementation may realize only a subset. Its claims must be
+reduced accordingly. A graph database with labels may support <span
+class="math inline"><em>M</em></span> and <span
+class="math inline"><em>Q</em></span> while lacking authority, evidence,
+or revision semantics. A provenance store may support parts of <span
+class="math inline"><em>L</em></span> without semantic identity. A
+policy engine may evaluate <span class="math inline"><em>A</em></span>
+while depending on meanings it does not govern. SCI is the composed
+obligation surface, not a product label awarded to any one
+component.</p>
+<p>The minimum operational surfaces are:</p>
+<ol type="1">
+<li>exact semantic identity and versioned reference;</li>
+<li>governed name, alias, disambiguation, and collision handling;</li>
+<li>typed objects, claims, relations, contexts, and nonclaims;</li>
+<li>provenance, evidence, authority, standing, and uncertainty;</li>
+<li>admission, refusal, contradiction, and revision procedures;</li>
+<li>governed transformations among prose, models, queries,
+representations, and effects;</li>
+<li>navigation and bounded context construction;</li>
+<li>agent and human interfaces that do not transfer authority
+silently;</li>
+<li>distribution and federation with local adoption control;</li>
+<li>recovery when sources, evidence, schemas, or interpretations
+change.</li>
+</ol>
+<h2 id="gmb-and-the-universal-gsm">15. GMB and the Universal GSM</h2>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the author-confirmed <code>CCF -&gt; CMB -&gt; GMB</code> lineage.
+GMB is the corpus’s most direct proposed realization family for SCI: it
+can retain semantic identities, representations, relations, provenance,
+evidence, standing, authority, refusals, projections, and revision
+lineage. The <strong>universal Governed Semantic Model (GSM)</strong>
+supplies the shared semantic coordinate and relation fabric over which
+these records can be compared and traversed.</p>
+<p>These identities should not collapse. SCI is the general
+architectural capability thesis. GMB is a governed meaning and custody
+architecture. The universal GSM is a semantic model and integration
+fabric. Hyperpedia is a pedagogical and scholarly projection. Crystal
+Network / Distributed Knowledge Network is a distribution and federation
+direction. GTK and CSIL address identity and named reachability. SMT and
+Governed Semantic Cartography address topology and navigation. Semantic
+Memory Hierarchies address retrieval and persistence profiles. Governed
+Semantic Compilation addresses transformation and continuation. A
+working system may compose them, but composition is not identity.</p>
+<h2 id="realization-funnel">16. Realization Funnel</h2>
+<p>SCI spans the complete funnel:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<p><strong>Possibility</strong> contains candidate meanings, models,
+relations, infrastructures, and social arrangements.
+<strong>Specification</strong> defines identities, semantic types,
+invariants, operations, authority, evidence, and refusal.
+<strong>Configuration Manifold 1 (CM1)</strong> contains all admissible
+schemas, storage, policies, interfaces, agent roles, and distribution
+arrangements. <strong>Configuration Manifold 2 (CM2)</strong> contains
+preferred admissible configurations under declared fidelity, privacy,
+accessibility, cost, resilience, sovereignty, and maintenance criteria.
+<strong>IC</strong> means <strong>Instance Constitution</strong> or
+<strong>Instance Configuration</strong> interchangeably and binds one
+schema/version, registry, policy, authority, evidence, and deployment
+profile. <strong>IR</strong> means <strong>Instance Realization</strong>
+or <strong>Implementation Realization</strong> interchangeably and
+includes actual files, databases, services, indexes, models, APIs,
+interfaces, and effects. <strong>Evidence</strong> tests correspondence,
+resolution, retrieval, governance, safety, usability, performance, and
+recovery. <strong>Revision</strong> updates any earlier layer while
+preserving lineage and identifying stale dependent claims.</p>
+<h2 id="semantic-primitives-and-invariants">17. Semantic Primitives and
+Invariants</h2>
+<p>The integrated primitive set is: semantic identity, governed name,
+typed semantic object, claim, nonclaim, relation, context, provenance,
+evidence, authority, standing, admissibility decision, refusal,
+transformation, projection, observation, and revision event.</p>
+<p>The central invariants are:</p>
+<ol type="1">
+<li>A representation is not the meaning or world object it
+represents.</li>
+<li>Similarity does not establish identity; identity does not establish
+truth.</li>
+<li>Storage does not grant authority or standing.</li>
+<li>Evidence remains scoped to subject, method, environment, time, and
+claim.</li>
+<li>A semantic transformation declares preserved, changed, omitted, and
+unknown content.</li>
+<li>Admission and refusal are attributable operations, not silent
+database side effects.</li>
+<li>Contradiction detection does not by itself decide which claim is
+correct.</li>
+<li>A cognitive system may propose semantic changes but cannot ratify
+its own standing or execution authority.</li>
+<li>Distributed publication does not compel local adoption.</li>
+<li>Revision preserves lineage and identifies dependent claims,
+projections, and caches requiring reconsideration.</li>
+</ol>
+<h2 id="semantic-infrastructure-capability-layer">Semantic
+Infrastructure Capability Layer</h2>
+<p>Across the completed P1 corpus, Semantic Computing Infrastructure
+(SCI) is the <strong>capability layer between physical computation and
+cognitive applications that supplies governed semantic identity, state,
+memory, navigation, compilation, evidence, and revision
+services</strong>. It is an architectural thesis and capability fabric,
+not one operating system, database, model, or deployed
+implementation.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional/Crystallized
+Meaning Base (CMB)</em><br />
+<strong>Supplies:</strong> The historical meaning-base work in the
+current GMB lineage.<br />
+<strong>SCI boundary:</strong> Current GMB is one state substrate within
+SCI, not the whole infrastructure layer.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governed Semantic
+Cartography</em><br />
+<strong>Supplies:</strong> Coordinates, projections, traversal, and
+atlas coherence.<br />
+<strong>SCI boundary:</strong> GSC supplies navigation capabilities
+within SCI.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Governed Knowledge
+Loop</em><br />
+<strong>Supplies:</strong> Analysis, crystallization, frontier,
+mutation, and revision lifecycle.<br />
+<strong>SCI boundary:</strong> GKL supplies lifecycle control over SCI
+state.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Cognitive ABI for
+Capability-Centered Computing</em><br />
+<strong>Supplies:</strong> Contracts, qualification, routing, and
+substitution across cognitive and effect capabilities.<br />
+<strong>SCI boundary:</strong> The ABI exposes callable capabilities;
+SCI is the wider substrate providing some realizations.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>MosaiCOS: A Constitutional
+Operating System</em><br />
+<strong>Supplies:</strong> A proposed full-stack constitutional OS
+configuration.<br />
+<strong>SCI boundary:</strong> MosaiCOS may host or consume SCI services
+without being identical to the semantic layer.</p></li>
+</ul>
+<p>An SCI profile should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+I= (&amp;identity, state, memory, navigation, compilation, \\
+&amp;governance, evidence, revision, interfaces, \\
+&amp;trust\_boundary, resource\_model)
+\end{aligned}.
+$$</span></p>
+<p>The profile states services and obligations, not an assumption that
+every application needs all of them. A conventional database, graph,
+search engine, compiler, or model can provide part of the surface. SCI
+earns independent architectural value only when shared semantic services
+reduce duplication or enable correspondence, governance, reconstruction,
+and substitution not achieved by simpler components.</p>
+<p>The layer must remain plural and replaceable. Centralizing semantic
+infrastructure can create surveillance, lock-in, monoculture, authority
+concentration, and catastrophic shared failure. Local, federated,
+application-specific, and portable realizations belong in CM1; CM2
+preferences depend on domain values and threat models.</p>
+<p>The universal GSM can type<br />
+<code>PROVIDES_SEMANTIC_CAPABILITY</code>,
+<code>USES_IDENTITY_SERVICE</code>,<br />
+<code>STORES_IN_GMB</code>, <code>NAVIGATES_WITH_GSC</code>,
+<code>COMPILES_SEMANTIC_OPERATION</code>,
+<code>GOVERNED_BY_PROFILE</code>,<br />
+<code>EXPOSES_CAPABILITY_ABI</code>,
+<code>FEDERATES_WITH_INFRASTRUCTURE</code>,
+<code>SUBSTITUTABLE_BY</code>,<br />
+and<br />
+<code>FAILS_AT_SHARED_BOUNDARY</code>. These relations keep the layer
+from becoming a monolith by definition.</p>
+<p>This integration establishes four editorial commitments: adopt
+semantic infrastructure capability layer as SCI’s official corpus role;
+adopt the SCI-profile envelope; require comparison against simpler
+component stacks; and include local, federated, portable, and
+anti-concentration criteria in configuration selection.</p>
+<h2
+id="stateful-semantic-service-contract-and-portable-continuity">Stateful
+Semantic Service Contract and Portable Continuity</h2>
+<p>The fixed-seed comparison with Governed Semantic Cartography,
+Semantic Debt, Cold Boot Continuity, and the Cognitive ABI gives each
+SCI capability a portable service contract:</p>
+<p><span class="math display">$$
+\begin{aligned}
+S= (&amp;capability, semantic\_identity, inputs, preconditions, \\
+&amp;outputs, residue, state\_root, authority\_requirements, \\
+&amp;evidence, substitution\_profile, checkpoint, resumption)
+\end{aligned}.
+$$</span></p>
+<p>GSC navigation, identity lookup, semantic compilation, and governed
+memory can be exposed as services without making the infrastructure one
+monolith. Each call must name which governed state root and profile it
+used, what semantic residue remains, and which evidence or refusal was
+returned. Service compatibility alone does not establish equivalent
+meaning or result standing.</p>
+<p>Semantic Debt is observable at the service boundary when an
+obligation is deferred, a translation loses required structure, a cache
+remains stale, or a migration leaves an unresolved dependent. The
+service should return applicable debt references and new debt signals
+without deciding contested classifications on its own.</p>
+<p>Cold-boot continuity requires more than data persistence. A
+checkpoint should preserve or recover service identity, governed roots,
+profiles, pending work, debt and remainder, dependency versions, and the
+conditions for rebinding authority and capability. A replacement SCI
+realization may reconstruct these obligations without reproducing the
+predecessor implementation.</p>
+<p>The Cognitive ABI can expose and substitute SCI capabilities through
+contract, qualification, admission, authorization, effect, and witness
+predicates. The ABI is the callable boundary; SCI is the substrate or
+provider. The universal GSM can type<br />
+<code>EXPOSES_SEMANTIC_SERVICE</code>,<br />
+<code>BINDS_SERVICE_STATE_ROOT</code>,
+<code>RETURNS_SEMANTIC_RESIDUE</code>,
+<code>REPORTS_SERVICE_DEBT</code>,<br />
+<code>CHECKPOINTS_FOR_COLD_BOOT</code>,
+<code>RESUMES_UNDER_REVALIDATION</code>,<br />
+and<br />
+<code>SUBSTITUTES_THROUGH_COGNITIVE_ABI</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+a stateful semantic-service contract; map SCI services to Cognitive ABI
+without merging them; require cold-boot checkpoints and revalidation
+conditions; and make debt and residue observable across service and
+substitution boundaries.</p>
+<h2 id="a-stateful-semantic-service-fabric">A Stateful Semantic Service
+Fabric</h2>
+<p>Sixteen downstream uses treat Semantic Computing Infrastructure as a
+shared capability layer. They use it for portable capability interfaces,
+cold boot, governed meaning storage and learning, current orientation,
+semantic compilation, lexical identity, atlas projections, human
+authoring, MCIR topology, meaning crystals, receipts, recursive motifs,
+debt, field analysis, and governed convergence. This breadth supports a
+service fabric, not a new truth layer or a total operating system.</p>
+<p>The service contract is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+S^*= (&amp;services, objects, identities, schemas, authorities, \\
+&amp;state, transactions, dependencies, portability, \\
+&amp;availability, privacy, effects, evidence, provider\_exit, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>Each service - identity resolution, canonicalization, search,
+binding, projection, compilation, memory, lineage, evidence, or revision
+- must declare inputs, outputs, authority, state, freshness, privacy,
+failure outcomes, and claim ceiling. Consumers should be able to replace
+a provider while preserving specified semantic obligations or receive an
+explicit incompatibility and migration remainder.</p>
+<p>SCI is stateful when histories, identities, conflicts, standing, and
+revisions matter. Cold boot therefore requires more than an API: exact
+semantic dependencies, schema versions, governing profiles, current
+heads, unresolved conflicts, and reconstruction evidence must travel.
+Availability or portability claims require measured service behavior and
+exercised provider exit, not architecture diagrams.</p>
+<p>The universal GSM can type<br />
+<code>PROVIDES_SEMANTIC_SERVICE</code>,
+<code>DEPENDS_ON_SEMANTIC_SERVICE</code>,<br />
+<code>PRESERVES_SERVICE_STATE</code>,
+<code>SUBSTITUTES_SEMANTIC_PROVIDER</code>,
+<code>EMITS_MIGRATION_REMAINDER</code>,<br />
+<code>RECONSTRUCTS_SEMANTIC_CONTINUITY</code>, and<br />
+<code>DOES_NOT_CREATE_TRUTH_LAYER</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the stateful service contract; require authority,
+state, privacy, failure, and evidence per service; make provider
+substitution and cold boot explicit; and preserve SCI as infrastructure
+beneath GMB, Hyperpedia, agents, and applications rather than a
+sovereign oracle.</p>
+<h2 id="counterevidence-and-failure-modes">18. Counterevidence and
+Failure Modes</h2>
+<p>The thesis should be narrowed or rejected where: (1) existing
+database, knowledge-representation, workflow, and policy infrastructure
+already supplies the required capability without a distinct SCI layer;
+(2) a common fabric cannot reconcile domain-specific semantics without
+destructive normalization; (3) governance centralizes lexical or
+institutional authority; (4) canonicalization merges contested or merely
+similar meanings; (5) semantic models drift faster than their governance
+can update; (6) provenance volume overwhelms useful retrieval; (7)
+contradiction detection produces false conflict; (8) agents bypass the
+substrate through raw context or tools; (9) representations create an
+illusion of understanding unsupported by observation; (10) GMB becomes
+an indispensable central controller; (11) federation cannot preserve
+local authority and interoperability together; (12) privacy requirements
+prevent the context needed for disambiguation; (13) evidence and
+authority metadata are forged, stale, or circular; (14) transformation
+loses meaning without declaring the loss; (15) semantic navigation
+performs worse than hybrid lexical/vector/graph baselines; (16)
+maintenance cost exceeds coordination benefit; (17) SCI does not
+measurably reduce unsupported claims or recovery time; or (18) the
+architecture simply renames established components without adding
+enforceable composition contracts.</p>
+<p>Required evaluation includes task-specific baselines,
+identity/collision tests, retrieval quality, unsupported-claim rates,
+contradiction precision and recall, provenance and latency costs, policy
+bypass tests, human comprehension, cross-domain transfer, federation
+failure, source withdrawal, schema migration, and recovery after
+defective evidence. The present paper supplies no such empirical
+results.</p>
+<h2
+id="meaning-infrastructure-is-a-service-fabric-not-a-truth-layer">Meaning
+Infrastructure Is a Service Fabric, Not a Truth Layer</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Semantic Computing Infrastructure proposes shared services for
+identity, canonicalization, search, binding, projection, compilation,
+memory, lineage, evidence, and revision. This can make semantic
+obligations portable across agents and applications. The infrastructure
+remains beneath the GMB, Hyperpedia, Crystal Network, and user-facing
+systems; it does not become their sovereign oracle or a complete
+operating system for knowledge.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Truth-layer attack.</strong> Structured representation,
+provenance, consensus, or canonical identity is treated as truth or
+understanding.</li>
+<li><strong>Destructive-normalization attack.</strong> A common fabric
+forces domain-specific, contested, local, or minority meanings into one
+canonical ontology.</li>
+<li><strong>Central-authority attack.</strong> Identity, vocabulary,
+admission, and projection services concentrate institutional or lexical
+power in one provider.</li>
+<li><strong>Bypass attack.</strong> Agents and applications use raw
+prompts, direct tools, private caches, or external services outside the
+fabric while claiming SCI governance.</li>
+<li><strong>State-loss attack.</strong> Provider substitution preserves
+APIs but loses histories, standing, conflicts, revisions, privacy rules,
+or unresolved remainder.</li>
+<li><strong>Provenance-overload attack.</strong> Evidence and lineage
+volume make retrieval slower, less comprehensible, or easier to
+manipulate through noise.</li>
+<li><strong>Privacy-context attack.</strong> The context needed for
+disambiguation conflicts with minimization, deletion, confidentiality,
+and local control.</li>
+<li><strong>Renaming-prior-art attack.</strong> Existing databases,
+knowledge graphs, workflow, provenance, policy, and search systems
+already provide the claimed layer without a distinct enforceable
+composition contract.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper proposes a stateful semantic service fabric and research
+program. It does not establish architectural necessity, a new truth
+layer, a total knowledge operating system, implemented portability,
+provider neutrality, successful federation, improved AI reasoning,
+reduced hallucination, or semantic understanding. GMB is a current
+realization family and consumer, not identical to SCI.</p>
+<p>Prior-art, systems, knowledge-representation, database, privacy,
+federation, retrieval, HCI, AI, and performance claims require current
+external research and full worked instances with baselines, bypass
+tests, provider exit, schema migration, defective-evidence recovery, and
+measured costs. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public promise is replaceable, inspectable services for working
+with meaning-bearing records - with state, authority, privacy, failure,
+and migration made explicit - rather than a central machine that decides
+what knowledge is true.</p>
+<h2 id="corpus-integration-sources">20. Corpus Integration Sources</h2>
+<p>This pass used exact local heads for GTK (SHA-256<br />
+<code>5F4A36BE1B9CB7DA3A174FCA32AEE74974678D628950F9E2600C647045BD24BB</code>),
+Governed Semantic Cartography (</p>
+<p><code>EB64EFEA1CCFD1DB7DA65E0989F9372DE3C30E0B974A260554D1FE4A089B1AD3</code>),
+the SMT worked example (<br />
+<code>BAA41D5FCC820805F23676EED9B1542E0DC8744F7D7A145D21F4BE99A0D99BC9</code>),
+Governed Semantic Compilation (<br />
+<code>290F01F3CAE7ECFC5C76CBFCAE330E8D489CDC600204C3D589E290CA497EE175</code>),
+Semantic Memory Hierarchies (<br />
+<code>60A92B670AD84FD94EB7F2D88F7435797DE2810183F7BE8869D3E8139C635FDE</code>),
+Semantic Fragmentation (<br />
+<code>4048182A492E8ED731505426801D7A89074DE7311C0B3D975ECD2A2478D845F8</code>),
+Constitutional Semantic Engineering (<br />
+<code>456E5AF1304EF2556334B557C7A41F3958611AADFE1850B3405CD003E9333699</code>),
+and GMB semantic-manifold documentation (<br />
+<code>49A05A424F226A21C81D638727E1165DE1AD55AB1CBDC56EA65D67A1362A4B08</code>).
+Exact custody does not establish architectural necessity,
+implementation, identity merger, or standing.</p>
+<h2 id="open-research-questions">21. Open Research Questions</h2>
+<p>Semantic Computing Infrastructure raises several unresolved
+challenges:</p>
+<ol type="1">
+<li>How should canonical semantic identity be defined?</li>
+<li>How can semantic drift be prevented over long time horizons?</li>
+<li>What governance models prevent ontology fragmentation?</li>
+<li>How can reasoning scale over extremely large semantic graphs?</li>
+<li>How should AI agents interact with governed semantic
+substrates?</li>
+</ol>
+<p>These questions define a research frontier connecting computer
+science, knowledge representation, and epistemology.</p>
+<hr />
+<h2 id="conclusion">22. Conclusion</h2>
+<p>Modern computing systems lack a stable architectural layer for
+meaning.</p>
+<p>Operating systems execute computation, and AI systems attempt to
+reason about knowledge, but the infrastructure required to represent and
+govern meaning itself remains underdeveloped.</p>
+<p>Semantic Computing Infrastructure proposes a way to address this
+gap.</p>
+<p>It introduces mechanisms for representing semantic objects,
+stabilizing conceptual identity, governing knowledge admission, and
+enabling computation over structured meaning.</p>
+<p>In such systems, computation becomes more than symbol
+manipulation.</p>
+<p>It becomes the <strong>controlled transformation of meaning
+structures</strong>.</p>
+<p>The machine can participate in governed semantic ecosystems without
+becoming their self-authorizing governor.</p>
+<p>If semantic representations can be transformed and checked under
+explicit authority and evidence, computing gains a richer first-class
+domain for working with knowledge without equating representation,
+execution, and truth.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<hr />
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<h3 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h3>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. The integration custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/semantic-</code></p>
+<p><code>computing-infrastructure/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>120A0721B9807A05AFE4BBD5A94406E8F20BF65B42FF58D835D26CCE95503B1D</code>.
+The exact source remains unchanged. The missing-layer thesis, three
+macro layers, semantic-object proposal, canonicalization, governance,
+semantic computation, memory, navigation, compilation,
+knowledge-operating-system direction, implications, questions, and
+conclusion are author material. This pass converts categorical claims
+into a testable architecture thesis, defines an SCI capability fabric,
+distinguishes semantic representation from meaning and authority, places
+GMB and the universal GSM in the architecture, maps the full realization
+funnel, and adds corpus adjacencies, counterevidence, and open editorial
+questions. Those changes are AI editorial or synthetic contributions
+until adopted. No SCI implementation or comparative baseline was
+executed. The pass does not establish that operating systems and AI lack
+all semantic infrastructure, that semantic representations are new, that
+hallucination is caused by one missing layer, or that GMB presently
+conforms to a complete SCI profile. External prior art was not reviewed.
+No publication, canonical standing, identity merger, conformance
+assignment, or implementation authority is granted.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern computing systems exhibit a structural
+discontinuity between two domains: the execution substrate of operating
+systems and the reasoning substrate of artificial intelligence. Its
+nearest external comparison fields are semantic, software, ai. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. Modularity, secure-development practice,
+and reproducibility reduce classes of failure but do not guarantee
+architectural coherence or user sovereignty. Retrieval, tool use, and
+policy layers can reduce unsupported output without eliminating model
+error, source error, omission, bias, or the environmental and
+institutional costs of scale. These limits are not generic disclaimers:
+they identify the assumptions that a later empirical, formal, or
+implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E7]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Memory Hierarchies.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20793071</p>
+<p>Adam Ableman <em>Constitutional Semantic Engineering.</em> Zenodo,
+2026. doi:10.5281/zenodo.21111455</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848472">10.5281/zenodo.23848472</a></p>

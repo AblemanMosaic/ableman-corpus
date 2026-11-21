@@ -1,0 +1,1541 @@
+<h1 id="constitutional-computation">Constitutional Computation</h1>
+<h2 id="computing-through-authorized-transformation">Computing Through
+Authorized Transformation</h2>
+<h3
+id="every-machine-changes-state.-constitutional-machines-must-also-justify-it.">Every
+machine changes state. Constitutional machines must also justify
+it.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern computation is founded upon models that describe how state
+changes occur. Turing Machines describe state transitions over symbolic
+tapes. Lambda Calculus describes computation through function
+application. Interaction systems describe computation through local
+graph rewriting. These models differ in representation and execution,
+yet share a common assumption:</p>
+<blockquote>
+<p>Computation concerns what can happen.</p>
+</blockquote>
+<p>Legitimacy, authority, governance, and accountability are typically
+treated as external concerns, layered atop computational substrates
+after execution occurs.</p>
+<p>This paper proposes <strong>Constitutional Computation</strong>, a
+computational paradigm in which legitimacy is elevated to a first-class
+computational primitive. Computation is modeled not merely as state
+transformation, but as <strong>authorized transformation</strong>.
+Effects are not directly executed. They are petitioned, evaluated
+against a constitution, admitted or denied, receipted, and only then
+allowed to alter state.</p>
+<p>Constitutional Computation introduces formal structures for
+petitions, capabilities, constitutions, admission judgments, authority
+relations, effect semantics, time ordering, and receipts. The resulting
+model binds causality and legitimacy into a single computational
+process. State transitions become constitution-bounded rather than
+merely mechanically bounded.</p>
+<p>The implications extend beyond governance and compliance.
+Constitutional Computation provides foundations for explainable
+software, governed artificial intelligence, capability-secure systems,
+semantic observability, autonomous agents, and future computational
+substrates in which execution and justification are inseparable.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Software systems increasingly operate in domains where legitimacy
+matters as much as correctness.</p>
+<p>Applications move money.</p>
+<p>Agents invoke tools.</p>
+<p>Cloud systems provision infrastructure.</p>
+<p>Artificial intelligence systems perform actions in the world.</p>
+<p>Yet the underlying computational models remain primarily concerned
+with causality.</p>
+<p>They answer:</p>
+<blockquote>
+<p>What state follows from this state?</p>
+</blockquote>
+<p>Modern systems increasingly require an additional question:</p>
+<blockquote>
+<p>Under what authority is this transformation admissible?</p>
+</blockquote>
+<p>Traditional computation treats legitimacy as metadata.</p>
+<p>Constitutional Computation treats legitimacy as part of the
+computation itself.</p>
+<hr />
+<h2 id="the-missing-axis-of-computation">2. The Missing Axis of
+Computation</h2>
+<p>Every major computational model describes causality.</p>
+<p>A Turing Machine describes:</p>
+<pre class="text"><code>State A
+-&gt; Transition
+-&gt; State B</code></pre>
+<p>Lambda Calculus describes:</p>
+<pre class="text"><code>Expression A
+-&gt; Reduction
+-&gt; Expression B</code></pre>
+<p>Interaction Systems describe:</p>
+<pre class="text"><code>Structure A
+-&gt; Rewrite
+-&gt; Structure B</code></pre>
+<p>Each determines what transformations are mechanically possible.</p>
+<p>Constitutional Computation introduces a second axis:</p>
+<pre class="text"><code>Can the transformation occur?
+
+Is the transformation admissible?</code></pre>
+<p>The first concerns mechanics.</p>
+<p>The second concerns legitimacy.</p>
+<p>The central claim of this paper is that legitimacy can be
+incorporated directly into the computational substrate.</p>
+<hr />
+<h2 id="formal-model">3. Formal Model</h2>
+<p>A Constitutional Computation system is defined as:</p>
+<p><span
+class="math display">𝒞 = (<em>S</em>, <em>P</em>, <em>I</em><em>d</em>, <em>A</em>, <em>C</em>, <em>R</em>, <em>Γ</em>, ⊢, ≺ )</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>S</em></span> is a state space</li>
+<li><span class="math inline"><em>P</em></span> is a set of
+petitions</li>
+<li><span class="math inline"><em>I</em><em>d</em></span> is a set of
+actor identities</li>
+<li><span class="math inline"><em>A</em></span> is a set of
+authorities</li>
+<li><span class="math inline"><em>C</em></span> is a set of
+capabilities</li>
+<li><span class="math inline"><em>R</em></span> is a set of
+receipts</li>
+<li><span
+class="math inline"><em>Γ</em> = (<em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub>, <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>)</span>
+is a constitution, decomposed into admission judgment and effect
+interpreter (see Section 3.1)</li>
+<li><span class="math inline">⊢</span> is the admission relation</li>
+<li><span class="math inline">≺</span> is an ordering relation over
+receipts and constitutional events</li>
+</ul>
+<p>A constitutional transition is defined as:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+$$</span></p>
+<p>iff:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>a</em><em>d</em><em>m</em><em>i</em><em>t</em>, <em>π</em>)</span></p>
+<p>and</p>
+<p><span
+class="math display"><em>S</em><sub><em>t</em> + 1</sub> = <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em><sub><em>t</em></sub>, <em>p</em>)</span></p>
+<p>and</p>
+<p><span
+class="math display"><em>r</em> = <em>r</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em>(<em>p</em>, <em>a</em><em>d</em><em>m</em><em>i</em><em>t</em>, <em>π</em>, <em>H</em>(<em>r</em><sub><em>t</em> − 1</sub>), <em>t</em><em>s</em>, <em>v</em><em>e</em><em>r</em>(<em>Γ</em>))</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>S</em><sub><em>t</em></sub></span> is
+the current state at logical time <span
+class="math inline"><em>t</em></span></li>
+<li><span class="math inline"><em>p</em></span> is a petition</li>
+<li><span class="math inline"><em>π</em></span> is the proof object
+constructed by <span
+class="math inline"><em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub></span>
+during admission</li>
+<li><span class="math inline"><em>r</em></span> is a receipt</li>
+<li><span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>
+is the constitution-constrained effect interpreter</li>
+</ul>
+<p>Execution is conditional upon proof of admissibility. The proof <span
+class="math inline"><em>π</em></span> is constructed during admission,
+not supplied externally. A separate verification mode permits externally
+supplied proofs and is treated in Section 3.1.</p>
+<p>The constitution constrains not merely whether execution happens, but
+how admitted effects are interpreted.</p>
+<h3 id="formal-refinement">3.1 Formal Refinement</h3>
+<p>The model above can be presented in a tighter form that eliminates
+redundant duality between the functional and relational presentations of
+<span class="math inline"><em>Γ</em></span>, makes proof construction
+explicit, structures the state space, integrates the effect interpreter
+into <span class="math inline"><em>Γ</em></span>, and collapses the
+entire model into a single transition rule.</p>
+<p><strong>Relational admission as primary.</strong> Treat the
+relational form as primary:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>π</em>)</span></p>
+<p>Here <span class="math inline"><em>π</em></span> is constructed by
+<span class="math inline"><em>Γ</em></span> during admission rather than
+supplied externally. The functional notation <span
+class="math inline"><em>Γ</em>(⋅)</span> remains valid as an
+implementation surface but is not a separate formal object. A variant
+supports externally supplied proofs for verification rather than
+construction:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ (<em>p</em>, <em>π</em><sub><em>c</em><em>l</em><em>a</em><em>i</em><em>m</em></sub>) ⇒ <em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em></span></p>
+<p>This cleanly separates proof construction from proof
+verification.</p>
+<p><strong>Constitution as admission-effect pair.</strong> The
+constitution is structured as:</p>
+<p><span
+class="math display"><em>Γ</em> = (<em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub>, <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>)</span></p>
+<p>where <span
+class="math inline"><em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub></span>
+is the admission judgment and <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>
+is the effect interpreter:</p>
+<p><span
+class="math display"><em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub>, <em>S</em> ⊢ <em>p</em> ⇒ <em>S</em><sup>′</sup> = <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em>, <em>p</em>)</span></p>
+<p><strong>Structured state.</strong> State is decomposed into typed
+components:</p>
+<p><span
+class="math display"><em>S</em> = (<em>S</em><sub><em>d</em><em>a</em><em>t</em><em>a</em></sub>, <em>S</em><sub><em>a</em><em>u</em><em>t</em><em>h</em></sub>, <em>S</em><sub><em>c</em><em>a</em><em>p</em></sub>, <em>S</em><sub><em>m</em><em>e</em><em>t</em><em>a</em></sub>)</span></p>
+<p>where <span
+class="math inline"><em>S</em><sub><em>d</em><em>a</em><em>t</em><em>a</em></sub></span>
+holds application data, <span
+class="math inline"><em>S</em><sub><em>a</em><em>u</em><em>t</em><em>h</em></sub></span>
+holds authority assignments, <span
+class="math inline"><em>S</em><sub><em>c</em><em>a</em><em>p</em></sub></span>
+holds capability state including revocations, and <span
+class="math inline"><em>S</em><sub><em>m</em><em>e</em><em>t</em><em>a</em></sub></span>
+holds constitution version and metadata. Admission and effect
+interpretation may read or write to any component, but the decomposition
+prevents hidden state channels: capability revocation lives in <span
+class="math inline"><em>S</em><sub><em>c</em><em>a</em><em>p</em></sub></span>,
+constitution version lives in <span
+class="math inline"><em>S</em><sub><em>m</em><em>e</em><em>t</em><em>a</em></sub></span>,
+and these are not silently smuggled through <span
+class="math inline"><em>S</em><sub><em>d</em><em>a</em><em>t</em><em>a</em></sub></span>.</p>
+<p><strong>Unified constitutional step.</strong> The entire model
+collapses into a single transition relation:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+$$</span></p>
+<p>where <span class="math inline"><em>r</em></span> commits the
+decision and <span class="math inline"><em>π</em></span> explains it.
+The system is then defined as the closure of this relation over admitted
+petitions. This gives one semantic object, one transition rule, and
+maximal compression of the formal apparatus.</p>
+<p><strong>Definition (System).</strong> The Constitutional Computation
+system <span class="math inline">𝒞</span> is defined as the reflexive
+transitive closure of the constitutional step relation:</p>
+<p><span class="math display">$$
+\mathcal{C} = closure(\overset{\Gamma}{\Rightarrow})
+$$</span></p>
+<p><strong>Minimality.</strong> The tuple <span
+class="math inline">(<em>p</em>, <em>Γ</em>, <em>r</em>, <em>π</em>)</span>
+is minimal in the sense that removing any component eliminates either
+admissibility, interpretability, or verifiability of the transition:
+<span class="math inline"><em>p</em></span> carries the intent to be
+admitted, <span class="math inline"><em>Γ</em></span> carries the policy
+under which admission is decided, <span
+class="math inline"><em>r</em></span> carries the commitment of the
+decision, and <span class="math inline"><em>π</em></span> carries the
+justification that admits checking.</p>
+<p>Reachability, composition, the minimal runtime, and the worked
+example may all be presented as instances or trajectories within this
+closure. The remainder of this paper continues to use the longer
+notations where they aid exposition, with the understanding that they
+are projections of this unified rule onto specific facets (admission,
+effect, ordering, receipt).</p>
+<hr />
+<h2 id="constitutions">4. Constitutions</h2>
+<p>The constitution is the central governing object.</p>
+<p>A constitution is defined as a state-indexed admission judgment that
+constructs a decision and a proof:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>π</em>)</span></p>
+<p>where <span
+class="math inline"><em>S</em><sub><em>t</em></sub></span> is current
+state, <span class="math inline"><em>p</em></span> is a petition, and
+<span class="math inline"><em>π</em></span> is the proof object produced
+by admission (not supplied as input). The decomposition <span
+class="math inline"><em>Γ</em> = (<em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub>, <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>)</span>
+from Section 3.1 makes <span
+class="math inline"><em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub></span>
+the carrier of this judgment and <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>
+the carrier of effect interpretation.</p>
+<p>The constitution may be:</p>
+<ul>
+<li>static</li>
+<li>stateful</li>
+<li>versioned</li>
+<li>self-amending</li>
+</ul>
+<p>depending upon implementation.</p>
+<p>For deterministic constitutional systems:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>π</em>)</span></p>
+<p>must always yield the same <span
+class="math inline"><em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em></span>
+and a deterministically constructed <span
+class="math inline"><em>π</em></span> for identical inputs.</p>
+<p>More sophisticated constitutions may be expressed as proof systems.
+In that case, when state is implicit and admission is read as type
+derivation, the judgment may be abbreviated as:</p>
+<p><span
+class="math display"><em>Γ</em> ⊢ <em>p</em> : <em>τ</em></span></p>
+<p>where <span class="math inline">(<em>τ</em>)</span> represents a
+capability type or admissibility proof. This form is a notational
+abbreviation of the canonical state-indexed judgment, not a competing
+judgment.</p>
+<p>Admission becomes proof construction rather than simple rule
+evaluation.</p>
+<hr />
+<h2 id="constitution-constrained-effects">5. Constitution-Constrained
+Effects</h2>
+<p>A critical requirement of Constitutional Computation is that effect
+semantics are constrained by the constitution.</p>
+<p>It is insufficient to define:</p>
+<p><span
+class="math display"><em>S</em><sup>′</sup> = <em>δ</em>(<em>S</em>, <em>p</em>)</span></p>
+<p>if <span class="math inline">(<em>δ</em>)</span> is external to
+constitutional interpretation.</p>
+<p>Otherwise, the same admitted petition could produce divergent states
+under different runtimes.</p>
+<p>Constitutional Computation therefore requires:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>a</em><em>d</em><em>m</em><em>i</em><em>t</em>, <em>π</em>) ⇒ <em>S</em><sup>′</sup> = <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em><sub><em>t</em></sub>, <em>p</em>)</span></p>
+<p>This means admissibility and effect interpretation are coupled.</p>
+<p>The constitution governs:</p>
+<ul>
+<li>whether an effect may occur</li>
+<li>how the effect is interpreted</li>
+<li>which state transition is legitimate</li>
+<li>which runtime semantics are valid</li>
+</ul>
+<p>The machine does not merely ask:</p>
+<blockquote>
+<p>May this operation execute?</p>
+</blockquote>
+<p>It also asks:</p>
+<blockquote>
+<p>What does this operation constitutionally mean?</p>
+</blockquote>
+<hr />
+<h2 id="time-and-ordering">6. Time and Ordering</h2>
+<p>Constitutional systems require an ordering model.</p>
+<p>Receipts are ordered by:</p>
+<p><span
+class="math display"><em>r</em><sub><em>i</em></sub> ≺ <em>r</em><sub><em>j</em></sub></span></p>
+<p>meaning receipt <span
+class="math inline">(<em>r</em><sub><em>i</em></sub>)</span> precedes
+receipt <span
+class="math inline">(<em>r</em><sub><em>j</em></sub>)</span>.</p>
+<p>A logical timestamp may be defined as:</p>
+<p><span
+class="math display"><em>t</em><em>s</em>(<em>r</em>)</span></p>
+<p>The constitution evaluates petitions against ordered state:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>π</em>)</span></p>
+<p>Receipts may form a hash-linked lineage:</p>
+<p><span
+class="math display"><em>h</em><sub><em>t</em></sub> = <em>H</em>(<em>h</em><sub><em>t</em> − 1</sub> ∥ <em>r</em><sub><em>t</em></sub>)</span></p>
+<p>This provides replayability, tamper evidence, and deterministic
+reconstruction.</p>
+<p>Without ordering, simultaneous petitions, conflicts, replay, and
+receipt verification remain underspecified.</p>
+<hr />
+<h2 id="deterministic-and-concurrent-modes">7. Deterministic and
+Concurrent Modes</h2>
+<p>Constitutional systems may operate in deterministic or concurrent
+modes.</p>
+<h3 id="deterministic-mode">7.1 Deterministic Mode</h3>
+<p>Deterministic mode imposes a total order over petitions.</p>
+<p><span
+class="math display"><em>p</em><sub>1</sub> ≺ <em>p</em><sub>2</sub> ≺ <em>p</em><sub>3</sub></span></p>
+<p>This produces replayable execution:</p>
+<p><span
+class="math display"><em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup>) = <em>S</em><sub><em>t</em></sub>  iff  <em>Γ</em>
+and  ≺  are deterministic</span></p>
+<p>where <span
+class="math inline"><em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup></span>
+is the subset of receipts recording admitted effects, and <span
+class="math inline"><em>f</em><em>o</em><em>l</em><em>d</em></span> is
+defined by iterative application of the constitutional effect
+interpreter:</p>
+<p><span
+class="math display"><em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup>) = <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(…<em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em><sub>0</sub>, <em>r</em><sub>1</sub>.<em>p</em>), <em>r</em><sub>2</sub>.<em>p</em>)…, <em>r</em><sub><em>t</em></sub>.<em>p</em>)</span></p>
+<p>applied to the commit receipts in the order <span
+class="math inline">≺</span>.</p>
+<p>Replayability requires both a deterministic effect interpreter <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>
+and a stable ordering <span class="math inline">≺</span>. Without these,
+replay is not guaranteed.</p>
+<p>Deterministic mode is useful for:</p>
+<ul>
+<li>financial ledgers</li>
+<li>audit-sensitive systems</li>
+<li>compliance workflows</li>
+<li>reproducible governance</li>
+</ul>
+<h3 id="concurrent-mode">7.2 Concurrent Mode</h3>
+<p>Concurrent mode permits partial ordering.</p>
+<p>Two petitions may execute concurrently when they do not conflict:</p>
+<p><span
+class="math display">(<em>p</em><sub><em>i</em></sub> ∥ <em>p</em><sub><em>j</em></sub>) ∧ ¬(<em>p</em><sub><em>i</em></sub>#<em>p</em><sub><em>j</em></sub>) ⇒ <em>c</em><em>o</em><em>m</em><em>m</em><em>u</em><em>t</em><em>a</em><em>t</em><em>i</em><em>v</em><em>e</em>(<em>p</em><sub><em>i</em></sub>, <em>p</em><sub><em>j</em></sub>)</span></p>
+<p>where:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;p_i \# p_j \\
+&amp;\iff  \\
+&amp;\ne g\ commutative(\Gamma_{eff}(\cdot, p_i), \Gamma_{eff}(\cdot,
+p_j))
+\end{aligned}
+$$</span></p>
+<p>or equivalently at the state level:</p>
+<p><span
+class="math display">∃<em>S</em>: <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em>, <em>p</em><sub><em>i</em></sub>), <em>p</em><sub><em>j</em></sub>) ≠ <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em>, <em>p</em><sub><em>j</em></sub>), <em>p</em><sub><em>i</em></sub>)</span></p>
+<p>This grounds conflict in semantics rather than examples.</p>
+<p>Concurrent mode requires conflict resolution policies inside <span
+class="math inline">(<em>Γ</em>)</span>.</p>
+<hr />
+<h2 id="petitions">8. Petitions</h2>
+<p>The petition is the fundamental computational object.</p>
+<p>A petition is defined as:</p>
+<p><span
+class="math display"><em>p</em> = (<em>i</em>, <em>i</em><em>d</em>, <em>a</em>, <em>c</em>, <em>e</em>, <em>σ</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">(<em>i</em>)</span> = intent</li>
+<li><span class="math inline">(<em>i</em><em>d</em>)</span> = actor
+identity</li>
+<li><span class="math inline">(<em>a</em>)</span> = authority basis</li>
+<li><span class="math inline">(<em>c</em>)</span> = capability</li>
+<li><span class="math inline">(<em>e</em>)</span> = proposed effect</li>
+<li><span class="math inline">(<em>σ</em>)</span> = supporting
+evidence</li>
+</ul>
+<p>Intent describes purpose.</p>
+<p>Effect describes proposed state transformation.</p>
+<p>Identity describes the actor.</p>
+<p>Authority describes the source of legitimacy.</p>
+<p>These must remain distinct.</p>
+<p>A petition must satisfy:</p>
+<p><span
+class="math display"><em>w</em><em>e</em><em>l</em><em>l</em><em>F</em><em>o</em><em>r</em><em>m</em><em>e</em><em>d</em>(<em>p</em>) ⇒ <em>a</em> ⊨ <em>c</em> ∧ <em>b</em><em>i</em><em>n</em><em>d</em>(<em>i</em><em>d</em>, <em>a</em>)</span></p>
+<p>where:</p>
+<p><span
+class="math display"><em>b</em><em>i</em><em>n</em><em>d</em> ⊆ <em>I</em><em>d</em> × <em>A</em></span></p>
+<p>meaning the asserted authority basis must legitimately support the
+requested capability, and the asserted identity must be bound to that
+authority basis. Without identity-authority binding, an identity could
+assert arbitrary authority basis.</p>
+<p>Unlike instructions, petitions are not executed directly.</p>
+<p>They are evaluated.</p>
+<hr />
+<h2 id="authority-and-capabilities">9. Authority and Capabilities</h2>
+<p>Authority and capability are separate concepts.</p>
+<p>Authority answers:</p>
+<blockquote>
+<p>Why may this actor act?</p>
+</blockquote>
+<p>Capability answers:</p>
+<blockquote>
+<p>What may this actor do?</p>
+</blockquote>
+<p>The authority relation is defined as:</p>
+<p><span class="math display"> ⊨  ⊆ <em>A</em> × <em>C</em></span></p>
+<p><span class="math display"><em>a</em> ⊨ <em>c</em></span></p>
+<p>means authority basis <span class="math inline">(<em>a</em>)</span>
+supports capability <span class="math inline">(<em>c</em>)</span>.</p>
+<p>A capability is defined as:</p>
+<p><span
+class="math display"><em>c</em> = (<em>o</em><em>p</em>, <em>r</em><em>e</em><em>s</em><em>o</em><em>u</em><em>r</em><em>c</em><em>e</em>, <em>c</em><em>o</em><em>n</em><em>s</em><em>t</em><em>r</em><em>a</em><em>i</em><em>n</em><em>t</em><em>s</em>)</span></p>
+<p>Examples:</p>
+<pre class="text"><code>(database.read,
+ customer_records,
+ region=EU)
+
+(funds.transfer,
+ treasury_account,
+ amount &lt; $10,000)</code></pre>
+<p>Capabilities support attenuation:</p>
+<p><span
+class="math display"><em>c</em><sup>′</sup> ⊆ <em>c</em></span></p>
+<p>where delegated capabilities are weaker than their parents.</p>
+<p>Delegation is defined as:</p>
+<p><span class="math display">$$
+A_1
+\xrightarrow{delegate(c)}
+A_2
+$$</span></p>
+<p>A delegated authority chain is valid only when attenuation is
+preserved:</p>
+<p><span
+class="math display"><em>a</em><sub>0</sub> ⊨ <em>c</em> ∧ <em>a</em><sub>0</sub>→<sup>*</sup><em>a</em><sub><em>n</em></sub> ⇒ <em>a</em><sub><em>n</em></sub> ⊨ <em>c</em><sup>′</sup></span></p>
+<p>where:</p>
+<p><span
+class="math display"><em>c</em><sup>′</sup> ⊆ <em>c</em></span></p>
+<p>Constitutional systems may implement:</p>
+<ul>
+<li>revocable capabilities</li>
+<li>time-limited capabilities</li>
+<li>affine capabilities</li>
+<li>linear capabilities</li>
+<li>duplicable capabilities</li>
+</ul>
+<p>depending on constitutional requirements.</p>
+<hr />
+<h2 id="admission">10. Admission</h2>
+<p>Admission is the constitutional equivalent of evaluation.</p>
+<p>A petition may be:</p>
+<pre class="text"><code>admitted</code></pre>
+<p>or:</p>
+<pre class="text"><code>denied</code></pre>
+<p>Admission is represented formally using the primary state-indexed
+judgment:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>π</em>)</span></p>
+<p>Only admitted petitions may produce effects.</p>
+<p>This creates a constitutional boundary between intention and
+transformation.</p>
+<h3 id="soundness">10.1 Soundness</h3>
+<p>Admission must be sound.</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇒ <em>p</em>
+satisfies constitutional constraints under
+<em>S</em><sub><em>t</em></sub></span></p>
+<p>Soundness ensures that admitted petitions are constitutionally
+valid.</p>
+<h3 id="completeness">10.2 Completeness</h3>
+<p>Some systems may additionally require completeness.</p>
+<p><span class="math display"><em>p</em> valid under
+<em>S</em><sub><em>t</em></sub> ⇒ <em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em></span></p>
+<p>Completeness ensures that all valid petitions are admitted.</p>
+<p>Many practical constitutional systems may choose soundness over
+completeness.</p>
+<p>A conservative system may deny some valid petitions in order to
+prevent unauthorized transformation.</p>
+<hr />
+<h2 id="proof-objects">11. Proof Objects</h2>
+<p>A proof object is defined as:</p>
+<p><span
+class="math display"><em>π</em> : <em>P</em><em>r</em><em>o</em><em>o</em><em>f</em>(<em>p</em> : <em>a</em><em>d</em><em>m</em><em>i</em><em>t</em>)</span></p>
+<p>or, in denial cases:</p>
+<p><span
+class="math display"><em>π</em> : <em>P</em><em>r</em><em>o</em><em>o</em><em>f</em>(<em>p</em> : <em>d</em><em>e</em><em>n</em><em>y</em>)</span></p>
+<p>Proof objects must be checkable.</p>
+<p>They may include:</p>
+<ul>
+<li>rule traces</li>
+<li>capability derivations</li>
+<li>delegation chains</li>
+<li>state predicates</li>
+<li>cryptographic attestations</li>
+<li>policy evaluation logs</li>
+</ul>
+<p>Proofs may be minimal or expansive.</p>
+<p>Minimal proofs reduce storage.</p>
+<p>Expansive proofs improve auditability.</p>
+<p>Advanced systems may use:</p>
+<ul>
+<li>succinct proofs</li>
+<li>zero-knowledge receipts</li>
+<li>proof compression</li>
+<li>verifiable computation</li>
+</ul>
+<p>The proof object connects constitutional logic to computational
+verification.</p>
+<p>Formally, proof construction implies the existence of a verification
+predicate:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇓ (<em>a</em><em>d</em><em>m</em><em>i</em><em>t</em>, <em>π</em>) ⇒ <em>v</em><em>e</em><em>r</em><em>i</em><em>f</em><em>y</em>(<em>π</em>, <em>p</em>, <em>Γ</em>, <em>S</em><sub><em>t</em></sub>)</span></p>
+<p>This closes the loop from construction to verification to soundness:
+admission produces <span class="math inline"><em>π</em></span>, <span
+class="math inline"><em>π</em></span> is independently checkable against
+<span
+class="math inline">(<em>p</em>, <em>Γ</em>, <em>S</em><sub><em>t</em></sub>)</span>,
+and soundness (Section 13.1) follows from the existence of a valid <span
+class="math inline"><em>π</em></span>.</p>
+<hr />
+<h2 id="receipts">12. Receipts</h2>
+<p>Receipts provide durable evidence that constitutional evaluation
+occurred.</p>
+<p>A receipt is defined as:</p>
+<p><span
+class="math display"><em>r</em> = (<em>p</em>, <em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>π</em>, <em>h</em>, <em>t</em><em>s</em>, <em>v</em><em>e</em><em>r</em>)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">(<em>p</em>)</span> = petition</li>
+<li><span
+class="math inline">(<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>)</span>
+= admission outcome</li>
+<li><span class="math inline">(<em>π</em>)</span> = proof trace</li>
+<li><span class="math inline">(<em>h</em>)</span> = receipt linkage
+hash</li>
+<li><span class="math inline">(<em>t</em><em>s</em>)</span> = logical
+timestamp</li>
+<li><span class="math inline">(<em>v</em><em>e</em><em>r</em>)</span> =
+constitution version under which <span
+class="math inline"><em>Γ</em></span> evaluated <span
+class="math inline"><em>p</em></span></li>
+</ul>
+<p>Receipts may form a cryptographically verifiable lineage graph.</p>
+<p>Constitutional systems maintain the invariant:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+\Rightarrow
+r.decision = admit
+$$</span></p>
+<p>No effect may exist without an admitting receipt.</p>
+<p>Receipts must also correspond to the state they purport to
+commit:</p>
+<p><span
+class="math display"><em>r</em> ⤳ <em>S</em><sub><em>t</em> + 1</sub> ⇒ <em>S</em><sub><em>t</em> + 1</sub> = <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em><sub><em>t</em></sub>, <em>r</em>.<em>p</em>)</span></p>
+<p>This prevents forged admission receipts without execution, and
+prevents divergence between the receipt ledger and actual state.</p>
+<p>Receipts must also be admission-consistent: an admit-receipt must
+correspond to an actual admission judgment:</p>
+<p><span
+class="math display"><em>r</em>.<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em> = <em>a</em><em>d</em><em>m</em><em>i</em><em>t</em> ⇒ <em>Γ</em><sub><em>r</em>.<em>v</em><em>e</em><em>r</em></sub>, <em>S</em><sub><em>r</em>.<em>t</em><em>s</em></sub> ⊢ <em>r</em>.<em>p</em></span></p>
+<p>This prevents hash-valid receipts that record admission decisions
+never made by <span class="math inline"><em>Γ</em></span>.</p>
+<p>Two receipt classes exist.</p>
+<h3 id="authorization-receipt">12.1 Authorization Receipt</h3>
+<p>Produced before execution.</p>
+<p>Records admissibility.</p>
+<h3 id="commit-receipt">12.2 Commit Receipt</h3>
+<p>Produced after execution.</p>
+<p>Records successful state transition.</p>
+<p>This distinction separates legitimacy from completion.</p>
+<h3 id="denial-receipt">12.3 Denial Receipt</h3>
+<p>Denials are also receipted.</p>
+<p><span
+class="math display"><em>r</em>.<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em> = <em>d</em><em>e</em><em>n</em><em>y</em></span></p>
+<p>Denial receipts preserve evidence of attempted but refused
+transformations.</p>
+<p>A denied petition may be revised:</p>
+<p><span class="math display">$$
+p \xrightarrow{revise} p'
+$$</span></p>
+<p>or escalated through a constitutionally defined appeals path.</p>
+<hr />
+<h2 id="constitutional-reachability">13. Constitutional
+Reachability</h2>
+<p>Traditional computation defines reachable states mechanically.</p>
+<p>Constitutional Computation defines reachable states
+constitutionally.</p>
+<p><span
+class="math display"><em>N</em><em>e</em><em>x</em><em>t</em><sub><em>Γ</em></sub>(<em>S</em><sub><em>t</em></sub>) = {<em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em><sub><em>t</em></sub>, <em>p</em>) ∣ <em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em>}</span></p>
+<p>This is equivalent to the existence of a constitutional step:</p>
+<p><span class="math display">$$
+S_{t+1} \in Next_\Gamma(S_t)
+\ \iff\
+\exists p, r, \pi:\ (S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r,
+\pi)
+$$</span></p>
+<p>Reachability and transition semantics are thus a single object viewed
+from two angles.</p>
+<p>Classical transition systems define reachability mechanically:</p>
+<p><span
+class="math display"><em>N</em><em>e</em><em>x</em><em>t</em>(<em>S</em>) = {<em>δ</em>(<em>S</em>, <em>i</em>)}</span></p>
+<p>Constitutional Computation acts as a restriction operator over
+transition systems.</p>
+<p>It defines the subset of mechanically possible futures that are
+constitutionally admissible.</p>
+<p>The future of the system is therefore bounded by legitimacy.</p>
+<h3 id="named-properties">13.1 Named Properties</h3>
+<p>The model supports four named properties, each following directly
+from the invariants stated above and in Appendix B. These are presented
+as propositions rather than theorems because they are definitional
+consequences of the model rather than results requiring proof under a
+fixed constitutional logic.</p>
+<p><strong>Proposition (Authorization Safety).</strong> Every transition
+has an admitted petition:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+\Rightarrow
+\Gamma, S_t \vdash p
+$$</span></p>
+<p>This follows from the transition rule itself: the constitutional step
+relation is defined only over petitions admitted by <span
+class="math inline"><em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub></span>.</p>
+<p><strong>Proposition (Receipt Completeness).</strong> State is fully
+recoverable from the commit receipts in the ledger:</p>
+<p><span
+class="math display"><em>S</em><sub><em>t</em> + 1</sub> = <em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup>)</span></p>
+<p>where <span
+class="math inline"><em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup> ⊆ <em>R</em><sub> ≤ <em>t</em></sub></span>
+is the subset of receipts recording admitted effects. Authorization
+receipts and denial receipts are preserved in <span
+class="math inline"><em>R</em><sub> ≤ <em>t</em></sub></span> as
+evidence of constitutional evaluation but do not contribute to <span
+class="math inline"><em>f</em><em>o</em><em>l</em><em>d</em></span>.
+This follows from the state-receipt consistency invariant and the
+determinism of <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>
+under stable ordering <span class="math inline">≺</span>.</p>
+<p><strong>Proposition (Constitutional Soundness).</strong> Admission
+implies constitutional satisfaction:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em> ⇒ <em>p</em> ⊨ <em>Γ</em> at <em>S</em><sub><em>t</em></sub></span></p>
+<p>This follows from the definition of <span
+class="math inline"><em>Γ</em><sub><em>a</em><em>d</em><em>m</em></sub></span>
+as a judgment over <span class="math inline"><em>Γ</em></span>.</p>
+<p><strong>Proposition (Replay Determinism).</strong> If <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>
+and <span class="math inline">≺</span> are deterministic, then for every
+<span class="math inline"><em>t</em></span>:</p>
+<p><span
+class="math display"><em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup>) = <em>S</em><sub><em>t</em></sub></span></p>
+<p>is unique. This follows from the determinism of <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>
+under stable ordering: the iterative application defining <span
+class="math inline"><em>f</em><em>o</em><em>l</em><em>d</em></span>
+produces a single value at each step, and the receipt ledger thereby
+commits the system to a single reconstructible state trajectory. Replay
+is therefore a property of the model, not merely a feature of an
+implementation.</p>
+<p>Each proposition is stated informally; formal proofs would require
+fixing a specific constitutional logic and are left to subsequent
+work.</p>
+<h3 id="computational-class">13.2 Computational Class</h3>
+<p>Constitutional Computation defines a <em>restricted transition
+system</em>: the set of transitions admissible under <span
+class="math inline"><em>Γ</em></span> is a subset of the mechanically
+possible transitions of the underlying substrate.</p>
+<p><span
+class="math display"><em>T</em><em>S</em><sub><em>Γ</em></sub> ⊆ <em>T</em><em>S</em></span></p>
+<p>Equivalently, the language <span
+class="math inline">ℒ<sub><em>Γ</em></sub></span> of constitutionally
+reachable trajectories is a restriction of the language <span
+class="math inline">ℒ</span> of mechanically reachable trajectories:</p>
+<p><span class="math display">ℒ<sub><em>Γ</em></sub> ⊆ ℒ</span></p>
+<p>This positions Constitutional Computation alongside type systems
+(which restrict the language of programs), effect systems (which
+restrict the language of effects), and logical frameworks (which
+restrict the language of admissible derivations). In each case, a
+substrate’s expressive freedom is constrained by a discipline that makes
+some property of the resulting computation legible.</p>
+<hr />
+<h2 id="composition">14. Composition</h2>
+<p>Constitutional systems must support composed actions.</p>
+<p>Sequential composition:</p>
+<p><span
+class="math display"><em>p</em><sub>1</sub>; <em>p</em><sub>2</sub></span></p>
+<p>is valid only when both petitions transition consistently:</p>
+<p><span class="math display">$$
+(S_t, p_1) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r_1, \pi_1)
+\ \land\
+(S_{t+1}, p_2) \overset{\Gamma}{\Rightarrow} (S_{t+2}, r_2, \pi_2)
+$$</span></p>
+<p>In particular, <span
+class="math inline"><em>r</em><sub>1</sub>.<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em> = <em>a</em><em>d</em><em>m</em><em>i</em><em>t</em></span>
+is necessary but not sufficient: <span
+class="math inline"><em>p</em><sub>2</sub></span> must also be
+admissible under the state <span
+class="math inline"><em>S</em><sub><em>t</em> + 1</sub></span> produced
+by <span class="math inline"><em>p</em><sub>1</sub></span>.</p>
+<p>Parallel petitions require conflict analysis.</p>
+<p>Define:</p>
+<p><span
+class="math display"><em>p</em><sub><em>i</em></sub>#<em>p</em><sub><em>j</em></sub></span></p>
+<p>when petitions are non-commutative.</p>
+<p>Examples include:</p>
+<ul>
+<li>competing writes</li>
+<li>double-spend attempts</li>
+<li>conflicting authority assignments</li>
+<li>simultaneous constitutional amendments</li>
+</ul>
+<p>Constitutional runtimes may support:</p>
+<ul>
+<li>atomic petition sets</li>
+<li>transactional petitions</li>
+<li>multi-petition admission</li>
+<li>two-phase admission and commit</li>
+<li>compensating petitions</li>
+</ul>
+<p>as first-class constructs.</p>
+<hr />
+<h2 id="constitutional-evolution">15. Constitutional Evolution</h2>
+<p>Constitutions may evolve.</p>
+<p>But constitutional evolution must itself be governed.</p>
+<p>An amendment petition is defined as:</p>
+<p><span
+class="math display"><em>p</em><sub><em>a</em><em>m</em><em>e</em><em>n</em><em>d</em></sub> ∈ <em>P</em></span></p>
+<p>If admitted:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em><sub><em>a</em><em>m</em><em>e</em><em>n</em><em>d</em></sub> ⇒ <em>Γ</em><sup>′</sup></span></p>
+<p>The amendment transition must produce a receipt and remain inside the
+same transition system:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;(S_t, p_{amend}) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi) \
+\\
+&amp;\land \ \Gamma \\
+&amp;\rightarrow \Gamma'
+\end{aligned}
+$$</span></p>
+<p>where <span
+class="math inline"><em>S</em><sub><em>t</em> + 1</sub>.<em>S</em><sub><em>m</em><em>e</em><em>t</em><em>a</em></sub>.<em>v</em><em>e</em><em>r</em> = <em>v</em> + 1</span>
+and <span
+class="math inline"><em>S</em><sub><em>t</em> + 1</sub>.<em>S</em><sub><em>d</em><em>a</em><em>t</em><em>a</em></sub> = <em>S</em><sub><em>t</em></sub>.<em>S</em><sub><em>d</em><em>a</em><em>t</em><em>a</em></sub></span>.
+Amendment does not change application data but does increment the
+constitution version in <span
+class="math inline"><em>S</em><sub><em>m</em><em>e</em><em>t</em><em>a</em></sub></span>,
+which subsequent admission judgments will read via <span
+class="math inline"><em>c</em><em>u</em><em>r</em><em>r</em><em>e</em><em>n</em><em>t</em><em>V</em><em>e</em><em>r</em><em>s</em><em>i</em><em>o</em><em>n</em></span>.</p>
+<p>The constitution version is operationally bound into the transition
+rule. Each receipt <span class="math inline"><em>r</em></span> records
+the version <span
+class="math inline"><em>v</em> = <em>r</em>.<em>v</em><em>e</em><em>r</em></span>
+under which it was evaluated, and subsequent petitions evaluate under
+the constitution version current at their timestamp:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma_v}{\Rightarrow} (S_{t+1}, r, \pi)
+\quad \text{where}\quad v = currentVersion(t)
+$$</span></p>
+<p>Equivalently, for any receipt <span
+class="math inline"><em>r</em></span> in the ledger, the admission that
+produced it was evaluated under <span
+class="math inline"><em>Γ</em><sub><em>r</em>.<em>v</em><em>e</em><em>r</em></sub></span>
+at state <span
+class="math inline"><em>S</em><sub><em>r</em>.<em>t</em><em>s</em></sub></span>:</p>
+<p><span
+class="math display"><em>Γ</em><sub><em>r</em>.<em>v</em><em>e</em><em>r</em></sub>, <em>S</em><sub><em>r</em>.<em>t</em><em>s</em></sub> ⊢ <em>r</em>.<em>p</em></span></p>
+<p>This makes versioning operationally binding rather than only
+documentary.</p>
+<p>This prevents governance root-of-trust ambiguity.</p>
+<p>A constitutional system must define:</p>
+<ul>
+<li>who may amend <span class="math inline">(<em>Γ</em>)</span></li>
+<li>which authority basis supports amendment</li>
+<li>whether amendments are immediate or delayed</li>
+<li>whether prior receipts remain evaluated under historical
+constitutions</li>
+<li>how constitutional versions are addressed</li>
+</ul>
+<p>A receipt should therefore include the constitution version used for
+evaluation. Formally:</p>
+<p><span
+class="math display"><em>v</em><em>e</em><em>r</em> : <em>R</em> → <em>V</em></span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>Γ</em><sub><em>v</em></sub> ⊢ <em>p</em> ⇒ <em>r</em>.<em>v</em><em>e</em><em>r</em> = <em>v</em></span></p>
+<p>Replay across amendments must apply the constitution version recorded
+in each receipt:</p>
+<p><span
+class="math display"><em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em>)
+applies <em>Γ</em><sub><em>r</em>.<em>v</em><em>e</em><em>r</em></sub>
+for each <em>r</em> ∈ <em>R</em></span></p>
+<p>Without versioned replay, execution under amended constitutions is
+undefined.</p>
+<hr />
+<h2 id="worked-example-competing-treasury-transfers">16. Worked Example:
+Competing Treasury Transfers</h2>
+<p>Consider two agents.</p>
+<p>Agent A possesses delegated authority to transfer up to $5,000.</p>
+<p>Agent B possesses delegated authority to transfer up to $50,000.</p>
+<p>Current balance:</p>
+<pre class="text"><code>$7,000</code></pre>
+<p>Two petitions arrive.</p>
+<p>Petition <span
+class="math inline">(<em>P</em><sub>1</sub>)</span>:</p>
+<pre class="text"><code>Intent:
+    vendor_payment
+
+Identity:
+    agent_A
+
+Authority:
+    delegated_accounts_payable_role
+
+Capability:
+    funds.transfer(amount &lt;= 5000)
+
+Effect:
+    transfer $5,000 to Vendor X</code></pre>
+<p>Petition <span
+class="math inline">(<em>P</em><sub>2</sub>)</span>:</p>
+<pre class="text"><code>Intent:
+    vendor_payment
+
+Identity:
+    agent_B
+
+Authority:
+    delegated_treasury_role
+
+Capability:
+    funds.transfer(amount &lt;= 50000)
+
+Effect:
+    transfer $6,000 to Vendor Y</code></pre>
+<p>The petitions conflict:</p>
+<p><span
+class="math display"><em>P</em><sub>1</sub>#<em>P</em><sub>2</sub></span></p>
+<p>because both consume from the same balance.</p>
+<p>Under deterministic ordering:</p>
+<p><span
+class="math display"><em>P</em><sub>1</sub> ≺ <em>P</em><sub>2</sub></span></p>
+<p>the constitution evaluates:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub>0</sub> ⊢ <em>P</em><sub>1</sub> ⇓ (<em>a</em><em>d</em><em>m</em><em>i</em><em>t</em>, <em>π</em><sub>1</sub>)</span></p>
+<p>because:</p>
+<ul>
+<li>identity is authenticated</li>
+<li>authority is valid</li>
+<li>capability is valid</li>
+<li>delegation is attenuated</li>
+<li>sufficient balance exists</li>
+</ul>
+<p>Authorization receipt <span
+class="math inline">(<em>R</em><sub>1</sub><sup><em>a</em></sup>)</span>
+is generated.</p>
+<p>The effect executes:</p>
+<p><span
+class="math display"><em>S</em><sub>1</sub> = <em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em><sub>0</sub>, <em>P</em><sub>1</sub>)</span></p>
+<p>The balance becomes:</p>
+<pre class="text"><code>$2,000</code></pre>
+<p>Commit receipt <span
+class="math inline">(<em>R</em><sub>1</sub><sup><em>c</em></sup>)</span>
+is generated.</p>
+<p>The constitution then evaluates <span
+class="math inline">(<em>P</em><sub>2</sub>)</span>:</p>
+<p><span
+class="math display"><em>Γ</em>, <em>S</em><sub>1</sub> ⊢ <em>P</em><sub>2</sub> ⇓ (<em>d</em><em>e</em><em>n</em><em>y</em>, <em>π</em><sub>2</sub>)</span></p>
+<p>because the balance constraint is no longer satisfied.</p>
+<p>Denial receipt <span
+class="math inline">(<em>R</em><sub>2</sub><sup><em>d</em></sup>)</span>
+records:</p>
+<ul>
+<li>valid identity</li>
+<li>valid authority</li>
+<li>valid capability</li>
+<li>failed state predicate</li>
+<li>ordering dependency</li>
+</ul>
+<p>The resulting receipt graph explains:</p>
+<ul>
+<li>why one transfer occurred</li>
+<li>why the second failed</li>
+<li>which authority participated</li>
+<li>which capability was exercised</li>
+<li>which constitutional rule applied</li>
+<li>which state predicate prevented the second transfer</li>
+</ul>
+<p>The explanation emerges from computation itself.</p>
+<hr />
+<h2 id="constitutional-observability">17. Constitutional
+Observability</h2>
+<p>Traditional observability answers:</p>
+<blockquote>
+<p>What happened?</p>
+</blockquote>
+<p>Constitutional observability answers:</p>
+<blockquote>
+<p>Why did it happen?</p>
+</blockquote>
+<p>Because every effect originates from an admitted petition, receipt
+graphs become semantic execution traces.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>Q</em>(<em>R</em>) → <em>e</em><em>x</em><em>p</em><em>l</em><em>a</em><em>n</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em><em>s</em></span></p>
+<p>be a query over receipt graph <span
+class="math inline">(<em>R</em>)</span>.</p>
+<p>A provenance query is defined over the effect <span
+class="math inline"><em>e</em> = <em>p</em>.<em>e</em></span> of a
+petition <span class="math inline"><em>p</em></span>:</p>
+<p>First define the receipt-of relation: for a petition <span
+class="math inline"><em>p</em></span> that produced receipt <span
+class="math inline"><em>r</em><sub><em>p</em></sub></span>,</p>
+<p><span
+class="math display"><em>r</em> ⤳ <em>p</em> := <em>r</em>≺<sup>*</sup><em>r</em><sub><em>p</em></sub></span></p>
+<p>Then the provenance of a petition is:</p>
+<p><span
+class="math display"><em>p</em><em>r</em><em>o</em><em>v</em>(<em>p</em>) = {<em>r</em> ∣ <em>r</em>.<em>p</em> = <em>p</em> ∨ <em>r</em> ⤳ <em>p</em>}</span></p>
+<p>An authority trace may be defined as:</p>
+<p><span
+class="math display"><em>a</em><em>u</em><em>t</em><em>h</em>(<em>e</em>) = <em>c</em><em>h</em><em>a</em><em>i</em><em>n</em>(<em>a</em>)</span></p>
+<p>Causal closure over a receipt is defined as the transitive closure of
+<span class="math inline">≺</span>:</p>
+<p><span
+class="math display"><em>c</em><em>l</em><em>o</em><em>s</em><em>u</em><em>r</em><em>e</em>(<em>r</em>) = {<em>r</em><sup>′</sup> ∣ <em>r</em><sup>′</sup>≺<sup>*</sup><em>r</em>}</span></p>
+<p>Causal closure is essential for full provenance and audit
+completeness.</p>
+<p>A denial query may be defined as:</p>
+<p><span
+class="math display"><em>d</em><em>e</em><em>n</em><em>y</em>(<em>e</em>) = {<em>r</em> ∣ <em>r</em>.<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em> = <em>d</em><em>e</em><em>n</em><em>y</em> ∧ <em>r</em>.<em>p</em>.<em>e</em> = <em>e</em>}</span></p>
+<p>Observability becomes structured inquiry over constitutional
+history.</p>
+<p>Execution, explanation, and governance share the same substrate.</p>
+<hr />
+<h2 id="artificial-intelligence">18. Artificial Intelligence</h2>
+<p>Autonomous agents create legitimacy challenges.</p>
+<p>An agent may possess:</p>
+<ul>
+<li>memory</li>
+<li>tools</li>
+<li>databases</li>
+<li>network access</li>
+<li>delegated authority</li>
+</ul>
+<p>Constitutional Computation converts agent actions into petitions.</p>
+<p>Tool invocations become capability exercises.</p>
+<p>Memory modifications become authorized transformations.</p>
+<p>Delegation becomes explicit and receipted.</p>
+<p>This creates a framework for governed agency in which explanation is
+intrinsic.</p>
+<p>An agent does not simply call a tool.</p>
+<p>It petitions to exercise a capability.</p>
+<hr />
+<h2 id="safety-and-liveness">19. Safety and Liveness</h2>
+<p>Constitutional systems prioritize safety.</p>
+<p>Safety condition:</p>
+<blockquote>
+<p>No unauthorized transformation occurs.</p>
+</blockquote>
+<p>Formally:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+\Rightarrow
+\Gamma, S_t \vdash p
+$$</span></p>
+<p>However, safety alone is insufficient.</p>
+<p>A perfectly governed system that never executes is useless.</p>
+<p>Liveness in its strongest form would require:</p>
+<p><span class="math display">$$
+\forall p, S_t,\
+(\Gamma, S_t \vdash p)
+\Rightarrow
+\Diamond\ \exists S_{t+1}:\ (S_t, p) \overset{\Gamma}{\Rightarrow}
+(S_{t+1}, r, \pi)
+$$</span></p>
+<p>meaning every admitted petition eventually produces a transition.
+This is unrealistic under contention. A more realistic relaxation
+is:</p>
+<p><span class="math display">$$
+\forall p, S_t,\
+(\Gamma, S_t \vdash p)
+\Rightarrow
+\Diamond\ (\exists S_{t+1}:\ (S_t, p) \overset{\Gamma}{\Rightarrow}
+(S_{t+1}, r, \pi)\ \lor\ revoke(p))
+$$</span></p>
+<p>meaning every admitted petition eventually executes or is explicitly
+revoked. Constitutional systems may further scope liveness per authority
+or per capability class.</p>
+<p>Constitutional systems must therefore manage:</p>
+<ul>
+<li>governance deadlock</li>
+<li>admission bottlenecks</li>
+<li>constitutional contention</li>
+<li>proof evaluation delays</li>
+<li>conflict resolution starvation</li>
+</ul>
+<p>The practical system must balance legitimacy and throughput.</p>
+<hr />
+<h2 id="cost-model">20. Cost Model</h2>
+<p>Constitutional Computation introduces overhead.</p>
+<p>Execution cost becomes:</p>
+<p><span
+class="math display"><em>T</em><sub><em>c</em><em>o</em><em>n</em><em>s</em><em>t</em><em>i</em><em>t</em><em>u</em><em>t</em><em>i</em><em>o</em><em>n</em><em>a</em><em>l</em></sub> = <em>T</em><sub><em>c</em><em>o</em><em>m</em><em>p</em><em>u</em><em>t</em><em>e</em></sub> + <em>T</em><sub><em>a</em><em>d</em><em>m</em><em>i</em><em>s</em><em>s</em><em>i</em><em>o</em><em>n</em></sub> + <em>T</em><sub><em>r</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em></sub></span></p>
+<p>The admission term itself decomposes as:</p>
+<p><span
+class="math display"><em>T</em><sub><em>a</em><em>d</em><em>m</em><em>i</em><em>s</em><em>s</em><em>i</em><em>o</em><em>n</em></sub> = <em>O</em>(|<em>π</em>|+<em>e</em><em>v</em><em>a</em><em>l</em>(<em>Γ</em>))</span></p>
+<p>In the worst case, policy evaluation over an expressive
+constitutional language may be NP-hard. Practical systems must therefore
+use restricted constitutional languages to keep <span
+class="math inline"><em>e</em><em>v</em><em>a</em><em>l</em>(<em>Γ</em>)</span>
+tractable.</p>
+<p>Additional costs include:</p>
+<ul>
+<li>proof evaluation</li>
+<li>receipt storage</li>
+<li>capability validation</li>
+<li>lineage maintenance</li>
+<li>conflict analysis</li>
+<li>constitutional versioning</li>
+</ul>
+<p>Receipt graph growth is at least linear in the number of
+petitions:</p>
+<p><span
+class="math display">|<em>R</em>| = <em>O</em>(|<em>P</em>|)</span></p>
+<p>Proof traces may create superlinear storage pressure if they include
+large evidence structures.</p>
+<p>Mitigation strategies include:</p>
+<h3 id="compression">20.1 Compression</h3>
+<p><span
+class="math display"><em>R</em><sup>′</sup> = <em>c</em><em>o</em><em>m</em><em>p</em><em>r</em><em>e</em><em>s</em><em>s</em>(<em>R</em>)</span></p>
+<p>preserving constitutional invariants.</p>
+<h3 id="checkpointing">20.2 Checkpointing</h3>
+<p><span
+class="math display"><em>S</em><sub><em>k</em></sub> = <em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em><sub> ≤ <em>k</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup>)</span></p>
+<p>allowing replay from checkpoints rather than genesis.</p>
+<h3 id="amortization">20.3 Amortization</h3>
+<p>Systems may use:</p>
+<ul>
+<li>batched petitions</li>
+<li>cached proofs</li>
+<li>capability pre-certification</li>
+<li>receipt compression</li>
+<li>admission memoization</li>
+<li>periodic state commitments</li>
+</ul>
+<p>The objective is not free governance.</p>
+<p>The objective is governance with bounded cost.</p>
+<hr />
+<h2 id="failure-modes-and-invariants">21. Failure Modes and
+Invariants</h2>
+<p>Constitutional systems are not immune to failure.</p>
+<p>But each failure mode can be tied to an invariant.</p>
+<h3 id="forged-authority">21.1 Forged Authority</h3>
+<p>If authority does not support capability:</p>
+<p><span
+class="math display">¬(<em>a</em> ⊨ <em>c</em>) ⇒ <em>Γ</em> ⊬ <em>p</em></span></p>
+<h3 id="capability-leakage">21.2 Capability Leakage</h3>
+<p>Delegated capabilities must preserve attenuation:</p>
+<p><span
+class="math display"><em>c</em><sub><em>d</em><em>e</em><em>l</em><em>e</em><em>g</em><em>a</em><em>t</em><em>e</em><em>d</em></sub> ⊆ <em>c</em><sub><em>s</em><em>o</em><em>u</em><em>r</em><em>c</em><em>e</em></sub></span></p>
+<h3 id="receipt-tampering">21.3 Receipt Tampering</h3>
+<p>If receipt hashes fail:</p>
+<p><span
+class="math display"><em>H</em>(<em>r</em><sub><em>i</em></sub>) ≠ <em>h</em><sub><em>i</em> + 1</sub> ⇒ <em>i</em><em>n</em><em>v</em><em>a</em><em>l</em><em>i</em><em>d</em> <em>c</em><em>h</em><em>a</em><em>i</em><em>n</em></span></p>
+<h3 id="governance-capture">21.4 Governance Capture</h3>
+<p>A malicious constitution may admit harmful petitions.</p>
+<p>Mitigation requires constitutional amendment controls, versioned
+receipts, root-of-trust protection, and meta-governance.</p>
+<h3 id="delegation-explosion">21.5 Delegation Explosion</h3>
+<p>Unbounded delegation can create uncontrolled authority
+propagation.</p>
+<p>Mitigation requires:</p>
+<ul>
+<li>attenuation</li>
+<li>revocation</li>
+<li>expiry</li>
+<li>delegation depth limits</li>
+<li>receipt-backed delegation graphs</li>
+</ul>
+<h3 id="constitutional-deadlock">21.6 Constitutional Deadlock</h3>
+<p>Legitimate actions may be blocked indefinitely.</p>
+<p>Mitigation requires liveness guarantees, escalation paths, and
+deadlock detection.</p>
+<h3 id="state-receipt-divergence">21.7 State-Receipt Divergence</h3>
+<p>If state mutates without a corresponding admitting receipt, or if a
+receipt records an effect that did not occur, the system loses
+constitutional integrity.</p>
+<p>The system-wide integrity invariant is:</p>
+<p><span
+class="math display"><em>S</em><sub><em>t</em> + 1</sub> = <em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup>)</span></p>
+<p>where <span
+class="math inline"><em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup></span>
+is the subset of receipts recording admitted effects, as in Section
+13.1.</p>
+<p>Any divergence between the receipt ledger and the actual state must
+be detected and treated as a constitutional fault.</p>
+<hr />
+<h2 id="relationship-to-existing-work">22. Relationship to Existing
+Work</h2>
+<p>Constitutional Computation integrates ideas from multiple traditions
+while drawing a sharp distinction.</p>
+<p>Capability systems constrain who can act.</p>
+<p>Proof-Carrying Code proves program safety.</p>
+<p>Blockchain systems order what happened.</p>
+<p>Event sourcing records what happened.</p>
+<p>Constitutional Computation determines what is allowed to happen
+before it happens.</p>
+<h3 id="capability-systems">22.1 Capability Systems</h3>
+<p>Constitutional Computation extends capability security by making
+capability exercise receipted, state-aware, and constitutionally
+evaluated.</p>
+<h3 id="proof-carrying-code">22.2 Proof-Carrying Code</h3>
+<p>Constitutional Computation extends proof verification from program
+safety to operational legitimacy.</p>
+<h3 id="event-sourcing">22.3 Event Sourcing</h3>
+<p>Constitutional Computation extends event logs into constitutional
+evidence structures where events must originate in admitted
+petitions.</p>
+<h3 id="blockchain-systems">22.4 Blockchain Systems</h3>
+<p>Constitutional Computation extends ledger concepts beyond ordering
+toward legitimacy, admissibility, and authority-bearing
+transformation.</p>
+<h3 id="distributed-systems">22.5 Distributed Systems</h3>
+<p>Constitutional Computation extends causal ordering with authority
+ordering, intent ordering, and governance-aware conflict resolution.</p>
+<hr />
+<h2 id="coherence-as-a-computational-objective">23. Coherence as a
+Computational Objective</h2>
+<p>Modern systems maintain multiple conflicting models:</p>
+<ul>
+<li>permissions</li>
+<li>workflows</li>
+<li>documentation</li>
+<li>audit logs</li>
+<li>organizational charts</li>
+<li>runtime execution</li>
+</ul>
+<p>These drift.</p>
+<p>Constitutional systems seek coherence.</p>
+<p>The mechanism is explicit:</p>
+<ol type="1">
+<li>Governance artifacts compile into <span
+class="math inline">(<em>Γ</em>)</span>.</li>
+<li>Effect semantics are constrained by <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub></span>.</li>
+<li>Execution occurs only through admitted petitions.</li>
+<li>Every admission emits receipts.</li>
+<li>Every effect has an admitting receipt.</li>
+<li>Observability queries receipt graphs.</li>
+<li>Constitutional amendments are themselves receipted.</li>
+</ol>
+<p>Governance, execution, and explanation remain synchronized because
+they are generated by the same computational process.</p>
+<p>Coherence becomes an emergent property of constitutional
+execution.</p>
+<hr />
+<h2 id="minimal-constitutional-runtime">24. Minimal Constitutional
+Runtime</h2>
+<p>A minimal implementation separates evaluation, recording, and
+execution.</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">## evaluation depends on current state</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>decision, proof <span class="op">=</span> evaluate(p, Gamma, S_t)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">## authorization receipt captures the admission decision</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>auth_receipt <span class="op">=</span> record_authorization(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    petition<span class="op">=</span>p,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    decision<span class="op">=</span>decision,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    proof<span class="op">=</span>proof,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    timestamp<span class="op">=</span>ts,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    constitution<span class="op">=</span>Gamma.version</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>append(auth_receipt)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">## only admitted petitions produce effects</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> decision <span class="op">==</span> <span class="st">&quot;admit&quot;</span>:</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    S_next <span class="op">=</span> Gamma_eff(S_t, p)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">## commit receipt captures successful state transition</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    commit_receipt <span class="op">=</span> record_commit(</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        petition<span class="op">=</span>p,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        prior_state_hash<span class="op">=</span>H(S_t),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        new_state_hash<span class="op">=</span>H(S_next),</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>        timestamp<span class="op">=</span>ts,</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        constitution<span class="op">=</span>Gamma.version</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    append(commit_receipt)</span></code></pre></div>
+<p>The runtime enforces the invariant:</p>
+<p><span
+class="math display"><em>r</em><em>e</em><em>c</em><em>e</em><em>i</em><em>p</em><em>t</em>.<em>t</em><em>s</em> = <em>t</em> ⇒ <em>S</em><sub><em>t</em></sub>
+is the evaluation state</span></p>
+<p>Without this invariant, concurrent admission can introduce ambiguity
+over which state was evaluated.</p>
+<p>This minimal runtime contains the constitutional cycle:</p>
+<pre class="text"><code>petition
+-&gt; evaluation
+-&gt; proof
+-&gt; receipt
+-&gt; conditional effect
+-&gt; ordered history</code></pre>
+<p>From these primitives emerge:</p>
+<ul>
+<li>governance</li>
+<li>observability</li>
+<li>capability security</li>
+<li>receipt graphs</li>
+<li>constitutional execution</li>
+</ul>
+<p>The constitutional cycle is simple despite its consequences.</p>
+<hr />
+<h2 id="toward-constitutional-machines">25. Toward Constitutional
+Machines</h2>
+<p>Traditional computational systems evolve through mechanically
+permitted transformations.</p>
+<p>Constitutional systems evolve through admissible transformations.</p>
+<p>The primitive computational object is no longer the instruction.</p>
+<p>It is the constitutional step itself:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+$$</span></p>
+<p>This relation carries state, petition, constitution, successor state,
+receipt, and proof together as a single semantic object. The earlier
+presentations <span
+class="math inline">(<em>p</em>, <em>Γ</em>, <em>r</em>)</span>, <span
+class="math inline">(<em>p</em>, <em>Γ</em>, <em>r</em>, <em>π</em>)</span>,
+and the labeled transition form are projections of this primitive onto
+specific facets.</p>
+<p>The resulting machine computes not merely state.</p>
+<p>It computes state together with the legitimacy of its own
+evolution.</p>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>Constitutional Computation introduces legitimacy as a first-class
+computational primitive.</p>
+<p>Traditional computational models define what transformations are
+mechanically possible.</p>
+<p>Constitutional Computation defines what transformations are
+constitutionally reachable.</p>
+<p>The central claim may be expressed formally:</p>
+<p><span
+class="math display"><em>N</em><em>e</em><em>x</em><em>t</em><sub><em>Γ</em></sub>(<em>S</em><sub><em>t</em></sub>) = {<em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em><sub><em>t</em></sub>, <em>p</em>) ∣ <em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em>}</span></p>
+<p>The future of a constitutional system is not bounded solely by
+mechanics.</p>
+<p>It is bounded by legitimacy.</p>
+<p>By elevating constitutions, petitions, admission judgments,
+capabilities, authorities, ordering, effect semantics, and receipts into
+the computational substrate itself, software systems gain intrinsic
+explainability, accountability, observability, and governance.</p>
+<p>Computation therefore becomes the evolution of state through
+authorized transformation.</p>
+<p>Stated in the language of formal systems: Constitutional Computation
+lifts transition systems into <em>justified transition systems</em>,
+where transitions are paired with admissibility proofs and constrained
+interpreters.</p>
+<p>Equivalently, a Constitutional Machine is a labeled transition
+system:</p>
+<p><span class="math display">$$
+(S_t) \xrightarrow{p\,/\,(r, \pi)} (S_{t+1})
+$$</span></p>
+<p>with petition <span class="math inline"><em>p</em></span> as the
+label and the pair <span
+class="math inline">(<em>r</em>, <em>π</em>)</span> as the annotation.
+The unified constitutional step and the LTS form are equivalent:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+\ \equiv\
+(S_t) \xrightarrow{p\,/\,(r, \pi)} (S_{t+1})
+$$</span></p>
+<p>This closes the loop between the operational-semantics presentation
+of Section 3.1, the custom transition notation used throughout the
+paper, and standard LTS framing. This places Constitutional Computation
+directly within the vocabulary of operational semantics, labeled
+transition systems, and process calculi.</p>
+<p>In particular, Constitutional Computation is a conservative extension
+of labeled transition systems in which transitions are constrained to
+those admitting a justification under <span
+class="math inline"><em>Γ</em></span>. When <span
+class="math inline"><em>Γ</em></span> is trivially permissive, the
+constitutional transition system reduces to its underlying transition
+system; the constitutional structure imposes no restriction in the
+limit.</p>
+<hr />
+<h2 id="appendix-a-primitive-objects">Appendix A: Primitive Objects</h2>
+<ul>
+<li><p><strong>Object:</strong> Constitution<br />
+<strong>Definition:</strong> <span
+class="math inline">(<em>Γ</em>)</span></p></li>
+<li><p><strong>Object:</strong> Petition<br />
+<strong>Definition:</strong> <span
+class="math inline">(<em>p</em> = (<em>i</em>, <em>i</em><em>d</em>, <em>a</em>, <em>c</em>, <em>e</em>, <em>σ</em>))</span></p></li>
+<li><p><strong>Object:</strong> Capability<br />
+<strong>Definition:</strong> <span
+class="math inline">(<em>c</em> = (<em>o</em><em>p</em>, <em>r</em><em>e</em><em>s</em><em>o</em><em>u</em><em>r</em><em>c</em><em>e</em>, <em>c</em><em>o</em><em>n</em><em>s</em><em>t</em><em>r</em><em>a</em><em>i</em><em>n</em><em>t</em><em>s</em>))</span></p></li>
+<li><p><strong>Object:</strong> Authority relation<br />
+<strong>Definition:</strong> <span
+class="math inline">( ⊨  ⊆ <em>A</em> × <em>C</em>)</span></p></li>
+<li><p><strong>Object:</strong> Receipt<br />
+<strong>Definition:</strong> <span
+class="math inline">(<em>r</em> = (<em>p</em>, <em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em>, <em>π</em>, <em>h</em>, <em>t</em><em>s</em>, <em>v</em><em>e</em><em>r</em>))</span></p></li>
+<li><p><strong>Object:</strong> Admission<br />
+<strong>Definition:</strong> <span
+class="math inline">(<em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em>)</span></p></li>
+<li><p><strong>Object:</strong> Effect semantics<br />
+<strong>Definition:</strong> <span
+class="math inline"><em>Γ</em><sub><em>e</em><em>f</em><em>f</em></sub>(<em>S</em>, <em>p</em>)</span></p></li>
+<li><p><strong>Object:</strong> Ordering<br />
+<strong>Definition:</strong> <span
+class="math inline">(<em>r</em><sub><em>i</em></sub> ≺ <em>r</em><sub><em>j</em></sub>)</span></p></li>
+</ul>
+<hr />
+<h2 id="appendix-b-constitutional-invariants">Appendix B: Constitutional
+Invariants</h2>
+<p>Authorization Invariant:</p>
+<p><span class="math display">$$
+(S_t, p) \overset{\Gamma}{\Rightarrow} (S_{t+1}, r, \pi)
+\Rightarrow
+r.decision = admit
+$$</span></p>
+<p>Reachability Invariant:</p>
+<p><span
+class="math display"><em>S</em><sub><em>t</em> + 1</sub> ∈ <em>N</em><em>e</em><em>x</em><em>t</em><sub><em>Γ</em></sub>(<em>S</em><sub><em>t</em></sub>) ⇒ ∃<em>p</em> : <em>Γ</em>, <em>S</em><sub><em>t</em></sub> ⊢ <em>p</em></span></p>
+<p>Capability Invariant:</p>
+<p><span
+class="math display"><em>w</em><em>e</em><em>l</em><em>l</em><em>F</em><em>o</em><em>r</em><em>m</em><em>e</em><em>d</em>(<em>p</em>) ⇒ <em>a</em> ⊨ <em>c</em></span></p>
+<p>Attenuation Invariant:</p>
+<p><span
+class="math display"><em>c</em><sub><em>d</em><em>e</em><em>l</em><em>e</em><em>g</em><em>a</em><em>t</em><em>e</em><em>d</em></sub> ⊆ <em>c</em><sub><em>s</em><em>o</em><em>u</em><em>r</em><em>c</em><em>e</em></sub></span></p>
+<p>Receipt Integrity Invariant:</p>
+<p><span
+class="math display"><em>H</em>(<em>r</em><sub><em>i</em></sub>) = <em>h</em><sub><em>i</em> + 1</sub></span></p>
+<p>Constitutional Evolution Invariant:</p>
+<p><span
+class="math display"><em>Γ</em> → <em>Γ</em><sup>′</sup> ⇒ ∃<em>r</em></span></p>
+<p><strong>Master Invariant.</strong> The state-receipt,
+admission-consistency, and replay-correctness invariants can be unified
+as a single closure property:</p>
+<p><span
+class="math display"><em>S</em><sub><em>t</em></sub> = <em>f</em><em>o</em><em>l</em><em>d</em>(<em>R</em><sub> ≤ <em>t</em></sub><sup><em>c</em><em>o</em><em>m</em><em>m</em><em>i</em><em>t</em></sup>) ∧ ∀<em>r</em> ∈ <em>R</em>: (<em>r</em>.<em>d</em><em>e</em><em>c</em><em>i</em><em>s</em><em>i</em><em>o</em><em>n</em> = <em>a</em><em>d</em><em>m</em><em>i</em><em>t</em> ⇒ <em>Γ</em><sub><em>r</em>.<em>v</em><em>e</em><em>r</em></sub>, <em>S</em><sub><em>r</em>.<em>t</em><em>s</em></sub> ⊢ <em>r</em>.<em>p</em>)</span></p>
+<p>The first conjunct ensures the receipt ledger reconstructs current
+state; the second ensures every admitted receipt corresponds to a real
+admission judgment under the state at the time of issuance.</p>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern computation is founded upon models that
+describe how state changes occur. Its nearest external comparison fields
+are formal, governance, semantic. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. A written constitution can legitimate domination
+as easily as constrain it unless amendment, participation, enforcement,
+and appeal remain effective in practice. Formal vocabularies and graph
+links make commitments explicit but cannot by themselves establish
+correct identity, shared interpretation, or lossless translation between
+contexts. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Turing, A. M. (1936). <em>On Computable Numbers, with an Application
+to the Entscheidungsproblem.</em></p>
+<p>Church, A. (1936). <em>An Unsolvable Problem of Elementary Number
+Theory.</em></p>
+<p>Lafont, Y. (1997). <em>Interaction Combinators.</em></p>
+<p>Lamport, L. (1978). <em>Time, Clocks, and the Ordering of Events in a
+Distributed System.</em></p>
+<p>Saltzer, J. H., &amp; Schroeder, M. D. (1975). <em>The Protection of
+Information in Computer Systems.</em></p>
+<p>Denning, D. E. (1976). <em>A Lattice Model of Secure Information
+Flow.</em></p>
+<p>Miller, M. S. (2006). <em>Robust Composition: Towards a Unified
+Approach to Access Control and Concurrency Control.</em></p>
+<p>Necula, G. C. (1997). <em>Proof-Carrying Code.</em></p>
+<p>Ableman, A. (2026). <em>Universal Governance Kernel <span
+class="math inline">(<em>U</em><em>G</em><em>K</em>)</span>:
+Constitutional Governance for Software Systems.</em></p>
+<p>Ableman, A. (2026). <em>Closing the Gap: ACTIVE, CRYSTALLIZED, and
+ABSENT Governance in Modern Software.</em></p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20624488">10.5281/zenodo.20624488</a></p>

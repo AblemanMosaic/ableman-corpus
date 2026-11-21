@@ -1,0 +1,855 @@
+<h1 id="the-path-was-open">The Path Was Open</h1>
+<h2
+id="declared-boundaries-reachable-effects-and-human-accountability-in-agentic-systems">Declared
+Boundaries, Reachable Effects, and Human Accountability in Agentic
+Systems</h2>
+<h3
+id="a-machine-may-choose-a-route.-the-conditions-of-passage-still-require-an-account.">A
+machine may choose a route. The conditions of passage still require an
+account.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Machine action selection creates neither an automatic responsibility
+vacuum nor automatic human liability. This paper develops a
+boundary-accountability framework that separates selection autonomy from
+authority over effects; declared admissibility from operational
+reachability; and causal contribution, answerability, fault, and legal
+liability.</p>
+<p>The technical core is the <strong>declared-effective boundary
+gap</strong>: modeled execution histories reachable under a
+configuration and threat model but excluded by the deployment’s declared
+scope. A nonempty gap is evidence of a technical mismatch within the
+model. It does not establish probability, notice, duty, fault, intent,
+causation, or liability. An empty gap is equally bounded: it can enforce
+an illegitimate policy, omit real effect paths, or depend on unsound
+abstraction.</p>
+<p>A conditional mediation proposition shows that prohibited modeled
+effects are excluded if every relevant effect passes through an
+accurate, non-bypassable gate whose allowed transitions preserve the
+declared safety property. The proposition is a specification theorem,
+not evidence that a deployment satisfies its premises. Real use requires
+exact configurations, concretization between abstract and physical
+effects, current authority, effect observation, bypass testing, custody,
+and independent verification.</p>
+<p>The source reports an exhaustive 625-string finite illustration and
+says that a companion checker is supplied. No such program or result
+file was found in the authorized corpus. An independent AI
+reconstruction from the prose reproduced the reported counts, but that
+is conditional arithmetic validation rather than custody of the claimed
+author evidence. The source’s 2026 incident and legal claims also remain
+author-supplied pending separately authorized primary-source
+verification.</p>
+<p>This revision integrates the accountability framework with Authority
+Laundering Theory, constitutional enforcement, receipts, observability,
+work custody, Warrant by Structure, the universal GSM, and the
+realization funnel. It grants no factual, legal, safety, implementation,
+or publication standing.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/the-path-</code></p>
+<p><code>was-open/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>6F25113712C10321E25088E378013961C5F90F97D383DB0082FA9370E0E5DBB1</code>.
+The exact source remains unchanged.</p>
+<p>The title, boundary-gap formalism, proposition, investigative method,
+incident applications, finite illustration, legal analysis, research
+agenda, and rhetoric are author material. The evidentiary downgrades,
+formal repairs, integration surfaces, countertests, and editorial
+alternatives are AI-assisted contributions explicitly distinguished from
+the original author material.</p>
+<p>This paper is not legal advice. It does not adjudicate any incident,
+actor, organization, claim, statute, case, duty, mental state, causation
+question, or liability theory. The primary-source legal and factual
+review required for an evidence-qualified revision was not authorized in
+this program and was not performed.</p>
+<h2 id="what-the-framework-does-and-does-not-decide">1. What the
+Framework Does and Does Not Decide</h2>
+<p><strong>Selection autonomy</strong> asks who or what selected an
+action. <strong>Effect authority</strong> asks which effect could be
+performed, against what resource, under whose warrant, through which
+mediator, and within what jurisdiction. A highly adaptive system can
+operate inside a narrow effect envelope; a simple script can hold broad
+ambient privilege.</p>
+<p>The framework organizes four further inquiries without merging
+them:</p>
+<ul>
+<li><strong>causal contribution:</strong> participation in producing an
+outcome;</li>
+<li><strong>answerability:</strong> obligation to supply an account of
+relevant decisions and controls;</li>
+<li><strong>fault:</strong> failure under an applicable normative
+standard; and</li>
+<li><strong>legal liability:</strong> satisfaction of every element and
+defense of a particular legal theory.</li>
+</ul>
+<p>Technical reachability can inform all four, but determines none by
+itself. Similarly, deployment intent is not automatically intent
+regarding every downstream effect.</p>
+<h2 id="declared-scope-and-reachable-effects">2. Declared Scope and
+Reachable Effects</h2>
+<p>Let <span class="math inline"><em>Σ</em></span> be an alphabet of
+abstract effect events and <span
+class="math inline"><em>Σ</em><sup>*</sup></span> its finite histories.
+Let <span class="math inline">𝒜 ⊆ <em>Σ</em><sup>*</sup></span> be the
+declared admissible safety property, assumed prefix-closed for this
+bounded analysis. Let <span class="math inline"><em>C</em></span> be a
+versioned configuration, <span class="math inline"><em>T</em></span> a
+threat and environment model, and <span
+class="math inline"><em>Π</em><sub><em>T</em></sub></span> the proposal
+and environment behaviors included in the analysis.</p>
+<p><span
+class="math display">ℛ(<em>C</em>, <em>T</em>) = ⋃<sub><em>π</em> ∈ <em>Π</em><sub><em>T</em></sub></sub>Traces (<em>C</em>, <em>π</em>, <em>T</em>).</span></p>
+<p>The declared-effective boundary gap is:</p>
+<p><span
+class="math display"><em>Δ</em>(<em>C</em>, <em>T</em>) = ℛ(<em>C</em>, <em>T</em>) \ 𝒜.</span></p>
+<p>A witness <span
+class="math inline"><em>τ</em> ∈ <em>Δ</em>(<em>C</em>, <em>T</em>)</span>
+establishes only that the abstract model admits a declared-prohibited
+history. Reachability is not probability:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\Delta(C,T) \\
+&amp;\neq \varnothing \not \\
+&amp;\Rightarrow \Pr_\mu(\Delta(C,T))\text{ is large}
+\end{aligned}.
+$$</span></p>
+<p>Nor does failed search establish closure. Practical analysis should
+distinguish observed lower bounds, modeled reachability, and sound
+overapproximations:</p>
+<p><span class="math display">$$
+\underline{\mathcal{R}}\subseteq\mathcal{R}\subseteq\overline{\mathcal{R}}.
+$$</span></p>
+<p>The correct result may be <strong>unresolved</strong> when neither a
+witness nor a sound exclusion proof exists.</p>
+<h2 id="from-abstract-histories-to-real-effects">3. From Abstract
+Histories to Real Effects</h2>
+<p>An abstract trace matters only if it is related soundly to concrete
+execution. Let <span class="math inline"><em>α</em></span> map a
+concrete history <span class="math inline"><em>ρ</em></span> to its
+abstract effect history. A safety argument needs a declared relationship
+such as:</p>
+<p><span class="math display">$$
+\rho\in\mathcal{R}_{\mathrm{concrete}}(C,T)
+\Longrightarrow
+\alpha(\rho)\in\overline{\mathcal{R}}(C,T).
+$$</span></p>
+<p>The mapping must preserve the effects relevant to the policy. If
+“call approved service” abstracts away that the service can access a
+prohibited third-party resource, an empty abstract gap does not
+establish containment. Interface admission and effect admission are
+distinct.</p>
+<p>The abstraction must also say whether refusal, termination, delayed
+effects, retries, asynchronous jobs, credential use, human intervention,
+and downstream services are events. Omitting them can make the proof
+true only of the wrong system.</p>
+<h2 id="conditional-mediation-and-its-proof-burden">4. Conditional
+Mediation and Its Proof Burden</h2>
+<p>Let <span
+class="math inline"><em>Γ</em>(<em>h</em>, <em>e</em>)</span> decide
+whether proposed effect <span class="math inline"><em>e</em></span> may
+extend history <span class="math inline"><em>h</em></span>. The source’s
+proposition can be retained as a conditional specification theorem:</p>
+<p>If the empty history is admissible; refusals and termination preserve
+admissibility; every relevant concrete effect is accurately represented
+and mediated before execution; the policy and authority are current; the
+mediator and evidence path cannot be bypassed or modified; and</p>
+<p><span
+class="math display"><em>Γ</em>(<em>h</em>, <em>e</em>) = ALLOW ⇒ <em>h</em><em>e</em> ∈ 𝒜,</span></p>
+<p>then every modeled reachable history remains in <span
+class="math inline">𝒜</span>.</p>
+<p>The induction is elementary because the premises carry the hard work.
+A proof for a real system needs evidence for:</p>
+<ol type="1">
+<li>effect completeness and correct resource identity;</li>
+<li>non-bypassability, including administrators, intermediaries,
+plugins, retries, and supply chain;</li>
+<li>policy and warrant integrity at effect time;</li>
+<li>effect atomicity and recovery after partial failure;</li>
+<li>sound abstraction and version binding;</li>
+<li>independent checks against producer/verifier co-drift; and</li>
+<li>continuous or change-triggered requalification.</li>
+</ol>
+<p>The theorem therefore explains what complete mediation would buy. It
+cannot certify complete mediation from architecture prose.</p>
+<h2 id="authority-and-legitimacy">5. Authority and Legitimacy</h2>
+<p><span class="math inline">𝒜</span> does not authorize itself. A
+declared scope can be faithfully enforced while violating a resource
+owner’s authority, law, consent, contract, or institutional
+constraint.</p>
+<p>Authority Laundering Theory supplies the missing separation:
+explicit, receipted machinery cannot turn a defective root into
+legitimate authority. Every admissibility claim should bind the warrant
+source, jurisdiction, resource owner, time, delegated scope, revocation
+status, and contested alternatives.</p>
+<p>This yields two independent questions:</p>
+<ol type="1">
+<li>Did the system enforce the declared boundary?</li>
+<li>Was the declared boundary itself properly warranted?</li>
+</ol>
+<p>An empty technical gap supports only the first, and only under its
+model and evidence.</p>
+<h2 id="accountability-reconstruction">6. Accountability
+Reconstruction</h2>
+<p>The paper’s five inquiries form a useful evidence schema:</p>
+<ul>
+<li><p><strong>Inquiry:</strong> Declared boundary<br />
+<strong>Required question:</strong> What was allowed, prohibited,
+unresolved, and by whom?<br />
+<strong>Evidence boundary:</strong> policy plus warrant
+provenance</p></li>
+<li><p><strong>Inquiry:</strong> Effective boundary<br />
+<strong>Required question:</strong> Which effects were reachable at the
+relevant version and time?<br />
+<strong>Evidence boundary:</strong> configuration, traces, models,
+attacks</p></li>
+<li><p><strong>Inquiry:</strong> Control and authority<br />
+<strong>Required question:</strong> Who could establish, change, test,
+waive, stop, or restart?<br />
+<strong>Evidence boundary:</strong> formal role plus practical
+capability</p></li>
+<li><p><strong>Inquiry:</strong> Knowledge and notice<br />
+<strong>Required question:</strong> Which actor received what
+information, when, with what uncertainty?<br />
+<strong>Evidence boundary:</strong> actor-specific delivery and
+acknowledgment</p></li>
+<li><p><strong>Inquiry:</strong> Preventive alternatives<br />
+<strong>Required question:</strong> Which feasible intervention blocks
+which class of histories?<br />
+<strong>Evidence boundary:</strong> counterfactual tests and
+legitimate-task cost</p></li>
+</ul>
+<p>Every material claim should carry source, custody, time,
+configuration, support status, contrary evidence, and claim ceiling.
+Organizational knowledge must not be imputed automatically to one
+person; lack of an adequate notice path may itself be an independently
+examinable design decision.</p>
+<p>Control ownership should also resist a nearest-person shortcut. A
+human approver without the decisive facts or authority may be a moral
+crumple zone. A remote provider should not absorb blame for a documented
+local decision merely because it built a component. The evidence must
+identify the action, capacity, notice, and applicable standard for each
+actor.</p>
+<h2 id="counterfactual-prevention">7. Counterfactual Prevention</h2>
+<p>For a harmful history <span class="math inline"><em>τ</em></span> and
+proposed precaution <span class="math inline"><em>j</em></span>:</p>
+<p><span
+class="math display"><em>τ</em> ∉ ℛ(<em>C</em><sup>(<em>j</em>)</sup>, <em>T</em>)</span></p>
+<p>shows only that the modeled precaution interrupts that history. A
+meaningful prevention claim must cover an equivalence class of harmful
+effects, preserve legitimate task requirements, and show that the
+precaution was available, within the actor’s control, and reasonable
+under the applicable standard at the relevant time.</p>
+<p>Counterfactual interruption is evidence, not verdict. Multiple
+sufficient causes, alternative routes, third-party acts, uncertainty,
+and legal causation remain separate.</p>
+<h2 id="status-of-the-finite-illustration">8. Status of the Finite
+Illustration</h2>
+<p>The source defines five proposal symbols, length-four strings, three
+mediation configurations, an absorbing stop, and local success after
+read then submit. It reports:</p>
+<ul>
+<li><p><strong>Configuration:</strong> declared prohibition only<br />
+<strong>Strings:</strong> 625<br />
+<strong>Prohibited effect:</strong> 406<br />
+<strong>Local completion:</strong> 82</p></li>
+<li><p><strong>Configuration:</strong> direct-route mediation<br />
+<strong>Strings:</strong> 625<br />
+<strong>Prohibited effect:</strong> 272<br />
+<strong>Local completion:</strong> 82</p></li>
+<li><p><strong>Configuration:</strong> both modeled routes
+mediated<br />
+<strong>Strings:</strong> 625<br />
+<strong>Prohibited effect:</strong> 0<br />
+<strong>Local completion:</strong> 82</p></li>
+</ul>
+<p>No claimed companion file<br />
+<code>The_Path_Was_Open_Model_Check.py</code> or recorded output was
+found in the authorized corpus. A temporary AI reconstruction using the
+prose semantics reproduced all six counts. This supports arithmetic
+consistency under the inferred model, not exact custody of the author
+program or validation of a real system.</p>
+<p>The equal completion count is construction-dependent because external
+actions neither help nor hinder the local task. The zero is similarly
+conditional on enumerating only two external routes and stipulating that
+both are blocked. The illustration demonstrates a logical possibility:
+effect mediation can eliminate modeled prohibited outcomes without
+reducing success in a task constructed so the prohibited effects are
+unnecessary.</p>
+<p>Before this can be treated as reproducible evidence in a future
+edition, the exact author program, hash, output, transition semantics,
+and independent replay should be supplied.</p>
+<h2 id="legal-and-incident-claims-verification-hold">9. Legal and
+Incident Claims: Verification Hold</h2>
+<p>The source discusses 2026 reports attributed to Hugging Face, OpenAI,
+and Anthropic; federal statutes; California law; Department of Justice
+guidance; and reported decisions including <em>Amazon.com Services v.
+Perplexity AI</em>. It also cites scholarship on responsibility gaps,
+delegation, meaningful human control, and moral crumple zones.</p>
+<p>These materials were not externally checked in this program. They
+must not be presented as verified merely because the source gives dates,
+quotations, holdings, or citations. For a future evidence-qualified
+revision, an authorized legal/factual pass must retrieve the primary
+texts, verify existence and dates, confirm quotations and procedural
+posture, update subsequent history, validate statutory versions, and
+separate holding, dicta, party allegation, agency guidance, and author
+inference.</p>
+<p>Even after verification, architectural evidence must be mapped
+element by element. Negligence is not intent; access is not damage;
+organizational attribution is not automatic personal liability; and
+causing an act through an intermediary has its own requirements. The
+framework supplies evidence organization, not a liability engine.</p>
+<h2 id="corpus-integration">10. Corpus Integration</h2>
+<p>The adjacent corpus machinery has distinct roles:</p>
+<ul>
+<li><strong>The Mechanics of Constitutional Enforcement</strong> asks
+how declared constraints become non-bypassable effect mediation.</li>
+<li><strong>Authority Laundering Theory</strong> prevents structural
+enforcement from legitimizing defective authority roots.</li>
+<li><strong>Reasoning by Way of Receipts</strong> binds proposals,
+decisions, effects, evidence, and revision without making receipt
+existence sufficient proof.</li>
+<li><strong>The Constitutional Observability Platform</strong> exposes
+claims, configurations, warnings, effects, and standing to actors who
+can use them.</li>
+<li><strong>A Formal Theory of Work Custody</strong> preserves who holds
+work and how authority and lineage move.</li>
+<li><strong>Warrant by Structure</strong> grades authorization, gate
+participation, effect evidence, and closure rather than collapsing
+them.</li>
+</ul>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the <code>CCF -&gt; CMB -&gt; GMB</code> lineage. It can preserve
+declarations, warrants, configurations, traces, reports, evidence,
+disputes, and legal-source bindings with their standing. Inclusion does
+not adjudicate them. The universal GSM keeps selection, authority,
+effect, actor, notice, control, evidence, claim, and legal element
+distinct.</p>
+<h2 id="realization-funnel">11. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate agent architectures, effect
+paths, mediators, authority roots, accountability theories, and evidence
+designs.</li>
+<li><strong>Specification:</strong> define scope, threat model, effects,
+abstraction, mediation, warrants, receipts, notice, and claim
+boundaries.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> retain
+configurations meeting mandatory authority, containment, evidence,
+recovery, privacy, and due-process constraints.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer among
+admissible configurations by capability, usability, resilience,
+inspectability, sovereignty, cost, and human accountability.</li>
+<li><strong>IC:</strong> select an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for one
+deployment and jurisdiction. The names are interchangeable.</li>
+<li><strong>IR:</strong> construct an <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong> of
+that configuration. The names are interchangeable.</li>
+<li><strong>Evidence:</strong> retain exact configurations, model
+checks, attacks, receipts, effects, warnings, actor-specific notice, and
+primary sources.</li>
+<li><strong>Revision:</strong> change the system or claims after new
+evidence while preserving prior lineage and standing.</li>
+</ul>
+<p>The paper reaches Specification and offers an abstract demonstration.
+It does not establish an IC, IR, real containment result, legal
+application, or implementation authority.</p>
+<h2 id="boundary-accountability-diagnostic">Boundary-Accountability
+Diagnostic</h2>
+<p>Across the completed P1 corpus, The Path Was Open is the
+<strong>boundary-accountability diagnostic for comparing declared scope,
+modeled reachability, concrete effect routes, authority, notice,
+control, and feasible prevention</strong>. It organizes evidence
+relevant to responsibility without turning a technical witness into
+legal liability, moral fault, or automatic exculpation.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Complete mediation, effect gates, classified
+remainder, and atomic evidence obligations.<br />
+<strong>Path-paper boundary:</strong> This paper tests whether the
+claimed boundary actually covered modeled and concrete routes.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Authority Laundering
+Theory</em><br />
+<strong>Supplies:</strong> Separation of structural enforcement from
+legitimacy of the warrant root.<br />
+<strong>Path-paper boundary:</strong> An empty boundary gap cannot
+legitimize the declared policy.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Delivery of warnings, state, claims,
+evidence, and standing to relevant actors.<br />
+<strong>Path-paper boundary:</strong> Availability in a dashboard is not
+actor-specific notice or practical control.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Time-indexed responsibility for live work and
+transitions.<br />
+<strong>Path-paper boundary:</strong> Custody informs control and
+answerability without deciding fault.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Reconstruction of proposal, gate, effect,
+evidence, and revision.<br />
+<strong>Path-paper boundary:</strong> Receipt existence is one
+evidentiary object, not proof that the effect was completely
+mediated.</p></li>
+</ul>
+<p>The diagnostic should produce a typed case record:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B= (&amp;declaration, warrant, configuration, threat\_model, \\
+&amp;abstract\_effects, concretization, reachable\_effects, \\
+&amp;gap, actors, control, notice, alternatives, evidence, \\
+&amp;unknowns, claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>Its output is not <code>RESPONSIBLE</code> or
+<code>NOT RESPONSIBLE</code>. It is a set of bounded findings such
+as<br />
+<code>DECLARED_EFFECTIVE_MISMATCH</code>,<br />
+<code>UNMODELED_ROUTE</code>, <code>BYPASS_WITNESS</code>,
+<code>UNSOUND_CONCRETIZATION</code>,
+<code>DEFECTIVE_WARRANT</code>,<br />
+<code>NOTICE_NOT_DELIVERED</code>, <code>CONTROL_NOT_ESTABLISHED</code>,
+<code>PRECAUTION_INTERRUPTS_MODELED_CLASS</code>,<br />
+or <code>UNRESOLVED</code>. Each finding states the model and evidence
+under which it holds.</p>
+<p>The paper also links agent containment to institutional
+accountability. A system can choose among paths only because other
+actors selected credentials, effect mediators, policies, interfaces,
+monitoring, escalation, and shutdown powers. That observation does not
+make every designer liable. It makes those surrounding choices
+discoverable objects for actor-specific inquiry.</p>
+<p>The universal GSM can type<br />
+<code>DECLARES_EFFECT_BOUNDARY</code>,
+<code>REACHES_MODELED_EFFECT</code>,<br />
+<code>MAPS_CONCRETE_TO_ABSTRACT_EFFECT</code>,
+<code>WITNESSES_BOUNDARY_GAP</code>,
+<code>OMITS_EFFECT_ROUTE</code>,<br />
+<code>HOLDS_PRACTICAL_CONTROL</code>,
+<code>RECEIVES_ACTOR_SPECIFIC_NOTICE</code>,
+<code>CAN_APPLY_PRECAUTION</code>,<br />
+<code>INTERRUPTS_HARMFUL_HISTORY_CLASS</code>,
+<code>REMAINS_LEGALLY_UNADJUDICATED</code>,<br />
+and<br />
+<code>BOUNDS_ACCOUNTABILITY_CLAIM</code>. These relations preserve the
+diagnostic’s usefulness without making it a liability engine.</p>
+<p>This integration establishes four editorial commitments: classify the
+paper as the boundary-accountability diagnostic; adopt the typed
+case-record envelope and bounded finding vocabulary; require
+actor-specific control, notice, and feasible-alternative evidence; and
+retain legal liability, moral fault, causal contribution, and technical
+boundary findings as distinct conclusions.</p>
+<h2
+id="commitment-resolution-notice-and-equivalence-in-boundary-accountability">Commitment,
+Resolution, Notice, and Equivalence in Boundary Accountability</h2>
+<p>The fixed-seed comparison with CHC, Constitutional Binding Theory,
+The Locus of Shared Experience, and Semantic Gravitational Attractors
+gives the boundary diagnostic a more precise semantic and interpersonal
+evidence path:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B^*= (&amp;declaration, warrant, commitments, binding\_profile, \\
+&amp;configuration, threat\_model, abstract\_effects, \\
+&amp;concretization, reachable\_effects, gap, actors, control, \\
+&amp;notice\_route, recognition, equivalence\_regime, \\
+&amp;alternatives, evidence, unknowns, claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>CHC can commit to the declared boundary, model, policy, evidence, and
+decision epoch. Those commitments establish exact objects for audit;
+they do not prove that the boundary covered every concrete effect route.
+Constitutional Binding Theory makes concretization an anchor-resolution
+problem whose candidates, exclusions, law, target, and remainder must be
+visible.</p>
+<p>The Locus of Shared Experience sharpens actor-specific notice.
+Sending a message, rendering a warning, semantic uptake, recognition,
+consent, practical control, and shared understanding are different
+relations. A technical record should preserve route, accessibility,
+permission, correction, refusal, and remaining difference without
+claiming access to an actor’s experience.</p>
+<p>Semantic Gravitational Attractors adds an adversarial case:
+canonicalizing several effects, actors, warnings, or incidents under one
+equivalence regime can improve analysis or erase a material
+accountability distinction. False merges and silent remainder loss can
+conceal who knew what, which route remained open, or which precaution
+could interrupt it.</p>
+<p>The universal GSM can type<br />
+<code>COMMITS_TO_BOUNDARY_DECLARATION</code>,<br />
+<code>RESOLVES_CONCRETE_EFFECT_CLASS</code>,
+<code>DELIVERS_ACTOR_SPECIFIC_NOTICE</code>,<br />
+<code>DOES_NOT_INFER_RECOGNITION</code>,
+<code>CANONICALIZES_UNDER_ACCOUNTABILITY_REGIME</code>,<br />
+<code>PRESERVES_ACTOR_DIFFERENCE</code>, and<br />
+<code>WITNESSES_REMAINDER_LOSS</code>.</p>
+<p>This randomized review establishes four editorial commitments: extend
+the case record with commitment and binding profiles; distinguish notice
+delivery from recognition, consent, and control; audit accountability
+equivalence regimes for false merge and remainder loss; and retain
+legal, moral, and experiential conclusions outside the technical
+diagnostic.</p>
+<h2 id="a-boundary-accountability-case-docket">A Boundary-Accountability
+Case Docket</h2>
+<p>Four downstream uses refine <em>The Path Was Open</em> into a
+reusable case docket. CHC shows that exact commitments and passing
+receipts do not exclude unmodeled effect routes. Constitutional Binding
+Theory treats concrete-to-abstract effect mapping as governed resolution
+with candidates, exclusions, and remainder. Semantic Gravitational
+Attractors shows that canonicalization can false-merge effects, actors,
+notices, or feasible precautions. <em>The Locus of Shared
+Experience</em> separates delivered notice from recognition,
+understanding, consent, practical control, and shared experience.</p>
+<p>The resulting docket is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B^*= (&amp;declaration, warrant, commitments, binding\_profile, \\
+&amp;configuration, threat\_model, abstract\_effects, \\
+&amp;concrete\_routes, equivalence\_regime, gaps, actors, \\
+&amp;authority, control, notice, recognition, consent, \\
+&amp;alternatives, interruptions, remedies, evidence, \\
+&amp;unknowns, claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>Boundary review should preserve both missing-route and
+wrong-abstraction failures. A concrete path may be absent from the
+model, or several materially different paths may be collapsed into one
+class. Each actor requires separately supported authority, control,
+notice, feasible response, and remedy fields. Organizational delivery
+cannot be imputed to an individual, and technical reachability cannot be
+converted into knowledge, consent, fault, liability, or exculpation.</p>
+<p>Counterfactual prevention should enumerate interventions,
+prerequisites, costs, side effects, actor control, and residual routes.
+“The path was open” is a bounded technical finding only when the route
+and intervention are evidenced under an exact configuration and time. It
+remains compatible with <code>UNKNOWN</code>,<br />
+<code>PARTIAL_CONTROL</code>, <code>NOTICE_UNPROVEN</code>,
+<code>ALTERNATIVE_INFEASIBLE</code>,<br />
+and<br />
+<code>EQUIVALENT_ROUTE_REMAINS</code>.</p>
+<p>The universal GSM can type<br />
+<code>COMMITS_TO_BOUNDARY_MODEL</code>,
+<code>RESOLVES_CONCRETE_EFFECT_ROUTE</code>,<br />
+<code>FALSE_MERGES_ACCOUNTABILITY_CASE</code>,
+<code>DELIVERS_NOTICE_WITHOUT_RECOGNITION</code>,<br />
+<code>CONTROLS_FEASIBLE_INTERRUPTION</code>,
+<code>LEAVES_EQUIVALENT_ROUTE_OPEN</code>,<br />
+and<br />
+<code>WITHHOLDS_LIABILITY_CONCLUSION</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the full case docket; test both omitted routes and
+false abstraction; require actor-specific notice, control, and
+feasible-alternative evidence; and retain legal, moral, experiential,
+and technical conclusions as distinct.</p>
+<h2
+id="diagnostic-accountability-without-a-liability-verdict">Diagnostic
+Accountability Without a Liability Verdict</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>When an autonomous system causes harm, neither “the machine chose”
+nor “a person deployed it” settles responsibility. This paper provides a
+boundary-accountability diagnostic: reconstruct reachable effects,
+authority, mediation, evidence, notice, control, and counterfactual
+prevention. It does not decide legal liability, guilt, intent,
+causation, or remedy.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Legal-category substitution.</strong> Architectural terms
+are treated as elements of a legal claim. Any legal mapping requires
+jurisdiction, current authority, facts, procedure, and qualified
+review.</li>
+<li><strong>Reachability-as-causation attack.</strong> An effect was
+technically reachable, so the subject is said to have caused it.
+Reachability, actual traversal, causal contribution, and legal causation
+are distinct.</li>
+<li><strong>Authority-as-responsibility attack.</strong> A party had
+some authority, so all downstream outcomes are attributed to it. Scope,
+knowledge, control, delegation, intervention opportunity, and competing
+causes matter.</li>
+<li><strong>Receipt-as-notice attack.</strong> A warning or receipt
+existed, so a person is presumed to have understood it. Delivery,
+accessibility, comprehension, timing, and ability to act require
+evidence.</li>
+<li><strong>Containment-theater attack.</strong> A declared boundary
+omits a reachable path. The diagnostic must compare modeled and concrete
+effect graphs and preserve the boundary gap.</li>
+<li><strong>Counterfactual fantasy attack.</strong> A hypothetical
+safeguard is claimed to have prevented harm without a supported
+mechanism or feasible deployment. Counterfactuals require explicit
+intervention and assumptions.</li>
+<li><strong>Hindsight attack.</strong> Post-incident knowledge is
+projected backward into foreseeability. Evidence must be time-indexed
+and actor-indexed.</li>
+<li><strong>Machine-agency laundering.</strong> System autonomy is used
+either to erase human decisions or to anthropomorphize the system into a
+legal person. The framework preserves role-specific action without
+deciding personhood.</li>
+</ol>
+<h3 id="evidence-and-citation-gate">Evidence and citation gate</h3>
+<p>The finite illustration demonstrates the diagnostic schema, not a
+real incident finding. Any concrete legal, historical, security, or
+incident claim remains on verification hold until exact sources,
+jurisdiction, dates, system versions, evidence custody, disputed facts,
+and qualified analysis are supplied.</p>
+<p>Internal corpus sources explain the technical model of authority,
+receipts, mediation, and effect paths. They cannot establish law or
+facts outside the corpus. No external research was added in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The paper’s public contribution is a better question set for
+accountability: what paths were open, who could close them, what
+evidence existed at the time, which protections actually mediated the
+effect, and what feasible intervention would have changed the
+outcome?</p>
+<h2 id="counterevidence-and-failure-modes">12. Counterevidence and
+Failure Modes</h2>
+<p>The framework must narrow or fail where: (1) declared scope is
+illegitimate; (2) an effect path is omitted; (3) abstraction erases the
+prohibited downstream effect; (4) a mediator is bypassable; (5) an
+intermediary holds undeclared authority; (6) policy changes between
+proposal and effect; (7) resource identity is wrong; (8) receipt and
+effect are not atomic; (9) recovery duplicates or loses effects; (10)
+verifier and producer co-drift; (11) environment behavior lies outside
+<span class="math inline"><em>T</em></span>; (12) the overapproximation
+is unsound; (13) model-check paths are spurious; (14) no witness is
+mistaken for safety; (15) reachable is mistaken for probable; (16)
+organizational notice is imputed to an actor without evidence; (17)
+formal control differs from practical control; (18) a nearby human
+becomes a crumple zone; (19) one interrupted sequence leaves equivalent
+harmful routes; (20) a precaution was unavailable or destroys the
+legitimate task; (21) the original checker remains missing; (22)
+AI-reconstructed counts differ under alternative plausible semantics;
+(23) incident sources do not support the stated facts; (24) legal
+sources do not support the stated propositions; (25) later authority
+changes the law; (26) architectural evidence is treated as a legal
+element; (27) privacy or due-process costs are omitted; or (28) the
+method yields no more accurate or uncertainty-preserving reconstruction
+than simpler incident analysis.</p>
+<h2 id="conclusion">14. Conclusion</h2>
+<p>The decisive distinction is not whether a machine chose an action. It
+is whether the effect path, authority, evidence, and human control
+surrounding that choice can be reconstructed without converting
+technical facts into automatic blame or exculpation.</p>
+<p>The declared-effective boundary gap is a useful technical object.
+Complete mediation is a useful conditional theorem. Neither supplies its
+own real-world premises, legitimate authority, actor knowledge, or legal
+conclusion. Those require exact artifacts, bounded models, observable
+effects, custody, primary sources, and separately justified
+inference.</p>
+<p>The path may have been open. The framework’s discipline is to show
+which path, under which configuration, according to which evidence, and
+what that evidence does not yet permit us to say.</p>
+<h2 id="author-supplied-reference-note">Author-Supplied Reference
+Note</h2>
+<p>The source manuscript contains scholarship, incident reports,
+statutes, guidance, cases, and an unpublished motivating dialogue. All
+remain author-supplied references pending an explicitly authorized
+primary-source verification pass. Their exact text and citations are
+preserved in the source under the custody hash above.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that machine action selection creates neither an
+automatic responsibility vacuum nor automatic human liability. Its
+nearest external comparison fields are security, ai, governance. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. Retrieval, tool use, and policy layers can reduce unsupported
+output without eliminating model error, source error, omission, bias, or
+the environmental and institutional costs of scale. A written
+constitution can legitimate domination as easily as constrain it unless
+amendment, participation, enforcement, and appeal remain effective in
+practice. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E2]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E3]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E6]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E7]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848461">10.5281/zenodo.23848461</a></p>

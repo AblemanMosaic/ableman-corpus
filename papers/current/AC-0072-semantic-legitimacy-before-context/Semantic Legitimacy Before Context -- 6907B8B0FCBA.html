@@ -1,0 +1,830 @@
+<h1 id="semantic-legitimacy-before-context">Semantic Legitimacy Before
+Context</h1>
+<h2 id="a-constitutional-framework-for-trustworthy-reasoning-systems">A
+Constitutional Framework for Trustworthy Reasoning Systems</h2>
+<h3
+id="context-may-propose-only-legitimately-admitted-meaning-may-bind.">Context
+may propose; only legitimately admitted meaning may bind.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern information systems use similarity, co-occurrence, retrieval,
+ranking, memory, and prior interaction to construct context. These
+signals are useful for discovery, but usefulness does not establish
+identity, truth, authority, jurisdiction, admissibility, or permission
+to affect a decision.</p>
+<p>This paper develops the <strong>Legitimacy-Before-Binding
+Principle</strong>: contextual material may enter a candidate or
+exploratory surface before full adjudication, but it may not acquire
+governing standing, bind semantic state, authorize inference, or produce
+consequential effect until the relevant legitimacy conditions have been
+evaluated. This formulation preserves the original
+Legitimacy-Before-Context insight while avoiding an impossible
+requirement that a system know which context matters before using
+context to discover it.</p>
+<p>Legitimacy is not treated as a single confidence score or intrinsic
+property of text. It is a jurisdiction-relative decision over exact
+identity, provenance, authority, scope, epistemic support,
+transformation lineage, temporal validity, conflicts, and intended
+effect. Evaluation produces typed outcomes–admit, refuse, hold, or admit
+with bounded standing–and a receipt whose claim ceiling does not exceed
+the evidence.</p>
+<p>The resulting architecture separates <strong>candidate
+context</strong> from <strong>binding context</strong>. Candidate
+context can be broad, approximate, plural, and uncertain. Binding
+context is the governed projection eligible to influence a specified
+reasoning or effect surface. The Governed Meaning Base (GMB) preserves
+the durable semantic state, while constitutional context compilation
+constructs invocation-specific projections under declared rules.</p>
+<p>The paper is a conceptual and architectural proposal. It does not
+prove that legitimacy can be perfectly determined, that admitted claims
+are true, or that an authority is morally justified. Its contribution is
+the ordering rule: contextual relevance may nominate material, but it
+cannot silently promote that material into semantic or operational
+authority.</p>
+<h2 id="the-problem-relevance-is-not-standing">1. The Problem: Relevance
+Is Not Standing</h2>
+<p>Search, recommendation, knowledge graphs, retrieval systems, and
+language models infer useful relationships from context. Similarity,
+proximity, repetition, links, and statistical association can identify
+material worth considering. They cannot by themselves answer:</p>
+<ul>
+<li>Is this the intended entity or revision?</li>
+<li>Is the source eligible to make this claim in this jurisdiction?</li>
+<li>Is the evidence sufficient for the proposed use?</li>
+<li>Has the material been transformed or quoted outside scope?</li>
+<li>Is it current, revoked, contested, or superseded?</li>
+<li>May it guide a model, bind a project, or authorize an effect?</li>
+</ul>
+<p>When systems collapse relevance into standing, nearby material can
+borrow authority; repetition can masquerade as support; retrieved
+instructions can impersonate policy; model synthesis can return as
+evidence; and a persuasive projection can become more influential than
+its source permits.</p>
+<p>The problem is not that context exists before legitimacy. Exploratory
+context is often how a system discovers candidate sources and conflicts.
+The problem is <strong>promotion without adjudication</strong>: context
+gains binding force because it is present, ranked highly, repeated, or
+convenient.</p>
+<h2 id="core-distinctions">2. Core Distinctions</h2>
+<h3 id="candidate-context-and-binding-context">2.1 Candidate Context and
+Binding Context</h3>
+<p><strong>Candidate context</strong> is material eligible for search,
+comparison, challenge, or possible admission. It may be noisy,
+contradictory, low-confidence, hostile, incomplete, or outside current
+authority. Its presence carries no automatic standing.</p>
+<p><strong>Binding context</strong> is material admitted for a specified
+purpose, scope, time, jurisdiction, and effect class. It may guide a
+model or govern a decision only to the extent of that standing.</p>
+<p>The distinction prevents the retrieval layer from becoming an
+implicit constitutional layer.</p>
+<h3 id="legitimacy-truth-and-authority">2.2 Legitimacy, Truth, and
+Authority</h3>
+<p>Legitimacy is not truth. A procedurally admissible claim can be
+false. A true observation can be inadmissible for a particular effect
+because its identity, custody, acquisition, privacy, or authority is
+defective.</p>
+<p>Authority is also not truth. Authority identifies who may make or
+bind a kind of declaration under a given order. It does not make the
+declaration epistemically correct or morally justified.</p>
+<h3 id="provenance-and-reliability">2.3 Provenance and Reliability</h3>
+<p>Provenance establishes a traceable relation to origins and
+transformations. It does not establish reliability merely by existing. A
+false claim can have perfect provenance, and a provenance chain can be
+complete relative to an instrumented path while an unobserved path
+remains.</p>
+<h3 id="context-and-meaning">2.4 Context and Meaning</h3>
+<p>Context can alter interpretation without changing source bytes. A
+binding decision must therefore identify not only the artifact but also
+the relevant semantic regime, qualifiers, transformation, and
+surrounding obligations. This is why the GMB lineage and meaning
+commitments cannot be reduced to retrieval metadata.</p>
+<h2 id="the-legitimacy-before-binding-principle">3. The
+Legitimacy-Before-Binding Principle</h2>
+<p>Let <span class="math inline"><em>x</em></span> be candidate
+material, <span class="math inline"><em>p</em></span> its proposed
+purpose, <span class="math inline"><em>j</em></span> the governing
+jurisdiction, <span class="math inline"><em>t</em></span> the relevant
+time, and <span class="math inline"><em>e</em></span> the intended
+effect class. Define a legitimacy evaluation:</p>
+<p><span class="math display">$$
+\begin{aligned}
+L(x,p,j,t,e) \rightarrow \{&amp;\operatorname{ADMIT},
+\operatorname{REFUSE}, \\
+&amp;\operatorname{HOLD}, \operatorname{BOUNDED}\}
+\end{aligned}.
+$$</span></p>
+<p>The principle is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp; \\
+&amp;\ne g\operatorname{Admitted}(x,p,j,t,e) \\
+&amp;\Rightarrow  \\
+&amp;\ne g\operatorname{BindingEffect}(x,p,j,t,e)
+\end{aligned}.
+$$</span></p>
+<p>This does not prohibit the system from retrieving, displaying,
+comparing, or challenging <span class="math inline"><em>x</em></span>.
+It prohibits those exploratory operations from silently conferring
+binding standing.</p>
+<p>An <code>ADMIT</code> result grants only the standing named by the
+decision.</p>
+<p><code>BOUNDED</code> may allow quotation but not instruction,
+retrieval but not persistence, local reasoning but not external effect,
+or advisory use but not governing use. <code>HOLD</code> preserves
+uncertainty and identifies what evidence or authority is missing.
+<code>REFUSE</code> is a typed outcome, not disappearance.</p>
+<h2 id="legitimacy-evaluation-surface">4. Legitimacy Evaluation
+Surface</h2>
+<p>A legitimacy decision may require:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identity</td>
+<td>Which exact entity, revision, representation, and semantic regime is
+this?</td>
+</tr>
+<tr>
+<td>Provenance</td>
+<td>From which sources and transformations did it derive?</td>
+</tr>
+<tr>
+<td>Authority</td>
+<td>Who may assert or bind this kind of material?</td>
+</tr>
+<tr>
+<td>Jurisdiction</td>
+<td>Which order, corpus, project, or decision surface governs?</td>
+</tr>
+<tr>
+<td>Scope and purpose</td>
+<td>For what use and audience is the material eligible?</td>
+</tr>
+<tr>
+<td>Epistemic support</td>
+<td>What evidence, method, calibration, and alternatives support
+it?</td>
+</tr>
+<tr>
+<td>Temporal status</td>
+<td>Is it current, stale, revoked, superseded, or future-effective?</td>
+</tr>
+<tr>
+<td>Conflict</td>
+<td>Which incompatible claims, laws, or interpretations remain?</td>
+</tr>
+<tr>
+<td>Transformation</td>
+<td>Which qualifications, uncertainty, dissent, or obligations may be
+lost?</td>
+</tr>
+<tr>
+<td>Effect class</td>
+<td>What consequence would binding this material permit?</td>
+</tr>
+</tbody>
+</table>
+<p>Not every decision needs the strongest possible evidence on every
+dimension. The required profile depends on consequence. A low-risk
+exploratory query may admit weakly sourced candidates; a medical, legal,
+financial, infrastructure, or autonomous-effect decision requires
+stronger evidence and authority.</p>
+<h2 id="constitutional-semantic-pipeline">5. Constitutional Semantic
+Pipeline</h2>
+<p>The architecture separates discovery from promotion:</p>
+<pre class="text"><code>source and observation surfaces
+  -&gt; candidate discovery
+  -&gt; identity and provenance binding
+  -&gt; legitimacy and admissibility evaluation
+  -&gt; conflict, alternative, and counterevidence search
+  -&gt; typed disposition
+  -&gt; purpose-bounded context projection
+  -&gt; inference or effect request
+  -&gt; independent effect authorization where required
+  -&gt; receipt, observation, and revision</code></pre>
+<p>Candidate generation may use contextual similarity, models, human
+suggestions, or network discovery. The legitimacy gate is downstream of
+discovery but upstream of binding and effect. This placement preserves
+search power without allowing search rank to become authority.</p>
+<p>Every promotion should produce a decision record naming the evaluated
+object, purpose, jurisdiction, evidence, alternatives, outcome,
+standing, expiry, and appeal or revision route. The receipt binds the
+decision; it does not prove that the evidence was true or complete.</p>
+<h2 id="gmb-and-invocation-context">6. GMB and Invocation Context</h2>
+<p>The current architecture is the <strong>Governed Meaning Base
+(GMB)</strong> under the author-confirmed historical lineage
+<code>CCF -&gt; CMB -&gt; GMB</code>. GMB is the durable semantic state
+and custody surface: identities, concepts, claims, relations, standing,
+evidence, conflicts, decisions, and revision lineage can persist there
+without being flattened into one prompt.</p>
+<p>Constitutional context compilation produces a purpose-specific
+projection from that state. The relation is:</p>
+<p><span class="math display">$$
+\operatorname{GMBState}
+\xrightarrow{\text{legitimacy and admissibility}}
+\operatorname{BindingContext}_{p,j,t,e}
+\xrightarrow{\text{realization}}
+\operatorname{PresentedContext}.
+$$</span></p>
+<p>The presented context is not identical to GMB state. It is a bounded
+projection whose omissions, transformations, order, provider
+representation, and claim ceiling require evidence. Meaning as Binding
+explains why presence is insufficient; Governed Context &amp; Memory
+governs the invocation surface; The Three Hash Rule keeps state,
+admissibility, and meaning commitments distinct; Semantic Custody
+preserves responsibility for semantic transformation; Reasoning by Way
+of Receipts preserves intermediate decisions and debts.</p>
+<h2 id="semantic-promotion-gate">Semantic Promotion Gate</h2>
+<p>Across the completed P1 corpus, Semantic Legitimacy Before Context is
+the <strong>semantic promotion gate that prevents candidate material
+from gaining binding standing merely through retrieval, repetition,
+proximity, fluency, or inclusion in a prompt</strong>. Its precise claim
+is legitimacy before binding context, not legitimacy before discovery or
+exploratory comparison.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>A Constitution for the
+Context Window</em><br />
+<strong>Supplies:</strong> Governance of selection, ordering, omission,
+compression, instruction priority, and provider realization.<br />
+<strong>SLBC boundary:</strong> SLBC decides which candidate materials
+may bind for the stated purpose before that projection is
+assembled.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Binding
+Theory: Governed Anchor Resolution as a Universal Pattern in Semantic
+Systems</em><br />
+<strong>Supplies:</strong> Identity and anchor resolution under explicit
+governance.<br />
+<strong>SLBC boundary:</strong> Correct resolution is necessary but does
+not itself confer epistemic or effect standing.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional/Crystallized
+Meaning Base (CMB)</em><br />
+<strong>Supplies:</strong> Historical source architecture in the
+<code>CCF -&gt; CMB -&gt; GMB</code> lineage.<br />
+<strong>SLBC boundary:</strong> Current synthesis uses GMB; durable
+inclusion remains distinct from purpose-specific admission.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Records of proposal, evaluation, disposition,
+evidence, and revision.<br />
+<strong>SLBC boundary:</strong> A receipt binds the gate event but does
+not prove the candidate true or legitimate.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Epistemology
+Under Adversarial Semantic Pressure</em><br />
+<strong>Supplies:</strong> Claim ceilings, counterevidence, uncertainty,
+and resistance to authority laundering.<br />
+<strong>SLBC boundary:</strong> SLBC operationalizes a pre-binding
+decision surface for those epistemic obligations.</p></li>
+</ul>
+<p>A promotion request should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Q= (&amp;candidate, identity, source, transformations, purpose, \\
+&amp;jurisdiction, time, effect\_class, evidence, authority, \\
+&amp;conflicts, alternatives, privacy, expiry, appeal)
+\end{aligned}.
+$$</span></p>
+<p>Its disposition should distinguish <code>DISCOVERABLE</code>,
+<code>RETRIEVABLE</code>, <code>QUOTABLE</code>,
+<code>ADVISORY</code>,<br />
+<code>BINDING_FOR_PURPOSE</code>, <code>PERSISTABLE</code>,
+<code>EFFECT_ELIGIBLE</code>, <code>HOLD</code>,<br />
+and <code>REFUSE</code>. These standings are not a monotone ladder in
+every jurisdiction: material can be quotable but not persistable,
+retrievable but not disclosable, or binding for a narrow internal
+calculation but ineligible for external effect.</p>
+<p>The gate must remain plural and contestable. Institutional authority
+can be defective; minority evidence can be novel but important; a true
+fact can be privacy-inadmissible; a false claim can have perfect
+provenance. Consequence-proportionate profiles, declared alternatives,
+expiry, appeal, and independent downstream effect authorization prevent
+legitimacy from becoming centralized censorship or an epistemic
+oracle.</p>
+<p>The universal GSM can type<br />
+<code>DISCOVERS_CANDIDATE_CONTEXT</code>,
+<code>RESOLVES_SEMANTIC_IDENTITY</code>,<br />
+<code>REQUESTS_BINDING_STANDING</code>, <code>ADMITS_FOR_PURPOSE</code>,
+<code>LIMITS_EFFECT_CLASS</code>,<br />
+<code>HOLDS_FOR_CONFLICT</code>,
+<code>REFUSES_CROSS_JURISDICTION_REUSE</code>,
+<code>EXPIRES_ADMISSION</code>,<br />
+<code>APPEALS_SEMANTIC_DISPOSITION</code>,<br />
+and<br />
+<code>REQUIRES_SEPARATE_EFFECT_AUTHORIZATION</code>. These relations
+supply the missing granularity between relevance and consequence.</p>
+<p>This integration establishes four editorial commitments: classify
+SLBC as the semantic promotion gate; adopt the complete
+promotion-request envelope and typed standing vocabulary; require
+plural, consequence-proportionate, expiring, and appealable legitimacy
+profiles; and preserve discovery, retrieval, binding, persistence, and
+effect authorization as separate transitions.</p>
+<h2 id="identity-to-effect-promotion-chain">Identity-to-Effect Promotion
+Chain</h2>
+<p>The fixed-seed comparison with APD, GCML, enforcement mechanics, and
+the Identity Spine Doctrine clarifies that semantic identity, binding
+standing, procedural use, enforcement, and effect are distinct
+transitions:</p>
+<p><span class="math display">$$
+\begin{aligned}
+P= (&amp;identity\_decision, purpose\_standing, procedure, \\
+&amp;placement, mediation, effect\_authorization, containment, \\
+&amp;evidence, appeal)
+\end{aligned}.
+$$</span></p>
+<p>The Identity Spine can admit, link, split, fork, supersede, or refuse
+a concept identity. That decision resolves what candidate material is
+about; it does not decide whether the material is admissible for a
+purpose. SLBC assigns the purpose-specific posture and must react when
+an identity changes or enters review.</p>
+<p>GCML may lower binding material into a procedural profile while
+preserving its purpose, expiry, privacy, and effect limits. Enforcement
+mechanics can place and mediate the resulting rule, but mechanical
+completeness cannot cure a defective semantic admission or antecedent
+authority. APD containment applies only at the declared realized effect
+surface.</p>
+<p>The gate should therefore emit downstream invalidation obligations.
+If identity, evidence, jurisdiction, authority, or expiry changes,
+affected context builds, procedures, enforcement structures, effect
+authorizations, and caches enter <code>RECOMPUTE_REQUIRED</code>,<br />
+<code>CONTESTED</code>, <code>QUARANTINED</code>,<br />
+or another typed posture rather than silently retaining standing.</p>
+<p>The universal GSM can type<br />
+<code>RESOLVES_IDENTITY_BEFORE_PROMOTION</code>,<br />
+<code>ADMITS_FOR_BINDING_PURPOSE</code>,
+<code>LOWERS_WITH_PURPOSE_LIMIT</code>,
+<code>PLACED_AS_ENFORCEABLE_RULE</code>,<br />
+<code>AUTHORIZED_FOR_EFFECT_SEPARATELY</code>,
+<code>CONTAINED_UNDER_REALIZED_SURFACE</code>,<br />
+and<br />
+<code>INVALIDATES_DOWNSTREAM_PROMOTION</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the identity-to-effect promotion chain; keep identity and purpose
+standing separate; require downstream invalidation after material
+changes; and preserve semantic admission, effect authorization, and APD
+containment as independent decisions.</p>
+<h2
+id="a-multidimensional-promotion-gate-with-invalidation-propagation">A
+Multidimensional Promotion Gate with Invalidation Propagation</h2>
+<p>Eighteen retained downstream uses place Semantic Legitimacy Before
+Context across context compilation, commitments, cold boot, communal
+computing, collective coordination, context management, crystallization,
+adversarial epistemology, procedural lowering, human-legible
+representation, human validation, identity governance,
+anti-self-ratification, retrieval, semantic debt, fragmentation
+analysis, enforcement, and interface-frame risk. This breadth confirms a
+promotion gate, not a binary truth oracle or centralized censorship
+mechanism.</p>
+<p><span class="math display">$$
+\begin{aligned}
+L^*= (&amp;candidate, identity, source, transformations, purpose, \\
+&amp;jurisdiction, time, epistemic\_posture, privacy, \\
+&amp;effect\_class, evidence, counterevidence, authority, \\
+&amp;conflicts, alternatives, disposition, expiry, appeal, \\
+&amp;dependents, invalidation, revision)
+\end{aligned}.
+$$</span></p>
+<p>Discovery, retrieval, quotation, advisory use, binding-for-purpose,
+persistence, procedural lowering, effect eligibility, and effect
+authority are non-identical and need not form one monotone ladder. A
+true claim may be privacy-inadmissible; a false claim can have exact
+provenance; an authoritative source can be wrong; a novel minority claim
+can be legitimate to investigate without becoming binding.</p>
+<p>Every promotion binds a purpose and consequence class. Material
+change in identity, source, transformation, evidence, authority,
+jurisdiction, privacy, or expiry propagates typed obligations to
+dependent contexts, caches, procedures, models, decisions, and effect
+authorizations. Valid outcomes include <code>HOLD</code>,<br />
+<code>CONFLICT</code>, <code>CONTESTED</code>, <code>QUARANTINED</code>,
+<code>RECOMPUTE_REQUIRED</code>,<br />
+and <code>REFUSE</code>; refusal requires grounds, scope, expiry where
+appropriate, and an appeal or revision path.</p>
+<p>The universal GSM can type<br />
+<code>REQUESTS_SEMANTIC_PROMOTION</code>,
+<code>ADMITS_FOR_PURPOSE</code>,<br />
+<code>LIMITS_PROMOTION_EFFECT_CLASS</code>,
+<code>PRESERVES_PRIVACY_REFUSAL</code>,
+<code>CONTESTS_PROMOTION</code>,<br />
+<code>EXPIRES_PROMOTION</code>,
+<code>INVALIDATES_DEPENDENT_CONTEXT</code>,
+<code>REQUIRES_RECOMPUTATION</code>,<br />
+and<br />
+<code>AUTHORIZES_EFFECT_SEPARATELY</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+expanded promotion and invalidation record; retain multidimensional
+nonmonotone dispositions; require plural, appealable,
+consequence-proportionate profiles; and propagate material change
+without collapsing identity, truth, legitimacy, admission, persistence,
+procedure, or effect authority.</p>
+<h2 id="failure-and-counterevidence-conditions">7. Failure and
+Counterevidence Conditions</h2>
+<p>Legitimacy-first systems can fail through:</p>
+<ul>
+<li><strong>authority capture:</strong> an institution defines itself as
+the only legitimate speaker;</li>
+<li><strong>epistemic exclusion:</strong> marginalized or novel evidence
+cannot satisfy incumbent profiles;</li>
+<li><strong>false precision:</strong> a score hides contest, plurality,
+or missing evidence;</li>
+<li><strong>circular legitimation:</strong> the evaluator derives
+authority from the material it evaluates;</li>
+<li><strong>bootstrap opacity:</strong> foundational identities or
+authority are left undeclared;</li>
+<li><strong>staleness:</strong> a once-admitted claim continues after
+its basis changes;</li>
+<li><strong>context starvation:</strong> overstrict gates prevent
+discovery or useful low-risk reasoning;</li>
+<li><strong>laundered transformation:</strong> a summary or model output
+inherits more standing than its sources;</li>
+<li><strong>jurisdiction collapse:</strong> standing in one corpus or
+purpose is reused in another;</li>
+<li><strong>cost and delay:</strong> evaluation overhead exceeds
+consequence-adjusted value.</li>
+</ul>
+<p>The proposal is weakened if context-first systems with explicit
+uncertainty and independent effect controls perform as well at lower
+cost; if legitimacy profiles cannot be calibrated; if admission
+decisions reproduce institutional bias; or if users cannot inspect and
+contest the grounds of refusal. These are empirical and governance
+questions, not exceptions to be defined away.</p>
+<h2 id="realization-funnel-placement">8. Realization-Funnel
+Placement</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Legitimacy-before-binding responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore candidate meanings, contexts, authorities, and even
+undesirable legitimacy regimes.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define identities, dimensions, outcomes, jurisdictions, claim
+ceilings, and effect boundaries.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate configurations that satisfy the bare model, including
+captured or exclusionary regimes.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer transparent, plural, revisable, sovereignty-preserving,
+evidence-sensitive, and consequence-proportionate regimes.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select actual registries, evaluators, evidence profiles, thresholds,
+expiry, appeal, and effect policies.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Implement discovery, evaluation, GMB mutation, context projection,
+provider realization, and effect mediation.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Test identity, provenance, conflicts, bias, false admission, false
+refusal, staleness, bypass, cost, and user contestability.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Amend profiles and decisions while preserving predecessor standing,
+disputes, receipts, and migration history.</td>
+</tr>
+</tbody>
+</table>
+<p>This paper primarily proposes a Specification principle and CM2
+preferences. It does not select a complete legitimacy constitution,
+certify a GMB implementation, or establish empirical benefit.</p>
+<h2 id="evaluation-program">9. Evaluation Program</h2>
+<p>A comparative evaluation should distinguish:</p>
+<ul>
+<li>candidate-recall and discovery loss;</li>
+<li>false admission and false refusal by consequence class;</li>
+<li>authority and jurisdiction leakage;</li>
+<li>unsupported-claim propagation depth;</li>
+<li>time to detect revocation or staleness;</li>
+<li>preservation of qualifiers through transformation;</li>
+<li>user ability to inspect, contest, and repair decisions;</li>
+<li>machine, human, latency, and privacy cost;</li>
+<li>performance against a simpler context-first system with downstream
+effect controls.</li>
+</ul>
+<p>Negative controls should include relevant but unauthorized text,
+authoritative but irrelevant text, true but privacy-inadmissible
+evidence, false claims with perfect provenance, stale previously
+admitted policy, prompt-injected retrieved instructions, paraphrases
+that strengthen source claims, and cross-jurisdiction reuse.</p>
+<p>No novelty, reliability, or superiority claim is established until
+this protocol is executed against exact systems and independently
+reviewed. A current external literature review is also required for a
+future evidence-qualified revision.</p>
+<h2
+id="legitimacy-first-is-a-load-bearing-profile-not-a-universal-retrieval-rule">Legitimacy-First
+Is a Load-Bearing Profile, Not a Universal Retrieval Rule</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Semantic Legitimacy Before Context argues that authority-sensitive
+reasoning should not let relevance or usefulness substitute for
+identity, provenance, standing, and admissible binding. Material should
+enter consequential context through a promotion gate. Approximate
+retrieval and exploratory reasoning may still use context-first methods
+when their outputs remain appropriately bounded.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Authority-capture attack.</strong> The legitimacy gate
+suppresses dissenting or unfamiliar sources. Issuer, jurisdiction,
+appeal, plural standing, and provisional lanes are required.</li>
+<li><strong>Grounding-regress attack.</strong> Every context item
+requires prior legitimacy, which itself requires context. The
+architecture needs declared roots and bounded provisional
+reasoning.</li>
+<li><strong>Exploration-suppression attack.</strong> Low-standing
+hypotheses cannot be examined because they are not already admitted.
+Inquiry and consequential reliance need different lanes.</li>
+<li><strong>Context-first counterexample.</strong> Approximate retrieval
+solves a benign task without prior promotion. The thesis must remain
+claim- and consequence-relative.</li>
+<li><strong>Invalidation-gap attack.</strong> A source loses standing
+but derived contexts and decisions remain active. Dependency and
+invalidation propagation are required.</li>
+<li><strong>Binding-mismatch attack.</strong> A legitimate source is
+bound to the wrong subject or sense. Legitimacy and correct resolution
+are distinct tests.</li>
+<li><strong>Latency and scarcity attack.</strong> Full adjudication
+makes timely action impossible. Profiles need budgets, cached standing,
+expiry, deferral, and emergency rules.</li>
+<li><strong>Legitimacy-as-truth attack.</strong> Admitted material is
+treated as fact. Standing authorizes a role under rules; it does not
+guarantee truth.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The defensible thesis is conditional: legitimacy-first promotion
+becomes load-bearing where reasoning must support verification,
+authority-sensitive inference, or consequential effects. The paper does
+not show that every retrieval, brainstorming, or pattern-recognition
+task needs the same gate.</p>
+<p>Claims about reasoning accuracy, retrieval quality, safety, latency,
+institutional legitimacy, or comparative performance require external
+evidence and experiments. Internal corpus relations establish
+architectural necessity under declared assumptions only. No external
+research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public result is a context window that can distinguish “useful to
+consider” from “authorized to rely on,” preserve why an item was
+admitted, and withdraw its downstream influence when its standing
+fails.</p>
+<h2 id="conclusion">10. Conclusion</h2>
+<p>The central mistake of context-first reasoning is not using context.
+It is allowing contextual salience to confer standing.</p>
+<p>Semantic Legitimacy Before Context is therefore best read as
+<strong>legitimacy before binding context</strong>. Search, models,
+networks, and people may generate candidates freely within declared
+containment boundaries. Promotion into durable meaning, governing
+context, or consequential inference requires a typed legitimacy and
+admissibility decision.</p>
+<p>This ordering preserves both exploration and constitutional
+restraint. It allows context to discover possibilities while preventing
+relevance, fluency, repetition, or proximity from silently becoming
+authority. It also preserves uncertainty: when legitimacy cannot yet be
+established, the system can hold, qualify, or refuse rather than invent
+confidence.</p>
+<p>The result is not guaranteed truth. It is a system that can say why
+material was allowed to bind, for what purpose, under which authority,
+with what evidence, until when, and with which unresolved alternatives.
+That is a narrower claim than trustworthy reasoning in full, but it is
+an essential part of making reasoning inspectable and revisable.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern information systems use similarity,
+co-occurrence, retrieval, ranking, memory, and prior interaction to
+construct context. Its nearest external comparison fields are ai,
+governance, semantic. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. Formal
+vocabularies and graph links make commitments explicit but cannot by
+themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E7]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18633797.</p>
+<p>Adam Ableman. <em>Semantic Custody</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20300952.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>Adam Ableman. <em>Governed Meaning Base (GMB)</em>. Ableman Corpus
+current edition in the historical CCF -&gt; CMB -&gt; GMB lineage;
+conceptual claims retain the standing stated in the work.</p>
+<p>Adam Ableman. <em>Meaning as Binding</em>. Ableman Corpus current
+edition; conceptual claims retain the standing stated in the work.</p>
+<p>Adam Ableman. <em>A Constitution for the Context Window</em>. Ableman
+Corpus current edition; conceptual claims retain the standing stated in
+the work.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>External literature research and source verification remain required
+for a future evidence-qualified revision.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI.</em> Zenodo, 2026. doi:10.5281/zenodo.18633797</p>
+<p>Adam Ableman <em>Semantic Custody.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20300952</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848223">10.5281/zenodo.23848223</a></p>

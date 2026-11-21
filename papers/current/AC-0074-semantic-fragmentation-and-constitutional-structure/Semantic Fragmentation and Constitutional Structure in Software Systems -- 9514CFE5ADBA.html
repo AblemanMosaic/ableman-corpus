@@ -1,0 +1,1235 @@
+<h1
+id="semantic-fragmentation-and-constitutional-structure-in-software-systems">Semantic
+Fragmentation and Constitutional Structure in Software Systems</h1>
+<h2
+id="diagnosing-meaning-loss-across-distributed-constitutional-systems">Diagnosing
+Meaning Loss Across Distributed Constitutional Systems</h2>
+<h3 id="sfa-does-not-primarily-grade-correctness-or-performance.">SFA
+does not primarily grade correctness or performance.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern software systems exhibit a persistent gap between their
+apparent structure and their actual governing behavior. Modules, APIs,
+configuration schemas, and documentation describe visible surfaces,
+while configuration resolution, authority delegation, execution routing,
+fallback behavior, and exception handling often remain distributed
+through implementation. The system has an operative constitution, but
+may be unable to represent or explain it.</p>
+<p>This paper introduces <strong>Semantic Fragmentation Analysis
+(SFA)</strong> as a source-bounded method for characterizing how a
+software system distributes, obscures, contradicts, or externalizes its
+governing structure. SFA does not primarily grade correctness or
+performance. It identifies decision classes, authority surfaces,
+admissibility rules, resolution cascades, fallbacks, projections,
+evidence, and revision paths; reconstructs representative decision
+events; and reports where declared structure and operative behavior
+diverge.</p>
+<p>The paper defines semantic fragmentation, operative and declared
+constitutions, structural legibility, resolution surfaces, authority
+scopes, and constitutional exposure. It formalizes a decision event,
+gives a non-compensatory fragmentation profile, states diagnostic
+invariants, expands the pattern taxonomy, and supplies a worked
+configuration-resolution example. It then locates SFA within the full
+Possibility–Specification–CM1–CM2–Instance Configuration–Implementation
+Realization–Evidence–Revision funnel and connects local structural
+legibility to constitutional compatibility across systems.</p>
+<p>SFA is a diagnostic architecture, not a certification result.
+Explicit models can be stale, incomplete, deceptive, excessively
+centralized, privacy-invasive, or more costly than the opacity they
+replace. The method therefore preserves uncertainty, hidden remainder,
+counterevidence, and refusal. Its intended contribution is a disciplined
+route from implicit constitutional behavior toward software whose
+authority, resolution, transformation, and failure semantics can be
+inspected and revised without claiming that legibility alone makes the
+software correct, secure, legitimate, or desirable.</p>
+<p><strong>Keywords:</strong> semantic fragmentation; constitutional
+computing; software architecture; authority; admissibility; resolution
+surface; fallback; structural legibility; provenance;
+interoperability.</p>
+<h2 id="introduction-the-problem-of-implicit-structure">1. Introduction:
+The Problem of Implicit Structure</h2>
+<p>Software systems are typically described through functions, classes,
+APIs, interfaces, configuration schemas, and documentation. These
+surfaces create the impression that a system’s structure is explicit and
+well defined. Yet actual behavior also depends on deeper decision
+processes:</p>
+<ul>
+<li>how configuration values are resolved;</li>
+<li>which source or component has authority;</li>
+<li>how execution paths are selected;</li>
+<li>which exceptions trigger fallback;</li>
+<li>how defaults, environment, state, and history interact;</li>
+<li>what evidence remains after a decision takes effect.</li>
+</ul>
+<p>These processes often exist as distributed logic embedded in
+implementation. A system can therefore appear modular while its real
+control structure crosses modules; appear configurable while hidden
+defaults dominate; or appear governed by one policy while fallback paths
+implement another.</p>
+<p>The resulting mismatch is not adequately described by code complexity
+alone. Complexity concerns how much structure must be understood.
+<strong>Semantic fragmentation</strong> concerns whether the governing
+meaning of that structure–who may decide what, under which conditions,
+by which rule, with what fallback and evidence–exists as a coherent
+inspectable object.</p>
+<p>A fragmented system is not necessarily incorrect. It may perform
+well, pass tests, and satisfy users. The narrower claim is that it lacks
+<strong>structural legibility</strong>: an accountable ability to answer
+how a consequential outcome was selected. That distinction matters
+because a system can be functionally successful yet difficult to audit,
+repair, translate, replace, or govern.</p>
+<p>The central thesis is:</p>
+<blockquote>
+<p>Software systems commonly possess an operative constitutional form
+whose authority, admissibility, resolution, routing, and fallback rules
+are distributed across implementation. Semantic Fragmentation Analysis
+reconstructs and tests that form without presuming that a successful
+reconstruction is complete or normatively justified.</p>
+</blockquote>
+<h2 id="definitions-and-claim-boundary">2. Definitions and Claim
+Boundary</h2>
+<h3 id="semantic-fragmentation">2.1 Semantic fragmentation</h3>
+<p><strong>Semantic fragmentation</strong> is the condition in which
+governing rules of decision, authority, admissibility, precedence,
+transformation, fallback, or evidence are distributed across implicit,
+inconsistent, opaque, or externally represented forms rather than
+available through a coherent declared model.</p>
+<p>Fragmentation may be locational, when rules are scattered; semantic,
+when the same term or status has incompatible meanings; constitutional,
+when authority or admissibility is undeclared; evidentiary, when
+outcomes cannot be reconstructed; or projective, when the interface
+presents a simpler constitution than the implementation exercises.</p>
+<p>Fragmentation is relative to a bounded question and observation
+surface. No finite analysis proves that every operative rule has been
+recovered. SFA must therefore report both characterized structure and
+<strong>remainder</strong>: behavior, authority, state, dependencies,
+and environmental influence not yet explained.</p>
+<h3 id="operative-and-declared-constitutions">2.2 Operative and declared
+constitutions</h3>
+<p>The <strong>operative constitution</strong> of a system is the set of
+rules and relations that actually govern consequential transitions in
+the observed scope. It includes code, configuration precedence,
+defaults, runtime state, external services, human intervention,
+deployment environment, fallback paths, and any other factor that can
+alter an outcome.</p>
+<p>The <strong>declared constitution</strong> is the system’s explicit
+account of those rules: schemas, policy artifacts, interface contracts,
+intermediate representations, help text, documentation, diagnostic
+surfaces, and machine-readable declarations.</p>
+<p>The two need not be identical in form, but consequential differences
+must be identifiable. A declared model that omits a harmless
+implementation optimization may remain adequate. A model that says a
+policy controls an outcome while an undocumented fallback bypasses it is
+constitutionally misleading.</p>
+<h3 id="structural-legibility">2.3 Structural legibility</h3>
+<p><strong>Structural legibility</strong> is the bounded capacity to
+reconstruct a consequential outcome from declared candidates, authority
+bases, selection rules, fallbacks, relevant state, and evidence.
+Legibility is not the same as simplicity, transparency of every secret,
+or unrestricted disclosure. A secure system may legitimately hide
+sensitive values while still exposing typed reasons, authority, scope,
+and verifiable evidence.</p>
+<h3 id="resolution-surface">2.4 Resolution surface</h3>
+<p>A <strong>resolution surface</strong> is an explicit human- or
+machine-legible interface through which a system reports what was
+resolved, which candidates were considered, what authority and
+precedence rules applied, which fallback or refusal occurred, what
+outcome was selected, and what evidence supports the report.</p>
+<p>A log line is not automatically a resolution surface. The surface
+must preserve the semantics required to reconstruct or challenge the
+decision. Conversely, a resolution surface need not reveal protected
+values; it may use commitments, redaction classes, or authorized
+views.</p>
+<h3 id="claim-boundary">2.5 Claim boundary</h3>
+<p>SFA produces a structural characterization under declared scope,
+observation, and test conditions. It does not by itself establish:</p>
+<ul>
+<li>functional correctness;</li>
+<li>security or absence of hidden paths;</li>
+<li>normative legitimacy of the governing rules;</li>
+<li>completeness of the reconstructed constitution;</li>
+<li>identity between a model and the system;</li>
+<li>constitutional compatibility with another system;</li>
+<li>improvement from a proposed refactor.</li>
+</ul>
+<p>Those are separate claims requiring separate evidence.</p>
+<h2 id="a-minimal-operational-model">3. A Minimal Operational Model</h2>
+<p>Let a consequential resolution event be represented as:</p>
+<p><span
+class="math display"><em>r</em> = ⟨<em>q</em>, <em>C</em>, <em>A</em>, <em>P</em>, <em>F</em>, <em>x</em>, <em>o</em>, <em>E</em>⟩,</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>q</em></span> is the question or
+decision class;</li>
+<li><span class="math inline"><em>C</em></span> is the set of considered
+candidates;</li>
+<li><span class="math inline"><em>A</em></span> records the authority
+basis and scope for each candidate or rule;</li>
+<li><span class="math inline"><em>P</em></span> is the precedence or
+selection procedure;</li>
+<li><span class="math inline"><em>F</em></span> is the declared fallback
+or refusal behavior;</li>
+<li><span class="math inline"><em>x</em></span> is the relevant input,
+environment, and prior state;</li>
+<li><span class="math inline"><em>o</em></span> is the selected outcome
+or refusal;</li>
+<li><span class="math inline"><em>E</em></span> is the retained evidence
+sufficient for the bounded claim.</li>
+</ul>
+<p>The operative constitution observed across a scoped set of events
+<span class="math inline"><em>R</em></span> can be approximated by the
+authority, precedence, fallback, and transition relations recovered from
+those events:</p>
+<p><span
+class="math display"><em>K</em><sub>op</sub>(<em>S</em>, <em>R</em>) = ⋃<sub><em>r</em> ∈ <em>R</em></sub>{<em>A</em><sub><em>r</em></sub>, <em>P</em><sub><em>r</em></sub>, <em>F</em><sub><em>r</em></sub>, <em>T</em><sub><em>r</em></sub>}.</span></p>
+<p>The declared constitution is <span
+class="math inline"><em>K</em><sub>decl</sub>(<em>S</em>)</span>. Two
+diagnostic differences are then useful:</p>
+<p><span
+class="math display"><em>Δ</em><sub>hidden</sub> = <em>K</em><sub>op</sub> \ <em>K</em><sub>decl</sub>,   <em>Δ</em><sub>stale</sub> = <em>K</em><sub>decl</sub> \ <em>K</em><sub>op</sub>.</span></p>
+<p><span class="math inline"><em>Δ</em><sub>hidden</sub></span>
+identifies recovered operative rules absent from the declaration. <span
+class="math inline"><em>Δ</em><sub>stale</sub></span> identifies
+declared rules not observed in the scoped operative analysis. Neither
+set is automatically a defect: observation may be incomplete, a declared
+path may be rare, or an implementation detail may be semantically
+irrelevant. Each member requires disposition and evidence.</p>
+<p>SFA should report a profile rather than one compensatory score:</p>
+<p><span
+class="math display"><em>Φ</em>(<em>S</em>) = ⟨<em>L</em>, <em>D</em>, <em>A</em><sub><em>o</em></sub>, <em>T</em><sub><em>d</em></sub>, <em>P</em><sub><em>d</em></sub>, <em>R</em><sub><em>d</em></sub>⟩,</span></p>
+<p>where <span class="math inline"><em>L</em></span> is locational
+dispersion, <span class="math inline"><em>D</em></span> decision
+opacity, <span
+class="math inline"><em>A</em><sub><em>o</em></sub></span> authority
+opacity, <span
+class="math inline"><em>T</em><sub><em>d</em></sub></span> trace
+deficit, <span
+class="math inline"><em>P</em><sub><em>d</em></sub></span> projection
+divergence, and <span
+class="math inline"><em>R</em><sub><em>d</em></sub></span> revision
+deficit. A low value on one axis must not cancel a critical failure on
+another. No validated universal measurement scale is claimed here;
+Section 11 gives candidate operationalizations.</p>
+<h2 id="diagnostic-invariants">4. Diagnostic Invariants</h2>
+<p>The following are proposed SFA invariants for an explicitly governed
+resolution architecture. They are evaluation obligations, not claims
+that current software satisfies them.</p>
+<ol type="1">
+<li><strong>Authority is declared.</strong> Every consequential
+selection identifies the authority basis and its scope, or explicitly
+reports that authority is unresolved.</li>
+<li><strong>Candidates are bounded.</strong> The considered candidate
+set and any intentionally omitted class are recoverable at the
+resolution required by the claim.</li>
+<li><strong>Precedence is explicit.</strong> Selection order, tie
+handling, and override semantics are represented separately from
+candidate values.</li>
+<li><strong>Fallback is constitutional.</strong> Defaults, error
+recovery, compatibility paths, and emergency overrides are treated as
+governing rules rather than invisible implementation details.</li>
+<li><strong>Effects are attributable.</strong> A consequential effect
+can be linked to the resolution event that admitted it without implying
+that the event proved the decision correct.</li>
+<li><strong>Projection divergence is detectable.</strong> A user-facing
+or API-facing account cannot silently substitute for materially
+different operative behavior.</li>
+<li><strong>Scope boundaries are explicit.</strong> Distributed
+authorities identify where their jurisdiction begins, ends, overlaps, or
+requires escalation.</li>
+<li><strong>Refusal and remainder persist.</strong> Missing evidence,
+unresolved authority, refused action, and unexplained behavior are not
+rewritten as success or zero.</li>
+<li><strong>Revision preserves lineage.</strong> A changed rule,
+fallback, schema, or authority relation creates a successor state with
+its predecessor and migration consequences retained.</li>
+</ol>
+<p>A system may intentionally relax an invariant. SFA then records the
+relaxation, rationale, scope, and consequence rather than silently
+treating the invariant as met.</p>
+<h2 id="semantic-fragmentation-analysis">5. Semantic Fragmentation
+Analysis</h2>
+<p>An SFA pass is bounded by a target, decision classes, runtime
+conditions, and evidence ceiling. It proceeds as follows.</p>
+<h3 id="scope-the-analysis">5.1 Scope the analysis</h3>
+<p>Declare the system head, build, configuration, environment, external
+services, user role, relevant secrets or redactions, and the exact
+decision classes under study. A claim about configuration resolution
+must not become a claim about every authority path in the system.</p>
+<h3 id="inventory-visible-and-operative-surfaces">5.2 Inventory visible
+and operative surfaces</h3>
+<p>Record the modules, APIs, schemas, documentation, policy artifacts,
+configuration sources, runtime stores, logs, deployment controls, human
+procedures, and external providers that may influence the decision. Mark
+which are declarations, projections, evidence, or effect-producing
+mechanisms.</p>
+<h3 id="enumerate-decision-classes">5.3 Enumerate decision classes</h3>
+<p>Examples include configuration value selection, resource choice,
+identity resolution, route selection, parser choice, capability
+admission, policy evaluation, fallback, retry, override, and
+termination. Each class receives an expected decision-event schema based
+on equation (1).</p>
+<h3 id="trace-representative-resolutions">5.4 Trace representative
+resolutions</h3>
+<p>For each class, choose ordinary, boundary, conflicting, missing,
+denied, stale, and failure cases. Trace candidates, authority,
+precedence, fallback, state, outcome, and retained evidence. Where a
+field cannot be reconstructed, preserve <code>UNKNOWN</code>,<br />
+<code>WITHHELD</code>, or <code>NOT_OBSERVED</code> rather than
+inventing a value.</p>
+<h3 id="map-authority-and-scope">5.5 Map authority and scope</h3>
+<p>Identify which component or actor may propose, select, override,
+execute, observe, interpret, and revise. A module that computes a value,
+a policy that authorizes it, and a runtime that applies it may be
+different authorities.</p>
+<h3 id="compare-projection-with-operation">5.6 Compare projection with
+operation</h3>
+<p>Compare documentation, UI explanation, API response, or declared
+policy with the traced operative path. Differences receive typed
+dispositions: benign abstraction, protected omission, stale declaration,
+undocumented authority, unresolved remainder, or material
+contradiction.</p>
+<h3 id="probe-counterfactuals">5.7 Probe counterfactuals</h3>
+<p>Change one candidate, authority, precedence rule, fallback condition,
+or environment fact at a time where safely possible. Verify whether the
+observed outcome changes as the reconstructed model predicts.
+Counterfactual mismatch is evidence that the model is incomplete, not
+permission to patch the explanation after the fact.</p>
+<h3 id="produce-a-characterization">5.8 Produce a characterization</h3>
+<p>The output includes scoped decision classes, recovered resolution
+events, authority map, fragmentation profile, hidden and stale
+differences, pattern findings, evidence, remainder, failure cases, and
+proposed successor changes. It is a diagnostic package, not a pass/fail
+certificate.</p>
+<h2 id="structural-pattern-taxonomy">6. Structural Pattern Taxonomy</h2>
+<p>The source identifies three initial patterns. The expanded taxonomy
+keeps those and proposes additional comparison classes.</p>
+<h3 id="implementation-derived-authority">6.1 Implementation-derived
+authority</h3>
+<p>Authority is not declared but emerges from function boundaries,
+control flow, mutable state, call order, or deployment privilege. Code
+becomes the only source of truth for governance, even when documentation
+implies a separate policy source.</p>
+<h3 id="structural-contrast-amplification">6.2 Structural contrast
+amplification</h3>
+<p>One domain is strongly formalized while an adjacent domain remains
+implicit. The explicit subsystem makes the neighboring informality
+visible: for example, a typed policy model may reveal that fallback and
+operator override remain conventional and unreceipted.</p>
+<h3 id="resolution-cascade-opacity">6.3 Resolution cascade opacity</h3>
+<p>Each precedence cascade may be locally coherent, but several
+interacting cascades–configuration, mode, resource, identity, plugin, or
+environment resolution–lack a unified diagnostic surface. Users can
+observe the outcome without reconstructing why it occurred.</p>
+<h3 id="fallback-constitutionalization">6.4 Fallback
+constitutionalization</h3>
+<p>A fallback designed as exceptional becomes the ordinary governing
+path. Because it is labeled fallback, its authority, testing, or
+observability may remain weaker than the primary path even while it
+determines most effects.</p>
+<h3 id="shadow-constitution">6.5 Shadow constitution</h3>
+<p>Documentation, schemas, or policy artifacts describe one rule set
+while implementation, deployment, or operator practice consistently
+exercises another. The declared constitution becomes a projection rather
+than the operative source of governance.</p>
+<h3 id="scope-leakage">6.6 Scope leakage</h3>
+<p>Authority valid in one semantic space influences another without an
+explicit bridge. A renderer changes domain state, a parser determines
+authorization, or a deployment default overrides a user-level policy
+outside its declared jurisdiction.</p>
+<h3 id="authority-aliasing">6.7 Authority aliasing</h3>
+<p>Several components appear to exercise the same named authority but
+derive it from different warrants or scopes. The shared label hides
+competing constitutional bases.</p>
+<h3 id="evidence-truncation">6.8 Evidence truncation</h3>
+<p>The system records the selected outcome but discards rejected
+candidates, precedence, fallback, relevant state, or refusal. Post hoc
+explanation then becomes narrative reconstruction rather than
+evidence-backed resolution.</p>
+<h3 id="projection-laundering">6.9 Projection laundering</h3>
+<p>A legible UI, API response, or generated explanation is treated as
+proof that the underlying decision was itself explicit and governed.
+Presentation quality substitutes for operative evidence.</p>
+<h3 id="revision-discontinuity">6.10 Revision discontinuity</h3>
+<p>Changes to precedence, authority, schema, or fallback overwrite prior
+behavior without a successor relation, migration account, or
+compatibility statement. The system cannot explain whether old and new
+outcomes belong to one constitutional lineage.</p>
+<p>These patterns may co-occur. They are diagnostic candidates whose
+presence must be shown by bounded evidence rather than assigned by
+resemblance alone.</p>
+<h2 id="authority-and-spatial-structure">7. Authority and Spatial
+Structure</h2>
+<p>A useful model is hub-and-spoke coordination with spatially scoped
+authority. A hub may orchestrate execution while spokes govern
+configuration, parsing, identity, policy, execution, evidence, or
+rendering. The model is useful only if it does not collapse
+orchestration into sovereignty.</p>
+<p>For each semantic space, SFA asks:</p>
+<ul>
+<li>what objects and effects lie within the scope;</li>
+<li>who may propose, decide, override, and revise;</li>
+<li>which invariants apply;</li>
+<li>how requests cross the boundary;</li>
+<li>what evidence and refusal return;</li>
+<li>how overlap or conflict is resolved.</li>
+</ul>
+<p>Fragmentation arises when scopes are unclear, authority is implicit,
+cross-space translation is lossy, or coordination is visible only as a
+final output. Centralizing every decision is not the necessary remedy. A
+distributed constitution can remain legible if its scopes, bridges, and
+escalation rules are explicit.</p>
+<h2 id="resolution-as-a-first-class-concept">8. Resolution as a
+First-Class Concept</h2>
+<p>Software constantly resolves which value, identity, resource, route,
+policy, or implementation applies. Treating resolution as an
+implementation detail hides the point at which competing semantic
+possibilities become one operative effect.</p>
+<p>A resolution surface should expose at least:</p>
+<pre class="text"><code>decision class
+scope and exact instance
+candidate identities and sources
+authority basis for each candidate
+precedence or selection rule
+rejected and unavailable candidates
+fallback or refusal path
+selected outcome
+effect status
+evidence and uncertainty
+revision or appeal route</code></pre>
+<p>The surface should distinguish <strong>proposal</strong>,
+<strong>admission</strong>, <strong>execution</strong>,
+<strong>observation</strong>, and <strong>interpretation</strong>. A
+selected value may never be applied. A runtime may apply a value that
+the diagnostic surface failed to observe. A human explanation may
+misinterpret an accurate trace. Combining these stages produces false
+confidence.</p>
+<h2
+id="worked-example-interacting-configuration-and-resource-resolution">9.
+Worked Example: Interacting Configuration and Resource Resolution</h2>
+<p>Consider a stipulated media application with a <code>mode</code>
+setting and an independently selected playback engine. The visible
+documentation says command-line configuration has highest precedence,
+followed by project configuration, environment, user configuration, and
+default.</p>
+<p>For one run:</p>
+<ul>
+<li><p><strong>Input:</strong> command line<br />
+<strong>Candidate:</strong> <code>mode=safe</code><br />
+<strong>Authority basis:</strong> current invocation<br />
+<strong>Availability:</strong> present</p></li>
+<li><p><strong>Input:</strong> project file<br />
+<strong>Candidate:</strong> none<br />
+<strong>Authority basis:</strong> project scope<br />
+<strong>Availability:</strong> absent</p></li>
+<li><p><strong>Input:</strong> environment<br />
+<strong>Candidate:</strong> <code>mode=fast</code><br />
+<strong>Authority basis:</strong> process environment<br />
+<strong>Availability:</strong> present</p></li>
+<li><p><strong>Input:</strong> user file<br />
+<strong>Candidate:</strong> <code>mode=balanced</code><br />
+<strong>Authority basis:</strong> user scope<br />
+<strong>Availability:</strong> present</p></li>
+<li><p><strong>Input:</strong> default<br />
+<strong>Candidate:</strong> <code>mode=balanced</code><br />
+<strong>Authority basis:</strong> built-in fallback<br />
+<strong>Availability:</strong> present</p></li>
+</ul>
+<p>The mode resolver selects <code>safe</code>. A second cascade then
+chooses a playback engine. The preferred safe engine is unavailable, so
+a compatibility fallback selects the legacy engine. The UI reports
+only</p>
+<p><code>mode=safe</code>.</p>
+<p>The result is not necessarily wrong. It is fragmented if the system
+cannot answer that two independent resolutions occurred, that the engine
+fallback had separate authority, or that <code>safe</code> at the mode
+layer did not entail the preferred safe engine at the resource
+layer.</p>
+<p>A bounded resolution record would preserve:</p>
+<pre class="text"><code>MODE-RESOLUTION
+  selected: safe
+  source: command line
+  rejected: environment=fast, user=balanced, default=balanced
+  rule: cli &gt; project &gt; environment &gt; user &gt; default
+
+ENGINE-RESOLUTION
+  requested profile: safe
+  preferred engine: unavailable
+  selected: legacy-engine
+  basis: compatibility fallback F-3
+  effect: playback initialized
+  warning: safe-mode projection does not imply preferred-engine
+  realization</code></pre>
+<p>An SFA counterfactual removes the command-line candidate and predicts
+environment selection, then makes the preferred engine available and
+predicts withdrawal of fallback F-3. If either prediction fails, the
+reconstructed constitution is incomplete. This example illustrates the
+method; it is not evidence about a real application.</p>
+<h2
+id="constitutional-software-architecture-and-the-realization-funnel">10.
+Constitutional Software Architecture and the Realization Funnel</h2>
+<p>SFA diagnoses implicit constitutional structure. Constitutional
+software architecture asks how selected governing relations can become
+explicit, inspectable, and revisable without confusing representation
+with reality.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Semantic-fragmentation responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore possible authority, resolution, fallback, observability, and
+compatibility structures, including opaque, centralized, conflicting,
+harmful, and minimal forms.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define decision classes, scopes, invariants, event schemas,
+authority grammar, evidence kinds, refusal, remainder, and claim
+ceilings.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate all admissible configurations that satisfy the
+specification, including undesirable distributions, weak exposure,
+excessive disclosure, and high-cost instrumentation.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations that minimize material hidden authority,
+preserve privacy and security, expose consequential fallback, support
+challenge and revision, and avoid unnecessary centralization.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select exact sources, precedence, scopes, bridges, redactions,
+evidence retention, runtime targets, observers, and test cases for one
+system instance.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Implement the policies, HLIR/MCIR forms, resolvers, kernels, traces,
+interfaces, and migration paths chosen for that instance.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Execute ordinary, conflict, missing, denied, fallback, stale,
+adversarial, and counterfactual cases; compare declared and observed
+events; preserve unexplained remainder.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Create successor specifications and configurations when rules or
+findings change; retain predecessor behavior, migration decisions,
+incompatibilities, and unresolved findings.</td>
+</tr>
+</tbody>
+</table>
+<p>The funnel prevents several category errors. A specification is not a
+running resolver. A running resolver is not evidence that every effect
+passed through it. A complete trace is not proof that the policy was
+legitimate. A preferred CM2 architecture is not the only technically
+admissible CM1 realization.</p>
+<p>Human-legible intermediate representations, machine-legible
+constitutional forms, governed execution kernels, and resolution
+surfaces can reduce fragmentation only when their relation to operative
+effects is verified. Otherwise they become another declared layer over a
+shadow constitution.</p>
+<h2 id="from-local-legibility-to-constitutional-compatibility">11. From
+Local Legibility to Constitutional Compatibility</h2>
+<p>Interoperability depends on more than shared message formats. The
+companion paper <em>Constitutional Compatibility: A Meta-Map for
+Institutional Semantic Standards</em> analyzes systems across semantic
+boundary, authority grammar, identity, admissibility, translation law,
+receipt structure, and constitutional exposure [CC].</p>
+<p>SFA supplies a local diagnostic prerequisite: before comparing two
+constitutions, each system must expose enough of its operative structure
+to identify what is being compared. This does not require full global
+compatibility. Compatibility is scoped to an operation, artifact, or
+relationship.</p>
+<p>For systems <span class="math inline"><em>S</em><sub>1</sub></span>
+and <span class="math inline"><em>S</em><sub>2</sub></span>, a proposed
+bridge <span class="math inline"><em>M</em></span> is admissible for
+operation <span class="math inline"><em>u</em></span> only if the
+translation preserves the declared invariants required by each side for
+<span class="math inline"><em>u</em></span>, or explicitly refuses the
+operation:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Compat}_u(S_1,S_2,M) \\
+&amp;\Rightarrow \operatorname{Preserves}_M(I_1^u) \\
+&amp;\land \operatorname{Preserves}_M(I_2^u)
+\end{aligned}\tag{5}.
+$$</span></p>
+<p>This implication is an obligation schema, not an executable test or
+proof of compatibility. SFA can reveal missing authority, scope
+conflict, identity ambiguity, or unreceipted translation that prevents
+the obligation from being evaluated. A compatibility bridge then becomes
+an explicit constitutional artifact rather than an undocumented
+adapter.</p>
+<h2 id="evidence-and-evaluation">12. Evidence and Evaluation</h2>
+<p>Candidate observations for the fragmentation profile include:</p>
+<ul>
+<li><p><strong>Axis:</strong> Locational dispersion<br />
+<strong>Candidate observations:</strong> distinct files, stores,
+services, procedures, and actors required to recover one decision<br />
+<strong>Nonclaim:</strong> more locations do not automatically mean
+worse architecture</p></li>
+<li><p><strong>Axis:</strong> Decision opacity<br />
+<strong>Candidate observations:</strong> proportion of scoped events
+lacking candidates, rule, fallback, or outcome linkage<br />
+<strong>Nonclaim:</strong> a complete-looking trace may still be
+false</p></li>
+<li><p><strong>Axis:</strong> Authority opacity<br />
+<strong>Candidate observations:</strong> events without a resolvable
+authority basis and scope<br />
+<strong>Nonclaim:</strong> declared authority is not necessarily
+legitimate</p></li>
+<li><p><strong>Axis:</strong> Trace deficit<br />
+<strong>Candidate observations:</strong> inability to connect effect to
+admitted decision event<br />
+<strong>Nonclaim:</strong> traceability does not prove
+correctness</p></li>
+<li><p><strong>Axis:</strong> Projection divergence<br />
+<strong>Candidate observations:</strong> material differences between
+declared/presented and observed behavior<br />
+<strong>Nonclaim:</strong> abstraction is not automatically
+deception</p></li>
+<li><p><strong>Axis:</strong> Revision deficit<br />
+<strong>Candidate observations:</strong> changes without predecessor,
+migration, or compatibility relation<br />
+<strong>Nonclaim:</strong> versioning alone does not preserve
+meaning</p></li>
+</ul>
+<p>Evaluation should bind the exact source head, build, configuration,
+environment, permissions, external dependencies, and observation tools.
+Tests should include ordinary operation, conflicting candidates, absent
+values, invalid inputs, authority denial, fallback activation, stale
+cache or state, partial failure, external-service change, and
+counterfactual perturbation.</p>
+<p>Results should report coverage and remainder. A system that explains
+one carefully selected happy path has not established general
+legibility. A system that refuses every uncertain case may avoid false
+explanations while remaining unusable. Coverage, error within covered
+cases, refusal quality, overhead, privacy loss, and repair value must be
+evaluated separately.</p>
+<h2
+id="hidden-constitution-diagnostic-theory-and-method">Hidden-Constitution
+Diagnostic Theory and Method</h2>
+<p>Across the completed P1 corpus, Semantic Fragmentation and
+Constitutional Structure is the <strong>diagnostic theory and method for
+reconstructing hidden operative constitutions from dispersed authority,
+precedence, fallback, resolution, effect, evidence, projection, and
+revision surfaces in software systems</strong>. It defines the method
+family; it is distinct from Semantic Field Analysis in general and from
+the completed seventeen-system evidence study.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Field
+Analysis</em><br />
+<strong>Supplies:</strong> A general semantic mapping procedure across
+entities, relations, authority, evidence, and hidden structure.<br />
+<strong>SFA boundary:</strong> Software SFA specializes that method to
+consequential resolution and operative constitutions.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>What Software Systems
+Actually Receipt, Govern, and Hide</em><br />
+<strong>Supplies:</strong> A frozen seventeen-system comparative
+evidence study.<br />
+<strong>SFA boundary:</strong> The study tests and revises SFA
+categories without becoming the method’s identity.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Binding
+Theory: Governed Anchor Resolution as a Universal Pattern in Semantic
+Systems</em><br />
+<strong>Supplies:</strong> Detailed analysis of one resolution family:
+governed anchor binding.<br />
+<strong>SFA boundary:</strong> SFA generalizes across configuration,
+authority, routing, fallback, resources, and effects.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Heterogeneous evidence surfaces and typed
+correspondence edges.<br />
+<strong>SFA boundary:</strong> COP can expose operative state; SFA
+diagnoses whether the resulting account is structurally complete
+enough.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Capability and effect paths outside declared
+governance.<br />
+<strong>SFA boundary:</strong> GCG tests path coverage; SFA reconstructs
+the broader operative constitution and its fragmentation.</p></li>
+</ul>
+<p>An SFA investigation should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+S= (&amp;system\_head, scope, decision\_classes, surfaces, \\
+&amp;resolution\_events, authority, precedence, fallback, \\
+&amp;effects, evidence, projections, counterfactuals, \\
+&amp;remainder, profile, revision)
+\end{aligned}.
+$$</span></p>
+<p>The core comparison is among declared, operative, projected, and
+reconstructed constitutions. These can diverge without fraud:
+documentation may be stale, observation incomplete, modularity
+intentional, or abstraction legitimate. The method should classify each
+divergence and retain uncertainty rather than rewarding centralization
+or maximum disclosure.</p>
+<p>Fragmentation is material when it obstructs correct resolution,
+challenge, repair, migration, compatibility, user sovereignty, or
+accountability. Location count alone is not a defect. The
+noncompensatory profile should preserve locational dispersion, decision
+opacity, authority opacity, trace deficit, projection divergence, and
+revision deficit rather than collapse them into one score.</p>
+<p>The universal GSM can type<br />
+<code>DECLARES_SOFTWARE_CONSTITUTION</code>,<br />
+<code>OPERATES_UNDER_HIDDEN_RULE</code>,
+<code>RECONSTRUCTS_RESOLUTION_EVENT</code>,<br />
+<code>DERIVES_AUTHORITY_FROM_IMPLEMENTATION</code>,
+<code>ACTIVATES_CONSTITUTIONAL_FALLBACK</code>,<br />
+<code>ALIASES_AUTHORITY</code>, <code>TRUNCATES_EFFECT_EVIDENCE</code>,
+<code>LAUNDERS_PROJECTION</code>,<br />
+<code>PRESERVES_UNEXPLAINED_REMAINDER</code>,<br />
+and<br />
+<code>REVISES_SFA_CHARACTERIZATION</code>. These relations support both
+diagnosis and later constitutional refactoring.</p>
+<p>This integration establishes four editorial commitments: retain the
+paper as the hidden-constitution diagnostic theory and software method;
+adopt the investigation envelope and four-constitution comparison;
+define material fragmentation by impaired consequence rather than
+dispersion alone; and keep general Semantic Field Analysis, software SFA
+theory, the seventeen-system study, and any tooling as distinct linked
+identities.</p>
+<h2
+id="custodied-reconstruction-under-agentic-and-adversarial-change">Custodied
+Reconstruction Under Agentic and Adversarial Change</h2>
+<p>The fixed-seed comparison with Work Custody, ACG, Constitutional
+Epistemology under adversarial pressure, and Proxy Collapse makes a
+fragmentation investigation both responsibility-bearing and
+calibration-aware:</p>
+<p><span class="math display">$$
+\begin{aligned}
+F= (&amp;subject, scope, declared\_constitution, \\
+&amp;operative\_constitution, projection, reconstruction, \\
+&amp;custodian, threats, proxy\_assumptions, evidence, \\
+&amp;remainder, repair, revision)
+\end{aligned}.
+$$</span></p>
+<p>Work Custody identifies who must advance the reconstruction, obtain
+missing evidence, challenge an inference, repair a surface, or return
+unresolved remainder. Custody over a report is not authority over the
+analyzed system and does not make the reconstruction complete.</p>
+<p>ACG can use the fragmentation map to select assurance subjects,
+courts, effect probes, and revision gates. Constitutional Epistemology
+adds adversarial cases in which a formally consistent declaration or
+receipt intentionally or inadvertently hides the operative path through
+omission, drift, witness capture, or staged observation.</p>
+<p>A declared or projected constitution is often used as a proxy for
+operative behavior. When generators, deployment paths, incentives, or
+environments change, that proxy can lose calibration even if its syntax
+and lineage remain intact. Proxy Collapse supplies this bounded
+diagnostic; it does not imply that all documentation or models are
+invalid.</p>
+<p>The universal GSM can type<br />
+<code>CUSTODIES_CONSTITUTION_RECONSTRUCTION</code>,<br />
+<code>INFORMS_ACG_ASSURANCE_SCOPE</code>,
+<code>ATTACKED_BY_SEMANTIC_PRESSURE</code>,
+<code>USES_PROJECTION_AS_PROXY</code>,<br />
+<code>LOSES_OPERATIVE_CALIBRATION</code>,
+<code>RETAINS_UNEXPLAINED_REMAINDER</code>,<br />
+and<br />
+<code>REPAIRS_FRAGMENTED_SURFACE</code>.</p>
+<p>This randomized review establishes four editorial commitments: assign
+custody to reconstruction and repair work; feed the operative map into
+ACG scope; adversarially test declared/operative divergence; and treat
+projected constitutions as recalibratable proxies rather than guaranteed
+correspondence.</p>
+<h2 id="a-custodied-reconstruction-profile-for-hidden-constitutions">A
+Custodied Reconstruction Profile for Hidden Constitutions</h2>
+<p>Twelve retained downstream uses place software semantic-fragmentation
+analysis before custody repair, adversarial epistemology, ACG court
+selection, GCML and GCNL design, legacy migration, proxy recalibration,
+binding-quality review, semantic-debt accounting, general field
+analysis, semantic infrastructure, and the comparative system study.
+They confirm that the paper defines a diagnostic reconstruction profile,
+not a mandate to centralize every rule or disclose every protected
+fact.</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;subject\_head, scope, decision\_classes, surfaces, \\
+&amp;declared, operative, projected, reconstructed, authority, \\
+&amp;precedence, fallback, effects, evidence, counterfactuals, \\
+&amp;custody, threats, protected\_omissions, remainder, \\
+&amp;repair, revision)
+\end{aligned}.
+$$</span></p>
+<p>Fragmentation is material only relative to a consequence: impaired
+resolution, challenge, repair, migration, compatibility, sovereignty,
+accountability, or evidence. Distribution can be legitimate modularity.
+A unified model can itself become a shadow constitution, suppress local
+authority, expose secrets, or drift from operation. The profile
+therefore reports noncompensatory dimensions and coverage rather than
+one universal fragmentation score.</p>
+<p>Reconstruction is a claim-bearing activity. Each finding binds an
+exact system generation, environment, observer, decision class, evidence
+path, counterfactual, confidence, and custodian. <code>UNKNOWN</code>,
+protected non-disclosure, external influence, and unresolved remainder
+are valid outcomes. A repair proposal remains separate from
+authorization to change the system and from evidence that operative
+behavior actually changed.</p>
+<p>The universal GSM can type<br />
+<code>INSTANTIATES_FRAGMENTATION_REVIEW</code>,<br />
+<code>RECONSTRUCTS_OPERATIVE_CONSTITUTION</code>,
+<code>DISTINGUISHES_LEGITIMATE_DISTRIBUTION</code>,<br />
+<code>PRESERVES_PROTECTED_OMISSION</code>,
+<code>ASSIGNS_RECONSTRUCTION_CUSTODY</code>,<br />
+<code>TESTS_WITH_COUNTERFACTUAL</code>,
+<code>PROPOSES_FRAGMENTATION_REPAIR</code>,<br />
+and<br />
+<code>WITHHOLDS_COMPLETE_CONSTITUTION_CLAIM</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+complete reconstruction record; define materiality by scoped consequence
+rather than dispersion; require custody, threat, counterfactual,
+coverage, and protected-omission fields; and keep diagnosis, repair
+proposal, authorized change, and observed effect separate.</p>
+<h2 id="failure-modes-counterevidence-and-limits">13. Failure Modes,
+Counterevidence, and Limits</h2>
+<p>SFA and explicit constitutional architecture can fail in several
+ways:</p>
+<ul>
+<li><strong>model staleness:</strong> the declared structure stops
+tracking implementation;</li>
+<li><strong>instrumentation theater:</strong> rich traces create
+confidence without binding effects;</li>
+<li><strong>centralization:</strong> one canonical model suppresses
+legitimate local authority or plurality;</li>
+<li><strong>privacy or security leakage:</strong> traces reveal
+protected values, topology, or attack surfaces;</li>
+<li><strong>observability effect:</strong> instrumentation changes
+timing or decisions being measured;</li>
+<li><strong>cost displacement:</strong> maintenance and runtime overhead
+exceed the value of legibility;</li>
+<li><strong>explanatory compression loss:</strong> a compact account
+omits details material to a dispute;</li>
+<li><strong>false closure:</strong> <code>UNKNOWN</code> or external
+influence is silently assigned to the nearest component;</li>
+<li><strong>framework duplication:</strong> SFA adds vocabulary without
+outperforming established architecture, provenance, policy, tracing, or
+debugging methods;</li>
+<li><strong>outcome irrelevance:</strong> greater legibility does not
+improve repair time, policy compliance, compatibility, user sovereignty,
+or error detection.</li>
+</ul>
+<p>Evidence against the stronger program would include repeated findings
+that ordinary architecture documentation and tracing recover the same
+decisions at lower cost; inability to distinguish material fragmentation
+from normal modularity; low inter-reviewer agreement on pattern
+classification; resolution surfaces that drift as rapidly as prose
+documentation; failure of counterfactual probes to validate
+reconstructed models; or no measurable benefit in debugging, migration,
+audit, or cross-system integration.</p>
+<p>The present paper performs no external literature review and reports
+no empirical SFA study. For a future evidence-qualified revision, it
+requires comparison with current work in software architecture,
+configuration management, provenance, policy-as-code, access control,
+observability, program analysis, event sourcing, distributed tracing,
+safety engineering, interoperability, and human-computer
+explanation.</p>
+<h2
+id="reconstruct-hidden-constitutions-without-creating-a-new-one">Reconstruct
+Hidden Constitutions Without Creating a New One</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Semantic Fragmentation Analysis reconstructs how software actually
+resolves authority, configuration, routing, fallback, transformation,
+and evidence when the governing behavior is scattered across code and
+environment. It can expose gaps between the declared and operative
+constitution. The reconstruction is itself a bounded claim and can
+become another stale, centralized, or deceptive layer.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Normal-modularity attack.</strong> Legitimate distribution
+of responsibility is scored as fragmentation merely because rules are
+not centralized.</li>
+<li><strong>Shadow-constitution attack.</strong> The SFA model becomes
+the authoritative story while operative behavior, local authority, and
+exceptions continue elsewhere.</li>
+<li><strong>Stale-declaration attack.</strong> The reconstruction was
+accurate for one generation but remains active after code,
+configuration, provider, or environment change.</li>
+<li><strong>Instrumentation-theater attack.</strong> Rich traces and
+diagrams appear explanatory without binding the observed effect or
+testing counterfactuals.</li>
+<li><strong>Protected-omission attack.</strong> Legibility is pursued by
+exposing secrets, personal data, security topology, or legitimately
+restricted decisions.</li>
+<li><strong>False-closure attack.</strong> Unknown, inaccessible,
+nondeterministic, human, or external influence is assigned to the
+nearest known component.</li>
+<li><strong>Repair-authority attack.</strong> A diagnostic finding is
+treated as authorization to centralize, rewrite, or deploy a
+repair.</li>
+<li><strong>Framework-duplication attack.</strong> Existing
+architecture, tracing, provenance, policy, configuration, and debugging
+methods recover the same decisions at lower cost.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>SFA is a source-bounded diagnostic reconstruction profile. It does
+not certify completeness, correctness, security, legitimacy,
+compatibility, or desirability. Structural legibility is
+consequence-scoped and noncompensatory; protected omission and
+<code>UNKNOWN</code> are valid outcomes. Diagnosis, repair proposal,
+authorized change, and observed effect remain separate.</p>
+<p>Claims about prevalence, reviewer reliability, debugging benefit,
+migration improvement, policy compliance, user comprehension,
+sovereignty, or comparative novelty require external literature and
+empirical studies over exact system generations. No external research
+was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public value is the ability to ask why a consequential software
+decision happened and receive a custodied, testable reconstruction -
+including what remains hidden or unknown - without pretending that
+explanation itself makes the system legitimate.</p>
+<h2 id="research-agenda">14. Research Agenda</h2>
+<ol type="1">
+<li><strong>Pattern taxonomy.</strong> Test whether the proposed
+patterns are distinguishable, reproducible, and useful across systems
+and reviewers.</li>
+<li><strong>Resolution modeling.</strong> Develop minimal decision-event
+schemas for configuration, identity, routing, policy, fallback, and
+resource selection without forcing one universal implementation.</li>
+<li><strong>Authority representation.</strong> Separate proposal,
+authorization, execution, observation, interpretation, override, and
+revision authority across scoped semantic spaces.</li>
+<li><strong>Constitutional exposure.</strong> Determine which structure
+must be public, participant-visible, operator-visible, auditor-visible,
+machine-verifiable, committed but redacted, or legitimately
+undisclosed.</li>
+<li><strong>Metrics.</strong> Validate non-compensatory profile axes,
+coverage measures, reviewer agreement, and outcome correlations rather
+than inventing an unsupported universal score.</li>
+<li><strong>Cross-system analysis.</strong> Apply SFA before
+constitutional-compatibility mapping and measure whether explicit
+bridges reduce translation and authority failures.</li>
+<li><strong>Refactoring experiments.</strong> Compare unchanged systems,
+documentation-only changes, resolution surfaces, explicit constitutional
+artifacts, and governed kernels on repair, migration, audit, and
+user-comprehension tasks.</li>
+<li><strong>Adversarial analysis.</strong> Test shadow paths, stale
+declarations, forged traces, fallback dominance, authority aliasing,
+incomplete observers, and protected information.</li>
+</ol>
+<h2 id="corpus-integration">15. Corpus Integration</h2>
+<p>This paper occupies a diagnostic bridge among several corpus layers
+without merging their identities:</p>
+<ul>
+<li><strong>Constitutional Computing</strong> supplies the larger
+proposal that software effects should be organized through explicit
+authority, admissibility, evidence, refusal, and revision rather than
+hidden implementation convention [CComp].</li>
+<li><strong>Sovereign Software</strong> turns structural legibility
+toward user inspection, substitution, renegotiation, provider exit, and
+the hardware boundary; SFA can identify where those capabilities are
+blocked by hidden constitutional behavior [SS].</li>
+<li><strong>GMB</strong>, the current Governed Meaning Base in the
+historical <code>CCF -&gt; CMB -&gt; GMB</code> lineage, can hold
+standing-aware concepts, rules, conflicts, evidence, and revision
+history. A GMB record is not proof that operative code follows it
+[GMB].</li>
+<li><strong>GSOL and MCIR</strong> can provide specification and
+intermediate representations for authority- and effect-bearing
+operations. SFA tests whether their obligations survive lowering into
+configuration and implementation [GSOL].</li>
+<li><strong>Semantic Legitimacy Before Context</strong> prevents
+observed or documented material from becoming binding merely because it
+is available to the analysis [SLC].</li>
+<li><strong>Reasoning by Way of Receipts</strong> preserves intermediate
+decisions, refusals, evidence, and debt; receipts make resolution
+inspectable without proving truth or correctness [RWR].</li>
+<li><strong>The Three Hash Rule</strong> separates exact state,
+admissibility commitments, and meaning commitments so byte identity
+cannot silently stand in for constitutional or semantic equivalence
+[THR].</li>
+<li><strong>The Constitutional Observability Platform</strong> separates
+domain state, presentation state, accessibility, pixels or outputs,
+interaction, and interpretation; it supplies heterogeneous evidence
+surfaces for checking an SFA reconstruction [COP].</li>
+<li><strong>Constitutional Binding Theory</strong> analyzes governed
+anchor resolution; SFA generalizes the diagnostic question across
+configuration, authority, routing, fallback, and other decision classes
+without treating every resolver as the same system [CBT].</li>
+<li><strong>Constitutional Compatibility</strong> begins once local
+constitutions are legible enough to compare across semantic boundary,
+authority, identity, admissibility, translation, receipts, and exposure
+[CC].</li>
+</ul>
+<p>The paper therefore reaches Specification, defines CM1 and CM2
+selection concerns, and supplies one synthetic Instance Configuration.
+It does not establish an implemented SFA tool, a validated metric, a
+complete system constitution, or a certified compatibility bridge.</p>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>Software systems are governed by structures that are rarely made
+fully explicit. Their constitutions are not absent: they are distributed
+through code paths, configuration layers, defaults, runtime state,
+fallbacks, external services, deployment controls, and human
+practice.</p>
+<p>Semantic Fragmentation Analysis makes that distribution a direct
+object of inquiry. It reconstructs bounded decision events, maps
+authority and scope, compares declaration with operation, probes
+counterfactuals, preserves remainder, and characterizes patterns without
+reducing the result to correctness or one score.</p>
+<p>The architectural response is not simply to centralize every rule or
+generate more documentation. It is to make consequential resolution,
+authority, transformation, fallback, evidence, refusal, and revision
+explicit at the level required for inspection and challenge–and then
+verify that the declaration remains connected to operative effects.</p>
+<p>That shift supports a form of constitutional software architecture in
+which systems can explain how they govern themselves while remaining
+honest about what the explanation omits. Legibility does not guarantee
+legitimacy. It makes legitimacy, compatibility, repair, and user
+sovereignty more tractable questions because the governing structure is
+no longer required to remain hidden inside implementation.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Cm1.</strong> Existing source passages use this stage only
+as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Evidence.</strong> This stage is outside the present paper’s
+asserted contribution and evidentiary scope.</li>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern software systems exhibit a persistent
+gap between their apparent structure and their actual governing
+behavior. Its nearest external comparison fields are governance,
+software, semantic. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Modularity, secure-development practice, and reproducibility reduce
+classes of failure but do not guarantee architectural coherence or user
+sovereignty. Formal vocabularies and graph links make commitments
+explicit but cannot by themselves establish correct identity, shared
+interpretation, or lossless translation between contexts. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E6]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[CC]</strong> Adam Ableman. <em>Constitutional Compatibility:
+A Meta-Map for Institutional Semantic Standards</em>. Exact selected
+source:<br />
+<code>Constitutional Compatibility.md</code>,<br />
+SHA-256<br />
+<code>FC0C747F474373B385E6F8023B2ECC862CE253A2F2DD7CA45BFE12D87DC90EBB</code>.
+Publication identity remains under review in the corpus ledger.</p>
+<p><strong>[CComp]</strong> Adam Ableman. <em>Constitutional
+Computing</em>. Corpus source family; exact publication and version
+relation must be resolved through the paper registry before citation
+finalization.</p>
+<p><strong>[SS]</strong> Adam Ableman. <em>Sovereign Software:
+Constitutional Computing and the Reorganization of the Computing
+Stack</em>. Corpus source family; exact publication and version relation
+must be resolved before citation finalization.</p>
+<p><strong>[GMB]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Current corpus terminology under the author-confirmed
+historical lineage <code>CCF -&gt; CMB -&gt; GMB</code>; the terminology
+ruling grants no publication, canonical, implementation, or conformance
+standing.</p>
+<p><strong>[GSOL]</strong> Adam Ableman. <em>Governed Semantic
+Operations Language</em> and related MCIR materials. Corpus source
+family; exact work and version relations remain subject to registry
+review.</p>
+<p><strong>[SLC]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; conceptual claims retain
+the standing stated in the work.</p>
+<p><strong>[RWR]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; conceptual claims retain
+the standing stated in the work.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI: <code>10.5281/zenodo.20788617</code>.</p>
+<p><strong>[COP]</strong> Adam Ableman. <em>The Constitutional
+Observability Platform</em>. Ableman Corpus current edition; conceptual
+claims retain the standing stated in the work.</p>
+<p><strong>[CBT]</strong> Adam Ableman. <em>Constitutional Binding
+Theory: Governed Anchor Resolution as a Universal Pattern in Semantic
+Systems</em>. Corpus source family; publication does not alter separate
+canonical standing.</p>
+<p>External scholarly and technical sources remain to be researched and
+verified for a future evidence-qualified revision readiness.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848215">10.5281/zenodo.23848215</a></p>

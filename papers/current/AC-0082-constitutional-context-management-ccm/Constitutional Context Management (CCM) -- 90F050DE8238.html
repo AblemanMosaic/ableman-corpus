@@ -1,0 +1,1139 @@
+<h1 id="constitutional-context-management-ccm">Constitutional Context
+Management (CCM)</h1>
+<h2
+id="working-state-governance-relevance-as-admission-and-hash-bound-attention-in-generational-systems">Working-State
+Governance, Relevance as Admission, and Hash-Bound Attention in
+Generational Systems</h2>
+<h3
+id="ccm-transforms-context-from-a-transient-token-buffer-into-a-typed-hash-bound-admissible-set-of-active-commitments.">CCM
+transforms context from a transient token buffer into a typed,
+hash-bound, admissible set of active commitments.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Contemporary AI systems rely on context windows as ephemeral
+substrates for reasoning. These windows are finite, mutable, and opaque,
+leading to silent drift in meaning, loss of invariants, and unobservable
+degradation of system behavior. While Governed Context &amp; Memory
+(GCM) establishes persistence, provenance, and hash-bound memory, it
+does not govern what is <em>active</em> at any given moment.</p>
+<p>This paper introduces <strong>Constitutional Context Management
+(CCM)</strong>, a framework for governing working state. CCM transforms
+context from a transient token buffer into a <strong>typed, hash-bound,
+admissible set of active commitments</strong>. It defines context
+artifacts, context lanes, and relevance as a governed admission
+function. It introduces context hashing for drift detection, amendment
+semantics for controlled evolution, and refusal as a first-class
+response to context insufficiency.</p>
+<p>We formalize a separation:</p>
+<ul>
+<li>GCM governs persistence across time</li>
+<li>CCM governs activation in the present</li>
+</ul>
+<p>Together, they produce continuity without drift.</p>
+<p>We argue that reliable reasoning, long-horizon interaction, and safe
+agent execution require governance not only of memory, but of
+<strong>attention itself</strong>.</p>
+<hr />
+<h2 id="the-failure-of-ungoverned-context-windows">1. The Failure of
+Ungoverned Context Windows</h2>
+<p>Modern systems implicitly define:</p>
+<pre><code>Context approximately Token Window</code></pre>
+<p>This approximation is operationally convenient but incomplete: a
+provider token window is one serialization surface, not a sufficient
+model of governed working state.</p>
+<p>The context window:</p>
+<ul>
+<li>decays under length constraints</li>
+<li>truncates without semantic awareness</li>
+<li>is reordered or summarized without constraint</li>
+<li>is not inspectable as a structured entity</li>
+</ul>
+<p>By itself, it supplies no declared governance contract.</p>
+<p>This produces a distinct failure mode:</p>
+<blockquote>
+<p><strong>Definition (Context Drift).</strong> Context Drift occurs
+when the effective working state of a system diverges from its declared
+or intended constraints due to untracked mutation, truncation, or
+recomposition of context.</p>
+</blockquote>
+<p>Unlike memory loss, context drift is silent.</p>
+<p>The system continues to produce coherent outputs while no longer
+operating under the same commitments.</p>
+<p>This is not a failure of intelligence.</p>
+<p>It is a failure of governance.</p>
+<hr />
+<h2 id="context-as-binding-not-storage">2. Context as Binding, Not
+Storage</h2>
+<p>From GCM, we distinguish:</p>
+<ul>
+<li>Memory – persistent, external, retrievable artifacts</li>
+<li>Context – working attention</li>
+</ul>
+<p>CCM refines this further:</p>
+<blockquote>
+<p><strong>Context is the binding layer that determines which meaning is
+active.</strong></p>
+</blockquote>
+<p>Formally:</p>
+<pre><code>Meaning = f(Memory, Context Binding)</code></pre>
+<p>Two systems with identical memory can produce divergent outputs if
+their context binding differs.</p>
+<p>Therefore:</p>
+<ul>
+<li>Governing memory is insufficient</li>
+<li>Governing context is required</li>
+</ul>
+<hr />
+<h2 id="from-token-streams-to-context-artifacts">3. From Token Streams
+to Context Artifacts</h2>
+<p>CCM replaces monolithic context with <strong>Context
+Artifacts</strong>.</p>
+<blockquote>
+<p><strong>Definition (Context Artifact).</strong> A context artifact is
+a discrete, typed, hash-bound unit of meaning with declared provenance
+and admission policy.</p>
+</blockquote>
+<p>Each artifact contains:</p>
+<ul>
+<li>canonical content</li>
+<li>type</li>
+<li>provenance (user, system, retrieval)</li>
+<li>semantic hash under a declared context lens</li>
+<li>admission constraints</li>
+<li>relevance bindings</li>
+</ul>
+<p>Working context becomes:</p>
+<pre><code>W = {C_1, C_2, C_3, ...}</code></pre>
+<p>Context is no longer only a stream. It is a typed, task-relative
+configuration of commitments whose ordering and projection may also
+matter.</p>
+<h3 id="typed-active-context-record">3.1 Typed active-context
+record</h3>
+<p>Let a context artifact be a typed record rather than undifferentiated
+prompt text:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C_i = \langle &amp;id_i, v_i, \tau_i, \ell_i, r_i, p_i, \sigma_i, d_i,
+x_i, \\
+&amp;a_i\rangle
+\end{aligned},
+$$</span></p>
+<p>where <span
+class="math inline"><em>i</em><em>d</em><sub><em>i</em></sub></span> and
+<span class="math inline"><em>v</em><sub><em>i</em></sub></span>
+identify the artifact and revision, <span
+class="math inline"><em>τ</em><sub><em>i</em></sub></span> is its type,
+<span class="math inline"><em>ℓ</em><sub><em>i</em></sub></span> its
+lane, <span class="math inline"><em>r</em><sub><em>i</em></sub></span> a
+content reference, <span
+class="math inline"><em>p</em><sub><em>i</em></sub></span> provenance,
+<span class="math inline"><em>σ</em><sub><em>i</em></sub></span>
+epistemic or governance standing, <span
+class="math inline"><em>d</em><sub><em>i</em></sub></span> declared
+dependencies, <span
+class="math inline"><em>x</em><sub><em>i</em></sub></span> conflicts,
+and <span class="math inline"><em>a</em><sub><em>i</em></sub></span> its
+admission requirements. This is a proposed schema, not a claim that
+every context representation needs these exact fields.</p>
+<p>For task <span
+class="math inline"><em>q</em><sub><em>t</em></sub></span>, candidate
+pool <span class="math inline"><em>C</em></span>, policy/configuration
+<span class="math inline"><em>Φ</em><sub><em>t</em></sub></span>, and
+budget <span class="math inline"><em>B</em><sub><em>t</em></sub></span>,
+selection produces a typed active state:</p>
+<p><span
+class="math display"><em>W</em><sub><em>t</em></sub> = <em>S</em>(<em>q</em><sub><em>t</em></sub>, <em>C</em>, <em>Φ</em><sub><em>t</em></sub>, <em>B</em><sub><em>t</em></sub>).</span></p>
+<p>The serialized provider input is a projection, not the state of
+record:</p>
+<p><span
+class="math display"><em>P</em><sub><em>t</em></sub> = <em>Π</em>(<em>W</em><sub><em>t</em></sub>, <em>α</em><sub><em>t</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>α</em><sub><em>t</em></sub></span> is the
+declared provider-adapter profile. <span
+class="math inline"><em>W</em><sub><em>t</em></sub></span>, <span
+class="math inline"><em>P</em><sub><em>t</em></sub></span>, and the
+model’s hidden execution state must not be treated as identical.</p>
+<hr />
+<h2 id="context-lanes-structural-separation-of-meaning">4. Context Lanes
+(Structural Separation of Meaning)</h2>
+<blockquote>
+<p><strong>Definition (Context Lane).</strong> A context lane is a
+governed channel that constrains which artifacts may be active and how
+they interact.</p>
+</blockquote>
+<p>CCM defines the following canonical lanes:</p>
+<ul>
+<li><strong>Identity Lane</strong> – role, system identity, operating
+stance</li>
+<li><strong>Invariant Lane</strong> – non-negotiable rules and
+definitions</li>
+<li><strong>Goal Lane</strong> – current objectives</li>
+<li><strong>Constraint Lane</strong> – operational limits and
+boundaries</li>
+<li><strong>Working Knowledge Lane</strong> – retrieved or active
+facts</li>
+<li><strong>Speculative Lane</strong> – explicitly marked inference
+(optional)</li>
+</ul>
+<p>Each lane:</p>
+<ul>
+<li>enforces type constraints</li>
+<li>prevents cross-lane overwrite</li>
+<li>has independent admission rules</li>
+<li>is hash-governed</li>
+</ul>
+<p>This is intended to prevent common collapse modes:</p>
+<ul>
+<li>goals rewriting invariants</li>
+<li>speculation overwriting facts</li>
+<li>summaries mutating constraints</li>
+</ul>
+<h3 id="lanes-are-profiles-not-self-authenticating-authority">4.1 Lanes
+are profiles, not self-authenticating authority</h3>
+<p>The six lanes are a useful default profile, not an exhaustive or
+automatically canonical taxonomy. A domain may need evidence,
+delegation, temporal, privacy, effect, or contest lanes. Conversely, a
+small task may lawfully omit optional lanes. Lane membership does not
+make content true or authoritative: it constrains how a record may be
+interpreted and combined.</p>
+<p>Cross-lane references are necessary. A goal may depend on working
+knowledge; a constraint may narrow a tool capability; a speculative
+claim may point to the evidence whose absence keeps it speculative. The
+invariant is therefore not “lanes never interact” but “cross-lane
+influence is typed, inspectable, and unable to overwrite a stronger lane
+without the authorized transition for that lane.”</p>
+<hr />
+<h2 id="relevance-admissibility-and-selection">5. Relevance,
+Admissibility, and Selection</h2>
+<p>Similarity may generate candidates, but it cannot by itself decide
+what enters working state. CCM separates four questions:</p>
+<ol type="1">
+<li><strong>Validity:</strong> Is the artifact well-formed and its
+referenced content available?</li>
+<li><strong>Admissibility:</strong> May it participate under the
+applicable authority, provenance, scope, and lane rules?</li>
+<li><strong>Relevance:</strong> Does it bear on the current task under a
+declared relation or retrieval rule?</li>
+<li><strong>Closure:</strong> Can the selected set fit the budget
+without losing required dependencies, counterevidence, or controlling
+constraints?</li>
+</ol>
+<p>A compact admission judgment is:</p>
+<p><span
+class="math display"><em>A</em>(<em>q</em><sub><em>t</em></sub>, <em>C</em><sub><em>i</em></sub>, <em>Φ</em><sub><em>t</em></sub>) → {ADMIT, REFUSE, HOLD}.</span></p>
+<p>Selection then operates only over admissible candidates:</p>
+<p><span
+class="math display"><em>W</em><sub><em>t</em></sub> = <em>S</em>(<em>q</em><sub><em>t</em></sub>, {<em>C</em><sub><em>i</em></sub> ∣ <em>A</em>(<em>q</em><sub><em>t</em></sub>, <em>C</em><sub><em>i</em></sub>, <em>Φ</em><sub><em>t</em></sub>) = ADMIT}, <em>Φ</em><sub><em>t</em></sub>, <em>B</em><sub><em>t</em></sub>).</span></p>
+<p><code>HOLD</code> matters because missing provenance, unresolved
+contradiction, or an unavailable dependency is not equivalent to a
+definitive rejection. Relevance determines what may matter
+<em>after</em> legitimacy and admissibility are considered; it is not
+authority to admit an artifact.</p>
+<p>The selection function must declare tie-breaking, dependency closure,
+conflict handling, ordering, truncation, and nondeterminism. Otherwise
+two systems can share the same artifact store and policy label while
+silently producing materially different active states.</p>
+<h2 id="modes-of-context-binding">6. Modes of Context Binding</h2>
+<p>CCM supports multiple binding mechanisms:</p>
+<ol type="1">
+<li><p><strong>Declared Binding (Human)</strong></p>
+<ul>
+<li>explicit tags, anchors, or pinned artifacts</li>
+</ul></li>
+<li><p><strong>Generative Binding (LLM)</strong></p>
+<ul>
+<li>model-mediated selection</li>
+</ul></li>
+<li><p><strong>Residual Binding</strong></p>
+<ul>
+<li>continuation from prior working state</li>
+</ul></li>
+<li><p><strong>Indexed Binding</strong></p>
+<ul>
+<li>precomputed graph or embedding structures</li>
+</ul></li>
+</ol>
+<p>These modes are composable but governed by admission policy.</p>
+<p>No binding mechanism bypasses lane constraints.</p>
+<hr />
+<h2 id="independent-commitments-and-drift-detection">7. Independent
+Commitments and Drift Detection</h2>
+<p>The source proposed a single hash over a set of artifact hashes. That
+is insufficient when order, multiplicity, lane position, selected
+revision, dependency closure, policy, semantic regime, query binding, or
+provider projection can change meaning. A CCM profile should instead
+preserve independent commitments.</p>
+<p>Following the separation discipline of <em>The Three Hash Rule</em>,
+a context receipt may carry:</p>
+<ul>
+<li><span class="math inline"><em>H</em><sub><em>s</em></sub></span>:
+the canonical active-state commitment, including artifact identities,
+revisions, typed lanes, and any semantically relevant order or
+multiplicity;</li>
+<li><span class="math inline"><em>H</em><sub><em>c</em></sub></span>:
+the admissibility and configuration commitment, including policy,
+authority, selection profile, budget, and admitted/refused/held
+decisions;</li>
+<li><span class="math inline"><em>H</em><sub><em>m</em></sub></span>:
+the meaning-regime commitment, including lens, canonicalization,
+interpretation, and required semantic resources;</li>
+<li><span class="math inline"><em>H</em><sub><em>r</em></sub></span>: a
+receipt-binding commitment over the task, the preceding commitments,
+dependency/conflict closure, and the exact projected provider
+input;</li>
+<li><span class="math inline"><em>H</em><sub><em>j</em></sub></span>: an
+optional locality or phase commitment when namespace or phase is
+material.</li>
+</ul>
+<p>This is a CCM integration profile, not a claim that the published
+Three Hash Rule already implements CCM. Hash equality proves equality of
+committed canonical inputs under the named algorithms and regimes. It
+does not by itself prove semantic correctness, completeness, authority,
+absence of omitted context, or equivalence outside that regime.</p>
+<p>Define a context receipt as:</p>
+<p><span
+class="math display"><em>R</em><sub><em>t</em></sub> = ⟨<em>q</em><sub><em>t</em></sub>, <em>H</em><sub><em>s</em></sub>, <em>H</em><sub><em>c</em></sub>, <em>H</em><sub><em>m</em></sub>, <em>H</em><sub><em>r</em></sub>, <em>H</em><sub><em>j</em></sub>, <em>π</em><sub><em>t</em></sub>, <em>o</em><sub><em>t</em></sub>⟩,</span></p>
+<p>where <span
+class="math inline"><em>π</em><sub><em>t</em></sub></span> contains the
+evidence needed to recompute or verify the commitments and <span
+class="math inline"><em>o</em><sub><em>t</em></sub></span> records
+admitted, refused, held, omitted, and budget-displaced artifacts. Drift
+is not merely any hash change. It is a mismatch between the actual
+transition and the transition authorized or predicted under the
+applicable configuration.</p>
+<h2 id="transition-and-amendment-semantics">8. Transition and Amendment
+Semantics</h2>
+<p>Active context is supposed to change between tasks. Treating every
+change in <span
+class="math inline"><em>W</em><sub><em>t</em></sub></span> as a
+constitutional amendment would make ordinary retrieval impossible. CCM
+therefore distinguishes four transition classes:</p>
+<ul>
+<li><p><strong>Transition:</strong> deterministic recomputation<br />
+<strong>Example:</strong> a new task selects a different admissible
+subset under unchanged rules<br />
+<strong>Required treatment:</strong> new receipt; no constitutional
+amendment</p></li>
+<li><p><strong>Transition:</strong> governed operational update<br />
+<strong>Example:</strong> a new evidence artifact is admitted or an
+obsolete working item is retired under existing authority<br />
+<strong>Required treatment:</strong> lineage-bearing update
+receipt</p></li>
+<li><p><strong>Transition:</strong> constitutional amendment<br />
+<strong>Example:</strong> lane authority, denial rule, selection law,
+required commitment, or amendment authority changes<br />
+<strong>Required treatment:</strong> authorized amendment under prior
+effective law</p></li>
+<li><p><strong>Transition:</strong> undeclared drift<br />
+<strong>Example:</strong> actual state or projection differs from its
+authorized inputs or receipt<br />
+<strong>Required treatment:</strong> refuse, hold, or escalate; preserve
+the mismatch</p></li>
+</ul>
+<p>An amendment record must identify the predecessor, proposed
+successor, authority, procedure, changed commitments, effective scope,
+migration rule, and rollback or refusal posture. The component proposing
+a change does not acquire authority to ratify its own expansion merely
+by placing the proposal in context.</p>
+<h2 id="context-admission-as-governance-gate">9. Context Admission as
+Governance Gate</h2>
+<p>Context is not passively accumulated.</p>
+<p>It is admitted.</p>
+<p>Each artifact must pass:</p>
+<ul>
+<li>type validation</li>
+<li>lane compatibility</li>
+<li>invariant consistency checks</li>
+<li>provenance requirements</li>
+</ul>
+<p>Admission failure results in:</p>
+<ul>
+<li>rejection</li>
+<li>or escalation</li>
+</ul>
+<p>This enforces:</p>
+<blockquote>
+<p>Not all available context is admissible context.</p>
+</blockquote>
+<hr />
+<h2 id="context-sufficiency-and-capability-claims">10. Context
+Sufficiency and Capability Claims</h2>
+<p>The source expression<br />
+<code>Capability &lt;= Integrity(W_active)</code> is directionally
+useful but dimensionally underspecified. CCM should make a task-relative
+establishment claim instead. Let <span
+class="math inline"><em>R</em><em>e</em><em>q</em>(<em>q</em><sub><em>t</em></sub>)</span>
+be the declared required-context profile and <span
+class="math inline"><em>C</em><em>o</em><em>v</em>(<em>W</em><sub><em>t</em></sub>, <em>R</em><em>e</em><em>q</em>(<em>q</em><sub><em>t</em></sub>))</span>
+the evidence-backed coverage judgment. Then:</p>
+<p><span
+class="math display"><em>R</em><em>e</em><em>a</em><em>d</em><em>y</em>(<em>q</em><sub><em>t</em></sub>, <em>W</em><sub><em>t</em></sub>) = <em>V</em><em>a</em><em>l</em><em>i</em><em>d</em>(<em>W</em><sub><em>t</em></sub>) ∧ <em>A</em><em>d</em><em>m</em><em>i</em><em>s</em><em>s</em><em>i</em><em>b</em><em>l</em><em>e</em>(<em>W</em><sub><em>t</em></sub>) ∧ <em>C</em><em>l</em><em>o</em><em>s</em><em>e</em><em>d</em>(<em>W</em><sub><em>t</em></sub>, <em>R</em><em>e</em><em>q</em>(<em>q</em><sub><em>t</em></sub>)).</span></p>
+<p>If <code>Ready</code> is false or cannot be established, the claimed
+task capability is not established. The system may narrow the task, seek
+missing context, return a qualified answer, hold for review, or refuse.
+It must not silently promote missing evidence into a complete context
+claim.</p>
+<p>This rule has an open-world boundary: <span
+class="math inline"><em>R</em><em>e</em><em>q</em>(<em>q</em><sub><em>t</em></sub>)</span>
+can itself be incomplete or wrong. A serious profile therefore needs
+declared discovery obligations, counterevidence search, and a receipt
+for what was searched and omitted. CCM governs a stated context
+boundary; it does not prove that nothing relevant exists outside it.</p>
+<h2 id="refusal-and-context-insufficiency">11. Refusal and Context
+Insufficiency</h2>
+<p>CCM extends GCM’s principle of explicit ignorance.</p>
+<p>If:</p>
+<pre><code>Required_Context(Q) not-subset-of W_active</code></pre>
+<p>Then:</p>
+<pre><code>Respond(Q) = REFUSE or &quot;INSUFFICIENT CONTEXT&quot;</code></pre>
+<p>Refusal is not failure.</p>
+<p>It is:</p>
+<blockquote>
+<p>Preservation of working-state integrity.</p>
+</blockquote>
+<hr />
+<h2 id="context-as-configuration-topology">12. Context as Configuration
+Topology</h2>
+<p>Working context forms a structured graph:</p>
+<ul>
+<li>nodes = context artifacts</li>
+<li>edges = relevance, dependency, contradiction</li>
+<li>layers = lanes</li>
+</ul>
+<p>This produces a <strong>Context Topology</strong>, not a window.</p>
+<p>This topology is:</p>
+<ul>
+<li>inspectable</li>
+<li>queryable</li>
+<li>hash-checkable</li>
+<li>evolution-traceable</li>
+</ul>
+<hr />
+<h2
+id="relationship-to-the-governed-meaning-base-and-historical-jn-references">13.
+Relationship to the Governed Meaning Base and Historical JN
+References</h2>
+<p>The source names JN as its canonical semantic substrate. Current
+corpus terminology uses <strong>Governed Meaning Base (GMB)</strong>
+under the author-confirmed lineage <code>CCF -&gt; CMB -&gt; GMB</code>.
+Newly generated current-architecture prose therefore uses GMB. JN
+remains exact historical source language and a distinct system/lineage
+candidate; this pass does not silently declare JN and GMB identical.</p>
+<p>Under the current integration model:</p>
+<ul>
+<li>GMB holds governed semantic records, sources, claims, standing,
+relations, counterevidence, and revision lineage.</li>
+<li>CCM selects and binds a task-relative active projection from those
+records.</li>
+<li>The provider context window receives a serialized projection of that
+active state.</li>
+<li>Receipts link the projection and decisions back to the exact records
+and configuration that produced them.</li>
+</ul>
+<p>GMB admission does not automatically make an artifact active, and CCM
+activation does not make an artifact true. Storage, standing,
+admissibility, relevance, activation, projection, execution, and effect
+remain distinct stages.</p>
+<h2 id="externalizing-the-context-window">14. Externalizing the Context
+Window</h2>
+<p>The LLM context window becomes a declared projection <span
+class="math inline"><em>P</em><sub><em>t</em></sub> = <em>Π</em>(<em>W</em><sub><em>t</em></sub>, <em>α</em><sub><em>t</em></sub>)</span>
+rather than the source of truth. Reproducibility requires more than a
+stable active-state root: it requires the same projection algorithm and
+version, provider adapter, tokenizer or serialization contract when
+material, ordering, truncation rule, and nondeterminism posture.</p>
+<p>The projection should be inspectable and receipt-bound. It is
+deterministic only when its declared projection profile is
+deterministic; the architecture must not promise determinism while
+delegating unrecorded selection or rewriting to a model or provider.</p>
+<h2 id="observability-and-control">15. Observability and Control</h2>
+<p>CCM exposes working state:</p>
+<ul>
+<li>active artifact list</li>
+<li>lane composition</li>
+<li>context hash</li>
+<li>drift/amendment logs</li>
+<li>admission decisions</li>
+</ul>
+<p>Users can query:</p>
+<ul>
+<li>“What context is active?”</li>
+<li>“What changed?”</li>
+<li>“Why was this admitted?”</li>
+</ul>
+<p>Context becomes visible.</p>
+<hr />
+<h2 id="working-state-governance">16. Working-State Governance</h2>
+<p>CCM can be summarized as:</p>
+<blockquote>
+<p>Governance of what the system is currently allowed to treat as active
+meaning.</p>
+</blockquote>
+<p>This reframes context entirely.</p>
+<p>Not:</p>
+<ul>
+<li>storage</li>
+<li>buffer</li>
+<li>prompt</li>
+</ul>
+<p>But:</p>
+<ul>
+<li>constraint surface</li>
+<li>commitment set</li>
+<li>admissible working state</li>
+</ul>
+<hr />
+<h2 id="agentic-and-runtime-implications">17. Agentic and Runtime
+Implications</h2>
+<p>Agent failures can arise from unstable context, hidden mutation,
+unresolved contradiction, prompt injection, omitted dependencies, stale
+retrieval, or unbounded inference. CCM proposes stable multi-step
+context binding, reproducibility surfaces, explicit admission decisions,
+and safe degradation. These benefits remain design hypotheses until a
+specified runtime profile is implemented and evaluated.</p>
+<p>The source named GER/AOK as an intended runtime setting. AOK/AOK-G
+material is custody-only and excluded from the current Ableman semantic
+integration scope. This candidate therefore retains that historical
+source relationship without using AOK as evidence, authority, or an
+Ableman-system dependency. CCM remains runtime-neutral unless the author
+later adopts a specific implementation profile.</p>
+<h2 id="corpus-integration-and-layer-boundaries">18. Corpus Integration
+and Layer Boundaries</h2>
+<p>CCM belongs between governed semantic state and runtime
+execution:</p>
+<ol type="1">
+<li><strong>GMB</strong> retains governed semantic records and
+lineage.</li>
+<li><strong>GCM</strong> governs persistent memory, retrieval
+boundaries, and ignorance/refusal posture.</li>
+<li><strong>Semantic Legitimacy Before Context</strong> requires
+grounding and admissibility before contextual usefulness can support
+reasoning.</li>
+<li><strong>CCM</strong> constructs the active, task-relative working
+state and records admission, omission, conflict, and projection
+decisions.</li>
+<li><strong>Reasoning by Way of Receipts</strong> requires explanations
+to remain linked to exact premises, evidence, scope, and decision
+lineage.</li>
+<li><strong>Admissibility Engineering</strong> constrains realizations
+so context requirements are structural rather than prompt-only
+aspirations.</li>
+<li>A separately authorized runtime may execute under the resulting
+context; effect authorization remains independent.</li>
+</ol>
+<p>The stack does not imply that storage, context selection, reasoning,
+and execution are one system identity. They are interoperating roles
+whose exact implementations and authority boundaries require
+profiles.</p>
+<h2 id="worked-example-current-name-with-historical-sources">19. Worked
+Example: Current Name with Historical Sources</h2>
+<p>Suppose a task asks for the current name of the corpus’s governed
+meaning architecture. The candidate pool includes an older CCF artifact,
+a later CMB paper, and a direct author ruling that the lineage is
+<code>CCF -&gt; CMB -&gt; GMB</code> with GMB current.</p>
+<p>A similarity-only retriever might select the longer CMB paper and
+answer with CMB. CCM instead records:</p>
+<ul>
+<li>all three artifacts are relevant;</li>
+<li>the older artifacts remain admissible as historical evidence;</li>
+<li>the direct ruling has current terminology authority for this
+question;</li>
+<li>the answer uses GMB while citing CCF and CMB as historical
+lineage;</li>
+<li>no source title or quotation is silently rewritten;</li>
+<li>the selection and omission record explains why the current ruling
+controlled the answer.</li>
+</ul>
+<p>The example illustrates a central point: governing context does not
+mean deleting obsolete or conflicting material. It means preserving
+material with typed standing and controlling how it may affect the
+current task.</p>
+<h2 id="universal-gsm-placement">20. Universal GSM Placement</h2>
+<p>CCM introduces or depends on the following distinct semantic
+entities: context artifact, artifact revision, lane profile, lane
+assignment, active-state set, task, query, selection profile, budget,
+admission judgment, refusal, hold, omission, dependency, conflict,
+semantic lens, canonicalization regime, projection profile, provider
+adapter, active-state commitment, admissibility commitment, meaning
+commitment, receipt binding, amendment, operational update, drift event,
+sufficiency judgment, execution request, and effect judgment.</p>
+<p>Important adjacencies include:</p>
+<ul>
+<li>an artifact <strong>HAS_REVISION</strong> an artifact revision;</li>
+<li>an artifact revision <strong>ASSIGNED_UNDER</strong> a lane
+profile;</li>
+<li>an admission judgment <strong>EVALUATES</strong> an artifact
+revision for a task;</li>
+<li>an active state <strong>SELECTED_UNDER</strong> a policy, budget,
+and selection profile;</li>
+<li>an active state <strong>DEPENDS_ON</strong> admitted artifacts and
+declared closure;</li>
+<li>a projection <strong>DERIVED_FROM</strong> an active state under an
+adapter profile;</li>
+<li>a receipt <strong>BINDS</strong> the task, decisions, commitments,
+and projection;</li>
+<li>a drift event <strong>CONTRADICTS</strong> an expected or authorized
+transition;</li>
+<li>an amendment <strong>SUCCEEDS</strong> a prior constitutional
+configuration.</li>
+</ul>
+<p>Lexical co-occurrence or matching hashes do not establish these
+identity or derivation relations. Each consequential edge requires
+source or receipt support.</p>
+<h2 id="realization-funnel">21. Realization Funnel</h2>
+<ul>
+<li><p><strong>Stage:</strong> Possibility<br />
+<strong>CCM role:</strong> Enumerate context records, lane systems,
+selection strategies, semantic regimes, budgets, conflict policies,
+projection adapters, refusal postures, and harmful or null
+configurations.</p></li>
+<li><p><strong>Stage:</strong> Specification<br />
+<strong>CCM role:</strong> Define the artifact schema, authority model,
+admission outcomes, commitments, transition classes, dependency/conflict
+closure, receipt contract, and falsifiers.</p></li>
+<li><p><strong>Stage:</strong> CM1<br />
+<strong>CCM role:</strong> Retain every admissible configuration,
+including expensive, overly restrictive, privacy-invasive, unstable,
+incomplete, or low-utility configurations.</p></li>
+<li><p><strong>Stage:</strong> CM2<br />
+<strong>CCM role:</strong> Prefer configurations that preserve
+controlling constraints and counterevidence, minimize silent omission,
+expose uncertainty, remain inspectable, and fit declared
+resource/privacy limits.</p></li>
+<li><p><strong>Stage:</strong> Instance Configuration<br />
+<strong>CCM role:</strong> Choose exact lanes, laws, lenses, algorithms,
+budgets, adapters, sources, versions, tie-breakers, and review
+authorities for one deployment.</p></li>
+<li><p><strong>Stage:</strong> Implementation Realization<br />
+<strong>CCM role:</strong> Build the store connector, selector,
+canonicalizer, receipt emitter, projection adapter, refusal path,
+amendment path, and operator surface.</p></li>
+<li><p><strong>Stage:</strong> Evidence<br />
+<strong>CCM role:</strong> Preserve test vectors,
+admitted/refused/held/omitted records, commitment openings, drift
+probes, projection comparisons, attack results, and human-review
+outcomes.</p></li>
+<li><p><strong>Stage:</strong> Revision<br />
+<strong>CCM role:</strong> Amend configuration through prior authority,
+repair algorithms, migrate records, retain predecessor receipts, and
+record claim movement.</p></li>
+</ul>
+<p>The present paper operates mainly at Specification and early
+Configuration. It does not authorize or prove an Implementation
+Realization.</p>
+<h2 id="governed-active-working-state-layer">Governed Active
+Working-State Layer</h2>
+<p>The completed P1 corpus positions Constitutional Context Management
+(CCM) as the <strong>governed active working-state layer that selects,
+binds, updates, expires, and receipts context across a sequence of tasks
+or invocations</strong>. It is not long-term semantic state, one
+compiled provider window, model memory, or truth by inclusion.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>A Constitution for the
+Context Window</em><br />
+<strong>Supplies:</strong> The invocation-scoped constitutional
+compiler, courts, Context IR, provider projection, and receipts.<br />
+<strong>CCM boundary:</strong> CCM manages the longer-lived working
+state from which particular context builds are requested.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional/Crystallized
+Meaning Base (CMB)</em><br />
+<strong>Supplies:</strong> The historical meaning-base work in the
+current CCF-to-CMB-to-GMB lineage.<br />
+<strong>CCM boundary:</strong> Current GMB stores governed semantic
+state; CCM selects and maintains a task-relative active slice.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Technical Brief: Recursive
+Semantic Orientation and Complex Systems Cognition</em><br />
+<strong>Supplies:</strong> Hypotheses, partitions, unknowns, probes, and
+stopping.<br />
+<strong>CCM boundary:</strong> An orientation state can guide CCM
+relevance without becoming identical to active context.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Exigence and the Cognitive
+Kernel</em><br />
+<strong>Supplies:</strong> Need, attention, custody, sufficiency, and
+reconsideration.<br />
+<strong>CCM boundary:</strong> CogK supplies attention pressure; CCM
+performs governed context selection and amendment.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Legitimacy Before
+Context</em><br />
+<strong>Supplies:</strong> The admissibility question before material
+becomes binding context.<br />
+<strong>CCM boundary:</strong> CCM operationalizes ongoing admission,
+displacement, and revalidation over working state.</p></li>
+</ul>
+<p>An active-context state should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;work\_id, base\_snapshot, lanes, candidates, \\
+&amp;active\_bindings, selection\_basis, omissions, budget, \\
+&amp;expiry, receipts, revision)
+\end{aligned}.
+$$</span></p>
+<p>The GMB snapshot, candidate set, selected working state, invocation
+Context IR, provider-visible prompt, model output, and external effect
+remain separate. Hash binding proves commitment to exact bytes or
+structures under a scheme; it does not prove relevance, completeness,
+correctness, authority, or semantic equivalence.</p>
+<p>Relevance is a governed admission claim, not a similarity score.
+Selection must expose task, jurisdiction, time, authority, evidence,
+risk, budget, and displacement consequences. Expiry and eviction require
+a preservation or loss record where removed material remains relevant to
+custody, safety, dispute, or revision.</p>
+<p>The universal GSM can type<br />
+<code>CANDIDATE_FOR_ACTIVE_CONTEXT</code>,<br />
+<code>SELECTED_UNDER_RELEVANCE_PROFILE</code>,
+<code>BOUND_IN_CONTEXT_LANE</code>, <code>DISPLACED_BY</code>,<br />
+<code>EXPIRES_FROM_WORKING_STATE</code>, <code>PRESERVED_IN_GMB</code>,
+<code>PROJECTED_TO_CONTEXT_BUILD</code>,<br />
+<code>HASH_COMMITTED_AS</code>,
+<code>INSUFFICIENT_FOR_TASK</code>,<br />
+and<br />
+<code>REVISED_BY_CONTEXT_RECEIPT</code>. These relations distinguish
+managed attention from epistemic standing.</p>
+<p>This integration establishes four editorial commitments: adopt
+governed active working-state layer as CCM’s official corpus role; adopt
+the active-context record; preserve the
+GMB/CCM/ContextBuild/provider-window/output/effect separation; and
+require relevance, displacement, expiry, and loss to be receipted under
+explicit profiles.</p>
+<h2 id="context-as-experimental-and-decision-state">Context as
+Experimental and Decision State</h2>
+<p>The fixed-seed comparison with <em>Meaning Crystals</em>, Agentic
+Interface Surfaces, <em>Classified Earthworks</em>, and Project57
+exposes two under-specified CCM roles: active context is both a decision
+state for consequential work and an experimental condition when behavior
+is being measured.</p>
+<p><span class="math display">$$
+\begin{aligned}
+U= (&amp;work, context\_snapshot, selection, omissions, standing, \\
+&amp;freshness, interface, decision, effect, evidence, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>A context-use receipt should bind what was available, selected,
+omitted, expired, and provider-visible at the moment a decision,
+interface recognition, or measured response occurred. It should not
+imply that all selected material was true or authoritative. Meaning
+crystals remain candidate context objects whose stability, freshness,
+standing, and task fitness are evaluated separately.</p>
+<p>Agentic interfaces consume the active context indirectly through the
+agent’s recognized constraints and progress conditions. A context
+revision can therefore change interface behavior without any code or
+surface change. When that happens, the new recognition regime should be
+attributable to a context transition rather than presented as an
+unchanged interface contract.</p>
+<p><em>Classified Earthworks</em> demonstrates the consequence boundary:
+omitting batch lineage, current test results, jurisdiction, or site
+conditions can turn an apparently coherent context into an unsafe
+routing state. Project57 demonstrates the experimental boundary: the
+exact context template, ordering, omissions, memory, system instruction,
+and provider projection are treatment variables, not incidental prompt
+metadata.</p>
+<p>The universal GSM can type<br />
+<code>RECEIPTS_CONTEXT_USE</code>,<br />
+<code>TREATS_CONTEXT_AS_EXPERIMENTAL_CONDITION</code>,
+<code>CHANGES_RECOGNITION_BY_CONTEXT_REVISION</code>,<br />
+<code>OMITS_SAFETY_CRITICAL_CONTEXT</code>,
+<code>BINDS_MEASURED_RESPONSE_TO_CONTEXT</code>,<br />
+and<br />
+<code>SELECTS_CRYSTAL_WITHOUT_PROMOTING_STANDING</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+a context-use receipt; classify context as a controlled experimental
+condition when responses are measured; require context-to-interface
+change attribution; and identify safety-critical omission classes for
+consequential domain decisions.</p>
+<h2 id="context-as-a-reconstructable-decision-substrate">Context as a
+Reconstructable Decision Substrate</h2>
+<p>Five downstream uses apply CCM to context-window constitutions,
+earthwork decisions, agent interfaces, meaning crystals, and
+Meta-Binding tests. They confirm that CCM governs the active working
+set, not the whole GMB, a memory store, or a hidden prompt. Its product
+is a versioned decision substrate whose inclusions, exclusions,
+freshness, standing, and insufficiencies can be reconstructed.</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;task, subject, generation, purpose, lanes, candidates, \\
+&amp;admitted, excluded, ordering, budgets, authority, \\
+&amp;freshness, standing, dependencies, omissions, receipts, \\
+&amp;expiry, successor)
+\end{aligned}.
+$$</span></p>
+<p>Relevance is a scoped admission judgment, not truth or importance in
+general. Lane membership does not authenticate content. Compression,
+ordering, repetition, omission, tool output, system messages, and
+retrieval timing can all alter the effective decision surface. A context
+result must therefore expose controlling exclusions and unresolved
+dependencies, not merely the material loaded.</p>
+<p>Cold boot requires reconstruction from exact source identities,
+admission decisions, lane rules, budgets, and successor lineage. Hashes
+can detect drift in a declared artifact but cannot prove that the
+candidate set was complete, the authority valid, the summary faithful,
+or the context sufficient. Insufficiency and refusal are lawful
+outcomes.</p>
+<p>The universal GSM can type<br />
+<code>ADMITS_TO_ACTIVE_CONTEXT</code>,
+<code>EXCLUDES_WITH_CONTEXT_REASON</code>,<br />
+<code>BINDS_CONTEXT_LANE</code>, <code>REPORTS_CONTEXT_OMISSION</code>,
+<code>EXPIRES_CONTEXT_BINDING</code>,<br />
+<code>RECONSTRUCTS_DECISION_CONTEXT</code>, and<br />
+<code>DOES_NOT_CONFER_TRUTH</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+reconstructable context record; treat relevance as scoped admission;
+make omission, order, freshness, and insufficiency first-class; and
+require exact reconstruction evidence without promoting hashes or
+summaries into semantic proof.</p>
+<h2 id="failure-modes-and-falsification-program">22. Failure Modes and
+Falsification Program</h2>
+<p>A CCM profile is weakened or falsified within its stated scope if any
+of the following occurs:</p>
+<ol type="1">
+<li>A materially different ordered or lane-typed active state produces
+the same state commitment without a declared equivalence rule.</li>
+<li>A lens erases a distinction that its specification says it
+preserves.</li>
+<li>A stable receipt verifies while the provider receives a materially
+different projection.</li>
+<li>A required dependency or controlling counterexample is omitted while
+closure reports success.</li>
+<li>A speculative record influences an invariant or fact lane without a
+typed, authorized transition.</li>
+<li>Prompt content expands its own authority merely by being selected
+into context.</li>
+<li>Two implementations using the same deterministic profile select
+different states without recording nondeterminism.</li>
+<li>A withdrawn or superseded revision remains active without explicit
+historical standing.</li>
+<li>An unavailable source is silently replaced by model recall.</li>
+<li>Any normal task-to-task selection change is misreported as
+constitutional drift, making the system unusably amendment-heavy.</li>
+<li>A constitutional rule changes as an ordinary operational update,
+laundering amendment authority.</li>
+<li>Privacy-sensitive material is committed or exposed beyond its
+declared disclosure profile.</li>
+<li>Refusal occurs despite an admissible, sufficient context whose
+required proof is available.</li>
+<li>The system claims completeness without a declared search boundary or
+omission receipt.</li>
+</ol>
+<p>Evaluation should include positive, negative, mutation, truncation,
+prompt-injection, stale-revision, conflicting-evidence, missing-source,
+ordering, budget-pressure, adapter-mismatch, and replay tests. Passing
+those tests establishes only the tested profile and threat model.</p>
+<h2 id="govern-the-present-without-pretending-it-is-complete">Govern the
+Present Without Pretending It Is Complete</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Constitutional Context Management governs the active working state
+used for a present decision. It treats admitted instructions, evidence,
+definitions, constraints, uncertainties, and omissions as typed and
+provenance-bearing commitments rather than as an invisible prompt
+buffer. The goal is reconstructable orientation and bounded refusal, not
+a claim that a context can contain everything relevant.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>False-sufficiency attack.</strong> The context passes a
+completeness check because the checklist omitted the decisive category.
+Sufficiency must be claim-, task-, and consequence-scoped.</li>
+<li><strong>Stale-state attack.</strong> A once-valid instruction, fact,
+permission, or dependency remains active after amendment, revocation, or
+environmental change.</li>
+<li><strong>Provenance-as-truth attack.</strong> A source is known
+exactly and is therefore treated as correct, authoritative, current, or
+relevant.</li>
+<li><strong>Context-poisoning attack.</strong> Adversarial material
+enters through retrieval, user content, tools, inherited state, or
+summaries and is promoted into an operative commitment.</li>
+<li><strong>Compression-loss attack.</strong> Summarization preserves
+fluency but erases qualifiers, dissent, negative evidence, standing, or
+unresolved obligations.</li>
+<li><strong>Privacy-and-secrecy attack.</strong> Reconstructability
+expands retention or disclosure of sensitive material beyond the task’s
+legitimate need.</li>
+<li><strong>Liveness attack.</strong> Repeated sufficiency and
+governance checks prevent useful work or make refusal the only stable
+state. The policy needs consequence-proportional continuation
+rules.</li>
+<li><strong>Layer-collapse attack.</strong> CCM, the GMB, retrieval, the
+universal GSM, and a model context window are treated as one store or
+one authority surface.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a governed active-working-state layer with
+admission, amendment, sufficiency, omission, and refusal semantics. It
+does not guarantee complete knowledge, correct retrieval, truth,
+authority, privacy, safety, or good decisions. A context receipt
+establishes only the bounded state and procedures it actually
+covers.</p>
+<p>Claims about comprehension, error reduction, privacy, security,
+latency, cost, organizational performance, or model behavior require
+exact implementations, comparison baselines, and external evidence. The
+GMB can supply governed records to CCM, but it does not automatically
+determine the active context; CCM can prepare a context, but it does not
+acquire GMB standing. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>For a reader, the proposal turns “what did the agent know?” into an
+inspectable question: what was admitted, what was excluded, what had
+changed, what remained uncertain, and why the system continued or
+refused.</p>
+<h2 id="publication-standing-and-evidence-limits">23. Publication
+Standing and Evidence Limits</h2>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+</ul>
+<hr />
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<h3 id="source-identity-and-claim-standing">Source, Identity, and Claim
+Standing</h3>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author source. The source remains unchanged. The integration
+custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/</code></p>
+<p><code>constitutional-context-management/integration-</code><br />
+<code>custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>9E94E95A00068B6C607C4E6C11FB4D4031D8583D19E92A180F1FB00F8E547AA1</code>.
+The integration custody manifest binds that source and six exact
+internal comparison works by path, size, and SHA-256. Exact custody does
+not prove the candidate’s claims, establish identity among the works, or
+grant publication standing. This paper is best treated provisionally as
+the concise conceptual architecture for governed active context.
+<em>Governed Context &amp; Memory (GCM)</em> supplies the earlier
+persistence-and-retrieval frame. <em>A Constitution for the Context
+Window</em> is a much larger later treatment of constitutional context
+compilation, courts, amendments, adapters, delegation, effects,
+receipts, and conformance. Their adjacency is strong, but this pass does
+not merge their work identities or declare CCM a version of either
+paper. The paper makes architectural and normative proposals. It does
+not report an implemented CCM runtime, controlled evaluation, security
+proof, cognitive-science result, or evidence that current AI products
+satisfy the model. Statements about what a CCM system “will” do are
+design obligations, not observed product behavior.</p>
+<h2 id="conclusion">24. Conclusion</h2>
+<p>Memory without governance produces drift across time.</p>
+<p>Context without governance produces drift across steps.</p>
+<p>CCM resolves the second failure.</p>
+<p>By transforming context into:</p>
+<ul>
+<li>typed</li>
+<li>hash-bound</li>
+<li>admitted</li>
+<li>observable</li>
+</ul>
+<p>it establishes a stable working state.</p>
+<p>The central shift is structural:</p>
+<blockquote>
+<p>Context is not data. Context is a set of active commitments.</p>
+</blockquote>
+<p>When those commitments are governed:</p>
+<ul>
+<li>relevance becomes enforceable</li>
+<li>drift becomes detectable</li>
+<li>refusal becomes necessary</li>
+<li>reasoning becomes stable</li>
+</ul>
+<p>A system operating under CCM will not proceed under insufficient
+context.</p>
+<p>It will not silently mutate its commitments.</p>
+<p>It will not substitute inference for grounding.</p>
+<p>Instead, it will preserve its working state–and when that state is
+insufficient, it will stop.</p>
+<p>Not as limitation.</p>
+<p>As proof that the system is still intact.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that contemporary AI systems rely on context
+windows as ephemeral substrates for reasoning. Its nearest external
+comparison fields are ai, governance, provenance. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. A written constitution can legitimate
+domination as easily as constrain it unless amendment, participation,
+enforcement, and appeal remain effective in practice. A complete
+provenance graph can faithfully record a false or unauthorized process;
+provenance is evidence about lineage, not automatic truth or legitimacy.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E7]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[1]</strong> Ableman Adam Ableman <em>Governed Context &amp;
+Memory (GCM).</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>F85726AC84A47C608FABF3704BFBC790FB0D393690430374916D45C6FC83C8DB</code>.</p>
+<p><strong>[2]</strong> Ableman Adam Ableman <em>A Constitution for the
+Context Window.</em> Exact reviewed author draft,<br />
+SHA-256<br />
+<code>C4F6CC466FA4306C595AFF66D9EBD4F396E45B91876E1D32A5027FCF465312EE</code>.</p>
+<p><strong>[3]</strong> Ableman Adam Ableman <em>Semantic Legitimacy
+Before Context.</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>1E9058F212FCB00E42E35E927DF2E7F830BC9C9499AAFF469FE65FF8AE137B68</code>.</p>
+<p><strong>[4]</strong> Ableman Adam Ableman <em>Reasoning by Way of
+Receipts.</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>.</p>
+<p><strong>[5]</strong> Ableman Adam Ableman <em>The Three Hash
+Rule.</em> Exact reviewed published author source,<br />
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p><strong>[6]</strong> Ableman Adam Ableman <em>Admissibility
+Engineering.</em> Exact reviewed author source,<br />
+SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>.</p>
+<p><strong>Reference-status note.</strong> These are internal corpus
+references. No external literature search, current-product comparison,
+implementation replay, security audit, or independent validation was
+performed in this pass.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847508">10.5281/zenodo.23847508</a></p>

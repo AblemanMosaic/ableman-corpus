@@ -1,0 +1,869 @@
+<h1 id="governance-coverage-gaps">Governance Coverage Gaps</h1>
+<h2
+id="diagnosing-missing-scope-participation-discovery-exception-and-evidence-at-capability-boundaries">Diagnosing
+Missing Scope, Participation, Discovery, Exception, and Evidence at
+Capability Boundaries</h2>
+<h3
+id="an-exception-removes-an-obligation-only-when-an-authorized-bounded-reviewable-rule-says-so.">An
+exception removes an obligation only when an authorized, bounded,
+reviewable rule says so.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>A system can correctly apply every rule it knows about and still
+exercise capability that no rule governs. This paper develops
+<strong>Governance Coverage Gaps (GCG)</strong> as a diagnostic
+framework for that failure. Receipt-bound execution can justify an
+evaluated action; it cannot by itself establish that every relevant
+capability was discovered, declared, assigned applicable governance,
+mediated at grant, observed in use, or represented in the receipt.</p>
+<p>The framework distinguishes five gap classes: scope-definition,
+governance-participation, capability-discovery, exception-authority, and
+evidence gaps. This expansion preserves the source paper’s central
+distinction between governance that exists but fails to participate and
+governance that was never defined, while making explicit the independent
+observation needed to discover undeclared capability. It also corrects
+an important limit: documented non-participation is not automatically
+intentional or acceptable. An exception removes an obligation only when
+an authorized, bounded, reviewable rule says so.</p>
+<p>Governance coverage is formalized as a relation among a bounded
+capability inventory, applicability rules, required governance layers,
+evidenced participation, authorized exceptions, and an observation
+regime. “Full coverage” is therefore never an unqualified claim about
+all possible capability. It is a closure claim relative to a declared
+system boundary, discovery method, time interval, threat model, and
+evidence standard.</p>
+<p>Integrated with Admissibility Engineering, the Three Hash Rule, the
+Constitutional Observability Platform, Reasoning by Way of Receipts,
+Constitutional Computing, Governed Agentic Coding, GMB, and the
+universal GSM, GCG becomes a method for locating where constitutional
+machinery is absent rather than merely malfunctioning. This paper
+supplies a specification and evaluation program, not proof that any
+implementation has achieved complete governance.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/governance-</code></p>
+<p><code>coverage-gaps/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>9566E16E4D8CC59667C4BFA202358096B3D02C3A1F0D82E36DB51F3D6C127842</code>.
+The source remains unchanged.</p>
+<p>The central problem, two-path diagnosis, N-determination,
+capability-grant boundary, receipt limitation, system postures, and
+examples are author material. The expanded taxonomy, formal model,
+independent discovery method, exception rule, corpus bridges, tests,
+counterevidence, and editorial alternatives are AI-assisted
+contributions explicitly distinguished from the original author
+material. No external research was conducted.</p>
+<h2 id="the-missing-question">1. The Missing Question</h2>
+<p>Admissibility and receipts answer consequential questions: Was this
+operation permitted? Under what authority? Which constraints applied?
+What result and evidence were produced?</p>
+<p>Governance coverage asks an earlier and wider question:</p>
+<blockquote>
+<p>Was the capability surface itself discovered and bound to governance
+before capability was granted or exercised?</p>
+</blockquote>
+<p>A system can return a valid receipt for every operation that enters
+its governed pathway while retaining an unreceipted escape path. It can
+also govern every declared plugin operation while failing to govern
+installation code, configuration expansion, repair tooling,
+administrator bypass, or a lower hardware interface.</p>
+<p>The absence is structural. It cannot be repaired merely by making the
+existing gate stricter.</p>
+<h2 id="five-independent-gap-classes">2. Five Independent Gap
+Classes</h2>
+<p>The source’s two paths should be retained and made more precise.</p>
+<ol type="1">
+<li><strong>Scope-definition gap:</strong> a discovered capability has
+no applicable governance contract.</li>
+<li><strong>Participation gap:</strong> applicable governance exists,
+but one or more required layers do not participate in grant or
+execution.</li>
+<li><strong>Capability-discovery gap:</strong> the inventory or
+observation regime fails to expose a capability that the system can
+grant or exercise.</li>
+<li><strong>Exception-authority gap:</strong> non-participation is
+documented but not authorized, bounded, expiring, reviewable, or
+evidenced.</li>
+<li><strong>Evidence gap:</strong> governance may have participated, but
+available evidence cannot establish coverage or noncoverage.</li>
+</ol>
+<p>The first two correspond to pre-governance absence and governance
+failure. The third explains how the first can be found. The fourth
+prevents documentation from laundering an omission into legitimacy. The
+fifth prevents lack of evidence from becoming evidence of coverage.</p>
+<p>The classes may coexist. An undeclared repair interface can be both
+undiscovered and outside scope; after discovery it may acquire a scope
+rule yet remain unmediated; an authorized emergency exception may still
+have inadequate evidence.</p>
+<h2 id="capability-grant-boundaries">3. Capability-Grant Boundaries</h2>
+<p>A <strong>capability-grant boundary</strong> is a transition at which
+an actor, component, process, model, plugin, configuration, or lower
+layer acquires the practical ability to produce an effect. Grant and
+invocation are distinct. Governance that begins only at invocation may
+be too late if installation, loading, discovery, or initialization
+already created effects.</p>
+<p>Boundary candidates include:</p>
+<ul>
+<li>package build and installation hooks;</li>
+<li>plugin discovery, loading, and activation;</li>
+<li>configuration evaluation and template expansion;</li>
+<li>model tool grants and agent delegation;</li>
+<li>credentials, handles, file descriptors, and network routes;</li>
+<li>repair, recovery, migration, import, and administrative paths;</li>
+<li>driver and hardware abstraction escape surfaces; and</li>
+<li>composed capabilities whose combination creates authority absent
+from each component.</li>
+</ul>
+<p>The boundary is not necessarily one code location. In distributed
+systems it may span declarations, brokers, policy engines, transport,
+runtime, and external providers. Coverage analysis must follow the full
+grant chain.</p>
+<h2 id="a-bounded-formal-model">4. A Bounded Formal Model</h2>
+<p>For a system boundary <span class="math inline"><em>S</em></span>,
+interval <span class="math inline"><em>T</em></span>, and observation
+regime <span class="math inline"><em>O</em></span>, let:</p>
+<ul>
+<li><span
+class="math inline"><em>C</em><sub><em>d</em><em>e</em><em>c</em><em>l</em></sub></span>
+be declared capabilities;</li>
+<li><span
+class="math inline"><em>C</em><sub><em>d</em><em>i</em><em>s</em><em>c</em></sub></span>
+be capabilities discovered by methods independent of governance
+declarations;</li>
+<li><span
+class="math inline"><em>C</em><sub><em>o</em><em>b</em><em>s</em></sub></span>
+be capabilities observed as granted or exercised;</li>
+<li><span class="math inline"><em>N</em>(<em>c</em>)</span> be the
+governance layers normatively required for capability <span
+class="math inline"><em>c</em></span>;</li>
+<li><span class="math inline"><em>P</em>(<em>c</em>)</span> be the
+layers evidenced as participating;</li>
+<li><span class="math inline"><em>X</em>(<em>c</em>)</span> be
+authorized exceptions; and</li>
+<li><span class="math inline"><em>E</em>(<em>c</em>)</span> be the
+evidence supporting discovery, applicability, participation, and
+exception claims.</li>
+</ul>
+<p>The bounded inventory is:</p>
+<p><span
+class="math display"><em>C</em><sup>*</sup> = <em>C</em><sub><em>d</em><em>e</em><em>c</em><em>l</em></sub> ∪ <em>C</em><sub><em>d</em><em>i</em><em>s</em><em>c</em></sub> ∪ <em>C</em><sub><em>o</em><em>b</em><em>s</em></sub>.</span></p>
+<p>For each <span
+class="math inline"><em>c</em> ∈ <em>C</em><sup>*</sup></span>, the
+unfulfilled governance set is:</p>
+<p><span
+class="math display"><em>G</em>(<em>c</em>) = <em>N</em>(<em>c</em>) \ (<em>P</em>(<em>c</em>) ∪ <em>X</em>(<em>c</em>)).</span></p>
+<p>This equation is valid only when <span
+class="math inline"><em>N</em></span>, <span
+class="math inline"><em>P</em></span>, and <span
+class="math inline"><em>X</em></span> are well-defined and adequately
+evidenced. Otherwise the verdict is indeterminate.</p>
+<p>A scope-definition gap exists when <span
+class="math inline"><em>c</em> ∈ <em>C</em><sub><em>d</em><em>i</em><em>s</em><em>c</em></sub> ∪ <em>C</em><sub><em>o</em><em>b</em><em>s</em></sub></span>
+but <span class="math inline"><em>N</em>(<em>c</em>)</span> is
+undefined. A participation gap exists when <span
+class="math inline"><em>N</em>(<em>c</em>)</span> is defined and <span
+class="math inline"><em>G</em>(<em>c</em>) ≠ ⌀</span>. A discovery gap
+is inferred only when a later or independent observation exposes
+capability omitted by the declared discovery procedure; an evaluator
+cannot enumerate unknown unknowns directly.</p>
+<p>No universal scalar “degree of governance” follows without a
+weighting model. A set-valued coverage profile is safer because one
+missing high-impact capability may matter more than hundreds of covered
+low-impact operations.</p>
+<h2 id="n-determination">5. N-Determination</h2>
+<p>The source names the selection of applicable governance layers
+<strong>N-determination</strong>. This is not simply a count. It is a
+function from a capability and context to required obligations:</p>
+<p><span
+class="math display"><em>N</em>(<em>c</em>, <em>k</em>) = {<em>g</em><sub>1</sub>, …, <em>g</em><sub><em>n</em></sub>}.</span></p>
+<p>Context <span class="math inline"><em>k</em></span> may include
+actor, authority, data class, jurisdiction, resource, effect type,
+environment, time, delegation chain, and risk posture. N-determination
+needs an authoritative normative source independent of observed
+participation. Otherwise a system could define its requirements to match
+what happened and report perfect coverage.</p>
+<p>Under-declaration omits an applicable layer. Over-declaration adds
+irrelevant layers, which can create delay, cost, contradiction, or
+inaccessible governance. Ambiguity leaves applicability unresolved. All
+three are diagnostic outcomes; only the first is necessarily a coverage
+deficit.</p>
+<h2 id="discovery-cannot-be-derived-from-declaration-alone">6. Discovery
+Cannot Be Derived from Declaration Alone</h2>
+<p>Comparing declared layers with evidenced participation is necessary
+but insufficient. It detects missing participants only for capabilities
+already inside the evaluator’s inventory. Pre-governance absence
+requires an independent discovery channel.</p>
+<p>Candidate discovery methods include:</p>
+<ul>
+<li>static enumeration of entry points, permissions, imports, hooks, and
+effectful APIs;</li>
+<li>runtime tracing across grant and invocation boundaries;</li>
+<li>package, plugin, service, credential, device, and network
+inventories;</li>
+<li>differential execution under changed policy or denied
+capability;</li>
+<li>threat modeling and adversarial path exploration;</li>
+<li>dependency and supply-chain analysis;</li>
+<li>interface-to-implementation correspondence checks; and</li>
+<li>reconciliation of intended, declared, observed, and externally
+available capabilities.</li>
+</ul>
+<p>Each method has blind spots. Coverage claims must name which methods
+ran, what they could observe, what interval they covered, and which
+paths remained inaccessible. The correct verdict for insufficient
+observation is <strong>indeterminate</strong>, not full coverage.</p>
+<h2 id="receipts-and-coverage-evidence">7. Receipts and Coverage
+Evidence</h2>
+<p>Receipts justify what their capture boundary includes. They do not
+automatically prove that the boundary is complete.</p>
+<p>For coverage analysis, a receipt or linked evidence package should
+bind:</p>
+<ul>
+<li>system boundary and version;</li>
+<li>capability inventory and discovery method;</li>
+<li>actor and authority;</li>
+<li>requested, granted, exercised, and denied capabilities;</li>
+<li>applicable governance set <span
+class="math inline"><em>N</em>(<em>c</em>)</span>;</li>
+<li>evidenced participants <span
+class="math inline"><em>P</em>(<em>c</em>)</span>;</li>
+<li>exceptions <span class="math inline"><em>X</em>(<em>c</em>)</span>
+with grantor, scope, reason, expiry, and review condition;</li>
+<li>unobserved or inaccessible surfaces;</li>
+<li>result and effect evidence;</li>
+<li>verdict and claim ceiling; and</li>
+<li>revision or remediation link.</li>
+</ul>
+<p>The Three Hash Rule can bind intent, artifact, and result, but
+coverage analysis must also show that the governed artifact and result
+encompass the relevant capability path. Reasoning by Way of Receipts
+supplies a mode of inference from such records; it cannot infer
+unrecorded participation as fact.</p>
+<h2 id="exceptions-and-intentional-partial-governance">8. Exceptions and
+Intentional Partial Governance</h2>
+<p>The source proposes that documented non-participation is intentional
+partial governance rather than a gap. Documentation alone is
+insufficient. A valid exception must be:</p>
+<ul>
+<li>granted by an authority entitled to relax the obligation;</li>
+<li>limited to named capabilities, actors, environments, and
+effects;</li>
+<li>justified and reviewable;</li>
+<li>time-bound or revision-bound where appropriate;</li>
+<li>visible to dependent decisions;</li>
+<li>unable to silently expand through composition; and</li>
+<li>accompanied by compensating controls or an explicit accepted
+residual risk.</li>
+</ul>
+<p>An exception may make non-participation authorized. It does not make
+the underlying exposure disappear. Reports should distinguish
+<strong>covered</strong>, <strong>authorized exception</strong>,
+<strong>uncovered</strong>, and <strong>indeterminate</strong>.</p>
+<h2 id="coverage-verdicts-and-claim-ceilings">9. Coverage Verdicts and
+Claim Ceilings</h2>
+<p>For each capability, the basic verdicts are:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Verdict</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Covered</td>
+<td>Required layers participated, with sufficient evidence.</td>
+</tr>
+<tr>
+<td>Authorized exception</td>
+<td>A valid exception displaces named obligations within its
+bounds.</td>
+</tr>
+<tr>
+<td>Uncovered</td>
+<td>Required participation or scope definition is missing.</td>
+</tr>
+<tr>
+<td>Indeterminate</td>
+<td>Discovery, applicability, participation, or exception evidence is
+insufficient.</td>
+</tr>
+</tbody>
+</table>
+<p>A system-level statement should aggregate these without hiding severe
+outliers. “Full coverage” should be written as:</p>
+<blockquote>
+<p>No uncovered capability was found within boundary <span
+class="math inline"><em>S</em></span>, interval <span
+class="math inline"><em>T</em></span>, inventory <span
+class="math inline"><em>C</em><sup>*</sup></span>, discovery regime
+<span class="math inline"><em>O</em></span>, applicability law <span
+class="math inline"><em>N</em></span>, and evidence threshold <span
+class="math inline"><em>Q</em></span>.</p>
+</blockquote>
+<p>This is a defeasible closure claim, not proof that no unknown
+capability exists. New evidence reopens it.</p>
+<h2 id="corpus-integration">10. Corpus Integration</h2>
+<p><strong>Admissibility Engineering</strong> supplies the machinery for
+deciding whether a proposed action may proceed. GCG asks whether every
+relevant capability path reaches that machinery. <strong>The
+Constitutional Observability Platform</strong> supplies observation and
+evidence surfaces; GCG states what those surfaces must cover.
+<strong>The Three Hash Rule</strong> and <strong>Reasoning by Way of
+Receipts</strong> bind intent, artifact, result, and inference, while
+GCG tests whether the receipt boundary omits an effect path.</p>
+<p><strong>Constitutional Computing</strong> provides the larger account
+of inspectable, renegotiable authority across the stack.
+<strong>Governed Agentic Coding</strong> makes the problem concrete for
+agents, tools, dependencies, delegation, and software effects. The
+<strong>Governed Meaning Base (GMB)</strong> can retain capability
+identities, applicability rules, exceptions, evidence, conflicts, and
+revisions. The universal <strong>GSM</strong> can type relations among
+capability, actor, authority, governor, effect, evidence, and gap.</p>
+<p>These are complementary roles, not identity mergers. GCG is the
+diagnostic bridge between capability discovery and governed effect
+closure.</p>
+<h2 id="realization-funnel">11. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate capabilities, grant paths,
+governance layers, exceptions, observers, and failure classes.</li>
+<li><strong>Specification:</strong> define the system boundary, <span
+class="math inline"><em>C</em><sup>*</sup></span>, <span
+class="math inline"><em>N</em></span>, <span
+class="math inline"><em>P</em></span>, <span
+class="math inline"><em>X</em></span>, evidence requirements, and
+verdict semantics.</li>
+<li><strong>CM1:</strong> retain admissible diagnostic configurations,
+including broad, costly, weak, or undesirable ones.</li>
+<li><strong>CM2:</strong> prefer configurations that maximize
+consequential discovery and mediation while controlling cost, latency,
+privacy, accessibility, and governance burden.</li>
+<li><strong>IC:</strong> select an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for one
+system, threat model, interval, and authority regime. The expansions are
+interchangeable.</li>
+<li><strong>IR:</strong> produce an <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong> such
+as an inventory compiler, grant mediator, observer, gap analyzer,
+receipt schema, or dashboard. The expansions are interchangeable.</li>
+<li><strong>Evidence:</strong> run discovery, bypass, differential,
+receipt-completeness, exception, and replay tests.</li>
+<li><strong>Revision:</strong> close, accept, narrow, or reclassify gaps
+and update discovery after new capability appears.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 criteria. It
+does not select an IC, implement an IR, or demonstrate empirical
+coverage.</p>
+<h2 id="evaluation-program">12. Evaluation Program</h2>
+<p>A coverage campaign should test:</p>
+<ol type="1">
+<li>inventory recall against independently discovered capability;</li>
+<li>declaration-to-runtime correspondence;</li>
+<li>applicability accuracy for <span
+class="math inline"><em>N</em>(<em>c</em>, <em>k</em>)</span>;</li>
+<li>participation evidence for each required layer;</li>
+<li>bypass resistance at grant, load, invocation, repair, and
+administration paths;</li>
+<li>composed-capability escalation;</li>
+<li>exception authority, scope, expiry, and visibility;</li>
+<li>receipt completeness across the effect path;</li>
+<li>false covered and false uncovered verdicts; and</li>
+<li>detection latency after a new capability or path appears.</li>
+</ol>
+<p>Results should be reported per boundary and effect class, not
+compressed into one reassuring percentage.</p>
+<h2 id="capability-surface-closure-diagnostic">Capability-Surface
+Closure Diagnostic</h2>
+<p>Across the completed P1 corpus, Governance Coverage Gaps is the
+<strong>capability-surface closure diagnostic that asks whether every
+consequence-bearing grant and effect path discovered within a bounded
+system reaches the required governance, evidence, exception, and
+revision machinery</strong>. It complements action-level admissibility
+by testing whether relevant actions can escape the action-level gate
+entirely.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Admissibility
+Engineering</em><br />
+<strong>Supplies:</strong> Constraint binding and counterexample search
+across enumerated realization pathways.<br />
+<strong>GCG boundary:</strong> GCG discovers capabilities and grant
+paths that were omitted from the declared governance surface.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Agentic Interface
+Surfaces</em><br />
+<strong>Supplies:</strong> Action, effect, evidence, feedback, and
+recognition surfaces for agents.<br />
+<strong>GCG boundary:</strong> GCG tests whether hidden tools, adapters,
+credentials, retries, and lower paths bypass those surfaces.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Role-aware evidence and operational-state
+projection.<br />
+<strong>GCG boundary:</strong> The platform supplies observations; GCG
+evaluates their coverage and unknowns.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Jnana II: Constitutional
+Transformation Substrate</em><br />
+<strong>Supplies:</strong> Transformation, capability, effect, and
+receipt planes.<br />
+<strong>GCG boundary:</strong> GCG sets the claim ceiling for Jnana
+mediation and containment.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutionally Governed
+Infrastructure</em><br />
+<strong>Supplies:</strong> Continuation-control mechanisms such as
+schedulers, routers, and administrative paths.<br />
+<strong>GCG boundary:</strong> GCG tests whether their configuration and
+effects are within declared scope.</p></li>
+</ul>
+<p>A coverage campaign should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+G= (&amp;boundary, interval, threat\_model, \\
+&amp;declared\_capabilities, independent\_discovery, \\
+&amp;observed\_capabilities, grant\_paths, required\_layers, \\
+&amp;participating\_layers, exceptions, evidence, verdicts, \\
+&amp;unknowns)
+\end{aligned}.
+$$</span></p>
+<p>Coverage analysis begins at capability acquisition, not only
+invocation. Installation, configuration expansion, loading, delegation,
+credential delivery, repair, migration, administration, retries,
+fallbacks, and composed capabilities may create practical authority
+before the named operation is called.</p>
+<p>The diagnostic should report each capability as <code>COVERED</code>,
+<code>AUTHORIZED_EXCEPTION</code>,<br />
+<code>UNCOVERED_SCOPE</code>, <code>UNCOVERED_PARTICIPATION</code>,
+<code>UNDISCOVERED_UNTIL_COUNTEREVIDENCE</code>,<br />
+<code>EVIDENCE_INSUFFICIENT</code>,<br />
+or<br />
+<code>OUTSIDE_DECLARED_BOUNDARY</code>. A system-level closure claim is
+valid only relative to the boundary, interval, inventory, discovery
+regime, applicability law, effect classes, and evidence threshold; any
+new path reopens it.</p>
+<p>The universal GSM can type<br />
+<code>DISCOVERS_CAPABILITY_INDEPENDENTLY</code>,<br />
+<code>GRANTS_CAPABILITY_AT_BOUNDARY</code>,
+<code>REQUIRES_GOVERNANCE_LAYER</code>,
+<code>PARTICIPATES_IN_GRANT</code>,<br />
+<code>AUTHORIZES_BOUNDED_EXCEPTION</code>,
+<code>ESCAPES_GOVERNANCE_SCOPE</code>,
+<code>COMPOSES_HIGHER_CAPABILITY</code>,<br />
+<code>LACKS_COVERAGE_EVIDENCE</code>,
+<code>REOPENS_CLOSURE_CLAIM</code>,<br />
+and<br />
+<code>REMEDIATES_WITHOUT_PROVING_COMPLETENESS</code>. These relations
+make the diagnostic actionable and defeasible.</p>
+<p>This integration establishes four editorial commitments: retain GCG
+as the capability-surface closure diagnostic; adopt the full campaign
+envelope and seven-valued capability verdict; require independent
+discovery at grant, load, repair, and composed-capability boundaries;
+and make every full-coverage statement explicitly bounded, reopenable,
+and incapable of proving unknown-path absence.</p>
+<h2 id="semantic-and-capability-dual-closure">Semantic and Capability
+Dual Closure</h2>
+<p>The fixed-seed comparison with enforcement mechanics, the Identity
+Spine Doctrine, Ontology Laundering, and receipt reasoning shows that
+coverage has two coupled but distinct surfaces:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;capability\_paths, semantic\_bindings, \\
+&amp;identity\_propagation, mediators, effects, evidence, \\
+&amp;unknowns, reopen\_triggers)
+\end{aligned}.
+$$</span></p>
+<p>Enforcement mechanics can mediate declared capabilities while stale
+or unpropagated identities cause the rule to govern the wrong semantic
+subject. Identity Spine transitions can update the central registry
+while caches, indexes, prompts, compiled projections, provider stores,
+and external integrations retain old bindings. Both conditions defeat a
+broad closure claim.</p>
+<p>Ontology Laundering supplies an adversarial semantic-change
+diagnostic. A new meaning may enter through an uncovered configuration,
+migration, model update, translation, proxy, or administrative path
+without passing the positive identity and admission protocol. Discovery
+of such a path establishes a coverage gap, not deliberate laundering;
+classification still requires its own evidence and alternatives.</p>
+<p>Receipts record inventories, discoveries, decisions, remediation, and
+bounded closure verdicts. Receipt completeness cannot prove unknown-path
+absence, and a hash-complete archive can still omit an entire capability
+or semantic propagation surface.</p>
+<p>The universal GSM can type<br />
+<code>COVERS_CAPABILITY_AND_SEMANTIC_BINDING</code>,<br />
+<code>DISCOVERS_STALE_IDENTITY_PATH</code>,
+<code>ESCAPES_SEMANTIC_PROPAGATION</code>,<br />
+<code>INTRODUCES_ONTOLOGY_CHANGE_OUTSIDE_GATE</code>,
+<code>RECEIPTS_BOUNDED_COVERAGE</code>,<br />
+and<br />
+<code>REOPENS_DUAL_CLOSURE_ON_COUNTEREVIDENCE</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+dual capability/semantic closure; include identity propagation in
+coverage campaigns; route uncovered semantic change to a separate
+laundering classification; and prohibit receipt completeness from
+proving unknown-path absence.</p>
+<h2 id="a-multiplane-reopenable-coverage-court">A Multiplane, Reopenable
+Coverage Court</h2>
+<p>Nineteen downstream uses extend Governance Coverage Gaps beyond one
+capability inventory while preserving one stable diagnostic. The paper
+is used to test capability acquisition and invocation, concrete effect
+routes, semantic and ontology propagation, identity migration,
+observation and evidence paths, standards execution bindings,
+infrastructure continuation control, and the completeness ceiling of
+receipts, lineage, enforcement, and conformance claims.</p>
+<p>The recurrent campaign object is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C^*= (&amp;subject\_generation, claim, jurisdiction, planes, \\
+&amp;inventories, routes, grants, mediators, observers, \\
+&amp;discovery\_methods, independence, exceptions, unknowns, \\
+&amp;counterexamples, coverage\_interval, reopen\_triggers, \\
+&amp;verdict, evidence, remainder)
+\end{aligned}.
+$$</span></p>
+<p><code>planes</code> should be a typed vector rather than one scalar:
+authority, capability grant, invocation, semantic propagation, identity,
+external effect, observation, evidence, challenge, and remedy may have
+different coverage. A path can cross an action gate while escaping the
+identity spine, receipt store, observer, appeal process, or successor
+propagation. Conversely, an unobserved region is not automatically an
+uncovered harmful capability; it may be absent, inaccessible, out of
+jurisdiction, or still unknown.</p>
+<p>Coverage is always relative to an exact subject generation, discovery
+profile, environment, jurisdiction, and interval. New plugins,
+credentials, caches, prompts, providers, build hooks, routes, model
+behavior, or counterexamples reopen the verdict. Conformance, a
+complete-looking receipt chain, successful migration, a signed
+commitment, or a green enforcement court cannot raise that bounded
+result to universal closure.</p>
+<p>Two broader lexical hits remain rejected: generic “coverage gaps” in
+the model-first migration evidence list and generic “receipt coverage
+gaps” in the quantitative-insights paper do not establish a dependency
+on this framework.</p>
+<p>The universal GSM can type<br />
+<code>TESTS_COVERAGE_PLANE</code>,
+<code>DISCOVERS_UNMEDIATED_ROUTE</code>,<br />
+<code>BOUNDS_COVERAGE_TO_GENERATION</code>,
+<code>DECLARES_DISCOVERY_INDEPENDENCE</code>,<br />
+<code>REOPENS_ON_CAPABILITY_CHANGE</code>,
+<code>DISTINGUISHES_UNKNOWN_FROM_UNCOVERED</code>,<br />
+<code>LIMITS_CONFORMANCE_CLAIM</code>, and<br />
+<code>RETAINS_COVERAGE_REMAINDER</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the multiplane coverage vector; bind every verdict to
+subject, method, environment, and interval; require explicit reopening
+triggers and unknown states; and prohibit receipts, commitments,
+conformance, or enforcement success from implying universal closure.</p>
+<h2 id="counterevidence-and-failure-modes">13. Counterevidence and
+Failure Modes</h2>
+<p>The framework should be narrowed or rejected where: (1) the
+capability inventory is derived only from declarations; (2) unknown
+capability is treated as nonexistent; (3) observation covers invocation
+but not grant or load; (4) <span class="math inline"><em>N</em></span>
+is chosen after observing participation; (5) a documented omission is
+treated as authorized without a valid exception; (6) an exception has no
+expiry or review condition; (7) composition creates unmodeled
+capability; (8) administrator, repair, migration, or recovery paths
+bypass mediation; (9) hardware or provider effects exceed the
+abstraction; (10) receipts omit a material effect; (11) receipts record
+only successful paths; (12) failed and partial operations leave state;
+(13) the observer can be bypassed or tampered with; (14) the observation
+regime changes behavior materially; (15) privacy or safety limits make
+observation incomplete; (16) over-governance creates denial of service
+or inaccessible operation; (17) one scalar score hides a severe
+uncovered capability; (18) temporal capability appears outside the
+sampled interval; (19) capability identity changes across versions; (20)
+authority to define scope is itself ungoverned; (21) evidence exists but
+is not bound to the evaluated instance; (22) absence of a record is
+treated as proof of absence; (23) intentional partial governance is
+confused with no residual risk; (24) institutional analogies ignore
+legal or social context; (25) claims of empirical clustering lack a
+sample and method; (26) an implementation passes its own fixtures but
+lacks adversarial discovery; (27) GMB inclusion is treated as coverage
+proof; (28) a declared contract cannot constrain the lower realization;
+(29) remediation closes one path while opening another; or (30)
+“complete governance” is asserted without a bounded claim ceiling.</p>
+<h2
+id="coverage-is-a-bounded-search-result-not-a-declaration-of-completeness">Coverage
+Is a Bounded Search Result, Not a Declaration of Completeness</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Governance Coverage Gaps asks how a system can discover capabilities
+and effect paths that its own rules never declared. It separates grant,
+invocation, mediation, observation, evidence, challenge, and remedy,
+then binds any coverage verdict to an exact subject generation,
+environment, method, jurisdiction, and interval. The framework makes
+closure claims more honest; it does not prove that every path has been
+found.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Inventory-circularity attack.</strong> Required governance
+is derived from the same declaration being evaluated, so undeclared
+capabilities cannot appear as missing.</li>
+<li><strong>Unknown-as-absent attack.</strong> Inaccessible, unobserved,
+or undiscovered regions are counted as nonexistent rather than
+indeterminate.</li>
+<li><strong>Temporal-escape attack.</strong> A capability appears only
+during repair, migration, failure, update, expiry, race, or an unsampled
+interval.</li>
+<li><strong>Composition-escape attack.</strong> Two governed modules
+compose into a new capability, authority path, or external effect absent
+from either inventory.</li>
+<li><strong>Observer-bypass attack.</strong> The mechanism that emits
+evidence can be bypassed, disabled, tampered with, or shares the
+subject’s compromised root.</li>
+<li><strong>Receipt-closure attack.</strong> Complete-looking records
+are treated as proof that unrecorded routes do not exist.</li>
+<li><strong>Over-governance attack.</strong> Excess layers, monitoring,
+or review create denial of service, privacy harm, inaccessible
+operation, or incentives to bypass governance.</li>
+<li><strong>Remediation-regression attack.</strong> Closing a path opens
+another route or changes identity, policy, dependencies, or observation
+without reopening the verdict.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper supplies a multiplane, reopenable coverage diagnostic and a
+four-way verdict: covered, authorized exception, uncovered, or
+indeterminate. It does not establish universal closure, complete
+capability discovery, security, compliance, legitimacy, or absence from
+missing evidence. Coverage remains relative to the exact subject and
+discovery campaign.</p>
+<p>Any concrete security, access-control, software-supply-chain,
+institutional, or empirical-clustering claim requires external
+literature, an independently justified normative inventory, adversarial
+discovery methods, exact observation boundaries, and reproducible
+evidence. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The key public question is not only whether rules worked on the
+actions they saw. It is how the system looked for powers, paths, and
+effects its rules did not know to name - and what remains unknown after
+that search.</p>
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Governance failure is not limited to rules that malfunction.
+Capability can escape because governance was never defined, because
+required layers did not participate, because the capability was never
+discovered, because an exception lacked authority, or because evidence
+cannot establish what happened.</p>
+<p>The decisive shift is from asking only why an evaluated action was
+allowed to asking how the system knows which capabilities existed, which
+governance applied, where capability was granted, which paths were
+observed, and what remains outside the claim boundary.</p>
+<p>GCG does not prove complete governance. It supplies the architecture
+for making coverage claims bounded, falsifiable, receipted, and
+revisable. That is the defensible transition from justified execution
+toward governed capability closure.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires an authorized review of capability-security
+literature, access-control and policy-coverage methods, runtime and
+supply-chain observability, plugin and build-system boundary studies,
+and any institutional comparison. The source’s claim of empirical
+clustering should remain a hypothesis unless a sample, method, and
+results are supplied.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that a system can correctly apply every rule it
+knows about and still exercise capability that no rule governs. Its
+nearest external comparison fields are governance, provenance, security.
+The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice. A
+complete provenance graph can faithfully record a false or unauthorized
+process; provenance is evidence about lineage, not automatic truth or
+legitimacy. Unforgeable capabilities can constrain exercise of authority
+while still leaving allocation, delegation, revocation, and social
+legitimacy incorrectly specified. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847861">10.5281/zenodo.23847861</a></p>

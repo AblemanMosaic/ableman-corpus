@@ -1,0 +1,1379 @@
+<h1
+id="mcir-a-canonical-intermediate-representation-for-governed-transformation">MCIR:
+A Canonical Intermediate Representation for Governed Transformation</h1>
+<h2
+id="hash-stable-structure-for-semantics-authority-and-admissible-change">Hash-Stable
+Structure for Semantics, Authority, and Admissible Change</h2>
+<h3
+id="a-change-to-admissibility-authority-scope-transformation-semantics-or-capability-exposure-must-therefore-alter-the-canonical-structure.">A
+change to admissibility, authority scope, transformation semantics, or
+capability exposure must therefore alter the canonical structure.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern computation increasingly depends on transformations whose
+authority and consequences are not fully captured by source code,
+binaries, policies, or configuration files alone. Textual code is a
+flattened projection of abstract structure, while binary code is a still
+more opaque target realization. Neither representation natively records
+which changes alter admissibility, authority scope, transformation
+semantics, or permitted effects.</p>
+<p>This paper introduces MCIR, Meta-Compilation Intermediate
+Representation, as a canonical, hash-stable representation for governed
+transformation. MCIR is not merely an intermediate representation for
+programs; it is an intermediate representation for systems of structured
+change, including compilers, policies, protocols, capability regimes,
+semantic governance layers, and other transformation-bearing systems.
+Its core property is canonicalization: any admitted definition has
+exactly one valid structural normal form under a closed, versioned
+grammar and deterministic normalization rules.</p>
+<p>MCIR requires governance-relevant parameters to be represented as
+first-class structural nodes. A change to admissibility, authority
+scope, transformation semantics, or capability exposure must therefore
+alter the canonical structure. This makes governance-relevant divergence
+mechanically visible, diffable, and hash-identifiable.</p>
+<p>We formalize governance relevance as a predicate over parameters that
+can alter admissibility, authority relations, transformation semantics,
+or capability exposure. We define admissibility as a first-class
+function, distinguish grammar-scoped structural equivalence from
+canonical form, state the key canonicalization invariants, and provide
+worked examples involving threshold changes, authority expansion,
+unordered capability sets, and a fully formal minimal grammar fragment.
+We further clarify that hashing is compressed identity over canonical
+bytes, not the source of canonical uniqueness, and propose deterministic
+collision containment through cascading domain-separated
+identifiers.</p>
+<p>MCIR provides a representation discipline for AI-native and
+governance-aware computation: before a system is lowered into code,
+binary, policy execution, protocol behavior, or runtime effect, its
+admissible structure can be made explicit, canonical, and mechanically
+comparable.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Computing systems evolve through transformation.</p>
+<p>Source lowers to binary. Policies constrain execution. Protocols
+define message exchange. Optimizers alter structure while attempting to
+preserve behavior. Configuration changes expose or restrict capability.
+Governance arrangements shift who may mutate, override, admit, refuse,
+or execute.</p>
+<p>These transformations are consequential, yet their definitions are
+typically fragmented across source code, documentation, configuration
+files, build scripts, deployment pipelines, policy engines, runtime
+flags, and convention. A governance-relevant change may occur without a
+single canonical structural locus where that change must appear.
+Thresholds can shift. Authority scope can expand. Capability exposure
+can widen. A transformation may produce different outputs for identical
+inputs. The system changes, but the evidence of that change remains
+distributed.</p>
+<p>MCIR adopts a single architectural principle:</p>
+<p>If a system changes in governance-relevant ways, that change must
+alter its canonical structural representation.</p>
+<p>Formally, for MCIR artifacts X and Y under grammar version G_v:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{GovRelDiff}_{G_v}(X,Y) \\
+&amp;\Rightarrow \mathrm{canonicalize}_{G_v}(X) \\
+&amp;\ne \mathrm{canonicalize}_{G_v}(Y)
+\end{aligned}
+$$</span></p>
+<p>MCIR does not define correct governance. It defines whether
+governance has changed.</p>
+<p>This distinction matters. In ordinary software systems, one can often
+change the behavior of a system without changing the visible form that
+humans treat as authoritative. A configuration file may alter a policy.
+A build flag may change an optimizer. A runtime capability may be
+exposed through a deployment setting. A special authority may be
+introduced through an exception path. These changes may be operationally
+decisive while remaining structurally underrepresented.</p>
+<p>MCIR is designed to prevent such invisibility.</p>
+<p>It does so by representing governance-bearing transformation as a
+closed, versioned, canonical abstract syntax tree. Admissibility rules,
+authority bindings, capability exposure, transformation semantics, and
+other governance-relevant parameters must be explicit nodes or fields
+within the representation. The canonical representation can then be
+normalized, diffed, hashed, and compared. Formatting, textual order,
+narrative explanation, and incidental serialization differences cannot
+mask governance-relevant divergence.</p>
+<p>This paper presents MCIR as a canonical representation for governed
+transformation.</p>
+<hr />
+<h2 id="ai-generated-code-and-the-limits-of-textual-representation">2.
+AI-Generated Code and the Limits of Textual Representation</h2>
+<p>Recent discussion around AI-generated software often frames the
+future as a choice between textual code and direct binary generation.
+This framing misses the more important representation problem.</p>
+<p>Textual code is already a flattened projection of deeper structure.
+It serializes abstract syntax, binding relationships, control flow, data
+flow, authority assumptions, and effect boundaries into a linear token
+stream. Humans have learned to read and write that stream. Compilers
+have learned to parse it back into structure. Large language models can
+generate it token by token. But textual code is not the structure
+itself.</p>
+<p>Binary code is a still more compressed and target-specific
+projection. It may be executable, but it is poorly suited for expressing
+why a transformation is admissible, what authority it requires, what
+capabilities it exposes, which claims it supports, or what semantic
+continuity it preserves.</p>
+<p>Direct binary generation therefore moves in the wrong direction for
+governance-aware systems. It may produce executable artifacts, but it
+maximizes opacity at precisely the layer where authority, semantics, and
+admissibility must become explicit.</p>
+<p>MCIR proposes a different path. AI systems may propose
+transformations, but those transformations should be represented in a
+canonical governed structure before they are lowered into textual code,
+backend IR, binary output, policy execution, or runtime effects. In this
+architecture, the relevant question is not merely whether an artifact
+runs. The question is whether the artifact’s admissible structure is
+explicit, comparable, and bound to the authority and evidence that
+permit it to move.</p>
+<p>MCIR is therefore not a replacement for all programming languages or
+compiler IRs. It is a canonical representation layer for governed
+transformation. Textual languages, domain-specific human-legible IRs,
+compiler IRs, and binaries may all serve as projections or lowerings.
+MCIR is the structure that prevents governance-relevant meaning from
+being lost in those projections.</p>
+<hr />
+<h2 id="formal-preliminaries">3. Formal Preliminaries</h2>
+<p>Let S be a state space.</p>
+<p>Let I be an input space.</p>
+<p>Let O_A be an admissibility outcome space.</p>
+<p>Let E be a set of entities.</p>
+<p>Let R be a set of resources.</p>
+<p>Let P be a set of powers or permissions.</p>
+<p>Let C_all be a universe of capabilities.</p>
+<p>MCIR uses four semantic surfaces to define governance relevance:</p>
+<ol type="1">
+<li>Admissibility.</li>
+<li>Authority.</li>
+<li>Transformation.</li>
+<li>Capability.</li>
+</ol>
+<p>Admissibility is modeled as a function:</p>
+<p><span
+class="math display"><em>A</em> : <em>S</em> × <em>I</em> → <em>O</em><sub><em>A</em></sub></span></p>
+<p>For example, a domain may define:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O_A = \{&amp;\mathrm{admit}, \mathrm{reject}, \mathrm{refuse}, \\
+&amp;\mathrm{defer}, \mathrm{unsupported}\}
+\end{aligned}
+$$</span></p>
+<p>Authority is modeled as a relation:</p>
+<p><span
+class="math display"><em>Σ</em> ⊆ <em>E</em> × <em>R</em> × <em>P</em></span></p>
+<p>Transformation semantics are modeled as a state-and-output
+transition:</p>
+<p><span
+class="math display"><em>T</em> : <em>S</em> × <em>I</em> → <em>S</em> × <em>O</em><sub><em>T</em></sub></span></p>
+<p>Capability exposure is modeled as a subset of available
+capabilities:</p>
+<p><span
+class="math display"><em>C</em> ⊆ <em>C</em><sub>all</sub></span></p>
+<p>A parameter p is governance-relevant when changing p can change at
+least one of these four surfaces.</p>
+<p><span
+class="math display">GovRel(<em>p</em>) ⇔ ∃<em>s</em>, <em>i</em> : <em>Δ</em><sub><em>p</em></sub>(<em>A</em>, <em>Σ</em>, <em>T</em>, <em>C</em>) ≠ 0</span></p>
+<p>Equivalently:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{GovRel}(p) \Longleftrightarrow \Delta_p A \\
+&amp;\ne 0 \\
+&amp;\lor \Delta_p \Sigma \\
+&amp;\ne 0 \\
+&amp;\lor \Delta_p T \\
+&amp;\ne 0 \\
+&amp;\lor \Delta_p C \\
+&amp;\ne 0
+\end{aligned}
+$$</span></p>
+<p>MCIR imposes the structural representation obligation:</p>
+<p><span
+class="math display">GovRel(<em>p</em>) ⇒ StructRep(<em>p</em>)</span></p>
+<p>Every governance-relevant parameter must be structurally represented
+within the MCIR artifact.</p>
+<p>Failure to represent such a parameter is representation unsoundness.
+It is not a canonicalization failure. Canonicalization can only
+normalize the structure it is given.</p>
+<p>This distinction is central. MCIR cannot repair a model that hides
+governance outside the representation. MCIR can make such hiding a
+violation of the representation contract.</p>
+<hr />
+<h2 id="governance-relevant-parameters">4. Governance-Relevant
+Parameters</h2>
+<p>Operationally, a parameter is governance-relevant if it influences
+any of the following:</p>
+<ol type="1">
+<li>Admissibility: accept, reject, admit, refuse, validate, invalidate,
+or classify decisions.</li>
+<li>Authority scope: who or what may mutate, override, admit, execute,
+certify, or bind rules.</li>
+<li>Transformation semantics: outputs, state transitions, or behavior
+for identical inputs.</li>
+<li>Capability exposure: permitted effects, accessible resources,
+execution powers, or environmental reach.</li>
+</ol>
+<p>The operational boundary rule is:</p>
+<p>Any behavior that can change acceptance or rejection, authority to
+mutate or override, transformation outputs for identical inputs, or
+permitted effects must be represented as nodes within Definitions,
+Constraints, Transformations, or Bindings.</p>
+<p>External configuration is permitted only for governance-irrelevant
+parameters, such as display labels or non-semantic formatting
+preferences, and those parameters must be confined to Metadata.</p>
+<p>MCIR does not automatically infer governance relevance. Designers
+must declare it explicitly and must satisfy the structural
+representation obligation. Undeclared governance relevance is
+representation unsoundness.</p>
+<p>Examples of governance-relevant parameters include:</p>
+<pre><code>admission thresholds
+refusal predicates
+authority keys
+override rules
+capability lists
+effect permissions
+transformation functions
+precision rules
+runtime target constraints
+binding scopes
+policy version
+grammar version</code></pre>
+<p>Examples of governance-irrelevant metadata may include:</p>
+<pre><code>display title
+human-facing description
+editor fold preference
+UI color label
+documentation note</code></pre>
+<p>However, a field is not governance-irrelevant merely because it is
+stored in a configuration file or described as metadata. If it changes
+admissibility, authority, transformation outputs, or permitted effects,
+it must be represented within the governance-bearing structure.</p>
+<hr />
+<h2 id="admissibility-as-a-first-class-function">5. Admissibility as a
+First-Class Function</h2>
+<p>Admissibility is not merely an informal label in MCIR. It is a
+first-class semantic function.</p>
+<p>Let:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O_A = \{&amp;\mathrm{admit}, \mathrm{reject}, \mathrm{refuse}, \\
+&amp;\mathrm{defer}, \mathrm{unsupported}\}
+\end{aligned}
+$$</span></p>
+<p>Then:</p>
+<p><span
+class="math display"><em>A</em> : <em>S</em> × <em>I</em> → <em>O</em><sub><em>A</em></sub></span></p>
+<p>maps a state and input to an admissibility outcome.</p>
+<p>Constraints are partial structural definitions of A. Thresholds,
+refusal predicates, authority requirements, and capability gates all
+contribute to determining A.</p>
+<p>For example, a threshold rule:</p>
+<p><span
+class="math display">score(<em>i</em>) ≥ minimum_score</span></p>
+<p>may define part of A as follows:</p>
+<p><span
+class="math display">score(<em>i</em>) ≥ minimum_score ⇒ <em>A</em>(<em>s</em>, <em>i</em>) = admit</span></p>
+<p><span
+class="math display">score(<em>i</em>) &lt; minimum_score ⇒ <em>A</em>(<em>s</em>, <em>i</em>) = refuse</span></p>
+<p>This avoids Pandoc alignment environments while preserving the
+intended formal statement.</p>
+<p>Authority bindings may also define A. If an input proposes a
+transformation outside the authority scope of the signer or actor, A may
+return refuse regardless of other constraints.</p>
+<p>Capability exposure may also define A. If an input requires a
+capability absent from C, the input may be refused or classified
+unsupported.</p>
+<p>Thus the main MCIR regions relate to admissibility as follows:</p>
+<pre><code>Definitions define objects, thresholds, authorities, and capabilities.
+Constraints define predicates over state, input, and definitions.
+Transformations define state and output change.
+Bindings define who or what may apply or mutate definitions,
+constraints, and transformations.
+Metadata may not alter A.</code></pre>
+<p>A valid MCIR artifact need not contain a fully executable decision
+procedure for A in every domain. However, any structural component that
+can affect A must be represented.</p>
+<p>This unifies thresholds, constraints, refusal predicates, and
+authority gates as structural contributors to admissibility.</p>
+<hr />
+<h2 id="formal-structure-of-mcir">6. Formal Structure of MCIR</h2>
+<p>MCIR is defined over a finite, acyclic, versioned grammar.</p>
+<p>A schematic grammar is:</p>
+<pre><code>MCIR ::= Header Definitions Constraints Transformations Bindings
+Metadata
+
+Header ::= version identifier domain
+
+Definitions ::= Definition*
+Definition ::= ObjectDef
+             | InvariantDef
+             | ThresholdDef
+             | AuthorityDef
+             | CapabilityDef
+
+Constraints ::= Constraint*
+Constraint ::= Expr
+
+Transformations ::= Transformation*
+Transformation ::= name inputs outputs semantics
+
+Bindings ::= Binding*
+Binding ::= AuthorityBinding
+          | ContextBinding
+
+Metadata ::= key value*</code></pre>
+<p>The top-level structure has six major regions.</p>
+<h3 id="header">6.1 Header</h3>
+<p>The Header defines the grammar version, identifier, and domain.
+Versioning is governance-relevant. A change in grammar version changes
+the rules of parsing, normalization, and interpretation. It must
+therefore be explicit.</p>
+<h3 id="definitions">6.2 Definitions</h3>
+<p>Definitions introduce named governance-bearing objects. These include
+objects, invariants, thresholds, authorities, and capabilities. The
+exact node set is closed per grammar version.</p>
+<h3 id="constraints">6.3 Constraints</h3>
+<p>Constraints define admissibility predicates, refusal conditions,
+structural restrictions, or other governing expressions. These
+expressions are represented as expression trees within the same grammar
+version.</p>
+<h3 id="transformations">6.4 Transformations</h3>
+<p>Transformations define structured change. A transformation includes
+inputs, outputs, and semantics. MCIR does not require all
+transformations to be executable in the same sense as a programming
+language function. It requires their governance-relevant structure to be
+explicit.</p>
+<h3 id="bindings">6.5 Bindings</h3>
+<p>Bindings connect authority, context, scope, and transformations. For
+example, an AuthorityBinding may state that a particular authority may
+mutate Constraints but not Transformations, or may admit a certain class
+of object but not override capability exposure.</p>
+<h3 id="metadata">6.6 Metadata</h3>
+<p>Metadata contains governance-irrelevant annotations. Metadata may
+support human use, documentation, display, or indexing, but it must not
+influence admissibility, authority, transformation semantics, or
+capability exposure.</p>
+<p>The grammar obeys the following properties:</p>
+<pre><code>closed per version
+finite
+acyclic
+no implicit defaults
+explicit ordered/unordered child declarations
+deterministic normalization rules</code></pre>
+<p>No implicit defaults are permitted. If a field is required, it must
+be present. If a field is optional, the absence itself must have
+explicit grammar-defined meaning. Hidden defaults are a common source of
+governance drift and are therefore disallowed.</p>
+<p>Each node declares whether its children are ordered, unordered, or
+multiset-like. This prevents textual order from becoming accidentally
+governance-relevant or accidentally governance-irrelevant.</p>
+<hr />
+<h2 id="grammar-scoped-structural-equivalence">7. Grammar-Scoped
+Structural Equivalence</h2>
+<p>Structural equivalence is always scoped to a grammar version.</p>
+<p>Two MCIR ASTs X and Y are structurally equivalent under grammar
+version G_v, written:</p>
+<p><span
+class="math display"><em>X</em>≡<sub><em>G</em><sub><em>v</em></sub></sub><em>Y</em></span></p>
+<p>if the following conditions hold:</p>
+<pre><code>node types match under G_v
+all governance-relevant fields match after normalization under G_v
+ordered children are equal as sequences
+unordered children are equal as multisets under structural equivalence
+identifiers are alpha-normalized according to G_v
+numeric literals are normalized under declared precision in G_v
+expression trees match under declared structural rules in G_v
+metadata differences are ignored only where G_v declares them
+governance-irrelevant</code></pre>
+<p>Structural equivalence is not broad semantic equivalence.</p>
+<p>MCIR does not assume that two different expressions are equivalent
+merely because they may be algebraically reducible to the same value.
+For example:</p>
+<pre><code>x + y</code></pre>
+<p>and:</p>
+<pre><code>y + x</code></pre>
+<p>are structurally equivalent only if G_v explicitly declares the
+operator commutative and canonicalizes the operands accordingly.</p>
+<p>Similarly:</p>
+<pre><code>(x + y) + z</code></pre>
+<p>and:</p>
+<pre><code>x + (y + z)</code></pre>
+<p>are structurally equivalent only if G_v explicitly declares
+associativity for the relevant expression form.</p>
+<p>This restriction is intentional. Broad semantic equivalence is
+difficult, domain-dependent, and often undecidable. MCIR’s goal is not
+to solve all semantic equivalence. Its goal is to define a canonical
+structural representation for declared governance semantics.</p>
+<p>The equivalence relation is therefore grammar-scoped:</p>
+<p><span
+class="math display">≡<sub><em>G</em><sub><em>v</em></sub></sub></span></p>
+<p>It is not a universal relation independent of grammar version.</p>
+<p>Structural equivalence is defined independently of canonicalization.
+Canonicalization computes a representative element of each
+grammar-scoped structural equivalence class.</p>
+<hr />
+<h2 id="canonical-form">8. Canonical Form</h2>
+<p>A canonical form is a representative element of each structural
+equivalence class under G_v.</p>
+<p>Canonicalization is a function:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub><em>v</em></sub></sub> : <em>A</em><em>S</em><em>T</em><sub><em>G</em><sub><em>v</em></sub></sub> → <em>A</em><em>S</em><em>T</em><sub><em>G</em><sub><em>v</em></sub></sub></span></p>
+<p>such that the following hold.</p>
+<p>Soundness:</p>
+<p><span
+class="math display"><em>X</em>≡<sub><em>G</em><sub><em>v</em></sub></sub><em>Y</em> ⇒ canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>) = canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>Y</em>)</span></p>
+<p>Completeness:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>) = canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>Y</em>) ⇒ <em>X</em>≡<sub><em>G</em><sub><em>v</em></sub></sub><em>Y</em></span></p>
+<p>Idempotence:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>)) = canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>)</span></p>
+<p>Thus canonicalization computes a normal form for grammar-scoped
+structural equivalence.</p>
+<p>The canonical form is not a claim of total semantic truth. It is not
+an assertion that two systems behave identically under every possible
+runtime condition. It is not a proof that an implementation matches an
+intention. It is a structural normal form for declared governance
+semantics under a specified grammar.</p>
+<p>The phrase “canonical identity” in MCIR therefore refers to the
+canonical bytes of the normalized structure, not to metaphysical
+uniqueness or complete semantic equivalence.</p>
+<hr />
+<h2 id="core-invariants">9. Core Invariants</h2>
+<p>This section states the core invariants of MCIR in theorem-style
+form.</p>
+<h3 id="governance-visibility-invariant">9.1 Governance Visibility
+Invariant</h3>
+<p>For any two valid MCIR artifacts X and Y under grammar version
+G_v:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{GovRelDiff}_{G_v}(X,Y) \\
+&amp;\Rightarrow \mathrm{canonicalize}_{G_v}(X) \\
+&amp;\ne \mathrm{canonicalize}_{G_v}(Y)
+\end{aligned}
+$$</span></p>
+<p>Meaning: governance-relevant divergence must alter canonical
+structure.</p>
+<h3 id="termination-invariant">9.2 Termination Invariant</h3>
+<p>For every valid finite acyclic AST under G_v:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>)</span></p>
+<p>terminates.</p>
+<p>This follows from finite recursion over an acyclic tree,
+deterministic normalization at each node, and finite sorting over finite
+child sets.</p>
+<h3 id="idempotence-invariant">9.3 Idempotence Invariant</h3>
+<p>For every valid AST X under G_v:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>)) = canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>)</span></p>
+<p>Meaning: once a structure is canonical, repeated canonicalization
+does not change it.</p>
+<h3 id="soundness-invariant">9.4 Soundness Invariant</h3>
+<p>For valid ASTs X and Y under G_v:</p>
+<p><span
+class="math display"><em>X</em>≡<sub><em>G</em><sub><em>v</em></sub></sub><em>Y</em> ⇒ canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>) = canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>Y</em>)</span></p>
+<p>Meaning: structurally equivalent artifacts normalize to the same
+canonical form.</p>
+<h3 id="completeness-invariant">9.5 Completeness Invariant</h3>
+<p>For valid ASTs X and Y under G_v:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>) = canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>Y</em>) ⇒ <em>X</em>≡<sub><em>G</em><sub><em>v</em></sub></sub><em>Y</em></span></p>
+<p>Meaning: identical canonical forms imply structural equivalence under
+the grammar version.</p>
+<h3 id="version-scoped-uniqueness-invariant">9.6 Version-Scoped
+Uniqueness Invariant</h3>
+<p>Canonical uniqueness is scoped to G_v. If the grammar version
+changes, the equivalence relation and canonicalization function may also
+change.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;G_v \\
+&amp;\ne G_w \\
+&amp;\Rightarrow \equiv_{G_v}\ \mathrm{need\ not\ equal}\ \equiv_{G_w}
+\end{aligned}
+$$</span></p>
+<p>Thus canonical identity is always interpreted relative to the grammar
+version that produced it.</p>
+<hr />
+<h2 id="canonicalization-algorithm">10. Canonicalization Algorithm</h2>
+<p>A schematic canonicalization algorithm is:</p>
+<pre><code>function canonicalize_Gv(node):
+    assert node conforms to G_v
+    normalize_numeric_literals_Gv(node)
+    normalize_identifiers_Gv(node)
+    expand_all_fields_explicit_Gv(node)
+    for child in node.children:
+        canonicalize_Gv(child)
+    if node.has_unordered_children:
+        sort(node.children, key=structural_hash_Gv)
+    sort_fields_Gv(node)
+    return node</code></pre>
+<p>Where:</p>
+<p><span
+class="math display">structural_hash<sub><em>G</em><sub><em>v</em></sub></sub>(<em>c</em><em>h</em><em>i</em><em>l</em><em>d</em>) = <em>H</em>(emit<sub><em>G</em><sub><em>v</em></sub></sub>(canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>c</em><em>h</em><em>i</em><em>l</em><em>d</em>)))</span></p>
+<p>and emit is the canonical serialization function for grammar version
+G_v.</p>
+<p>The algorithm proceeds bottom-up. Children are canonicalized before
+unordered child sets are sorted. Sorting is deterministic and based on
+canonical subtrees. Field ordering is deterministic and
+grammar-defined.</p>
+<h3 id="numeric-normalization">10.1 Numeric Normalization</h3>
+<p>Numeric literals are normalized according to declared precision
+rules. If a domain requires integer precision, floating representations
+cannot be silently substituted. If a domain permits decimal precision,
+rounding and formatting rules must be explicit.</p>
+<h3 id="identifier-normalization">10.2 Identifier Normalization</h3>
+<p>Identifiers are alpha-normalized where permitted. This means that
+purely local names may be normalized without changing structure.
+However, authority identifiers, external references, cryptographic keys,
+and domain-significant identifiers are not alpha-normalized unless the
+grammar explicitly declares them local and non-governance-relevant.</p>
+<h3 id="explicit-field-expansion">10.3 Explicit Field Expansion</h3>
+<p>All fields are expanded explicitly. No hidden defaults remain. If an
+empty list is the default, the canonical form contains the empty list.
+If absence is meaningful, absence is represented according to grammar
+rules.</p>
+<h3 id="ordered-and-unordered-children">10.4 Ordered and Unordered
+Children</h3>
+<p>Ordered children remain ordered. Unordered children are sorted by
+canonical structural hash or by a grammar-defined total ordering. This
+ensures that textual or serialization order cannot alter identity where
+the grammar declares order irrelevant.</p>
+<h3 id="well-founded-structural-hashing">10.5 Well-Founded Structural
+Hashing</h3>
+<p>The use of structural hash for sorting unordered children creates an
+apparent dependency:</p>
+<pre><code>canonicalization uses hashing for sorting
+hashing uses canonicalization for canonical bytes</code></pre>
+<p>This dependency is well-founded because the AST is finite and acyclic
+and because canonicalization is bottom-up.</p>
+<p>For any node n, all children of n are canonicalized before n sorts
+its unordered children. Therefore the structural hashes used for sorting
+children of n are computed over already canonicalized child subtrees. No
+parent hash is required to canonicalize a child. No child depends on the
+canonical form of its parent. Thus no cyclic dependency exists.</p>
+<hr />
+<h2 id="termination-and-uniqueness-sketch">11. Termination and
+Uniqueness Sketch</h2>
+<p>Given:</p>
+<pre><code>finite acyclic AST
+closed grammar per version
+deterministic normalization
+explicit ordered/unordered child declaration
+bottom-up canonicalization
+deterministic structural hashing
+canonical serialization</code></pre>
+<p>canonicalization terminates.</p>
+<p>The proof sketch is straightforward. Because the AST is finite and
+acyclic, recursive traversal terminates. Each node is processed a finite
+number of times. Normalization functions are deterministic and total
+over valid nodes. Sorting unordered children over a finite set
+terminates. Therefore canonicalization terminates for all valid
+ASTs.</p>
+<p>Canonical form is unique per structural equivalence class because all
+sources of representational variation included in structural equivalence
+are normalized deterministically:</p>
+<pre><code>identifier variation
+numeric literal variation
+field order variation
+unordered child order variation
+explicit default variation
+declared expression normalization</code></pre>
+<p>Soundness follows because structurally equivalent ASTs normalize
+every equivalence-preserving variation to the same representation.</p>
+<p>Completeness follows because equal canonical forms must share the
+same normalized node types, fields, child structures, identifiers,
+numeric values, and declared expression structures; therefore the
+original ASTs are structurally equivalent under the definition of
+equivalence scoped to G_v.</p>
+<p>Idempotence follows because once an AST is in canonical form,
+applying the same deterministic normalization rules again produces the
+same AST.</p>
+<hr />
+<h2 id="canonical-serialization-and-hash-identity">12. Canonical
+Serialization and Hash Identity</h2>
+<p>MCIR uses hashing as compressed identity, not as the source of
+canonical uniqueness.</p>
+<p>Let:</p>
+<p><span
+class="math display"><em>S</em> = emit<sub><em>G</em><sub><em>v</em></sub></sub>(canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>A</em><em>S</em><em>T</em>))</span></p>
+<p>where S is the canonical serialized byte sequence.</p>
+<p>Then:</p>
+<p><span
+class="math display">MCIR_ID<sub>1</sub> = <em>H</em><sub>1</sub>(<em>S</em>)</span></p>
+<p>The canonical identity is the canonical form and canonical bytes. The
+hash is a compact identifier over those bytes.</p>
+<p>This distinction matters because cryptographic hashes are
+collision-resistant, not mathematically injective. MCIR does not require
+hash injectivity for canonicalization. Canonicalization is provided by
+grammar and normalization rules. Hashing provides compact reference and
+practical collision resistance.</p>
+<h3 id="collision-containment">12.1 Collision Containment</h3>
+<p>If a collision is observed for MCIR_ID_1, meaning two distinct
+canonical serializations share the same digest, MCIR permits
+deterministic refinement:</p>
+<p><span
+class="math display">MCIR_ID = (<em>H</em><sub>1</sub>(<em>S</em>), <em>H</em><sub>2</sub>(<em>S</em>), <em>H</em><sub>3</sub>(<em>S</em>), ...)</span></p>
+<p>Where each H_i is a domain-separated hash function over the same
+canonical bytes:</p>
+<p><span
+class="math display"><em>H</em><sub><em>i</em></sub>(<em>S</em>) = <em>H</em>(domain_separator<sub><em>i</em></sub>‖<em>S</em>)</span></p>
+<p>This refinement is:</p>
+<pre><code>deterministic in S
+not user-generated
+not context-dependent
+extended only upon observed ambiguity
+compatible with compact default identifiers</code></pre>
+<p>Collision detection requires access to canonical bytes S or a trusted
+retrieval path for comparing canonical bytes when an identifier conflict
+appears.</p>
+<p>MCIR therefore distinguishes:</p>
+<pre><code>canonical identity: canonical form and canonical bytes
+compressed identifier: hash tuple used for compact reference</code></pre>
+<p>This avoids the common error of treating hashes as ontological
+identity.</p>
+<hr />
+<h2 id="diff-semantics">13. Diff Semantics</h2>
+<p>Structural diff compares canonical ASTs.</p>
+<p>A formal sketch:</p>
+<p><span
+class="math display"><em>Δ</em>(<em>X</em>, <em>Y</em>) = TreeEdit(canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>X</em>), canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>Y</em>))</span></p>
+<p>The raw delta is a tree-edit structure over canonical forms.</p>
+<p>MCIR then classifies structural deltas through a mapping:</p>
+<p><span
+class="math display"><em>ϕ</em> : <em>Δ</em> → GovernanceChangeClass</span></p>
+<p>Examples of GovernanceChangeClass include:</p>
+<pre><code>threshold change
+authority expansion
+authority contraction
+capability enablement
+capability removal
+transformation semantic change
+constraint addition
+constraint removal
+binding addition
+binding removal
+grammar version change
+metadata-only change</code></pre>
+<p>A schematic diff procedure is:</p>
+<pre><code>diff_Gv(X, Y):
+    X_c = canonicalize_Gv(X)
+    Y_c = canonicalize_Gv(Y)
+    delta = TreeEdit(X_c, Y_c)
+    classes = phi(delta)
+    return delta, classes</code></pre>
+<p>Formatting and textual order cannot mask divergence. If a
+governance-relevant parameter changes, the canonical AST changes. If the
+canonical AST changes, structural diff can classify the change.</p>
+<p>This enables a governance-aware review process. Instead of asking
+only “what changed in the text?”, reviewers can ask:</p>
+<pre><code>what changed in admissibility?
+what changed in authority?
+what changed in capability exposure?
+what changed in transformation semantics?
+what changed only in metadata?</code></pre>
+<p>This is the difference between syntactic review and governed
+structural review.</p>
+<hr />
+<h2 id="mcir-as-a-semantic-commit-object">14. MCIR as a Semantic Commit
+Object</h2>
+<p>MCIR may be understood as a semantic commit object.</p>
+<p>In ordinary version control, a commit records a content state, parent
+relation, author metadata, and a hash identifier. It helps make textual
+project history visible and referable.</p>
+<p>MCIR generalizes this logic to governed transformation.</p>
+<p>In this framing:</p>
+<pre><code>canonical form = commit content
+canonical bytes = committed structural object
+hash tuple = compact commit identifier
+grammar version = commit schema
+structural diff = semantic delta
+authority bindings = admissibility context
+capability definitions = effect scope
+constraints = admissibility surface
+transformations = governed change semantics</code></pre>
+<p>Unlike an ordinary code commit, an MCIR artifact is not merely a
+snapshot of files. It is a canonical commitment to a governance-bearing
+structure.</p>
+<p>This framing clarifies why canonicalization matters. Without
+canonical form, superficial representation differences can masquerade as
+structural change, or structural change can hide behind incidental
+formatting. With canonical form, the semantic commit object becomes
+mechanically comparable.</p>
+<p>MCIR does not replace version control. It supplies a canonical
+structure that version control can store, reference, review, and
+distribute.</p>
+<hr />
+<h2 id="worked-example-threshold-based-admission">15. Worked Example:
+Threshold-Based Admission</h2>
+<p>Consider an admission policy.</p>
+<h3 id="variant-a">15.1 Variant A</h3>
+<p>Admission rule:</p>
+<pre><code>Accept if score &gt;= 75.
+Authority: OversightBoard.</code></pre>
+<p>Schematic MCIR:</p>
+<pre><code>Header:
+  version: 1
+  identifier: AdmissionPolicy
+  domain: access_control
+
+Definitions:
+  ThresholdDef:
+    name: minimum_score
+    value: 75
+
+  AuthorityDef:
+    name: OversightBoard
+    key: PUBKEY_ABC
+
+Constraints:
+  score &gt;= minimum_score
+
+Bindings:
+  AuthorityBinding:
+    authority: OversightBoard
+    scope: Constraints</code></pre>
+<p>Canonical serialization, schematic:</p>
+<pre><code>{
+  domain: access_control,
+  identifier: AdmissionPolicy,
+  version: 1,
+  thresholds: [
+    { name: minimum_score, value: 75 }
+  ],
+  authorities: [
+    { name: OversightBoard, key: PUBKEY_ABC }
+  ],
+  constraints: [
+    score &gt;= minimum_score
+  ],
+  bindings: [
+    { authority: OversightBoard, scope: Constraints }
+  ]
+}</code></pre>
+<p>Hash:</p>
+<p><span
+class="math display"><em>H</em><sub><em>A</em></sub> = <em>H</em>(<em>s</em><em>e</em><em>r</em><em>i</em><em>a</em><em>l</em><em>i</em><em>z</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em><sub><em>A</em></sub>)</span></p>
+<h3 id="variant-b-threshold-raised">15.2 Variant B: Threshold
+Raised</h3>
+<p>Variant B changes:</p>
+<pre><code>ThresholdDef.minimum_score.value: 75 -&gt; 80</code></pre>
+<p>This changes admissibility. Therefore it is governance-relevant.</p>
+<p>The canonical structure changes. The diff reports:</p>
+<pre><code>ThresholdDef.minimum_score.value: 75 -&gt; 80</code></pre>
+<p>And:</p>
+<p><span
+class="math display"><em>H</em><sub><em>B</em></sub> ≠ <em>H</em><sub><em>A</em></sub></span></p>
+<h3 id="variant-c-authority-expansion">15.3 Variant C: Authority
+Expansion</h3>
+<p>Variant C adds:</p>
+<pre><code>AuthorityDef:
+  name: EmergencyOverrideBoard
+  key: PUBKEY_DEF
+
+AuthorityBinding:
+  authority: EmergencyOverrideBoard
+  scope: Transformations</code></pre>
+<p>This expands authority scope. Therefore it is
+governance-relevant.</p>
+<p>The canonical structure changes. The diff reports:</p>
+<pre><code>AuthorityDef added: EmergencyOverrideBoard
+AuthorityBinding added: EmergencyOverrideBoard -&gt; Transformations</code></pre>
+<p>And:</p>
+<p><span
+class="math display"><em>H</em><sub><em>C</em></sub> ≠ <em>H</em><sub><em>A</em></sub></span></p>
+<h3 id="variant-d-unordered-capability-set">15.4 Variant D: Unordered
+Capability Set</h3>
+<p>Suppose capabilities are declared unordered.</p>
+<p>Variant D1:</p>
+<pre><code>CapabilityDef:
+  name: allowed_effects
+  values: {net, fs}</code></pre>
+<p>Variant D2:</p>
+<pre><code>CapabilityDef:
+  name: allowed_effects
+  values: {fs, net}</code></pre>
+<p>Because values is declared unordered, canonicalization sorts the set
+under the grammar-defined order:</p>
+<pre><code>values: {fs, net}</code></pre>
+<p>Therefore:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>D</em>1) = canonicalize<sub><em>G</em><sub><em>v</em></sub></sub>(<em>D</em>2)</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>H</em><sub><em>D</em>1</sub> = <em>H</em><sub><em>D</em>2</sub></span></p>
+<p>Textual order does not affect canonical representation when order is
+declared governance-irrelevant.</p>
+<h3 id="variant-e-capability-enablement">15.5 Variant E: Capability
+Enablement</h3>
+<p>Now suppose Variant E changes:</p>
+<pre><code>values: {fs}</code></pre>
+<p>to:</p>
+<pre><code>values: {fs, net}</code></pre>
+<p>This enables network capability. Capability exposure is
+governance-relevant. Therefore the canonical structure changes.</p>
+<p>Diff:</p>
+<pre><code>CapabilityDef.allowed_effects.values: +net</code></pre>
+<p>And:</p>
+<p><span
+class="math display"><em>H</em><sub><em>E</em></sub> ≠ <em>H</em><sub><em>D</em></sub></span></p>
+<hr />
+<h2 id="fully-formal-minimal-example">16. Fully Formal Minimal
+Example</h2>
+<p>This section gives a compact formal example with a tiny grammar
+fragment.</p>
+<p>Let G_1 define:</p>
+<pre><code>Policy ::= Header Thresholds Capabilities
+
+Header ::= version identifier
+
+Thresholds ::= Threshold*
+Threshold ::= name value
+
+Capabilities ::= CapabilitySet
+CapabilitySet ::= { Capability* }
+
+Capability ::= fs | net | exec</code></pre>
+<p>Assume:</p>
+<pre><code>Thresholds is an unordered set keyed by name.
+Capabilities is an unordered set.
+Header fields are ordered by grammar rule: version, identifier.
+Numeric values are integers.
+No implicit defaults are permitted.</code></pre>
+<p>Define AST X:</p>
+<pre><code>Policy(
+  Header(version=1, identifier=&quot;P&quot;),
+  Thresholds[
+    Threshold(name=&quot;minimum_score&quot;, value=75),
+    Threshold(name=&quot;maximum_retries&quot;, value=3)
+  ],
+  Capabilities{net, fs}
+)</code></pre>
+<p>Define AST Y:</p>
+<pre><code>Policy(
+  Header(identifier=&quot;P&quot;, version=1),
+  Thresholds[
+    Threshold(name=&quot;maximum_retries&quot;, value=3),
+    Threshold(name=&quot;minimum_score&quot;, value=75)
+  ],
+  Capabilities{fs, net}
+)</code></pre>
+<p>Under G_1:</p>
+<pre><code>Header field order is normalized.
+Thresholds is unordered.
+Capabilities is unordered.</code></pre>
+<p>Therefore:</p>
+<p><span
+class="math display"><em>X</em>≡<sub><em>G</em><sub>1</sub></sub><em>Y</em></span></p>
+<p>Canonicalization steps for X:</p>
+<pre><code>1. Confirm X conforms to G_1.
+2. Expand all required fields explicitly.
+3. Normalize Header field order to version, identifier.
+4. Canonicalize Threshold children.
+5. Sort Thresholds by canonical key or structural hash.
+6. Sort Capabilities.
+7. Emit canonical serialization.</code></pre>
+<p>Canonicalization steps for Y are identical after normalization.</p>
+<p>Canonical serialization for both:</p>
+<pre><code>Policy{
+  Header{
+    version:1,
+    identifier:&quot;P&quot;
+  },
+  Thresholds:[
+    Threshold{name:&quot;maximum_retries&quot;,value:3},
+    Threshold{name:&quot;minimum_score&quot;,value:75}
+  ],
+  Capabilities:{fs,net}
+}</code></pre>
+<p>Thus:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>X</em>) = canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>Y</em>)</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>H</em>(emit<sub><em>G</em><sub>1</sub></sub>(canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>X</em>))) = <em>H</em>(emit<sub><em>G</em><sub>1</sub></sub>(canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>Y</em>)))</span></p>
+<p>Now define AST Z:</p>
+<pre><code>Policy(
+  Header(version=1, identifier=&quot;P&quot;),
+  Thresholds[
+    Threshold(name=&quot;minimum_score&quot;, value=80),
+    Threshold(name=&quot;maximum_retries&quot;, value=3)
+  ],
+  Capabilities{fs, net}
+)</code></pre>
+<p>Z differs from X by minimum_score:</p>
+<pre><code>75 -&gt; 80</code></pre>
+<p>Because minimum_score participates in admissibility,
+GovRel(minimum_score) holds.</p>
+<p>Therefore:</p>
+<p><span
+class="math display"><em>X</em>≢<sub><em>G</em><sub>1</sub></sub><em>Z</em></span></p>
+<p>and:</p>
+<p><span
+class="math display">canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>X</em>) ≠ canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>Z</em>)</span></p>
+<p>Diff:</p>
+<p><span
+class="math display"><em>Δ</em>(<em>X</em>, <em>Z</em>) = TreeEdit(canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>X</em>), canonicalize<sub><em>G</em><sub>1</sub></sub>(<em>Z</em>))</span></p>
+<p>Classification:</p>
+<p><span
+class="math display"><em>ϕ</em>(<em>Δ</em>(<em>X</em>, <em>Z</em>)) = threshold_change</span></p>
+<p>This example illustrates the essential discipline: representational
+variation disappears, governance-relevant variation remains.</p>
+<hr />
+<h2 id="worked-example-transformation-semantics">17. Worked Example:
+Transformation Semantics</h2>
+<p>Consider a transformation that maps input records into an output
+classification.</p>
+<p>Variant A:</p>
+<pre><code>Transformation:
+  name: classify
+  inputs: [score]
+  outputs: [status]
+  semantics:
+    if score &gt;= minimum_score:
+      status = accepted
+    else:
+      status = refused</code></pre>
+<p>Variant B changes the refusal branch:</p>
+<pre><code>else:
+  status = manual_review</code></pre>
+<p>For identical inputs below threshold, the output changes. Therefore
+this is governance-relevant transformation divergence.</p>
+<p>MCIR records the transformation semantics structurally. The diff
+reports:</p>
+<pre><code>Transformation.classify.semantics.false_branch:
+  refused -&gt; manual_review</code></pre>
+<p>This is not merely an implementation change. It changes the
+admissibility consequence of the policy.</p>
+<p>Variant C changes only a display label:</p>
+<pre><code>Metadata:
+  refused_label: &quot;Denied&quot;</code></pre>
+<p>to:</p>
+<pre><code>Metadata:
+  refused_label: &quot;Not admitted&quot;</code></pre>
+<p>If the grammar declares this label governance-irrelevant, canonical
+governance identity does not change. Metadata identity may change, but
+structural governance identity remains the same.</p>
+<p>This distinction allows MCIR to separate governance-bearing
+transformation from human-facing annotation.</p>
+<hr />
+<h2 id="versioning-and-extensibility">18. Versioning and
+Extensibility</h2>
+<p>The grammar is closed per version.</p>
+<p>New node types require a version increment. Older versions remain
+parseable and canonicalizable under their own rules. Canonicalization
+rules are bound to grammar version.</p>
+<p>Versioning itself is governance-relevant. A change from one grammar
+version to another may change what can be represented, what must be
+explicit, or how equivalence is determined. Therefore grammar version
+appears in the Header and participates in canonical identity.</p>
+<p>Versioning rules include:</p>
+<pre><code>grammar version must be explicit
+canonicalization rules are version-bound
+old versions remain canonicalizable
+new node types require version increment
+migration must be represented as a transformation
+version change is diff-visible</code></pre>
+<p>MCIR does not allow silent grammar evolution. If representation rules
+change, that change must itself be visible.</p>
+<hr />
+<h2 id="relationship-to-existing-theory-and-systems">19. Relationship to
+Existing Theory and Systems</h2>
+<p>MCIR draws from several established traditions, but combines them for
+a different purpose.</p>
+<h3 id="term-rewriting-and-normal-forms">19.1 Term Rewriting and Normal
+Forms</h3>
+<p>MCIR uses the idea of a normal form: structurally equivalent
+artifacts reduce to a unique canonical representative. This resembles
+term rewriting systems where expressions are rewritten into normal forms
+under a rewrite relation.</p>
+<p>MCIR differs in that its rewrite system is not designed primarily for
+computation reduction or algebraic simplification. It is designed for
+governance-bearing structural commitment. Rewrites are limited to
+grammar-declared normalization rules.</p>
+<h3 id="alpha-equivalence-in-lambda-calculus">19.2 Alpha-Equivalence in
+Lambda Calculus</h3>
+<p>MCIR uses alpha-normalization where local names are not
+governance-relevant. This parallels alpha-equivalence in lambda
+calculus, where bound variable names may differ without changing
+structure.</p>
+<p>MCIR restricts alpha-normalization to grammar-declared local
+identifiers. Authority names, cryptographic keys, external references,
+and domain-significant identifiers cannot be normalized away unless
+explicitly declared safe.</p>
+<h3 id="abstract-interpretation">19.3 Abstract Interpretation</h3>
+<p>Abstract interpretation maps concrete program behavior into abstract
+domains for analysis. MCIR similarly represents governance-relevant
+aspects of a system in a structured abstraction.</p>
+<p>The difference is that MCIR is not merely an analysis result. It is a
+canonical commitment object. It does not summarize behavior alone; it
+records the declared admissibility, authority, capability, and
+transformation structure to which other evidence may refer.</p>
+<h3 id="proof-carrying-code-and-typed-irs">19.4 Proof-Carrying Code and
+Typed IRs</h3>
+<p>Proof-carrying code and typed IRs attach machine-checkable guarantees
+or type structure to executable artifacts. MCIR shares the goal of
+making properties explicit before execution.</p>
+<p>MCIR differs by focusing on governed transformation. It represents
+authority scope, capability exposure, admissibility, refusal, and
+semantic change structure. Proofs may be attached to or referenced by
+MCIR artifacts, but MCIR is not itself a proof system.</p>
+<h3 id="content-addressable-structures-and-merkle-dags">19.5
+Content-Addressable Structures and Merkle DAGs</h3>
+<p>Content-addressable systems identify artifacts by hashes of their
+content. Merkle DAGs allow efficient integrity checking over structured
+graphs.</p>
+<p>MCIR uses content addressing, but treats hashing as compressed
+identity over canonical bytes. It adds governance relevance, equivalence
+rules, canonicalization obligations, and diff classifications that
+ordinary content-addressed storage does not define.</p>
+<h3 id="canonical-json-or-cbor">19.6 Canonical JSON or CBOR</h3>
+<p>Canonical JSON and CBOR canonicalize encoding. They can ensure that
+the same data structure serializes the same way. They do not define
+governance relevance, structural equivalence classes, authority
+bindings, capability exposure, or diff semantics for
+admissibility-bearing change.</p>
+<p>MCIR may use canonical serialization techniques, but its main
+contribution is not serialization. Its contribution is governance-aware
+structural representation.</p>
+<h3 id="compiler-irs">19.7 Compiler IRs</h3>
+<p>Compiler IRs represent programs for analysis and lowering. They are
+usually optimized for transformation, analysis, or machine code
+generation. They do not usually represent authority scope, admissibility
+rules, governance bindings, or capability exposure as first-class
+constitutional commitments.</p>
+<p>MCIR can relate to compiler IRs as a higher governance-bearing layer.
+Compiler IRs may be lowerings from MCIR-governed structures, or
+artifacts compared against MCIR definitions.</p>
+<h3 id="policy-as-code">19.8 Policy-as-Code</h3>
+<p>Policy-as-code frameworks evaluate policies. They may define rules,
+constraints, and decisions. They do not necessarily require canonical
+structural equivalence, hash-stable normal forms, deterministic diff
+semantics, or explicit representation of all governance-relevant
+parameters as a closed grammar.</p>
+<p>MCIR can represent policy systems, but it is not merely a policy
+evaluator.</p>
+<h3 id="reproducible-builds">19.9 Reproducible Builds</h3>
+<p>Reproducible build systems aim to ensure that the same inputs produce
+the same build outputs. They do not by themselves canonicalize authority
+bindings, admissibility semantics, or capability exposure as first-class
+nodes.</p>
+<p>MCIR complements reproducible builds by representing governed
+transformation commitments before, during, and after lowering.</p>
+<hr />
+<h2 id="mcir-in-a-governance-aware-software-stack">20. MCIR in a
+Governance-Aware Software Stack</h2>
+<p>In a broader constitutional computing stack, MCIR can serve as the
+canonical hub between human-legible specification, semantic
+decomposition, backend realization, and runtime custody.</p>
+<p>A schematic pipeline:</p>
+<pre><code>HLIR / source / policy / protocol
+-&gt; GSIR or other structured semantic candidate representation
+-&gt; GMB staging
+-&gt; MCIR candidate preflight
+-&gt; MCIR admission where warranted
+-&gt; PEIR / CEIR / backend IR
+-&gt; package or binary realization
+-&gt; hosted runner or sandbox execution
+-&gt; custody receipt
+-&gt; MCRM comparison
+-&gt; standing or refusal report</code></pre>
+<p>In this stack:</p>
+<pre><code>HLIR provides human-legible governed proposal.
+GSIR structures decomposed semantic candidates.
+GMB stages candidate meaning without authority.
+MCIR canonically represents admitted governed change.
+PEIR / CEIR / backend IRs prepare execution-facing realization.
+C-D.MS records custody and effects.
+MCRM compares source, binary, runtime, and semantic surfaces.</code></pre>
+<p>MCIR does not need to contain all runtime evidence. It must, however,
+represent the canonical governed structure to which runtime evidence,
+custody receipts, and comparison records can refer.</p>
+<p>This is how a system can distinguish:</p>
+<pre><code>source meaning
+canonical governed meaning
+backend realization
+runtime behavior
+custody evidence
+semantic standing</code></pre>
+<p>without collapsing them into a single ambiguous artifact.</p>
+<hr />
+<h2 id="limitations-and-non-claims">21. Limitations and Non-Claims</h2>
+<p>MCIR is intentionally limited.</p>
+<p>It does not decide correct governance.</p>
+<p>It does not infer undeclared governance relevance.</p>
+<p>It does not prove broad semantic equivalence.</p>
+<p>It does not guarantee that an implementation conforms to an MCIR
+definition.</p>
+<p>It does not make a hash ontologically unique.</p>
+<p>It does not replace compiler IRs, policy engines, proof systems,
+sandboxing systems, or runtime custody layers.</p>
+<p>It does not eliminate the need for human judgment.</p>
+<p>Its role is narrower:</p>
+<pre><code>make governed transformation explicit
+canonicalize declared governance structure
+make governance-relevant divergence mechanically visible
+support structural diff
+support hash-stable reference
+separate canonical bytes from compressed identifiers</code></pre>
+<p>The most important non-claim is that canonical structural equivalence
+is not total semantic equivalence.</p>
+<p>Two MCIR structures with the same canonical form are structurally
+equivalent under the declared grammar. Whether a particular
+implementation, binary, execution, or runtime behavior conforms to that
+structure is a separate evidentiary question.</p>
+<p>Similarly, two systems may behave the same over a finite fixture set
+while differing structurally. MCIR does not erase such differences. It
+records structure. Other layers, such as runtime witnesses or comparison
+disciplines, may record bounded behavior.</p>
+<hr />
+<h2 id="security-and-failure-modes">22. Security and Failure Modes</h2>
+<p>MCIR is vulnerable to modeling errors. If a designer fails to
+represent a governance-relevant parameter, canonicalization cannot
+detect changes to that parameter. This is not a canonicalization
+failure. It is representation unsoundness.</p>
+<p>Important failure modes include:</p>
+<pre><code>undeclared governance relevance
+governance-bearing behavior hidden in metadata
+implicit defaults
+version drift
+external configuration changing authority or effects
+overbroad equivalence declarations
+hash-only identity assumptions
+non-deterministic canonicalization
+ambiguous ordered/unordered child declarations</code></pre>
+<p>Mitigations include:</p>
+<pre><code>closed grammar
+explicit no-implicit-default rule
+governance relevance audit
+metadata confinement
+version-bound canonicalization
+structural diff review
+collision containment
+retrievable canonical bytes
+non-claims discipline</code></pre>
+<p>MCIR should be used with a validation surface that checks
+representation completeness relative to a domain’s governance model. A
+valid canonical form is only as honest as the model boundary that
+produced it.</p>
+<hr />
+<h2 id="future-work">23. Future Work</h2>
+<p>Several extensions are natural.</p>
+<h3 id="domain-specific-mcir-profiles">23.1 Domain-Specific MCIR
+Profiles</h3>
+<p>Different domains may define profiles over the MCIR grammar:</p>
+<pre><code>software package governance
+legal process governance
+financial settlement governance
+scientific workflow governance
+AI-agent operation governance
+protocol governance
+compiler governance</code></pre>
+<p>Each profile can specify required node types, allowed
+transformations, authority models, precision rules, and admissibility
+structures.</p>
+<h3 id="mcir-to-backend-lowering">23.2 MCIR-to-Backend Lowering</h3>
+<p>MCIR can be lowered into execution-facing forms, such as backend IRs,
+policy engines, sandbox profiles, or runtime packages. Such lowering
+must itself be represented as a governed transformation.</p>
+<h3 id="runtime-witness-binding">23.3 Runtime Witness Binding</h3>
+<p>Runtime evidence can be bound back to MCIR definitions. A runtime
+witness does not prove total semantic equivalence, but it can support
+bounded claims about observed behavior under specified conditions.</p>
+<h3 id="source-binary-runtime-correspondence">23.4 Source-Binary-Runtime
+Correspondence</h3>
+<p>MCIR can serve as the canonical semantic hub for comparing source,
+binary, and runtime artifacts. Such correspondence must preserve
+distinctions among declared intent, compiled realization, observed
+behavior, and admitted standing.</p>
+<h3 id="ai-native-transformation-review">23.5 AI-Native Transformation
+Review</h3>
+<p>AI systems can propose MCIR transformations directly. Review then
+occurs over canonical structural deltas rather than over free-form
+natural language summaries or flattened textual code alone.</p>
+<hr />
+<h2 id="conclusion">24. Conclusion</h2>
+<p>MCIR extends intermediate representation from execution mechanics to
+governed transformation. By requiring governance-relevant parameters to
+appear as first-class structural nodes, defining grammar-scoped
+structural equivalence over those nodes, and computing canonical normal
+forms under a closed versioned grammar, MCIR ensures that
+admissibility-relevant change cannot hide behind formatting, ordering,
+configuration convention, or narrative explanation.</p>
+<p>Canonical form provides structural uniqueness for declared governance
+semantics under a specified grammar. Cryptographic hashing provides
+compact collision-resistant identifiers over canonical bytes, while
+deterministic cascading identifiers contain observed hash ambiguity
+without making identity user-dependent.</p>
+<p>MCIR does not decide what governance should be. It does not prove
+broad semantic equivalence, infer undeclared governance relevance, or
+replace backend execution systems. Its role is narrower and more
+fundamental: to make governed change explicit, canonical, diffable, and
+mechanically identifiable before that change is lowered into code,
+binary, protocol behavior, policy execution, or runtime effect.</p>
+<p>In an AI-native software environment, this representation discipline
+becomes essential. Systems that can generate code or binaries faster
+than humans can review them require a substrate where authority,
+admissibility, capabilities, transformations, and claim boundaries are
+represented structurally.</p>
+<p>Textual code is a flattened projection. Binary is target realization.
+MCIR is canonical governed structure.</p>
+<p>That is the representation layer required for software whose changes
+cannot merely execute, but must be admissible.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern computation increasingly depends on
+transformations whose authority and consequences are not fully captured
+by source code, binaries, policies, or configuration files alone. Its
+nearest external comparison fields are formal, security, governance. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. Unforgeable capabilities can constrain exercise
+of authority while still leaving allocation, delegation, revocation, and
+social legitimacy incorrectly specified. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.21095303">10.5281/zenodo.21095303</a></p>

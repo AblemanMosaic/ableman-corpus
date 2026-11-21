@@ -1,0 +1,2748 @@
+<h1 id="no-crack-roasting">No-Crack Roasting</h1>
+<h2
+id="thermal-boundary-control-and-flavor-development-in-artisanal-coffee-roasting">Thermal
+Boundary Control and Flavor Development in Artisanal Coffee
+Roasting</h2>
+<h3
+id="the-history-of-coffee-roasting-treats-the-crack-as-a-milestone.-this-work-explores-the-possibility-that-it-is-instead-a-warning.">The
+history of coffee roasting treats the crack as a milestone. This work
+explores the possibility that it is instead a warning.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Traditional coffee roasting uses first crack as a coarse observable
+of roast progression. This paper proposes that modern control of latent
+thermochemical state allows progression to be tracked directly rather
+than through the proxy of structural failure.</p>
+<p>Conventional coffee roasting practice treats first crack and second
+crack as central developmental milestones. Roast progression is commonly
+described relative to these audible fracture events, and many roasting
+methodologies intentionally target specific post-crack development
+intervals.</p>
+<p>This paper proposes a constraint-based roasting paradigm termed
+<em>No-Crack Roasting</em>, in which roast trajectories are
+intentionally constrained to remain within a feasible thermochemical
+region that suppresses sustained fracture events. Rather than treating
+crack as a developmental phase, the method treats crack as an observable
+manifestation of boundary crossing within a coupled
+temperature-moisture-pressure system.</p>
+<p>The proposed mechanism is selective: pyrolytically-derived burnt and
+acrid compounds (the masking layer) are predicted to be substantially
+reduced, while bean-intrinsic flavor compounds (caffeine, chlorogenic
+acids, trigonelline derivatives, origin-specific phenolics) are
+predicted to be largely preserved. The predicted operational consequence
+is that the <strong>origin character of each bean should become more
+perceptually accessible</strong> under no-crack roasting — the bright
+astringency of African beans, the chocolate-tobacco complexity of
+Indonesian beans, the citrus brightness of Kenyans — because the bean’s
+native flavor envelope would no longer be masked by
+pyrolytically-generated burnt-overlay compounds. This prediction is
+consistent with practitioner observation across the empirical scope
+described in Section 14; formal sensory-panel validation remains future
+work (Section 20).</p>
+<p>Coffee roasting is modeled as constrained trajectory optimization
+within a thermochemical state space. We hypothesize that the feasible
+region excluding fracture events contains trajectories that match or
+exceed crack-inclusive paths in flavor-relevant objective space under
+comparable control and endpoint constraints. Under this interpretation,
+first crack is not itself a developmental phase transition but a
+structural failure event induced by exceeding a pressure-temperature
+boundary.</p>
+<p>The framework introduces observable and latent roast states,
+state-estimation methods, thermodynamic constraints, kinetic models, and
+control-theoretic formulations suitable for future experimental
+validation. Observations from fourteen coffee origins spanning South
+America, Central America, Africa, Indonesia, and Papua New Guinea
+motivate the framework but do not by themselves establish causality. The
+paper therefore advances no-crack roasting primarily as a falsifiable
+thermodynamic hypothesis and constrained optimization paradigm rather
+than as a finalized roasting doctrine.</p>
+<p>The proposal is structured in three layers with distinct evidential
+standing. <strong>Layer 1 (operational)</strong>: no-crack roasting is
+feasible across the full target-darkness range under stovetop
+hand-roasting — supported by extensive practitioner evidence.
+<strong>Layer 2 (control-theoretic)</strong>: acoustic crack functions
+as an observable proxy for latent thermochemical state progression,
+rather than as a developmental mechanism — conceptually well-supported
+and largely independent of the masking hypothesis. <strong>Layer 3
+(masking theory)</strong>: reduced pyrolysis-product accumulation should
+improve perceptual access to the bean’s non-ash flavor envelope — the
+most ambitious claim, requiring future sensory-panel and chemical
+validation. Layers 1 and 2 stand independently of Layer 3; readers
+skeptical of Layer 3 may still find Layers 1–2 useful. The three layers
+are made explicit in Section 1.1.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>Coffee roasting has historically been described through audible
+transitions known as first crack and second crack. These events serve as
+practical indicators of roast progression and are deeply embedded within
+roasting culture.</p>
+<p>Despite their widespread use, crack events are not themselves flavor
+compounds, chemical reactions, or developmental mechanisms. They are
+observable manifestations of physical processes occurring within the
+bean.</p>
+<p>This raises a more precise question than is usually stated. The
+traditional formulation — <em>is crack necessary for flavor
+development?</em> — conflates two distinct possibilities: that crack is
+a <em>mechanism</em> of flavor development (which would make it causally
+required), or that crack is an <em>observable</em> of flavor development
+(which would make it useful as a state estimator but not causally
+required).</p>
+<p>The present paper takes the second possibility seriously. Under this
+interpretation, crack has been used operationally as a proxy for roast
+progression for centuries, alongside other human-scale observables such
+as visual color, olfactory transition in the volatile output, and
+tactile and mass-loss feel. The written tradition of coffee roasting
+emphasizes acoustic milestones because acoustic events are discrete,
+intersubjectively verifiable, and easy to record in writing; olfactory
+monitoring of the volatile output — the moment the smell shifts from
+Maillard-sweet to pyrolytic-acrid — is detectable by any human nose but
+is poorly served by textual transmission, and has therefore been
+historically underrepresented in the written record despite plausibly
+widespread operational use.</p>
+<p>This paper explores the possibility that desirable flavor development
+can occur while remaining within a feasible thermochemical region that
+excludes sustained fracture events, using a combination of modern
+instrumentation (Section 15) and the same human-scale observables
+(olfaction, color) that operational roasting practice has always
+employed.</p>
+<h3 id="the-three-layers-of-the-proposal">1.1 The Three Layers of the
+Proposal</h3>
+<p><strong>This paper should be read primarily as a theory-and-framework
+paper motivated by extensive practitioner observation rather than as a
+completed experimental validation.</strong> The conceptual framework is
+the primary contribution; the practitioner evidence motivates and
+constrains the framework; formal experimental validation under
+controlled conditions is identified throughout as future work (Sections
+17, 20). Readers expecting either pure theory (with no empirical
+contact) or completed empirical study (with statistical power and
+controlled trials) may find the paper does not match their expectation;
+what is offered is a theory with explicit empirical motivation and
+explicit falsification pathways, situated at the stage where
+craft-derived insights enter formal scientific literature.</p>
+<p>The argument advanced in this paper is structured in three distinct
+layers, each making a claim of different ambition and supported by
+evidence of different kinds. Distinguishing the layers explicitly is
+important because they do not stand on equally firm ground, and a
+reader’s response to the strongest claim should not determine their
+assessment of the weaker claims.</p>
+<p><strong>Layer 1 — Operational feasibility.</strong> No-crack roasting
+produces drinkable coffee across the full target-darkness range from
+light/city through darkest non-burning roast. This is the weakest and
+most directly supported claim. The evidence is approximately eight years
+of single-practitioner stovetop practice comprising several hundred
+batches (Section 14). The Layer 1 claim does not depend on any
+particular theory of flavor mechanism; it depends only on the
+operational demonstration that the protocol can be executed and produces
+a product the practitioner considers acceptable.</p>
+<p><strong>Layer 2 — Crack as observable proxy, not mechanism.</strong>
+First crack functions in coffee roasting as a state estimator — an
+observable signal that historically coincided with roast progression —
+rather than as a developmental mechanism that itself causally
+contributes to flavor. Under this layer, crack is an instrument like a
+thermometer or a color chart, and the question of whether the instrument
+can be replaced by other instruments (modern thermochemical estimators,
+olfactory state tracking, visual color setpoint) becomes a
+control-theoretic and instrumentation question rather than a question
+about what is chemically necessary for good coffee. Layer 2 is
+conceptually well-supported by the historical observation that multiple
+human-scale state estimators (visual, olfactory, tactile, auditory) have
+always coexisted in roasting practice, and that the written tradition’s
+emphasis on acoustic milestones reflects writability rather than
+necessary primacy (Section 1). Layer 2 is largely independent of Layer
+3: even if the masking hypothesis fails empirically, the instrumentation
+reframe survives.</p>
+<p><strong>Layer 3 — Masking hypothesis (H2).</strong> Trajectories that
+produce sustained crack also drive pyrolysis-product accumulation as a
+sibling consequence (Section 13), and this pyrolysis-product
+accumulation forms a perceptually dominant masking layer that suppresses
+access to the bean’s non-ash flavor envelope. Reducing this masking
+layer through no-crack practice is therefore predicted to improve
+perceptual access to origin character. This is the most ambitious claim
+and the one most dependent on future experimental validation. The
+chemistry-based prediction is supported (Section 12), and practitioner
+observation is consistent with the prediction (Section 14), but formal
+sensory-panel and chemical-assay validation remains future work
+(Sections 17, 20).</p>
+<p>The three layers map approximately onto the H0/H1/H2 distinctions of
+Section 2: Layer 2 corresponds to H1 (crack as proxy), and Layer 3
+corresponds to H2 (the masking hypothesis). Layer 1 is the operational
+claim that precedes these and does not require taking a position on the
+H0/H1/H2 question at all.</p>
+<p>If only Layer 1 holds, no-crack roasting is an alternative roasting
+technique with practitioner-validated feasibility and no theoretical
+novelty.</p>
+<p>If Layers 1 and 2 hold but Layer 3 does not, no-crack roasting is an
+instrumentation upgrade — a way to reproduce or refine outcomes that
+conventional crack-based roasting also achieves, using better state
+estimators than acoustic fracture.</p>
+<p>If all three layers hold, no-crack roasting reduces a
+previously-unnamed perceptual masking layer and improves access to bean
+origin character — a substantive claim about coffee chemistry and
+perception with potential implications for roasting practice, sensory
+science, and (per the public-health discussion downstream)
+population-level coffee exposure to pyrolytic compounds.</p>
+<p>The paper develops all three layers because they reinforce each other
+in the practitioner’s experience and admit a coherent formal treatment.
+But the layered structure is more durable than any single layer: a
+critique that defeats Layer 3 does not necessarily defeat Layers 1–2,
+and a critique that defeats Layer 2 does not defeat Layer 1.</p>
+<p>A further structural distinction worth previewing here, since it
+underlies the framework throughout, is that the present work treats
+<strong>roast darkness</strong>, <strong>fracture state</strong>, and
+<strong>pyrolysis-product contribution</strong> as <em>three independent
+observables</em> rather than as proxies for a single underlying quantity
+(Section 12). Conventional roasting practice tends to conflate these —
+darker roasts are typically also cracked roasts with substantial
+pyrolysis-product accumulation, and lighter roasts tend to have all
+three quantities low. The framework’s central claim is that these three
+observables can be partly decoupled: a dark roast may exhibit reduced
+fracture and reduced pyrolysis-product contribution relative to a
+conventional trajectory of the same darkness. Without this conceptual
+distinction the framework would be incoherent; with it, the empirical
+question becomes how broad the decoupled region of state space actually
+is.</p>
+<h4 id="a-note-on-the-title">A Note on the Title</h4>
+<p>The framework’s deeper principle is most naturally stated as the
+control of pyrolysis-product accumulation: maintain the trajectory in a
+region where the bean’s non-ash flavor envelope develops while the
+pyrolytic masking layer is held to a contextually appropriate level.
+Under this principle, fracture suppression is one
+<em>implementation</em> among possibly several — the one validated by
+the present work — because acoustic crack is the practitioner’s
+directly-audible real-time observable of the boundary crossing that
+drives pyrolysis-product accumulation (Section 13). A more general
+statement of the principle might be called <strong>low-masking
+roasting</strong>, with the present work’s no-crack technique as the
+validated implementation in the observed practitioner regime.</p>
+<p>The title <em>No-Crack Roasting</em> reflects the implementation
+rather than the principle, by deliberate choice. Acoustic crack is the
+landmark working roasters know intimately — every batch most
+practitioners have ever roasted has included it. Framing the technique
+in terms of crack speaks directly to that lived experience and invites
+the operational test: try a trajectory that stays slightly below the
+line you know, and observe what happens. A more abstract framing in
+terms of low-masking would lose this point of contact with practitioner
+knowledge.</p>
+<p>Researchers extending the framework to regimes outside the present
+empirical scope — where decoupling trajectories might separate fracture
+from pyrolysis-product accumulation (Section 13, Low-Masking
+Generalization) — may find the low-masking framing more general. The
+title preserves the practitioner’s entry point; the body of the paper
+preserves the principle’s generality.</p>
+<h2 id="hypothesis-space">2. Hypothesis Space</h2>
+<p>The traditional question — <em>what role does first crack play in
+roasting?</em> — admits three structurally different answers,
+distinguished here to avoid claim ambiguity. The first treats crack as a
+<em>mechanism</em> of roast development; the second and third treat it
+as an <em>observable</em> of roast development with differing
+operational consequences.</p>
+<h3 id="h0-developmental-necessity">H0: Developmental Necessity</h3>
+<p>First crack is necessary for full flavor development.</p>
+<p>Without crack, desirable roast development cannot be achieved. Under
+H0, crack is a mechanism: the fracture event itself contributes causally
+to flavor.</p>
+<h3 id="h1-developmental-proxy">H1: Developmental Proxy</h3>
+<p>First crack is not itself necessary.</p>
+<p>It functions as a state estimator: an observable signal that
+frequently coincides with thermochemical progress under conventional
+practice but is not causally required. Under H1, crack is one of several
+historically available human-scale observables (alongside visual color,
+olfactory transition, tactile and mass-loss feel) used by roasters as a
+proxy for the latent state variables that actually drive flavor
+development.</p>
+<h3 id="h2-perceptual-masking-by-pyrolysis-products">H2: Perceptual
+Masking by Pyrolysis Products</h3>
+<p>Trajectories that produce sustained first crack also drive
+substantial pyrolysis-product formation. Under this hypothesis, fracture
+and pyrolysis-product accumulation are not in a chemical-causal
+relationship — the mechanical pop is not itself a chemical reaction —
+but rather are <em>sibling consequences</em> of the same upstream
+trajectory crossing into a state-space region where both phenomena are
+co-produced. The resulting layer of pyrolysis products (ash-associated
+flavors, pyrolytically-derived bitter compounds such as quinic acid
+lactones, and other pyrolytic degradation products including PAHs and
+pyrolytic phenolics; see Section 11) occupies the perceptually dominant
+foreground of the resulting cup. The pyrolysis layer is not a
+<em>developmental contribution</em> to flavor but a <em>masking
+layer</em> over the non-ash flavor envelope of the underlying bean.
+Roasting trajectories that suppress sustained fracture — and which
+therefore also suppress the boundary-crossing that drives
+pyrolysis-product formation — maintain the pyrolysis contribution at
+perceptually contextual levels (empirically, the practitioner estimates
+the residual ash-flavor signal at on the order of 5–10% of conventional
+levels, though this is a sensory estimate of the perceptual signature of
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span> rather
+than a chemical measurement) while leaving the underlying non-ash flavor
+envelope substantially unchanged in composition.</p>
+<p>H2 is a <em>structural</em> claim about signal composition, not a
+<em>preference</em> claim about flavor quality. It predicts that under
+matched-extraction conditions, sensory panels should detect at least as
+many non-ash flavor descriptors (e.g. fruit, floral, spice, chocolate,
+tobacco, origin-specific notes — whichever the bean carries) in no-crack
+roasts as in conventional roasts of the same bean, with the descriptors
+rated equal or stronger in perceptual intensity. Whether a given drinker
+prefers the result — black, with milk, sweetened, iced, or otherwise
+modified — is downstream of this signal-composition claim and is out of
+scope.</p>
+<p>The present work develops the framework under H2 as the working
+hypothesis, with H1 retained as the fallback claim if matched-endpoint
+testing fails to reproduce the descriptor-count and intensity
+predictions across brewing methods and origins.</p>
+<h2 id="unified-model">3. Unified Model</h2>
+<p>The proposed framework can be compressed into a single closed
+formulation:</p>
+<p><span
+class="math display"><em>Ṡ</em> = <em>f</em><sub><em>S</em></sub>(<em>S</em>, <em>u</em>)</span></p>
+<p><span
+class="math display"><em>Ω</em> = {<em>S</em> ∣ <em>A</em><sub><em>Ω</em></sub>(<em>S</em>) ≤ <em>ϵ</em>}</span></p>
+<p><span
+class="math display"><em>S</em>(<em>t</em>) ∈ <em>Ω</em>  ∀ <em>t</em> ∈ [0, <em>T</em>]</span></p>
+<p><span class="math display"><em>u</em>(<em>t</em>) ∈ 𝒰</span></p>
+<p><span
+class="math display">max<sub><em>u</em></sub>∫<sub>0</sub><sup><em>T</em></sup><em>J</em>(<em>S</em>(<em>t</em>), <em>Ṡ</em>(<em>t</em>)) <em>d</em><em>t</em></span></p>
+<p>where <span class="math inline"><em>S</em></span> is the roast state,
+<span class="math inline"><em>u</em></span> is the vector of control
+inputs, <span class="math inline">𝒰</span> is the admissible control set
+(subject to actuator limits in heat input, airflow, agitation, and drum
+speed), <span class="math inline"><em>Ω</em></span> is the
+fracture-suppressed feasible region, <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub> : <em>S</em> ↦ ℝ</span>
+is a band-limited acoustic fracture statistic acting as an observation
+operator on the state, <span class="math inline"><em>ϵ</em></span> is
+the selected crack-suppression threshold, and <span
+class="math inline"><em>J</em></span> is a scalarized flavor-relevant
+objective. The path constraint <span
+class="math inline"><em>S</em>(<em>t</em>) ∈ <em>Ω</em> ∀ <em>t</em></span>
+couples the dynamics, the feasible region, and the objective into a
+single optimization problem.</p>
+<h3 id="standing-assumptions">Standing Assumptions</h3>
+<p>The optimization problem above is well-posed under the following
+standing assumptions:</p>
+<ul>
+<li><strong>Feasibility and reachability.</strong> <span
+class="math inline"><em>Ω</em> ≠ ⌀</span>, and <span
+class="math inline"><em>Ω</em></span> is reachable from the initial
+state <span class="math inline"><em>S</em><sub>0</sub></span> under some
+admissible control <span class="math inline"><em>u</em> ∈ 𝒰</span>.
+Without this, the constrained optimization is vacuously infeasible.
+<strong>The framework does not assume that the fracture-suppressed
+feasible region is large; only that it is non-empty and operationally
+reachable. Determining its measure, robustness to control noise, and
+accessibility under different roasting platforms remains an empirical
+question.</strong> The practitioner’s eight-year evidence base (Section
+14) establishes that <span class="math inline"><em>Ω</em></span> is
+non-empty and reachable under stovetop hand-roasting; how broadly it
+extends across other equipment configurations and how robustly it can be
+navigated under non-expert control are open questions whose answers
+determine the framework’s practical significance — a small <span
+class="math inline"><em>Ω</em></span> would render the framework
+intellectually interesting but practically narrow, while a broad <span
+class="math inline"><em>Ω</em></span> would imply potentially
+transformative implications for industrial roasting.</li>
+<li><strong>Boundedness of the control set.</strong> <span
+class="math inline">𝒰</span> is bounded (and, in standard formulations,
+compact) under the actuator-limit constraints. This rules out unbounded
+control magnitudes and supports existence of optimal controls under the
+path constraint.</li>
+<li><strong>Regularity of the dynamics.</strong> <span
+class="math inline"><em>f</em><sub><em>S</em></sub></span> is Lipschitz
+continuous in <span class="math inline"><em>S</em></span> on the
+operating domain, uniformly in <span
+class="math inline"><em>u</em> ∈ 𝒰</span>. This guarantees existence and
+uniqueness of state trajectories for any admissible control. The
+component functions <span
+class="math inline"><em>f</em><sub><em>T</em></sub></span>, <span
+class="math inline"><em>g</em><sub><em>P</em></sub></span>, <span
+class="math inline"><em>g</em><sub>∇</sub></span>, and <span
+class="math inline"><em>h</em></span> introduced in Section 8 inherit
+this regularity through the dependence of <span
+class="math inline"><em>Ṡ</em></span> on them.</li>
+<li><strong>Regularity of the acoustic statistic.</strong> <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub></span> is
+measurable, and <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>))</span>
+is at least piecewise continuous in <span
+class="math inline"><em>t</em></span> along admissible trajectories.
+This ensures the path constraint <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>)) ≤ <em>ϵ</em></span>
+is well-defined and the feasible set is measurable.</li>
+</ul>
+<p>These assumptions are mild and typical of constrained optimal control
+formulations; they are stated explicitly to clarify the scope of the
+formal claims that follow.</p>
+<p>Equivalently: find <span class="math inline"><em>u</em> ∈ 𝒰</span>
+such that the induced trajectory <span
+class="math inline"><em>S</em>(⋅)</span> satisfies the path constraint
+<span class="math inline"><em>S</em>(<em>t</em>) ∈ <em>Ω</em></span> for
+all <span class="math inline"><em>t</em> ∈ [0, <em>T</em>]</span>, and
+among such admissible control-trajectory pairs maximize the flavor
+objective. The terminal time <span class="math inline"><em>T</em></span>
+refers to the end of the controlled process, defined as the moment the
+bean mass falls below the process temperature threshold for further
+state evolution; in stovetop hand-roasting (Section 14) this includes
+both the burner-driven phase and the pot-thermal-battery discharge
+phase, both of which are under active control and both of which
+contribute to <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> accumulation
+along the trajectory. The feasible region <span
+class="math inline"><em>Ω</em></span> thereby induces a viability
+constraint, with the viability kernel implicitly defined by <span
+class="math inline"><em>Ω</em></span>, and roasting becomes a
+viability-constrained optimal control problem in the sense of Aubin’s
+viability theory: the core task is not to reach a target state but to
+remain within the admissible region while the trajectory evolves under
+control.</p>
+<p>The acoustic statistic <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>))</span>
+enters the constraint as an <em>observable proxy</em> for the boundary
+crossing that drives pyrolysis-product formation, rather than as the
+directly-controlled quantity. In the observed practitioner regime
+(Sections 13, 14), trajectories that produce sustained fracture also
+drive pyrolytic-product accumulation, because both are downstream
+consequences of the same upstream trajectory crossing into the pyrolytic
+regime. Acoustic fracture is therefore detectable and audible to the
+practitioner in real time, whereas <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> accumulation
+is latent and not directly observable; the path constraint <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub> ≤ <em>ϵ</em></span>
+operationalizes the latent constraint on <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> via the
+observable acoustic surrogate. This proxy relationship is empirically
+robust in the practiced stovetop regime but is not a chemical-causal
+claim; alternative trajectories that could in principle decouple
+fracture from pyrolysis are discussed as a research direction in Section
+13.</p>
+<p>Roasting is therefore modeled as trajectory optimization through a
+thermochemical state space subject to fracture-exclusion
+constraints.</p>
+<h2 id="state-space-and-observability">4. State Space and
+Observability</h2>
+<h3 id="full-roast-state">4.1 Full Roast State</h3>
+<p>We model the roast state as:</p>
+<p><span
+class="math display"><em>S</em> = {<em>T</em><sub><em>b</em></sub>, ∇<em>T</em>, <em>M</em>, <em>P</em><sub><em>i</em><em>n</em><em>t</em></sub>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>, <em>a</em><sub><em>w</em></sub>, <em>C</em><sub><em>p</em></sub>, <em>t</em>}</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>T</em><sub><em>b</em></sub></span> =
+bean temperature</li>
+<li><span class="math inline">∇<em>T</em></span> = internal thermal
+gradient</li>
+<li><span class="math inline"><em>M</em></span> = moisture content</li>
+<li><span
+class="math inline"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub></span>
+= internal vapor pressure</li>
+<li><span
+class="math inline"><em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub></span>
+= cellular structural density</li>
+<li><span class="math inline"><em>a</em><sub><em>w</em></sub></span> =
+water activity</li>
+<li><span class="math inline"><em>C</em><sub><em>p</em></sub></span> =
+cumulative pyrolysis-product content (the substrate of the masking layer
+of Section 12; the subscript <span class="math inline"><em>p</em></span>
+here denotes ‘pyrolysis’)</li>
+<li><span class="math inline"><em>t</em></span> = time</li>
+</ul>
+<p>The pyrolysis-product state variable <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> accumulates
+pyrolytic degradation products as the trajectory crosses the pyrolysis
+onset (Section 18). Its evolution is specified in Section 10 as part of
+the kinetic model. Under conventional roasting trajectories, <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> grows rapidly
+during and after first crack; under no-crack trajectories, <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> grows slowly
+and remains small.</p>
+<p><span class="math inline"><em>C</em><sub><em>p</em></sub></span> is
+not directly observable in real time. It is also not a single chemically
+well-defined compound class. <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> is best
+understood as a <strong>theoretical aggregate construct</strong>
+representing the cumulative perceptual contribution of
+pyrolytically-derived compounds to the masking layer of Section 12. The
+compound populations that contribute to <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> include PAHs,
+quinic acid lactones, guaiacol and syringol, pyrolytic furans at acrid
+concentrations, late-stage degraded melanoidins, and char-like fragments
+(see Section 11 for the full bean-intrinsic vs pyrolytically-derived
+distinction). These compounds do not have a natural common unit of mass
+or concentration; the framework treats them together because they are
+co-produced by the same upstream cause (trajectory residence time above
+<span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span>)
+and because their perceptual contribution to the cup is dominated by
+their aggregate masking effect rather than by any single compound. <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> should
+therefore be read as a latent theoretical quantity defined operationally
+by its perceptual signature and by the proxies listed below, rather than
+as a directly-measurable chemical concentration. An analogy from
+thermodynamics may help orient the reader’s expectations: <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> is a
+phenomenological state variable in the sense that entropy is. It has
+well-defined dynamics (Section 10), formal mathematical treatment, and
+experimental observability through proxies, but is not identifiable with
+any single microscopic quantity. Like entropy, its usefulness comes from
+summarizing aggregate behavior at the right level of abstraction for the
+framework in which it appears, not from being a concentration of a
+particular chemical species.</p>
+<p>Operational proxies include polycyclic aromatic hydrocarbon (PAH)
+concentration in headspace or roasted samples (cf. Houessou et
+al. 2007), bean-mass headspace gas composition (CO and CO2 evolution
+from pyrolytic decomposition in the beans, with the CO/CO2 ratio
+shifting as the trajectory progresses through the pyrolytic regime; in
+gas-fired roasters, bean-derived gases must be distinguished from burner
+combustion products by sampling bean-mass headspace directly rather than
+the exhaust stack), and optical color metrics (Agtron or surface
+reflectance darkening as a monotone signature of advancing pyrolysis —
+melanoidin accumulation and pyrolytic darkening products in the bean
+surface). The estimator <span
+class="math inline"><em>Ĉ</em><sub><em>p</em></sub></span> can be
+constructed analogously to <span
+class="math inline"><em>P̂</em><sub><em>i</em><em>n</em><em>t</em></sub></span>
+and <span class="math inline"><em>â</em><sub><em>w</em></sub></span> in
+Section 4.3; like those estimators, <span
+class="math inline"><em>Ĉ</em><sub><em>p</em></sub></span> is a
+model-derived inference from observable proxies rather than a direct
+measurement.</p>
+<h3 id="observable-subspace">4.2 Observable Subspace</h3>
+<p>The observable subspace includes both instrumental and human-sensory
+channels. Instrumental observables include those listed in Section 15
+(thermal, acoustic, mass-loss, gas-composition, optical). Human-sensory
+observables include visual color, audible fracture events, olfactory
+transition in the volatile output, and tactile and mass-loss feel.
+Olfactory monitoring in particular tracks the transition from
+Maillard-dominated volatile output (caramel, malt, bread, cocoa notes)
+to pyrolytic-dominated output (acrid, smoky notes) and is therefore an
+implicit estimator of <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> crossing a
+perceptual threshold; this places the working nose in the same formal
+role as the instrumental <span
+class="math inline"><em>Ĉ</em><sub><em>p</em></sub></span> estimator of
+Section 4.1.</p>
+<h4 id="olfactory-stage-taxonomy">Olfactory Stage Taxonomy</h4>
+<p>The six-stage scheme presented in this subsection is a
+<strong>practitioner-derived operational taxonomy</strong> specific to
+this paper. It is not a published or validated sensory-science
+classification, and the stage labels (Stage 1 through Stage 6) are this
+paper’s nomenclature rather than reference to external taxonomy. Formal
+sensory-science characterization of the olfactory transitions described
+here — including blind-panel verification that the stage boundaries are
+intersubjectively distinguishable, and chemical characterization of the
+volatile-compound shifts at each transition — would be a natural
+future-work direction (Section 20). The taxonomy below is presented for
+operational use within the framework’s empirical scope, not as a
+validated sensory-science scheme.</p>
+<p>In operational practice, the volatile output of the roast progresses
+through a sequence of distinguishable olfactory stages that correspond
+approximately to thermochemical regions of the state trajectory. The
+sequence below is observed under direct stovetop roasting where the
+volatile output reaches the roaster’s nose without dilution.</p>
+<ol type="1">
+<li><strong>Green / wooden stage.</strong> At low bean temperature, the
+volatile output resembles the interior of a wooden building — dry,
+cellulosic, slightly vegetal. This stage reflects the green bean’s
+native volatile profile heated but largely unreacted.</li>
+<li><strong>Waxy stage.</strong> As bean temperature rises, surface and
+matrix waxes volatilize. The smell shifts to a distinctly waxy
+character. This stage corresponds to the early evaporative regime (<span
+class="math inline"><em>d</em><em>M</em>/<em>d</em><em>t</em></span>
+large, <span class="math inline"><em>T</em><sub><em>b</em></sub></span>
+rising) before substantial Maillard activity begins.</li>
+<li><strong>Yellowing stage.</strong> The bean visually yellows; the
+smell lightens, losing the waxy character and acquiring a faintly grassy
+or hay-like quality. This stage corresponds to ongoing moisture loss and
+the onset of pigment changes preceding browning.</li>
+<li><strong>Browning / early Maillard stage.</strong> Visual browning
+begins. The smell acquires the characteristic Maillard signature —
+bread, malt, caramel-edge — as <span
+class="math inline"><em>k</em><sub><em>M</em></sub>(<em>T</em><sub><em>b</em></sub>, <em>a</em><sub><em>w</em></sub>)</span>
+enters its productive range. This is the onset of <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span>
+accumulation.</li>
+<li><strong>Flavor-development stage.</strong> The smell reaches its
+deepest, most integrated profile — the full Maillard envelope plus the
+bean’s origin-specific volatiles. This stage corresponds to maximum
+<span
+class="math inline"><em>d</em><em>E</em><sub><em>n</em><em>a</em></sub>/<em>d</em><em>t</em></span>
+at moderate <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> accumulation.
+Under no-crack operation, the trajectory is held in this regime as long
+as possible before pyrolytic onset.</li>
+<li><strong>Burning / pyrolytic stage.</strong> The smell shifts to
+acrid, smoky, sharply pungent character. This is the perceptual
+signature of <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> crossing the
+olfactory detection threshold for pyrolysis products. The transition
+from Stage 5 to Stage 6 is the operational analogue of the path
+constraint <span
+class="math inline"><em>S</em>(<em>t</em>) ∈ <em>Ω</em></span>
+failing.</li>
+</ol>
+<p>The Stage 5 / Stage 6 boundary is the operational decision point for
+no-crack roasting: the goal is to maximize residence time in Stage 5
+while preventing crossing into Stage 6. The transition is rapid and the
+boundary is sharp under direct sensory observation, which makes
+olfaction a viable real-time estimator of approach to the pyrolytic
+regime. In the practitioner’s observations, Stage 6 onset often preceded
+sustained acoustic crack activity, suggesting that the olfactory channel
+may provide earlier warning of approach to the pyrolytic regime than the
+acoustic channel. Instrumented validation should quantify the temporal
+offset between Stage 6 onset and sustained crack activity, including how
+the offset varies across origins, roast trajectories, and equipment
+configurations; the practitioner observation establishes the phenomenon
+but not its quantitative structure.</p>
+<h4 id="drying-phase-signature-and-the-wet-bulb-effect">Drying-Phase
+Signature and the Wet-Bulb Effect</h4>
+<p>The olfactory stage sequence is grounded in a well-documented phase
+structure of coffee roasting (Schwartzberg 2002; Heyd et al. 2007;
+Fabbri et al. 2011): an initial <em>drying phase</em> in which moisture
+evaporation dominates the energy balance, followed by <em>Maillard</em>,
+<em>development</em>, and (in conventional roasting) <em>pyrolytic</em>
+phases. The drying phase has a distinct operational signature that
+connects directly to the olfactory taxonomy above.</p>
+<p>During the drying phase, the bean’s energy balance is dominated by
+the latent heat of vaporization of water. As long as significant free
+water remains in the bean, evaporation absorbs incoming thermal energy
+at a rate that holds bean temperature approximately at the wet-bulb
+limit (near 100 °C / 212 °F). Color development cannot begin until <span
+class="math inline"><em>T</em><sub><em>b</em></sub></span> breaks free
+of this ceiling, which occurs only when moisture content drops enough
+that evaporation can no longer absorb the incoming heat. This is why
+Maillard browning (Stage 4) does not start until Stages 1–3 have
+completed.</p>
+<p>This regime has three operationally important properties:</p>
+<ol type="1">
+<li><strong>The maximum water-vapor off-gas rate is approximately
+stable</strong> within the practitioner’s normal range of burner
+settings. The rate-limiting step is moisture diffusion out of the bean
+interior, which is a property of the bean rather than of the burner.
+Higher burner output does not bypass this bottleneck.</li>
+<li><strong>The duration of the drying phase is approximately
+heat-input-invariant</strong> within the practitioner’s normal range of
+burner settings. This is an operational regularity observed across
+hundreds of batches, not a strict physical invariance: at burner
+settings below the normal range, drying takes substantially longer (the
+pot cannot get hot enough to drive sufficient bean-surface heat
+transfer); at burner settings above the normal range, drying does
+shorten somewhat (higher pot temperature increases the pot-to-bean
+temperature difference and therefore the surface heat transfer rate),
+but the practitioner pays for any reduction in drying time with markedly
+increased losses to the kitchen environment from the pot exterior and
+reduced control authority in later phases.</li>
+<li><strong>The end of the drying phase is signaled by a noticeable drop
+in humidity off-gas</strong>, occurring as a crossfade between olfactory
+Stages 2 (waxy) and 3 (yellowing). Under direct stovetop roasting, this
+off-gas drop is detectable as a <strong>tactile-humidity</strong>
+signal: warm humid air leaving the pot is felt directly on the face
+during Stages 1–2, and the sensation diminishes audibly and tangibly as
+drying completes.</li>
+</ol>
+<p>In the open stovetop configuration, the energy balance during the
+drying phase differs from the closed-chamber drum-roaster case
+(Schwartzberg 2002; Heyd et al. 2007), where surplus burner energy that
+does not drive evaporation is swept through the chamber and lost as
+exhaust enthalpy via forced airflow. On the open stovetop there is no
+forced exhaust. Surplus burner energy not absorbed by evaporation is
+instead stored in the pot thermal mass (raising pot temperature),
+released to the kitchen environment by radiation and convection from the
+pot exterior, and lost by passive convection of warm air above the open
+pot. The pot’s thermal mass is therefore being charged throughout the
+burner-on phase — this is the same thermal battery that supports the
+late-phase pot-battery protocol (Section 14), with the charge state at
+burner-off determined by the full burner-on trajectory rather than only
+by terminal-phase settings.</p>
+<p>This adds a fourth human-sensory observable channel to the framework:
+<strong>tactile humidity detection at the face</strong>, complementing
+the olfactory, visual, and auditory channels. Industrial roasting uses
+exhaust humidity probes for the same purpose; under stovetop
+hand-roasting, the human face serves the equivalent function.</p>
+<p>The control-theoretic implication is that the drying phase is a
+regime in which the heat-input control variable <span
+class="math inline"><em>u</em>(<em>t</em>)</span> is <em>underdetermined
+by the state</em> within the practitioner’s normal range — the bean
+mass’s behavior during Stages 1–3 is not highly sensitive to exact
+burner setting, because the bean-side mass-transfer bottleneck
+dominates. Precise control discipline becomes important once the
+humidity off-gas drops, <span
+class="math inline"><em>T</em><sub><em>b</em></sub></span> breaks free
+of 100 °C, and the trajectory enters the Maillard regime (Stage 4
+onward). This regime distinction is taken up in Section 14.</p>
+<p>Not all state variables are directly measurable in situ.</p>
+<p>Define:</p>
+<p><span
+class="math display"><em>S</em><sub><em>o</em></sub> ⊂ <em>S</em></span></p>
+<p>where <span
+class="math inline"><em>S</em><sub><em>o</em></sub></span> contains
+observable quantities such as:</p>
+<ul>
+<li>bean temperature</li>
+<li>exhaust temperature</li>
+<li>acoustic spectra</li>
+<li>mass loss</li>
+<li>environmental conditions</li>
+<li>airflow</li>
+<li>chamber humidity</li>
+<li>exhaust gas composition</li>
+</ul>
+<p>The remaining variables must be estimated.</p>
+<h3 id="state-estimation">4.3 State Estimation</h3>
+<p>Internal pressure is treated as a latent variable reconstructed from
+observables:</p>
+<p><span
+class="math display"><em>P̂</em><sub><em>i</em><em>n</em><em>t</em></sub> = <em>f</em><sub><em>P</em></sub>(<em>A</em>(<em>t</em>, <em>ω</em>), <em>m</em><sup>′</sup>(<em>t</em>), <em>T</em><sub><em>b</em></sub>, ∇<em>T</em>)</span></p>
+<p>Water activity is likewise estimated indirectly:</p>
+<p><span
+class="math display"><em>â</em><sub><em>w</em></sub> = <em>f</em><sub><em>a</em></sub>(<em>m</em>(<em>t</em>), <em>T</em><sub><em>b</em></sub>)</span></p>
+<p>The roasting problem therefore includes both control and state
+reconstruction. The claim is not that the full state is directly
+observable, but that sufficiently informative proxies may permit
+operational control of the fracture boundary.</p>
+<h2 id="time-scale-separation">5. Time-Scale Separation</h2>
+<p>Roasting contains both fast and slow dynamics.</p>
+<p>Define:</p>
+<p><span
+class="math display"><em>S</em> = <em>S</em><sub><em>f</em><em>a</em><em>s</em><em>t</em></sub> ∪ <em>S</em><sub><em>s</em><em>l</em><em>o</em><em>w</em></sub></span></p>
+<p>where <span
+class="math inline"><em>S</em><sub><em>f</em><em>a</em><em>s</em><em>t</em></sub></span>
+includes surface temperature fluctuations, airflow perturbations,
+transient acoustic emissions, and pressure impulses, while <span
+class="math inline"><em>S</em><sub><em>s</em><em>l</em><em>o</em><em>w</em></sub></span>
+includes moisture diffusion, Maillard progression, structural evolution,
+and water activity changes.</p>
+<p>Control should primarily govern smoothed trajectories in <span
+class="math inline"><em>S</em><sub><em>s</em><em>l</em><em>o</em><em>w</em></sub></span>
+while filtering high-frequency fluctuations in <span
+class="math inline"><em>S</em><sub><em>f</em><em>a</em><em>s</em><em>t</em></sub></span>.
+Acoustic impulses remain important as boundary-warning signals, but a
+stable controller should avoid chasing every fast transient as though it
+represented a change in developmental state.</p>
+<p>This separation is central to no-crack roasting: the operator or
+machine must respond quickly enough to avoid fracture, but slowly enough
+to preserve thermal continuity.</p>
+<h2 id="feasible-region-and-acoustic-constraint">6. Feasible Region and
+Acoustic Constraint</h2>
+<p>Define the fracture-suppressed feasible region:</p>
+<p><span
+class="math display"><em>Ω</em> = {<em>S</em> ∣ <em>A</em><sub><em>Ω</em></sub>(<em>S</em>) ≤ <em>ϵ</em>}</span></p>
+<p>where <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub> : <em>S</em> → ℝ</span>
+is a band-limited acoustic observation operator mapping states to a
+scalar fracture-emission statistic. Let <span
+class="math inline"><em>A</em>(<em>t</em>, <em>ω</em>; <em>S</em>)</span>
+denote the acoustic power spectral density measured at the bean surface
+as a function of time and frequency under state evolution <span
+class="math inline"><em>S</em>(⋅)</span>. Then <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub></span> is defined as
+the band integral:</p>
+<p><span
+class="math display"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>)) := ∫<sub><em>ω</em><sub>1</sub></sub><sup><em>ω</em><sub>2</sub></sup><em>A</em>(<em>t</em>, <em>ω</em>; <em>S</em>(⋅)) <em>d</em><em>ω</em></span></p>
+<p>where <span
+class="math inline">[<em>ω</em><sub>1</sub>, <em>ω</em><sub>2</sub>]</span>
+is the frequency band associated with fracture-relevant acoustic
+emissions. The constraint is:</p>
+<p><span
+class="math display"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>)) ≤ <em>ϵ</em>  ∀ <em>t</em> ∈ [0, <em>T</em>].</span></p>
+<p>This disambiguates the two roles <span
+class="math inline"><em>A</em></span> plays: <span
+class="math inline"><em>A</em>(<em>t</em>, <em>ω</em>; <em>S</em>(⋅))</span>
+is the measured acoustic signal (an observable signal, conditional on
+the state trajectory), and <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub> : <em>S</em> → ℝ</span>
+is the derived state functional (the band-integrated statistic at the
+current state). Strictly, <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub></span> is a
+trajectory-induced functional evaluated at time <span
+class="math inline"><em>t</em></span>, not a purely Markovian function
+of the instantaneous state alone; the notation <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub> : <em>S</em> → ℝ</span>
+is a slight abuse that suppresses the trajectory dependence for
+readability. The path constraint <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>)) ≤ <em>ϵ</em></span>
+is therefore enforced on the trajectory-induced value at each <span
+class="math inline"><em>t</em></span>.</p>
+<p>The strict pre-crack manifold is:</p>
+<p><span
+class="math display">ℳ<sub><em>p</em><em>r</em><em>e</em></sub> = {<em>S</em> ∣ <em>A</em><sub><em>Ω</em></sub>(<em>S</em>) &lt; <em>ϵ</em>}.</span></p>
+<p>Acoustic emissions are not assumed to be perfect measurements of
+fracture proximity. They are treated as operationally useful proxies.
+The assumption that acoustic emission is a sufficient statistic for
+fracture proximity may fail in low-signal or equipment-noise-dominated
+environments.</p>
+<h2 id="heat-transfer-regimes">7. Heat Transfer Regimes</h2>
+<h3 id="conduction-dominant-operation">7.1 Conduction-Dominant
+Operation</h3>
+<p>The manual roasting method employs:</p>
+<ul>
+<li>thick-bottomed conductive vessels</li>
+<li>continuous agitation</li>
+<li>whisk-assisted redistribution</li>
+<li>controlled heat application</li>
+</ul>
+<p>These mechanisms reduce thermal localization and promote
+equilibration across bean surfaces.</p>
+<h3 id="biot-number">7.2 Biot Number</h3>
+<p>The relevant dimensionless parameter is:</p>
+<p><span class="math display">$$
+Bi = \frac{hL}{k}
+$$</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>h</em></span> = convective heat
+transfer coefficient</li>
+<li><span class="math inline"><em>L</em></span> = characteristic
+length</li>
+<li><span class="math inline"><em>k</em></span> = thermal
+conductivity</li>
+</ul>
+<p>The hypothesis is not that <span
+class="math inline"><em>B</em><em>i</em> → 0</span>, but rather that
+effective crack suppression occurs within an empirical regime
+satisfying:</p>
+<p><span
+class="math display"><em>B</em><em>i</em> &lt; <em>B</em><em>i</em><sub><em>c</em><em>r</em><em>i</em><em>t</em></sub></span></p>
+<p>for some process-dependent threshold. This reflects reduced internal
+thermal gradients rather than a physically unattainable asymptotic
+limit.</p>
+<h2 id="pressure-structure-and-energy-balance">8. Pressure, Structure,
+and Energy Balance</h2>
+<p>Internal pressure is not free-floating. It is linked to moisture,
+temperature, pore volume, and structural density.</p>
+<p>A minimal heuristic relation is:</p>
+<p><span class="math display">$$
+P_{int} \sim \frac{M T_b}{V_{pore}}
+$$</span></p>
+<p>where <span
+class="math inline"><em>V</em><sub><em>p</em><em>o</em><em>r</em><em>e</em></sub></span>
+is the effective pore volume available for vapor expansion. Cellular
+density <span
+class="math inline"><em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub></span>
+enters through its relation to pore volume and fracture tolerance:</p>
+<p><span
+class="math display"><em>V</em><sub><em>p</em><em>o</em><em>r</em><em>e</em></sub> = <em>V</em><sub><em>p</em><em>o</em><em>r</em><em>e</em></sub>(<em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>)</span></p>
+<p>and:</p>
+<p><span
+class="math display"><em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub> = <em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub>(<em>M</em>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>).</span></p>
+<p>Cellular density is not quasi-static: it evolves under thermal and
+pressure exposure as the bean’s structural matrix changes:</p>
+<p><span class="math display">$$
+\frac{d\rho_{cell}}{dt} = h(T_b, P_{int}).
+$$</span></p>
+<p>This evolution equation captures the irreversible structural change
+of the bean during roasting, including the expansion and porosity
+evolution that occurs as the cellular matrix is heated and stressed even
+when fracture itself is suppressed. The sign of <span
+class="math inline"><em>h</em></span> depends on the local regime: in
+conventional roasting the bean expands (density decreases) as moisture
+is released and the cellular matrix transforms; under tightly controlled
+no-crack regimes the expansion is more gradual but typically still
+dominant over densification.</p>
+<p>Thermal gradients couple to pressure accumulation through accelerated
+localized vaporization. Pressure evolution depends not only on the
+instantaneous state but on the rate of moisture release, since vapor
+generation is the driving term:</p>
+<p><span class="math display">$$
+\frac{dP_{int}}{dt} = g_P\!\left(\nabla T,\ \frac{dM}{dt},\ T_b\right)
+$$</span></p>
+<p>with the qualitative relationship:</p>
+<p><span class="math display">$$
+\frac{\partial P_{int}}{\partial t} \propto \nabla T \cdot k_d(T_b)
+$$</span></p>
+<p>The dependence on <span
+class="math inline"><em>d</em><em>M</em>/<em>d</em><em>t</em></span>
+rather than <span class="math inline"><em>M</em></span> alone makes
+pressure a genuinely dynamic variable rather than a quasi-static
+function of the instantaneous state: fast moisture release drives sharp
+pressure rises that slow release does not, even at the same
+instantaneous moisture content.</p>
+<p>The bean temperature evolves according to a minimal energy
+balance:</p>
+<p><span class="math display">$$
+\frac{dT_b}{dt} = f_T(u(t), T_{env}, M)
+$$</span></p>
+<p>where <span class="math inline"><em>u</em>(<em>t</em>)</span>
+includes heat input, airflow, agitation, and drum or vessel dynamics.
+The internal thermal gradient is coupled to the bean’s thermal state
+through the surface-core differential:</p>
+<p><span
+class="math display">∇<em>T</em> = <em>g</em><sub>∇</sub>(<em>T</em><sub><em>b</em></sub>, <em>T</em><sub><em>s</em><em>u</em><em>r</em><em>f</em><em>a</em><em>c</em><em>e</em></sub>)</span></p>
+<p>where <span
+class="math inline"><em>T</em><sub><em>s</em><em>u</em><em>r</em><em>f</em><em>a</em><em>c</em><em>e</em></sub></span>
+is the bean surface temperature, observable via infrared imaging
+(Section 15). The qualitative dependence is <span
+class="math inline">∇<em>T</em> ∝ (<em>T</em><sub><em>s</em><em>u</em><em>r</em><em>f</em><em>a</em><em>c</em><em>e</em></sub> − <em>T</em><sub><em>b</em></sub>)/<em>L</em></span>
+for characteristic length <span class="math inline"><em>L</em></span>,
+with the precise functional form depending on bean geometry, conductive
+properties, and the heat-transfer regime. This grounds the gradient as a
+dynamical variable derived from observable thermal quantities rather
+than a free parameter.</p>
+<h2 id="mechanistic-model">9. Mechanistic Model</h2>
+<h3 id="conventional-regime">9.1 Conventional Regime</h3>
+<p>Large thermal gradients produce:</p>
+<p><span class="math display">∇<em>T</em>↑</span></p>
+<p><span
+class="math display"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub>↑</span></p>
+<p><span class="math display">Fracture</span></p>
+<p><span class="math display">Pyrolysis</span></p>
+<p>This pathway is associated with abrupt pressure release, cellular
+rupture, rapid porosity change, and increased thermal stress.</p>
+<h3 id="no-crack-regime">9.2 No-Crack Regime</h3>
+<p>Reduced thermal gradients produce:</p>
+<p><span class="math display">∇<em>T</em>↓</span></p>
+<p><span class="math display">Diffusive Moisture Release</span></p>
+<p><span
+class="math display"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub>↓</span></p>
+<p><span class="math display">Fracture Suppression</span></p>
+<p><span class="math display">Extended Maillard Activity</span></p>
+<p>The central mechanism is therefore not reduced temperature alone but
+altered transport dynamics.</p>
+<h2 id="minimal-kinetic-model">10. Minimal Kinetic Model</h2>
+<p>Moisture evolution is represented by:</p>
+<p><span class="math display">$$
+\frac{dM}{dt} = -k_d(T_b,\nabla T)
+$$</span></p>
+<p>where <span
+class="math inline"><em>k</em><sub><em>d</em></sub></span> is an
+effective drying rate.</p>
+<p>The kinetic model decomposes flavor development into two quantities:
+the cumulative non-ash flavor envelope <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> and
+the cumulative pyrolysis-product accumulation <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>. These evolve
+via separable kinetics, but the two equations are coupled through their
+shared dependence on <span
+class="math inline"><em>T</em><sub><em>b</em></sub></span> (and hence on
+the control <span class="math inline"><em>u</em></span>): the same
+temperature trajectory drives both <span
+class="math inline"><em>k</em><sub><em>M</em></sub></span> and <span
+class="math inline"><em>k</em><sub><em>P</em></sub></span>, so <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> and
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span> cannot
+be controlled independently — they share a single thermal substrate. The
+kinetics:</p>
+<p><span class="math display">$$
+\frac{dE_{na}}{dt} = k_M(T_b, a_w)
+$$</span></p>
+<p><span class="math display">$$
+\frac{dC_p}{dt} = k_P(T_b)
+$$</span></p>
+<p>where <span
+class="math inline"><em>k</em><sub><em>M</em></sub></span> is the
+Maillard and bean-native flavor compound formation rate and <span
+class="math inline"><em>k</em><sub><em>P</em></sub></span> is the
+pyrolytic degradation rate (the pyrolysis-product formation rate). <span
+class="math inline"><em>k</em><sub><em>M</em></sub></span> is
+hypothesized to peak within an intermediate temperature and
+water-activity region; <span
+class="math inline"><em>k</em><sub><em>P</em></sub></span> is
+hypothesized to increase monotonically with temperature and to
+accelerate sharply above the pyrolysis onset <span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span>
+(Section 18). The differential equation for <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> should be
+understood as a <strong>reduced-order phenomenological model</strong>
+rather than a claim that all constituent compounds (PAHs, quinic acid
+lactones, guaiacol, syringol, late-stage degraded melanoidins, char
+fragments) share identical kinetics; the aggregate rate <span
+class="math inline"><em>k</em><sub><em>P</em></sub></span> summarizes
+the population’s collective behavior at the level appropriate to the
+masking-layer abstraction (Section 4.1) and does not constrain the
+kinetics of individual constituent species.</p>
+<p>A flavor-relevant scalar objective can be constructed from <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> and
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span> as a
+<em>signal-to-masking ratio</em>. A minimal illustrative form is:</p>
+<p><span class="math display">$$
+J(t) = \frac{E_{na}(t)}{1 + \alpha \, C_p(t)}
+$$</span></p>
+<p>where <span class="math inline"><em>α</em> &gt; 0</span> is a
+perceptual masking coefficient (the ratio of pyrolysis-product
+contribution to the perceptual foreground per unit <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, calibrated
+empirically against sensory descriptor counts; see Section 20). This
+form is presented as the simplest algebraic expression of the
+qualitative claim that pyrolysis-product accumulation masks the non-ash
+envelope rather than destroys it; the form is monotone decreasing in
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span> and is
+acknowledged to be incomplete (Section 14 notes an interior optimum in
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span> that
+this form does not capture). Readers should engage this expression as
+one specific instantiation of the signal-to-masking principle, not as
+the definitive flavor objective of the framework. The principle — that
+the perceptual cup is a ratio between the non-ash envelope and the
+masking layer, with the masking layer attenuating the envelope rather
+than removing it — survives any specific algebraic form; refinement of
+the algebra to admit interior optima and other empirical structure is
+left for future work.</p>
+<p><strong>A scope note on the psychophysical regime.</strong> The
+signal-to-masking model is intended to describe <strong>suprathreshold
+perceptual dominance shifts</strong> — the gross perceptual
+reorganization that occurs when one compound class (pyrolysis products)
+shifts from dominating ~95% of the perceptual foreground to occupying
+~5–10%. It is not intended to model perception at the limits of
+detection, where threshold effects, compound-specific masking,
+adaptation, and subtle interaction effects (well-studied in
+psychoacoustics and chemosensory signal-detection theory) would matter
+and would likely defeat the single-coefficient ratio form. The empirical
+regime the framework addresses is the regime where the ash-flavor signal
+in conventional roasts is large, the underlying non-ash compound
+population is also large but perceptually suppressed, and reducing the
+ash signal substantially shifts which compounds dominate the cup. In
+this regime, the framework predicts perceptual differences large enough
+to be operationally observable without requiring threshold-level sensory
+discrimination. Formal blind-panel sensory science would still be
+valuable for converting the practitioner observation into
+peer-reviewable form (Section 20), but the underlying perceptual claim
+is a claim about gross perceptual dominance, not about psychophysical
+signal detection at threshold.</p>
+<p>The single-coefficient form <span
+class="math inline"><em>α</em></span> is adopted as the minimal model;
+sensory masking in real perceptual systems is notoriously nonlinear, and
+future work may require origin-specific masking coefficients,
+descriptor-specific masking functions, or a matrix-valued <span
+class="math inline"><em>α</em></span> that depends on which non-ash
+compounds are being masked by which pyrolytic products. The scalar form
+here is a starting point sufficient to express the qualitative claim,
+not a commitment to single-parameter sensory psychophysics.</p>
+<p>The differential form follows by the quotient rule:</p>
+<p><span class="math display">$$
+\frac{dJ}{dt} = \frac{k_M(T_b, a_w)}{1 + \alpha \, C_p} - \frac{\alpha
+\, E_{na} \, k_P(T_b)}{(1 + \alpha \, C_p)^2}
+$$</span></p>
+<p>This form encodes the H2 mechanism (Section 12) directly: pyrolysis
+does not destroy the non-ash envelope within the admissible region —
+<span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> is
+monotone non-decreasing along trajectories that remain in <span
+class="math inline"><em>Ω</em></span> (the pre-pyrolytic regime where
+<span class="math inline"><em>k</em><sub><em>M</em></sub> &gt; 0</span>
+and <span class="math inline"><em>k</em><sub><em>M</em></sub></span> is
+not opposed by Maillard-product degradation) — but it masks it. Outside
+<span class="math inline"><em>Ω</em></span>, Maillard products
+themselves degrade at sufficiently high <span
+class="math inline"><em>T</em><sub><em>b</em></sub></span>, so <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> is
+not in general monotone on arbitrary trajectories; the monotone claim is
+scoped to admissible trajectories.</p>
+<p>The functional form <span
+class="math inline"><em>J</em> = <em>E</em><sub><em>n</em><em>a</em></sub>/(1 + <em>α</em><em>C</em><sub><em>p</em></sub>)</span>
+is monotone decreasing in <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> and therefore
+predicts <span class="math inline"><em>J</em></span> maximized as <span
+class="math inline"><em>C</em><sub><em>p</em></sub> → 0</span>.
+Operational practice (Section 14) indicates this monotonicity does not
+hold across the full <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> range: at
+very low <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, the cup
+loses identity as coffee even though <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span>
+would be at or near its maximum. The pyrolysis-product accumulation
+contributes positively to the perceptual identity <em>coffee</em> up to
+a contextual threshold, beyond which it begins to mask. The current
+formula is therefore scoped to the regime where <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> is small but
+above a contextual lower bound <span
+class="math inline"><em>C</em><sub><em>p</em></sub><sup><em>m</em><em>i</em><em>n</em></sup>(target)</span>
+that depends on the target roast darkness. Refinement of the functional
+form to admit an interior optimum — e.g. a form whose denominator is
+non-monotone in <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, or whose
+numerator includes a positive pyrolysis-identity term at low <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> — is left for
+future work. The qualitative finding is robust; the algebraic form is a
+modeling choice not yet uniquely determined by data.</p>
+<p>Two limiting cases within the scoped regime are instructive:</p>
+<ul>
+<li><strong>Conventional roasting</strong> (<span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> large). <span
+class="math inline"><em>J</em> ≈ <em>E</em><sub><em>n</em><em>a</em></sub>/(<em>α</em><em>C</em><sub><em>p</em></sub>)</span>
+falls inversely with pyrolysis-product accumulation. The model predicts
+that the non-ash envelope is present in the cup but perceptually
+attenuated by the masking layer.</li>
+<li><strong>No-crack roasting</strong> (<span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> small, near
+zero). <span
+class="math inline"><em>J</em> ≈ <em>E</em><sub><em>n</em><em>a</em></sub></span>.
+The model predicts that the non-ash envelope is recovered at near-full
+perceptual weight.</li>
+</ul>
+<p>The hypothesis of an extended Maillard window with suppressed
+pyrolysis corresponds to maximizing <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span>
+while constraining <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> to remain
+small. The path constraint <span
+class="math inline"><em>S</em>(<em>t</em>) ∈ <em>Ω</em></span> (Section
+3), enforced via the acoustic statistic <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>) ≤ <em>ϵ</em></span>,
+operationalizes this in observable terms: the fracture-suppression
+constraint bounds <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> growth by
+bounding the regime in which <span
+class="math inline"><em>k</em><sub><em>P</em></sub></span> is large.</p>
+<h2 id="flavor-objective-and-path-dependence">11. Flavor Objective and
+Path Dependence</h2>
+<p>The flavor representation factorizes into a vector of non-ash
+descriptors and the pyrolysis-product masking layer, consistent with the
+signal-to-masking decomposition of Section 10:</p>
+<p><span
+class="math display"><em>F</em> = (<em>F</em><sub><em>n</em><em>a</em></sub>, <em>C</em><sub><em>m</em><em>a</em><em>s</em><em>k</em></sub>)</span></p>
+<p>where <span
+class="math inline"><em>F</em><sub><em>n</em><em>a</em></sub></span> is
+the vector of perceptual descriptors:</p>
+<p><span
+class="math display"><em>F</em><sub><em>n</em><em>a</em></sub> = {<em>f</em><sub><em>a</em><em>r</em><em>o</em><em>m</em><em>a</em></sub>, <em>f</em><sub><em>a</em><em>c</em><em>i</em><em>d</em><em>i</em><em>t</em><em>y</em></sub>, <em>f</em><sub><em>b</em><em>o</em><em>d</em><em>y</em></sub>, <em>f</em><sub><em>p</em><em>e</em><em>r</em><em>s</em><em>i</em><em>s</em><em>t</em><em>e</em><em>n</em><em>c</em><em>e</em></sub>}</span></p>
+<p>and <span
+class="math inline"><em>C</em><sub><em>m</em><em>a</em><em>s</em><em>k</em></sub></span>
+is the perceptual expression of pyrolysis-product accumulation (whose
+state-space substrate is <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> from Section
+4.1). <span
+class="math inline"><em>C</em><sub><em>m</em><em>a</em><em>s</em><em>k</em></sub></span>
+is dominated by <em>pyrolytically-derived</em> ash, smoke, acrid, and
+burnt-bitter compounds, not by bean-intrinsic bitter and astringent
+compounds (see <em>Bean-Intrinsic vs Pyrolytically-Derived Bitter
+Compounds</em> below). What was previously labelled <span
+class="math inline"><em>f</em><sub><em>b</em><em>i</em><em>t</em><em>t</em><em>e</em><em>r</em><em>n</em><em>e</em><em>s</em><em>s</em></sub></span>
+in flat-vector flavor representations is, on closer inspection, two
+distinct compound classes whose conflation has historically obscured the
+framework’s actual claim: the perceptual signature of <span
+class="math inline"><em>C</em><sub><em>m</em><em>a</em><em>s</em><em>k</em></sub></span>
+is specifically the pyrolytically-derived burnt-bitter overlay, not the
+bean’s intrinsic bitterness profile.</p>
+<h3
+id="bean-intrinsic-vs-pyrolytically-derived-bitter-and-acrid-compounds">Bean-Intrinsic
+vs Pyrolytically-Derived Bitter and Acrid Compounds</h3>
+<p>Coffee bitterness and astringency arise from multiple chemically
+distinct compound classes. The framework’s claim that no-crack roasting
+reduces the masking layer <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> refers
+exclusively to <em>pyrolytically-derived</em> compounds, not to
+<em>bean-intrinsic</em> compounds. This distinction is important because
+the two classes contribute differently to the cup, and the no-crack
+technique selectively reduces the former while preserving the
+latter.</p>
+<p><strong>Bean-intrinsic bitter and astringent compounds</strong>
+(predicted to be preserved under no-crack roasting; part of <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span>):</p>
+<ul>
+<li><strong>Caffeine</strong> — bitter, present in green coffee, largely
+unchanged by roasting at the temperatures relevant here.</li>
+<li><strong>Chlorogenic acids and their intact derivatives</strong> —
+contribute substantial astringency and bright/acidic character. African
+beans (Kenyan, Ethiopian, Burundian, Rwandan) have particularly high
+chlorogenic acid content, which is part of why they have their
+distinctive bright and astringent character. The <em>intact</em>
+chlorogenic acids and their non-pyrolytic derivatives are part of the
+non-ash envelope.</li>
+<li><strong>Trigonelline and its non-pyrolytic derivatives</strong> —
+including N-methylpyridinium, which contributes a bitterness considered
+desirable.</li>
+<li><strong>Bean-native phenolic compounds and diterpenes</strong> —
+cafestol, kahweol, and various origin-specific polyphenols contributing
+structural bitterness and oily mouthfeel.</li>
+</ul>
+<p>These compounds are part of the non-ash flavor envelope <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> and
+constitute much of what distinguishes one origin from another. The
+bright astringency of an Ethiopian Yirgacheffe, the chocolate-tobacco
+complexity of a Sumatran Mandheling, the citrus brightness of a Kenyan
+AA — these are bean-intrinsic profiles, not pyrolytic artifacts.
+Reducing them would reduce origin character.</p>
+<p><strong>Pyrolytically-derived bitter and acrid compounds</strong>
+(reduced by no-crack roasting; part of <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>):</p>
+<ul>
+<li><strong>Quinic acid lactones and other pyrolytic decomposition
+products of chlorogenic acids</strong> — formed by <em>thermal
+decomposition</em> of chlorogenic acids in the pyrolytic regime. These
+contribute the harsh, lingering, characteristically dark-roast
+bitterness — the “burnt” character, chemically distinct from the intact
+chlorogenic acids of the bean.</li>
+<li><strong>Pyrolytic furans and furanones at acrid
+concentrations</strong> — at moderate Maillard levels these contribute
+caramel and bread notes; at pyrolytic concentrations they contribute
+smoky and acrid character.</li>
+<li><strong>Guaiacol, syringol, and other pyrolytic decomposition
+products of cellulose and lignin</strong> — phenolic compounds with
+smoky, medicinal, and acrid character. These are pure pyrolysis products
+with no bean-intrinsic source.</li>
+<li><strong>Late-stage melanoidins in their pyrolytically-degraded
+forms</strong> — earlier-stage Maillard products are sweet and
+caramel-edged; the same compounds further decomposed at higher
+temperatures lose those qualities and contribute pyrolytic
+bitterness.</li>
+<li><strong>PAHs and char-like fragments</strong> — toxicologically
+significant; contribute subtle smoky notes at coffee
+concentrations.</li>
+</ul>
+<p>These compounds are what <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> accumulates
+and what <span
+class="math inline"><em>C</em><sub><em>m</em><em>a</em><em>s</em><em>k</em></sub></span>
+perceptually expresses. They are not bean-intrinsic; they are produced
+by the trajectory’s residence time above the pyrolytic onset <span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span>.</p>
+<p><strong>Operational consequence.</strong> The framework predicts that
+the no-crack technique reduces <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> (the
+pyrolytically-derived overlay) without substantially reducing the
+bean-intrinsic compounds that constitute origin character. The empirical
+observation across the practitioner’s eight years of practice is
+consistent with this prediction: African beans are observed to retain
+their characteristic bright astringency under no-crack roasting, and the
+astringency is reported as <em>more</em> perceptually accessible than
+under conventional roasts, consistent with reduced masking by pyrolytic
+burnt-overlay compounds. Indonesian and Papua New Guinea beans are
+similarly observed to retain their chocolate-tobacco complexity, with
+the same reported unmasking effect. The framework predicts that the
+dominant effect is selective reduction of the pyrolytic overlay while
+preserving the bean’s full bitter-and-astringent compound spectrum; the
+practitioner’s observations are consistent with this prediction. The cup
+is not less bitter overall; it is <em>differently</em> bitter — with the
+bitterness and astringency now reflecting the bean’s intrinsic chemistry
+rather than a pyrolytic overlay imposed by the roast trajectory.</p>
+<p>The scalar non-ash envelope used in the kinetic model of Section 10
+is defined as the preference-weighted sum:</p>
+<p><span
+class="math display"><em>E</em><sub><em>n</em><em>a</em></sub> := <em>w</em> ⋅ <em>F</em><sub><em>n</em><em>a</em></sub>,   <em>w</em> = {<em>w</em><sub>1</sub>, <em>w</em><sub>2</sub>, <em>w</em><sub>3</sub>, <em>w</em><sub>4</sub>}</span></p>
+<p>where <span class="math inline"><em>w</em></span> represents
+preference weights over the non-ash descriptors. This identifies the
+scalar <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> of
+Section 10 with the weighted vector aggregation above, resolving the
+apparent dimensional mismatch: <span
+class="math inline"><em>F</em><sub><em>n</em><em>a</em></sub></span> is
+the perceptual vector, <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> is
+its scalar projection under the chosen preference weighting. The full
+flavor scalar combines this with the masking term per Section 10:</p>
+<p><span class="math display">$$
+J = \frac{E_{na}}{1 + \alpha\, C_p}
+$$</span></p>
+<p>This factorization makes explicit that preference (encoded in <span
+class="math inline"><em>w</em></span>) is preserved as a downstream
+parameter while the masking-reduction mechanism (encoded in <span
+class="math inline"><em>α</em></span> and <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>) is
+preference-independent: any choice of <span
+class="math inline"><em>w</em></span> over <span
+class="math inline"><em>F</em><sub><em>n</em><em>a</em></sub></span>
+benefits from reducing <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>.</p>
+<p>Because roasting chemistry is path-dependent, the more precise
+objective is:</p>
+<p><span
+class="math display">max<sub><em>u</em></sub>∫<sub>0</sub><sup><em>T</em></sup><em>J</em>(<em>S</em>(<em>t</em>), <em>Ṡ</em>(<em>t</em>)) <em>d</em><em>t</em></span></p>
+<p>For tractability, some experimental implementations may approximate
+this with a state-functional <span
+class="math inline"><em>J</em>(<em>S</em>(<em>t</em>))</span>, but this
+should be understood as a simplification rather than a claim that roast
+chemistry is memoryless.</p>
+<p>Assume <span class="math inline"><em>J</em></span> is continuous or
+piecewise smooth over <span class="math inline"><em>Ω</em></span>.
+Without this assumption, the optimization problem is not well-posed.</p>
+<h2 id="thermochemical-hypothesis">12. Thermochemical Hypothesis</h2>
+<p>We hypothesize that first crack is not a developmental phase
+transition but a structural failure event induced by exceeding a
+pressure-temperature boundary. Beyond the boundary, pyrolysis-product
+formation enters a regime where these compounds become perceptually
+dominant in the resulting cup.</p>
+<p>Predicted decreases (the pyrolysis layer):</p>
+<ul>
+<li>polycyclic aromatic hydrocarbons</li>
+<li>pyrolytic decomposition products</li>
+<li>excessive pyrolytically-derived phenolic compounds (quinic acid
+lactones, guaiacol, syringol; bean-intrinsic chlorogenic acids and their
+non-pyrolytic derivatives are predicted to be preserved — see Section
+11)</li>
+<li>ash-associated flavors</li>
+</ul>
+<p>Predicted <em>perceptual</em> effect on the non-ash envelope:</p>
+<ul>
+<li>the underlying non-ash flavor compounds of the bean (whatever they
+are for a given origin) become perceptually unmasked rather than
+chemically preserved</li>
+<li>compounds that were always present under conventional roasting but
+were dominated by the pyrolysis layer rise relative to it in the
+cup</li>
+<li>this applies origin-agnostically: dark cherry and tobacco in one
+bean, citrus and blackcurrant in another, floral and bergamot in a third
+— the framework does not predict <em>which</em> compounds dominate the
+unmasked envelope, only that <em>whatever</em> the bean carries becomes
+more perceptually accessible</li>
+</ul>
+<p>The distinction between <em>preservation</em> (compounds physically
+protected from degradation) and <em>unmasking</em> (compounds chemically
+present at comparable levels but no longer perceptually dominated by
+pyrolysis products) is testable. Chemical assay of matched-extraction
+samples would show similar levels of the underlying compounds under both
+regimes if the mechanism is unmasking; substantially elevated levels
+under no-crack if the mechanism is preservation; both effects may
+contribute to varying degrees. The hypothesis remains subject to direct
+chemical and sensory validation.</p>
+<p>No-crack roasting is independent of conventional light/medium/dark
+endpoint categories. A roast may reach light, medium, or dark endpoint
+targets while remaining inside the fracture-suppressed feasible region.
+The critique advanced here is not a critique of dark-roast sensory
+development as such, but specifically of ash-associated pyrolysis
+products that become perceptually dominant when the trajectory crosses
+the fracture-associated boundary.</p>
+<h3 id="roast-degree-versus-fracture-state">Roast Degree versus Fracture
+State</h3>
+<p>Three quantities that conventional roasting practice tends to
+collapse into a single “roast level” are treated by this framework as
+<strong>independent observables</strong>:</p>
+<ol type="1">
+<li><strong>Roast darkness</strong> — total Maillard product
+accumulation, measured by Agtron, surface reflectance, or visual color
+grade. A function of cumulative thermal exposure (roughly the integral
+of <span
+class="math inline"><em>k</em><sub><em>M</em></sub>(<em>T</em><sub><em>b</em></sub>, <em>a</em><sub><em>w</em></sub>)</span>
+along the trajectory).</li>
+<li><strong>Crack activity</strong> — audible structural fracture
+events, captured by the acoustic statistic <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>))</span>.
+A function of the internal pressure trajectory relative to the fracture
+boundary <span
+class="math inline"><em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub>(<em>M</em>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>)</span>.</li>
+<li><strong>Pyrolysis-product contribution</strong> (<span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>) —
+accumulated pyrolytic degradation products, the substrate of the masking
+layer. A function of dwell time above the pyrolysis onset <span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span>.</li>
+</ol>
+<p>These three quantities are correlated under conventional roasting
+practice because most thermal trajectories cross all three boundaries
+together. They are not, however, the same variable. The framework
+permits:</p>
+<ul>
+<li><strong>Dark no-crack roasts</strong>: high cumulative Maillard
+contribution (visually dark) with the fracture and pyrolysis boundaries
+unbroached, achieved by extended dwell at moderate temperature below
+<span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub></span>.</li>
+<li><strong>Light cracked roasts</strong>: short fast trajectories that
+cross the fracture boundary without accumulating substantial
+darkness.</li>
+<li><strong>Cracked-but-low-pyrolysis roasts</strong>: trajectories that
+briefly cross fracture but exit the pyrolytic regime before significant
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span>
+accumulates.</li>
+</ul>
+<p>The paper’s working hypothesis (H2) makes a claim about one of these
+three quantities only: that <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, the
+pyrolysis-product contribution, masks the non-ash envelope and should be
+minimized. It makes no claim about roast darkness as a perceptual
+variable: a dark roast with low <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> is permitted
+and predicted to retain unmasked non-ash flavor. The title “No-Crack
+Roasting” names the operational constraint (suppress <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub></span>), not a
+darkness regime; the framework is silent on whether a target roast
+should be light, medium, or dark in Agtron terms.</p>
+<h2 id="structural-transformation-and-extraction-coupling">13.
+Structural Transformation and Extraction Coupling</h2>
+<p>Fracture provides effects on two distinct channels that must not be
+conflated. The framework does not identify darkness with defect. It
+identifies uncontrolled fracture-associated pyrolysis-product
+accumulation with masking.</p>
+<p><strong>Extraction channel.</strong> Fracture changes the bean’s
+physical structure in ways that affect how compounds are released into
+the brew water:</p>
+<ul>
+<li>increased porosity</li>
+<li>increased surface area</li>
+<li>improved degassing pathways</li>
+<li>altered brewing diffusion</li>
+<li>increased dissolved-solids yield per unit time of extraction</li>
+</ul>
+<p>These are real benefits to <em>extraction</em>, not to the flavor
+envelope itself. Crack suppression reduces dissolved-solids yield under
+a fixed brewing protocol, which means the same brewing parameters
+applied to a no-crack roast produce an under-extracted cup. The modeled
+non-ash envelope <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span> is
+not reduced by crack suppression — it is the <em>brewing protocol</em>
+that is no longer matched to the bean’s altered extraction geometry.</p>
+<p><strong>Masking channel.</strong> Fracture is also a structural
+marker of the pyrolysis-product threshold (Section 12). Under H2,
+crossing this threshold is associated with the masking-layer
+accumulation that the hypothesis identifies.</p>
+<p>The two channels are independent. The extraction-channel benefits of
+fracture can be replicated under no-crack roasting by adjusting the
+brewing protocol (finer grind, lower coffee-to-water ratio, more
+aggressive extraction methods such as heavy boil or pressure extraction)
+to recover comparable dissolved-solids yield. Under such
+matched-extraction conditions, the masking-channel effect is what
+differentiates the two regimes.</p>
+<p>This distinction has direct implications for experimental design
+(Section 17): comparing a no-crack roast brewed at conventional
+parameters against a conventional roast brewed at conventional
+parameters confounds the channels and is uninformative about H2.
+Matched-endpoint testing must equalize dissolved-solids load, not just
+brewing-time protocol.</p>
+<h3 id="causal-structure-of-fracture-and-pyrolysis-coupling">Causal
+Structure of Fracture and Pyrolysis Coupling</h3>
+<p>The framework’s path constraint <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>)) ≤ <em>ϵ</em></span>
+treats fracture-suppression as operationally equivalent to
+pyrolysis-product suppression. It is worth being precise about the
+causal structure that licenses this equivalence, because the claim is
+more subtle than it can appear at first reading.</p>
+<p>Fracture and pyrolytic-product formation are governed by different
+physics. Fracture is a <em>mechanical</em> event determined by the
+internal vapor pressure exceeding the bean’s structural integrity: <span
+class="math inline"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub>(<em>t</em>) ≥ <em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub>(<em>M</em>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>)</span>.
+Pyrolytic-product formation is a <em>thermal-chemical</em> phenomenon
+determined by the bean temperature crossing the pyrolytic-onset
+threshold: <span
+class="math inline"><em>T</em><sub><em>b</em></sub>(<em>t</em>) ≥ <em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span>.
+These are not the same event and neither chemically causes the other —
+the mechanical pop is not itself a chemical reaction, and pyrolytic
+decomposition does not require structural failure to proceed.</p>
+<p>The two phenomena are, however, <strong>operationally coupled in the
+observed practitioner regime</strong> by their shared upstream cause:
+trajectories that drive bean temperature above <span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span>
+while moisture remains in the bean also produce internal pressures that
+approach <span
+class="math inline"><em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub></span>,
+and trajectories that produce sustained <span
+class="math inline"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub> ≥ <em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub></span>
+have also typically driven <span
+class="math inline"><em>T</em><sub><em>b</em></sub></span> above <span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub></span>.
+The causal structure is:</p>
+<p><span class="math display">thermal trajectory + moisture
+state + pressure buildup</span></p>
+<p><span class="math display">→  boundary crossing</span></p>
+<p><span class="math display">→  fracture + pyrolysis-product
+acceleration</span></p>
+<p>Fracture and pyrolysis-product acceleration are <em>sibling
+consequences</em> of the same upstream cause, not parent-and-child
+events. The framework’s path constraint <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub> ≤ <em>ϵ</em></span>
+is therefore best read as: <em>manage the trajectory so that the
+upstream boundary crossing does not occur; use acoustic fracture as the
+observable indicator that boundary crossing has occurred, since it is
+the directly-audible sibling of the latent and unmeasurable
+pyrolysis-product accumulation.</em></p>
+<p>This precision matters for two reasons. First, it removes an implicit
+chemical-causation overclaim that would not survive examination: the
+framework does not claim that crack causes pyrolysis. Second, it makes
+the framework’s empirical scope explicit: the operational coupling
+between fracture and pyrolysis-product formation is robust <em>in the
+observed practitioner regime</em> but is not a necessary coupling across
+all possible state-space paths.</p>
+<p>It follows that <strong>the framework presently assumes that acoustic
+fracture is a useful operational surrogate for pyrolysis-product
+accumulation within the practitioner’s observed regime; establishing the
+strength and limits of this correlation is itself a primary experimental
+objective for follow-up work.</strong> The practical effectiveness of
+no-crack roasting depends on this surrogate relationship holding tightly
+— if the correlation between <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub></span> and <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> is loose
+across the practiced regime, the path constraint would not reliably
+control the latent quantity of interest. Quantifying how tightly
+acoustic crack and pyrolysis-product accumulation co-vary across roast
+trajectories, origins, and equipment configurations is one of the
+highest-priority empirical questions the framework opens.</p>
+<h4 id="low-masking-generalization-as-future-work">Low-Masking
+Generalization as Future Work</h4>
+<p>The shared-upstream-cause structure raises an interesting theoretical
+possibility: are there trajectories that decouple fracture from
+pyrolysis-product formation? In principle, yes:</p>
+<ul>
+<li>Aggressive pre-drying trajectories that lower <span
+class="math inline"><em>M</em></span> substantially before <span
+class="math inline"><em>T</em><sub><em>b</em></sub></span> approaches
+<span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub></span>
+could in principle reach pyrolytic temperatures without significant
+fracture, because the pressure-buildup component of the boundary
+crossing would be suppressed by the reduced moisture available for vapor
+formation.</li>
+<li>Very fast pressure-ramp trajectories at sub-pyrolytic temperatures
+could in principle produce fracture without significant
+pyrolysis-product accumulation, if the bean fractured before its
+temperature reached the pyrolytic-onset threshold.</li>
+</ul>
+<p>Such decoupling trajectories are not within the empirical scope of
+the present work and have not been investigated by the practitioner.
+They would constitute alternative implementations of a more general
+principle that might be called <strong>low-masking roasting</strong>:
+managing the trajectory to limit pyrolysis-product accumulation, with
+fracture suppression as one operational approach among possibly several.
+No-crack roasting as developed here remains the primary operational form
+for the observed stovetop regime, because acoustic fracture is the
+practical real-time indicator of boundary crossing under realistic
+hand-roasting control. Whether other regimes admit decoupling
+trajectories that achieve equivalent low-masking outcomes via different
+operational paths is a question for experimental investigation outside
+the present scope.</p>
+<h3 id="three-mechanisms-with-distinct-empirical-signatures">Three
+Mechanisms with Distinct Empirical Signatures</h3>
+<p>H2 is the dominant working hypothesis of this paper, but the
+framework supports three potentially distinct mechanisms by which
+no-crack roasting could improve the cup. They are not mutually
+exclusive, and the experimental program of Section 20 is designed to
+distinguish among them.</p>
+<ul>
+<li><strong>Preservation.</strong> Specific non-ash flavor compounds
+(Maillard intermediates, bean-native volatiles, lipid-derived aromatics)
+are physically protected from pyrolytic degradation by trajectories that
+remain in <span class="math inline"><em>Ω</em></span>. <em>Empirical
+signature</em>: chemical assay of matched-extraction samples shows
+higher levels of these compounds in no-crack roasts than in conventional
+roasts.</li>
+<li><strong>Unmasking</strong> (the H2 mechanism formalized in Sections
+10–12). Compound levels are not substantially different between regimes;
+what differs is the perceptual weight of the pyrolysis-product
+accumulation <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, which masks
+the non-ash envelope in conventional roasts. <em>Empirical
+signature</em>: chemical assay shows similar non-ash compound levels
+across regimes, but matched-extraction sensory panels detect more
+non-ash descriptors per cup and rate them at higher intensity in
+no-crack samples.</li>
+<li><strong>Extraction geometry</strong> (the Section 13 extraction
+channel). Fracture changes the bean’s physical structure — porosity,
+surface area, degassing pathways — in ways that alter compound release
+into brew water. <em>Empirical signature</em>: under fixed brewing
+parameters, no-crack roasts produce under-extracted cups; under
+matched-TDS brewing, this channel contributes no flavor difference. The
+extraction-channel effect is therefore detectable by comparing
+fixed-brewing-parameter results against matched-TDS results.</li>
+</ul>
+<p>The three mechanisms have different observable consequences and
+different falsification routes (Section 20). Preservation requires
+elevated compound levels; unmasking requires lower pyrolysis-product
+accumulation in the presence of comparable compound levels; extraction
+geometry requires the result to disappear under matched-TDS brewing. The
+framework remains agnostic as to the relative magnitudes of the three
+contributions in any given roast; the prediction is only that each
+contributes through a distinguishable channel.</p>
+<h2 id="experimental-observations">14. Experimental Observations</h2>
+<h3 id="operational-evidence-base">Operational Evidence Base</h3>
+<p>The framework developed here is grounded in approximately eight years
+of single-practitioner stovetop roasting practice by the present author,
+comprising several hundred batches across the full target-darkness range
+from light/city through darkest non-burning roast. The empirical scope
+is <strong>stovetop hand-roasting</strong>, not drum or machine
+roasting; all observations in this paper come from the hand-roasting
+configuration described below.</p>
+<p>A note on the role of operational detail in this section. The
+remainder of Section 14 documents specific stovetop technique — six
+control sub-inputs (burner, shake, lift, whisk, breath, pot thermal
+battery), the late-phase pot-battery protocol, the failure mode
+taxonomy, the cooldown-pops-as-quality-indicator finding. This level of
+operational detail is included because it constitutes the empirical
+foundation from which the framework was derived, and because precise
+documentation of the validated method is necessary for any reader who
+wishes to evaluate the empirical basis of the claims. The operational
+detail is therefore the <em>source</em> of the framework, not the
+framework itself. The framework’s claims (Layers 1, 2, 3 of Section 1.1)
+are about state-space structure, observability, and signal-to-masking
+decomposition, all of which are implementation-general; the stovetop
+protocol is one validated instantiation of these claims. Machine-roaster
+configurations and other equipment regimes are expected to support
+corresponding instantiations (Section 16 maps the control surface; the
+drum-roaster analogue of the late-phase pot-battery protocol is given
+there), though experimental validation in those configurations is
+outside the present empirical scope.</p>
+<p>The equipment configuration is intentionally minimal: a
+thick-bottomed pot with a single handle, an open kitchen stove burner
+(gas in the practitioner’s case, though electric coil or induction admit
+the same control structure with adjusted dynamics), and a metal whisk
+used continuously inside the pot during roasting. There is no enclosed
+roasting chamber, no forced airflow system, no programmable temperature
+controller, and no instrumented sensor stack. The roasting environment
+is open to the kitchen.</p>
+<p>The thick-bottomed pot is not incidental equipment. It functions as a
+<strong>thermal battery</strong>: during the burner-driven phase, the
+pot bottom accumulates stored thermal energy at a rate determined by
+burner setting and pot thermal mass; during the late phase of the
+trajectory the pot is removed from the burner but continues to deliver
+heat to the bean mass from this stored energy, with a discharge time
+constant set by pot thermal mass and pot-to-bean heat transfer
+coefficient. This stored-energy delivery is used as a controlled
+completion mechanism (see <em>Late-Phase Protocol</em> below) and is
+essential to reaching the preferred 5–10% <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> contribution
+range. A thin pot would not support this protocol, since burner-off
+would terminate effective heat input immediately.</p>
+<p>The four sensory channels used as state estimators are:</p>
+<ul>
+<li><strong>Nose</strong> — olfactory stage detection (Section 4.2), the
+primary real-time state estimator</li>
+<li><strong>Ears</strong> — audible crack as the constraint-violation
+signal (heard only when admissibility has already been overshot)</li>
+<li><strong>Face</strong> — tactile humidity detection during the drying
+phase (Section 4.2)</li>
+<li><strong>Eyes</strong> — visual color development as the setpoint
+readout</li>
+</ul>
+<p>The four control inputs available to the practitioner are:</p>
+<ul>
+<li><strong>Burner setting</strong> — the primary heat-input rate
+control (knob position on the stove)</li>
+<li><strong>Pot agitation (shake)</strong> — shaking the pot laterally
+during cooking, distributing heat across the bean mass and breaking up
+local hot spots</li>
+<li><strong>Pot-to-burner distance (lift)</strong> — briefly lifting the
+pot off the burner during shaking, instantly reducing effective heat
+input without changing the burner setting</li>
+<li><strong>Whisking vigor</strong> — continuous whisk action inside the
+pot, with whisking vigor (rate and arc) as a continuous parameter
+affecting bean-to-bean heat transfer and overall thermal
+homogeneity</li>
+<li><strong>Direct airflow (breath)</strong> — blowing directly into the
+pot to cool the bean mass, providing an additional fast transient
+heat-output channel independent of burner setting and pot position;
+admissible as a control input and operationally useful for arresting
+Stage 5 / Stage 6 transitions when burner reduction alone is too
+slow</li>
+<li><strong>Pot thermal battery (stored-energy release)</strong> — the
+pot bottom’s accumulated thermal energy during the burner-driven phase
+is released to the bean mass after pot-removal-from-burner, with a long
+discharge time constant set by pot thermal mass and bean-pot heat
+transfer; controlled by the timing of pot-removal (which loads the
+battery to a target state) and by stirring during discharge (which
+modulates the rate of energy transfer); used to deliver the final
+contribution of <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> that achieves
+the preferred 5–10% range</li>
+</ul>
+<p>Fourteen distinct origins were evaluated including coffees from South
+America, Central America, Africa, Indonesia, and Papua New Guinea; no
+qualitative divergence was observed across origins within
+practitioner-sensory resolution.</p>
+<p>The preferred evaluation blend consisted of:</p>
+<ul>
+<li>50% Colombia</li>
+<li>30% Ethiopia</li>
+<li>20% Papua New Guinea</li>
+</ul>
+<p>Observed flavor characteristics appeared directionally consistent
+across origins, though controlled statistical validation remains
+necessary.</p>
+<h3
+id="non-monotonicity-at-low-pyrolysis-product-accumulation">Non-Monotonicity
+at Low Pyrolysis-Product Accumulation</h3>
+<p>The full darkness range achievable under no-crack practice extends
+from light/city through what would be visually classified as darkest
+non-burning roast. Across this range, the practitioner observation is
+that <strong>pyrolysis-product contribution is not monotonically
+undesirable</strong>: at very low <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, the cup
+loses identity as coffee. The darkest end of the no-crack range produces
+a cup with extreme color development but <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> contribution
+below approximately 5% of conventional cracked-roast levels; this cup is
+described by the practitioner as “more like a coffee-flavored tea” — the
+visual identity of coffee is preserved, the non-ash envelope is at
+maximum, but the pyrolysis-product-associated flavors that are part of
+the perceptual category <em>coffee</em> are insufficient.</p>
+<p>This finding refines H2. The operational claim is not <em>minimize
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span></em>
+but <em>find the contextually appropriate <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> value for the
+target roast darkness</em>. Pyrolysis-product accumulation contributes
+positively to coffee identity up to a contextual threshold; beyond that
+threshold it masks. The optimum is an interior point in <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, not a
+corner. Across the practitioner’s roast-darkness range, the optimal
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span> is
+observed to vary with target darkness but remain substantially below the
+conventional cracked-roast value at every darkness level.</p>
+<h3
+id="control-theoretic-structure-of-the-operational-practice">Control-Theoretic
+Structure of the Operational Practice</h3>
+<p>Under stovetop hand-roasting, the operational practice instantiates a
+control-theoretic structure that aligns with the formal model of
+Sections 3 and 16:</p>
+<ul>
+<li><strong>Visual color</strong> functions as the
+<strong>setpoint</strong>: the target color of the finished beans
+defines 100% completion for the batch. The practitioner stakes the
+target color at batch start as the calibration of the endpoint; the
+trajectory is then steered toward that endpoint.</li>
+<li><strong>Olfactory state</strong> (Section 4.2 stage taxonomy)
+functions as the <strong>real-time state estimator</strong>: at every
+moment in the trajectory, the volatile output gives a direct readout of
+whether the system is <em>too hot now</em>, <em>not hot enough to
+progress</em>, or <em>progressing at the right rate</em>. The
+conclusions available from the smell at any given moment are
+operational: increase heat, decrease heat, or hold.</li>
+<li><strong>Heat input</strong> is the <strong>control variable</strong>
+<span class="math inline"><em>u</em>(<em>t</em>)</span>, decomposed in
+stovetop practice into six sub-controls: burner setting, pot shake
+(lateral agitation), pot lift (transient distance from burner), whisking
+vigor (continuous in-pot agitation), direct airflow (breath blown into
+the pot for active cooling), and pot thermal battery (stored-energy
+release after pot-removal-from-burner). These sub-controls have distinct
+response profiles and operate on distinct time scales: burner setting
+sets the slowly-adjustable baseline during the burner-driven phase; pot
+shake, pot lift, and breath all provide fast transient reductions of
+effective heat input, with breath specifically targeting the bean-mass
+surface for direct convective cooling; whisking vigor maintains thermal
+homogeneity throughout and modulates the rate of pot-to-bean energy
+transfer during pot-battery discharge; the pot thermal battery operates
+on a longer time scale than any other control input and is used to
+deliver the final controlled contribution of <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> during the
+late phase. In machine-roaster configurations, this control surface maps
+to burner output, drum rotation speed, airflow rate, chamber-load
+mixing, and post-burner heat-soak management; the present work’s
+empirical validation is limited to the stovetop instantiation.</li>
+<li><strong>Acoustic crack</strong> is not a primary signal at all. It
+is a <strong>downstream proxy for constraint violation</strong>: when
+crack activity becomes audible, the controller has <em>already</em>
+allowed the trajectory to cross the admissible boundary. In skilled
+practice, crack should not be heard; if it is heard, the batch has been
+overshot at that moment, and the controller has failed.</li>
+</ul>
+<p>Within this structure, the failure modes are operationally
+distinguishable:</p>
+<ul>
+<li><strong>Insufficient heat input.</strong> The trajectory stalls:
+olfactory output remains in an earlier stage (Section 4.2) for too long,
+and the target color is approached too slowly or not at all. The batch
+may stall before reaching the target setpoint.</li>
+<li><strong>Excess heat input.</strong> The trajectory crosses into
+pyrolytic onset (Stage 6 of Section 4.2): olfactory output shifts to
+acrid/smoky, <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> accumulates
+rapidly, and acoustic fracture activity follows. The result is excess
+ash flavor and (depending on severity) a batch that is partially or
+fully outside admissibility.</li>
+<li><strong>Successful trajectory.</strong> Heat input is modulated
+continuously such that olfactory output progresses through Stages 1–5
+(Section 4.2) at the appropriate pace to reach the target visual color
+at the moment olfactory Stage 5 reaches its operational peak. Whisking
+maintains thermal homogeneity. Stage 6 onset is detected by smell
+<em>before</em> it would trigger acoustic crack from active
+burner-driven heat input, and the pot is removed from the burner at that
+moment to begin the late-phase pot-battery-driven completion (described
+below).</li>
+</ul>
+<h4 id="the-ash-flavor-selection-phase">The Ash Flavor Selection
+Phase</h4>
+<p>Within the browning regime (Stage 4 onward) the bean mass admits a
+temperature sub-regime in which <span
+class="math inline"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub></span>
+reaches <span
+class="math inline"><em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub></span>
+for individual beans, producing audible fracture events. This sub-regime
+— here called <strong>pop-active browning</strong>, distinguished from
+earlier <strong>pre-pop browning</strong> in which <span
+class="math inline"><em>E</em><sub><em>n</em><em>a</em></sub></span>
+accumulates but <span
+class="math inline"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub></span>
+has not yet reached the fracture threshold — is the <strong>ash flavor
+selection phase</strong>. Popping does not occur during the yellowing
+phase (Stage 3) because bean temperature is still rising through the
+post-wet-bulb regime and has not yet reached fracture-threshold
+conditions; popping is exclusively a browning-phase phenomenon.</p>
+<p>The practitioner’s control task is to titrate the duration of
+pop-active browning. Zero engagement of this phase is associated with
+the reported &lt;5% <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> failure mode
+(the “coffee-flavored tea” cup of the non-monotonicity finding above),
+where the trajectory completes browning to the target visual color
+without any beans crossing the fracture boundary. Sustained engagement
+is associated with the conventional cracked-roast outcome and excess
+<span class="math inline"><em>C</em><sub><em>p</em></sub></span>. The
+preferred 5–10% range (a practitioner sensory estimate; see the
+non-monotonicity discussion above) is reportedly produced by a brief,
+bounded engagement: 2–5 audible pops, after which the trajectory exits
+the pop-active regime.</p>
+<h4 id="late-phase-pot-battery-protocol">Late-Phase Pot-Battery
+Protocol</h4>
+<p>The pop-active phase can in principle be engaged at any point during
+browning. In practice, the operationally preferred implementation is to
+engage it at the tail end of the trajectory using the pot’s thermal
+battery, for reasons of <em>control authority</em> rather than
+mechanism.</p>
+<p>With the burner on during browning, the system has high control
+authority working against the practitioner: heat input rate is large,
+and once one bean crosses the fracture threshold the rate of subsequent
+crossings accelerates rapidly (more beans warming through the threshold
+per unit time, with the active heat input continuously pushing the
+system upward). The interval between first pop and rapid sustained
+popping is short, and landing exactly 2–5 pops requires active
+suppression by burner reduction and other transient controls, with
+narrow margin for error.</p>
+<p>With the burner off at the tail end of the trajectory, the pot’s
+stored thermal energy is on a monotonically declining trajectory: it
+dissipates into the bean mass and from the bean mass outward, with no
+replenishment. Once a small number of beans pop, the system’s total
+embodied heat has already begun decreasing, so the next bean that would
+have popped is now slightly below threshold by the time its turn comes.
+<strong>The pop sequence is self-limiting under pot-battery
+discharge.</strong> This is a qualitatively different control regime
+from burner-driven popping: not just easier, but operating in a
+self-terminating energy budget rather than an open-ended one.</p>
+<p>The tail-end protocol is therefore:</p>
+<ol type="1">
+<li><strong>Burner off, pot to cool stove surface.</strong> Active heat
+input terminates. The pot’s accumulated thermal energy now becomes the
+sole remaining energy source.</li>
+<li><strong>Stir up.</strong> Distribute the stored thermal load across
+the bean mass, exposing interior beans to surface heat and homogenizing
+the temperature distribution.</li>
+<li><strong>Stop stirring; leave.</strong> With the pot off the burner
+and stirring halted, the bean mass equilibrates with the pot bottom over
+a discharge time constant set by pot thermal mass. During this interval
+2–5 audible fracture events occur in the bean mass — the operationally
+desirable pop sequence.</li>
+<li><strong>Stir again.</strong> After the pops subside, resume stirring
+to homogenize the cooling bean mass and prevent any local hot spots from
+sustaining further fracture.</li>
+<li><strong>Cool to threshold.</strong> Continue stirring intermittently
+until the bean mass is below the process temperature threshold; then
+leave to cool passively.</li>
+</ol>
+<p>The 2–5 pops produced by this protocol are an <strong>engineered
+fraction of total <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>
+accumulation</strong>, not constraint-relaxation artifacts. The
+pot-battery discharge delivers a controlled, self-limiting dose of
+pop-active-phase residence time to the bean mass after burner-driven
+heating has stopped. The dose is calibrated by the timing of
+pot-removal-from-burner (which loads the battery to a target state) and
+by stirring discipline during discharge.</p>
+<p>The pop count serves as a <strong>quality indicator</strong> for the
+trajectory. Zero pops indicate the active-phase trajectory ran too
+cautiously and never reached the pop-active sub-regime — the &lt;5%
+failure mode. More than a small bounded number of pops indicate the
+pop-active sub-regime was engaged longer than intended, either via
+mistimed burner-off or excessive stored thermal load — approaching the
+conventional cracked-roast outcome. The 2–5 range is the operational
+signature of a brief, controlled engagement of the ash flavor selection
+phase under self-limiting pot-battery discharge.</p>
+<p>The drying phase (Stages 1–3, Section 4.2) and the post-drying phases
+(Stages 4–5) have qualitatively different control dynamics. During
+drying, the bean is held near the wet-bulb temperature by latent-heat
+absorption, and the burner setting is underdetermined by the state
+within the admissible range; precise control discipline is not required
+during this period because the bean does not respond strongly to small
+variations in heat input. Once the humidity off-gas drops (felt as the
+face sensation diminishing) and <span
+class="math inline"><em>T</em><sub><em>b</em></sub></span> breaks free
+of 100 °C, the trajectory becomes highly responsive to heat input and
+the four control sub-inputs (burner, shake, lift, whisk) all become
+operationally significant. This natural regime transition — from coarse
+control during drying to fine control during browning and development —
+is detected by the practitioner via the combination of olfactory stage
+progression and tactile humidity sensation, without instrumentation.</p>
+<p>This control structure has been validated through the practitioner’s
+operational experience across the full roast-darkness range. It is the
+<strong>primary validated implementation path</strong> for no-crack
+roasting, not a fallback to be used in the absence of
+instrumentation.</p>
+<p><strong>The roast-and-extraction unit.</strong> The framework’s
+perceptual claims are properly understood as claims about the
+<em>coupled roast-and-extraction system</em>, not about the roast alone.
+The practitioner’s operational protocol pairs no-crack roasting with
+aggressive extraction: ultra-fine grind, low coffee-to-water ratio, and
+heavy boil extraction (or equivalent pressure extraction at espresso
+scales). These two halves of the protocol are operationally inseparable.
+A no-crack roast brewed at conventional extraction parameters does not
+fully express the framework’s predicted outcome — it produces a cup that
+may read as thin or under-developed compared to conventional
+expectations, because conventional extraction does not pull enough of
+the non-ash compound population out of the bean to fully populate the
+perceptual foreground. Practitioner experience suggests that aggressive
+extraction is required to bring the bean’s full non-ash flavor envelope
+into the cup; with the ash population reduced to a
+practitioner-estimated 5–10% of conventional levels (a sensory estimate
+of the perceptual signature of <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, not a
+chemical measurement), the framework predicts that aggressive extraction
+populates the cup with the non-ash compounds without simultaneously
+over-extracting an ash dominance — a prediction consistent with the
+practitioner’s repeated observation across origins and roast endpoints,
+though not yet formally validated under blind controlled conditions.</p>
+<p>This coupling has direct implications for experimental design and for
+reader expectations. A skeptical taster who applies
+<em>conventional</em> extraction parameters to a no-crack roast and
+finds the result thin or weak is not testing what the framework claims;
+they are testing whether no-crack roasting can substitute for
+conventional roasting under unchanged brewing protocols, which the
+framework does not predict. The framework’s claim is that <em>under
+matched aggressive extraction</em>, the no-crack roast delivers a cup
+whose perceptual character is dominated by the bean’s non-ash flavor
+envelope rather than by pyrolytic overlay. Sections 13 and 17 develop
+the matched-TDS experimental requirement that follows from this
+coupling.</p>
+<h3 id="epistemic-scope-of-the-operational-evidence">Epistemic Scope of
+the Operational Evidence</h3>
+<p>The operational evidence base supports the following claims at high
+confidence (in the sense of repeated single-practitioner observation
+across hundreds of batches):</p>
+<ul>
+<li>The full target-darkness range from light/city through darkest
+non-burning is achievable under no-crack operation</li>
+<li>Olfactory state estimation + visual color setpoint + continuous
+heat-input control is a feasible implementation of the framework’s
+control structure</li>
+<li>The failure modes (under-development, ash overshoot) are
+distinguishable in real time via olfaction</li>
+<li>At very low <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span>, the cup
+loses identity as coffee even at maximal color development</li>
+</ul>
+<p>It does not, by itself, establish:</p>
+<ul>
+<li>Statistical superiority of no-crack output over conventional roasts
+in formal blind sensory panels (this is the formal H2 falsification test
+of Section 20, not yet conducted)</li>
+<li>The functional form of the optimal <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> as a function
+of target darkness</li>
+<li>Cross-practitioner reproducibility under matched protocols</li>
+<li>Performance under industrial-scale roasting equipment</li>
+</ul>
+<p>The operational evidence is appropriate to establish <em>feasibility
+and characteristic behavior</em> of the method, in the sense in which
+craft practice accumulates knowledge before formal study. Statistical
+and sensory-panel evidence remains future work as outlined in Sections
+17 and 20.</p>
+<h2 id="instrumentation-requirements">15. Instrumentation
+Requirements</h2>
+<p>The framework’s operational implementation has been validated under
+hand-roasting practice using olfactory state estimation and visual color
+setpoint as described in Section 14. Modern instrumentation is therefore
+<em>not a prerequisite</em> for no-crack roasting; it is an extension
+that enables capabilities the hand-roasting implementation does not
+support.</p>
+<p>The historical role of first crack as an operational state estimator
+is filled, under modern roasting, by an instrumentation stack that
+tracks the latent thermochemical state directly rather than through the
+proxy of structural failure. This stack complements rather than replaces
+the human-sensory observables (visual color, olfactory transition,
+tactile feel) that have always been available to roasters; the
+combination of instrumental and sensory channels allows finer-grained
+state tracking than either alone.</p>
+<p>The specific capabilities that instrumentation adds beyond skilled
+hand-roasting include: (i) reproduction of the method by operators
+without the years of practice required to develop reliable olfactory
+state estimation; (ii) quantitative cross-batch and cross-operator
+comparison; (iii) matched-endpoint experimental designs for the formal
+H2 falsification tests of Sections 17 and 20; (iv) automated process
+control at industrial batch scales where direct olfactory monitoring is
+not practical; (v) construction of explicit estimators <span
+class="math inline"><em>P̂</em><sub><em>i</em><em>n</em><em>t</em></sub></span>,
+<span class="math inline"><em>â</em><sub><em>w</em></sub></span>, and
+<span class="math inline"><em>Ĉ</em><sub><em>p</em></sub></span> for the
+latent state variables.</p>
+<p>Future validation should include:</p>
+<h3 id="thermal">Thermal</h3>
+<ul>
+<li>embedded thermocouples</li>
+<li>infrared surface imaging</li>
+<li>surface-core differential measurement</li>
+</ul>
+<h3 id="acoustic">Acoustic</h3>
+<p>Acoustic power density should be measured as:</p>
+<p><span
+class="math display"><em>A</em>(<em>t</em>, <em>ω</em>)</span></p>
+<p>with decomposition across frequency bands.</p>
+<p>Potential categories include:</p>
+<ul>
+<li>microfracture bands</li>
+<li>continuous high-frequency emissions</li>
+<li>fracture impulses</li>
+<li>audible crack events</li>
+</ul>
+<h3 id="mass-transport">Mass Transport</h3>
+<ul>
+<li>real-time mass-loss curves</li>
+<li>drying-rate estimation</li>
+<li>moisture-release profiles</li>
+</ul>
+<h3 id="gas-analysis">Gas Analysis</h3>
+<ul>
+<li>CO</li>
+<li>CO2</li>
+<li>exhaust chemistry</li>
+<li>volatile-compound sampling</li>
+</ul>
+<h2 id="optimal-control-formulation">16. Optimal Control
+Formulation</h2>
+<p>The control input vector <span
+class="math inline"><em>u</em>(<em>t</em>)</span> is a
+substrate-and-equipment-dependent set whose components vary with the
+roasting configuration. The present work’s empirical validation is for
+<strong>stovetop hand-roasting</strong> (Section 14), in which the
+components are:</p>
+<ul>
+<li><strong>burner setting</strong> (primary heat-input rate
+control)</li>
+<li><strong>pot agitation</strong> / shake (lateral mixing)</li>
+<li><strong>pot-to-burner distance</strong> / lift (transient heat-input
+reduction)</li>
+<li><strong>whisking vigor</strong> (continuous in-pot mixing)</li>
+<li><strong>direct airflow</strong> / breath (active convective cooling
+of the bean-mass surface)</li>
+<li><strong>pot thermal battery</strong> (stored-energy release during
+late-phase pot-off completion; long-time-scale control input loaded by
+burner-driven phase and discharged by pot-to-bean heat transfer)</li>
+</ul>
+<p>In <strong>machine-roaster configurations</strong> (drum, fluid-bed,
+spouted-bed), the analogous components are:</p>
+<ul>
+<li>heat input (burner power or heating-element control)</li>
+<li>airflow rate</li>
+<li>drum rotation or fluid-bed velocity</li>
+<li>batch-load mass</li>
+</ul>
+<p>The formalism below is stated for <span
+class="math inline"><em>u</em>(<em>t</em>)</span> generally; the
+optimal-control problem is well-posed under either control surface, but
+the empirical claims of this paper are scoped to the stovetop case.</p>
+<p>The Late-Phase Pot-Battery Protocol of Section 14 admits a direct
+drum-roaster analogue. In a drum-roaster configuration, the equivalent
+implementation is to stop drum rotation at the appropriate moment in
+browning, which cuts the active control input that distributes heat
+through the bean mass while allowing the chamber’s stored thermal energy
+to discharge into the now-static bean column in a self-limiting fashion.
+The 2–5 audible pops occur during this rotation-paused interval;
+rotation is then resumed (with burner off if not already) to re-engage
+forced airflow and drive the bean mass below the process temperature
+threshold. The mechanism is the same as in the stovetop case — cut the
+active control input that pumps energy through the system, allow
+residual stored thermal energy to discharge in a self-limiting fashion,
+count pops, then resume active control for cooldown — with drum rotation
+playing the role that pot-on-burner plays in the stovetop
+instantiation.</p>
+<p>The roasting problem becomes:</p>
+<p><span
+class="math display">max<sub><em>u</em></sub>∫<sub>0</sub><sup><em>T</em></sup><em>J</em>(<em>S</em>(<em>t</em>), <em>Ṡ</em>(<em>t</em>)) <em>d</em><em>t</em></span></p>
+<p>subject to:</p>
+<p><span
+class="math display"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>)) ≤ <em>ϵ</em></span></p>
+<p>with initial condition:</p>
+<p><span
+class="math display"><em>S</em>(0) = <em>S</em><sub>0</sub></span></p>
+<p>and terminal constraints such as:</p>
+<p><span
+class="math display"><em>C</em>(<em>S</em>(<em>T</em>)) = <em>C</em><sub><em>t</em><em>a</em><em>r</em><em>g</em><em>e</em><em>t</em></sub></span></p>
+<p>where <span
+class="math inline"><em>C</em>(<em>S</em>(<em>T</em>))</span> may
+include endpoint color, mass loss, density, expansion ratio, and
+selected chemical proxies.</p>
+<p>Internal pressure enters as a soft penalty through estimated state
+reconstruction rather than as an independent hard constraint:</p>
+<p><span
+class="math display"><em>λ</em><em>P̂</em><sub><em>i</em><em>n</em><em>t</em></sub>(<em>t</em>)</span></p>
+<p>may be included in the objective or penalty term.</p>
+<p>The objective is therefore not temperature tracking but trajectory
+optimization within:</p>
+<p><span
+class="math display"><em>Ω</em> = {<em>S</em> ∣ <em>A</em><sub><em>Ω</em></sub>(<em>S</em>) ≤ <em>ϵ</em>}</span></p>
+<h2 id="comparative-experimental-design">17. Comparative Experimental
+Design</h2>
+<p>Future validation requires matched-endpoint comparisons on both the
+roast and the brew.</p>
+<p><strong>Roast-side controls</strong> (equalizing the bean state at
+end of roasting):</p>
+<ul>
+<li>identical green coffee</li>
+<li>identical batch mass</li>
+<li>identical Agtron color</li>
+<li>matched mass loss</li>
+<li>matched density</li>
+<li>matched expansion ratio</li>
+<li>crack-enabled roast</li>
+<li>crack-suppressed roast</li>
+<li>chemical endpoint class or proxy equivalence</li>
+</ul>
+<p><strong>Brew-side controls</strong> (equalizing what reaches the
+cup):</p>
+<ul>
+<li>matched total dissolved solids (TDS) yield in the brew</li>
+<li>matched extraction percentage (extraction yield by mass of dissolved
+compounds relative to dry coffee mass)</li>
+</ul>
+<p>The brew-side controls are required because of the two-channel
+decomposition in Section 13: fracture’s extraction-channel benefit
+(higher dissolved-solids yield per unit brewing time at fixed
+parameters) is independent of its masking-channel effect. Comparing a
+no-crack roast brewed at conventional parameters against a conventional
+roast brewed at conventional parameters confounds the two channels and
+is uninformative about H2. The no-crack roast may require finer grind,
+lower coffee-to-water ratio, or more aggressive extraction (heavy boil,
+pressure extraction) to achieve TDS-matched brews; this brewing
+adjustment is the operational counterpart of the masked-versus-unmasked
+comparison.</p>
+<p>Agtron alone is insufficient because crack affects porosity, density,
+and extraction structure. A multi-metric endpoint constraint — spanning
+both roast endpoint and brew endpoint — is required to avoid confounding
+structural and extraction differences with chemical and perceptual
+differences.</p>
+<h2 id="phase-boundaries">18. Phase Boundaries</h2>
+<p>Thermochemical phase space may be represented by axes:</p>
+<ul>
+<li><span
+class="math inline"><em>T</em><sub><em>b</em></sub></span></li>
+<li><span class="math inline"><em>M</em></span></li>
+<li><span
+class="math inline"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub></span></li>
+</ul>
+<p>with <span class="math inline"><em>t</em></span> as a trajectory
+parameter.</p>
+<p>The fracture boundary is:</p>
+<p><span
+class="math display"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub> = <em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub>(<em>M</em>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>).</span></p>
+<p>The pyrolysis boundary is:</p>
+<p><span
+class="math display"><em>T</em><sub><em>b</em></sub> &gt; <em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>).</span></p>
+<p>Both <span
+class="math inline"><em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub></span>
+and <span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub></span>
+are assumed to be continuous functions of their arguments on the
+relevant operating domain. Without this assumption, the geometry of
+phase space is undefined and trajectory optimization within <span
+class="math inline"><em>Ω</em></span> is not well-posed.</p>
+<p>Expected qualitative properties include:</p>
+<p><span class="math display">$$
+\frac{\partial P_{fracture}}{\partial \rho_{cell}} &gt; 0
+$$</span></p>
+<p>and:</p>
+<p><span class="math display">$$
+\frac{\partial T_{pyro}}{\partial M} &lt; 0
+$$</span></p>
+<p>The sign of:</p>
+<p><span class="math display">$$
+\frac{\partial P_{fracture}}{\partial M}
+$$</span></p>
+<p>may depend on whether moisture is treated primarily as a plasticizing
+factor, a pressure source, or a structural weakening factor. This
+requires empirical determination rather than assumption.</p>
+<h2 id="failure-modes">19. Failure Modes</h2>
+<p>Potential limitations include:</p>
+<h3 id="underdevelopment">Underdevelopment</h3>
+<ul>
+<li>grassy notes</li>
+<li>enzymatic flavors</li>
+<li>insufficient Maillard progression</li>
+</ul>
+<h3 id="shelf-stability">Shelf Stability</h3>
+<ul>
+<li>altered moisture retention</li>
+<li>altered degassing behavior</li>
+</ul>
+<h3 id="control-fragility">Control Fragility</h3>
+<ul>
+<li>narrow operating margins</li>
+<li>operator sensitivity</li>
+<li>instability near fracture boundaries</li>
+</ul>
+<h3 id="energy-cost">Energy Cost</h3>
+<ul>
+<li>increased roast duration</li>
+<li>reduced throughput</li>
+<li>altered commercial economics</li>
+</ul>
+<h3 id="observability-limits">Observability Limits</h3>
+<ul>
+<li>poor microphone placement</li>
+<li>equipment noise</li>
+<li>low-signal acoustic environments</li>
+<li>weak correlation between acoustic emissions and internal fracture
+proximity</li>
+</ul>
+<h3 id="scalability">Scalability</h3>
+<ul>
+<li>drum systems</li>
+<li>fluid-bed systems</li>
+<li>industrial systems</li>
+</ul>
+<p>may behave differently from conduction-dominant manual methods.</p>
+<h2 id="falsification-criteria">20. Falsification Criteria</h2>
+<p>The framework’s three-layer structure (Section 1.1) implies that
+different empirical observations would falsify different layers. The
+criteria below are grouped by which layer they test. A given observation
+may refute a stronger layer while leaving weaker layers intact.</p>
+<h3 id="layer-1-falsification-operational-feasibility">Layer 1
+Falsification — Operational Feasibility</h3>
+<p>Layer 1 claims that no-crack roasting is feasible across the
+target-darkness range. It would be refuted by:</p>
+<ul>
+<li>failure of independent practitioners to reproduce no-crack outcomes
+under matched protocols across multiple sessions</li>
+<li>operational fragility so severe that the practitioner-validated
+range cannot be extended to other practitioners or other equipment
+configurations even with training</li>
+<li>fundamental thermodynamic impossibility argument showing that the
+proposed feasible region <span class="math inline"><em>Ω</em></span> is
+empty or has measure zero under realistic boundary conditions</li>
+</ul>
+<p>Refutation at Layer 1 would invalidate the entire paper, since Layers
+2 and 3 depend on Layer 1 being achievable. The reported eight-year
+single-practitioner evidence makes this the least likely refutation
+path, but it is logically possible.</p>
+<h3 id="layer-2-falsification-crack-as-proxy-not-mechanism">Layer 2
+Falsification — Crack as Proxy, Not Mechanism</h3>
+<p>Layer 2 claims that acoustic crack functions as an observable proxy
+for thermochemical state progression rather than as a causally required
+developmental event. It would be refuted by:</p>
+<ul>
+<li>demonstration that fracture-event chemistry itself — not merely the
+temperature regime that produces fracture — causally contributes to
+desirable flavor compound formation, independent of the trajectory’s
+thermochemical state</li>
+<li>sensory evidence that no-crack roasts are <em>intrinsically</em>
+incapable of reaching flavor outcomes equivalent or superior to
+matched-endpoint cracked roasts, under any practitioner skill level or
+instrumentation regime</li>
+<li>historical or operational evidence that pre-instrumental roasters
+who used olfactory or visual estimation in place of acoustic milestones
+produced systematically inferior results, indicating that the acoustic
+estimator was not merely one among several but causally privileged</li>
+</ul>
+<p>Refutation at Layer 2 would invalidate the instrumentation reframe
+and the proxy interpretation but leave Layer 1 (operational feasibility)
+intact. The framework would reduce to “an alternative roasting protocol
+exists” without the conceptual claim that conventional roasting was
+relying on a coarse instrument.</p>
+<h3 id="layer-3-falsification-the-masking-hypothesis-h2">Layer 3
+Falsification — The Masking Hypothesis (H2)</h3>
+<p>Layer 3 claims that pyrolysis-product accumulation forms a
+perceptually dominant masking layer whose reduction improves access to
+the bean’s non-ash flavor envelope.</p>
+<p>It is worth distinguishing two epistemic statuses for this claim. The
+<strong>phenomenon</strong> — that no-crack roasts under matched
+aggressive extraction (Section 14) produce a perceptually distinct cup
+in which non-ash flavor character dominates rather than pyrolytic
+overlay — is supported by the practitioner’s hundreds of trials over
+eight years, and the framework predicts perceptual differences large
+enough to be operationally observable without requiring threshold-level
+sensory discrimination. The <strong>formal blind-panel
+demonstration</strong> of this phenomenon, under controlled
+matched-extraction conditions with trained sensory panels and
+statistical power, has not been conducted and remains future work. These
+are distinct things: the phenomenon’s existence is well-supported at the
+practitioner-observation level, but its formal scientific demonstration
+in peer-reviewable form is pending. Layer 3 falsification routes test
+both: whether the phenomenon exists at all (refuted by negative
+blind-panel results), and whether the formal model’s specific structure
+(<span class="math inline"><em>α</em></span> as a single masking
+coefficient, ratio form, etc.) holds.</p>
+<p>Layer 3 would be refuted by:</p>
+<ul>
+<li>matched-extraction sensory panels detect <em>fewer</em> non-ash
+flavor descriptors per cup in no-crack samples than in conventional
+roasts of the same bean</li>
+<li>matched-extraction sensory panels rate non-ash descriptor
+<em>intensity</em> lower in no-crack samples than in conventional
+roasts</li>
+<li>chemical assay of the non-ash compound classes (Maillard products,
+bean-native volatiles, lipid-derived aromatics, etc.) shows
+substantially lower levels in matched-endpoint no-crack samples than in
+conventional ones, indicating that the mechanism is <em>not</em>
+unmasking but rather <em>loss</em> of those compounds under conventional
+roasting</li>
+<li>the perceptual masking coefficient <span
+class="math inline"><em>α</em></span> in Section 10 cannot be calibrated
+to a consistent value across origins and panels — i.e. the
+signal-to-masking ratio fails to behave as a single-parameter
+family</li>
+<li>PAH and pyrolytically-derived compound assay shows no substantial
+reduction in no-crack roasts compared to conventional matched-endpoint
+roasts, indicating that the trajectory-based prediction does not hold
+empirically</li>
+</ul>
+<p>Refutation at Layer 3 would invalidate the masking hypothesis (H2)
+and would invalidate much of the formal kinetic and signal-to-masking
+machinery of Sections 10–11. However, Layers 1 and 2 would survive: a
+reader who concludes that Layer 3 is wrong may still take from the paper
+that no-crack roasting is feasible (Layer 1) and that crack functions as
+an observable proxy rather than a developmental mechanism (Layer 2).</p>
+<h3 id="general-cross-layer-criteria">General Cross-Layer Criteria</h3>
+<p>Some criteria apply across multiple layers and would weaken the
+framework in any combination of refutations:</p>
+<ul>
+<li>no-crack trajectories fail to reproduce across origins or roasting
+platforms (weakens Layer 1 and undermines the generality of Layers
+2–3)</li>
+<li>extraction robustness disappears when density, expansion, and mass
+loss are controlled (weakens Layer 3 specifically, since the
+brewing-channel decomposition of Section 13 depends on the
+masking-channel being the differentiator under matched extraction)</li>
+</ul>
+<p>These outcomes provide clear empirical paths for falsification at
+multiple levels of ambition: operational (Layer 1), instrumentation
+(Layer 2), and sensory/chemical/formal (Layer 3). The layered structure
+means the paper can be partially correct: refutation of the strongest
+layer does not refute the weaker layers, and partial validation of
+weaker layers does not establish the stronger ones.</p>
+<h2 id="discussion">Discussion</h2>
+<p>The principal contribution of this work is not a roasting recipe but
+a formal reframing of roasting itself.</p>
+<p>Rather than treating crack as a developmental target, the framework
+models roasting as constrained trajectory optimization within a
+thermochemical state space.</p>
+<p>Under this interpretation, crack becomes one observable manifestation
+of state-space boundary crossing rather than the organizing principle of
+roast development.</p>
+<p>The key question therefore becomes:</p>
+<p>What flavor-optimal trajectories exist within the feasible region
+that excludes fracture events?</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This paper proposes no-crack roasting as a constrained thermochemical
+optimization paradigm.</p>
+<p>Coffee roasting is modeled as trajectory optimization within a
+feasible state-space region:</p>
+<p><span
+class="math display"><em>Ω</em> = {<em>S</em> ∣ <em>A</em><sub><em>Ω</em></sub>(<em>S</em>) ≤ <em>ϵ</em>}</span></p>
+<p>The central hypothesis is that this fracture-suppressed region
+contains trajectories capable of matching or exceeding crack-inclusive
+roast paths in flavor-relevant objective space under comparable control
+and endpoint constraints.</p>
+<p>If validated, the implications extend beyond a particular roasting
+technique. Crack would cease to function as a developmental milestone
+and instead become one indicator among many describing motion through a
+thermochemical landscape whose governing structure is fundamentally
+continuous rather than event-based.</p>
+<h2 id="appendix-a-observable-and-latent-variables">Appendix A:
+Observable and Latent Variables</h2>
+<p>Observable:</p>
+<ul>
+<li>temperatures</li>
+<li>acoustic spectra</li>
+<li>mass loss</li>
+<li>exhaust composition</li>
+<li>airflow</li>
+<li>chamber humidity</li>
+</ul>
+<p>Latent:</p>
+<ul>
+<li>internal pressure</li>
+<li>water activity</li>
+<li>cellular density</li>
+<li>pore-volume evolution</li>
+</ul>
+<p>with corresponding estimators.</p>
+<h2 id="appendix-b-acoustic-classification">Appendix B: Acoustic
+Classification</h2>
+<p>Class 0: No detectable fracture activity</p>
+<p>Class 1: Microfracture emissions only</p>
+<p>Class 2: Occasional isolated impulses</p>
+<p>Class 3: Partial first crack</p>
+<p>Class 4: Sustained first crack</p>
+<p>Class 5: Second crack</p>
+<h2 id="appendix-c-thermochemical-phase-space">Appendix C:
+Thermochemical Phase Space</h2>
+<p>Axes:</p>
+<ul>
+<li><span
+class="math inline"><em>T</em><sub><em>b</em></sub></span></li>
+<li><span class="math inline"><em>M</em></span></li>
+<li><span
+class="math inline"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub></span></li>
+</ul>
+<p>Trajectory parameter:</p>
+<ul>
+<li><span class="math inline"><em>t</em></span></li>
+</ul>
+<p>Fracture boundary:</p>
+<p><span
+class="math display"><em>P</em><sub><em>i</em><em>n</em><em>t</em></sub> = <em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub>(<em>M</em>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>)</span></p>
+<p>Pyrolysis boundary:</p>
+<p><span
+class="math display"><em>T</em><sub><em>b</em></sub> &gt; <em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span></p>
+<p>Regions:</p>
+<ul>
+<li>feasible region</li>
+<li>pre-crack manifold</li>
+<li>fracture zone</li>
+<li>pyrolysis zone</li>
+</ul>
+<h2 id="appendix-d-representative-curves">Appendix D: Representative
+Curves</h2>
+<ul>
+<li><span
+class="math inline"><em>T</em><sub><em>b</em></sub>(<em>t</em>)</span></li>
+<li><span class="math inline"><em>m</em>(<em>t</em>)</span></li>
+<li><span
+class="math inline"><em>A</em>(<em>t</em>, <em>ω</em>)</span></li>
+<li>drying trajectories</li>
+<li>crack-enabled profiles</li>
+<li>no-crack profiles</li>
+<li>endpoint density and expansion curves</li>
+</ul>
+<h2 id="appendix-e-cross-substrate-generalization">Appendix E:
+Cross-Substrate Generalization</h2>
+<p><strong>Scope note.</strong> This appendix sketches a research
+direction <em>suggested by the formalism</em>. It does not advance
+experimental claims for any substrate other than coffee. The
+candidate-substrate list below should be read as enumerating possible
+directions for future investigation, not as implied extensions already
+supported by evidence. Application of the framework to any non-coffee
+substrate would require per-substrate empirical validation and the
+parameter recalibration described at the end of this appendix.</p>
+<p>The formalism developed in this paper is presented for coffee but is
+substrate-neutral in structure. The signal-to-masking decomposition, the
+acoustic fracture-suppression constraint, and the path-constrained
+optimal control formulation apply in principle to any roasted plant
+material whose flavor development proceeds through Maillard kinetics
+under thermal control and whose endpoint is approached by a structural
+fracture or rupture event.</p>
+<h3 id="substrate-neutral-elements">Substrate-Neutral Elements</h3>
+<p>The following elements of the framework are
+substrate-independent:</p>
+<ul>
+<li>The state structure <span
+class="math inline"><em>S</em> = {<em>T</em><sub><em>b</em></sub>, ∇<em>T</em>, <em>M</em>, <em>P</em><sub><em>i</em><em>n</em><em>t</em></sub>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>, <em>a</em><sub><em>w</em></sub>, <em>C</em><sub><em>p</em></sub>, <em>t</em>}</span>.
+Each component is defined for any plant material under thermal roasting;
+none is coffee-specific in definition.</li>
+<li>The kinetic decomposition <span
+class="math inline"><em>d</em><em>E</em><sub><em>n</em><em>a</em></sub>/<em>d</em><em>t</em> = <em>k</em><sub><em>M</em></sub>(<em>T</em><sub><em>b</em></sub>, <em>a</em><sub><em>w</em></sub>)</span>
+and <span
+class="math inline"><em>d</em><em>C</em><sub><em>p</em></sub>/<em>d</em><em>t</em> = <em>k</em><sub><em>P</em></sub>(<em>T</em><sub><em>b</em></sub>)</span>.
+The Maillard rate <span
+class="math inline"><em>k</em><sub><em>M</em></sub></span> and the
+pyrolytic rate <span
+class="math inline"><em>k</em><sub><em>P</em></sub></span> are general
+food-chemistry quantities; their functional forms differ across
+substrates but their roles in the model do not.</li>
+<li>The signal-to-masking ratio <span
+class="math inline"><em>J</em> = <em>E</em><sub><em>n</em><em>a</em></sub>/(1 + <em>α</em><em>C</em><sub><em>p</em></sub>)</span>.
+Perceptual masking by pyrolysis products is a general property of
+roasted plant material, not coffee-specific.</li>
+<li>The acoustic fracture-suppression constraint <span
+class="math inline"><em>A</em><sub><em>Ω</em></sub>(<em>S</em>(<em>t</em>)) ≤ <em>ϵ</em></span>.
+Any roasted material with an audible fracture, rupture, or expansion
+event admits an analogous acoustic statistic, though the spectral band
+<span
+class="math inline">[<em>ω</em><sub>1</sub>, <em>ω</em><sub>2</sub>]</span>
+and the threshold <span class="math inline"><em>ϵ</em></span> require
+per-substrate calibration.</li>
+<li>The viability-constrained optimal control formulation of Section
+3.</li>
+<li>The three-mechanism distinction of Section 13 (preservation,
+unmasking, extraction geometry).</li>
+</ul>
+<h3 id="candidate-substrates">Candidate Substrates</h3>
+<p>The framework’s mechanism — “fly low” relative to the fracture
+boundary, accept a small residual pyrolysis-product signal, recover the
+non-ash envelope — has plausible application to:</p>
+<ul>
+<li><strong>Grains</strong>: barley (especially roasted-barley beverages
+such as mugicha; malting and dark malt production), wheat, oats, rye,
+spelt</li>
+<li><strong>Rice</strong>: roasted-rice tea (genmaicha), puffed-rice
+products, parched rice</li>
+<li><strong>Maize</strong>: popcorn, parched corn, masa toasting</li>
+<li><strong>Legumes</strong>: soybean (roasted as kinako), chickpeas,
+lupini, lentils, peanuts</li>
+<li><strong>Tree nuts</strong>: almonds, hazelnuts, walnuts, pistachios,
+cashews</li>
+<li><strong>Seeds</strong>: sesame, sunflower, pumpkin, flax</li>
+<li><strong>Other</strong>: cocoa beans, cacao nibs, chicory root,
+carob, dandelion root, lotus seed</li>
+</ul>
+<p>In each case the same structural pattern applies: a thermal regime
+exists below the conventional fracture-or-rupture boundary in which the
+non-ash envelope of the substrate develops while the pyrolysis-product
+accumulation is held to a small contextual contribution.</p>
+<h3 id="per-substrate-recalibration">Per-Substrate Recalibration</h3>
+<p>Application to any non-coffee substrate requires recalibration of the
+following parameters:</p>
+<ul>
+<li><strong>Pyrolysis onset temperature</strong> <span
+class="math inline"><em>T</em><sub><em>p</em><em>y</em><em>r</em><em>o</em></sub>(<em>M</em>)</span>
+and PAH formation thresholds. The coffee-specific values from Houessou
+et al. (2007) and related literature are not transferable to other
+substrates.</li>
+<li><strong>Maillard kinetics</strong> <span
+class="math inline"><em>k</em><sub><em>M</em></sub>(<em>T</em><sub><em>b</em></sub>, <em>a</em><sub><em>w</em></sub>)</span>.
+Different substrates have different sugar/amino-acid profiles and
+therefore different Maillard product spectra and rates.</li>
+<li><strong>Cellular geometry</strong> (<span
+class="math inline"><em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub></span>,
+<span
+class="math inline"><em>V</em><sub><em>p</em><em>o</em><em>r</em><em>e</em></sub></span>)
+and the fracture pressure <span
+class="math inline"><em>P</em><sub><em>f</em><em>r</em><em>a</em><em>c</em><em>t</em><em>u</em><em>r</em><em>e</em></sub>(<em>M</em>, <em>ρ</em><sub><em>c</em><em>e</em><em>l</em><em>l</em></sub>)</span>.
+Bean, kernel, nut, and seed structures differ substantially in their
+mechanical properties and pore architectures.</li>
+<li><strong>Acoustic fracture signature</strong>. Frequency band <span
+class="math inline">[<em>ω</em><sub>1</sub>, <em>ω</em><sub>2</sub>]</span>
+and threshold <span class="math inline"><em>ϵ</em></span> are
+substrate-specific; popping corn, splitting almonds, and rupturing rice
+grains each produce distinct acoustic signatures.</li>
+<li><strong>Perceptual masking coefficient</strong> <span
+class="math inline"><em>α</em></span>. The mapping from
+pyrolysis-product accumulation to perceptual ash dominance is
+substrate-specific and reflects the underlying non-ash envelope’s
+perceptual scale.</li>
+</ul>
+<h3 id="status">Status</h3>
+<p>This appendix records the framework’s claimed generality and
+identifies plausible candidate substrates. It does not advance
+experimental claims for any substrate other than coffee. Experimental
+validation of the framework on any non-coffee substrate, and the
+per-substrate recalibration of the parameters listed above, remain
+future work.</p>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that traditional coffee roasting uses first crack
+as a coarse observable of roast progression. Its nearest external
+comparison fields are craft, observation, cps. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: State estimates and
+sensory protocols remain sensitive to calibration, hidden variables,
+operator judgment, and changing materials; repeatability is not
+universal process control. Telemetry can be complete at the instrumented
+boundary while omitting the causal variable, real-world effect, or
+authority question that matters. Runtime monitors and fallback
+controllers only protect modeled safety envelopes and can fail through
+sensor error, timing assumptions, unsafe recovery, or omitted hazards.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Rudolf E. Kalman. “A New Approach to Linear
+Filtering and Prediction Problems.” <em>Journal of Basic
+Engineering</em> 82(1), 1960, pp. 35-45. DOI: 10.1115/1.3662552.
+https://doi.org/10.1115/1.3662552 <strong>Relationship:</strong>
+Foundational state-estimation predecessor.</p>
+<p><strong>[E2]</strong> Leslie Pack Kaelbling, Michael L. Littman, and
+Anthony R. Cassandra. “Planning and Acting in Partially Observable
+Stochastic Domains.” <em>Artificial Intelligence</em> 101(1-2), 1998,
+pp. 99-134. DOI: 10.1016/S0004-3702(98)00023-X.
+https://doi.org/10.1016/S0004-3702(98)00023-X
+<strong>Relationship:</strong> Predecessor model for acting under
+partial observability; used to compare belief-state control with
+governed epistemic state.</p>
+<p><strong>[E3]</strong> Specialty Coffee Association. <em>Coffee Value
+Assessment and Published Standards</em>.
+https://sca.coffee/research/coffee-standards
+<strong>Relationship:</strong> Industry standard for repeatable
+physical, descriptive, affective, and extrinsic coffee assessment.</p>
+<p><strong>[E4]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E5]</strong> W3C. <em>Trace Context, Level 1</em>. W3C
+Recommendation, 23 November 2021. https://www.w3.org/TR/trace-context/
+<strong>Relationship:</strong> Adjacent distributed tracing standard for
+propagating trace identity across service boundaries.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Event-Driven Craft Processes
+as State-Estimation Problems</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-45D8DDF80127D803</code>;<br />
+source SHA-256<br />
+<code>936C0B8B481E811D204A60C0848B406BFFC90CA7D74711DD45C6A691E1924062</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>A Theory of Agentic
+Observation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20437813</code>;<br />
+source SHA-256<br />
+<code>1D11B8E8A166861E5C0A0FF41300B6D5799F931BE00587DDE6617EC424C17FCB</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Constitutional
+Observability Platform</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-9FC6DF9C2BCB38DA</code>;<br />
+source SHA-256<br />
+<code>D93D41518A823703E1076B02D95D28BD7ADF29D3DC15760E0165E84E28BC70B9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Testing for Deriving
+Observable State of Software Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-BAA7A4A4150F5D66</code>;<br />
+source SHA-256<br />
+<code>0B6AAC8B71DA25E24F7FB4A018692F609096DBA8383C9C8C0AC15F1AF711B3A8</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Epistemic Situational
+Awareness (ESA)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18123102</code>;<br />
+source SHA-256<br />
+<code>D43BD7CF219AB9A6EAF715CFA8CBFA32FCB8A11B8DFCADE004E00595D5F68503</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Robotics</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18750683</code>;<br />
+source SHA-256<br />
+<code>D10DF9B6B7F742D9EEABF01BC5DFC3755BB4EBF548E8CB5F215BB9D94678F514</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The references below are organized by the technical area the present
+work draws on. Citations are stated in standard form so the reader can
+locate the original source.</p>
+<h3 id="coffee-standards-and-sensory-evaluation">Coffee Standards and
+Sensory Evaluation</h3>
+<p>Specialty Coffee Association. (2024). <em>SCA Standard 102-2024:
+Coffee Value Assessment — Sample Preparation and Tasting Mechanics</em>.
+Specialty Coffee Association. Available at <a
+href="https://sca.coffee/research/coffee-standards"
+class="uri">https://sca.coffee/research/coffee-standards</a>.</p>
+<p>Illy, A., &amp; Viani, R. (Eds.). (2005). <em>Espresso Coffee: The
+Science of Quality</em> (2nd ed.). Amsterdam: Academic Press / Elsevier.
+ISBN 978-0-12-370371-2.</p>
+<h3 id="coffee-roasting-modeling-heat-and-mass-transfer">Coffee Roasting
+Modeling — Heat and Mass Transfer</h3>
+<p>Schwartzberg, H. G. (2002). Modeling bean heating during batch
+roasting of coffee beans. In J. Welti-Chanes, G. V. Barbosa-Cánovas,
+&amp; J. M. Aguilera (Eds.), <em>Engineering and Food for the 21st
+Century</em> (pp. 871–892). Boca Raton, FL: CRC Press.</p>
+<p>Heyd, B., Broyart, B., Hernandez, J. A., Valdovinos-Tijerino, B.,
+&amp; Trystram, G. (2007). Physical model of heat and mass transfer in a
+spouted bed coffee roaster. <em>Drying Technology</em>, 25(7–8),
+1243–1248. <a href="https://doi.org/10.1080/07373930701438683"
+class="uri">https://doi.org/10.1080/07373930701438683</a></p>
+<p>Fabbri, A., Cevoli, C., Alessandrini, L., &amp; Romani, S. (2011).
+Numerical model of heat and mass transfer during roasting coffee using
+3D digitised geometry. <em>Procedia Food Science</em>, 1, 742–746. <a
+href="https://doi.org/10.1016/j.profoo.2011.09.112"
+class="uri">https://doi.org/10.1016/j.profoo.2011.09.112</a></p>
+<p>Wang, X., &amp; Lim, L.-T. (2014). A kinetics and modeling study of
+coffee roasting under isothermal conditions. <em>Food and Bioprocess
+Technology</em>, 7(3), 621–632. <a
+href="https://doi.org/10.1007/s11947-013-1159-8"
+class="uri">https://doi.org/10.1007/s11947-013-1159-8</a></p>
+<h3 id="coffee-roasting-chemistry-volatile-and-aroma-compounds">Coffee
+Roasting Chemistry — Volatile and Aroma Compounds</h3>
+<p>Yeretzian, C., Jordan, A., Badoud, R., &amp; Lindinger, W. (2002).
+From the green bean to the cup of coffee: investigating coffee roasting
+by on-line monitoring of volatiles. <em>European Food Research and
+Technology</em>, 214(2), 92–104. <a
+href="https://doi.org/10.1007/s00217-001-0424-7"
+class="uri">https://doi.org/10.1007/s00217-001-0424-7</a></p>
+<p>Yeretzian, C., Opitz, S., Smrke, S., &amp; Wellinger, M. (2019).
+Coffee volatile and aroma compounds — from the green bean to the cup. In
+A. Farah (Ed.), <em>Coffee: Production, Quality and Chemistry</em>
+(pp. 726–770). Cambridge: Royal Society of Chemistry. <a
+href="https://doi.org/10.1039/9781782622437-00726"
+class="uri">https://doi.org/10.1039/9781782622437-00726</a></p>
+<p>Sunarharum, W. B., Williams, D. J., &amp; Smyth, H. E. (2014).
+Complexity of coffee flavor: a compositional and sensory perspective.
+<em>Food Research International</em>, 62, 315–325. <a
+href="https://doi.org/10.1016/j.foodres.2014.02.030"
+class="uri">https://doi.org/10.1016/j.foodres.2014.02.030</a></p>
+<h3 id="pyrolysis-and-pah-formation-in-roasting">Pyrolysis and PAH
+Formation in Roasting</h3>
+<p>Houessou, J. K., Maloug, S., Leveque, A.-S., Delteil, C., Heyd, B.,
+&amp; Camel, V. (2007). Effect of roasting conditions on the polycyclic
+aromatic hydrocarbon content in ground Arabica coffee and coffee brew.
+<em>Journal of Agricultural and Food Chemistry</em>, 55(23), 9719–9726.
+<a href="https://doi.org/10.1021/jf071745s"
+class="uri">https://doi.org/10.1021/jf071745s</a></p>
+<p>Orecchio, S., Ciotti, V. P., &amp; Culotta, L. (2009). Polycyclic
+aromatic hydrocarbons (PAHs) in coffee brew samples: Analytical method
+by GC-MS, profile, levels and sources. <em>Food and Chemical
+Toxicology</em>, 47(4), 819–826. <a
+href="https://doi.org/10.1016/j.fct.2009.01.011"
+class="uri">https://doi.org/10.1016/j.fct.2009.01.011</a></p>
+<h3 id="acoustic-emission-and-fracture-monitoring">Acoustic Emission and
+Fracture Monitoring</h3>
+<p>Grosse, C. U., &amp; Ohtsu, M. (Eds.). (2008). <em>Acoustic Emission
+Testing: Basics for Research — Applications in Civil Engineering</em>.
+Berlin Heidelberg: Springer-Verlag. <a
+href="https://doi.org/10.1007/978-3-540-69972-9"
+class="uri">https://doi.org/10.1007/978-3-540-69972-9</a></p>
+<h3 id="heat-transfer-and-food-process-engineering">Heat Transfer and
+Food Process Engineering</h3>
+<p>Incropera, F. P., DeWitt, D. P., Bergman, T. L., &amp; Lavine, A. S.
+(2011). <em>Fundamentals of Heat and Mass Transfer</em> (7th ed.).
+Hoboken, NJ: John Wiley &amp; Sons. ISBN 978-0-470-50197-9.</p>
+<p>Singh, R. P., &amp; Heldman, D. R. (2014). <em>Introduction to Food
+Engineering</em> (5th ed.). London: Academic Press / Elsevier. ISBN
+978-0-12-398530-9.</p>
+<h3 id="optimal-control-and-state-estimation">Optimal Control and State
+Estimation</h3>
+<p>Bryson, A. E., &amp; Ho, Y.-C. (1975). <em>Applied Optimal Control:
+Optimization, Estimation, and Control</em> (Rev. ed.). Washington, DC:
+Hemisphere Publishing.</p>
+<p>Kirk, D. E. (2004). <em>Optimal Control Theory: An Introduction</em>.
+Mineola, NY: Dover Publications. ISBN 978-0-486-43484-1.</p>
+<h3 id="viability-theory-comparator-formalism-section-3">Viability
+Theory (Comparator Formalism, Section 3)</h3>
+<p>Aubin, J.-P. (1991). <em>Viability Theory</em>. Systems &amp;
+Control: Foundations &amp; Applications. Boston: Birkhäuser. ISBN
+978-0-8176-3571-8.</p>
+<p>Aubin, J.-P., Bayen, A. M., &amp; Saint-Pierre, P. (2011).
+<em>Viability Theory: New Directions</em> (2nd ed.). Berlin Heidelberg:
+Springer. <a href="https://doi.org/10.1007/978-3-642-16684-6"
+class="uri">https://doi.org/10.1007/978-3-642-16684-6</a></p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20724254">10.5281/zenodo.20724254</a></p>

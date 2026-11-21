@@ -1,0 +1,409 @@
+<h1 id="constitutional-syscalls">Constitutional Syscalls</h1>
+<h2 id="explicit-authority-contracts-for-system-interaction">Explicit
+Authority Contracts for System Interaction</h2>
+<h3
+id="as-computation-moves-into-virtualized-sandboxed-replayable-and-distributed-domains-that-presumption-becomes-unstable.">As
+computation moves into virtualized, sandboxed, replayable, and
+distributed domains, that presumption becomes unstable.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Classical system calls fuse mechanism and jurisdiction: an operation
+and its permission are inseparable, presuming a privileged kernel as the
+sole authority over execution reality. As computation moves into
+virtualized, sandboxed, replayable, and distributed domains, that
+presumption becomes unstable.</p>
+<p>This paper reconceptualizes the system call as a contracted authority
+crossing - a typed request mediated by explicit admissibility rules. A
+constitutional boundary separates what can be done from what may be done
+here and now. Each call is evaluated under a contract defining its
+semantics, authority requirements, and admissible outcomes: execution,
+simulation, deferral, or refusal. Refusal is not failure but a
+legitimate, typed result carrying structured explanation.</p>
+<p>We formalize this model with a minimal admissibility function and
+extend it to multi-authority chains. Using graphical user interface
+(GUI) operations as a stress test, we demonstrate temporal portability,
+deterministic replay, and auditable refusal across heterogeneous
+authorities. Execution semantics evolve from trap to adjudication: the
+system no longer merely obeys instructions; it interprets them under
+contract.</p>
+<hr />
+<h2 id="from-trap-to-adjudication">1. From Trap to Adjudication</h2>
+<p>The classical syscall model treats a system call as a privileged trap
+into a kernel that owns execution reality. User code invokes; the kernel
+decides; the machine complies. Authority is implicit in position -
+kernel space is legitimate, user space is constrained.</p>
+<p>This model has been remarkably effective. Yet it embeds a strong
+ontological assumption: that there exists a single jurisdiction
+grounding all legitimate system actions.</p>
+<p>As execution environments diversify - virtual machines, WebAssembly
+runtimes, replay engines, distributed hosts - that presumption becomes
+unstable. The same syscall may be interpretable, simulatable,
+deferrable, or inadmissible depending on context.</p>
+<p>The thesis of this paper is precise:</p>
+<blockquote>
+<p>System calls should be understood not as privileged traps, but as
+constitutional boundary crossings - requests adjudicated under explicit
+authority contracts.</p>
+</blockquote>
+<p>This reframing moves execution semantics from trap to
+adjudication.</p>
+<hr />
+<h2 id="mechanism-and-jurisdiction">2. Mechanism and Jurisdiction</h2>
+<p>The instability arises from conflating two concerns:</p>
+<p><strong>Mechanism</strong> - how an operation could be performed</p>
+<p><strong>Jurisdiction</strong> - whether an operation is permitted
+under a specific authority and contract</p>
+<p>Traditional OS design binds these together. If the kernel understands
+how to perform an operation, it is presumed authorized to do so.</p>
+<p>In modern layered systems, this presumption fails. A replay engine
+may understand file I/O but refuse execution to preserve determinism. A
+sandbox may know how to open sockets but lack jurisdiction to permit
+it.</p>
+<p>Separating mechanism from jurisdiction allows a precise
+formulation:</p>
+<p>Admissibility is an explicit function, not an implicit
+assumption.</p>
+<hr />
+<h2 id="redefining-the-system-call-boundary">3. Redefining the System
+Call Boundary</h2>
+<p>We propose:</p>
+<blockquote>
+<p>A system call is a typed request to cross an authority boundary,
+governed by an explicit contract, whose outcome may be execution,
+simulation, deferral, or refusal.</p>
+</blockquote>
+<p>Three consequences follow.</p>
+<ol type="1">
+<li><p><strong>Boundary-Defined Meaning</strong> The syscall’s semantics
+are defined at the boundary contract, not by a specific kernel
+implementation</p></li>
+<li><p><strong>Contract-Stabilized Interpretation</strong> Arguments and
+required authority levels are declared in versioned contracts</p></li>
+<li><p><strong>Refusal as Correct Behavior</strong> Refusal is a
+first-class, typed outcome with structured reason</p></li>
+</ol>
+<h3
+id="figure-1.-constitutional-boundary-and-admissible-outcomes">Figure 1.
+Constitutional boundary and admissible outcomes</h3>
+<pre><code>User Code -&gt; [Authority Boundary]
+                v
+        execute | simulate | defer | refuse</code></pre>
+<p>Each arrow represents a possible adjudication under contract.
+“Refuse” completes the set, closing open-ended failure into structured
+accountability. Outcomes are exclusive per boundary evaluation but may
+be sequenced across layered authorities.</p>
+<hr />
+<h2 id="minimal-constitutional-formalism">4. Minimal Constitutional
+Formalism</h2>
+<p>We define:</p>
+<pre><code>Syscall := {
+  op : OperationType,
+  args : TypedArguments,
+  required_authority : AuthorityLevel,
+  contract_id : ContractIdentifier
+}</code></pre>
+<pre><code>Authority := {
+  level : AuthorityLevel,
+  capabilities : Set[OperationType],
+  policies : Set[Constraints],
+  contract_registry : Set[ContractIdentifier]
+}</code></pre>
+<p>Define the admissibility function:</p>
+<p><span
+class="math display">Admissibility : Syscall × Authority → Outcome × Reason</span></p>
+<p>where <span
+class="math inline">Outcome ∈ {execute, simulate, defer, refuse}</span></p>
+<p>Reason is structured metadata:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">&quot;outcome&quot;</span><span class="fu">:</span><span class="st">&quot;refuse&quot;</span><span class="fu">,</span><span class="dt">&quot;reason&quot;</span><span class="fu">:</span><span class="st">&quot;insufficient_authority&quot;</span><span class="fu">}</span></span></code></pre></div>
+<p><span
+class="math inline">Admissibility(<em>S</em>, <em>A</em>)</span>
+yields:</p>
+<ul>
+<li><strong>execute</strong> if authority level, capability, and policy
+constraints are satisfied</li>
+<li><strong>simulate</strong> if execution is disallowed but simulation
+is contractually defined</li>
+<li><strong>defer</strong> if temporal or environmental preconditions
+are unmet</li>
+<li><strong>refuse</strong> otherwise</li>
+</ul>
+<p>Refusal is not exceptional. It is constitutional.</p>
+<h3 id="contract-provisioning">Contract Provisioning</h3>
+<p>The <code>contract_registry</code> is provisioned externally - at
+runtime instantiation via trusted loader, cryptographic signature
+verification, or authority bootstrap configuration. Contracts are
+versioned and auditable; authorities may refuse calls with unsupported
+contract identifiers.</p>
+<p>This prevents circular self-authorization.</p>
+<hr />
+<h2 id="multi-authority-composition">5. Multi-Authority Composition</h2>
+<p>Layered systems introduce authority chains:</p>
+<p><span
+class="math display"><em>A</em><sub>1</sub> → <em>A</em><sub>2</sub> → ⋯ → <em>A</em><sub><em>n</em></sub></span></p>
+<p>For example: Replay Engine -&gt; Runtime -&gt; Kernel -&gt;
+Hardware.</p>
+<p>Define sequential evaluation:</p>
+<p><span
+class="math display">Admissibility<sup>*</sup>(<em>S</em>, [<em>A</em><sub>1</sub>…<em>A</em><sub><em>n</em></sub>])</span></p>
+<pre><code>for i from 1 to n:
+    (outcome_i, reason_i) = Admissibility(S, A_i)
+    if outcome_i != execute:
+        return (outcome_i, reason_i)
+
+return (execute, {&quot;reason&quot;: &quot;all_authorities_admit&quot;})</code></pre>
+<p>Thus:</p>
+<ul>
+<li>Refusal by any authority terminates evaluation</li>
+<li>Simulation or deferral may occur at intermediate layers</li>
+<li>Execution requires unanimous admissibility</li>
+</ul>
+<p>This model supports layered governance without ambiguity.</p>
+<hr />
+<h2 id="gui-as-stress-test">6. GUI as Stress Test</h2>
+<p>Graphical user interface operations require long-lived state,
+asynchronous events, and partial execution.</p>
+<p>Under the classical trap model, GUI semantics accrete in user-space
+servers.</p>
+<p>Under constitutional boundaries:</p>
+<ul>
+<li>A replay authority may simulate</li>
+<li>A sandbox may refuse</li>
+<li>A runtime may defer</li>
+<li>A kernel may execute</li>
+</ul>
+<p>The same contract governs all layers.</p>
+<p>The complexity is adjudicated, not obscured.</p>
+<hr />
+<h2 id="relation-to-prior-systems">7. Relation to Prior Systems</h2>
+<p>Constitutional syscalls generalize:</p>
+<ul>
+<li><strong>Capability systems</strong> - where authority is explicit
+and token-bound</li>
+<li><strong>Reference monitor theory</strong> - where decisions are
+centralized and enforceable</li>
+<li><strong>seL4 and microkernels</strong> - which separate mechanism
+from policy</li>
+<li><strong>WASI and WebAssembly runtimes</strong> - which abstract host
+functionality via explicit host functions</li>
+</ul>
+<p>The extension lies in elevating the decision function itself to a
+typed, inspectable object with structured outcomes.</p>
+<hr />
+<h2 id="cost-and-overhead">8. Cost and Overhead</h2>
+<p>Explicit admissibility introduces cost:</p>
+<ul>
+<li>Additional boundary evaluation</li>
+<li>Structured logging</li>
+<li>Contract version negotiation</li>
+<li>Authority chain traversal</li>
+</ul>
+<p>These costs resemble measured IPC and capability-check overheads in
+microkernel systems such as seL4.</p>
+<p>The tradeoff is explicit adjudication for implicit assumption.</p>
+<p>Where classical syscalls risk undefined or silent failure,
+constitutional syscalls incur overhead to ensure structured refusal and
+replayable decisions.</p>
+<hr />
+<h2 id="architectural-consequences">9. Architectural Consequences</h2>
+<p>The model enables:</p>
+<ul>
+<li>Kernel-optional primary authorities</li>
+<li>Deterministic replay with structured logs</li>
+<li>Multi-jurisdiction enforcement</li>
+<li>Explicit failure-closed semantics</li>
+</ul>
+<p>It parallels invariant descent patterns: authority evaluation moves
+from advisory logic into substrate enforcement. A natural extension is
+to treat any reality-touching effect—GUI, I/O, time, networking—as a
+constitutional boundary crossing, keeping the computational core
+effect-pure.</p>
+<hr />
+<h2 id="constitutional-logging-and-replay">10. Constitutional Logging
+and Replay</h2>
+<p>A minimal audit structure:</p>
+<pre><code>ConstitutionalLog := {
+  syscall : Syscall,
+  outcome : Outcome,
+  reason : Reason,
+  contract_id : ContractIdentifier,
+  timestamp : Time
+}</code></pre>
+<p>Such logs support deterministic replay, auditability, and governance
+traceability.</p>
+<p>Future work includes partial static reasoning: verifying
+admissibility constraints from declared contracts prior to execution,
+analogous to type checking.</p>
+<hr />
+<h2 id="conclusion">11. Conclusion</h2>
+<p>Classical systems treat syscalls as privileged traps.</p>
+<p>Constitutional systems treat syscalls as governed authority
+crossings.</p>
+<p>In constitutional execution environments, refusal is no longer an
+error - it is part of correct behavior.</p>
+<p>By separating mechanism from jurisdiction and formalizing
+admissibility as a structured function, execution becomes accountable
+across layered authorities.</p>
+<p>The machine does not merely execute. It adjudicates.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that classical system calls fuse mechanism and
+jurisdiction: an operation and its permission are inseparable, presuming
+a privileged kernel as the sole authority over execution reality. Its
+nearest external comparison fields are security, formal, cps. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. Formal assurance remains relative to the encoded model,
+trusted base, and refinement chain; proof does not remove specification
+error or unmodeled environmental behavior. Runtime monitors and fallback
+controllers only protect modeled safety envelopes and can fail through
+sensor error, timing assumptions, unsafe recovery, or omitted hazards.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E2]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E3]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E6]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E7]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18737229">10.5281/zenodo.18737229</a></p>

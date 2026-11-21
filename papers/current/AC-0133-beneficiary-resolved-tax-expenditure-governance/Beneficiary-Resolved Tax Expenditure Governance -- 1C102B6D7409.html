@@ -1,0 +1,485 @@
+<h1
+id="beneficiary-resolved-tax-expenditure-governance">Beneficiary-Resolved
+Tax Expenditure Governance</h1>
+<h2
+id="a-governance-substrate-for-tracing-public-subsidy-into-enterprise-utility-or-taxable-personal-utility">A
+Governance Substrate for Tracing Public Subsidy into Enterprise Utility
+or Taxable Personal Utility</h2>
+<h3 id="every-subsidized-path-must-land-somewhere">“Every Subsidized
+Path Must Land Somewhere”</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Beneficiary-Resolved Tax Expenditure Governance models tax
+expenditures as public subsidy flows. Each subsidized transaction or
+asset event <span class="math inline">(<em>X</em>)</span> is represented
+in a benefit graph <span
+class="math inline">(<em>G</em> = (<em>V</em>, <em>A</em>, <em>τ</em>, <em>μ</em>, <em>π</em>))</span>
+with typed edges, evidence weights, and provenance bindings. Every
+subsidized path terminates in an enterprise sink, personal sink, escrow
+sink, refusal sink, or appealable conversion sink. The framework
+composes tax expenditure theory, IRC §§61/162/167/274, fringe-benefit
+doctrine, economic substance, FATCA/CRS-style beneficiary resolution,
+and VAT/input-credit logic.</p>
+<h2 id="claim-and-bound">1. Claim and Bound</h2>
+<p>BRTEG governs access to public subsidy, not general consumption.</p>
+<p>The framework is bounded in four ways.
+<strong>Substantively</strong>, it traces only subsidized flows —
+transactions and asset events that receive tax-preferred treatment — and
+is silent on after-tax economic activity. <strong>Doctrinally</strong>,
+it is a governance substrate, not a tax-code redesign: it operates
+within existing statutory categories (IRC §§61, 162, 167, 274) rather
+than altering them. <strong>Epistemically</strong>, its core theorem
+holds only under complete evidence, bounded MAC and attribution error,
+and enforced conversion; outside these conditions it falls back to safe
+harbor, escrow, or human review. <strong>Definitionally</strong>, it
+does not attempt to resolve irreducibly ambiguous benefit zones —
+diffuse brand value, morale, reputation, research spillovers, and mixed
+social/professional utility — but routes them to declared fallbacks.</p>
+<pre class="text"><code>subsidy flow
+-&gt; graph attribution
+-&gt; enterprise utility or taxable personal utility
+-&gt; escrow/refusal/conversion when unresolved or inadmissible</code></pre>
+<h2 id="doctrinal-anchoring">2. Doctrinal Anchoring</h2>
+<ul>
+<li><p><strong>Claim:</strong> Tax preference as subsidy<br />
+<strong>Anchor:</strong> Surrey<br />
+<strong>Function:</strong> subsidy treatment</p></li>
+<li><p><strong>Claim:</strong> Converted benefit as income<br />
+<strong>Anchor:</strong> IRC §61<br />
+<strong>Function:</strong> inclusion</p></li>
+<li><p><strong>Claim:</strong> Enterprise necessity<br />
+<strong>Anchor:</strong> IRC §162<br />
+<strong>Function:</strong> substantiation</p></li>
+<li><p><strong>Claim:</strong> Asset-use requirement<br />
+<strong>Anchor:</strong> IRC §167<br />
+<strong>Function:</strong> recapture</p></li>
+<li><p><strong>Claim:</strong> Meals/travel limits<br />
+<strong>Anchor:</strong> IRC §274<br />
+<strong>Function:</strong> admissibility priors</p></li>
+<li><p><strong>Claim:</strong> Substance over form<br />
+<strong>Anchor:</strong> Economic substance<br />
+<strong>Function:</strong> anti-relabeling</p></li>
+<li><p><strong>Claim:</strong> Human beneficiary resolution<br />
+<strong>Anchor:</strong> FATCA/CRS<br />
+<strong>Function:</strong> ownership tracing</p></li>
+<li><p><strong>Claim:</strong> Transaction governance<br />
+<strong>Anchor:</strong> VAT/input credits<br />
+<strong>Function:</strong> admissibility rails</p></li>
+</ul>
+<h2 id="notation">3. Notation</h2>
+<p><span class="math inline">(<em>X</em>)</span>: transaction or asset
+event.</p>
+<p><span class="math inline">(<em>B</em>(<em>t</em>))</span>: total
+utility.</p>
+<p><span class="math inline">(<em>E</em>(<em>t</em>))</span>: enterprise
+utility.</p>
+<p><span class="math inline">(<em>P</em>(<em>t</em>))</span>: personal
+utility.</p>
+<p><span
+class="math inline">(<em>P̂</em><sub><em>i</em></sub>(<em>t</em>))</span>:
+normalized allocation share.</p>
+<p><span
+class="math inline">(<em>G</em> = (<em>V</em>, <em>A</em>, <em>τ</em>, <em>μ</em>, <em>π</em>))</span>:
+benefit graph.</p>
+<p><span class="math inline">(<em>τ</em>)</span>: edge type.</p>
+<p><span class="math inline">(<em>μ</em>)</span>: evidence weight.</p>
+<p><span class="math inline">(<em>π</em>)</span>: provenance
+binding.</p>
+<p><span class="math inline">(<em>f</em><sub><em>θ</em></sub>)</span>:
+attribution function.</p>
+<p><span class="math inline">(<em>δ</em>)</span>: decision error
+bound.</p>
+<p><span class="math inline">(<em>ϵ</em><sub><em>M</em></sub>)</span>:
+MAC estimation error.</p>
+<p><span class="math inline">(<em>ϵ</em><sub><em>P</em></sub>)</span>:
+attribution error.</p>
+<p><span
+class="math inline">(<em>ϵ</em> = <em>ϵ</em><sub><em>M</em></sub> + <em>ϵ</em><sub><em>P</em></sub>)</span>.</p>
+<p><span
+class="math inline">(<em>Q</em><sub><em>α</em></sub>(MAC))</span>:
+conditional MAC baseline.</p>
+<p><span class="math inline">(<em>L</em>)</span>: luxury excess.</p>
+<p><span class="math inline">(<em>r</em>)</span>: conversion tax
+rate.</p>
+<p><span
+class="math display"><em>B</em>(<em>t</em>) = <em>E</em>(<em>t</em>) + <em>P</em>(<em>t</em>)</span></p>
+<p><span class="math display">$$
+\sum_i \hat{P}_i(t)=\frac{P(t)}{B(t)}
+$$</span></p>
+<h2 id="operational-attribution">4. Operational Attribution</h2>
+<p>Utility is operationalized from observable feature families, not
+subjective claims.</p>
+<p>A declarative label establishes enterprise necessity only if
+supported by independent evidence.</p>
+<h2 id="benefit-graph">5. Benefit Graph</h2>
+<p><span
+class="math display"><em>G</em> = (<em>V</em>, <em>A</em>, <em>τ</em>, <em>μ</em>, <em>π</em>)</span></p>
+<p>Minimum edge schema:</p>
+<pre class="text"><code>source
+target
+tau
+mu
+pi
+time
+purpose
+model version</code></pre>
+<p>Conservation:</p>
+<p><span
+class="math display">∑<sub><em>a</em> ∈ <em>i</em><em>n</em>(<em>v</em>)</sub><em>w</em><sub><em>a</em></sub> = ∑<sub><em>a</em> ∈ <em>o</em><em>u</em><em>t</em>(<em>v</em>)</sub><em>w</em><sub><em>a</em></sub></span></p>
+<p>for all non-source, non-sink nodes.</p>
+<p>Valid sinks:</p>
+<pre class="text"><code>enterprise
+personal
+escrow
+refusal
+appealable conversion</code></pre>
+<h2 id="identifiability">6. Identifiability</h2>
+<p>Unique attribution exists iff sufficient evidence, finite
+beneficiaries, and consistent edge algebra permit computation of <span
+class="math inline">(<em>f</em><sub><em>θ</em></sub>(<em>G</em>, ℛ, <em>t</em>))</span>
+within <span class="math inline">(<em>δ</em>)</span>.</p>
+<p>Otherwise:</p>
+<p><span
+class="math display">[<em>P̂</em>] = <em>P̂</em><sup>(1)</sup>, ..., <em>P̂</em><sup>(<em>k</em>)</sup></span></p>
+<p>and bounded pessimism selects the least over-attributing admissible
+allocation.</p>
+<h2 id="minimum-adequate-cost">7. Minimum Adequate Cost</h2>
+<p><span
+class="math display"><em>Q</em><sub><em>α</em></sub>(MAC)</span></p>
+<p>is the conditional adequate-cost quantile for a similarly situated
+enterprise.</p>
+<p><span
+class="math display"><em>L</em> = max (0, <em>C</em> − <em>Q</em><sub><em>α</em></sub>(MAC))</span></p>
+<p>Quantiles reduce heavy-tail and thin-market manipulation.</p>
+<h2 id="temporal-rule">8. Temporal Rule</h2>
+<p>Utility attribution is accrual-based; conversion may occur at
+point-of-sale, reconciliation, or audit finalization; deferred benefits
+require lifecycle reconciliation.</p>
+<h2 id="provenance-and-privacy">9. Provenance and Privacy</h2>
+<p>Artifacts:</p>
+<pre class="text"><code>purpose declaration
+receipt
+usage record
+ownership attestation
+beneficiary attestation
+attribution record
+decision record
+appeal record</code></pre>
+<p>Decision output:</p>
+<p><span
+class="math display">(ℛ<sup>′</sup>, <em>f</em><sub><em>θ</em></sub>, <em>P̂</em>, <em>δ</em>)</span></p>
+<p>Internal adjudication may use sensitive data; public disclosure is
+limited to aggregates, hashes, and model statistics.</p>
+<h2 id="architecture">10. Architecture</h2>
+<pre class="text"><code>Policy: thresholds, purposes, MAC baselines.
+Execution: evidence capture, attribution, reporting.
+Trusted oracle: binding determinations.
+Nonbinding oracle: evidence, priors, estimates.</code></pre>
+<h2 id="safe-harbor">11. Safe Harbor</h2>
+<p>Apply standardized treatment whenever:</p>
+<p><span
+class="math display"><em>C</em> &lt; <em>τ</em><sub><em>s</em></sub></span></p>
+<p>or</p>
+<p><span
+class="math display">Var(<em>P̂</em>) &lt; <em>ϵ</em><sub><em>s</em></sub></span></p>
+<p>where <span
+class="math inline">(<em>τ</em><sub><em>s</em></sub>)</span> is the
+published de minimis threshold and <span
+class="math inline">(<em>ϵ</em><sub><em>s</em></sub>)</span> is the
+published attribution-variance threshold.</p>
+<h2 id="worked-example">12. Worked Example</h2>
+<p>Mixed-use vehicle:</p>
+<pre class="text"><code>Actual cost C:            $24,000
+Q_alpha(MAC):                  $15,000
+Enterprise share:         60%
+Personal share:           40%</code></pre>
+<p>Result:</p>
+<pre class="text"><code>Enterprise admission:     $9,000
+Total conversion:         $15,000</code></pre>
+<p>Appeal:</p>
+<pre class="text"><code>Corrected usage records reduce personal share to 30%.
+
+30% &lt; rho
+
+Recapture avoided.
+Conversion reduced.
+State:
+CONVERTED -&gt; APPEALED -&gt; REVERSED -&gt; FINAL</code></pre>
+<h2 id="attack-model">13. Attack Model</h2>
+<ul>
+<li><p><strong>Evasion:</strong> Fragmentation<br />
+<strong>Signal:</strong> threshold clustering<br />
+<strong>Mitigation:</strong> beneficial-owner aggregation<br />
+<strong>Residual Risk:</strong> unrelated collusion</p></li>
+<li><p><strong>Evasion:</strong> Proxy beneficiaries<br />
+<strong>Signal:</strong> recurring indirect access<br />
+<strong>Mitigation:</strong> ownership/control graph<br />
+<strong>Residual Risk:</strong> informal proxies</p></li>
+<li><p><strong>Evasion:</strong> MAC inflation<br />
+<strong>Signal:</strong> comparator outliers<br />
+<strong>Mitigation:</strong> conditional MAC datasets<br />
+<strong>Residual Risk:</strong> thin markets</p></li>
+<li><p><strong>Evasion:</strong> Time shifting<br />
+<strong>Signal:</strong> usage drift<br />
+<strong>Mitigation:</strong> lifecycle reconciliation<br />
+<strong>Residual Risk:</strong> long horizons</p></li>
+<li><p><strong>Evasion:</strong> Relabeling<br />
+<strong>Signal:</strong> purpose/usage mismatch<br />
+<strong>Mitigation:</strong> independent evidence<br />
+<strong>Residual Risk:</strong> fabricated narratives</p></li>
+<li><p><strong>Evasion:</strong> Graph inflation<br />
+<strong>Signal:</strong> excessive path complexity<br />
+<strong>Mitigation:</strong> regularization<br />
+<strong>Residual Risk:</strong> legitimate complexity</p></li>
+<li><p><strong>Evasion:</strong> Offshore opacity<br />
+<strong>Signal:</strong> unresolved foreign chain<br />
+<strong>Mitigation:</strong> FATCA/CRS priors, escrow<br />
+<strong>Residual Risk:</strong> noncooperative jurisdictions</p></li>
+<li><p><strong>Evasion:</strong> Co-consumption<br />
+<strong>Signal:</strong> shared luxury use<br />
+<strong>Mitigation:</strong> allocation rules<br />
+<strong>Residual Risk:</strong> social ambiguity</p></li>
+</ul>
+<h2 id="deployment">14. Deployment</h2>
+<p>Pilot BRTEG on large firms claiming tax-preferred treatment in
+high-risk mixed-use categories.</p>
+<p>Expand only if unsupported subsidy claims fall by at least 20%,
+appeal reversals remain below 5%, and compliance cost remains below 10%
+of recovered subsidy value.</p>
+<p>Apply the same thresholds to all future category expansions.</p>
+<h2 id="validation">15. Validation</h2>
+<p>Metrics:</p>
+<pre class="text"><code>false positives
+false negatives
+appeal reversals
+compliance cost
+recovered subsidy value
+MAC calibration error
+audit yield
+opacity substitution</code></pre>
+<p>BRTEG is weakened if appeal reversals remain high, compliance burden
+exceeds recovered subsidy value, or opacity substitution outpaces
+attribution.</p>
+<h2 id="bounded-reduction-theorem">16. Bounded Reduction Theorem</h2>
+<p>Assumptions:</p>
+<p>A1. Complete evidence.</p>
+<p>A2. Finite beneficiaries.</p>
+<p>A3. Consistent edge algebra.</p>
+<p>A4. Conservation into valid sinks.</p>
+<p>A5. Bounded MAC error:</p>
+<p><span
+class="math display">|<em>Q̂</em><sub><em>α</em></sub> − <em>Q</em><sub><em>α</em></sub>| ≤ <em>ϵ</em><sub><em>M</em></sub></span></p>
+<p>A6. Bounded attribution error:</p>
+<p><span
+class="math display">|<em>P̂</em> − <em>P</em>| ≤ <em>ϵ</em><sub><em>P</em></sub></span></p>
+<p>A7. Positive conversion rate:</p>
+<p><span class="math display"><em>r</em> &gt; 0</span></p>
+<p>A8. Rational agents maximize expected after-tax utility.</p>
+<p>A9. Bounded obfuscation return.</p>
+<p>Define:</p>
+<p><span
+class="math display"><em>ϵ</em> = <em>ϵ</em><sub><em>M</em></sub> + <em>ϵ</em><sub><em>P</em></sub></span></p>
+<p>Theorem.</p>
+<p>Under A1–A9, BRTEG weakly decreases subsidized luxury substitution
+relative to baseline tax-preferred treatment and strictly decreases it
+whenever:</p>
+<p><span
+class="math display"><em>r</em><em>L</em> &gt; <em>ϵ</em></span></p>
+<p>Proof.</p>
+<p>Baseline treatment preserves subsidy value on luxury excess <span
+class="math inline">(<em>L</em>)</span>. BRTEG identifies <span
+class="math inline">(<em>L</em>)</span> within <span
+class="math inline">(<em>ϵ</em><sub><em>M</em></sub>)</span>, attributes
+the resulting personal share within <span
+class="math inline">(<em>ϵ</em><sub><em>P</em></sub>)</span>, and forces
+all subsidized paths into valid sinks through conservation. Personal
+utility generated by <span class="math inline">(<em>L</em>)</span> is
+converted at rate <span class="math inline">(<em>r</em>)</span>. The
+after-tax advantage of subsidized luxury therefore decreases by at least
+<span class="math inline">(<em>r</em><em>L</em> − <em>ϵ</em>)</span>. If
+<span class="math inline">(<em>r</em><em>L</em> &gt; <em>ϵ</em>)</span>,
+the decrease is strict; otherwise it is weak or indeterminate.</p>
+<h2 id="non-applicability">17. Non-Applicability</h2>
+<p>The theorem does not apply under:</p>
+<pre class="text"><code>incomplete evidence
+unbounded MAC or attribution error
+unenforced conversion or dominant obfuscation</code></pre>
+<h2 id="limitations">18. Limitations</h2>
+<p>Irreducibly ambiguous benefit zones include diffuse brand value,
+firm-wide morale, reputation, research spillovers, and mixed
+social/professional utility.</p>
+<p>Fallbacks:</p>
+<pre class="text"><code>safe harbor
+escrow
+human review
+sector schedule
+de minimis exclusion</code></pre>
+<h2 id="conclusion">19. Conclusion</h2>
+<p>BRTEG is a governance substrate, not a tax-code redesign, for tracing
+public subsidy into enterprise utility or taxable personal utility.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that beneficiary-Resolved Tax Expenditure
+Governance models tax expenditures as public subsidy flows. Its nearest
+external comparison fields are markets, governance. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Optimization can make
+a chosen objective efficient while preserving a bad objective, missing
+distributional harms, strategic behavior, or inadmissible states. A
+written constitution can legitimate domination as easily as constrain it
+unless amendment, participation, enforcement, and appeal remain
+effective in practice. These limits are not generic disclaimers: they
+identify the assumptions that a later empirical, formal, or
+implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Harry Markowitz. “Portfolio Selection.” <em>The
+Journal of Finance</em> 7(1), 1952, pp. 77-91. DOI:
+10.1111/j.1540-6261.1952.tb01525.x.
+https://doi.org/10.1111/j.1540-6261.1952.tb01525.x
+<strong>Relationship:</strong> Predecessor risk-return optimization
+model; included to distinguish scalar optimization from governance-aware
+admissibility.</p>
+<p><strong>[E2]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E3]</strong> U.S. Department of the Treasury. <em>Tax
+Expenditures</em>. Office of Tax Analysis. <a
+href="https://home.treasury.gov/policy-issues/tax-policy/tax-expenditures">home.treasury.gov
+source</a> <strong>Relationship:</strong> Primary official baseline for
+the definition and estimation limits of U.S. federal tax
+expenditures.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E6]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Markets</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1D49CCBB6E47B403</code>;<br />
+source SHA-256<br />
+<code>BB97EAC6F1861C2ED17DC0E0B75D47B04716E7FF3E3AC2A9B2F6CABCC67A5250</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>ACG for Quants</em>. Ableman
+Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-8A19CB4C1BD55BCA</code>;<br />
+source SHA-256<br />
+<code>2FEA83087B8DA79472BBA449C9D5B252B6DBA67C2EAF0DF41C206B1B0EEEF254</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Quant Insights for ACG
+Systems</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-EAEEDA4A34808C9B</code>;<br />
+source SHA-256<br />
+<code>F668C40E0FE27BDBFDC881BFA97735D61F00335A6FC3DF9488A4BCFCFFB19631</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governance Incentive
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-294436DA22D85E3A</code>;<br />
+source SHA-256<br />
+<code>30B4151092AA9C1157214B00B695BD39A137C010DFE3BC631A64073F946ACD4A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Surrey, S. S. <em>Pathways to Tax Reform: The Concept of Tax
+Expenditures</em>. Harvard University Press, 1973.</p>
+<p>Internal Revenue Code, 26 U.S.C.: §61 (Gross income defined); §162
+(Trade or business expenses); §167 (Depreciation); §274 (Disallowance of
+certain entertainment, etc., expenses).</p>
+<p>Foreign Account Tax Compliance Act (FATCA), 26 U.S.C.
+§§1471–1474.</p>
+<p>OECD. <em>Standard for Automatic Exchange of Financial Account
+Information in Tax Matters</em> (Common Reporting Standard, CRS). 2nd
+ed., 2017.</p>
+<p>Economic substance doctrine, 26 U.S.C. §7701(o).</p>
+<p>European Commission. <em>Council Directive 2006/112/EC of 28 November
+2006 on the common system of value added tax</em> (VAT input-credit
+framework).</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20602489">10.5281/zenodo.20602489</a></p>

@@ -1,0 +1,904 @@
+<h1 id="meaning-as-binding">Meaning as Binding</h1>
+<h2 id="a-relational-ontology-for-governed-semantic-systems">A
+Relational Ontology for Governed Semantic Systems</h2>
+<h3
+id="a-relation-may-carry-meaning-without-its-existence-persistence-or-exact-anchoring-making-it-legitimate-or-true.">A
+relation may carry meaning without its existence, persistence, or exact
+anchoring making it legitimate or true.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>This paper proposes an operational relational ontology in which
+meaning is not exhausted by intrinsic object properties or unconstrained
+mental projection but is constituted through bindings among
+interpreters, artifacts, references, practices, authorities, and
+contexts. A binding is a typed, scoped, temporally situated relation.
+Its existence does not establish truth, legitimacy, fidelity, or
+usefulness; those require separate evaluation.</p>
+<p>The paper distinguishes four questions often collapsed in semantic
+systems: whether a binding exists, whether it is exactly anchored to a
+source, whether it is admissible under a declared regime, and whether it
+is a high-quality binding for a stated purpose. Meaning-inertia
+describes resistance to revision produced by dependency and
+reinforcement, but high inertia can indicate either legitimate
+structural integration or harmful lock-in. Binding quality is therefore
+multidimensional rather than a single universal score.</p>
+<p>The current computational placement is the <strong>Governed Meaning
+Base (GMB)</strong>, following the author-confirmed lineage CCF -&gt;
+CMB -&gt; GMB. Exact-source overlays, semantic hashes, MCIR forms,
+receipts, and governed mutation can make bindings inspectable. They
+cannot manufacture semantic correctness merely by being present. In
+particular, verbatim overlay discipline proves textual anchoring, not
+entailment, interpretation quality, authority, or truth.</p>
+<p>The result is a candidate ontology and evaluation program spanning
+philosophical meaning, governed knowledge, and constitutional computing.
+It remains subject to external literature comparison and empirical
+testing; the oscillatory and phase-coherence language is retained only
+as a provisional analogy unless a measurable model is supplied.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Philosophical debates concerning the nature of meaning have
+historically been framed as a tension between object-centered and
+mind-centered accounts.</p>
+<p>Under <strong>naive realism</strong>, meaning is assumed to exist in
+objects themselves. Interpretation is therefore a process of discovering
+meaning already embedded in the world.</p>
+<p>Under <strong>naive idealism</strong>, meaning is treated as a
+projection of mental activity. Objects possess no intrinsic meaning;
+interpretation assigns significance arbitrarily.</p>
+<p>Despite their opposition, these positions share a common structural
+assumption: meaning must reside somewhere.</p>
+<p>This paper rejects that assumption. Meaning does not exist as a
+property located in either objects or minds. Instead, meaning emerges
+from <strong>relational binding acts</strong> between structures.</p>
+<p>Bindings are neither substances nor projections. They are structured
+relations that connect interpreters, artifacts, and domains of
+reference. When these relations stabilize, meaning appears.</p>
+<p>This shift from location to relation reframes both philosophical and
+technical questions about meaning formation. Rather than asking where
+meaning resides, the relevant questions become:</p>
+<ul>
+<li>how bindings are formed,</li>
+<li>how they stabilize,</li>
+<li>how they propagate through systems,</li>
+<li>and how their quality can be evaluated.</li>
+</ul>
+<hr />
+<h2 id="the-limits-of-location-based-theories">2. The Limits of
+Location-Based Theories</h2>
+<p>Location-based theories of meaning encounter complementary
+limitations.</p>
+<h3 id="naive-realism">2.1 Naive Realism</h3>
+<p>Naive realism assumes that meaning is intrinsic to objects.
+Interpretation merely reveals what is already present.</p>
+<p>However, this view fails to account for the diversity of
+interpretations across contexts. Scientific paradigms, legal
+interpretations, and linguistic conventions demonstrate that meaning
+cannot be fully reduced to object properties.</p>
+<h3 id="naive-idealism">2.2 Naive Idealism</h3>
+<p>Naive idealism treats meaning as mental projection. Interpretation
+becomes an act of assigning significance rather than discovering it.</p>
+<p>This approach preserves interpretive flexibility but collapses
+constraints. If meaning arises entirely from projection, distinguishing
+coherent interpretations from arbitrary ones becomes difficult.</p>
+<p>Both models therefore fail in opposite directions:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Naive realism</td>
+<td>ignores interpretive structure</td>
+</tr>
+<tr>
+<td>Naive idealism</td>
+<td>ignores objective constraint</td>
+</tr>
+</tbody>
+</table>
+<p>A relational model resolves this tension.</p>
+<hr />
+<h2 id="meaning-as-relational-binding">3. Meaning as Relational
+Binding</h2>
+<p>In the relational model proposed here, meaning arises through
+<strong>binding acts</strong> between structures.</p>
+<p>A binding can be represented schematically as:</p>
+<p><span
+class="math display"><em>b</em> = Bind (<em>x</em>, <em>y</em>; <em>r</em>, <em>λ</em>, <em>s</em>, <em>J</em>, <em>A</em>, <em>t</em>, <em>e</em>)</span></p>
+<p>Neither structure alone contains the meaning produced by the binding.
+The meaning exists in the stabilized relation between them.</p>
+<p>Bindings possess several key properties:</p>
+<ul>
+<li><strong>Relational existence</strong> – they do not exist
+independently of the structures they connect.</li>
+<li><strong>Stabilization</strong> – repeated reinforcement can cause
+bindings to persist.</li>
+<li><strong>Composability</strong> – bindings can participate in larger
+networks.</li>
+<li><strong>Inertia</strong> – established bindings resist change
+because other structures depend on them.</li>
+</ul>
+<p>Bindings therefore form networks that sustain semantic systems.</p>
+<hr />
+<h3 id="typed-binding-model">3.1 Typed Binding Model</h3>
+<p>A binding is not an unqualified edge. Let</p>
+<p><span
+class="math display"><em>b</em> = (<em>x</em>, <em>y</em>, <em>r</em>, <em>λ</em>, <em>s</em>, <em>J</em>, <em>A</em>, <em>t</em>, <em>e</em>, <em>p</em>),</span></p>
+<p>where <span class="math inline"><em>x</em></span> and <span
+class="math inline"><em>y</em></span> are the bound structures; <span
+class="math inline"><em>r</em></span> is relation type and direction;
+<span class="math inline"><em>λ</em></span> is the semantic lens; <span
+class="math inline"><em>s</em></span> is scope; <span
+class="math inline"><em>J</em></span> is jurisdiction or interpretive
+regime; <span class="math inline"><em>A</em></span> is claimed
+authority; <span class="math inline"><em>t</em></span> is valid and
+transaction time; <span class="math inline"><em>e</em></span> is
+evidence and provenance; and <span class="math inline"><em>p</em></span>
+is epistemic posture and standing. The same structures may support
+several non-equivalent bindings under different lenses or scopes.</p>
+<p>For a declared context <span class="math inline"><em>C</em></span>,
+an operational meaning profile may be represented as the eligible
+binding neighborhood</p>
+<p><span
+class="math display"><em>M</em><sub><em>C</em></sub>(<em>x</em>) = {<em>b</em> ∣ <em>x</em> ∈ <em>b</em> ∧ Eligible (<em>b</em>, <em>C</em>)}.</span></p>
+<p>This is not a claim that every form of human meaning reduces to a
+database edge set. It is a computational specification for making
+asserted semantic commitments inspectable. Absence from the represented
+neighborhood may indicate omission or representational limits rather
+than absence of meaning.</p>
+<h3 id="existence-anchor-admissibility-and-quality">3.2 Existence,
+Anchor, Admissibility, and Quality</h3>
+<p>Four predicates must remain separate:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Exists}(b), \\
+&amp;\quad \operatorname{Anchored}(b), \\
+&amp;\quad \operatorname{Admissible}(b,C), \\
+&amp;\quad \operatorname{Quality}(b,C)
+\end{aligned}.
+$$</span></p>
+<p>An exact anchor can coexist with a false interpretation. An
+admissible binding can be low-value or later revised. A useful
+exploratory binding can remain inadmissible for consequential use. A
+persistent binding can be unjustified. The ontology becomes governable
+only when these differences survive representation and interface
+design.</p>
+<h2 id="meaning-inertia">4. Meaning-Inertia</h2>
+<p>Once bindings become embedded within networks of dependency, they
+acquire <strong>meaning-inertia</strong>.</p>
+<p>Meaning-inertia describes the resistance of established bindings to
+change. This resistance arises from:</p>
+<ul>
+<li>institutional reinforcement,</li>
+<li>structural dependencies,</li>
+<li>shared conventions,</li>
+<li>and accumulated interpretive commitments.</li>
+</ul>
+<p>Examples include:</p>
+<ul>
+<li>scientific theories,</li>
+<li>legal definitions,</li>
+<li>communication protocols,</li>
+<li>software interfaces.</li>
+</ul>
+<p>In each case, the binding between structures becomes foundational.
+Altering the binding requires coordinated changes across dependent
+systems.</p>
+<p>Meaning-inertia therefore explains why semantic structures persist
+even when new interpretations are possible.</p>
+<hr />
+<h3 id="inertia-is-descriptive-not-legitimating">4.1 Inertia Is
+Descriptive, Not Legitimating</h3>
+<p>For a perturbation class <span class="math inline"><em>Δ</em></span>
+and preservation constraints <span
+class="math inline"><em>C</em></span>, one provisional
+operationalization is</p>
+<p><span
+class="math display"><em>I</em>(<em>b</em> ∣ <em>C</em>, <em>Δ</em>) = inf<sub><em>δ</em> ∈ <em>Δ</em></sub>{Cost (<em>δ</em>) : <em>δ</em>
+removes or materially changes <em>b</em> while preserving
+<em>C</em>}.</span></p>
+<p>This definition makes inertia relative to what changes are allowed,
+what must be preserved, and how cost is measured. High inertia may
+reflect broad evidentiary support and legitimate dependency, or it may
+reflect institutional power, coordination burden, path dependence,
+monopoly, or accumulated error. Inertia predicts resistance; it does not
+confer truth or moral authority.</p>
+<h2
+id="technical-instantiation-in-constitutional-computational-substrates">5.
+Technical Instantiation in Constitutional Computational Substrates</h2>
+<p>Relational binding is not merely a philosophical abstraction. It can
+be implemented technically within computational systems.</p>
+<p>The current architecture is the <strong>Governed Meaning Base
+(GMB)</strong>, following the author-confirmed lineage Constitutional
+Crystallization Framework (CCF) -&gt; Constitutional/Crystallized
+Meaning Base (CMB) -&gt; GMB. The historical CCF formulation supplied
+the overlay example developed here; current synthesis treats that
+machinery as a historical profile within the evolving GMB lineage.</p>
+<p>The historical formulation structures semantic artifacts through a
+two-layer model:</p>
+<ol type="1">
+<li>**Admitted source documents</li>
+<li>**Overlays binding semantic cues to those sources</li>
+</ol>
+<p>The crucial invariant is <strong>verbatim overlay
+discipline</strong>: each cue line within an overlay must be a verbatim
+substring of the source document.</p>
+<p>This constraint ensures that an overlay cue has an exact textual
+anchor and prevents one class of source substitution. It does not ensure
+that the cue’s classification, interpretation, authority, or downstream
+semantic commitment is correct. Those remain separately reviewable
+binding claims.</p>
+<p>Meaning therefore arises in the binding relation:</p>
+<p><span
+class="math display"><em>b</em><sub><em>s</em></sub> = Bind (cue
+region, exact source region; verbatim-anchor)</span></p>
+<p>Neither component alone contains the semantic claim expressed by the
+overlay. The claim emerges only through the relational structure
+connecting them.</p>
+<hr />
+<h2 id="verbatim-discipline-as-ontological-constraint">6. Verbatim
+Discipline as Ontological Constraint</h2>
+<p>The requirement that overlays contain verbatim substrings is not
+merely a formatting rule.</p>
+<p>It enforces the relational ontology of meaning.</p>
+<p>If overlays could introduce arbitrary text, meaning could be
+projected independently of the source. Conversely, if overlays were
+unnecessary, meaning would be assumed to reside entirely within the
+source.</p>
+<p>Verbatim discipline prevents both errors.</p>
+<p>The operational meaning claim exists in the typed relation among cue,
+exact source region, semantic lens, scope, and asserted interpretation.
+A verbatim violation is therefore a serious custody failure, but
+verbatim compliance alone is not semantic validation. The cue may quote
+exactly while misclassifying, decontextualizing, or over-authorizing the
+source.</p>
+<p>For this reason, verbatim violations are structurally significant
+failures, while conforming overlays still require semantic, evidentiary,
+and authority review within GMB.</p>
+<hr />
+<h2 id="stratified-binding-structures">7. Stratified Binding
+Structures</h2>
+<p>Within constitutional substrates, bindings do not exist at a single
+level.</p>
+<p>Two categories of binding structures emerge:</p>
+<ul>
+<li><strong>Primitive bindings</strong> – bindings admitted directly
+from authority sources.</li>
+<li><strong>Derived bindings</strong> – bindings generated through
+derivation from primitives.</li>
+</ul>
+<p>Derived bindings depend on explicit dependency structures. Each
+derived constraint includes a proof lineage identifying its originating
+primitives.</p>
+<p>This stratification mirrors logical systems in which theorems derive
+from axioms.</p>
+<p>It allows constitutional substrates to generate new constraints
+without expanding the trusted base of admitted sources.</p>
+<hr />
+<h2 id="oscillatory-binding-and-phase-coherence">8. Oscillatory Binding
+and Phase Coherence</h2>
+<p>Bindings can also be interpreted through an oscillatory model.</p>
+<p>Structures participating in a binding can be thought of as
+oscillatory systems. A successful binding occurs when these systems
+achieve <strong>phase coherence</strong>.</p>
+<p>Phase coherence implies that the structural rhythms of the bound
+systems reinforce one another rather than interfere destructively.</p>
+<p>Poor bindings produce phase drift, leading to semantic
+instability.</p>
+<p>This oscillatory perspective explains why some bindings become
+powerful foundations while others collapse under pressure.</p>
+<hr />
+<p>The oscillatory account is retained as a provisional explanatory
+analogy. No physical oscillator, measurable phase variable, coupling
+function, or empirical threshold is specified here. Accordingly, “phase
+coherence” should currently be read as a prompt to investigate mutual
+constraint, synchronization, and robustness across interacting
+structures–not as a demonstrated physical mechanism of meaning. The
+analogy should be removed or formalized if it does not generate
+discriminating predictions beyond the typed binding model.</p>
+<h2 id="binding-quality">9. Binding Quality</h2>
+<p>The relational ontology of meaning raises an important question: not
+all bindings are equally valuable.</p>
+<p>Bindings vary along several dimensions:</p>
+<h3 id="structural-coherence">9.1 Structural Coherence</h3>
+<p>A coherent binding integrates smoothly with existing semantic
+structures.</p>
+<h3 id="generativity">9.2 Generativity</h3>
+<p>Some bindings produce new structures and enable further reasoning or
+system construction.</p>
+<h3 id="stability">9.3 Stability</h3>
+<p>Bindings that remain robust under perturbation possess greater
+durability.</p>
+<h3 id="minimal-distortion">9.4 Minimal Distortion</h3>
+<p>High-quality bindings preserve structural integrity across domains
+rather than introducing contradictions.</p>
+<p>These criteria suggest the possibility of a future <strong>theory of
+binding quality</strong>, capable of evaluating semantic structures
+beyond their mere existence.</p>
+<hr />
+<h3 id="a-multidimensional-quality-profile">9.5 A Multidimensional
+Quality Profile</h3>
+<p>Binding quality should be represented first as a vector rather than
+collapsed into an unexplained scalar:</p>
+<p><span
+class="math display"><em>Q</em>(<em>b</em> ∣ <em>C</em>) = (<em>F</em>, <em>S</em>, <em>A</em>, <em>C</em><sub><em>o</em></sub>, <em>L</em>, <em>R</em>, <em>G</em>, <em>V</em>, <em>D</em>),</span></p>
+<p>where <span class="math inline"><em>F</em></span> is source fidelity,
+<span class="math inline"><em>S</em></span> scope clarity, <span
+class="math inline"><em>A</em></span> authority validity, <span
+class="math inline"><em>C</em><sub><em>o</em></sub></span> constraint
+coherence, <span class="math inline"><em>L</em></span> lineage
+recoverability, <span class="math inline"><em>R</em></span> perturbation
+robustness, <span class="math inline"><em>G</em></span> generativity,
+<span class="math inline"><em>V</em></span> revisability, and <span
+class="math inline"><em>D</em></span> distortion or excluded-context
+cost. The dimensions may conflict. A binding can be robust but
+distorting, generative but weakly grounded, exact but unauthorized, or
+coherent only inside a narrow jurisdiction.</p>
+<p>CM1 asks which binding configurations are admissible, including
+stable but harmful or low-value arrangements. CM2 applies declared
+preferences to distinguish desirable bindings from merely admissible
+ones. Any scalar score requires an explicit weighting function,
+jurisdiction, purpose, and sensitivity analysis. There is no
+context-free universal quality order in this paper.</p>
+<h3 id="primitive-derived-and-parasitic-bindings">9.6 Primitive,
+Derived, and Parasitic Bindings</h3>
+<p>“Primitive” identifies a declared authority or evidence root; it does
+not make the root infallible. A derived binding must preserve an
+inspectable derivation and cannot acquire more authority than its
+premises and derivation rule supply. A parasitic binding persists by
+exploiting dependencies, ambiguity, or asymmetric switching costs while
+contributing insufficient evidence or value. Because legitimate
+innovation may initially look weakly integrated, parasitism is a
+reviewable classification, not an automatic deletion rule.</p>
+<h2 id="implications-for-software-architecture">10. Implications for
+Software Architecture</h2>
+<p>The relational ontology of meaning has direct implications for
+software systems.</p>
+<p>Many contemporary development practices bind meaning at the level of
+<strong>implementation artifacts</strong> rather than at the level of
+domain specification.</p>
+<p>This misplacement produces fragile systems that are difficult to
+compose or evolve.</p>
+<p>Constitutional computational substrates relocate binding to the
+<strong>specification layer</strong>. Implementation becomes a derived
+artifact rather than the primary locus of semantic commitment.</p>
+<p>This shift increases:</p>
+<ul>
+<li>interoperability,</li>
+<li>generativity,</li>
+<li>and structural stability.</li>
+</ul>
+<hr />
+<h2 id="implications-for-knowledge-systems">11. Implications for
+Knowledge Systems</h2>
+<p>Relational binding provides a unified framework for understanding
+diverse knowledge systems.</p>
+<p>Scientific theories, legal systems, programming languages, and
+semantic networks all rely on stabilized bindings between
+structures.</p>
+<p>By recognizing bindings as primary ontological elements, these
+systems can be designed to support:</p>
+<ul>
+<li>explicit binding formation,</li>
+<li>traceable binding lineage,</li>
+<li>and evaluation of binding quality.</li>
+</ul>
+<hr />
+<h3 id="realization-funnel">11.1 Realization Funnel</h3>
+<ul>
+<li><p><strong>Stage:</strong> Possibility<br />
+<strong>Meaning-as-binding responsibility:</strong> Preserve alternative
+ontologies, lenses, relation types, and counterexamples.<br />
+<strong>Standing here:</strong> Open philosophical space.</p></li>
+<li><p><strong>Stage:</strong> Specification<br />
+<strong>Meaning-as-binding responsibility:</strong> Define typed
+bindings, contexts, identity layers, quality dimensions, source anchors,
+and limits.<br />
+<strong>Standing here:</strong> Candidate specification.</p></li>
+<li><p><strong>Stage:</strong> CM1<br />
+<strong>Meaning-as-binding responsibility:</strong> Enumerate admissible
+binding configurations, including stable, harmful, parasitic,
+contradictory, or low-value cases.<br />
+<strong>Standing here:</strong> Partially specified.</p></li>
+<li><p><strong>Stage:</strong> CM2<br />
+<strong>Meaning-as-binding responsibility:</strong> Apply declared
+preferences for fidelity, legitimacy, clarity, reversibility, pluralism,
+robustness, and low distortion.<br />
+<strong>Standing here:</strong> Proposed quality profile.</p></li>
+<li><p><strong>Stage:</strong> Instance Configuration<br />
+<strong>Meaning-as-binding responsibility:</strong> Select ontology,
+schema, lens, jurisdiction, authority roots, evidence rules, weights,
+thresholds, time model, and revision policy.<br />
+<strong>Standing here:</strong> Not selected here.</p></li>
+<li><p><strong>Stage:</strong> Implementation Realization<br />
+<strong>Meaning-as-binding responsibility:</strong> Encode bindings in
+GMB, MCIR, overlays, semantic hashes, receipts, and interfaces.<br />
+<strong>Standing here:</strong> Examples only; conformance
+unproven.</p></li>
+<li><p><strong>Stage:</strong> Evidence<br />
+<strong>Meaning-as-binding responsibility:</strong> Test inter-reviewer
+agreement, source recovery, perturbation response, counterexamples,
+prediction, downstream performance, and revision.<br />
+<strong>Standing here:</strong> Required and incomplete.</p></li>
+<li><p><strong>Stage:</strong> Revision<br />
+<strong>Meaning-as-binding responsibility:</strong> Amend bindings and
+quality judgments without erasing predecessor meanings, dissent,
+dependencies, or effects.<br />
+<strong>Standing here:</strong> Required direction.</p></li>
+</ul>
+<h3 id="compact-semantic-binding-kernel">Compact Semantic-Binding
+Kernel</h3>
+<p>The completed P1 corpus positions Meaning as Binding as the
+<strong>compact semantic-binding kernel</strong>: meaning arises through
+typed, consequential, reidentifiable relations among relata under
+context and constraint. The paper supplies the minimal ontology; The
+Locus of Meaning supplies the extended theory of jurisdiction, recursive
+meta-binding, locus, and governance. Neither establishes that all
+relations are meaningful or that binding entails truth.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Locus of
+Meaning</em><br />
+<strong>Supplies:</strong> The extended relational-constitutional
+theory, semantic loci, jurisdictions, and consequences.<br />
+<strong>Meaning-as-Binding boundary:</strong> Meaning as Binding remains
+the compact core rather than a duplicate full theory.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Binding
+Theory: Governed Anchor Resolution as a Universal Pattern in Semantic
+Systems</em><br />
+<strong>Supplies:</strong> A cross-layer anchor-resolution
+pattern.<br />
+<strong>Meaning-as-Binding boundary:</strong> CBT generalizes governed
+resolution beyond semantic meaning; this paper defines the semantic
+ontology.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Binding Quality
+(SBQ)</em><br />
+<strong>Supplies:</strong> A multidimensional profile for coherence,
+coverage, stability, and fragility.<br />
+<strong>Meaning-as-Binding boundary:</strong> SBQ evaluates bindings; it
+does not define meaning identity or truth.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Global Term Key:
+Constitutional Lexical Identity Through Disambiguated Semantic
+Binding</em><br />
+<strong>Supplies:</strong> Registered lexical identity and resolver
+behavior.<br />
+<strong>Meaning-as-Binding boundary:</strong> GTK supplies address and
+disambiguation for bindings, not their entire meaning.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meta-Binding as Operational
+Invariant</em><br />
+<strong>Supplies:</strong> Preservation obligations governing
+transformations of bindings.<br />
+<strong>Meaning-as-Binding boundary:</strong> Meta-binding protects
+binding commitments through change; it presupposes but does not replace
+the semantic kernel.</p></li>
+</ul>
+<p>A minimal semantic binding is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B= (&amp;relata, roles, context, constraints, \\
+&amp;differential\_sensitivity, uptake, consequences, \\
+&amp;reidentification, provenance)
+\end{aligned}.
+$$</span></p>
+<p>Association becomes a semantic-binding candidate only when changes to
+the relation make a discriminable difference within a declared
+jurisdiction and the binding can be reidentified, used, contested, or
+revised. Persistence or popularity may create meaning-inertia without
+creating legitimacy, truth, authority, or quality.</p>
+<p>The universal GSM can type <code>BOUND_WITH</code>,
+<code>PLAYS_ROLE_IN_BINDING</code>,
+<code>CONSTRAINED_IN_CONTEXT</code>,<br />
+<code>DIFFERENTIALLY_SENSITIVE_TO</code>, <code>UPTAKEN_BY</code>,
+<code>HAS_SEMANTIC_CONSEQUENCE</code>,<br />
+<code>REIDENTIFIED_AS_BINDING</code>,
+<code>PERSISTS_WITH_INERTIA</code>,
+<code>PARASITIC_ON_BINDING</code>,<br />
+and <code>REVISED_BY</code>. These relations give the compact thesis
+operational edges while leaving thicker theory to adjacent works.</p>
+<p>This integration establishes four editorial commitments: adopt
+compact semantic-binding kernel as the official corpus role; adopt the
+minimal binding record; require differential consequence and
+reidentifiability for semantic-binding claims; and explicitly route
+locus, jurisdiction, quality, lexical identity, and meta-binding to
+their companion works.</p>
+<h3 id="binding-jurisdictions-and-metaphor-firebreaks">Binding
+Jurisdictions and Metaphor Firebreaks</h3>
+<p>The fixed-seed comparison with <em>The Phenomenal Aperture</em>, the
+consciousness-disambiguation protocol, the Jnana open-source projection,
+and <em>The Ableman Wheel</em> shows that “binding” must carry a
+declared jurisdiction. Descriptive, interpretive, operational,
+normative, institutional, and physical bindings may share a relational
+form without sharing evidence, mechanism, or consequence.</p>
+<p><span class="math display">$$
+\begin{aligned}
+B_j= (&amp;relata, roles, jurisdiction, mechanism, authority, \\
+&amp;evidence, consequence, reidentification, revision)
+\end{aligned}.
+$$</span></p>
+<p>Phenomenal-frame binding concerns how presented relations shape human
+interpretation and action. Consciousness discourse requires a further
+mapping before that consequence says anything about phenomenality. Jnana
+uses operational and institutional binding when a specification,
+authority decision, capability, and realized effect constrain one
+another; semantic force alone does not authorize the project
+transformation.</p>
+<p>The Ableman Wheel adjacency produces<br />
+<code>NO_MATERIAL_RELATION</code> and a required metaphor firebreak. The
+paper’s oscillatory and phase-coherence language cannot borrow physical
+standing, measurements, or mechanism from a proposed rotating apparatus.
+Conversely, a physical phase relation or residual would not validate the
+semantic-binding ontology. Shared words such as phase, coherence, field,
+or binding are retrieval leads, not derivation or evidence.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_WITHIN_JURISDICTION</code>,<br />
+<code>CARRIES_OPERATIONAL_CONSEQUENCE</code>,
+<code>REQUIRES_AUTHORITY_FOR_NORMATIVE_BINDING</code>,<br />
+<code>MAPS_INTERPRETIVE_TO_PHENOMENAL_CLAIM</code>,
+<code>BLOCKS_METAPHOR_EVIDENCE_TRANSFER</code>,<br />
+and<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_ABLEMAN_WHEEL_</code><br />
+<code>PHYSICS</code>.</p>
+<p>This randomized review establishes four editorial commitments: add
+jurisdiction and mechanism to the minimal binding record; separate
+descriptive, interpretive, operational, normative, institutional, and
+physical binding claims; prohibit phase/coherence metaphor from
+borrowing physical evidence; and record no direct relation to the
+Ableman Wheel.</p>
+<h2 id="a-compact-relational-kernel-with-jurisdictional-type-safety">A
+Compact Relational Kernel with Jurisdictional Type Safety</h2>
+<p>Twenty retained downstream uses place Meaning as Binding across
+context compilation, admissibility, consciousness research, anchor
+resolution, collectives, meaning bases, possibility theory, epistemic
+orientation, compiler theory, lexical identity, governance compilation,
+controlled language, identity, open-source projection, meaning crystals,
+ontology change, qualia research, binding quality, semantic attractors,
+and semantic promotion. The stable core is a typed consequential
+relation, not a claim that every relation is semantic or legitimate.</p>
+<p><span class="math display">$$
+\begin{aligned}
+B^*= (&amp;relata, roles, jurisdiction, context, constraints, \\
+&amp;mechanism, differential\_sensitivity, uptake, \\
+&amp;consequences, reidentification, provenance, authority, \\
+&amp;standing, quality, remainder, revision)
+\end{aligned}.
+$$</span></p>
+<p>A relation is a semantic-binding candidate when a change to it makes
+a discriminable difference within a declared jurisdiction and it can be
+reidentified, used, contested, or revised. Existence, persistence, exact
+anchoring, salience, popularity, and inertia remain below truth,
+legitimacy, authority, quality, or beneficial consequence.</p>
+<p>Descriptive, interpretive, operational, normative, institutional,
+phenomenal, and physical bindings require different evidence and
+mechanisms. Shared words such as field, phase, coherence, force, or
+binding are retrieval leads only. Translation among jurisdictions
+requires an explicit bridge, preserved distinctions, authorized loss,
+and remainder; metaphor cannot transfer proof.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_RELATA_WITH_ROLES</code>,
+<code>BINDS_WITHIN_JURISDICTION</code>,<br />
+<code>UPTAKEN_AS_BINDING</code>,
+<code>HAS_DIFFERENTIAL_CONSEQUENCE</code>,
+<code>REIDENTIFIES_BINDING</code>,<br />
+<code>PERSISTS_WITH_INERTIA</code>,
+<code>EVALUATED_BY_BINDING_QUALITY</code>,<br />
+<code>TRANSLATES_BINDING_WITH_REMAINDER</code>, and<br />
+<code>BLOCKS_METAPHOR_EVIDENCE_TRANSFER</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+complete jurisdictional binding record; require differential
+consequence, uptake, and reidentifiability; keep existence, inertia,
+legitimacy, truth, authority, and quality separate; and require typed
+bridges and metaphor firebreaks across binding jurisdictions.</p>
+<h3 id="principal-failure-and-counterevidence-conditions">11.2 Principal
+Failure and Counterevidence Conditions</h3>
+<p>The proposal is weakened if bindings add no explanatory or
+computational power beyond contextual representation; if the binary
+realism/idealism framing misstates relevant philosophical positions; if
+exact anchors systematically fail to improve interpretation; if quality
+dimensions cannot be measured or compared; if phase language produces no
+distinct predictions; if relational encoding suppresses embodied,
+pragmatic, affective, or tacit meaning; if graph structures create false
+precision; if inertia tracks power more strongly than evidentiary
+integration; or if simpler provenance and versioning mechanisms provide
+the same practical assurance.</p>
+<p>These conditions do not automatically refute the relational thesis.
+They bound what the paper may claim and define the research needed to
+distinguish ontology, metaphor, data model, and implemented
+assurance.</p>
+<h2
+id="a-relation-can-carry-meaning-without-becoming-true-or-legitimate">A
+Relation Can Carry Meaning Without Becoming True or Legitimate</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Meaning as Binding treats computationally representable meaning as a
+typed relation among relata, interpreters, contexts, jurisdictions,
+practices, authorities, evidence, and consequences. This avoids placing
+meaning wholly inside an object or wholly inside an unconstrained
+interpreter. The model is an operational relational ontology for
+governed semantic systems, not a claim that every human, embodied,
+phenomenal, or cultural form of meaning reduces to graph edges.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Relation-inflation attack.</strong> Every association,
+co-occurrence, dependency, or causal link is called meaning. A
+semantic-binding candidate needs declared roles, uptake, differential
+consequence, and reidentifiability.</li>
+<li><strong>Graphification attack.</strong> Encoding a binding in a
+graph creates false precision while tacit, embodied, affective,
+pragmatic, or contested dimensions disappear.</li>
+<li><strong>Anchor-as-entailment attack.</strong> Exact textual custody
+is treated as proof that an interpretation follows from, faithfully
+represents, or has authority from the source.</li>
+<li><strong>Inertia-as-quality attack.</strong> Persistence, popularity,
+institutional reinforcement, or dependency count is treated as truth or
+beneficial integration rather than possible lock-in and power.</li>
+<li><strong>Quality-scalar attack.</strong> Several
+jurisdiction-specific binding dimensions are collapsed into one
+universal score that hides tradeoffs and affected perspectives.</li>
+<li><strong>Metaphor-transfer attack.</strong> Phase, coherence,
+oscillation, force, or binding terminology transfers evidence from
+physics or consciousness research without a typed bridge.</li>
+<li><strong>Philosophical-strawman attack.</strong> Complex realist and
+idealist traditions are reduced to naive positions so the relational
+proposal appears to resolve the field.</li>
+<li><strong>Authority-laundering attack.</strong> GMB inclusion,
+semantic hash, MCIR encoding, receipt, or repeated use is treated as
+legitimacy, standing, or truth.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper proposes a typed relational kernel for asserted semantic
+commitments and a multidimensional binding-quality research program. It
+does not settle the philosophy of meaning, reduce all meaning to
+computation, establish phenomenal or physical mechanisms, validate a
+universal quality metric, or confer truth and legitimacy on recorded
+bindings.</p>
+<p>Claims about philosophy, linguistics, cognition, phenomenology,
+physics, culture, software outcomes, or knowledge-system performance
+require external scholarship and domain-specific evidence. Oscillatory
+and phase-coherence language remains analogy unless a distinct
+measurable model and predictions are supplied. No external research was
+added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is an inspectable distinction: a system can show
+that a relation exists, where it is anchored, who treats it as
+operative, under which jurisdiction, with what consequences and evidence
+- while still leaving its truth, legitimacy, and quality open to
+contest.</p>
+<h2 id="conclusion">12. Conclusion</h2>
+<p>The traditional opposition between object-centered and mind-centered
+theories of meaning rests on a mistaken assumption: that meaning must
+reside somewhere.</p>
+<p>This paper proposes a relational ontology in which meaning emerges
+through <strong>binding acts</strong> between structures.</p>
+<p>Bindings stabilize semantic relations, acquire inertia, and propagate
+through networks of dependency. When implemented within constitutional
+computational substrates, these bindings can be made explicit,
+traceable, and auditable.</p>
+<p>Such systems demonstrate that philosophical claims about meaning need
+not remain abstract. Through careful architectural design, the
+relational nature of meaning can be encoded directly into computational
+infrastructure.</p>
+<p>The next step in this research program is the development of a formal
+theory of <strong>binding quality</strong>, capable of distinguishing
+robust, generative bindings from fragile or parasitic ones.</p>
+<p>Understanding these distinctions may prove essential not only for
+philosophical inquiry but also for the design of future knowledge and
+computational systems.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that an operational relational ontology in which
+meaning is not exhausted by intrinsic object properties or unconstrained
+mental projection but is constituted through bindings among
+interpreters, artifacts, references, practices, authorities, and
+contexts. Its nearest external comparison fields are semantic,
+provenance, governance. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models</em>. Zenodo, 2026. https://doi.org/10.5281/zenodo.18453681.</p>
+<p>Adam Ableman. <em>Semantic Hashing: Hashes as Declared Equivalence
+Classes of Meaning</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18500533.</p>
+<p>Adam Ableman. <em>Semantic Custody</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20300952.</p>
+<p>Adam Ableman. <em>Semantic Crystallization</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20310115.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>Adam Ableman. <em>Governed Meaning Base (GMB)</em>. Authorized
+Ableman Corpus edition developed through the historical CCF -&gt; CMB
+-&gt; GMB lineage; canonical concept standing remains governed
+separately from publication.</p>
+<p>External comparisons to philosophy of language, pragmatics,
+semiotics, inferentialism, embodied cognition, scientific
+representation, legal interpretation, ontology engineering, and
+knowledge representation require a source-by-source literature review.
+This paper presently offers a formal proposal and internal corpus
+integration, not an independent novelty or empirical-validity
+finding.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Semantic Crystallization.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20310115</p>
+<p>Adam Ableman <em>Semantic Custody.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20300952</p>
+<p>Adam Ableman <em>Semantic Hashing: Hashes as Declared Equivalence
+Classes of Meaning.</em> Zenodo, 2026. doi:10.5281/zenodo.18500533</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848001">10.5281/zenodo.23848001</a></p>

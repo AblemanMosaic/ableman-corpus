@@ -1,0 +1,752 @@
+<h1
+id="transformation-dominant-semantic-systems">Transformation-Dominant
+Semantic Systems</h1>
+<h2
+id="a-two-axis-morphology-of-semantic-change-and-obligation-carriage">A
+Two-Axis Morphology of Semantic Change and Obligation Carriage</h2>
+<h3
+id="transformation-and-conservation-should-not-be-treated-as-mutually-exclusive-operation-classes.">Transformation
+and conservation should not be treated as mutually exclusive operation
+classes.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern semantic systems can generate, translate, summarize,
+recombine, and propagate meaning at great speed while failing to
+preserve source, identity, authority, uncertainty, scope, or other
+commitments across those transformations. This paper proposes a
+morphology for diagnosing that asymmetry.</p>
+<p>Transformation and conservation should not be treated as mutually
+exclusive operation classes. A large semantic change can faithfully
+carry declared obligations; a nearly verbatim copy can sever provenance
+or authority. The revised model therefore uses two independent axes:
+semantic delta and obligation carriage. Conservation is a
+profile-relative property of a transformation, not simply a separate
+kind of operation.</p>
+<p>The paper defines a semantic-carriage envelope, typed preservation
+outcomes, transformation and carriage measures, failure patterns, and an
+empirical comparison program. It treats hallucination, semantic drift,
+and institutional incoherence as possible consequences of weak
+conservation among several competing explanations, not as established
+products of one architectural imbalance. It connects the diagnostic
+morphology to Constraint-Bearing Composability, Meta-Binding, Epistemic
+Lineage, Governance as Compilation, the Governed Meaning Base, and the
+universal GSM without merging their roles.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. The custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/</code></p>
+<p><code>transformation-dominant-semantic-systems/</code><br />
+<code>integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>7BF649A2BC481C4F8E1DF345D30D4775C8BF13B7CEC6A861DFA013DE15B8C14F</code>.
+The source remains unchanged.</p>
+<p>The distinction, asymmetry hypothesis, metaphors, examples,
+predictions, and limitations are author material. Formalization, corpus
+integration, counterevidence, evaluation, and decisions added here are
+AI editorial or synthetic candidates until adopted. No system is
+classified or certified by this paper.</p>
+<h2 id="the-diagnostic-problem">1. The Diagnostic Problem</h2>
+<p>Generation quality and semantic continuity are different
+achievements. A system can produce novel, coherent language while losing
+where a claim came from, how certain it was, who authorized it, which
+scope it occupied, or what transformation changed it. Conversely, a
+rigid archive may preserve bytes while failing to preserve
+interpretation, applicability, or living revision.</p>
+<p>The useful question is not whether a system transforms or conserves.
+Every operational semantic system does both to some degree. The question
+is which commitments it carries, under what profile, across which
+transformation, with what evidence and loss.</p>
+<h2 id="two-independent-axes">2. Two Independent Axes</h2>
+<p>Let <span class="math inline"><em>s</em></span> be an input semantic
+artifact and <span
+class="math inline"><em>τ</em>(<em>s</em>) = <em>s</em><sup>′</sup></span>
+an output. Define:</p>
+<p><span
+class="math display"><em>M</em><sub><em>p</em></sub>(<em>τ</em>, <em>s</em>) = (<em>Δ</em><sub><em>p</em></sub>(<em>s</em>, <em>s</em><sup>′</sup>), <em>C</em><sub><em>p</em></sub>(<em>τ</em>, <em>s</em>)),</span></p>
+<p>where <span
+class="math inline"><em>Δ</em><sub><em>p</em></sub></span> is semantic
+change under comparison profile <span
+class="math inline"><em>p</em></span>, and <span
+class="math inline"><em>C</em><sub><em>p</em></sub></span> is carriage
+of obligations declared relevant by <span
+class="math inline"><em>p</em></span>.</p>
+<p>This yields four important regions:</p>
+<ul>
+<li><p><strong>Semantic delta:</strong> high<br />
+<strong>Obligation carriage:</strong> high<br />
+<strong>Interpretation:</strong> faithful translation, synthesis, or
+migration</p></li>
+<li><p><strong>Semantic delta:</strong> high<br />
+<strong>Obligation carriage:</strong> low<br />
+<strong>Interpretation:</strong> transformative drift or unsupported
+invention</p></li>
+<li><p><strong>Semantic delta:</strong> low<br />
+<strong>Obligation carriage:</strong> high<br />
+<strong>Interpretation:</strong> conservative reproduction with
+preserved context</p></li>
+<li><p><strong>Semantic delta:</strong> low<br />
+<strong>Obligation carriage:</strong> low<br />
+<strong>Interpretation:</strong> superficial copying with broken
+identity, authority, or provenance</p></li>
+</ul>
+<p>The table is analytical, not a universal ontology. Delta and carriage
+depend on task, artifact type, observer, and declared commitments.</p>
+<h2 id="semantic-carriage-envelope">3. Semantic-Carriage Envelope</h2>
+<p>For a transformation, define an envelope:</p>
+<p><span
+class="math display"><em>E</em><sub><em>τ</em></sub> = (<em>I</em>, <em>S</em>, <em>P</em>, <em>A</em>, <em>K</em>, <em>U</em>, <em>R</em>, <em>X</em>, <em>W</em>),</span></p>
+<p>where <span class="math inline"><em>I</em></span> is input and output
+identity, <span class="math inline"><em>S</em></span> source and
+lineage, <span class="math inline"><em>P</em></span> transformation
+profile, <span class="math inline"><em>A</em></span> authority and
+standing, <span class="math inline"><em>K</em></span> obligations or
+invariants expected to carry, <span
+class="math inline"><em>U</em></span> uncertainty and unresolved
+remainder, <span class="math inline"><em>R</em></span> declared
+revisions and losses, <span class="math inline"><em>X</em></span> effect
+boundary, and <span class="math inline"><em>W</em></span> evidence and
+witnesses.</p>
+<p>Each obligation receives one typed outcome: <code>PRESERVED</code>,
+<code>REFINED</code>, <code>WEAKENED</code>,<br />
+<code>STRENGTHENED</code>, <code>TRANSLATED</code>,
+<code>DROPPED</code>, <code>CONFLICTED</code>,
+<code>NOT_APPLICABLE</code>,<br />
+or <code>UNKNOWN</code>. A transformed artifact is conservation-adequate
+only relative to the accepted outcomes of its profile.</p>
+<p>This prevents “same meaning” from hiding legitimate change and
+prevents fluent output from hiding lost commitments.</p>
+<h2 id="what-counts-as-semantic-transformation">4. What Counts as
+Semantic Transformation</h2>
+<p>Candidate transformation operations include paraphrase, translation,
+summarization, abstraction, synthesis, decomposition, inference,
+recombination, migration, normalization, and contextual adaptation.
+Their labels do not determine their behavior.</p>
+<p>A translation can preserve a proposition while changing connotation
+or legal effect. A summary can preserve a thesis while omitting a
+decisive exception. A normalization can preserve data values while
+erasing ordering or source identity. Classification must therefore
+inspect the envelope and domain profile, not assign permanent morphology
+to the operation name.</p>
+<h2 id="what-conservation-preserves">5. What Conservation Preserves</h2>
+<p>Conservation can concern different objects:</p>
+<ul>
+<li>byte, token, or structural identity;</li>
+<li>proposition or defined concept;</li>
+<li>constraint, invariant, or refusal;</li>
+<li>provenance and epistemic lineage;</li>
+<li>authority, jurisdiction, and standing;</li>
+<li>uncertainty, disagreement, and alternatives;</li>
+<li>dependency and version relation;</li>
+<li>effect boundary and permitted use; or</li>
+<li>reconstructability and audit evidence.</li>
+</ul>
+<p>Preserving one does not preserve all. Cryptographic identity can
+prove byte continuity without truth or authority. A paraphrase can
+conserve a claim without conserving evidence. A legal restatement can
+conserve wording while changing application.</p>
+<h2 id="transformation-dominance">6. Transformation Dominance</h2>
+<p>A system is transformation-dominant under profile <span
+class="math inline"><em>p</em></span> when its capacity or rate of
+semantic change substantially exceeds its demonstrated ability to carry
+the obligations relevant to its uses. This is task-relative, not a
+stable essence of the substrate.</p>
+<p>Let <span class="math inline"><em>T</em><sub><em>p</em></sub></span>
+summarize useful transformation capacity and <span
+class="math inline"><em>Q</em><sub><em>p</em></sub></span> summarize
+verified carriage quality. A provisional imbalance indicator is:</p>
+<p><span class="math display">$$
+D_p=\frac{T_p}{\epsilon+Q_p},
+$$</span></p>
+<p>with <span class="math inline"><em>ϵ</em> &gt; 0</span> preventing
+division by zero. The indicator is meaningful only when both terms have
+validated, commensurable measurements. It is not a score to rank LLMs,
+law, science, social media, evolution, or bureaucracy without
+domain-specific evidence.</p>
+<h2 id="hallucination-as-one-test-case">7. Hallucination as One Test
+Case</h2>
+<p>Weak source, uncertainty, and admissibility carriage can contribute
+to unsupported output. But hallucination also has other possible causes:
+ambiguous prompts, missing knowledge, retrieval failure, distribution
+shift, decoding, tool errors, evaluation mismatch, incentives, and
+incorrect reference answers.</p>
+<p>The morphological hypothesis becomes testable by intervention: hold
+model and task constant, add or remove specific conservation mechanisms,
+and measure supported-claim accuracy, citation fidelity, calibration,
+contradiction, abstention, and recovery. If conservation layers do not
+improve the targeted failures, the explanation should be narrowed.</p>
+<p>Hallucination is not defined here as all semantic transformation
+without provenance.</p>
+<h2 id="institutional-and-social-systems">8. Institutional and Social
+Systems</h2>
+<p>Institutions can preserve law, procedure, records, roles, and
+precedent while also generating drift, exclusion, rigidity, capture, or
+false continuity. Digital media can accelerate transformation while also
+preserving archives and traceability. The simple profiles in the source
+are hypotheses, not findings.</p>
+<p>A defensible comparison needs explicit unit of analysis, time window,
+obligations, authority, measures, counterfactual, and evidence. High
+conservation is not automatically good: conserving injustice, error, or
+obsolete identity can be harmful. Healthy conservation must include
+governed revision and refusal.</p>
+<h2 id="semantic-metabolism">9. Semantic Metabolism</h2>
+<p>The metabolism metaphor captures the joint need for generative change
+and continuity. It should not imply a measured biological homology or a
+universal carrying capacity. Its operational value lies in asking about
+inputs, transformations, retained structure, waste or remainder, repair,
+feedback, energy or resource cost, and failure under load.</p>
+<p>Use the metaphor when it yields measurements or design questions;
+otherwise retain it as pedagogy rather than evidence.</p>
+<h2 id="agentic-systems">10. Agentic Systems</h2>
+<p>Agentic systems add longitudinal state, tools, delegation, external
+effects, and coordination. Their conservation needs can include task
+identity, user intent, source custody, role and authority, constraints,
+decisions, uncertainty, receipts, intermediate failures, and handoff
+state.</p>
+<p>Conservation is not a memory dump. Carrying irrelevant, expired,
+private, or adversarial material can itself be unsafe. The profile must
+specify what persists, what expires, what may be compressed, what
+requires renewed authority, and what must be deleted or withheld.</p>
+<h2 id="corpus-integration-and-authorial-compression">11. Corpus
+Integration and Authorial Compression</h2>
+<p><strong>Transformation-Dominant Semantic Systems</strong> supplies
+the diagnostic morphology: semantic delta versus obligation carriage.
+<strong>Constraint-Bearing Composability</strong> specifies how
+obligations should survive composition. <strong>Meta-Binding as
+Operational Invariant</strong> identifies higher-order bindings that
+must persist across realization. <strong>Epistemic Lineage
+Engine</strong> tracks how claims descend from sources, transformations,
+and decisions. <strong>Governance as Compilation</strong> structures
+staged translation and semantic remainder.</p>
+<p>These are complementary, not five names for one mechanism. The
+diagnostic paper says where an imbalance may exist; the others specify
+selected conservation machinery.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> can retain sources,
+envelopes, typed carriage outcomes, losses, conflicts, effects, and
+revision lineage. The universal <strong>GSM</strong> can type
+transformations and their preserved or broken relations without treating
+connection as fidelity.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate generative, archival,
+lineage, authority, hybrid, lossy, and no-transform alternatives.</li>
+<li><strong>Specification:</strong> define semantic delta, carried
+obligations, loss types, evidence, authority, privacy, and effect
+boundaries.</li>
+<li><strong>CM1:</strong> retain admissible transformation/conservation
+profiles, including high-change and high-retention variants.</li>
+<li><strong>CM2:</strong> prefer configurations by task utility,
+fidelity, calibration, inspectability, privacy, cost, and
+revisability.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for one semantic workflow.</li>
+<li><strong>IR:</strong> produce an Instance Realization or
+Implementation Realization of representations, transformations, checks,
+storage, and receipts.</li>
+<li><strong>Evidence:</strong> test obligation carriage, useful change,
+error, recovery, costs, and downstream effects.</li>
+<li><strong>Revision:</strong> update profiles, mechanisms, and
+realization from failures and counterevidence.</li>
+</ul>
+<p>This paper reaches Specification and proposes CM1/CM2 measures. It
+does not select an IC or certify an IR. Realization-stage IR remains
+distinct from Intermediate Representation in MCIR and other compiler
+contexts.</p>
+<h2 id="evaluation-program">13. Evaluation Program</h2>
+<p>Construct task suites spanning exact reproduction, paraphrase,
+translation, summarization, synthesis, multi-step inference,
+long-running agents, handoffs, and institutional workflows. For each
+task, predeclare obligations and allowed transformations.</p>
+<p>Compare baseline systems with provenance, lineage,
+constraint-carriage, authority, uncertainty, and receipt mechanisms
+added singly and in combination. Measure semantic delta, obligation
+retention, unsupported additions, omission, provenance coverage,
+authority escalation, uncertainty calibration, reconstructability,
+reversibility, privacy loss, task success, latency, storage, and human
+comprehension.</p>
+<p>Use causal ablation where possible. Report when conservation reduces
+useful transformation, preserves error, creates rigidity, or imposes
+greater cost than benefit.</p>
+<h2 id="predictions">14. Predictions</h2>
+<p>The framework predicts, conditionally, that: (1) high delta with low
+carriage will correlate with selected drift measures; (2) explicit
+lineage will improve reconstructability but not necessarily truth; (3)
+authority carriage will reduce silent standing escalation where effect
+paths are actually mediated; (4) calibrated uncertainty and typed
+remainder will reduce unsupported closure; and (5) optimal profiles will
+vary by task rather than converge on maximum conservation.</p>
+<p>Each prediction can fail without invalidating every use of the
+morphology.</p>
+<h2 id="diagnostic-morphology-of-governed-semantic-change">Diagnostic
+Morphology of Governed Semantic Change</h2>
+<p>The completed P1 corpus supports a precise role for
+Transformation-Dominant Semantic Systems (TDSS): it is a
+<strong>diagnostic morphology of semantic change and obligation
+carriage</strong>. It classifies a workflow’s balance between useful
+transformation and preservation of declared commitments; it does not
+supply the conservation machinery itself.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Meta-Binding as Operational
+Invariant</em><br />
+<strong>Supplies:</strong> Higher-order obligations that must survive
+transformations.<br />
+<strong>TDSS boundary:</strong> Supplies candidates for what the
+carriage profile should preserve.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Epistemic Lineage
+Engine</em><br />
+<strong>Supplies:</strong> Source, transformation, decision, and
+revision lineage.<br />
+<strong>TDSS boundary:</strong> Supplies reconstruction machinery;
+lineage presence alone does not prove fidelity.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Staged translation, lowering, semantic
+remainder, and governed transition.<br />
+<strong>TDSS boundary:</strong> Supplies a transformation architecture;
+TDSS diagnoses its change/carriage behavior.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Debt</em><br />
+<strong>Supplies:</strong> Accumulated cost of lost, deferred,
+ambiguous, or unmaintained semantic obligations.<br />
+<strong>TDSS boundary:</strong> Debt is a downstream consequence and
+repair burden, not identical to low conservation.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Gravitational
+Attractors</em><br />
+<strong>Supplies:</strong> Versioned convergence and canonicalization
+regimes.<br />
+<strong>TDSS boundary:</strong> Convergence can conserve selected
+distinctions while transforming or erasing others.</p></li>
+</ul>
+<p>The cross-corpus diagnostic should report a vector rather than one
+rank:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D_T= (&amp;\Delta_{useful}, C_{required}, L_{accepted}, L_{silent}, \\
+&amp;R_{recoverable}, K_{cost})
+\end{aligned}.
+$$</span></p>
+<p>Here <span
+class="math inline"><em>Δ</em><sub><em>u</em><em>s</em><em>e</em><em>f</em><em>u</em><em>l</em></sub></span>
+is task-relative semantic change; <span
+class="math inline"><em>C</em><sub><em>r</em><em>e</em><em>q</em><em>u</em><em>i</em><em>r</em><em>e</em><em>d</em></sub></span>
+is verified carriage of required commitments; <span
+class="math inline"><em>L</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em><em>e</em><em>d</em></sub></span>
+and <span
+class="math inline"><em>L</em><sub><em>s</em><em>i</em><em>l</em><em>e</em><em>n</em><em>t</em></sub></span>
+separate disclosed from undisclosed loss; <span
+class="math inline"><em>R</em><sub><em>r</em><em>e</em><em>c</em><em>o</em><em>v</em><em>e</em><em>r</em><em>a</em><em>b</em><em>l</em><em>e</em></sub></span>
+measures whether prior meaning and obligations can be reconstructed or
+repaired; and <span
+class="math inline"><em>K</em><sub><em>c</em><em>o</em><em>s</em><em>t</em></sub></span>
+records the resource and privacy cost of preservation. A highly
+generative system can score well if it carries what the task requires
+and exposes loss. A byte-preserving archive can score poorly if
+interpretation, authority, scope, or revision context becomes
+unusable.</p>
+<p>Corpus integration adds one critical distinction:
+<strong>conservation of an obligation is not conservation of its truth
+or current validity</strong>. A system should preserve a claim’s source,
+scope, standing, defeaters, and expiry even when the claim is later
+rejected. Deletion, forgetting, expiry, and redaction can themselves be
+required obligations.</p>
+<p>The universal GSM can type <code>TRANSFORMS</code>,
+<code>CARRIES_OBLIGATION</code>, <code>DISCLOSES_LOSS</code>,<br />
+<code>SILENTLY_DROPS</code>, <code>PRESERVES_FOR_REVIEW</code>,
+<code>EXPIRES</code>, <code>REDACTS_UNDER</code>,
+<code>RECONSTRUCTS_FROM</code>,<br />
+and <code>INCURS_DEBT</code>. These relations keep change, retention,
+validity, and repair separate.</p>
+<p>This integration establishes four editorial commitments: adopt
+diagnostic morphology as TDSS’s official corpus role; adopt the six-part
+diagnostic vector; distinguish obligation conservation from truth
+preservation; and route implementation mechanisms to the adjacent works
+rather than presenting TDSS as a system architecture.</p>
+<h2
+id="orientation-change-authority-handoffs-evidence-paths-and-experience-research-carriage">Orientation
+Change, Authority Handoffs, Evidence Paths, and Experience-Research
+Carriage</h2>
+<p>The fixed-seed comparison with Recursive Semantic Orientation,
+Split-Authority AI Coordination, the Constitutional Observability
+Platform, and Qualia Binding and Realization Mapping turns the TDSS
+diagnostic toward four high-risk transformation surfaces:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D_T^*= (&amp;subject, operation, profile, useful\_delta, \\
+&amp;required\_carriage, accepted\_loss, silent\_loss, \\
+&amp;recoverability, cost, authority\_edge, evidence\_path, \\
+&amp;claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>An orientation update transforms hypotheses, partitions, unknowns,
+and active questions. It should preserve source custody, defeated
+countermodels, claim ceilings, and explicit remainder even when the
+active model changes. An authority handoff may transform a mandate into
+specification, realization, verification, or effect instructions; every
+edge must disclose obligation loss and semantic widening.</p>
+<p>An observability path transforms domain state into events, records,
+assessments, widgets, accessibility representations, and human
+interpretation. Agreement at one edge does not conserve meaning through
+the entire path. Qualia research adds a stronger ceiling: transforms
+among reports, constructs, dimensions, bindings, models, and candidate
+realizations must preserve evidence kind and residual without promoting
+predictive success into phenomenal standing.</p>
+<p>The universal GSM can type<br />
+<code>TRANSFORMS_ORIENTATION_STATE</code>,<br />
+<code>CARRIES_DEFEATED_COUNTERMODEL</code>,
+<code>TRANSFORMS_AUTHORITY_HANDOFF</code>,
+<code>SILENTLY_WIDENS_MANDATE</code>,<br />
+<code>CARRIES_EVIDENCE_ACROSS_PROJECTION</code>,
+<code>PRESERVES_EXPERIENCE_CLAIM_KIND</code>,<br />
+and<br />
+<code>REFUSES_PHENOMENAL_PROMOTION</code>.</p>
+<p>This randomized review establishes four editorial commitments: add
+subject, operation, authority edge, evidence path, and claim ceiling to
+the diagnostic; apply it to orientation updates; require carriage
+records at authority handoffs and observability projections; and impose
+experience-research claim-kind preservation across every transform.</p>
+<h2
+id="obligation-carriage-across-substitution-compilation-binding-and-debt">Obligation
+Carriage Across Substitution, Compilation, Binding, and Debt</h2>
+<p>Four downstream uses refine TDSS into an event-level diagnostic. A
+Cognitive ABI declares obligations that must survive capability
+substitution. <em>Everything Is a Compiler</em> uses the morphology to
+limit when compiler language explains a transformation. SBQ assesses the
+binding state produced or preserved after change. Semantic Debt records
+unresolved burdens that persist after dropped, ambiguous, or costly
+obligations. Semantic Gravitational Attractors was screened but not
+retained as a reverse dependency: generic conservation language and
+convergence do not establish use of the TDSS diagnostic.</p>
+<p>The carriage record should be:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;subject, operation, predecessor, successor, \\
+&amp;required\_obligations, equivalence, field\_fates, \\
+&amp;authorized\_loss, silent\_loss, evidence, dependents, \\
+&amp;liabilities, repair, remainder)
+\end{aligned}.
+$$</span></p>
+<p>TDSS evaluates a bounded transformation event or workflow. SBQ
+evaluates the resulting binding profile. Semantic Debt tracks unresolved
+burden across time. These are related but nonidentical postures. A
+low-carriage event need not create debt if the loss was explicit,
+authorized, terminal, and consequence-free. A small undisclosed loss may
+create severe debt when many downstream claims, capabilities, or effects
+depend on it.</p>
+<p>Accepted loss requires an authorized decision relative to a declared
+profile; the transformer cannot authorize its own convenience loss by
+recording it. Silent loss should propagate to dependent artifacts and
+trigger review, downgrade, conflict, repair, or retirement. Substitution
+equivalence remains profile-relative and must state which obligations
+and consequences were tested.</p>
+<p>The universal GSM can type<br />
+<code>DIAGNOSES_TRANSFORMATION_EVENT</code>,<br />
+<code>DECLARES_REQUIRED_CARRIAGE</code>,
+<code>AUTHORIZES_PROFILE_RELATIVE_LOSS</code>,<br />
+<code>SILENTLY_DROPS_OBLIGATION</code>,
+<code>PROPAGATES_CARRIAGE_FAILURE</code>,
+<code>DEGRADES_BINDING_QUALITY</code>,<br />
+<code>INCURS_SEMANTIC_DEBT</code>, and<br />
+<code>HAS_NO_CONFIRMED_ATTRACTOR_DEPENDENCY</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the carriage record; separate event morphology,
+resulting binding quality, and accumulated debt; require authorized
+rather than self-declared loss; and propagate silent loss to dependents
+without manufacturing an attractor dependency.</p>
+<h2 id="counterevidence-and-failure-modes">15. Counterevidence and
+Failure Modes</h2>
+<p>The framework should be narrowed or rejected where: (1)
+transformation and conservation are made exclusive; (2) operation names
+determine morphology; (3) high change is assumed unfaithful; (4) low
+change is assumed faithful; (5) a profile is absent; (6) obligations are
+not predeclared; (7) preservation types are conflated; (8) cryptographic
+identity implies truth; (9) provenance implies authority; (10) authority
+implies correctness; (11) reconstructability implies legitimacy; (12)
+uncertainty is discarded; (13) disagreement is normalized away; (14)
+loss is hidden; (15) strengthening creates unauthorized obligations;
+(16) conservation preserves error or injustice; (17) privacy conflicts
+with lineage; (18) deletion obligations conflict with persistence; (19)
+hallucination is treated as single-cause; (20) reference answers are
+wrong; (21) retrieval adds false evidence; (22) institutional examples
+are anecdotal; (23) system profile tables lack measures; (24) legal
+systems are called uniformly conservative; (25) social systems are
+called uniformly transformative; (26) metabolism is treated as
+biological proof; (27) imbalance measures are incommensurable; (28) high
+scores hide effect failures; (29) conservation layers can be bypassed;
+(30) receipts record only claims; (31) carrying stale context worsens
+decisions; (32) adversarial material persists; (33) GMB inclusion
+becomes validation; (34) GSM edges become fidelity; (35) corpus
+mechanisms are merged; (36) a specification is presented as implemented;
+(37) simpler provenance methods perform equally; (38) useful
+transformation is impaired; (39) costs exceed benefits; or (40) external
+research contradicts novelty or causal claims.</p>
+<h2 id="a-diagnostic-morphology-not-a-binary-ontology">A Diagnostic
+Morphology, Not a Binary Ontology</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>This paper distinguishes transformation-dominant operations that
+produce new semantic states from conservation-dominant operations that
+preserve identity, recoverability, and obligations across change. Most
+real operations mix both. The distinction is proposed as explanatory
+compression and a source of testable questions, not a universal
+classification of systems.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>False-binary attack.</strong> Mixed operations are forced
+into one class. Profiles need degrees, dimensions, and context rather
+than a single label.</li>
+<li><strong>Normative-bias attack.</strong> Transformation is equated
+with progress or conservation with virtue. Either can preserve harm or
+destroy value.</li>
+<li><strong>Scale-shift attack.</strong> An operation transforms locally
+while conserving system-level function, or the reverse. Classification
+must state level and object.</li>
+<li><strong>Temporal-shift attack.</strong> Short-term conservation
+produces long-term transformation. Observation horizon is part of the
+claim.</li>
+<li><strong>Identity-presumption attack.</strong> The conserved property
+is never specified. Conservation requires a declared identity and
+verification relation.</li>
+<li><strong>Novelty-presumption attack.</strong> Surface difference is
+treated as semantic novelty. Transformation requires a material
+distinction under a profile.</li>
+<li><strong>Biological-analogy attack.</strong> Metabolism, evolution,
+or homeostasis language is treated as mechanistic equivalence. Analogies
+must retain domain boundaries.</li>
+<li><strong>Measurement-circularity attack.</strong> Operators are
+classified by the effects used to define the categories. Independent
+observations and counterexamples are needed.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The morphology supplies a comparative vocabulary and predictions for
+governed semantic systems. It does not establish exhaustiveness, natural
+kinds, optimal balance, or universal laws. The dynamic-equilibrium
+framing is a research hypothesis, not a measured property of the corpus
+or other systems.</p>
+<p>Claims about biology, organizations, cognition, software evolution,
+learning, or system performance require external domain evidence and
+operational measures. Internal corpus examples support explanatory
+usefulness only. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The accessible question is: when a system changes, what is genuinely
+new, what must remain continuous, how is that continuity tested, and at
+what scale and time horizon?</p>
+<h2 id="conclusion">17. Conclusion</h2>
+<p>Semantic transformation and semantic conservation are not opposing
+substances. They are independent dimensions of governed change. The
+important question is whether a transformation produces useful semantic
+difference while carrying the commitments that the task requires and
+exposing every accepted loss.</p>
+<p>This reframing strengthens the source insight. Contemporary systems
+need not become less generative. They need explicit, testable ways to
+preserve source, identity, authority, uncertainty, scope, and evidence
+through generation - and equally explicit permission to revise what
+should not remain fixed.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source was searched in this pass. Further evidentiary
+strengthening requires authorized primary-source review of semantic
+change, information preservation, provenance, data and model lineage,
+LLM hallucination and calibration, institutional memory and drift,
+social-media information dynamics, legal and scientific record systems,
+distributed-system consistency, cognitive architecture, privacy and
+deletion, and empirical evaluation of conservation mechanisms.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Revision.</strong> This stage is outside the present paper’s
+asserted contribution and evidentiary scope.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern semantic systems can generate,
+translate, summarize, recombine, and propagate meaning at great speed
+while failing to preserve source, identity, authority, uncertainty,
+scope, or other commitments across those transformations. Its nearest
+external comparison fields are semantic, provenance, observation. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Telemetry can be complete at
+the instrumented boundary while omitting the causal variable, real-world
+effect, or authority question that matters. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848478">10.5281/zenodo.23848478</a></p>

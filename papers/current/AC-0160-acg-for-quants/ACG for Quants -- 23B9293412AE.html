@@ -1,0 +1,1049 @@
+<h1 id="acg-for-quants">ACG for Quants</h1>
+<h2
+id="point-in-time-identity-admissibility-constraint-effect-and-attribution-across-the-quant-lifecycle">Point-in-Time
+Identity, Admissibility, Constraint, Effect, and Attribution Across the
+Quant Lifecycle</h2>
+<h3
+id="a-quantitative-signal-may-exist-without-being-admissible-to-become-a-position-order-or-explanation.">A
+quantitative signal may exist without being admissible to become a
+position, order, or explanation.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Quantitative-finance systems do more than compute. They admit data,
+bind time-varying identities, transform evidence, test hypotheses,
+migrate research into production, construct constrained portfolios,
+authorize market effects, and explain outcomes. Each transition carries
+an implicit constitution: source and licensing rules, point-in-time
+requirements, leakage controls, risk and mandate limits, model
+approvals, execution authority, and retirement conditions.</p>
+<p>This paper applies <strong>Ableman Constitutional Governance
+(ACG)</strong> to that lifecycle. ACG is the corpus-level architectural
+family in which authority, jurisdiction, identity, admissibility,
+evidence, refusal, effects, standing, and revision remain explicit. It
+does not replace econometrics, optimization, market microstructure,
+model-risk management, security controls, regulation, or professional
+judgment. It makes their authority and dependency relations
+inspectable.</p>
+<p>The governing principle is <strong>admissibility before consequential
+reliance</strong>. A file, mapping, factor, backtest, forecast,
+portfolio, or order proposal does not gain standing merely by existing.
+It is evaluated for a declared purpose, time, jurisdiction, authority,
+evidence state, and effect class. Valid outcomes include admission,
+bounded admission, hold, and refusal. Refusal is not automatically an
+outage; in high-stakes systems, it can be the correct continuation.</p>
+<p>The paper develops point-in-time identity governance, bitemporal data
+admission, a Factor Semantic Specification, cross-substrate equivalence
+claims, constitutional portfolio construction, pre-admitted execution
+envelopes, factor-authority retirement, and bounded attribution. It
+distinguishes decision receipts from proof of data truth, causal
+explanation, legal compliance, optimality, or market effect. It also
+maps the proposal through Possibility, Specification, CM1, CM2, Instance
+Configuration, Implementation Realization, Evidence, and Revision.</p>
+<p>This is a conceptual architecture and research agenda, not investment
+advice, a trading strategy, a compliance determination, or evidence that
+an implementation improves returns or reduces risk. External financial,
+legal, technical, and empirical review remains required for a future
+evidence-qualified revision or use in a consequential trading
+system.</p>
+<h2 id="the-quant-stack-is-already-a-governance-system">1. The Quant
+Stack Is Already a Governance System</h2>
+<p>A conventional shorthand is:</p>
+<pre class="text"><code>data -&gt; research -&gt; factors -&gt; risk model -&gt; optimizer -&gt; orders -&gt;
+fills -&gt; attribution</code></pre>
+<p>That diagram hides the decisions that allow each arrow. A vendor
+delivery is selected and licensed. A record is matched to an entity. A
+field is interpreted under a schema. A historical observation is judged
+available at a past decision time. A research result is promoted. A
+production implementation is accepted as equivalent enough. A portfolio
+is selected from a feasible set. An order is authorized under live
+conditions. An attribution claim is accepted as an explanation.</p>
+<p>ACG renders those transitions explicitly:</p>
+<pre class="text"><code>candidate claim
+  -&gt; identity and temporal binding
+  -&gt; evidence and authority evaluation
+  -&gt; typed admissibility disposition
+  -&gt; semantic transformation
+  -&gt; constrained continuation
+  -&gt; consequential effect request
+  -&gt; outcome observation
+  -&gt; attribution, decay review, and revision</code></pre>
+<p>The change is not merely more logging. It separates the things that
+logs often collapse: availability from admissibility, identifier from
+identity, backtest from evidence, model score from authority, optimizer
+result from authorized portfolio, order submission from market effect,
+and performance decomposition from causal explanation.</p>
+<h2 id="nine-jurisdictions">2. Nine Jurisdictions</h2>
+<p>A mature quant process is a federation of partially independent
+jurisdictions.</p>
+<ol type="1">
+<li><strong>Data jurisdiction:</strong> which sources, fields, schemas,
+licenses, timestamps, quality conditions, and uses are permitted?</li>
+<li><strong>Identity jurisdiction:</strong> which issuer, security,
+listing, share class, contract, portfolio, account, or counterparty does
+a record denote, over which interval and under which authority?</li>
+<li><strong>Semantic jurisdiction:</strong> what does a field,
+transformation, feature, factor, forecast, exposure, or risk measure
+mean?</li>
+<li><strong>Research jurisdiction:</strong> which hypotheses, datasets,
+horizons, leakage controls, multiple-testing corrections, and evaluation
+standards apply?</li>
+<li><strong>Production jurisdiction:</strong> which exact
+implementation, dependencies, environment, data contract, and operating
+envelope are admitted?</li>
+<li><strong>Portfolio jurisdiction:</strong> which target holdings are
+admissible under objective, risk, liquidity, cost, mandate, legal, tax,
+concentration, and operational constraints?</li>
+<li><strong>Execution jurisdiction:</strong> which orders may be
+created, sized, routed, delayed, cancelled, or refused under current
+conditions?</li>
+<li><strong>Attribution jurisdiction:</strong> which supported
+decomposition or causal claim may explain an outcome?</li>
+<li><strong>Retirement jurisdiction:</strong> when does a source,
+mapping, factor, model, limit, implementation, or authority lose
+standing?</li>
+</ol>
+<p>These boundaries are not necessarily organizational departments. They
+are semantic and authority boundaries. One service may realize several;
+one jurisdiction may span several systems. The requirement is that a
+claim granted in one jurisdiction does not silently inherit standing in
+another.</p>
+<h2 id="admissibility-before-consequential-reliance">3. Admissibility
+Before Consequential Reliance</h2>
+<p>Let <span class="math inline"><em>x</em></span> be a candidate
+object, <span class="math inline"><em>p</em></span> its proposed
+purpose, <span class="math inline"><em>j</em></span> the relevant
+jurisdiction, <span class="math inline"><em>t</em></span> the decision
+time, <span class="math inline"><em>e</em></span> the effect class, and
+<span class="math inline"><em>E</em><sub><em>t</em></sub></span> the
+evidence state admissible at that time. Define:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\mathcal{A}(x,p,j,t,e,E_t) \in \{&amp;\operatorname{ADMIT},
+\operatorname{BOUNDED}, \\
+&amp;\operatorname{HOLD}, \operatorname{REFUSE}\}
+\end{aligned}.
+$$</span></p>
+<p>The central rule is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathcal{A}(x,p,j,t,e,E_t) \notin
+\{\operatorname{ADMIT},\operatorname{BOUNDED}\} \\
+&amp;\Rightarrow  \\
+&amp;\ne g\operatorname{ConsequentialReliance}(x,p,j,t,e)
+\end{aligned}.
+$$</span></p>
+<p><code>ADMIT</code> grants only the named standing.</p>
+<p><code>BOUNDED</code> may permit research but not production,
+quotation but not a join, signal calculation but not order generation,
+or monitoring but not capital allocation. <code>HOLD</code> identifies
+missing evidence or authority without pretending the claim is false.
+<code>REFUSE</code> identifies a conflict that should not continue under
+the current constitution.</p>
+<p>The rule is consequence-sensitive. Exploratory research should remain
+permissive enough to discover anomalies and alternatives. The threshold
+for a live order or regulatory report is different from the threshold
+for a notebook hypothesis. ACG governs promotion, not curiosity.</p>
+<h2 id="point-in-time-identity-governance">4. Point-in-Time Identity
+Governance</h2>
+<p>A ticker is not an entity. A CUSIP, ISIN, FIGI, vendor identifier, or
+internal key is not an entity either. Each is a time-bounded claim made
+within a naming scheme. Corporate actions, relistings, mergers,
+spinoffs, share-class changes, vendor corrections, and mapping policies
+can alter the relation.</p>
+<p>A governed identity assertion should bind at least:</p>
+<pre class="text"><code>IdentityAssertion
+  assertion_id
+  subject_identity_candidate
+  external_identifier
+  identifier_scheme_and_revision
+  entity_type
+  source_authority
+  valid_time_interval
+  transaction_time_interval
+  confidence_or_disposition
+  conflicts_and_alternatives
+  override_authority
+  predecessor_assertions
+  affected_dependents</code></pre>
+<p>The two times matter. Valid time states when the assertion purports
+to describe the world. Transaction time states when the system had
+admitted that assertion. A historical backtest must not silently use a
+mapping admitted only later.</p>
+<p>If <span class="math inline"><em>V</em>(<em>x</em>)</span> is valid
+time and <span class="math inline"><em>T</em>(<em>x</em>)</span> is
+transaction time, then the state eligible for an as-of decision at <span
+class="math inline"><em>t</em></span> is not simply every record whose
+valid time contains <span class="math inline"><em>t</em></span>. It is
+the subset that the decision system had admitted by <span
+class="math inline"><em>t</em></span> under the selected restatement
+policy:</p>
+<p><span
+class="math display"><em>E</em><sub><em>t</em></sub> = {<em>x</em> ∣ <em>t</em> ∈ <em>V</em>(<em>x</em>), <em>t</em> ∈ <em>T</em>(<em>x</em>), 𝒜(<em>x</em>, <em>p</em>, <em>j</em>, <em>t</em>, <em>e</em>, <em>E</em><sub><em>t</em></sub>) = ADMIT }.</span></p>
+<p>This expression is schematic because admissibility may depend
+recursively on other records. A realization must define termination,
+conflict, and circularity rules.</p>
+<h2 id="data-admission-and-restatement">5. Data Admission and
+Restatement</h2>
+<p>Statistical checks identify missingness, staleness, discontinuities,
+outliers, coverage changes, vendor disagreement, and distribution shift.
+ACG adds a typed decision and dependency consequence.</p>
+<p>A data-admission result should say not just “bad row” but:</p>
+<ul>
+<li>which exact snapshot, partition, schema, field, and subject were
+evaluated;</li>
+<li>which rule and version applied;</li>
+<li>which source, license, and authority supported use;</li>
+<li>which evidence and comparison windows were used;</li>
+<li>whether the result is admitted, bounded, held, refused, superseded,
+or requires restatement;</li>
+<li>which downstream datasets, factors, portfolios, reports, and claims
+may be affected;</li>
+<li>whether later correction changes historical valid state,
+transaction-time knowledge, or both.</li>
+</ul>
+<p>A 90 percent change in market capitalization is not self-explanatory.
+It may reflect price movement, share-count change, corporate action,
+unit error, mapping failure, stale data, or vendor correction. Each
+explanation changes the appropriate response and the downstream
+debt.</p>
+<p>A receipt binds the decision and its inputs. It does not prove the
+vendor value true, the check complete, or the dependency graph
+exhaustive. Independent source comparison, physical or market
+observations, later correction, and human review may contradict it.</p>
+<h2 id="research-and-the-factor-semantic-specification">6. Research and
+the Factor Semantic Specification</h2>
+<p>Research may explore. Production must be admitted.</p>
+<p>Before promotion, a factor or model should have a <strong>Factor
+Semantic Specification</strong> that distinguishes the intended economic
+and computational meaning from any one codebase:</p>
+<ul>
+<li>hypothesis and economic intuition;</li>
+<li>target, horizon, and decision use;</li>
+<li>universe and point-in-time membership rules;</li>
+<li>exact inputs, identity semantics, and availability lags;</li>
+<li>transformations, winsorization, normalization, neutralization, and
+missing-data policy;</li>
+<li>leakage controls and embargoes;</li>
+<li>training, validation, and test regimes;</li>
+<li>multiple-testing and selection history where relevant;</li>
+<li>rebalance, turnover, capacity, and decay expectations;</li>
+<li>risk, cost, mandate, and compliance interactions;</li>
+<li>known failure modes and refusal conditions;</li>
+<li>evidence state and unresolved alternatives.</li>
+</ul>
+<p>This specification is not automatically canonical or correct. It is a
+reviewable meaning contract. The implementation burden is to preserve
+the admitted semantics closely enough for the declared use.</p>
+<h2 id="research-to-production-as-a-bounded-equivalence-claim">7.
+Research-to-Production as a Bounded Equivalence Claim</h2>
+<p>Research and production commonly use different languages, data
+engines, libraries, numerical types, parallelism, calendars, and
+execution environments. Equality on a few samples does not establish
+semantic equivalence.</p>
+<p>Let <span class="math inline"><em>f</em><sub><em>R</em></sub></span>
+be the research realization, <span
+class="math inline"><em>f</em><sub><em>P</em></sub></span> the
+production realization, <span class="math inline"><em>S</em></span> the
+Factor Semantic Specification, <span
+class="math inline"><em>X</em></span> a versioned replay and edge-case
+suite, and <span class="math inline"><em>Δ</em></span> the declared
+tolerance and comparison relation. A bounded equivalence claim is:</p>
+<p><span
+class="math display"><em>f</em><sub><em>R</em></sub>≡<sub><em>S</em>, <em>X</em>, <em>Δ</em></sub><em>f</em><sub><em>P</em></sub>.</span></p>
+<p>The subscript is the point. The claim holds only for the named
+semantics, data surface, cases, tolerances, dependencies, and
+environment. It may require exact equality for identifiers and
+classifications, numerical tolerance for floating-point outputs, rank or
+portfolio-impact tolerance for signals, and distributional tests for
+nondeterministic models.</p>
+<p>An equivalence package should bind source and target artifacts,
+dependencies, environment, calendars, seeds, replay data, edge cases,
+known non-equivalences, comparison code, outputs, reviewer, and expiry.
+Hash equality of outputs is useful only where exact equality is
+intended; a matching digest does not explain which semantics were
+exercised.</p>
+<h2 id="portfolio-construction-as-constitutional-selection">8. Portfolio
+Construction as Constitutional Selection</h2>
+<p>An optimizer does not merely turn expected returns into holdings. It
+selects one point from a constrained set.</p>
+<p>Let <span class="math inline"><em>w</em></span> be portfolio weights,
+<span class="math inline"><em>α</em><sub><em>t</em></sub></span>
+expected returns admitted at time <span
+class="math inline"><em>t</em></span>, <span
+class="math inline"><em>Σ</em><sub><em>t</em></sub></span> a risk model,
+<span
+class="math inline"><em>C</em><sub><em>t</em></sub>(<em>w</em>, <em>w</em><sub><em>p</em><em>r</em><em>e</em><em>v</em></sub>)</span>
+a cost model, and <span
+class="math inline"><em>g</em><sub><em>k</em></sub>(<em>w</em>; <em>s</em><sub><em>t</em></sub>) ≤ 0</span>
+the constraints under state <span
+class="math inline"><em>s</em><sub><em>t</em></sub></span>. A generic
+selection is:</p>
+<p><span
+class="math display"><em>w</em><sub><em>t</em></sub><sup>*</sup> ∈ arg max<sub><em>w</em> ∈ ℱ<sub><em>t</em></sub></sub>(<em>α</em><sub><em>t</em></sub><sup>⊤</sup><em>w</em> − <em>λ</em><em>w</em><sup>⊤</sup><em>Σ</em><sub><em>t</em></sub><em>w</em> − <em>C</em><sub><em>t</em></sub>(<em>w</em>, <em>w</em><sub><em>p</em><em>r</em><em>e</em><em>v</em></sub>)),</span></p>
+<p>where</p>
+<p><span
+class="math display">ℱ<sub><em>t</em></sub> = {<em>w</em> ∣ <em>g</em><sub><em>k</em></sub>(<em>w</em>; <em>s</em><sub><em>t</em></sub>) ≤ 0 for
+all active <em>k</em>}.</span></p>
+<p>The feasible set is a constitutional surface: mandate, leverage,
+concentration, liquidity, borrow, turnover, exposure, legal, tax, and
+operational rules determine which continuations exist. CM1 is the
+admissible portfolio-configuration space under the bare rules. CM2
+applies declared preferences among admissible configurations. The
+selected optimizer, parameters, data snapshots, and tolerances form the
+Instance Configuration for that decision.</p>
+<p>An optimizer-decision record should bind the alpha, risk, cost,
+holdings, constraints, solver, objective, feasible-status result,
+binding limits, selected target, alternatives or sensitivity where
+feasible, and final authority. It does not prove global optimality,
+model truth, legality, or beneficial outcome unless separate evidence
+supports those claims.</p>
+<p>This separation also improves attribution. A factor can be predictive
+while its expression is blocked by risk, liquidity, cost, or mandate.
+The system should not relabel every downstream loss of expression as
+factor failure.</p>
+<h2 id="execution-as-effect-governance">9. Execution as Effect
+Governance</h2>
+<p>A target portfolio is not yet an order, and an order is not yet a
+market effect. Execution introduces live prices, spreads, liquidity,
+venue rules, account state, market impact, partial fills, cancellations,
+outages, and human intervention.</p>
+<p>For latency-sensitive paths, ACG can use <strong>pre-admitted
+authority envelopes</strong>. An envelope states which instrument,
+account, side, size, price distance, participation, venue, time window,
+risk budget, and exception conditions a fast path may use. The hot path
+need not re-prove the entire portfolio constitution for each event, but
+it must remain within the envelope and emit enough information for later
+reconciliation.</p>
+<p>The evidence sequence is:</p>
+<pre class="text"><code>portfolio decision
+  -&gt; execution authority envelope
+  -&gt; order intent and admission
+  -&gt; venue or broker submission observation
+  -&gt; acknowledgement, fill, cancellation, or uncertainty
+  -&gt; holdings and cash reconciliation
+  -&gt; exception, debt, and review</code></pre>
+<p>Hot-path capture may be minimal, but post-event expansion cannot
+retroactively authorize an out-of-scope effect. If the fast path exceeds
+its authority, the system records a violation and invokes the configured
+containment or recovery process.</p>
+<p>No receipt proves that a venue received an order or that a fill
+occurred merely because the local system says so. Broker, venue,
+clearing, custody, market-data, and account-state evidence have
+different trust and timing properties.</p>
+<h2 id="storage-and-computation-are-substrates-not-the-constitution">10.
+Storage and Computation Are Substrates, Not the Constitution</h2>
+<p>The source identifies Parquet, Delta Lake, KDB, Spark or Databricks,
+MCIR, and Jnana as useful components. Their architectural roles are
+plausible:</p>
+<ul>
+<li>columnar stores can support large evidence scans;</li>
+<li>versioned transactional tables can support schema control and time
+travel;</li>
+<li>time-series systems can answer low-latency as-of questions;</li>
+<li>distributed engines can recompute and backfill large
+transformations;</li>
+<li>obligation-carrying representations can preserve semantic and
+governance commitments across execution substrates.</li>
+</ul>
+<p>These are candidate realizations, not requirements or endorsements. A
+database preserves only the state written through its instrumented
+paths. Time travel does not guarantee point-in-time truth.
+Transactionality does not establish semantic legitimacy. A fast as-of
+join can return the wrong entity with perfect performance. MCIR or Jnana
+can carry obligations only if the source-to-intermediate-to-runtime
+transformations preserve and test them.</p>
+<p>The constitution belongs in the explicit identities, schemas,
+authorities, admissibility rules, dependency relations, effect
+boundaries, and evidence contracts, not in a product name.</p>
+<h2 id="factor-authority-decay-and-retirement">11. Factor Authority,
+Decay, and Retirement</h2>
+<p>A factor is not simply “in production.” It has bounded standing under
+conditions.</p>
+<p>An authority record may depend on predictive evidence, economic
+rationale, data stability, implementation equivalence, crowding,
+capacity, risk interaction, transaction cost, drawdown, regime,
+monitoring, and review time. The record should name expiry and
+retirement triggers.</p>
+<p>Different failures require different dispositions:</p>
+<ul>
+<li>prediction decay may reduce or remove capital;</li>
+<li>cost growth may change the admissible horizon or venue;</li>
+<li>source degradation may hold the factor despite intact research
+evidence;</li>
+<li>identity drift may require restatement;</li>
+<li>implementation drift may return the factor to equivalence
+review;</li>
+<li>risk mutation may restrict expression without invalidating the
+signal;</li>
+<li>rationale failure may require a stronger evidentiary reset.</li>
+</ul>
+<p>Possible outcomes include continue, continue with bounded capital,
+quarantine, review, revalidate, restrict, retire, supersede, or retain
+only for historical attribution. Retirement must preserve historical
+lineage; deleting the factor from the current registry should not
+rewrite why past decisions occurred.</p>
+<h2 id="attribution-is-a-bounded-explanation">12. Attribution Is a
+Bounded Explanation</h2>
+<p>Attribution is governance memory, but decomposition is not
+automatically causation. A portfolio return can be decomposed by factor,
+sector, security, trade, model, constraint, and cost under a selected
+method. Different methods may distribute interaction terms
+differently.</p>
+<p>An attribution claim should bind:</p>
+<ul>
+<li>the outcome and interval;</li>
+<li>exact holdings, prices, cash flows, corporate actions, and
+benchmark;</li>
+<li>admitted input and identity state;</li>
+<li>factor, risk, cost, optimizer, execution, and constraint
+revisions;</li>
+<li>decomposition or causal method;</li>
+<li>assumptions, residual, uncertainty, and alternatives;</li>
+<li>affected governance decisions.</li>
+</ul>
+<p>A losing trade may have followed an admissible process. A profitable
+trade may have violated its authority or relied on contaminated data.
+Economic outcome and governance integrity are distinct, though both
+matter.</p>
+<p>The strongest attribution test asks whether an alleged cause could
+have been known and acted upon at the relevant time. Explanations that
+use later restatements without labeling them are hindsight narratives,
+not point-in-time accounts.</p>
+<h2 id="minimal-adoption-profile">13. Minimal Adoption Profile</h2>
+<p>A team can begin without replacing its whole stack. A bounded
+prototype can implement six linked record families:</p>
+<ol type="1">
+<li><strong>Data Admission Record:</strong> source, snapshot, schema,
+license, freshness, checks, disposition, and dependents.</li>
+<li><strong>Identity Assertion Record:</strong> mapping, scheme,
+authority, bitemporal interval, conflict, and override.</li>
+<li><strong>Factor Semantic Record:</strong> definition, inputs,
+transformations, universe, horizon, evidence, and refusal
+conditions.</li>
+<li><strong>Substrate Equivalence Record:</strong> exact realizations,
+replay surface, tolerances, results, exceptions, and expiry.</li>
+<li><strong>Portfolio Decision Record:</strong> inputs, objective,
+constraints, solver, feasibility, sensitivity, target, and
+authority.</li>
+<li><strong>Attribution and Follow-Up Record:</strong> outcome, method,
+decomposition, uncertainty, competing explanations, and required
+revision.</li>
+</ol>
+<p>They should be linked, queryable, versioned, and connected to exact
+source and implementation artifacts. They should not live only in
+notebooks, PDFs, tickets, chats, or institutional memory.</p>
+<p>This is a prototype of record discipline, not proof of ACG
+conformance. The prototype still needs access control, privacy,
+retention, independent observation, dependency discovery, incident
+response, latency measurement, and human contestability.</p>
+<h2 id="realization-funnel">14. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>ACG-for-quants responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore signals, datasets, mappings, portfolio regimes, governance
+policies, and even dangerous or illegal possibilities under
+containment.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define identities, jurisdictions, temporal semantics, dispositions,
+factor meanings, constraint types, effect classes, and claim
+ceilings.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate configurations satisfying the bare specification,
+including strict, permissive, centralized, federated, expensive, and
+minimal designs.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer designs that reduce leakage, identity drift, hidden
+constraint, unbounded authority, privacy loss, irreproducibility, and
+catastrophic effect while preserving useful research and timely
+action.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select exact sources, schemas, calendars, algorithms, thresholds,
+authorities, models, objectives, constraints, brokers, stores, monitors,
+and recovery rules.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build and deploy exact pipelines, registries, factor engines,
+optimizers, order systems, evidence services, and human workflows.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Run historical replay, forward shadow evaluation, mutation tests,
+leakage checks, equivalence suites, incident drills, performance
+measurement, and independent review.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Restate data, correct identities, update semantics, recalibrate
+models, change constraints, retire authority, migrate implementations,
+and preserve dependent history.</td>
+</tr>
+</tbody>
+</table>
+<p>This paper reaches Specification and proposes CM1/CM2 criteria and a
+minimal prototype. It does not define a complete trading-system Instance
+Configuration or validate an Implementation Realization.</p>
+<h2 id="corpus-integration-and-the-companion-direction">15. Corpus
+Integration and the Companion Direction</h2>
+<p>This paper is the application-direction companion to <em>Quant
+Insights for ACG Systems</em>. That paper asks what constitutional
+governance can learn from quant practice. This paper asks what a quant
+lifecycle looks like when interpreted through ACG. Their overlapping
+concepts are deliberate connective tissue; their explanatory directions
+and audiences differ.</p>
+<p>Other direct dependencies include:</p>
+<ul>
+<li><strong>Admissibility Engineering:</strong> separates available,
+admissible, implemented, and evidenced surfaces.</li>
+<li><strong>The Three Hash Rule:</strong> prevents exact state,
+admissibility commitments, and meaning commitments from collapsing into
+one digest.</li>
+<li><strong>Reasoning by Way of Receipts:</strong> treats decision
+records as bounded reasoning carriers rather than proof of truth or
+effect.</li>
+<li><strong>Governed Semantic Project Lineage:</strong> connects Factor
+Semantic Specifications to exact research and production artifacts,
+builds, configurations, and successors.</li>
+<li><strong>A Formal Theory of Work Custody:</strong> identifies
+responsibility for data holds, model review, equivalence debt, incident
+repair, and retirement without confusing custody with ownership or
+authority.</li>
+<li><strong>The Constitutional Observability Platform:</strong> supplies
+observer, verifier, evidence-health, scenario, and explicit-remainder
+roles for production claims.</li>
+<li><strong>GMB</strong>, the current Governed Meaning Base in the
+historical <code>CCF -&gt; CMB -&gt; GMB</code> lineage: stores durable
+identities, meanings, claims, conflicts, standing, evidence, and
+revision relations. A purpose-specific quant context or policy
+projection may be compiled from GMB, but the projection is not identical
+to the durable state.</li>
+</ul>
+<h2
+id="quant-lifecycle-constitutional-application-profile">Quant-Lifecycle
+Constitutional Application Profile</h2>
+<p>Across the completed P1 corpus, ACG for Quants is the
+<strong>quant-lifecycle constitutional application profile for
+point-in-time data, identity, research promotion, model realization,
+portfolio selection, market effect, attribution, decay, and
+retirement</strong>. It does not supply investment advice, performance
+evidence, legal compliance, or authority to trade.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Quant Insights for ACG
+Systems</em><br />
+<strong>Supplies:</strong> Lessons that agentic constitutional
+governance can learn from quant practice.<br />
+<strong>ACG-for-Quants boundary:</strong> This paper applies the
+governance architecture in the opposite direction to a quant
+lifecycle.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Admissibility
+Engineering</em><br />
+<strong>Supplies:</strong> Separation of possible, admissible,
+preferred, selected, realized, and evidenced pathways.<br />
+<strong>ACG-for-Quants boundary:</strong> The quant profile specializes
+those transitions to data, factors, portfolios, orders, and
+attribution.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em><br />
+<strong>Supplies:</strong> Exact research, build, configuration, and
+successor custody.<br />
+<strong>ACG-for-Quants boundary:</strong> Quant lineage additionally
+requires bitemporal data and restatement dependency.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Responsibility for holds, reviews, repairs,
+incidents, and retirement.<br />
+<strong>ACG-for-Quants boundary:</strong> Custody does not imply
+investment authority, ownership, or truth.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Observer, verifier, scenario,
+evidence-health, and explicit-remainder roles.<br />
+<strong>ACG-for-Quants boundary:</strong> COP can support the profile
+without certifying market models or live effects.</p></li>
+</ul>
+<p>A quant decision chain should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Q= (&amp;data\_state, identity\_state, factor\_semantics, \\
+&amp;research\_evidence, promotion, realization, \\
+&amp;portfolio\_objective, constraints, target, \\
+&amp;order\_authority, execution, outcome, attribution, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>Point-in-time identity is not a preprocessing detail. Entity mapping,
+corporate action, universe membership, calendar, restatement, license,
+and availability determine what information and authority existed at the
+decision time. Research-to-production correspondence must name
+tolerances, numerics, dependencies, latency, market data, optimizer, and
+execution assumptions rather than claim implementation equality.</p>
+<p>Factor value, admissibility, portfolio feasibility, order authority,
+execution quality, and post-event attribution are separate claims.
+Attribution explains under a declared decomposition; it does not
+establish cause. Model decay or regime change can demote standing
+without erasing the historical decision state.</p>
+<p>The universal GSM can type<br />
+<code>ADMITS_POINT_IN_TIME_DATA</code>,
+<code>RESOLVES_BITEMPORAL_IDENTITY</code>,<br />
+<code>DEFINES_FACTOR_SEMANTICS</code>,
+<code>PROMOTES_RESEARCH_CANDIDATE</code>,
+<code>CLAIMS_SUBSTRATE_EQUIVALENCE</code>,<br />
+<code>SELECTS_FEASIBLE_PORTFOLIO</code>,
+<code>AUTHORIZES_MARKET_EFFECT</code>,
+<code>OBSERVES_EXECUTION_OUTCOME</code>,<br />
+<code>ATTRIBUTES_UNDER_MODEL</code>,<br />
+and<br />
+<code>RETIRES_FACTOR_AUTHORITY</code>. These relations make the
+application profile inspectable from research to retirement.</p>
+<p>This integration establishes four editorial commitments: retain ACG
+for Quants as the quant-lifecycle application profile; adopt the
+decision-chain envelope and point-in-time identity obligations; separate
+factor, admissibility, feasibility, authority, effect, and attribution
+claims; and require external domain, legal, privacy, security, and
+empirical review before any publication or implementation standing.</p>
+<h2
+id="research-promotion-contained-effect-and-cross-domain-restraint">Research
+Promotion, Contained Effect, and Cross-Domain Restraint</h2>
+<p>The fixed-seed comparison with craft state-estimation research,
+historical CCF, Jnana, and Continuation Primacy separates useful
+architecture from accidental analogy:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Q^*= (&amp;research\_PCM, data\_vintage, identity, \\
+&amp;factor\_specification, review, promotion, realization, \\
+&amp;portfolio, order\_authority, effect, outcome, \\
+&amp;attribution, retirement)
+\end{aligned}.
+$$</span></p>
+<p>Historical crystallization can describe the reversible movement from
+exploratory research through extraction, stabilization, review, CM1
+admission, CM2 preference, and current GMB state. It does not validate
+the factor or authorize trading. Jnana can provide a candidate
+containment architecture for representation, policy, lowering, effect
+mediation, receipts, and projection, subject to separate conformance
+evidence.</p>
+<p>Event-driven craft research and Continuation Primacy have no direct
+evidentiary relation to the quant lifecycle. Shared state, viability,
+transition, or continuation vocabulary cannot establish market validity,
+factor authority, portfolio feasibility, or execution quality.</p>
+<p>The universal GSM can type<br />
+<code>CRYSTALLIZES_QUANT_RESEARCH_CANDIDATE</code>,<br />
+<code>PROMOTES_FACTOR_UNDER_PROFILE</code>,
+<code>CONTAINED_BY_JNANA_CONTRACT</code>,<br />
+<code>AUTHORIZES_MARKET_EFFECT_SEPARATELY</code>,
+<code>RETIRES_FACTOR_AFTER_DECAY</code>,<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_CRAFT_EVIDENCE</code>,<br />
+and<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_CONTINUATION_</code><br />
+<code>THESIS</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the expanded quant transition; use historical crystallization for
+research posture only; treat Jnana as an optional separately evidenced
+containment realization; and retain explicit nonrelations to craft and
+Continuation Primacy.</p>
+<h2 id="a-time-indexed-consequence-chain-not-trading-authority">A
+Time-Indexed Consequence Chain, Not Trading Authority</h2>
+<p>Two retained downstream uses place ACG for Quants inside historical
+crystallization and Jnana containment. Two lexical leads from craft
+state estimation and continuation theory were rejected as nonrelations.
+The paper’s corpus role is therefore a domain application profile that
+makes the quant lifecycle a time-indexed consequence chain; it does not
+supply a factor, investment recommendation, legal conclusion, or
+authority to trade.</p>
+<p><span class="math display">$$
+\begin{aligned}
+Q^*= (&amp;decision\_time, data\_vintage, availability, licenses, \\
+&amp;entity\_identity, factor\_semantics, research\_evidence, \\
+&amp;promotion, model\_head, realization, objective, \\
+&amp;constraints, portfolio, order\_authority, execution, \\
+&amp;outcome, attribution, decay, retirement, revision)
+\end{aligned}.
+$$</span></p>
+<p>Point-in-time identity, information availability, research validity,
+promotion standing, portfolio feasibility, order authority, market
+effect, and attribution are separate claims. Restatement creates a
+successor data and identity state; it must not rewrite the information
+set under which a historical decision was made. Attribution is relative
+to a declared decomposition and cannot establish cause.</p>
+<p>Historical crystallization can preserve reversible movement from
+research candidate to reviewed meaning and selected configuration. Jnana
+can be a separately evidenced containment realization. Neither validates
+a factor, establishes research-to-production equivalence, satisfies law,
+or authorizes market effect. Quant-domain competence, current primary
+sources, licensing, privacy, security, model risk, market
+microstructure, and jurisdiction-specific legal review remain external
+publication and implementation gates.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_QUANT_DECISION_TIME</code>,<br />
+<code>RESOLVES_POINT_IN_TIME_IDENTITY</code>,
+<code>PROMOTES_FACTOR_UNDER_PROFILE</code>,<br />
+<code>SELECTS_PORTFOLIO_UNDER_CONSTRAINT</code>,
+<code>AUTHORIZES_ORDER_SEPARATELY</code>,<br />
+<code>OBSERVES_MARKET_EFFECT</code>,
+<code>ATTRIBUTES_UNDER_DECLARED_MODEL</code>,
+<code>RESTATES_WITH_SUCCESSOR</code>,<br />
+and<br />
+<code>RETIRES_FACTOR_STANDING</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+complete time-indexed consequence record; preserve historical
+information sets through restatement; separate validity, promotion,
+feasibility, authority, effect, and attribution; and retain external
+domain, legal, empirical, privacy, security, and licensing gates.</p>
+<h2 id="governed-research-is-not-trading-advice">Governed Research Is
+Not Trading Advice</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>ACG for Quants applies constitutional governance to the path from
+data and research through portfolio decisions and market execution. It
+asks who may promote a hypothesis, which data and models were used, what
+risks and limits apply, what actually reached an execution venue, and
+which evidence supports the result. It does not recommend any security,
+strategy, portfolio, or trade.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Look-ahead attack.</strong> Future information leaks into
+features, universes, labels, or preprocessing. Every dataset and
+transform must be time-indexed and reconstructable.</li>
+<li><strong>Survivorship attack.</strong> Delisted, failed, unavailable,
+or rejected instruments disappear from the research set. Universe
+construction is part of evidence.</li>
+<li><strong>Backtest-overfit attack.</strong> Repeated selection turns
+noise into apparent performance. Search history, multiple testing,
+holdouts, and abandoned variants require custody.</li>
+<li><strong>Cost-and-slippage attack.</strong> Gross simulated returns
+ignore spread, impact, latency, borrow, fees, capacity, and failed
+execution. Promotion requires execution-realistic assumptions.</li>
+<li><strong>Model-drift attack.</strong> A factor or risk relation
+changes after promotion. Standing must expire, be monitored, and support
+retirement or rollback.</li>
+<li><strong>Constraint-bypass attack.</strong> A broker, manual action,
+emergency path, or derived order evades portfolio or risk limits. Effect
+mediation must bind the actual execution route.</li>
+<li><strong>Attribution-overclaim.</strong> A decomposition is treated
+as causal explanation. Attribution is model-relative and cannot prove
+why a market moved.</li>
+<li><strong>Incentive-conflict attack.</strong> Researchers, managers,
+venues, or evaluators benefit from promotion or turnover. Conflicts and
+authority separation require disclosure.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a governance profile for quantitative research
+and execution. It does not establish profitability, investment merit,
+fiduciary compliance, legal compliance, risk reduction, market
+robustness, or causal insight. Historical performance cannot guarantee
+future results.</p>
+<p>Any empirical finance claim requires exact data rights and versions,
+universe construction, transformations, code, environment, search
+history, costs, baselines, uncertainty, out-of-sample evidence, and
+reproducible execution assumptions. Legal, regulatory, fiduciary, and
+market-structure claims require current jurisdiction-specific sources
+and qualified review. No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public value is not a better trading signal. It is an auditable
+boundary between an idea, a tested model, an authorized portfolio
+decision, and an actual market effect, with the ability to refuse,
+reconstruct, and retire each stage.</p>
+<h2 id="counterevidence-and-publication-requirements">16.
+Counterevidence and Publication Requirements</h2>
+<p>The proposal is weakened or must be revised if:</p>
+<ul>
+<li>existing model-risk, data-governance, security, compliance, and
+trading-control practices already provide the same outcomes with less
+complexity;</li>
+<li>receipt and approval overhead causes delays or errors larger than
+the failures it prevents;</li>
+<li>governance records expose strategies, positions, identities, or
+personal data beyond acceptable bounds;</li>
+<li>formal admissibility creates false confidence or turns uncertain
+expert judgment into brittle thresholds;</li>
+<li>the identity or dependency graph cannot be maintained accurately
+enough to support downstream-impact claims;</li>
+<li>research freedom is suppressed without a corresponding reduction in
+consequential risk;</li>
+<li>equivalence tests pass while portfolio behavior diverges under
+untested regimes;</li>
+<li>optimizer records create an illusion of explanation without
+sensitivity, alternative solutions, or model uncertainty;</li>
+<li>authority centralization makes override, recovery, or dissent
+unsafe;</li>
+<li>post-event attribution repeatedly confuses decomposition,
+correlation, and cause;</li>
+<li>live shadow trials show no measurable benefit over a simpler
+baseline.</li>
+</ul>
+<p>Further evidentiary strengthening requires a source-by-source review
+of quantitative-finance data practice, bitemporal databases, entity
+resolution, backtesting and leakage, model-risk governance, portfolio
+optimization, market microstructure, execution controls, performance
+attribution, legal and regulatory obligations, privacy, and operational
+resilience. Claims must be jurisdiction- and date-scoped. Empirical
+examples should use licensed or reproducible data and must distinguish
+illustrative behavior from investment performance.</p>
+<h2 id="conclusion">17. Conclusion</h2>
+<p>The ordinary quant question is whether a signal may contain useful
+predictive information. The constitutional question is whether that
+signal, in this exact identity and evidence state, may become this
+portfolio decision or market effect under the authorities and
+constraints currently in force.</p>
+<p>Neither question replaces the other. Admissibility without economic
+value is not a strategy. Economic value without admissibility is not a
+governable system.</p>
+<p>ACG for Quants makes the hidden constitution of the lifecycle
+explicit: point-in-time data and identity, factor meaning, research
+promotion, substrate migration, feasible-set construction, execution
+authority, outcome evidence, attribution, decay, and retirement. It
+permits exploration while demanding stronger standing for promotion and
+effect.</p>
+<p>The aim is not to make finance bureaucratic or to guarantee profit,
+safety, legality, or truth. It is to ensure that continuation is
+inspectable: what was admitted, why, under whose authority, from which
+state, with which constraints, toward which effect, with what evidence,
+and subject to which revision.</p>
+<p>A mature quant architecture needs both signal discipline and
+continuation discipline. Markets punish systems that cannot distinguish
+signal from noise. Consequential governance punishes systems that cannot
+distinguish an available action from an admissible one.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that quantitative-finance systems do more than
+compute. Its nearest external comparison fields are markets, governance,
+ai. The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Optimization can make
+a chosen objective efficient while preserving a bad objective, missing
+distributional harms, strategic behavior, or inadmissible states. A
+written constitution can legitimate domination as easily as constrain it
+unless amendment, participation, enforcement, and appeal remain
+effective in practice. Retrieval, tool use, and policy layers can reduce
+unsupported output without eliminating model error, source error,
+omission, bias, or the environmental and institutional costs of scale.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Harry Markowitz. “Portfolio Selection.” <em>The
+Journal of Finance</em> 7(1), 1952, pp. 77-91. DOI:
+10.1111/j.1540-6261.1952.tb01525.x.
+https://doi.org/10.1111/j.1540-6261.1952.tb01525.x
+<strong>Relationship:</strong> Predecessor risk-return optimization
+model; included to distinguish scalar optimization from governance-aware
+admissibility.</p>
+<p><strong>[E2]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E3]</strong> U.S. Department of the Treasury. <em>Tax
+Expenditures</em>. Office of Tax Analysis. <a
+href="https://home.treasury.gov/policy-issues/tax-policy/tax-expenditures">home.treasury.gov
+source</a> <strong>Relationship:</strong> Primary official baseline for
+the definition and estimation limits of U.S. federal tax
+expenditures.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E6]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E7]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutional Markets</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1D49CCBB6E47B403</code>;<br />
+source SHA-256<br />
+<code>BB97EAC6F1861C2ED17DC0E0B75D47B04716E7FF3E3AC2A9B2F6CABCC67A5250</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Quant Insights for ACG
+Systems</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-EAEEDA4A34808C9B</code>;<br />
+source SHA-256<br />
+<code>F668C40E0FE27BDBFDC881BFA97735D61F00335A6FC3DF9488A4BCFCFFB19631</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Incentive
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-294436DA22D85E3A</code>;<br />
+source SHA-256<br />
+<code>30B4151092AA9C1157214B00B695BD39A137C010DFE3BC631A64073F946ACD4A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Beneficiary-Resolved Tax
+Expenditure Governance</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.20602489</code>;<br />
+source SHA-256<br />
+<code>C9DFFC852939E257E3EA6CDE9C474707FA1BEE300360C6D402B5E91F2999C52A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Admissibility Engineering</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>Adam Ableman. <em>A Formal Theory of Work Custody</em>. Ableman
+Corpus current edition; conceptual claims retain the standing stated in
+the work.</p>
+<p>Adam Ableman. <em>The Constitutional Observability Platform</em>.
+Ableman Corpus current edition; conceptual claims retain the standing
+stated in the work.</p>
+<p>Adam Ableman. <em>From Content-Addressed Storage to Governed Semantic
+Project Lineage</em>. Ableman Corpus current edition; conceptual claims
+retain the standing stated in the work.</p>
+<p>Adam Ableman. <em>Governed Meaning Base (GMB)</em>. Ableman Corpus
+current edition in the author-confirmed historical terminology
+<code>CCF -&gt; CMB -&gt; GMB</code>; conceptual claims retain the
+standing stated in the work.</p>
+<p>Adam Ableman. <em>Quant Insights for ACG Systems</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p>Adam Ableman. <em>The Three Hash Rule</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20788617.</p>
+<p>External quantitative-finance, database, model-risk, optimization,
+execution, attribution, privacy, and legal literature remains required
+for a future evidence-qualified revision. The internal corpus
+establishes the receiving architecture; it does not validate the
+finance-specific claims.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847366">10.5281/zenodo.23847366</a></p>

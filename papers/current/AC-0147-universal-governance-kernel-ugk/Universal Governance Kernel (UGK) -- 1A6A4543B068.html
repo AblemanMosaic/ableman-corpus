@@ -1,0 +1,815 @@
+<h1 id="universal-governance-kernel-ugk">Universal Governance Kernel
+(UGK)</h1>
+<h2 id="accountable-authority-as-an-execution-substrate">Accountable
+Authority as an Execution Substrate</h2>
+<h3
+id="the-universal-governance-kernel-ugk-is-a-governance-first-execution-architecture.">The
+Universal Governance Kernel (UGK) is a governance-first execution
+architecture.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>The Universal Governance Kernel (UGK) is a governance-first execution
+architecture. Instead of asking only whether an actor has a permission
+or whether a mechanism can perform an operation, UGK asks what is
+intended, whose purpose is being served, which authority can bind the
+decision, which evidence is admissible, what disposition follows, and
+what exact effect and receipt result.</p>
+<p>UGK separates Steward, Governor, and Executor as functions; requires
+a deployment to be founded under a declared charter before ordinary
+effects are admitted; types operations through a schema registry; and
+retains admission, refusal, execution, failure, and verification records
+as a reviewable governance history. Its central discipline is that
+decision authority must be explicit and execution must remain downstream
+of a committed decision.</p>
+<p>The architecture can make authority claims and action lineage
+inspectable. It cannot make a charter legitimate, an authority deserved,
+evidence true, a purpose ethical, or a decision wise merely by
+representing and hashing them. This paper specifies the architecture and
+its failure tests. It does not claim that a conforming implementation,
+deployment, or cryptographic proof has been supplied.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+educational brief. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/universal-</code></p>
+<p><code>governance-kernel-brief/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>6B934D0CF3BB772E462EB2F7BCE329329E3E0978835FA156BD78A0772E18D2A4</code>.
+The source remains unchanged.</p>
+<p>The kernel framing, governance chain, functional roles, charter,
+receipts, schema tiers, authority postures, authority-laundering
+analysis, and limits are author material. The formal event/state model,
+distinction grammar, invariants, corpus interfaces, full realization
+funnel, expanded failure tests, and editorial alternatives are
+AI-assisted contributions explicitly distinguished from the original
+author material.</p>
+<p>No implementation or conformance evidence was inspected. The corpus
+contains several named UGK systems, profiles, codices, and
+implementation candidates. Their identity and version relationships
+remain unadjudicated; this brief does not merge or certify them.</p>
+<h2 id="the-governance-gap">1. The Governance Gap</h2>
+<p>Conventional execution paths often compress several questions into
+one permission check:</p>
+<pre class="text"><code>request -&gt; permission -&gt; action</code></pre>
+<p>That path can establish that a credential or role satisfied a rule.
+It may not establish whose purpose the action serves, which delegation
+is operative, which authority can bind the decision, what evidence was
+evaluated, what was refused, or how the effect can later be
+reconstructed and challenged.</p>
+<p>UGK expands the path:</p>
+<pre class="text"><code>Intent -&gt; Will -&gt; Authority -&gt; Decision -&gt; Commitment -&gt; Execution
+-&gt; Result Receipt</code></pre>
+<p>The objective is not universal prevention. It is accountable
+authority: significant effects should have a reconstructable legitimacy
+claim, decision basis, bounded effect, and evidentiary trail.</p>
+<h2 id="distinction-grammar">2. Distinction Grammar</h2>
+<p><strong>Identity</strong> answers who or what is acting. Identity is
+not authority.</p>
+<p><strong>Capability</strong> answers what operations are technically
+reachable. Capability is not permission or legitimacy.</p>
+<p><strong>Intent</strong> describes the requested action and
+target.</p>
+<p><strong>Will</strong> names the represented principal, purpose, or
+mandate the request claims to serve. A declared purpose does not
+generate authority.</p>
+<p><strong>Authority</strong> is a bounded basis on which a decision may
+be made for a named action, target, jurisdiction, time, and delegation
+chain. Authority is not ambient and does not arise from system
+acceptance alone.</p>
+<p><strong>Evidence</strong> is the material admitted for evaluation
+under a declared rule and standing.</p>
+<p><strong>Decision</strong> is the Governor’s typed disposition, such
+as admit, refuse, defer, conflict, or require amendment.</p>
+<p><strong>Commitment</strong> is the durable pre-effect record binding
+the admitted request, decision, authority, exact inputs, and permitted
+effect.</p>
+<p><strong>Execution</strong> is the attempted effect performed only
+within the commitment.</p>
+<p><strong>Receipt</strong> is evidence of a governance or execution
+event. A receipt’s claim ceiling is bounded by what was observed and
+committed.</p>
+<p><strong>Legitimacy</strong> is a larger judgment about whether the
+charter, authority, process, and result deserve binding force. UGK can
+expose the inputs to that judgment but cannot manufacture it through
+structure alone.</p>
+<h2 id="functional-separation">3. Functional Separation</h2>
+<h3 id="steward">3.1 Steward</h3>
+<p>The Steward function proposes an intent and identifies the principal
+or purpose it claims to serve. It does not approve its own authority
+merely by making a request.</p>
+<h3 id="governor">3.2 Governor</h3>
+<p>The Governor function resolves applicable policy and authority,
+evaluates evidence, and emits a typed decision with reasons and scope.
+It must remain distinguishable from the proposer and effecting mechanism
+even when one process hosts all three functions.</p>
+<h3 id="executor">3.3 Executor</h3>
+<p>The Executor function attempts only the committed effect. It cannot
+widen target, action, scope, duration, or delegation. Technical capacity
+beyond the commitment remains unreachable through the admitted path.</p>
+<p>These are constitutional functions, not necessarily separate people,
+services, or machines. A realization may combine them physically only if
+their logical boundaries and evidence remain inspectable.</p>
+<h2 id="governed-event-model">4. Governed Event Model</h2>
+<p>Let a request be:</p>
+<p><span
+class="math display"><em>q</em> = (<em>i</em>, <em>w</em>, <em>a</em>, <em>x</em>, <em>e</em>, <em>p</em>, <em>t</em>),</span></p>
+<p>where <span class="math inline"><em>i</em></span> is intent, <span
+class="math inline"><em>w</em></span> represented will or purpose, <span
+class="math inline"><em>a</em></span> asserted authority, <span
+class="math inline"><em>x</em></span> exact target and operation, <span
+class="math inline"><em>e</em></span> evidence, <span
+class="math inline"><em>p</em></span> governing policy and charter
+state, and <span class="math inline"><em>t</em></span> evaluation
+time.</p>
+<p>The Governor returns:</p>
+<p><span
+class="math display"><em>J</em>(<em>q</em>) = (<em>d</em>, <em>r</em>, <em>s</em>, <em>c</em>),</span></p>
+<p>where <span class="math inline"><em>d</em></span> is disposition,
+<span class="math inline"><em>r</em></span> reason, <span
+class="math inline"><em>s</em></span> authorized scope, and <span
+class="math inline"><em>c</em></span> the pre-effect commitment when and
+only when the request is admitted.</p>
+<p>Execution returns:</p>
+<p><span
+class="math display"><em>X</em>(<em>c</em>) = (<em>o</em>, <em>v</em>),</span></p>
+<p>where <span class="math inline"><em>o</em></span> is the observed
+outcome and <span class="math inline"><em>v</em></span> the result
+evidence. The final receipt binds <span
+class="math inline"><em>q</em></span>, <span
+class="math inline"><em>J</em>(<em>q</em>)</span>, <span
+class="math inline"><em>c</em></span>, <span
+class="math inline"><em>o</em></span>, and <span
+class="math inline"><em>v</em></span> without claiming more than those
+records establish.</p>
+<p>An admission decision is not proof that the effect occurred. A result
+receipt is not retroactive proof that the decision was legitimate. A
+failure receipt can prove an attempted execution and observed failure
+without proving that no external side effect occurred unless the
+observation boundary supports that claim.</p>
+<h2 id="state-and-transition-semantics">5. State and Transition
+Semantics</h2>
+<p>A deployment begins <strong>unfounded</strong>: ordinary application
+effects are not admitted. A founding transition binds a charter,
+identity roots, jurisdiction, policy versions, schema registry,
+amendment procedure, and founding provenance. Founding records a claimed
+authority regime; it does not prove the charter morally or legally
+legitimate.</p>
+<p>A governed event moves through:</p>
+<pre class="text"><code>UNFOUNDED
+  -&gt; FOUNDED
+  -&gt; REQUESTED
+  -&gt; EVALUATED
+  -&gt; COMMITTED or REFUSED/DEFERRED/CONFLICTED
+  -&gt; EFFECT_ATTEMPTED
+  -&gt; EFFECT_CONFIRMED, EFFECT_FAILED, or EFFECT_UNKNOWN
+  -&gt; RECEIPTED</code></pre>
+<p>Refusal, deferral, conflict, and unknown are terminal for the current
+effect unless a new, separately evaluated request is created. They are
+not exceptional gaps to be omitted from history.</p>
+<h2 id="charter-amendment-and-authority">6. Charter, Amendment, and
+Authority</h2>
+<p>A charter should minimally declare:</p>
+<ul>
+<li>governed domain and jurisdiction;</li>
+<li>identity and trust roots;</li>
+<li>functional roles and separation requirements;</li>
+<li>authority types and delegation rules;</li>
+<li>operation schemas and effect classes;</li>
+<li>evidence and decision rules;</li>
+<li>refusal and unknown semantics;</li>
+<li>receipt and verification obligations;</li>
+<li>amendment, revocation, recovery, and appeal procedures;</li>
+<li>privacy, retention, and disclosure bounds.</li>
+</ul>
+<p>Authority must be named, scoped, time-bound where applicable, and
+traceable through delegation. A credential can authenticate an actor
+without proving that the actor’s authority applies to the requested
+effect. A charter can authorize a procedure without proving that the
+surrounding institution is just.</p>
+<p>The source mentions trace-only, alternate-trace, and prevention
+authority. These are useful candidate postures, not yet an exhaustive
+authority ontology. A deployment must define exactly what each posture
+can observe, decide, block, simulate, or effect.</p>
+<h2 id="schema-registry">7. Schema Registry</h2>
+<p>The source proposes three operation tiers:</p>
+<ul>
+<li><strong>Tier 0:</strong> kernel operations such as admission and
+refusal;</li>
+<li><strong>Tier 1:</strong> universal governance operations such as
+session, evidence, audit, and verification events;</li>
+<li><strong>Tier 2:</strong> application-defined operations constrained
+by higher-tier law.</li>
+</ul>
+<p>Tiering should constrain extension rather than confer trust by label.
+Each operation schema must bind input types, required authority,
+evidence, decision outcomes, effect class, receipt fields, failure
+semantics, version, and compatibility rules. An application-defined
+operation cannot revise kernel law merely by registering a name.</p>
+<h2 id="receipts-and-the-three-hash-interface">8. Receipts and the
+Three-Hash Interface</h2>
+<p>Receipts form a governance history only when they bind exact objects
+and transitions. A useful receipt distinguishes at least:</p>
+<ul>
+<li>request identity and content;</li>
+<li>governing charter and policy version;</li>
+<li>authority and delegation evidence;</li>
+<li>decision and reason;</li>
+<li>pre-effect commitment;</li>
+<li>observed execution result;</li>
+<li>predecessor and revision lineage;</li>
+<li>verifier and canonicalization rules.</li>
+</ul>
+<p>The Three Hash Rule supplies a relevant integrity interface:
+identity, state, and evidence or transition commitments should not
+collapse into one undifferentiated digest. Hashes can support exact
+binding, tamper evidence, and replay comparison. They do not prove
+truth, authority, semantic equivalence, or legitimacy without the
+surrounding interpretation and verification rules.</p>
+<h2 id="authority-laundering">9. Authority Laundering</h2>
+<p>Authority laundering occurs when a result gains perceived legitimacy
+through workflow position, repetition, a trusted-looking container,
+successful execution, or vague upstream approval without a
+reconstructable authority-granting event.</p>
+<p>UGK resists laundering by preserving distinct links:</p>
+<pre class="text"><code>actor -&gt; represented principal -&gt; intent -&gt; mandate -&gt; authority
+      -&gt; policy -&gt; evidence -&gt; decision -&gt; commitment -&gt; effect -&gt; receipt</code></pre>
+<p>The test is not merely whether this chain exists in data. The system
+should ask whether the effect remains reachable if the asserted
+authority or delegation is removed. If it does, the claimed authority
+may be decorative rather than causal.</p>
+<h2 id="core-invariants">10. Core Invariants</h2>
+<ol type="1">
+<li><strong>No effect before decision commitment.</strong></li>
+<li><strong>Refusal implies no admitted effect.</strong></li>
+<li><strong>Every terminal disposition is receipted, including refusal
+and unknown.</strong></li>
+<li><strong>Identity, capability, will, authority, decision, execution,
+and receipt remain distinct.</strong></li>
+<li><strong>Authority is explicitly bounded by action, target, scope,
+time, jurisdiction, delegation, and revocation.</strong></li>
+<li><strong>Execution cannot widen the committed effect.</strong></li>
+<li><strong>Application schemas cannot silently amend kernel
+law.</strong></li>
+<li><strong>Receipts bind exact versions and canonicalization
+rules.</strong></li>
+<li><strong>Successful execution does not retroactively create
+authority.</strong></li>
+<li><strong>Cryptographic integrity does not establish factual truth or
+moral legitimacy.</strong></li>
+<li><strong>Recovery and amendment preserve prior history.</strong></li>
+<li><strong>Unknown observation remains unknown rather than being
+rewritten as success or failure.</strong></li>
+</ol>
+<h2 id="relation-to-the-corpus">11. Relation to the Corpus</h2>
+<p><em>Authority Laundering Theory</em> supplies the adversarial
+diagnosis. <em>Reasoning by Way of Receipts</em> constrains conclusions
+to retained evidence. <em>The Three Hash Rule</em> supplies a compact
+integrity discipline. <em>Constitutional Computing Architecture</em>
+places UGK within a larger reorganization of computing around
+inspectable and renegotiable authority.</p>
+<p>The Governed Meaning Base can represent identities, authorities,
+charters, schemas, decisions, receipts, conflicts, and revision lineage.
+It does not become the Governor merely by storing them. These are typed
+interfaces, not identity mergers or proof of a particular
+implementation.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate governance regimes,
+authority models, operation types, beneficial uses, captured systems,
+and harmful realizations.</li>
+<li><strong>Specification:</strong> define distinctions, roles, event
+semantics, state transitions, schemas, invariants, receipts, and failure
+outcomes.</li>
+<li><strong>CM1:</strong> retain all admissible configurations,
+including centralized, ceremonial, opaque, coercive, insecure, and
+administratively excessive forms.</li>
+<li><strong>CM2:</strong> select preferable forms under legitimacy,
+least authority, safety, inspectability, performance, privacy,
+portability, refusal, recovery, and user sovereignty criteria.</li>
+<li><strong>IC:</strong> bind an Instance Constitution or Instance
+Configuration for a domain, charter, identities, policies, schema
+versions, and effect boundary.</li>
+<li><strong>IR:</strong> construct its Instance Realization or
+Implementation Realization as a particular kernel and governed
+application environment.</li>
+<li><strong>Evidence:</strong> verify fixtures, courts or test suites,
+receipt chains, effect boundaries, refusals, recovery, and adversarial
+cases.</li>
+<li><strong>Revision:</strong> amend charter, schemas, authority,
+implementation, and claims through retained lineage and explicit
+authorization.</li>
+</ul>
+<p>This educational brief supplies a candidate Specification and CM1/CM2
+vocabulary. It does not select an IC, identify one canonical IR, or
+verify a deployed realization. Realization-stage IR remains distinct
+from Intermediate Representation in compiler contexts.</p>
+<h2 id="accountable-authority-transaction-kernel">Accountable Authority
+Transaction Kernel</h2>
+<p>Across the completed P1 corpus, the Universal Governance Kernel is
+the <strong>accountable-authority transaction kernel for converting a
+proposed intent into a bounded commitment, attempted effect, and
+claim-limited receipt under a declared charter</strong>. Its universal
+element is the distinction grammar and transaction pattern, not a claim
+that one kernel, authority model, or implementation should govern every
+domain.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Authority Laundering
+Theory</em><br />
+<strong>Supplies:</strong> Diagnosis of authority gained through
+workflow position, trusted containers, repetition, or successful
+effect.<br />
+<strong>UGK boundary:</strong> UGK supplies a transaction structure in
+which authority can be tested rather than presumed.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Claim-bounded inference from proposals,
+decisions, effects, and evidence.<br />
+<strong>UGK boundary:</strong> UGK emits governance events; the receipt
+theory governs what may be inferred from them.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Jnana II: Constitutional
+Transformation Substrate</em><br />
+<strong>Supplies:</strong> A software transformation substrate with
+capabilities and effect membranes.<br />
+<strong>UGK boundary:</strong> A Jnana profile may host UGK functions;
+neither identity entails the other.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Complete mediation, effect atomicity,
+classified remainder, and repair.<br />
+<strong>UGK boundary:</strong> UGK defines the transaction; enforcement
+determines whether effects can bypass it.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance Coverage
+Gaps</em><br />
+<strong>Supplies:</strong> Capability and grant-path coverage
+diagnosis.<br />
+<strong>UGK boundary:</strong> UGK conformance claims are limited to
+paths shown to cross the kernel.</p></li>
+</ul>
+<p>The kernel transaction should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+K= (&amp;charter, principal, intent, will, authority, evidence, \\
+&amp;decision, commitment, executor, effect, observation, \\
+&amp;receipt, contest, revision)
+\end{aligned}.
+$$</span></p>
+<p>The pre-effect commitment is the constitutional hinge. It must fix
+the admitted request, authority, exact target, scope, duration,
+capabilities, conditions, expected effect class, and failure semantics
+before the effect occurs. Execution may return
+<code>EFFECT_CONFIRMED</code>,<br />
+<code>EFFECT_FAILED</code>, <code>EFFECT_PARTIAL</code>,<br />
+or <code>EFFECT_UNKNOWN</code>; none changes the earlier authority
+retroactively.</p>
+<p>Logical Steward, Governor, Executor, and Witness functions may share
+a process only if role-specific inputs, authorities, decisions, and
+evidence remain distinguishable and independently challengeable where
+required. A charter is itself an object of authority, amendment, appeal,
+rights, and legitimacy review. Founding cannot self-certify its moral,
+legal, or institutional validity.</p>
+<p>The universal GSM can type<br />
+<code>PROPOSES_UNDER_STEWARD_ROLE</code>,
+<code>REPRESENTS_PRINCIPAL_WILL</code>,<br />
+<code>EVALUATES_UNDER_GOVERNOR_ROLE</code>,
+<code>COMMITS_BEFORE_EFFECT</code>,
+<code>EXECUTES_WITHIN_COMMITMENT</code>,<br />
+<code>OBSERVES_PARTIAL_EFFECT</code>,
+<code>CHALLENGES_KERNEL_DECISION</code>,
+<code>AMENDS_CHARTER</code>,<br />
+<code>BYPASSES_GOVERNANCE_KERNEL</code>,<br />
+and<br />
+<code>REMAINS_IDENTITY_UNADJUDICATED_AMONG_UGK_</code><br />
+<code>REALIZATIONS</code>. These relations preserve the architecture
+while respecting the existing identity hold.</p>
+<p>This integration establishes four editorial commitments: retain UGK
+as the accountable-authority transaction kernel; adopt the expanded
+transaction object and four effect outcomes; require logical role and
+contest separation even when components are colocated; and preserve all
+UGK system, profile, codex, and implementation identities as unmerged
+until separately adjudicated.</p>
+<h2 id="transaction-representation-and-orientation-state">Transaction,
+Representation, and Orientation State</h2>
+<p>The fixed-seed comparison with <em>MCIR Topologies</em> and
+<em>Epistemic Situational Awareness and the Governed Knowledge Loop</em>
+exposes three states that a UGK deployment must not collapse:</p>
+<p><span
+class="math display"><em>G</em><sub><em>t</em></sub> = (<em>t</em><em>r</em><em>a</em><em>n</em><em>s</em><em>a</em><em>c</em><em>t</em><em>i</em><em>o</em><em>n</em>_<em>s</em><em>t</em><em>a</em><em>t</em><em>e</em>, <em>r</em><em>e</em><em>p</em><em>r</em><em>e</em><em>s</em><em>e</em><em>n</em><em>t</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>_<em>s</em><em>t</em><em>a</em><em>t</em><em>e</em>, <em>e</em><em>p</em><em>i</em><em>s</em><em>t</em><em>e</em><em>m</em><em>i</em><em>c</em>_<em>o</em><em>r</em><em>i</em><em>e</em><em>n</em><em>t</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em><sub><em>t</em></sub>).</span></p>
+<p>The transaction state records the request, authority, decision,
+commitment, attempted effect, observation, and receipt. The
+representation state records which topology, schema, canonicalization,
+projection, and interpretation rules give those objects their
+machine-operable form. The epistemic orientation records which evidence,
+conflicts, unknowns, authority facts, and environmental observations are
+current enough for the proposed continuation.</p>
+<p>MCIR topology is therefore upstream of some UGK integrity claims
+without becoming the Governor. If a projection aliases two authorities,
+drops a revocation edge, hides a conflict, or silently changes
+shared-node ownership, a structurally valid kernel transaction can
+operate on the wrong represented constitution. Conversely, an MCIR
+artifact cannot authorize an effect merely because it represents one.
+UGK must bind the exact representation regime used at decision and
+execution time and receipt any topology migration that can alter
+interpretation.</p>
+<p>ESA informs whether the transaction is sufficiently located to
+proceed, but it does not bind the decision or supply authority. A
+current orientation can support <code>ADMIT</code>,<br />
+<code>DEFER</code>, <code>REFUSE</code>, <code>CONFLICT</code>,<br />
+or <code>EFFECT_UNKNOWN</code>; the Governor remains responsible for the
+disposition under the charter. Stale or incomplete orientation is a
+reason to qualify or stop, not a hidden substitute for judgment.</p>
+<p>These are optional architectural interfaces, not mandatory product
+dependencies. A minimal UGK can use other representation and orientation
+mechanisms if it preserves the same distinctions and evidence. Two
+additional failure tests follow: remove or alter a topology edge and
+verify that authority-sensitive interpretation cannot change silently;
+stale one required ESA dimension and verify that continuation cannot
+retain an unqualified admission.</p>
+<p>The universal GSM can type<br />
+<code>BINDS_TRANSACTION_TO_REPRESENTATION_REGIME</code>,<br />
+<code>PROJECTS_AUTHORITY_WITH_REMAINDER</code>,
+<code>ORIENTS_GOVERNANCE_DECISION</code>,<br />
+<code>DETECTS_STALE_DECISION_DIMENSION</code>,
+<code>MIGRATES_TOPOLOGY_UNDER_COMMITMENT</code>,<br />
+and<br />
+<code>DOES_NOT_DERIVE_AUTHORITY_FROM_REPRESENTATION_</code><br />
+<code>OR_ORIENTATION</code>.</p>
+<p>This randomized review adds three open editorial questions: adopt the
+three-state separation; require exact representation-regime custody for
+authority-sensitive transactions; and add topology-mutation and
+stale-orientation tests without making MCIR or ESA mandatory UGK
+implementations.</p>
+<h2 id="kernel-contract-profiles-and-realizations">Kernel Contract,
+Profiles, and Realizations</h2>
+<p>The frozen P3 field uses UGK as a reusable transaction grammar, an
+optional implementation family, a governance substrate inside a larger
+observability platform, an infrastructure scheduling example, an
+enforcement host, an operating-system role, a development-process
+component, and a domain profile for international trade. These are
+different relations and standings.</p>
+<p>The stable kernel contract is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+K= (&amp;charter, subject, intent, purpose, authority, evidence, \\
+&amp;disposition, commitment, effect\_attempt, observation, \\
+&amp;receipt, contest, successor, remainder)
+\end{aligned}.
+$$</span></p>
+<p>A profile specializes this contract for a domain, consequence class,
+authority topology, privacy regime, schema family, effect boundary, and
+remedy. A realization selects components, code, deployment boundaries,
+witnesses, and tests. Neither a profile name nor a working component
+proves kernel coverage, conformance, legitimacy, or non-bypass.</p>
+<p>AFS can express a UGK profile without proving an implementation.
+Agentic Interface Surfaces can project selected kernel constraints and
+outcomes without becoming the Governor. COP can use UGK as a governance
+substrate while retaining independent evidence-health and coverage
+roles. Constitutionally Governed Infrastructure can use UGK scheduling
+as one bounded case while keeping liveness, access, remedy, and
+affected-party evidence outside the kernel receipt.</p>
+<p>ACG, Jnana, the enforcement mechanics, MosaiCOS, and IEL each provide
+a possible host or surrounding lifecycle. Their downstream uses require
+explicit conformance versions and path coverage rather than identity
+merger. Legitimacy Without Self-Ratification limits any kernel’s ability
+to validate its own authority or evidence. APD limits effect-containment
+claims to the paths actually mediated. The international-trade profile
+specializes the grammar while remaining on title and identity hold.</p>
+<p>The universal GSM can type<br />
+<code>IMPLEMENTS_UGK_CONTRACT</code>,
+<code>SPECIALIZES_UGK_PROFILE</code>,<br />
+<code>HOSTS_KERNEL_FUNCTION</code>,
+<code>PROJECTS_KERNEL_INTERFACE</code>,
+<code>SURROUNDS_WITH_EVIDENCE_LOOP</code>,<br />
+<code>TESTS_KERNEL_PATH_COVERAGE</code>,
+<code>WITHHOLDS_SELF_RATIFICATION</code>,<br />
+and<br />
+<code>RETAINS_UGK_IDENTITY_HOLD</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: define the minimal UGK contract independently of any named
+realization; adopt a typed profile and conformance relation; require
+path, version, consequence, and evidence coverage for every realization
+claim; and keep all UGK systems, codices, profiles, and implementations
+unmerged until separately adjudicated.</p>
+<h2 id="counterevidence-and-failure-tests">13. Counterevidence and
+Failure Tests</h2>
+<p>The architecture must narrow, revise, or fail if: (1) a permission
+check already establishes every claimed distinction; (2) will is used to
+manufacture authority; (3) identity is treated as authority; (4)
+capability is treated as permission; (5) execution occurs before
+commitment; (6) refusal still permits the effect; (7) admission is
+recorded only after the effect; (8) result evidence is absent; (9) an
+effect failure hides partial side effects; (10) unknown observation is
+reported as success; (11) the Governor can widen its own authority; (12)
+the Steward approves its own request without an admitted rule; (13) the
+Executor widens target or scope; (14) combined roles erase logical
+separation; (15) a charter self-certifies legitimacy; (16) founding
+provenance is missing; (17) delegation has no scope or expiry; (18)
+revocation does not block later use; (19) alternate authority paths
+bypass the declared Governor; (20) a schema tier changes kernel law;
+(21) version incompatibility is ignored; (22) canonicalization is
+ambiguous; (23) hashes verify altered interpretations; (24) a receipt is
+mistaken for truth; (25) a receipt is mistaken for moral legitimacy;
+(26) a successful effect launders authority; (27) refusal receipts
+disclose protected evidence; (28) privacy rules make audit impossible;
+(29) audit requirements make ordinary use impractical; (30) recovery
+rewrites history; (31) appeals cannot challenge a decision; (32) the
+authority-removal test leaves the effect reachable; (33) the
+architecture cannot represent conflict among authorities; (34) one
+system candidate is silently declared the canonical UGK; (35) an
+implementation claims conformance without a versioned contract and
+tests; (36) cryptographic claims are made without executable
+verification; (37) external prior art contradicts novelty claims; (38)
+human legitimacy questions are delegated to the kernel; (39) GMB storage
+is confused with governing authority; or (40) publication standing is
+inferred from architectural coherence.</p>
+<h2
+id="a-governance-kernel-can-expose-authority-claims-without-making-them-legitimate">A
+Governance Kernel Can Expose Authority Claims Without Making Them
+Legitimate</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>UGK separates intent, will, authority, decision, commitment,
+execution, and result receipt. Steward, Governor, and Executor are
+functions; a charter and schema registry bound ordinary effects. The
+architecture can make a claimed authority path inspectable. It cannot
+manufacture legitimate purpose, deserved authority, true evidence, wise
+decisions, or correct effects from well-formed records.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Charter-legitimacy attack.</strong> A declared or hashed
+charter is treated as lawful, consensual, ethical, representative, or
+properly founded.</li>
+<li><strong>Role-collusion attack.</strong> Steward, Governor, and
+Executor are nominally separate but share control, incentives,
+credentials, infrastructure, or failure modes.</li>
+<li><strong>Purpose-laundering attack.</strong> A request is reframed
+into an authorized purpose while the affected subject’s will or
+jurisdiction is absent.</li>
+<li><strong>Schema-capture attack.</strong> Registry owners determine
+which operations, evidence, refusals, and harms can be represented.</li>
+<li><strong>Decision-effect gap attack.</strong> Execution differs from
+the committed decision, or effects occur through an unmediated
+path.</li>
+<li><strong>Receipt-proof attack.</strong> A transaction envelope
+establishes only recorded lineage but is promoted into proof of
+legitimacy, correctness, or real-world outcome.</li>
+<li><strong>Emergency-power attack.</strong> Overrides, degradation, or
+break-glass authority lacks expiry, review, repair, and successor
+discipline.</li>
+<li><strong>Universal-kernel attack.</strong> One governance grammar is
+imposed across domains whose authority, rights, evidence, remedies, and
+institutional forms differ.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies an accountable-authority transaction kernel and
+failure tests. It does not establish legitimate founding, complete role
+separation, correct decisions, complete mediation, actual effects,
+cryptographic security, legal validity, universal applicability, or a
+conforming implementation. Multiple UGK-named systems and profiles
+remain distinct until author adjudication.</p>
+<p>Every domain profile requires its own authority source, rights and
+nondelegable protections, evidence rules, remedies, exceptions,
+affected-party standing, bypass tests, and implementation evidence. No
+conformance review, deployment, identity merger, or external research
+occurred in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>UGK should let a person ask whose purpose an action serves, who could
+bind the decision, what evidence was admitted, what was refused, what
+effect actually occurred, and how to challenge it - while preserving the
+possibility that the entire authority claim is invalid.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>UGK reframes execution as a constitutional event. An action is not
+adequately governed merely because a capable actor passed a permission
+check. Its intent, represented purpose, authority, evidence, decision,
+commitment, effect, and receipt should remain separately
+inspectable.</p>
+<p>That discipline can make responsibility harder to hide. It cannot
+make authority legitimate by declaration or ethics automatic by
+computation. The kernel’s proper role is to preserve the structure
+through which legitimacy claims can be tested, challenged, revised, and
+refused before effects become irreversible.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<h3 id="author-corpus-interfaces-inspected-under-exact-custody">Author
+corpus interfaces inspected under exact custody</h3>
+<p>Ableman Adam Ableman <em>Authority Laundering Theory.</em></p>
+<p>Ableman Adam Ableman <em>Reasoning by Way of Receipts.</em></p>
+<p>Ableman Adam Ableman <em>The Three Hash Rule.</em></p>
+<p>Ableman Adam Ableman <em>Constitutional Computing
+Architecture.</em></p>
+<h3 id="external-verification-required">External verification
+required</h3>
+<p>No external literature was consulted. Publication comparison should
+cover access-control and authorization models, policy engines, workflow
+systems, reference monitors, capability security, event sourcing, audit
+logging, tamper-evident logs, distributed ledgers, constitutional and
+administrative governance, delegation, revocation, and accountable
+execution. Novelty, security, legality, and conformance remain
+unestablished.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+<li><strong>Publication form.</strong> This work is retained as a
+standalone technical companion because its concrete migration method is
+useful independently; it remains subordinate to the architecture it
+explains.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the Universal Governance Kernel (UGK) is a
+governance-first execution architecture. Its nearest external comparison
+fields are governance, security, provenance. The sources in [E1], [E2],
+[E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Unforgeable capabilities can constrain exercise of authority while still
+leaving allocation, delegation, revocation, and social legitimacy
+incorrectly specified. A complete provenance graph can faithfully record
+a false or unauthorized process; provenance is evidence about lineage,
+not automatic truth or legitimacy. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848556">10.5281/zenodo.23848556</a></p>

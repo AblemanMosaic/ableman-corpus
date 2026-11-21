@@ -1,0 +1,729 @@
+<h1 id="voting-by-barcode">Voting by Barcode</h1>
+<h2
+id="secret-ballot-security-gaps-provenance-horizons-identity-anonymity-separation-and-unreceipted-authority-transitions-for-both-mail-in-and-in-person-voting">Secret
+Ballot Security Gaps, Provenance Horizons, Identity-Anonymity
+Separation, and Unreceipted Authority Transitions for Both Mail-In and
+In-Person Voting</h2>
+<h3
+id="mail-in-voting-introduces-an-extended-period-during-which-voter-identity-ballot-custody-verification-decisions-and-administrative-actions-remain-linked.">Mail-in
+voting introduces an extended period during which voter identity, ballot
+custody, verification decisions, and administrative actions remain
+linked.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Most debates surrounding election integrity focus on fraud, access,
+turnout, or tabulation accuracy. This paper examines whether mail-in
+ballots and persistent barcode systems can satisfy verifiable governance
+standards, or whether they inherently create extended provenance gaps
+before anonymity is established.</p>
+<p>Our analysis examines a different question:</p>
+<p><strong>Can independent parties verify that every consequential
+decision affecting a ballot was made according to uniform rules before
+anonymity was established?</strong></p>
+<p>The framework developed here distinguishes between actions that
+merely occur and actions that produce sufficient evidence to be
+independently reconstructed, audited, and verified.</p>
+<p>An authority receipt is evidence that binds:</p>
+<ul>
+<li>actor</li>
+<li>authority</li>
+<li>object</li>
+<li>operation</li>
+<li>timestamp</li>
+<li>resulting state</li>
+</ul>
+<p>An authority receipt must also be tamper-evident and
+authority-binding, such that the transition cannot later be
+reinterpreted or altered without detection.</p>
+<p>Mail-in voting introduces an extended period during which voter
+identity, ballot custody, verification decisions, and administrative
+actions remain linked. During this pre-anonymization period, numerous
+consequential transitions may occur, including authentication, signature
+verification, challenge resolution, cure opportunities, acceptance
+determinations, and chain-of-custody transfers.</p>
+<p>A transition is consequential if it can affect whether a ballot is
+accepted, rejected, delayed, or subjected to differential
+processing.</p>
+<p>Many existing safeguards seek to constrain these processes. Public
+observers, audits, chain-of-custody procedures, video monitoring,
+statistical reporting, and legal prohibitions all contribute to
+transparency.</p>
+<p>However, transparency is not equivalent to verifiability.</p>
+<p>The principal concern identified in this analysis is therefore not
+fraud, but the existence of consequential authority transitions
+occurring before ballot anonymity is established that cannot be
+independently reconstructed through verifiable evidence.</p>
+<p><strong>Normative Implication:</strong> Under a standard of
+verifiable governance rather than institutional trust, mail-in ballots
+combined with persistent barcode systems create structural provenance
+gaps that are difficult (if not impossible) to close. They are therefore
+incompatible with full pre-anonymization reconstructability.</p>
+<h2 id="threat-model">Threat Model</h2>
+<p>This paper is concerned with verifiability rather than demonstrated
+misconduct.</p>
+<p>It does not argue that abuse has occurred.</p>
+<p>It does not estimate the probability that abuse will occur.</p>
+<p>It does not require assumptions regarding malicious actors.</p>
+<p>Instead, it examines whether independent observers possess sufficient
+evidence to determine that critical decisions were made according to
+uniform rules and legitimate authority.</p>
+<p>The relevant question is therefore not:</p>
+<p>“Did something improper happen?”</p>
+<p>The relevant question is:</p>
+<p>“Would independent parties possess sufficient evidence to determine
+whether it happened?”</p>
+<p>This distinction is important.</p>
+<p>The analysis concerns evidence sufficiency, not intent
+attribution.</p>
+<p>It concerns reconstructability, not accusation.</p>
+<h2 id="provenance-horizons">Provenance Horizons</h2>
+<p>Every safeguard possesses a provenance horizon.</p>
+<p>A provenance horizon is the point beyond which independent
+verification ends.</p>
+<p>A provenance horizon can be empirically located by identifying the
+earliest consequential transition in the processing pipeline for which
+independent observers lack sufficient evidence to reconstruct the
+transition.</p>
+<p>Public observers possess provenance horizons.</p>
+<p>Video systems possess provenance horizons.</p>
+<p>Audits possess provenance horizons.</p>
+<p>Chain-of-custody records possess provenance horizons.</p>
+<p>Statistical reports possess provenance horizons.</p>
+<p>Legal prohibitions possess provenance horizons.</p>
+<p>A safeguard’s usefulness is therefore bounded not merely by its
+existence, but by the extent of its provenance horizon.</p>
+<p>The existence of logs does not imply reconstructability. Logs may be
+incomplete, non-authoritative, non-binding, non-public, or
+insufficiently granular to determine which transitions occurred under
+which authority.</p>
+<p>The central question is therefore:</p>
+<p><strong>Where does independent verification end relative to the
+decisions that matter most?</strong></p>
+<p>If consequential acceptance decisions occur beyond the provenance
+horizon, those decisions remain dependent upon institutional trust
+rather than independently verifiable evidence.</p>
+<p>Election systems generally perform well at demonstrating procedural
+visibility and outcome auditability.</p>
+<p>They are often substantially weaker at demonstrating complete
+pre-anonymization reconstructability.</p>
+<h2 id="minimal-completeness-criterion">Minimal Completeness
+Criterion</h2>
+<p>A voting system satisfies pre-anonymization provenance completeness
+if every consequential transition prior to identity-anonymity separation
+produces an authority-bound, tamper-evident receipt sufficient for
+independent reconstruction.</p>
+<p>This criterion does not require disclosure of vote content.</p>
+<p>Nor does it require public exposure of sensitive voter data.</p>
+<p>It requires that consequential transitions be reconstructable by
+authorized independent review without relying solely on institutional
+assertion.</p>
+<p>The criterion is intentionally narrow.</p>
+<p>It concerns the pre-anonymization period because that is where
+identity-linked selection decisions occur.</p>
+<h2 id="identity-exists-before-anonymity">Identity Exists Before
+Anonymity</h2>
+<p>Ballot processing necessarily begins with an identifiable voter.</p>
+<p>Before anonymity is established, election systems may access:</p>
+<ul>
+<li>voter registration records</li>
+<li>signature records</li>
+<li>address information</li>
+<li>voting status</li>
+<li>party affiliation where maintained</li>
+<li>demographic information where available</li>
+</ul>
+<p>Election laws generally prohibit the use of political affiliation,
+race, ethnicity, or other protected characteristics in acceptance
+decisions.</p>
+<p>However, prohibition and impossibility are distinct concepts.</p>
+<p>The technical infrastructure used to authenticate voters may possess
+access to information that could serve as demographic or political
+proxies.</p>
+<p>This creates a period during which identity-linked decisions occur
+before anonymity is established.</p>
+<p>The concern is structural rather than accusatory.</p>
+<p>Any architecture that permits consequential decisions while identity
+remains attached creates a decision surface that does not exist after
+anonymity has been achieved.</p>
+<h2
+id="identity-anonymity-separation-as-a-security-property">Identity-Anonymity
+Separation as a Security Property</h2>
+<p>The security property of a secret ballot is not merely eventual
+anonymity.</p>
+<p>The critical property is demonstrable anonymity.</p>
+<p>Identity and vote content must become separated at a verifiable
+point.</p>
+<p>Demonstrable anonymity requires irreversibility, which requires that
+no technically or procedurally admissible mechanism remains by which
+identity-to-ballot linkage could be reconstructed within the system or
+from its retained artifacts</p>
+<p>In practice, perfect instantaneous separation may be difficult or
+impossible to achieve. The relevant objective is therefore to minimize
+the duration of identity linkage while maximizing the verifiability of
+the separation point.</p>
+<p>Where barcodes, serial numbers, ballot identifiers, envelope
+identifiers, or other persistent references exist, anonymity depends
+upon procedural assurances that:</p>
+<ul>
+<li>identity mappings are not retained alongside vote contents</li>
+<li>linkages are destroyed or isolated</li>
+<li>identifiers do not survive into counted ballot records</li>
+<li>reconstruction pathways do not remain available</li>
+</ul>
+<p>Mail voting extends the duration of identity linkage.</p>
+<p>However, the underlying concern is not unique to mail voting.</p>
+<p>Any voting architecture that introduces persistent identifiers faces
+the same question:</p>
+<p><strong>Can independent parties verify the point at which identity
+and vote become irreversibly separated?</strong></p>
+<p>Where this separation cannot be independently demonstrated, anonymity
+itself resides beyond the provenance horizon.</p>
+<p>More generally, any system that separates identity from outcome must
+be able to demonstrate where and how that separation became
+irreversible. Otherwise anonymity remains an assertion rather than a
+verifiable property.</p>
+<h2 id="persistent-identifiers-and-in-person-voting">Persistent
+Identifiers and In-Person Voting</h2>
+<p>Although mail voting is often the focus of election-integrity
+debates, the underlying analytical framework applies more broadly.</p>
+<p>Many in-person voting systems introduce persistent identifiers at
+various stages of the voting process.</p>
+<p>Examples may include:</p>
+<ul>
+<li>ballot serial numbers</li>
+<li>ballot-on-demand printing systems</li>
+<li>provisional ballot tracking numbers</li>
+<li>scanner-generated records</li>
+<li>digital poll-book associations</li>
+<li>precinct-to-central-tabulation custody records</li>
+</ul>
+<p>In some jurisdictions, voter check-in systems, ballot issuance
+systems, and central scanning systems may temporarily coexist within the
+same administrative workflow, creating periods in which identity-linked
+records and ballot-linked records exist simultaneously.</p>
+<p>The mere existence of identifiers does not establish a security
+problem.</p>
+<p>The relevant question is whether independent parties can verify that
+identity-to-ballot linkages are irreversibly severed before vote content
+enters durable records.</p>
+<p>Mail voting extends the duration and complexity of identity
+linkage.</p>
+<p>It does not create the underlying concern.</p>
+<p>The broader issue is any architecture in which persistent identifiers
+and vote records coexist within the same administrative lifecycle.</p>
+<h2 id="authority-receipts-and-silent-identity-transitions">Authority
+Receipts and Silent Identity Transitions</h2>
+<p>The most significant governance concern arises from transitions that
+may occur without independently verifiable receipts.</p>
+<p>Examples include:</p>
+<ul>
+<li>barcode creation</li>
+<li>barcode assignment</li>
+<li>voter-to-barcode linkage</li>
+<li>database retrieval</li>
+<li>signature verification outcomes</li>
+<li>challenge determinations</li>
+<li>cure notifications</li>
+<li>acceptance decisions</li>
+<li>manual overrides</li>
+<li>linkage severance</li>
+</ul>
+<p>Each transition may materially affect ballot status.</p>
+<p>Yet the public generally receives no authority-bound receipt
+describing the transition.</p>
+<p>The presence of authority receipts is necessary but not sufficient
+for provenance completeness. Receipts must also be complete,
+non-omissible, and resistant to selective generation or suppression.
+Systems in which transitions can occur without receipt generation, or in
+which receipts can be selectively withheld, remain subject to the same
+provenance limitations.</p>
+<p>A barcode itself is not an authority receipt.</p>
+<p>A barcode may identify, route, retrieve, correlate, or track.</p>
+<p>It does not inherently establish:</p>
+<ul>
+<li>who created the linkage</li>
+<li>under what authority the linkage exists</li>
+<li>how the linkage was used</li>
+<li>when the linkage was severed</li>
+<li>whether the linkage was ever combined with vote content</li>
+</ul>
+<p>The deeper issue is that persistent identifiers create referential
+persistence without necessarily creating evidentiary accountability.</p>
+<p>An identifier may function as an indexing primitive that permits
+retrieval and correlation while producing little evidence regarding how
+those capabilities were exercised.</p>
+<p>The result is an accountability asymmetry.</p>
+<p>Observers may see ballots move.</p>
+<p>Administrators may report outcomes.</p>
+<p>Audits may verify totals.</p>
+<p>But many of the authority transitions governing those outcomes may
+remain largely invisible.</p>
+<h2 id="example-of-an-authority-receipt">Example of an Authority
+Receipt</h2>
+<p>An ideal receipt for a signature-verification decision might
+contain:</p>
+<ul>
+<li>ballot identifier</li>
+<li>action performed</li>
+<li>verification method</li>
+<li>responsible system or official</li>
+<li>governing authority permitting the action</li>
+<li>timestamp</li>
+<li>resulting status</li>
+<li>integrity verification record</li>
+</ul>
+<p>Such a receipt would not reveal vote content.</p>
+<p>Its purpose would be to permit independent reconstruction of
+consequential administrative decisions.</p>
+<p>The central question is not whether a particular implementation is
+practical.</p>
+<p>The central question is whether consequential transitions can occur
+without generating equivalent evidence.</p>
+<h2 id="risk-category-1-database-lookup-symmetry">Risk Category 1:
+Database Lookup Symmetry</h2>
+<p>Modern ballot processing relies heavily upon database retrieval.</p>
+<p>The same mechanisms capable of retrieving signature records are
+frequently capable of retrieving additional voter information associated
+with the same record.</p>
+<p>This creates database lookup symmetry.</p>
+<p>If an identifier can retrieve one voter attribute, it can potentially
+retrieve others.</p>
+<p>Whether additional attributes are exposed, hidden, ignored, or
+utilized depends upon software configuration, workflow design, and
+oversight.</p>
+<p>Potential risks include:</p>
+<ul>
+<li>differential scrutiny</li>
+<li>selective review</li>
+<li>asymmetric cure opportunities</li>
+<li>targeted delays</li>
+<li>unequal verification thresholds</li>
+</ul>
+<p>The concern is not whether such actions are authorized.</p>
+<p>The concern is whether independent parties possess evidence
+sufficient to demonstrate that they did not occur.</p>
+<h2 id="risk-category-2-public-observation-and-provenance-horizons">Risk
+Category 2: Public Observation and Provenance Horizons</h2>
+<p>Public observer programs and video monitoring represent meaningful
+existing safeguards and improve transparency.</p>
+<p>Observers may witness:</p>
+<ul>
+<li>ballot intake</li>
+<li>sorting activities</li>
+<li>signature verification procedures</li>
+<li>extraction processes</li>
+<li>tabulation operations</li>
+</ul>
+<p>However, observation is not provenance.</p>
+<p>Different observers may possess different provenance horizons
+depending on their level of access. A system achieves public
+verifiability only if the provenance horizon available to independent
+external observers encompasses all consequential pre-anonymization
+transitions.</p>
+<p>These safeguards possess clear provenance horizons.</p>
+<p>Observers generally cannot verify:</p>
+<ul>
+<li>transportation events before arrival</li>
+<li>database queries executed during barcode scans</li>
+<li>software decision thresholds</li>
+<li>configuration changes</li>
+<li>internal audit logs</li>
+<li>after-hours processing</li>
+<li>post-event log integrity</li>
+<li>historical linkage relationships between identifiers and
+records</li>
+</ul>
+<p>An observable process can still contain substantial segments of
+authority execution that cannot be independently reconstructed.</p>
+<p>Public observation therefore improves transparency while leaving
+significant portions of decision-making beyond the provenance
+horizon.</p>
+<h2 id="risk-category-3-chain-of-custody-fragmentation">Risk Category 3:
+Chain-of-Custody Fragmentation</h2>
+<p>Ballots pass through multiple custodians before tabulation.</p>
+<p>Typical transfer points include:</p>
+<ul>
+<li>voter possession</li>
+<li>collection boxes</li>
+<li>postal systems</li>
+<li>transportation networks</li>
+<li>election facilities</li>
+<li>sorting systems</li>
+<li>verification systems</li>
+<li>extraction teams</li>
+<li>tabulation facilities</li>
+</ul>
+<p>Each transfer introduces opportunities for:</p>
+<ul>
+<li>delay</li>
+<li>misrouting</li>
+<li>loss</li>
+<li>unauthorized handling</li>
+<li>selective processing</li>
+</ul>
+<p>Existing controls reduce risk.</p>
+<p>They do not eliminate provenance gaps.</p>
+<p>Most importantly, the public rarely possesses a continuous receipt
+chain spanning every consequential transfer.</p>
+<h2
+id="risk-category-4-insider-threats-and-attack-surface-geometry">Risk
+Category 4: Insider Threats and Attack-Surface Geometry</h2>
+<p>Insider threats exist in all election systems.</p>
+<p>The distinguishing characteristic of expanded mail voting is not the
+existence of insiders.</p>
+<p>It is the geometry of the attack surface.</p>
+<p>Mail voting substantially lengthens the pre-anonymization period
+during which identity-linked decisions may occur.</p>
+<p>This increases the number of consequential transitions occurring
+before anonymity is established.</p>
+<p>The theoretical risks described here are not merely hypothetical. In
+2000, computer programmer Clint Curtis testified at a U.S. Congressional
+Hearing that he was contacted by Florida Congressman Tom Feeney and
+asked to create vote-switching software for Florida’s electronic voting
+machines. Curtis’s whistleblower testimony documents that the
+architecture of black-box voting systems creates vulnerability surfaces
+that technical insiders can exploit when given opportunity.</p>
+<p>This historical precedent is relevant because it confirms a key
+structural concern: consequential transitions in voting systems can
+occur without generating verifiable evidence. The same provenance
+horizon problem this paper identifies for mail-in ballots and barcode
+systems exists in electronic voting systems where software decisions are
+not accompanied by authority receipts.</p>
+<p>The concern is not necessarily overt misconduct.</p>
+<p>The concern is the existence of consequential transitions that remain
+difficult to independently reconstruct.</p>
+<h2
+id="risk-category-5-insufficient-provenance-of-rejection-statistics">Risk
+Category 5: Insufficient Provenance of Rejection Statistics</h2>
+<p>Reported rejection rates are frequently presented as evidence of
+system integrity.</p>
+<p>These figures may be accurate.</p>
+<p>However, aggregate outcomes do not constitute provenance.</p>
+<p>A rejection statistic does not independently demonstrate:</p>
+<ul>
+<li>how ballots were flagged</li>
+<li>how thresholds were selected</li>
+<li>how overrides occurred</li>
+<li>how cure opportunities were distributed</li>
+<li>whether standards were applied uniformly</li>
+</ul>
+<p>A low aggregate rejection rate provides no independent evidence of
+equal treatment.</p>
+<p>Without granular receipts, rejection statistics remain institutional
+claims regarding outcomes rather than independently verifiable
+demonstrations of process neutrality.</p>
+<p>The question is not merely whether rejection rates are low.</p>
+<p>The question is whether the process producing those rates can be
+independently reconstructed and verified.</p>
+<h2 id="risk-category-6-audit-scope-limitations">Risk Category 6: Audit
+Scope Limitations</h2>
+<p>Election audits perform an important function.</p>
+<p>Most focus on confirming that accepted ballots were tabulated
+correctly.</p>
+<p>However, tabulation verification occurs after many consequential
+transitions have already taken place.</p>
+<p>This reveals an important asymmetry.</p>
+<p>Election systems often audit aggregation effectively while providing
+comparatively weaker evidence regarding selection.</p>
+<p>Audits may not fully answer:</p>
+<ul>
+<li>Which ballots were challenged?</li>
+<li>Which ballots were flagged?</li>
+<li>Which ballots received discretionary review?</li>
+<li>Which ballots entered cure procedures?</li>
+<li>Which ballots experienced administrative delay?</li>
+<li>Which ballots were never accepted?</li>
+</ul>
+<p>A system may accurately count accepted ballots while providing
+limited visibility into the decisions that determined acceptance.</p>
+<h2 id="reform-opportunities">Reform Opportunities</h2>
+<p>The objective of reform is not merely security.</p>
+<p>The objective is verifiable governance.</p>
+<p>Potential reforms include:</p>
+<ul>
+<li>immutable receipts for consequential processing decisions</li>
+<li>cryptographically verifiable provenance chains</li>
+<li>comprehensive logging of database access</li>
+<li>publicly auditable, tamper-evident records of barcode-to-record
+interactions during processing, with vote content excluded</li>
+<li>strict separation between verification systems and nonessential
+voter attributes</li>
+<li>publication of anonymized process metrics</li>
+<li>continuous custody documentation</li>
+<li>independent auditing of automated decision systems</li>
+<li>bipartisan review of verification workflows</li>
+<li>blinded processing wherever feasible</li>
+</ul>
+<p>Any reform effort must also acknowledge legitimate tensions between
+privacy, throughput, legal requirements, and provenance
+completeness.</p>
+<p>These constraints do not imply that full receipt completeness is
+trivial to achieve, particularly given tensions with ballot secrecy,
+operational throughput, and legal standards of admissibility.</p>
+<p>The objective is not complete visibility.</p>
+<p>The objective is maximizing independent verifiability without
+compromising ballot secrecy.</p>
+<h2 id="legitimacy-and-provenance-integrity">Legitimacy and Provenance
+Integrity</h2>
+<p>A high-stakes social consent system like voting exposes itself to
+crushing legitimacy concerns from all sides.</p>
+<p>These concerns arise from:</p>
+<ul>
+<li>true incidents that occur</li>
+<li>true structural risks that exist</li>
+<li>unfounded rumors that cannot be readily refuted</li>
+</ul>
+<p>The presence of genuine vulnerabilities does not require that all
+allegations be true.</p>
+<p>The problem is that the absence of provenance integrity-based
+evidence makes it impossible to refute unfounded claims.</p>
+<p>When consequential transitions occur beyond the provenance horizon,
+the system cannot provide the evidence that would be necessary to
+demonstrate process neutrality.</p>
+<p>This creates a self-reinforcing cycle:</p>
+<ul>
+<li>Lack of verifiable evidence -&gt; legitimate skepticism</li>
+<li>Legitimate skepticism -&gt; amplified rumors</li>
+<li>Amplified rumors -&gt; further legitimacy erosion</li>
+<li>Further legitimacy erosion -&gt; demand for more evidence</li>
+<li>More evidence required -&gt; none available</li>
+</ul>
+<p>The system then becomes dependent on institutional trust precisely
+when trust is most strained.</p>
+<p>This is not a problem of bad actors alone.</p>
+<p>It is a problem of evidentiary architecture.</p>
+<p>A system that cannot refute unfounded claims because it lacks the
+evidence to do so invites perpetual legitimacy crisis by design.</p>
+<p>The presence of real vulnerabilities (such as the Clint Curtis case)
+further compounds this problem by providing grounds for reasonable
+skepticism that cannot be distinguished from unreasonable
+allegations.</p>
+<p>Without provenance completeness, the system cannot separate the
+two.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The central issue examined in this analysis is not whether election
+fraud has been proven.</p>
+<p>Nor is it whether election officials are acting in good faith.</p>
+<p>The issue is whether consequential transitions occurring before
+ballot anonymity is established are independently verifiable.</p>
+<p>Mail voting extends the duration and complexity of the
+pre-anonymization period.</p>
+<p>Persistent identifiers in both mail and in-person voting systems
+create additional questions regarding demonstrable identity-anonymity
+separation.</p>
+<p>Many of the resulting transitions are observable.</p>
+<p>Far fewer are independently reconstructable.</p>
+<p>The most important question is therefore not whether ballots were
+ultimately counted.</p>
+<p>It is whether every consequential transition affecting those ballots
+produced sufficient evidence to be independently reconstructed, audited,
+and verified.</p>
+<p>Trustworthy systems are not those that merely report outcomes.</p>
+<p>Trustworthy systems are those that make consequential transitions
+impossible to perform without generating evidence.</p>
+<p>The principal challenge identified here is therefore not ballot
+counting.</p>
+<p>It is the existence of provenance horizons within the identity-linked
+lifecycle of the ballot and the resulting dependence upon institutional
+trust where independent verification ends.</p>
+<h2
+id="appendix-a-relationship-to-ableman-constitutional-systems-acs">Appendix
+A: Relationship to Ableman Constitutional Systems (ACS)</h2>
+<p>The analytical framework employed in this paper derives from Ableman
+Constitutional Systems (ACS), a broader governance and observability
+framework concerned with authority, admissibility, provenance, and state
+transitions.</p>
+<p>This framework is complementary to end-to-end verifiable voting
+systems, which focus on ensuring that cast ballots are correctly
+included in tabulation. The present analysis instead focuses on the
+evidentiary completeness of pre-anonymization transitions that determine
+which ballots are accepted into that set.</p>
+<p>Within ACS, consequential actions are ideally accompanied by
+authority receipts that bind actor, authority, object, operation,
+timestamp, and resulting state. The concepts of provenance horizons,
+identity-anonymity separation, and authority receipts used throughout
+this paper are applications of those broader principles to election
+administration.</p>
+<p>The arguments presented in this paper do not depend upon acceptance
+of ACS as a complete framework. They may instead be interpreted more
+generally as claims regarding observability, accountability, provenance,
+and independent verification within complex administrative systems.</p>
+<h2 id="appendix-b-formalization-sketch">Appendix B: Formalization
+Sketch</h2>
+<p>Let <span class="math inline"><em>S</em><sub><em>t</em></sub></span>
+denote system state at time <span
+class="math inline"><em>t</em></span>.</p>
+<p>Let <span class="math inline"><em>T</em><sub><em>i</em></sub></span>
+denote a consequential state transition.</p>
+<p>Let <span class="math inline"><em>R</em><sub><em>i</em></sub></span>
+denote the evidence associated with <span
+class="math inline"><em>T</em><sub><em>i</em></sub></span>.</p>
+<p>A transition is independently reconstructable over an interval if
+sufficient evidence exists to uniquely infer the transition from the
+resulting record.</p>
+<p>A system is independently reconstructable over interval <span
+class="math inline">[<em>t</em><sub>0</sub>, <em>t</em><sub><em>n</em></sub>]</span>
+if every consequential transition in that interval has a corresponding
+record sufficient for independent reconstruction.</p>
+<p>A provenance horizon occurs wherever consequential transitions exist
+for which sufficient reconstructive evidence is unavailable.</p>
+<p>Under this formulation, a system approaches provenance completeness
+as the set of consequential transitions lacking corresponding evidence
+approaches zero.</p>
+<p>The central analytical question becomes whether critical
+pre-anonymization transitions occur before or after the provenance
+horizon.</p>
+<p>This formalization is offered only as an interpretive aid. The
+arguments presented in the main text do not depend upon acceptance of
+any specific mathematical model.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that most debates surrounding election integrity
+focus on fraud, access, turnout, or tabulation accuracy. Its nearest
+external comparison fields are voting, crypto. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Auditability and
+cryptographic verification must coexist with ballot secrecy,
+accessibility, coercion resistance, dispute procedures, and operational
+chain of custody. A valid hash, signature, or inclusion proof
+establishes a bounded cryptographic relation, not meaning, authority,
+safety, or jurisdiction by itself. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> U.S. Election Assistance Commission.
+<em>Voluntary Voting System Guidelines, Version 2.0</em>. 2021. <a
+href="https://www.eac.gov/documents/voluntary-voting-system-guidelines-version-20">eac.gov
+source</a> <strong>Relationship:</strong> Adjacent voting-system
+standard for auditability, software independence, evidence,
+accessibility, and dispute resolution.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E4]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E5]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E6]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E7]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Authority Chains for
+International Trade</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-B6ABC7DDD0E90CEB</code>;<br />
+source SHA-256<br />
+<code>E46132D7DB5B0C5B12615AAFBD64512C3EF9F87CB280FDEFC6B9543360147BE1</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20672054">10.5281/zenodo.20672054</a></p>

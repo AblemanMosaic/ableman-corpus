@@ -1,0 +1,753 @@
+<h1 id="semantic-field-analysis">Semantic Field Analysis</h1>
+<h2
+id="reachability-tension-detection-and-invariant-preserving-navigation-in-governed-semantic-systems">Reachability,
+Tension Detection, and Invariant-Preserving Navigation in Governed
+Semantic Systems</h2>
+<h3
+id="semantic-field-analysis-sfa-is-a-proposed-diagnostic-method-for-examining-those-interactions-as-versioned-governed-graph-projections.">Semantic
+Field Analysis (SFA) is a proposed diagnostic method for examining those
+interactions as versioned, governed graph projections.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Large governed knowledge systems accumulate claims, assumptions,
+constraints, evidence, refusals, and typed relationships whose
+interactions cannot be understood by document retrieval alone.
+<strong>Semantic Field Analysis (SFA)</strong> is a proposed diagnostic
+method for examining those interactions as versioned, governed graph
+projections.</p>
+<p>SFA does not treat basins, convergence, collapse, or drift as
+intrinsic properties of an undifferentiated corpus. Each result is
+relative to a declared projection: node and edge types, identity
+resolution, jurisdiction, time, standing, evidence policy, lens,
+thresholds, and treatment of uncertainty. Under such a projection, SFA
+can propose support-cohesion regions, tension boundaries, admissible
+paths, dependency-sensitive convergence candidates, and
+version-to-version structural changes.</p>
+<p>These outputs are diagnostic candidates, not truth, authority, or
+automatic governance decisions. Dense agreement may reflect duplicated
+sources or shared error. Contradiction may be scoped rather than
+globally inconsistent. Change may be correction rather than drift. The
+paper defines a typed field model, repairs the invariant-preserving path
+condition, integrates SFA with the Governed Meaning Base (GMB),
+universal GSM, semantic cartography, binding quality, fragmentation
+analysis, and governed semantic compilation, and specifies countertests
+and an evaluation program.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/semantic-</code></p>
+<p><code>field-analysis/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>3438748F405554FFD1537127AC00D0C123F17911F7E0B94F7BA4A5D48DB73AD9</code>.
+The exact source remains unchanged.</p>
+<p>The field-level thesis, basins, collapse ridges, invariant paths,
+convergence, drift, and GSC relationship are author material. The typed
+projection model, formal repairs, GMB/GSM placement, corpus interfaces,
+counterevidence, evaluation plan, and editorial alternatives are
+AI-assisted contributions explicitly distinguished from the original
+author material.</p>
+<p>No graph analysis or external research was performed. No result here
+establishes truth, novelty, implementation, conformance, canonical
+standing, identity merger, or evidence readiness.</p>
+<h2 id="problem-and-scope">1. Problem and Scope</h2>
+<p>Document retrieval answers which artifacts mention a term. SFA asks
+how explicitly represented semantic objects behave within a selected
+governed relation structure. The distinction matters because one
+artifact may support, qualify, contradict, refine, depend on, cite,
+supersede, or merely resemble another. Treating all edges alike
+manufactures structure that the corpus never declared.</p>
+<p>SFA therefore operates only after identity, relation type,
+provenance, standing, scope, and version are sufficiently explicit. It
+may analyze author material, AI synthesis, disputed candidates, and
+historical states, but it must keep those postures visible.</p>
+<p>The bounded thesis is:</p>
+<blockquote>
+<p>A governed corpus can expose diagnostically useful structural
+patterns when analysis is performed over typed, versioned,
+provenance-bearing projections whose assumptions and uncertainty remain
+inspectable.</p>
+</blockquote>
+<h2 id="typed-semantic-field">2. Typed Semantic Field</h2>
+<p>Let the governed semantic corpus at version <span
+class="math inline"><em>t</em></span> be a typed attributed
+multigraph:</p>
+<p><span
+class="math display"><em>G</em><sub><em>t</em></sub> = (<em>V</em><sub><em>t</em></sub>, <em>E</em><sub><em>t</em></sub>, <em>τ</em><sub><em>V</em></sub>, <em>τ</em><sub><em>E</em></sub>, <em>A</em><sub><em>V</em></sub>, <em>A</em><sub><em>E</em></sub>, <em>P</em>),</span></p>
+<p>where <span
+class="math inline"><em>V</em><sub><em>t</em></sub></span> contains
+identified semantic objects, <span
+class="math inline"><em>E</em><sub><em>t</em></sub></span> contains
+directed typed relations, <span
+class="math inline"><em>τ</em><sub><em>V</em></sub></span> and <span
+class="math inline"><em>τ</em><sub><em>E</em></sub></span> assign node
+and edge types, <span
+class="math inline"><em>A</em><sub><em>V</em></sub></span> and <span
+class="math inline"><em>A</em><sub><em>E</em></sub></span> hold
+provenance, standing, jurisdiction, time, evidence, and uncertainty, and
+<span class="math inline"><em>P</em></span> is the governing policy
+state.</p>
+<p>An SFA result is computed over a projection:</p>
+<p><span
+class="math display"><em>G</em><sub><em>t</em></sub><sup><em>q</em></sup> = <em>Π</em><sub><em>q</em></sub>(<em>G</em><sub><em>t</em></sub>),</span></p>
+<p>where profile <span class="math inline"><em>q</em></span> declares
+included types, jurisdictions, standing classes, time window, identity
+rules, relation semantics, weights, thresholds, and missing-data
+treatment. Results from different profiles are not automatically
+comparable.</p>
+<p>The word <strong>field</strong> is a functional metaphor for this
+navigable relation environment. It does not assert a physical field,
+continuous geometry, or model-internal representation.</p>
+<h2 id="semantic-basins-as-profile-relative-candidates">3. Semantic
+Basins as Profile-Relative Candidates</h2>
+<p>A semantic basin is not simply a strongly connected component.
+Support may be directed, qualification may reduce a claim, and circular
+citation may create density without independent support. Define a basin
+candidate <span
+class="math inline"><em>B</em> ⊆ <em>V</em>(<em>G</em><sub><em>t</em></sub><sup><em>q</em></sup>)</span>
+under profile <span class="math inline"><em>q</em></span> using declared
+measures such as:</p>
+<ul>
+<li>within-region support or dependency cohesion;</li>
+<li>source independence and evidence diversity;</li>
+<li>low unresolved mandatory contradiction under the chosen scope;</li>
+<li>boundary conductance or retention under permitted traversal;</li>
+<li>standing and uncertainty distribution; and</li>
+<li>sensitivity to removal of high-degree nodes or duplicated
+sources.</li>
+</ul>
+<p>A basin indicates structural cohesion under <span
+class="math inline"><em>q</em></span>, not truth, consensus, quality, or
+authority. A propaganda cluster, circular citation network, or shared
+mistaken premise can form a strong basin. SFA should therefore return
+the profile, contributing edges, dependency families, counterevidence,
+and sensitivity results with every basin label.</p>
+<h2 id="tension-boundaries-and-collapse">4. Tension Boundaries and
+Collapse</h2>
+<p>The source’s <strong>collapse ridge</strong> is retained as a strong
+term for a narrow condition. A contradiction edge alone does not prove
+collapse. Artifacts may concern different jurisdictions, times,
+definitions, or epistemic postures; a governed corpus can also preserve
+unresolved disagreement without explosion.</p>
+<p>A <strong>tension boundary</strong> exists where typed claims or
+constraints cannot be jointly traversed under profile <span
+class="math inline"><em>q</em></span> without qualification, branching,
+or adjudication. A <strong>collapse condition</strong> is stronger:</p>
+<p><span
+class="math display">Collapse<sub><em>q</em></sub>(<em>R</em>) ⇔ ¬∃<em>c</em> ∈ <em>C</em><em>M</em><sub>1</sub>(<em>R</em>, <em>q</em>),</span></p>
+<p>meaning that no configuration of region <span
+class="math inline"><em>R</em></span> satisfies the mandatory invariants
+declared by <span class="math inline"><em>q</em></span>. This definition
+makes collapse relative to explicit invariants and Configuration
+Manifold 1 rather than a visual graph feature.</p>
+<p>SFA should report whether a boundary is definitional mismatch, scoped
+disagreement, evidentiary conflict, temporal supersession, identity
+collision, policy incompatibility, or genuine
+no-admissible-configuration collapse.</p>
+<h2 id="invariant-preserving-paths">5. Invariant-Preserving Paths</h2>
+<p>The original condition <span
+class="math inline"><em>I</em>(<em>n</em><sub>1</sub>) ⊆ <em>I</em>(<em>n</em><sub><em>k</em></sub>)</span>
+is insufficient: endpoint sets do not show that intermediate transitions
+preserved anything, and set inclusion can mistake newly asserted
+invariants for satisfaction.</p>
+<p>For path <span
+class="math inline"><em>p</em> = (<em>v</em><sub>0</sub>, <em>e</em><sub>1</sub>, <em>v</em><sub>1</sub>, …, <em>e</em><sub><em>k</em></sub>, <em>v</em><sub><em>k</em></sub>)</span>,
+define:</p>
+<p><span class="math display">$$
+\mathrm{Admissible}_q(p) \iff
+\bigwedge_{i=1}^k \mathrm{Allowed}_q(e_i,v_{i-1},v_i)
+\wedge
+\bigwedge_{j\in I_q} \mathrm{Preserved}_j(p).
+$$</span></p>
+<p><code>Allowed</code> checks edge type, direction, identity,
+jurisdiction, time, standing, evidence, and authority.</p>
+<p><code>Preserved</code> is invariant-specific and must be
+operationally defined. A path may be admissible for explanation but not
+for authority, publication, implementation, or causal inference.</p>
+<p>Path output should include the exact edges, rejected alternatives,
+unresolved gaps, governing profile, and a claim ceiling. Similarity or
+adjacency alone cannot serve as an admissible reasoning step.</p>
+<h2 id="navigation-and-projection">6. Navigation and Projection</h2>
+<p>Field navigation begins from an identified node or question and
+selects a lens. A useful sequence is:</p>
+<pre class="text"><code>resolve identity and standing
+  -&gt; choose profile and projection
+  -&gt; inspect typed neighborhood
+  -&gt; traverse permitted paths
+  -&gt; compare cohesion and tension regions
+  -&gt; inspect exact evidence and counterevidence
+  -&gt; return findings with limits</code></pre>
+<p>This aligns SFA with Governed Semantic Cartography: cartography
+supplies coordinates, projections, and traversal semantics; SFA supplies
+diagnostic operators over a selected projection. Semantic Manifold
+Competence concerns the ability to navigate and operate appropriately.
+Neither is identical to SFA.</p>
+<h2 id="convergence-without-false-independence">7. Convergence Without
+False Independence</h2>
+<p>Multiple paths reaching a compatible claim form a <strong>convergence
+candidate</strong>, not independent confirmation. Paths may share a
+source, model, author, assumption, extraction error, or upstream
+artifact. SFA should compute dependency overlap before describing
+convergence as corroborative.</p>
+<p>At minimum, a convergence report should distinguish:</p>
+<ul>
+<li>multiple renderings of one source;</li>
+<li>several paths with a shared ancestor;</li>
+<li>independent evidence families;</li>
+<li>lexical convergence without identity agreement;</li>
+<li>compatible conclusions under different qualifications; and</li>
+<li>centrality caused by curation or linking policy.</li>
+</ul>
+<p>Convergence can identify a useful conceptual hub while remaining
+silent about truth. Popularity, degree, and structural centrality are
+not authority.</p>
+<h2 id="change-drift-and-distortion">8. Change, Drift, and
+Distortion</h2>
+<p>Let <span
+class="math inline"><em>G</em><sub><em>t</em></sub><sup><em>q</em></sup></span>
+and <span
+class="math inline"><em>G</em><sub><em>t</em> + 1</sub><sup><em>q</em></sup></span>
+be comparable projections. A semantic change record is:</p>
+<p><span
+class="math display"><em>Δ</em><sub><em>q</em></sub>(<em>t</em>, <em>t</em> + 1) = Diff(<em>G</em><sub><em>t</em></sub><sup><em>q</em></sup>, <em>G</em><sub><em>t</em> + 1</sub><sup><em>q</em></sup>),</span></p>
+<p>including node, edge, identity, standing, evidence, invariant, and
+policy changes. <strong>Drift</strong> should be reserved for change
+away from a declared invariant or intended reference. Other changes may
+be correction, refinement, expansion, deletion, merger proposal, or
+policy revision.</p>
+<p>Signals such as contradiction density, basin fragmentation, or
+unsupported-node growth require normalization for corpus size, source
+duplication, review backlog, and profile changes. A sudden structural
+shift is an investigation trigger, not automatic damage.</p>
+<h2 id="gmb-and-universal-gsm-placement">9. GMB and Universal GSM
+Placement</h2>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the author-confirmed <code>CCF -&gt; CMB -&gt; GMB</code> lineage.
+Historical CCF wording in the source is retained as lineage, not as the
+current architecture name.</p>
+<p>GMB governs semantic objects, standing, disputes, evidence, and
+revision. The universal GSM supplies typed identities, relations,
+primitives, invariants, dimensions, and adjacencies. SFA is an analytic
+projection over that governed fabric. It does not replace GMB, define
+the whole GSM, or authorize mutations based on its diagnostics.</p>
+<p>GTK supports lexical identity resolution. Semantic Fragmentation
+distinguishes incompatible structures. Semantic Binding Quality
+evaluates relation quality under a declared profile. Governed Semantic
+Compilation controls promotion into semantic state. SFA analyzes
+selected postures and relations after or across those operations. These
+are interfaces, not identity mergers.</p>
+<h2 id="realization-funnel">10. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> propose field models, profiles,
+measures, and visualizations.</li>
+<li><strong>Specification:</strong> define node and edge types,
+identities, profiles, invariants, outputs, and claim ceilings.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> retain analytically
+admissible configurations satisfying mandatory identity, custody, type,
+authority, and evidence rules.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer among
+admissible measures and projections for a stated task.</li>
+<li><strong>IC:</strong> choose an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for a
+specific corpus. The names are interchangeable.</li>
+<li><strong>IR:</strong> build an <strong>Instance Realization</strong>
+or <strong>Implementation Realization</strong> of that same stage. The
+names are interchangeable.</li>
+<li><strong>Evidence:</strong> compare output with annotated cases,
+counterexamples, reviewer judgments, and known graph changes.</li>
+<li><strong>Revision:</strong> change profiles, thresholds, identities,
+relations, and algorithms while preserving lineage.</li>
+</ul>
+<p>This paper proposes a method. It selects no IC and certifies no
+IR.</p>
+<h2 id="automation-and-output-contract">11. Automation and Output
+Contract</h2>
+<p>Automated SFA may compute candidate regions and paths, but every
+result should carry:</p>
+<ul>
+<li>corpus and projection version;</li>
+<li>profile and parameter hashes;</li>
+<li>included and excluded standing classes;</li>
+<li>node and edge identity basis;</li>
+<li>relation-type semantics;</li>
+<li>source-dependency treatment;</li>
+<li>uncertainty and sensitivity analysis;</li>
+<li>exact evidence links;</li>
+<li>counterexamples or rejected alternatives; and</li>
+<li>the permitted interpretation and prohibited inferences.</li>
+</ul>
+<p>Results should be receipted and reproducible where possible. Human or
+agent review may accept, revise, contest, or refuse a diagnostic; no
+metric promotes itself into semantic authority.</p>
+<h2
+id="diagnostic-analytics-profile-over-the-governed-semantic-fabric">Diagnostic
+Analytics Profile Over the Governed Semantic Fabric</h2>
+<p>Across the completed P1 corpus, Semantic Field Analysis is the
+<strong>diagnostic analytics profile for finding cohesion, tension,
+admissible paths, convergence candidates, and change within a selected
+governed semantic projection</strong>. It is not a replacement for the
+Governed Meaning Base, semantic cartography, identity resolution,
+binding evaluation, compilation, or author adjudication.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Governed Semantic
+Cartography</em><br />
+<strong>Supplies:</strong> Coordinate, projection, traversal, and
+path-global admission semantics.<br />
+<strong>SFA boundary:</strong> SFA runs diagnostics over a declared
+cartographic projection.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Fragmentation and
+Constitutional Structure</em><br />
+<strong>Supplies:</strong> Fragmentation types, incompatible structures,
+and repair targets.<br />
+<strong>SFA boundary:</strong> SFA may detect candidate fragmentation
+patterns without resolving them automatically.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Binding Quality
+(SBQ)</em><br />
+<strong>Supplies:</strong> Profile-relative evaluation of semantic
+bindings.<br />
+<strong>SFA boundary:</strong> SBQ evaluates relation quality; SFA
+analyzes larger projected structures using such evaluations.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Theory of Semantic Computing
+Infrastructure</em><br />
+<strong>Supplies:</strong> Semantic storage, transformation, retrieval,
+and governance capabilities.<br />
+<strong>SFA boundary:</strong> SFA is one analytic capability hosted by
+that infrastructure.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Admission, lowering, remainder, and receipted
+transformation.<br />
+<strong>SFA boundary:</strong> SFA output becomes governed state only
+through a separate compilation and promotion decision.</p></li>
+</ul>
+<p>An analysis run should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+F= (&amp;corpus\_snapshot, projection, identity\_policy, \\
+&amp;edge\_semantics, standing\_filter, measures, parameters, \\
+&amp;dependency\_model, results, sensitivity, counterexamples, \\
+&amp;claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>This envelope makes an SFA finding replayable as a result of a
+particular view rather than an intrinsic property of the whole corpus.
+Every basin, tension boundary, path, convergence candidate, or drift
+signal must retain the included and excluded nodes, source-family
+dependencies, rejected alternatives, and sensitivity to profile or
+threshold changes.</p>
+<p>SFA should prefer the simplest adequate operator. If a typed query,
+dependency trace, contradiction search, or source-family deduplication
+explains the finding, the field vocabulary adds no independent result.
+More complex analytics earn use only when they expose a materially
+useful interaction that simpler operations miss.</p>
+<p>The universal GSM can type<br />
+<code>ANALYZED_UNDER_PROJECTION</code>,
+<code>FORMS_BASIN_CANDIDATE</code>,<br />
+<code>CROSSES_TENSION_BOUNDARY</code>,
+<code>HAS_ADMISSIBLE_PATH_UNDER</code>,
+<code>CONVERGES_WITH_SHARED_DEPENDENCY</code>,<br />
+<code>CHANGES_RELATIVE_TO_REFERENCE</code>,
+<code>SENSITIVE_TO_PARAMETER</code>,
+<code>EXCLUDES_STANDING_CLASS</code>,<br />
+<code>CONTESTED_BY_COUNTEREXAMPLE</code>,<br />
+and<br />
+<code>PROMOTION_REQUIRES_ADJUDICATION</code>. These relations make
+diagnostics inspectable without turning the graph into an oracle.</p>
+<p>This integration establishes four editorial commitments: classify SFA
+as a diagnostic analytics profile; adopt the analysis-run envelope;
+require simple-baseline and sensitivity comparisons; and prohibit SFA
+results from self-promoting into identity, truth, authority, or
+canonical standing.</p>
+<h2 id="temporally-versioned-diagnostic-run">Temporally Versioned
+Diagnostic Run</h2>
+<p>The fixed-seed comparison with the seventeen-system evidence study,
+the MCIR DAG theorem, the GMB, and Quant Insights for ACG makes an SFA
+result time- and substrate-specific:</p>
+<p><span class="math display">$$
+\begin{aligned}
+F^*= (&amp;GMB\_snapshot, reference\_profile, projection, \\
+&amp;identity\_policy, standing\_cut, method\_version, \\
+&amp;parameters, data\_vintage, decision\_time, results, \\
+&amp;sensitivity, counterexamples, lineage, ceiling)
+\end{aligned}.
+$$</span></p>
+<p>The seventeen-system paper is one versioned evidence application of
+the method. Its case revisions and category changes should be lineaged
+rather than overwritten. A closed DAG reference layer can improve
+reconstructability while remaining silent about edge semantics, missing
+evidence, reviewer quality, or result validity.</p>
+<p>The GMB hosts the governed source, identity, relation, evidence,
+standing, dispute, and revision state over which the projection is
+drawn. SFA output is a diagnostic candidate until separately admitted.
+Quant temporal discipline requires the run to use only the data,
+identities, policies, and evidence admissibly available at its declared
+decision time when making point-in-time claims.</p>
+<p>Later corrections may produce a successor analysis without
+retroactively changing what was knowable. The universal GSM can
+type<br />
+<code>ANALYZES_GMB_SNAPSHOT</code>,<br />
+<code>USES_REFERENCE_CLOSURE_PROFILE</code>,
+<code>APPLIES_SFA_METHOD_VERSION</code>,<br />
+<code>USES_ADMISSIBLE_DATA_VINTAGE</code>,
+<code>LINEAGES_DIAGNOSTIC_SUCCESSOR</code>,<br />
+<code>SENSITIVE_TO_TEMPORAL_CUT</code>, and<br />
+<code>REQUIRES_SEPARATE_PROMOTION</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the temporally versioned run object; bind analyses to GMB and reference
+profiles; preserve point-in-time evidence discipline; and lineage
+successors without retroactive knowledge leakage.</p>
+<h2 id="a-reproducible-semantic-analysis-run">A Reproducible
+Semantic-Analysis Run</h2>
+<p>Ten downstream uses show Semantic Field Analysis as a shared method
+rather than a store, map, solver, or verdict engine. GMB supplies
+governed state; cartography supplies maintained map layers; field
+analysis inspects a bounded projection. Craft work uses it before
+comparing variables. Governance Incentive Engineering adds actors,
+strategies, burdens, and interventions. SMT retrieval may adjudicate
+candidate edges produced by SFA. Quant evaluation and recursive
+orientation use it as one time-bounded probe. Semantic-fragmentation
+work specializes it to hidden operative constitutions, and the
+seventeen-system study is one empirical application.</p>
+<p>Every analysis run should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R^*= (&amp;source\_snapshot, projection, profile, question, \\
+&amp;identities, edge\_semantics, standing, observer, metrics, \\
+&amp;baselines, sensitivity, countermaps, findings, evidence, \\
+&amp;remainder, expiry, revision)
+\end{aligned}.
+$$</span></p>
+<p>The run is reproducible only relative to its snapshot, projection,
+metric and inference profile. Cohesion, basin, tension, pressure, gap,
+path, and convergence are diagnostic outputs whose meaning depends on
+edge types, weights, standing, and observer choices. They do not become
+physical fields, causal forces, identity decisions, admissibility
+results, or author judgments through visualization or mathematical
+form.</p>
+<p>Sensitivity should perturb projection, edge inclusion, weights,
+standing filters, baseline, time window, and observer assumptions.
+Countermaps preserve plausible alternate fields. A finding that
+disappears under a nearby admissible profile should be reported as
+profile-sensitive rather than promoted as a corpus fact.</p>
+<p>The universal GSM can type<br />
+<code>RUNS_SEMANTIC_FIELD_ANALYSIS</code>,
+<code>PROJECTS_FROM_GMB_SNAPSHOT</code>,<br />
+<code>GENERATES_CANDIDATE_EDGE</code>,
+<code>SPECIALIZES_TO_HIDDEN_CONSTITUTION</code>,<br />
+<code>PERTURBS_ANALYSIS_PROFILE</code>,
+<code>PRESERVES_COUNTERMAP</code>, and<br />
+<code>EXPIRES_ANALYTIC_FINDING</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the reproducible-run envelope; bind all field
+language to exact analytic semantics; require sensitivity and
+countermaps; and keep SFA outputs nonbinding until separately
+adjudicated.</p>
+<h2 id="counterevidence-and-failure-modes">12. Counterevidence and
+Failure Modes</h2>
+<p>SFA must narrow or fail where:</p>
+<ol type="1">
+<li>lexical similarity is mistaken for node identity;</li>
+<li>edge types are collapsed into generic adjacency;</li>
+<li>inferred edges are presented as declared commitments;</li>
+<li>source duplication creates false cohesion or convergence;</li>
+<li>circular citation appears as independent support;</li>
+<li>contradiction is unscoped across time or jurisdiction;</li>
+<li>a disagreement is incorrectly called collapse;</li>
+<li>endpoint invariants hide an invalid intermediate transition;</li>
+<li>a profile silently excludes dissent or low-standing evidence;</li>
+<li>thresholds are selected after observing the desired result;</li>
+<li>centrality is treated as truth or authority;</li>
+<li>graph sparsity reflects missing ingestion rather than conceptual
+isolation;</li>
+<li>dense linking reflects curator preference rather than semantic
+structure;</li>
+<li>a field change is correction rather than harmful drift;</li>
+<li>profile changes make temporal comparisons invalid;</li>
+<li>uncertain or contested edges are coerced into binary values;</li>
+<li>metric optimization creates Goodhart effects;</li>
+<li>computational scale forces sampling that hides boundary cases;</li>
+<li>visualization geometry implies distances not present in the graph;
+or</li>
+<li>simpler typed queries explain the result as well as the field
+vocabulary.</li>
+</ol>
+<h2 id="evaluation-program">13. Evaluation Program</h2>
+<p>A credible SFA evaluation requires versioned benchmark graphs
+containing known identity collisions, duplicated sources, shared
+assumptions, scoped contradictions, genuine no-admissible-configuration
+cases, valid and invalid paths, corrections, and policy changes.
+Candidate methods should be tested for precision, recall, calibration,
+sensitivity to profile changes, robustness to adversarial linking,
+reproducibility, reviewer usefulness, and explanatory fidelity.</p>
+<p>Baselines should include ordinary typed graph queries, strongly
+connected components, community detection, dependency analysis,
+contradiction queries, and source-family deduplication. SFA earns
+standing only where its combined profile and outputs add value beyond
+those simpler operations.</p>
+<h2
+id="analysis-over-a-governed-field-not-governance-by-analytics">Analysis
+Over a Governed Field, Not Governance by Analytics</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Semantic Field Analysis examines an admitted corpus as a directed,
+temporally versioned field. It can identify coherent basins,
+contradiction ridges, paths, convergence, drift, and distortion. It
+observes the governed semantic fabric; it does not admit sources, invent
+standing, resolve disputes, or infer truth.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Graph-construction attack.</strong> Results reflect omitted,
+duplicated, or misclassified nodes and edges. Every run must bind its
+exact graph projection and exclusions.</li>
+<li><strong>Inferred-edge laundering.</strong> Model similarity becomes
+an asserted semantic relation. Extracted, inferred, proposed, disputed,
+and authored edges need separate standing.</li>
+<li><strong>Topology-as-truth attack.</strong> Centrality or
+reachability is treated as importance, correctness, or authority.
+Metrics describe a projection only.</li>
+<li><strong>Contradiction-misclassification.</strong> Difference, scope,
+temporal succession, or alternative vocabulary is labeled contradiction.
+Classification requires evidence and review.</li>
+<li><strong>Temporal-drift attack.</strong> Two runs compare different
+source or model generations without attribution. Snapshot, operator, and
+dependency identities are mandatory.</li>
+<li><strong>Convergence-independence attack.</strong> Similar results
+from tools sharing embeddings, prompts, data, or code are treated as
+independent confirmation.</li>
+<li><strong>Scale-opacity attack.</strong> Approximation, truncation,
+sampling, or indexing changes findings. Computational shortcuts and
+error bounds must be reported.</li>
+<li><strong>Analytics-authority attack.</strong> A diagnostic output
+automatically changes GMB standing or policy. SFA recommendations remain
+zero-authority proposals.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper defines a reproducible diagnostic run and output contract.
+It does not establish objective semantic geometry, complete
+contradiction detection, truth, causality, or governance authority.
+Basins and ridges are operator- and projection-relative.</p>
+<p>Claims about graph methods, embeddings, clustering, information
+retrieval, scalability, or human interpretability require external
+comparison and evaluation. Internal runs can test reproducibility and
+utility within the corpus but not general validity. No external research
+was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is a map of where ideas reinforce, diverge,
+conflict, or drift, with every result tied to the exact corpus and
+analytic choices that produced it and no metric allowed to rewrite the
+underlying authority record.</p>
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Semantic Field Analysis can turn a large corpus from an opaque
+document mass into an inspectable relation environment. Its value does
+not come from the field metaphor alone. It comes from disciplined
+projection: exact identities, typed edges, explicit standing, declared
+invariants, source dependency, versioned profiles, and recoverable
+evidence.</p>
+<p>Under those conditions, basins can identify structural cohesion,
+tension boundaries can localize adjudication needs, admissible paths can
+expose governed reasoning routes, convergence can be qualified by
+dependency, and graph change can be separated from harmful drift. None
+of these results authorizes itself. SFA is most useful when it makes the
+corpus easier to question without making the graph an oracle.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that large governed knowledge systems accumulate
+claims, assumptions, constraints, evidence, refusals, and typed
+relationships whose interactions cannot be understood by document
+retrieval alone. Its nearest external comparison fields are semantic,
+software, provenance. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. Modularity, secure-development practice,
+and reproducibility reduce classes of failure but do not guarantee
+architectural coherence or user sovereignty. A complete provenance graph
+can faithfully record a false or unauthorized process; provenance is
+evidence about lineage, not automatic truth or legitimacy. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E7]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Manifold Competence.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20533169</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848213">10.5281/zenodo.23848213</a></p>

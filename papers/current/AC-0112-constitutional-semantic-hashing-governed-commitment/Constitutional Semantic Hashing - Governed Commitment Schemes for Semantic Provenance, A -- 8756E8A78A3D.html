@@ -1,0 +1,894 @@
+<h1
+id="constitutional-semantic-hashing-governed-commitment-schemes-for-semantic-provenance-admissibility-and-constitutional-continuity">Constitutional
+Semantic Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</h1>
+<h2
+id="commitment-relations-over-declared-interpretation-regimes-rather-than-structural-identity-alone">Commitment
+Relations Over Declared Interpretation Regimes Rather Than Structural
+Identity Alone</h2>
+<h3
+id="constitutional-semantic-hashing-governed-commitment-schemes-for-semantic-provenance-admissibility-and-constitutional-continuity-asks-what-meaning-must-preserve-before-it-can-govern-what-follows.">Constitutional
+Semantic Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity asks what meaning must
+preserve before it can govern what follows.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Cryptographic systems traditionally secure integrity, authenticity,
+confidentiality, and provenance at the level of bytes, messages, or
+formally structured commitments. However, governance-bound semantic
+systems increasingly require stronger guarantees: determining whether
+artifacts remain equivalent under declared interpretation regimes,
+whether continuity claims remain admissible under evolving governance
+constraints, and whether lineage, authority, and semantic interpretation
+remain constitutionally continuous across system evolution.</p>
+<p>This paper introduces <strong>Constitutional Semantic Hashing
+(CSH)</strong>, a governed commitment framework that composes existing
+audited cryptographic primitives—including BLAKE3, SHA-256, Ed25519,
+deterministic canonicalization schemes, and lineage-aware receipt
+chains—with explicitly declared semantic interpretation regimes.</p>
+<p>CSH is not a novel cryptographic primitive. It is a governed
+composition framework providing semantics- and governance-aware
+commitment relations over canonicalized representations using existing
+cryptographic tools.</p>
+<p>The central claim is:</p>
+<blockquote>
+<p>Hashes become substantially more operationally useful when
+interpreted as commitments over declared equivalence classes under
+specified governance regimes rather than merely byte-level
+structure.</p>
+</blockquote>
+<p>Under CSH:</p>
+<ul>
+<li>interpretation regimes become explicit governance objects,</li>
+<li>admissibility becomes part of identity,</li>
+<li>authority becomes cryptographically bound to interpretation
+context,</li>
+<li>lineage becomes part of the commitment boundary,</li>
+<li>and continuity becomes conditional upon declared governance
+constraints.</li>
+</ul>
+<p>This enables:</p>
+<ul>
+<li>governed schema evolution,</li>
+<li>deterministic divergence detection relative to declared
+regimes,</li>
+<li>provenance-aware identity,</li>
+<li>governance-bound receipt chains,</li>
+<li>and admissibility-aware continuity management.</li>
+</ul>
+<p>CSH is deployable as a thin governance layer over existing
+cryptographic stacks, enabling systems such as MCIR, CONDEX, CMB, and
+DKN to enforce deterministically verifiable continuity and divergence
+detection without modifying their underlying cryptographic
+primitives.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Conventional cryptographic systems answer structural questions:</p>
+<ul>
+<li><em>Are these bytes identical?</em></li>
+<li><em>Was this message modified?</em></li>
+<li><em>Did this signer authorize this payload?</em></li>
+<li><em>Does this commitment verify?</em></li>
+</ul>
+<p>These are foundational capabilities.</p>
+<p>However, governance-bound semantic systems increasingly require
+stronger guarantees:</p>
+<ul>
+<li><em>Did anything governance-relevant change under the declared
+interpretation regime?</em></li>
+<li><em>Does this schema preserve admissible continuity?</em></li>
+<li><em>Was this artifact produced under the same authority and law
+context?</em></li>
+<li><em>Does this lineage preserve constitutional continuity?</em></li>
+<li><em>Is this still the same governed commitment under the declared
+regime?</em></li>
+</ul>
+<p>Traditional hashes cannot answer these questions because:</p>
+<blockquote>
+<p>structural identity and governance-relative identity are not
+equivalent.</p>
+</blockquote>
+<p>Two artifacts may differ structurally while remaining
+continuity-equivalent under a declared interpretation regime:</p>
+<ul>
+<li>field ordering changes,</li>
+<li>serialization changes,</li>
+<li>rendering migrations,</li>
+<li>schema refactors,</li>
+<li>or naming normalization.</li>
+</ul>
+<p>Conversely, two structurally identical artifacts may diverge
+constitutionally:</p>
+<ul>
+<li>authority changes,</li>
+<li>admissibility-law changes,</li>
+<li>interpretation-regime changes,</li>
+<li>lineage discontinuities,</li>
+<li>or governance-scope mutations.</li>
+</ul>
+<p>Constitutional Semantic Hashing addresses this gap by treating:</p>
+<blockquote>
+<p>interpretation regimes themselves as first-class governance
+objects.</p>
+</blockquote>
+<hr />
+<h2 id="relationship-to-semantic-hashing">2. Relationship to Semantic
+Hashing</h2>
+<p>Semantic Hashing established the core maneuver:</p>
+<ol type="1">
+<li>Select the distinctions willing to survive.</li>
+<li>Canonicalize the surviving representation.</li>
+<li>Hash the canonical form.</li>
+<li>Treat the resulting hash as a commitment to an equivalence class
+under the declared lens.</li>
+</ol>
+<p>This reframed hashing from:</p>
+<blockquote>
+<p>structural integrity checking</p>
+</blockquote>
+<p>into:</p>
+<blockquote>
+<p>governed equivalence-class commitment.</p>
+</blockquote>
+<p>CSH extends this structure by incorporating:</p>
+<ul>
+<li>authority context,</li>
+<li>admissibility-law context,</li>
+<li>lineage continuity,</li>
+<li>artifact provenance class,</li>
+<li>and interpretation-regime identity</li>
+</ul>
+<p>into the commitment relation itself.</p>
+<p>The result is not:</p>
+<blockquote>
+<p>stronger cryptography,</p>
+</blockquote>
+<p>but:</p>
+<blockquote>
+<p>richer governance-aware commitment semantics over existing
+cryptographic primitives.</p>
+</blockquote>
+<hr />
+<h2 id="definitions">3. Definitions</h2>
+<h3 id="artifact">3.1 Artifact</h3>
+<p>An artifact is a structured representation participating in a
+governance-aware semantic system.</p>
+<p>Examples include:</p>
+<ul>
+<li>receipts,</li>
+<li>policies,</li>
+<li>schemas,</li>
+<li>semantic claims,</li>
+<li>MCIR objects,</li>
+<li>CONDEX artifacts,</li>
+<li>or governance transitions.</li>
+</ul>
+<p>Artifacts are always interpreted relative to:</p>
+<ul>
+<li>an artifact class,</li>
+<li>a declared interpretation regime,</li>
+<li>and an admissibility context.</li>
+</ul>
+<hr />
+<h3 id="interpretation-regime">3.2 Interpretation Regime</h3>
+<p>An interpretation regime defines:</p>
+<ul>
+<li>what distinctions are relevant,</li>
+<li>what transformations preserve continuity,</li>
+<li>what normalization rules apply,</li>
+<li>and what equivalence boundaries govern admissibility.</li>
+</ul>
+<p>An interpretation regime includes:</p>
+<ul>
+<li>a semantic lens,</li>
+<li>a canonicalization procedure,</li>
+<li>a governance context,</li>
+<li>and a versioned admissibility structure.</li>
+</ul>
+<p>Identity under CSH is always:</p>
+<blockquote>
+<p>regime-relative rather than universal.</p>
+</blockquote>
+<hr />
+<h3 id="semantic-lens">3.3 Semantic Lens</h3>
+<p>A semantic lens is a deterministic projection from an artifact into a
+canonical representation preserving only governance-relevant
+distinctions.</p>
+<p>The lens defines:</p>
+<ul>
+<li>what survives,</li>
+<li>what is discarded,</li>
+<li>and what constitutes equivalence under the regime.</li>
+</ul>
+<p>The lens is therefore:</p>
+<blockquote>
+<p>an operational interpretation boundary rather than a philosophical
+semantic claim.</p>
+</blockquote>
+<hr />
+<h3 id="admissibility-law">3.4 Admissibility Law</h3>
+<p>An admissibility law defines:</p>
+<ul>
+<li>which commitments are permitted,</li>
+<li>which transitions preserve continuity,</li>
+<li>and which equivalence relations are constitutionally valid.</li>
+</ul>
+<p>Admissibility laws are:</p>
+<ul>
+<li>explicit,</li>
+<li>versioned,</li>
+<li>hashable,</li>
+<li>governance-bound,</li>
+<li>and distributable through signed publication mechanisms such as
+registries or constitutional ledgers.</li>
+</ul>
+<p>The admissibility law therefore becomes:</p>
+<blockquote>
+<p>a discoverable governance artifact participating directly in
+continuity verification.</p>
+</blockquote>
+<hr />
+<h3 id="authority">3.5 Authority</h3>
+<p>Authority identifies the entity authorized to produce or validate a
+governed commitment within a specified admissibility regime.</p>
+<p>Authority is interpreted relative to:</p>
+<ul>
+<li>the regime,</li>
+<li>the artifact class,</li>
+<li>and the lineage context.</li>
+</ul>
+<hr />
+<h3 id="lineage">3.6 Lineage</h3>
+<p>Lineage is the ordered continuity relation connecting governed
+commitments through admissible rebinding transitions.</p>
+<p>Lineage is part of the commitment relation itself rather than
+external metadata.</p>
+<p>Both:</p>
+<ul>
+<li>forward continuity, and:</li>
+<li>backward continuity</li>
+</ul>
+<p>are represented through chained <code>prior_receipt_hash</code>
+relations.</p>
+<p>Lineage replay therefore becomes:</p>
+<blockquote>
+<p>deterministic traversal of admissible continuity links under the
+declared regime.</p>
+</blockquote>
+<hr />
+<h2 id="constitutional-semantic-hashes">4. Constitutional Semantic
+Hashes</h2>
+<p>A Constitutional Semantic Hash is defined as:</p>
+<pre><code>CSH = H(
+  algorithm_id,
+  interpretation_regime_id,
+  regime_version,
+  authority_pubkey,
+  admissibility_law_hash,
+  artifact_type,
+  canonical_semantic_form,
+  prior_receipt_hash
+)</code></pre>
+<p>Where:</p>
+<table>
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr>
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>algorithm_id</code></td>
+<td>Audited primitive used</td>
+</tr>
+<tr>
+<td><code>interpretation_regime_id</code></td>
+<td>Declared equivalence regime</td>
+</tr>
+<tr>
+<td><code>regime_version</code></td>
+<td>Interpretation regime version</td>
+</tr>
+<tr>
+<td><code>authority_pubkey</code></td>
+<td>Authority exercising the commitment</td>
+</tr>
+<tr>
+<td><code>admissibility_law_hash</code></td>
+<td>Governance regime governing admissibility</td>
+</tr>
+<tr>
+<td><code>artifact_type</code></td>
+<td>Semantic provenance class</td>
+</tr>
+<tr>
+<td><code>canonical_semantic_form</code></td>
+<td>Normalized governance-relevant representation</td>
+</tr>
+<tr>
+<td><code>prior_receipt_hash</code></td>
+<td>Lineage continuity anchor</td>
+</tr>
+</tbody>
+</table>
+<p>The underlying primitive may be:</p>
+<ul>
+<li>BLAKE3,</li>
+<li>SHA-256,</li>
+<li>SHA-3,</li>
+<li>or another audited cryptographic primitive.</li>
+</ul>
+<p>CSH does not modify these primitives.</p>
+<p>It governs:</p>
+<ul>
+<li>commitment construction,</li>
+<li>interpretation context,</li>
+<li>admissibility boundaries,</li>
+<li>and continuity semantics.</li>
+</ul>
+<hr />
+<h2 id="commitment-relations">5. Commitment Relations</h2>
+<p>CSH is best understood as:</p>
+<blockquote>
+<p>a governed commitment scheme over a declared canonicalization and
+governance regime.</p>
+</blockquote>
+<p>Define a commitment:</p>
+<pre><code>c = (
+  regime,
+  authority,
+  law,
+  lineage,
+  canonical_form,
+  h
+)</code></pre>
+<p>such that:</p>
+<pre><code>h = CSH(...)</code></pre>
+<p>Two commitments are continuity-equivalent under a declared regime
+iff:</p>
+<p><span
+class="math display"><em>h</em><sub>1</sub> = <em>h</em><sub>2</sub></span></p>
+<p>within:</p>
+<ul>
+<li>the same interpretation regime,</li>
+<li>admissibility law,</li>
+<li>artifact class,</li>
+<li>and lineage assumptions.</li>
+</ul>
+<p>Hash equality therefore means:</p>
+<blockquote>
+<p>continuity under declared governance conditions.</p>
+</blockquote>
+<p>Not:</p>
+<blockquote>
+<p>universal semantic sameness.</p>
+</blockquote>
+<p>This distinction is foundational.</p>
+<hr />
+<h2 id="canonicalization-as-governance">6. Canonicalization as
+Governance</h2>
+<p>CSH depends fundamentally on deterministic canonicalization.</p>
+<p>Without deterministic canonicalization:</p>
+<ul>
+<li>equivalence classes fragment,</li>
+<li>replayability fails,</li>
+<li>and continuity becomes unstable.</li>
+</ul>
+<p>JSON Canonicalization Scheme (JCS, RFC 8785) provides a strong
+baseline for structured serialization. However, governance-bound
+semantic systems frequently require:</p>
+<ul>
+<li>governance-relevant-field selection,</li>
+<li>semantic normalization,</li>
+<li>admissibility-aware collapse,</li>
+<li>and interpretation-specific equivalence handling.</li>
+</ul>
+<p>Canonicalization therefore becomes:</p>
+<blockquote>
+<p>executable governance interpretation.</p>
+</blockquote>
+<p>The interpretation regime determines:</p>
+<ul>
+<li>what distinctions survive,</li>
+<li>what distinctions are denied relevance,</li>
+<li>and what transformations preserve continuity.</li>
+</ul>
+<p>This is not merely formatting.</p>
+<p>It is:</p>
+<blockquote>
+<p>governed semantic reduction under declared admissibility
+constraints.</p>
+</blockquote>
+<hr />
+<h2 id="constitutional-continuity-and-divergence">7. Constitutional
+Continuity and Divergence</h2>
+<p>Traditional hashes identify:</p>
+<blockquote>
+<p>structural sameness.</p>
+</blockquote>
+<p>CSH identifies:</p>
+<blockquote>
+<p>continuity under a declared interpretation and governance regime.</p>
+</blockquote>
+<p>This means:</p>
+<ul>
+<li>formatting changes,</li>
+<li>field reordering,</li>
+<li>serialization migration,</li>
+<li>or naming normalization</li>
+</ul>
+<p>may preserve constitutional continuity under one regime.</p>
+<p>Conversely:</p>
+<ul>
+<li>authority transfer,</li>
+<li>admissibility-law mutation,</li>
+<li>interpretation-regime changes,</li>
+<li>or lineage discontinuity</li>
+</ul>
+<p>may produce constitutional divergence even when structure remains
+unchanged.</p>
+<p>CSH therefore does not claim:</p>
+<blockquote>
+<p>objective semantic identity.</p>
+</blockquote>
+<p>It claims:</p>
+<blockquote>
+<p>governance-relative continuity under declared interpretation
+constraints.</p>
+</blockquote>
+<hr />
+<h2 id="deterministic-divergence-detection">8. Deterministic Divergence
+Detection</h2>
+<p>Most semantic systems detect divergence heuristically:</p>
+<ul>
+<li>embeddings,</li>
+<li>similarity scoring,</li>
+<li>narrative interpretation,</li>
+<li>or human review.</li>
+</ul>
+<p>CSH enables deterministic divergence detection relative to a declared
+interpretation regime.</p>
+<p>If:</p>
+<p><span
+class="math display">CSH<sub>new</sub> = CSH<sub>prior</sub></span></p>
+<p>then:</p>
+<blockquote>
+<p>no governance-relevant distinction changed under the declared
+regime.</p>
+</blockquote>
+<p>If:</p>
+<p><span
+class="math display">CSH<sub>new</sub> ≠ CSH<sub>prior</sub></span></p>
+<p>then:</p>
+<blockquote>
+<p>a governance-relevant distinction diverged under the declared
+regime.</p>
+</blockquote>
+<p>This distinction is intentionally scoped.</p>
+<p>CSH does not claim:</p>
+<blockquote>
+<p>universal semantic drift detection.</p>
+</blockquote>
+<p>It claims:</p>
+<blockquote>
+<p>deterministic divergence detection relative to explicit equivalence
+boundaries.</p>
+</blockquote>
+<p>This transforms:</p>
+<ul>
+<li>silent reinterpretation,</li>
+<li>schema laundering,</li>
+<li>hidden authority substitution,</li>
+<li>and continuity mutation</li>
+</ul>
+<p>into mechanically observable state transitions.</p>
+<hr />
+<h2 id="threat-model-and-governance-assumptions">9. Threat Model and
+Governance Assumptions</h2>
+<p>CSH assumes:</p>
+<ul>
+<li>authenticated authority keys,</li>
+<li>deterministic canonicalization,</li>
+<li>explicit interpretation-regime declaration,</li>
+<li>signed regime definitions,</li>
+<li>and governed admissibility-law management.</li>
+</ul>
+<p>The framework further assumes minimal trust in:</p>
+<ul>
+<li>regime operators,</li>
+<li>governance authorities,</li>
+<li>and canonicalization publishers.</li>
+</ul>
+<p>Primary threats include:</p>
+<ul>
+<li>spoofed interpretation regimes,</li>
+<li>malicious canonicalization ambiguity,</li>
+<li>governance capture,</li>
+<li>authority substitution,</li>
+<li>weak equivalence boundaries,</li>
+<li>semantic over-collapse,</li>
+<li>lineage forgery,</li>
+<li>and regime-discovery attacks.</li>
+</ul>
+<p>Mitigations include:</p>
+<ul>
+<li>signed regime publication,</li>
+<li>versioned regime discovery,</li>
+<li>multi-party governance approval,</li>
+<li>deterministic replay verification,</li>
+<li>and explicit admissibility-law lineage.</li>
+</ul>
+<p>CSH provides:</p>
+<blockquote>
+<p>a mechanism for enforcing governance-relative continuity
+commitments.</p>
+</blockquote>
+<p>It does not guarantee:</p>
+<ul>
+<li>correctness of governance regimes,</li>
+<li>political legitimacy,</li>
+<li>incentive alignment,</li>
+<li>or semantic appropriateness of the declared interpretation
+systems.</li>
+</ul>
+<p>These are governance failures rather than failures of the underlying
+cryptographic primitives.</p>
+<hr />
+<h2 id="worked-example">10. Worked Example</h2>
+<p>Consider two governance artifacts:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;policy_scope&quot;</span><span class="fu">:</span> <span class="st">&quot;district&quot;</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;max_energy_draw&quot;</span><span class="fu">:</span> <span class="dv">1200</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>and:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;scope&quot;</span><span class="fu">:</span> <span class="st">&quot;district&quot;</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;max_energy_draw&quot;</span><span class="fu">:</span> <span class="dv">1200</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Under:</p>
+<ul>
+<li>a structural hash, the identities diverge.</li>
+</ul>
+<p>Under:</p>
+<ul>
+<li>an interpretation regime treating <code>policy_scope</code> and
+<code>scope</code> as equivalent governance labels, the canonical
+semantic forms converge.</li>
+</ul>
+<p>The resulting CSH values remain identical if:</p>
+<ul>
+<li>authority remains unchanged,</li>
+<li>admissibility law remains unchanged,</li>
+<li>lineage continuity remains admissible,</li>
+<li>and interpretation regime remains unchanged.</li>
+</ul>
+<p>However, if:</p>
+<ul>
+<li>the authority changes,</li>
+<li>the admissibility law changes,</li>
+<li>or the interpretation regime changes,</li>
+</ul>
+<p>then constitutional continuity diverges even when canonical structure
+remains identical.</p>
+<p>Identity therefore depends on:</p>
+<blockquote>
+<p>governed commitment context, not merely structural
+representation.</p>
+</blockquote>
+<hr />
+<h2 id="comparison-to-related-approaches">11. Comparison to Related
+Approaches</h2>
+<ul>
+<li><p><strong>Approach:</strong> Traditional Hashing<br />
+<strong>Structural Integrity:</strong> Yes<br />
+<strong>Governance Regime:</strong> No<br />
+<strong>Authority Context:</strong> No<br />
+<strong>Lineage Continuity:</strong> No<br />
+<strong>Cannot Express:</strong> Governance-relative continuity</p></li>
+<li><p><strong>Approach:</strong> Signed Metadata<br />
+<strong>Structural Integrity:</strong> Partial<br />
+<strong>Governance Regime:</strong> Partial<br />
+<strong>Authority Context:</strong> Yes<br />
+<strong>Lineage Continuity:</strong> No<br />
+<strong>Cannot Express:</strong> Interpretation-bound
+equivalence</p></li>
+<li><p><strong>Approach:</strong> Content Addressing<br />
+<strong>Structural Integrity:</strong> Yes<br />
+<strong>Governance Regime:</strong> No<br />
+<strong>Authority Context:</strong> No<br />
+<strong>Lineage Continuity:</strong> No<br />
+<strong>Cannot Express:</strong> Admissibility-aware identity</p></li>
+<li><p><strong>Approach:</strong> Semantic Hashing<br />
+<strong>Structural Integrity:</strong> Relative to Lens<br />
+<strong>Governance Regime:</strong> Partial<br />
+<strong>Authority Context:</strong> No<br />
+<strong>Lineage Continuity:</strong> No<br />
+<strong>Cannot Express:</strong> Governance-bound lineage</p></li>
+<li><p><strong>Approach:</strong> CSH<br />
+<strong>Structural Integrity:</strong> Relative to Declared Regime<br />
+<strong>Governance Regime:</strong> Yes<br />
+<strong>Authority Context:</strong> Yes<br />
+<strong>Lineage Continuity:</strong> Yes<br />
+<strong>Cannot Express:</strong> N/A</p></li>
+</ul>
+<p>CSH differs from:</p>
+<ul>
+<li>content-addressing,</li>
+<li>signed metadata,</li>
+<li>blockchain commitments,</li>
+<li>and ordinary semantic hashing</li>
+</ul>
+<p>because the commitment relation itself includes:</p>
+<ul>
+<li>interpretation regime,</li>
+<li>admissibility law,</li>
+<li>authority context,</li>
+<li>and lineage continuity.</li>
+</ul>
+<hr />
+<h2 id="protocol-sketch">12. Protocol Sketch</h2>
+<p>A minimal CSH workflow proceeds as follows:</p>
+<ol type="1">
+<li>Publish signed interpretation regime definition.</li>
+<li>Publish signed admissibility-law definition.</li>
+<li>Canonicalize artifact under the regime.</li>
+<li>Construct canonical semantic form.</li>
+<li>Bind:
+<ul>
+<li>regime,</li>
+<li>authority,</li>
+<li>admissibility law,</li>
+<li>artifact class,</li>
+<li>lineage anchor, into the commitment tuple.</li>
+</ul></li>
+<li>Compute CSH using audited primitive.</li>
+<li>Sign and publish receipt.</li>
+<li>Verify continuity through deterministic replay.</li>
+</ol>
+<p>This allows:</p>
+<ul>
+<li>replayable governance verification,</li>
+<li>deterministic divergence detection,</li>
+<li>admissibility-aware lineage traversal,</li>
+<li>and governance-relative continuity validation.</li>
+</ul>
+<hr />
+<h2 id="mcir-and-governance-aware-identity">13. MCIR and
+Governance-Aware Identity</h2>
+<p>CSH composes naturally with MCIR architectures.</p>
+<p>Under MCIR:</p>
+<ul>
+<li>artifacts possess typed constitutional meaning,</li>
+<li>transitions are governed,</li>
+<li>admissibility is explicit,</li>
+<li>and continuity is regulated constitutionally.</li>
+</ul>
+<p>The MCIR identifier of an artifact therefore becomes:</p>
+<blockquote>
+<p>its Constitutional Semantic Hash under the declared interpretation
+regime.</p>
+</blockquote>
+<p>Identity tracks:</p>
+<ul>
+<li>admissible participation continuity, rather than:</li>
+<li>representation structure alone.</li>
+</ul>
+<p>This allows:</p>
+<ul>
+<li>governed schema evolution,</li>
+<li>deterministic continuity verification,</li>
+<li>semantic receipt chains,</li>
+<li>governance-aware replayability,</li>
+<li>and constitutional memory continuity.</li>
+</ul>
+<p>CSH may additionally compose with:</p>
+<ul>
+<li>propositional admissibility systems,</li>
+<li>temporal governance logic,</li>
+<li>and higher-order policy verification frameworks</li>
+</ul>
+<p>to express richer continuity and admissibility properties over
+semantic systems.</p>
+<hr />
+<h2 id="conclusion">14. Conclusion</h2>
+<p>Traditional cryptographic systems secure:</p>
+<ul>
+<li>structural integrity,</li>
+<li>signatures,</li>
+<li>and message authenticity.</li>
+</ul>
+<p>Semantic Hashing secures:</p>
+<ul>
+<li>declared equivalence classes under explicit lenses.</li>
+</ul>
+<p>Constitutional Semantic Hashing extends this into governance-aware
+systems by incorporating:</p>
+<ul>
+<li>interpretation regimes,</li>
+<li>admissibility laws,</li>
+<li>authority context,</li>
+<li>provenance class,</li>
+<li>and lineage continuity</li>
+</ul>
+<p>into the commitment relation itself.</p>
+<p>The result is not:</p>
+<blockquote>
+<p>stronger cryptographic primitives,</p>
+</blockquote>
+<p>but:</p>
+<blockquote>
+<p>governance-aware commitment schemes over existing audited
+primitives.</p>
+</blockquote>
+<p>CSH enables systems to distinguish:</p>
+<ul>
+<li>structural change, from:</li>
+<li>governance-relevant divergence under declared interpretation
+regimes.</li>
+</ul>
+<p>As governance-aware semantic systems, constitutional memory
+architectures, provenance-bound AI systems, and admissibility-governed
+infrastructures become increasingly important, frameworks like
+Constitutional Semantic Hashing provide a mechanically verifiable
+foundation for regime-relative continuity, deterministic divergence
+detection, provenance-aware identity, and admissibility-aware
+governance.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that cryptographic systems traditionally secure
+integrity, authenticity, confidentiality, and provenance at the level of
+bytes, messages, or formally structured commitments. Its nearest
+external comparison fields are crypto, semantic, governance. The sources
+in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself.
+Formal vocabularies and graph links make commitments explicit but cannot
+by themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E6]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E7]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20114888</code>;<br />
+source SHA-256<br />
+<code>1AFDBD390D3BF28224727FE150FFB30CA1810D997778CC8702B6CD20C4FA5B45</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20248734">10.5281/zenodo.20248734</a></p>

@@ -1,0 +1,770 @@
+<h1 id="recursive-semantic-orientation">Recursive Semantic
+Orientation</h1>
+<h2
+id="a-bounded-method-for-building-and-revising-working-models-of-complex-systems">A
+Bounded Method for Building and Revising Working Models of Complex
+Systems</h2>
+<h3
+id="recursive-semantic-orientation-rso-is-a-proposed-method-for-acquiring-a-usable-position-within-that-complexity-before-pursuing-exhaustive-detail.">Recursive
+Semantic Orientation (RSO) is a proposed method for acquiring a usable
+position within that complexity before pursuing exhaustive detail.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Complex systems often exceed the working memory of an investigator or
+agent because their components, relations, states, boundaries, and
+unknowns cannot be held together at once. Recursive Semantic Orientation
+(RSO) is a proposed method for acquiring a usable position within that
+complexity before pursuing exhaustive detail.</p>
+<p>The source method moves from hypothesis to coarse semantic partition,
+recursive refinement, verification, pattern discovery, focused search,
+and repetition. This paper preserves that architecture while narrowing
+its strongest claims. Complexity is not exclusively relational, all
+inquiry does not begin with an explicit hypothesis, and decomposition
+does not guarantee a simple or unique explanation. Partitions can
+conceal cross-cutting relations; familiar patterns can create
+confirmation bias; deferred retrieval can postpone critical
+evidence.</p>
+<p>RSO is therefore specified as a governed, graph-aware orientation
+loop. It maintains hypotheses, partitions, unknowns, evidence,
+questions, budgets, countermodels, and stopping conditions. It supports
+observation-led as well as hypothesis-led entry, searches for
+disconfirming evidence, and distinguishes a useful working model from
+truth, decision authority, or implementation readiness.</p>
+<h2 id="source-credit-evidence-and-standing">Source, Credit, Evidence,
+and Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. The custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/recursive-</code></p>
+<p><code>semantic-orientation/integration-custody-</code><br />
+<code>manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>0B79867D410C23B591DF53AFF2B516789427E1864748BFDD467FDDB5F87943B5</code>.
+The source remains unchanged.</p>
+<p>The source credits Alisa Esage and links two videos. This pass
+preserves that credit as source material but did not inspect the videos,
+infer endorsement, or perform external research. RSO and its named
+principles are author material. Formal boundaries, integrations,
+evaluation design, countertests, and open editorial questions added here
+are AI editorial or synthetic candidates until adopted.</p>
+<h2 id="the-orientation-problem">1. The Orientation Problem</h2>
+<p>An investigator approaching an unfamiliar codebase, institution,
+device, mathematical theory, or distributed system does not initially
+possess the model needed to interpret every observation. Retrieval alone
+can enlarge the unorganized mass. Premature local analysis can hide
+system-level causes. A first task is to construct enough semantic
+position to choose the next useful observation.</p>
+<p>RSO calls this <strong>orientation before analysis</strong>.
+Orientation is not prior knowledge of the whole system. It is a
+provisional account of scope, abstraction level, knowns, unknowns,
+relevant relations, risks, and next questions.</p>
+<p>The aphorism “complexity is relational, not numerical” captures an
+important contrast between many independent items and a few tightly
+coupled ones. It should not be treated as a universal definition. Scale,
+heterogeneity, dynamics, uncertainty, computational hardness, feedback,
+and observer limits may also contribute to difficulty.</p>
+<h2 id="orientation-state">2. Orientation State</h2>
+<p>At time <span class="math inline"><em>t</em></span>, define an
+orientation state:</p>
+<p><span
+class="math display"><em>O</em><sub><em>t</em></sub> = (<em>S</em><sub><em>t</em></sub>, <em>H</em><sub><em>t</em></sub>, <em>P</em><sub><em>t</em></sub>, <em>U</em><sub><em>t</em></sub>, <em>E</em><sub><em>t</em></sub>, <em>Q</em><sub><em>t</em></sub>, <em>C</em><sub><em>t</em></sub>, <em>B</em><sub><em>t</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>S</em><sub><em>t</em></sub></span> is scoped
+subject matter, <span
+class="math inline"><em>H</em><sub><em>t</em></sub></span> hypotheses or
+candidate models, <span
+class="math inline"><em>P</em><sub><em>t</em></sub></span> semantic
+partitions and cross-links, <span
+class="math inline"><em>U</em><sub><em>t</em></sub></span> explicit
+unknowns, <span
+class="math inline"><em>E</em><sub><em>t</em></sub></span> evidence and
+provenance, <span
+class="math inline"><em>Q</em><sub><em>t</em></sub></span> open
+questions and counterquestions, <span
+class="math inline"><em>C</em><sub><em>t</em></sub></span> constraints
+and consequences, and <span
+class="math inline"><em>B</em><sub><em>t</em></sub></span> the available
+time, attention, compute, access, and risk budget.</p>
+<p>An orientation update is admissible only when it records what
+changed, why it changed, which observations support it, what
+alternatives remain, and which claims exceed the evidence.</p>
+<h2 id="a-flexible-recursive-loop">3. A Flexible Recursive Loop</h2>
+<p>A bounded RSO episode can proceed as follows:</p>
+<ol type="1">
+<li><strong>Scope and position:</strong> identify the subject, task,
+abstraction level, effect boundary, and stakes.</li>
+<li><strong>Sample and observe:</strong> inspect a small but informative
+set of source-native structures.</li>
+<li><strong>Propose models:</strong> form provisional hypotheses,
+analogies, and partitions.</li>
+<li><strong>Name unknowns:</strong> record missing components,
+relations, transitions, evidence, and jurisdictions.</li>
+<li><strong>Map topology:</strong> represent hierarchy, adjacency,
+dependency, feedback, cycles, exceptions, and cross-cutting
+concerns.</li>
+<li><strong>Test and countertest:</strong> seek supporting,
+disconfirming, surprising, and out-of-distribution observations.</li>
+<li><strong>Retrieve selectively:</strong> acquire documentation or
+detail when its expected information value exceeds its cost and
+risk.</li>
+<li><strong>Refine or replace:</strong> split, merge, connect, qualify,
+or discard the current model.</li>
+<li><strong>Stop, act, or recurse:</strong> terminate at task-relative
+sufficiency, proceed under an explicit claim ceiling, or open another
+cycle.</li>
+</ol>
+<p>These operations need not occur in one fixed order. Observation may
+precede hypothesis. An urgent safety fact may require immediate
+retrieval. A discovered cross-link may dissolve an earlier
+partition.</p>
+<h2 id="coarse-semantic-partitioning">4. Coarse Semantic
+Partitioning</h2>
+<p>Coarse Semantic Partitioning (CSP) creates large provisional regions
+such as identity, authority, state, evidence, execution, policy,
+storage, communication, and unknown. The purpose is navigation, not
+ontological truth.</p>
+<p>A partition should carry its basis, exclusions, confidence, and
+cross-boundary edges. Because real systems are frequently graphs rather
+than trees, a component may participate in several regions.
+Authentication may concern identity, authority, evidence, user
+experience, and recovery simultaneously.</p>
+<p>The useful principle is therefore: structure can precede exhaustive
+detail, but the first structure remains revisable.</p>
+<h2 id="explicit-unknowns">5. Explicit Unknowns</h2>
+<p>Unknowns should be represented as first-class objects rather than
+omitted or prematurely classified. An unknown record should include
+location, relation candidates, uncertainty type, consequence if wrong,
+investigative priority, access limits, and closure evidence.</p>
+<p>A named unknown is partially oriented but not necessarily understood.
+Naming can also create false confidence. The registry must distinguish
+unknown, unknowable under present access, contested, withheld, not
+applicable, and not yet investigated.</p>
+<h2 id="hypotheses-observations-and-countermodels">6. Hypotheses,
+Observations, and Countermodels</h2>
+<p>Hypotheses guide attention by predicting structures, relations, and
+failure modes. They do not possess primacy in every inquiry. An
+observation-led survey, anomaly, user report, or random sample can
+precede an explicit model.</p>
+<p>Every active hypothesis should have:</p>
+<ul>
+<li>observations it explains;</li>
+<li>expected observations not yet found;</li>
+<li>a plausible alternative;</li>
+<li>evidence that would weaken or defeat it;</li>
+<li>the jurisdiction within which it applies; and</li>
+<li>a confidence and revision history.</li>
+</ul>
+<p>This preserves the source insight that invalid framing can produce
+low-value investigation without asserting that one initial hypothesis
+governs all exploration.</p>
+<h2 id="pattern-constrained-and-novelty-search">7. Pattern-Constrained
+and Novelty Search</h2>
+<p>Known patterns make search efficient: a credential path, deployment
+gate, bus, cache, authority boundary, or state machine has recognizable
+signatures. But expected-pattern matching can make investigators see
+only familiar structures.</p>
+<p>RSO should pair pattern-constrained search with <strong>novelty
+search</strong> and <strong>counterpattern search</strong>. For every
+expected match, ask what structurally different mechanism could produce
+the same observation, what evidence should be present but is absent, and
+where the system violates the analogy.</p>
+<p>Search is then neither exhaustive wandering nor recognition alone. It
+is a contest among model-guided, novelty-seeking, and disconfirming
+probes.</p>
+<h2 id="retrieval-and-detail-timing">8. Retrieval and Detail Timing</h2>
+<p>Deferred detail acquisition protects working memory when retrieval
+would overwhelm a weak model. It is not an absolute sequence. Security
+advisories, interface contracts, destructive-operation warnings,
+authoritative specifications, or incident evidence may need immediate
+attention.</p>
+<p>Retrieve when expected decision relevance, information gain,
+consequence reduction, or uncertainty reduction justifies the cost.
+Defer when material is low-value, duplicative, inaccessible, or likely
+to collapse the current abstraction level without improving the
+task.</p>
+<h2 id="recursive-refinement-and-topology">9. Recursive Refinement and
+Topology</h2>
+<p>Each region can become the subject of another orientation episode.
+Refinement may descend through subsystems, but it may also move sideways
+across adjacencies or upward to a broader constraint. Cycles and
+feedback mean the method is not merely recursive decomposition.</p>
+<p>The topology should retain at least containment, dependency, control,
+authority, evidence, temporal order, translation, conflict, exception,
+and uncertainty relations. A hierarchy that omits these edges can appear
+clear while being operationally false.</p>
+<h2 id="sufficiency-and-stopping">10. Sufficiency and Stopping</h2>
+<p>“Explanatory power stabilizes” and “diminishing returns” require
+observable criteria. Let continuation value be:</p>
+<p><span
+class="math display"><em>V</em><sub><em>t</em></sub> = <em>G</em><sub><em>t</em></sub> − (<em>K</em><sub><em>t</em></sub> + <em>R</em><sub><em>t</em></sub>),</span></p>
+<p>where <span
+class="math inline"><em>G</em><sub><em>t</em></sub></span> is expected
+information or decision gain, <span
+class="math inline"><em>K</em><sub><em>t</em></sub></span> is
+investigation cost, and <span
+class="math inline"><em>R</em><sub><em>t</em></sub></span> is the risk
+of delay, error, or intervention. Continue when <span
+class="math inline"><em>V</em><sub><em>t</em></sub></span> remains
+positive or a critical unknown lacks closure.</p>
+<p>A task may stop when coverage is adequate for the declared purpose,
+critical unknowns are bounded, alternatives have been tested,
+consequences are acceptable, evidence is traceable, and another cycle
+has low marginal value. A stopped orientation is a task-relative working
+model, not complete truth.</p>
+<h2 id="simplicity-and-architectural-attractors">11. Simplicity and
+Architectural Attractors</h2>
+<p>Recursive inquiry can reveal invariants and compress many
+observations into a simpler model. It can also expose irreducible
+pluralism, path dependence, conflicting objectives, or chaotic dynamics.
+Simplicity is an achievement to test, not an inevitable destination.</p>
+<p>Likewise, systems under similar constraints may converge on recurring
+structures, but common vocabulary or shape does not prove common
+mechanism, identity, optimality, or necessity. An
+architectural-attractor claim needs a comparison class, stated
+constraints, independent cases, alternative explanations, and evidence
+of convergence.</p>
+<p>Ableman’s Razor can guide model selection only under preserved
+explanatory coverage, visible remainder, and explicit cost. Compression
+that erases a failure path is not simplicity.</p>
+<h2 id="agent-capability-surface">12. Agent Capability Surface</h2>
+<p>An agentic implementation may expose <code>able_orient</code>,
+<code>able_partition</code>, <code>able_hypothesize</code>,<br />
+<code>able_gap</code>, <code>able_refine</code>,
+<code>able_trace</code>, <code>able_surface</code>,
+<code>able_claim</code>, <code>able_refute</code>,<br />
+and <code>able_validate</code>. Each operation should declare:</p>
+<ul>
+<li>accepted source and state identities;</li>
+<li>input and output schema;</li>
+<li>evidence and provenance obligations;</li>
+<li>authority and effect ceiling;</li>
+<li>uncertainty and remainder;</li>
+<li>resource budget;</li>
+<li>refusal and escalation outcomes; and</li>
+<li>revision relation to prior state.</li>
+</ul>
+<p>An orientation operation cannot silently become permission to
+execute. A validation operation must identify the profile and evidence
+under which it validates.</p>
+<h2 id="corpus-integration">13. Corpus Integration</h2>
+<p>RSO provides the iterative orientation workflow. <strong>The
+Well-Governed Mind</strong> supplies cognitive governance and
+self-revision. <strong>A Constitution for the Context Window</strong>
+governs admitted context. <strong>Governed Semantic Cartography</strong>
+maps semantic territories and boundaries. <strong>Semantic Field
+Analysis</strong> analyzes relations and tensions within a field.
+<strong>Semantic Manifold Topology</strong> supplies multi-relational
+topology. <strong>Meaning Crystals</strong> package bounded semantic
+state for transport and reconstruction.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> can retain sources,
+orientation states, hypotheses, partitions, unknowns, evidence,
+countermodels, stop reasons, and revisions. The universal
+<strong>GSM</strong> can type their relations without treating a lexical
+match as identity or a working model as truth.</p>
+<h2 id="realization-funnel">14. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate hypothesis-led,
+observation-led, graph, hierarchical, human, agent, and hybrid
+orientation methods.</li>
+<li><strong>Specification:</strong> define state, operations,
+provenance, budgets, outcomes, and stop rules.</li>
+<li><strong>CM1:</strong> retain admissible workflows, including costly,
+incomplete, and high-uncertainty variants.</li>
+<li><strong>CM2:</strong> prefer configurations by fidelity, information
+gain, safety, accessibility, inspectability, and cost.</li>
+<li><strong>IC:</strong> select an Instance Constitution or Instance
+Configuration for one investigative setting.</li>
+<li><strong>IR:</strong> build an Instance Realization or Implementation
+Realization of the chosen workflow and capability surface.</li>
+<li><strong>Evidence:</strong> compare orientation quality, errors,
+effort, transfer, and downstream decisions.</li>
+<li><strong>Revision:</strong> update the method, configuration, and
+implementation from receipts and failures.</li>
+</ul>
+<p>This paper reaches Specification and proposes criteria for CM1 and
+CM2. It does not select an IC or certify an IR. Here IR means
+realization, not Intermediate Representation as in MCIR or Context
+IR.</p>
+<h2 id="evaluation-program">15. Evaluation Program</h2>
+<p>Evaluate RSO on bounded unfamiliar systems against unguided
+exploration, documentation-first retrieval, and expert-chosen baselines.
+Use tasks with known architecture, hidden cross-links, misleading
+patterns, critical unknowns, and consequence-bearing decisions.</p>
+<p>Measure time to a useful map, coverage of critical relations, unknown
+recall, calibration, false structure, hypothesis revision,
+disconfirmation rate, source traceability, transfer to a second task,
+decision quality, cognitive or token cost, and harm from delayed
+retrieval. Separate human, agent, and collaborative results.</p>
+<h2 id="the-revisable-orientation-control-loop">The Revisable
+Orientation-Control Loop</h2>
+<p>Across the completed P1 corpus, Recursive Semantic Orientation (RSO)
+has one non-duplicative role: it is the <strong>revisable
+orientation-control loop</strong> that decides how an investigator
+builds, challenges, and updates a working position within an unfamiliar
+system. It is not the semantic terrain, the stored knowledge base, a
+cartographic projection, a truth engine, or permission to act.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Well-Governed
+Mind</em><br />
+<strong>Supplies:</strong> Cognitive governance, self-correction, and
+bounded stopping.<br />
+<strong>RSO boundary:</strong> RSO supplies the explicit investigation
+loop and state record.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Constitution for the
+Context Window</em><br />
+<strong>Supplies:</strong> Admission and displacement rules for active
+context.<br />
+<strong>RSO boundary:</strong> Context is one input to orientation; a
+context window is not the full orientation state.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governed Semantic
+Cartography</em><br />
+<strong>Supplies:</strong> Coordinates, projections, traversals, and
+atlas coherence.<br />
+<strong>RSO boundary:</strong> A map supports orientation but does not
+determine the investigator’s hypotheses, unknowns, or stopping
+decision.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Field
+Analysis</em><br />
+<strong>Supplies:</strong> Analysis of relations, tensions, pressures,
+and gaps in a bounded semantic field.<br />
+<strong>RSO boundary:</strong> Field analysis is one probe family within
+or downstream of an orientation episode.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meaning Crystals</em><br />
+<strong>Supplies:</strong> Portable, reconstructable packages of bounded
+semantic state.<br />
+<strong>RSO boundary:</strong> A crystal can carry an orientation
+snapshot; portability does not make the snapshot true or
+complete.</p></li>
+</ul>
+<p>The portable control object is:</p>
+<p><span
+class="math display"><em>O</em><sub><em>t</em></sub> = (<em>s</em><em>c</em><em>o</em><em>p</em><em>e</em>, <em>H</em><sub><em>t</em></sub>, <em>P</em><sub><em>t</em></sub>, <em>U</em><sub><em>t</em></sub>, <em>E</em><sub><em>t</em></sub>, <em>Q</em><sub><em>t</em></sub>, <em>C</em><sub><em>t</em></sub>, <em>B</em><sub><em>t</em></sub>, <em>c</em><em>e</em><em>i</em><em>l</em><em>i</em><em>n</em><em>g</em><sub><em>t</em></sub>),</span></p>
+<p>where hypotheses, provisional partitions, unknowns, evidence,
+questions, constraints, budget, and claim ceiling are independently
+represented. A governed update has the form:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Step(O_t,probe,result,receipt) \\
+&amp;\rightarrow O_{t+1} \\
+&amp;\mid Stop \\
+&amp;\mid Refuse \\
+&amp;\mid Escalate
+\end{aligned}.
+$$</span></p>
+<p>Custody and revision lineage should be monotonic even when beliefs
+are not: a defeated hypothesis may be removed from the active model
+while its source, test, defeat reason, and downstream influence remain
+reconstructable. Likewise, an omitted observation is not an explicit
+unknown, and an explicit unknown is not evidence of absence.</p>
+<p>Five objects remain distinct: <strong>source state</strong> is what
+was inspected; <strong>orientation state</strong> is the investigator’s
+bounded working position; <strong>map or projection</strong> is a
+rendering used for navigation; <strong>hypothesis</strong> is a
+defeasible explanatory candidate; <strong>standing</strong> is a
+governed assessment of a claim. A decision or external effect may
+consume these objects but is not identical to any of them.</p>
+<p>The universal GSM can type <code>ORIENTS_TO</code>,
+<code>PARTITIONS_AS</code>, <code>TRACKS_UNKNOWN</code>,<br />
+<code>PROPOSES_HYPOTHESIS</code>, <code>COUNTERMODELED_BY</code>,
+<code>PROBED_BY</code>, <code>UPDATED_BY</code>,
+<code>PROJECTED_THROUGH</code>,<br />
+<code>STOPPED_UNDER</code>,<br />
+and<br />
+<code>EXCEEDS_CLAIM_CEILING</code>. A GMB can preserve their versions
+and custody; it does not silently promote a working orientation to
+corpus truth.</p>
+<p>This integration establishes four editorial commitments: adopt
+revisable orientation-control loop as RSO’s official corpus role; adopt
+the portable state/update contract; require monotonic custody rather
+than monotonic belief; and preserve the five-object non-collapse rule
+across human and agent implementations.</p>
+<h2
+id="perspective-aware-attractor-challenged-authority-bounded-orientation-with-change-carriage-accounting">Perspective-Aware,
+Attractor-Challenged, Authority-Bounded Orientation with Change-Carriage
+Accounting</h2>
+<p>The fixed-seed comparison with The Locus of Shared Experience,
+Semantic Gravitational Attractors, Split-Authority AI Coordination, and
+transformation-dominant semantic systems expands an orientation episode
+without turning it into execution governance:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O_t^*= (&amp;scope, hypotheses, partitions, unknowns, evidence, \\
+&amp;questions, constraints, perspectives, permissions, \\
+&amp;attractor\_risks, authority\_role, change\_carriage, \\
+&amp;budget, claim\_ceiling)
+\end{aligned}.
+$$</span></p>
+<p>Shared-experience bridges require participant-indexed orientation
+states, directional access, correction, refusal, and withdrawal. The
+investigator’s model of another participant is not that participant’s
+experience or authority. Semantic attractors can stabilize terminology
+and navigation while also creating confirmation pressure, false
+convergence, and silent remainder loss.</p>
+<p>Split-Authority AI Coordination determines who may propose, revise,
+verify, admit, or act upon an orientation state. A capable investigator
+or agent cannot self-grant effect authority. Transformation-dominant
+diagnostics record what an orientation update changes, carries,
+discloses as lost, leaves unresolved, and costs to preserve.</p>
+<p>A valid stop therefore requires more than local coherence. It should
+state satisfied questions, unresolved high-consequence unknowns,
+untested countermodels, remaining participant permissions, attractor
+exposure, authority limits, and the semantic delta from the predecessor
+orientation.</p>
+<p>The universal GSM can type<br />
+<code>ORIENTS_UNDER_PARTICIPANT_PERMISSION</code>,<br />
+<code>PRESERVES_PERSPECTIVE_DIFFERENCE</code>,
+<code>CHALLENGES_SEMANTIC_ATTRACTOR</code>,<br />
+<code>UPDATED_BY_AUTHORIZED_ROLE</code>,
+<code>CARRIES_ORIENTATION_OBLIGATION</code>,<br />
+<code>DISCLOSES_ORIENTATION_LOSS</code>, and<br />
+<code>STOPS_WITH_EXPLICIT_REMAINDER</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the expanded orientation state; preserve participant perspectives and
+permissions; require attractor countertests and dimension-specific
+authority; and add semantic change-and-carriage accounting to every
+material orientation update and stop.</p>
+<h2
+id="versioned-orientation-as-a-non-authoritative-control-state">Versioned
+Orientation as a Non-Authoritative Control State</h2>
+<p>Nine downstream uses place Recursive Semantic Orientation between
+governed knowledge and action without making it an authority source.
+Context compilation and CCM consume an orientation to request or select
+bounded context. CogK schedules probes and evaluates sufficiency.
+Semantic Cartography supplies governed views. Semantic attractors
+require counterorientation. Split-authority roles may hold different
+orientation states. GKL uses orientation without granting mutation
+authority. Shared-experience work keeps participant perspectives
+distinct. TDSS tracks obligation carriage when orientation changes.</p>
+<p>The downstream-stable orientation state is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O= (&amp;subject, purpose, role, perspective, source\_cut, \\
+&amp;hypotheses, countermodels, knowns, unknowns, partitions, \\
+&amp;attractors, probes, evidence, claim\_ceilings, stopping, \\
+&amp;expiry, predecessor, remainder)
+\end{aligned}.
+$$</span></p>
+<p>An orientation update should state what was preserved, refined,
+defeated, dropped, or left unresolved. It may change context requests,
+search paths, and attention without changing mandate, identity, evidence
+standing, or effect authority. Different roles and participants may
+retain incompatible but valid orientation branches; convergence is an
+outcome to test, not a requirement.</p>
+<p>Counterorientation should deliberately sample excluded regions,
+minority hypotheses, low-connectivity concepts, contrary evidence, and
+alternative equivalence regimes. Expiry is dimension-specific: new
+evidence may stale one hypothesis while leaving the source cut or
+purpose current. Stopping should preserve the frontier and the reason
+further search was not justified, rather than narrating temporary
+sufficiency as semantic closure.</p>
+<p>The universal GSM can type<br />
+<code>HOLDS_ORIENTATION_FOR_ROLE</code>,<br />
+<code>BRANCHES_PERSPECTIVE_ORIENTATION</code>,
+<code>REQUESTS_CONTEXT_FROM_ORIENTATION</code>,<br />
+<code>UPDATES_WITH_CARRIAGE_RECORD</code>,
+<code>COUNTERORIENTS_AGAINST_ATTRACTOR</code>,<br />
+<code>EXPIRES_ORIENTATION_DIMENSION</code>,
+<code>STOPS_WITH_FRONTIER_REMAINDER</code>,<br />
+and<br />
+<code>DOES_NOT_GRANT_MUTATION_OR_EFFECT_AUTHORITY</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the versioned orientation state; preserve role and
+perspective branches; require counterorientation and change-carriage
+records; and keep context, mutation, mandate, and effect authority
+outside orientation itself.</p>
+<h2 id="counterevidence-and-failure-modes">16. Counterevidence and
+Failure Modes</h2>
+<p>The proposal should be narrowed or rejected where: (1) complexity is
+defined only by relations; (2) scale or dynamics are ignored; (3)
+intimidation is assumed universal; (4) orientation delays urgent
+evidence; (5) all inquiry is called hypothesis-first; (6) observations
+are forced into initial frames; (7) partitions erase cross-cutting
+relations; (8) hierarchy replaces graph topology; (9) named unknowns
+acquire false closure; (10) unknown and withheld are conflated; (11)
+uncertainty is uncalibrated; (12) familiar patterns create confirmation
+bias; (13) novelty search is absent; (14) analogies substitute for
+mechanism; (15) deferred retrieval hides authoritative warnings; (16)
+refinement loops indefinitely; (17) stopping criteria are subjective
+only; (18) simplicity erases exceptions; (19) one explanatory model is
+presumed; (20) attractors are inferred from anecdotes; (21) convergence
+is confused with optimality; (22) source credit is treated as
+endorsement; (23) linked material is cited without review; (24)
+orientation becomes execution authority; (25) agent operations lack
+schemas; (26) validation lacks a profile; (27) GMB inclusion becomes
+truth; (28) GSM edges imply causation; (29) corpus interfaces are
+merged; (30) a specification is presented as implemented; (31) measured
+performance does not improve; or (32) external research contradicts
+universality or novelty claims.</p>
+<h2
+id="orientation-is-a-revisable-control-state-not-a-view-from-nowhere">Orientation
+Is a Revisable Control State, Not a View From Nowhere</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Recursive Semantic Orientation builds a usable position inside a
+complex system before exhaustive analysis. It maintains scope,
+hypotheses, partitions, unknowns, evidence, questions, constraints,
+countermodels, and budgets through recursive refinement. The result is a
+working orientation state: useful for choosing the next observation,
+never identical to the system or automatically authoritative over
+it.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Partition-blindness attack.</strong> Coarse categories hide
+cross-cutting relations, feedback, boundary objects, minority cases, and
+coupled failures.</li>
+<li><strong>Hypothesis-lock attack.</strong> The initial frame
+determines what is noticed, retrieved, and classified, producing an
+increasingly coherent but false model.</li>
+<li><strong>Pattern-familiarity attack.</strong> Known architectures and
+corpus concepts crowd out novel structure and counterevidence.</li>
+<li><strong>Deferred-evidence attack.</strong> Orientation-before-detail
+postpones a decisive source, observation, stakeholder, or safety fact
+until after the model has hardened.</li>
+<li><strong>Compression-loss attack.</strong> Repeated summaries erase
+qualifiers, conflicts, low-frequency hazards, provenance, or
+uncertainty.</li>
+<li><strong>Stopping-prematurity attack.</strong> A usable model,
+reduced surprise, or stable vocabulary is mistaken for completeness or
+truth.</li>
+<li><strong>Perspective-erasure attack.</strong> One investigator’s
+purpose and access become the system’s natural boundary while affected
+or local perspectives disappear.</li>
+<li><strong>Orientation-authority attack.</strong> A model chosen for
+navigation begins to govern decisions, implementation, or people without
+a separate authority and evidence gate.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper specifies a governed orientation loop and evaluation
+program. It does not establish that complexity is purely relational,
+that every inquiry begins with a hypothesis, that recursive
+decomposition finds a unique simple architecture, or that RSO improves
+accuracy, speed, transfer, safety, or agent performance. Source credit
+is preserved; linked videos were not inspected.</p>
+<p>Evaluation requires exact task and perspective profiles, competing
+orientation methods, blind downstream tests, countermodel discovery,
+compression-loss audits, stopping calibration, affected-perspective
+review, and current external research. No external research or
+evaluation was performed in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>RSO is successful when it helps an investigator know what model they
+are currently using, what it omits, which evidence could overturn it,
+whose perspective it reflects, and which next observation is worth the
+cost - without pretending orientation is final understanding.</p>
+<h2 id="conclusion">18. Conclusion</h2>
+<p>Recursive Semantic Orientation is best understood as a disciplined
+way to build, test, and revise a working position within complexity. It
+begins with bounded scope and provisional structure, preserves unknowns
+and alternatives, moves across hierarchy and graph relations, retrieves
+detail when useful, and stops relative to a declared task and risk.</p>
+<p>Its aim is not to make every complex system simple. Its aim is to
+make the investigator’s present model explicit enough to challenge,
+improve, use cautiously, and revise.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<p>No external source or linked video was reviewed in this pass. Further
+evidentiary strengthening requires authorized primary-source research
+across complex-systems theory, cognitive science, human factors,
+information foraging, scientific method, debugging, software
+architecture, search and information retrieval, graph cognition,
+hypothesis testing, agent evaluation, and the credited methodology.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Instance Configuration.</strong> The present paper does not
+claim a complete instance configuration treatment. That stage remains
+successor work and cannot be inferred from the architecture described
+here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that complex systems often exceed the working
+memory of an investigator or agent because their components, relations,
+states, boundaries, and unknowns cannot be held together at once. Its
+nearest external comparison fields are semantic, ai, formal. The sources
+in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. Retrieval, tool use, and policy layers can
+reduce unsupported output without eliminating model error, source error,
+omission, bias, or the environmental and institutional costs of scale.
+Formal assurance remains relative to the encoded model, trusted base,
+and refinement chain; proof does not remove specification error or
+unmodeled environmental behavior. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E7]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Manifold Topology.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20257244</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848199">10.5281/zenodo.23848199</a></p>

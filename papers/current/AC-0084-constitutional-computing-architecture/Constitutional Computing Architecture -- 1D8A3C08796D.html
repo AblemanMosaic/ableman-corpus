@@ -1,0 +1,540 @@
+<h1 id="constitutional-computing-architecture">Constitutional Computing
+Architecture</h1>
+<h2
+id="a-receipted-authority-traceable-model-for-governed-execution-across-system-substrates">A
+Receipted, Authority-Traceable Model for Governed Execution Across
+System Substrates</h2>
+<h3
+id="constitutional-computing-architecture-separates-what-a-system-can-do-from-what-it-is-allowed-to-make-real.">Constitutional
+Computing Architecture separates what a system can do from what it is
+allowed to make real.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern computing systems execute vast numbers of state transitions
+under implicit, fragmented, and often untraceable governance structures.
+Policies exist, permissions are configured, and logs are recorded, yet
+the system’s actual behavior emerges from code paths and runtime
+interactions that are neither constitutionally unified nor epistemically
+inspectable.</p>
+<p>This paper introduces a <strong>Constitutional Computing Architecture
+(CCA)</strong>: a model in which execution is governed by a minimal set
+of structural invariants that bind authority, admissibility, scope, and
+receipt directly into the execution substrate. In this architecture,
+every state transition is mediated by explicit admissibility gates,
+authorized through traceable authority chains, constrained by declared
+scope, and recorded as a receipted, replayable artifact.</p>
+<p>We define a <strong>seven-invariant governance kernel</strong>,
+demonstrate its realization across multiple operating system substrates,
+and show how constitutional execution can be enforced using existing
+primitives without requiring new hardware or privileged runtime
+assumptions. The paper provides a reference-implementation sketch and
+corresponding test obligations. No independently verified implementation
+package or comprehensive test record is carried in this paper;
+realizability and portability therefore remain bounded engineering
+claims to be established by an exact implementation artifact.</p>
+<p>The core claim is simple and strong:</p>
+<pre class="text"><code>A system is constitutionally governed if it cannot act
+outside the structures that justify its actions.</code></pre>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Software systems today are governed in appearance but not in
+structure.</p>
+<p>They present:</p>
+<ul>
+<li>access control policies</li>
+<li>configuration constraints</li>
+<li>audit logs</li>
+<li>compliance documentation</li>
+</ul>
+<p>Yet these elements are:</p>
+<ul>
+<li>distributed across layers</li>
+<li>inconsistently enforced</li>
+<li>semantically disconnected from execution paths</li>
+</ul>
+<p>As a result, systems routinely exhibit:</p>
+<ul>
+<li>authority that cannot be precisely traced</li>
+<li>actions that cannot be fully justified</li>
+<li>logs that describe but do not prove behavior</li>
+<li>governance that is advisory rather than operative</li>
+</ul>
+<p>This gap is not incidental. It is architectural.</p>
+<p>The prevailing model treats governance as:</p>
+<pre class="text"><code>a descriptive overlay on top of execution</code></pre>
+<p>This paper proposes a different model:</p>
+<pre class="text"><code>execution as a governed, constitutionally constrained process</code></pre>
+<p>In this model:</p>
+<ul>
+<li>policies are not external documents</li>
+<li>authority is not inferred from context</li>
+<li>logs are not post hoc reconstructions</li>
+</ul>
+<p>Instead:</p>
+<pre class="text"><code>governance is embedded into the execution path itself</code></pre>
+<p>Every action must:</p>
+<ul>
+<li>pass through an admissibility structure</li>
+<li>be authorized by an explicit authority chain</li>
+<li>operate within declared scope</li>
+<li>produce a receipt that captures its justification</li>
+</ul>
+<p>This is <strong>constitutional execution</strong>.</p>
+<hr />
+<h2 id="from-policy-systems-to-constitutional-systems">2. From Policy
+Systems to Constitutional Systems</h2>
+<p>Traditional governance systems operate through three layers:</p>
+<ol type="1">
+<li><strong>Declaration</strong> – policies, roles, permissions</li>
+<li><strong>Enforcement</strong> – access checks, runtime
+conditions</li>
+<li><strong>Observation</strong> – logs, traces, audit records</li>
+</ol>
+<p>These layers are:</p>
+<ul>
+<li>loosely coupled</li>
+<li>inconsistently aligned</li>
+<li>often incomplete</li>
+</ul>
+<p>A system may:</p>
+<ul>
+<li>declare a rule it does not enforce</li>
+<li>enforce a rule it does not expose</li>
+<li>log behavior it cannot justify</li>
+</ul>
+<p>This produces <strong>governance fragmentation</strong>.</p>
+<p>Constitutional computing replaces this with a single structural
+requirement:</p>
+<pre class="text"><code>no state transition occurs outside admissibility</code></pre>
+<p>This collapses:</p>
+<ul>
+<li>policy</li>
+<li>enforcement</li>
+<li>audit</li>
+</ul>
+<p>into a unified structure.</p>
+<hr />
+<h2 id="the-governance-kernel">3. The Governance Kernel</h2>
+<p>At the core of the architecture is a minimal set of invariants that
+define constitutional execution.</p>
+<h3 id="the-seven-invariants">3.1 The Seven Invariants</h3>
+<p>A system satisfies the constitutional model if all execution adheres
+to the following invariants:</p>
+<ol type="1">
+<li><p><strong>Admissibility Mediation</strong> Every state transition
+must pass through an explicit admissibility gate.</p></li>
+<li><p><strong>Authority Traceability</strong> Every decision must be
+attributable to a declared authority chain.</p></li>
+<li><p><strong>Scope Declaration</strong> Every execution context must
+operate within explicitly defined scope boundaries.</p></li>
+<li><p><strong>Receipt Generation</strong> Every admissible transition
+must produce a receipt capturing its justification.</p></li>
+<li><p><strong>Lineage Continuity</strong> Receipts must form a coherent
+lineage of causally linked transitions.</p></li>
+<li><p><strong>Non-Bypassability</strong> No execution path may bypass
+admissibility mediation.</p></li>
+<li><p><strong>Deterministic Replayability</strong> Given receipts and
+inputs, transitions must be reconstructable.</p></li>
+</ol>
+<p>Together, these form the <strong>governance kernel</strong>.</p>
+<hr />
+<h2 id="execution-as-admissibility">4. Execution as Admissibility</h2>
+<p>In the constitutional model, execution is redefined.</p>
+<p>Instead of:</p>
+<pre class="text"><code>code -&gt; state transition</code></pre>
+<p>We have:</p>
+<pre class="text"><code>proposal -&gt; admissibility -&gt; decision -&gt; effect -&gt; receipt</code></pre>
+<p>Where:</p>
+<ul>
+<li><strong>proposal</strong>: the requested action</li>
+<li><strong>admissibility</strong>: evaluation against rules and
+authority</li>
+<li><strong>decision</strong>: allow or deny</li>
+<li><strong>effect</strong>: resulting state change</li>
+<li><strong>receipt</strong>: structured record of the transition</li>
+</ul>
+<p>This transforms execution from:</p>
+<pre class="text"><code>procedural computation</code></pre>
+<p>to:</p>
+<pre class="text"><code>governed state transition</code></pre>
+<hr />
+<h2 id="authority-as-a-first-class-structure">5. Authority as a
+First-Class Structure</h2>
+<p>Authority is not inferred from identity or role alone.</p>
+<p>It is represented explicitly as:</p>
+<ul>
+<li>delegable</li>
+<li>scope-bound</li>
+<li>referenceable</li>
+<li>inspectable</li>
+</ul>
+<p>Every admissibility decision must reference:</p>
+<pre class="text"><code>which authority allowed this action</code></pre>
+<p>This produces:</p>
+<ul>
+<li>explicit authority chains</li>
+<li>bounded delegation structures</li>
+<li>auditable capability flow</li>
+</ul>
+<p>Authority is no longer:</p>
+<pre class="text"><code>ambient</code></pre>
+<p>It becomes:</p>
+<pre class="text"><code>structurally bound to execution</code></pre>
+<hr />
+<h2 id="receipts-as-structural-evidence">6. Receipts as Structural
+Evidence</h2>
+<p>A receipt is not a log entry.</p>
+<p>It is a <strong>structural artifact</strong> containing:</p>
+<ul>
+<li>proposal</li>
+<li>authority context</li>
+<li>rule evaluation</li>
+<li>decision outcome</li>
+<li>resulting effect</li>
+<li>lineage references</li>
+</ul>
+<p>A receipt answers:</p>
+<pre class="text"><code>what happened
+why it was allowed
+who (or what) authorized it
+under what conditions</code></pre>
+<p>This transforms audit from:</p>
+<pre class="text"><code>reconstruction</code></pre>
+<p>to:</p>
+<pre class="text"><code>inspection of existing proof</code></pre>
+<hr />
+<h2 id="scope-as-a-constitutional-boundary">7. Scope as a Constitutional
+Boundary</h2>
+<p>Every execution occurs within a declared scope.</p>
+<p>Scope defines:</p>
+<ul>
+<li>what actions are admissible</li>
+<li>what authority applies</li>
+<li>what resources are accessible</li>
+</ul>
+<p>Scope is:</p>
+<ul>
+<li>explicit</li>
+<li>enforced</li>
+<li>receipted</li>
+</ul>
+<p>This prevents:</p>
+<ul>
+<li>implicit privilege escalation</li>
+<li>unintended cross-boundary effects</li>
+<li>unbounded execution contexts</li>
+</ul>
+<p>Scope becomes a <strong>constitutional boundary</strong>, not a
+configuration artifact.</p>
+<hr />
+<h2 id="cross-platform-realization">8. Cross-Platform Realization</h2>
+<p>A key contribution of this architecture is that it does not require
+new computational primitives.</p>
+<p>The governance kernel can be mapped onto existing system substrates,
+including:</p>
+<ul>
+<li>process isolation</li>
+<li>capability systems</li>
+<li>system call mediation</li>
+<li>filesystem and network boundaries</li>
+<li>containerization primitives</li>
+</ul>
+<p>Across platforms, the mapping preserves:</p>
+<pre class="text"><code>admissibility structure
+authority binding
+receipt generation
+scope enforcement</code></pre>
+<p>This demonstrates that constitutional execution is:</p>
+<pre class="text"><code>architecturally portable</code></pre>
+<hr />
+<h2 id="reference-implementation-sketch">9. Reference Implementation
+Sketch</h2>
+<p>A conforming reference implementation would need to demonstrate:</p>
+<ul>
+<li>full enforcement of the seven invariants</li>
+<li>declared test coverage across the execution scenarios in scope</li>
+<li>multi-platform adapter layers</li>
+<li>receipt generation and lineage tracking</li>
+</ul>
+<p>The implementation shows that:</p>
+<ul>
+<li>admissibility mediation can be made non-bypassable</li>
+<li>authority chains can be explicitly constructed and enforced</li>
+<li>receipts can be generated deterministically</li>
+<li>scope boundaries can be maintained across system calls</li>
+</ul>
+<p>If an exact implementation and its tests satisfy these obligations,
+that evidence would establish that the architecture is:</p>
+<pre class="text"><code>constructible, testable, and enforceable</code></pre>
+<hr />
+<h2 id="what-this-changes">10. What This Changes</h2>
+<p>This architecture alters several fundamental properties of
+systems.</p>
+<h3 id="from-implicit-to-explicit-authority">10.1 From Implicit to
+Explicit Authority</h3>
+<p>Authority is no longer hidden in:</p>
+<ul>
+<li>code paths</li>
+<li>configuration files</li>
+<li>runtime context</li>
+</ul>
+<p>It is declared, enforced, and receipted.</p>
+<hr />
+<h3 id="from-logs-to-proof">10.2 From Logs to Proof</h3>
+<p>Logs describe behavior.</p>
+<p>Receipts provide structured evidence about declared behavior within
+their stated scope.</p>
+<hr />
+<h3 id="from-policy-compliance-to-structural-compliance">10.3 From
+Policy Compliance to Structural Compliance</h3>
+<p>Instead of asking:</p>
+<pre class="text"><code>does the system follow its policies?</code></pre>
+<p>We ask:</p>
+<pre class="text"><code>can the system act outside its admissibility structure?</code></pre>
+<p>If verified evidence shows the answer is no within the declared
+boundary, that compliance condition is structurally enforced.</p>
+<hr />
+<h3 id="from-post-hoc-audit-to-inline-justification">10.4 From Post-Hoc
+Audit to Inline Justification</h3>
+<p>Audit becomes:</p>
+<pre class="text"><code>reading receipts</code></pre>
+<p>not reconstructing events.</p>
+<hr />
+<h2 id="limits">11. Limits</h2>
+<p>This architecture does not claim:</p>
+<ul>
+<li>that all systems must be fully constitutional</li>
+<li>that all external authority can be internalized</li>
+<li>that all execution must be fully receipted</li>
+</ul>
+<p>It does claim:</p>
+<ul>
+<li>that where governance matters, it can be made structural</li>
+<li>that where it is not structural, its limits can be made
+explicit</li>
+</ul>
+<p>External authority remains:</p>
+<ul>
+<li>a boundary condition</li>
+<li>not an error</li>
+</ul>
+<hr />
+<h2 id="conclusion">12. Conclusion</h2>
+<p>Constitutional computing reframes governance from documentation to
+structure.</p>
+<p>A system is no longer considered governed because:</p>
+<ul>
+<li>it has policies</li>
+<li>it logs activity</li>
+<li>it passes audits</li>
+</ul>
+<p>It is governed if:</p>
+<pre class="text"><code>it cannot produce an effect without producing its justification</code></pre>
+<p>This is the defining property:</p>
+<pre class="text"><code>execution and justification become inseparable</code></pre>
+<p>When this condition holds, governance is no longer aspirational.</p>
+<p>It is real.</p>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern computing systems execute vast numbers
+of state transitions under implicit, fragmented, and often untraceable
+governance structures. Its nearest external comparison fields are
+governance, software, security. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Modularity, secure-development practice, and reproducibility reduce
+classes of failure but do not guarantee architectural coherence or user
+sovereignty. Unforgeable capabilities can constrain exercise of
+authority while still leaving allocation, delegation, revocation, and
+social legitimacy incorrectly specified. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E6]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848584">10.5281/zenodo.23848584</a></p>

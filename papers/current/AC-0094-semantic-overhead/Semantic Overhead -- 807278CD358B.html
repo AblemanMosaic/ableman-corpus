@@ -1,0 +1,761 @@
+<h1 id="semantic-overhead">Semantic Overhead</h1>
+<h2 id="addressing-wasted-compute-in-agentic-coding">Addressing Wasted
+Compute in Agentic Coding</h2>
+<h3
+id="toward-constitutional-compression-of-meaning-in-software-systems">Toward
+Constitutional Compression of Meaning in Software Systems</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern software development–particularly in agentic and AI-assisted
+environments–incurs substantial hidden computational cost due to
+fragmented, ambiguous, and repeatedly reconstructed semantics. This
+paper introduces the concept of <strong>semantic overhead</strong>: the
+portion of compute expenditure devoted not to producing or executing
+systems, but to recovering, reconciling, and reinterpreting their
+intended meaning.</p>
+<p>We argue that contemporary pipelines distribute semantics across
+code, documentation, prompts, tickets, and human memory, forcing both
+humans and machines into continuous cycles of inference, validation, and
+repair. This results in systemic inefficiency, characterized by
+redundant model calls, iterative regeneration, and coordination
+drift.</p>
+<p>We propose <strong>Constitutional Agentic Compilation (CAC)</strong>
+as a structural remedy. By concentrating system semantics into a
+governed pipeline–<strong>PCM -&gt; CONDEX -&gt; HVL -&gt; Codex -&gt;
+MCIR -&gt; PEIR</strong>–CAC reduces ambiguity, bounds reasoning, and
+enables deterministic or bounded-discretion realization. This
+transformation shifts software production from high-entropy,
+interpretation-heavy processes toward lower-entropy, constitutionally
+governed systems.</p>
+<p>We formalize semantic overhead as a measurable inefficiency class,
+introduce the concepts of <strong>semantic debt</strong>,
+<strong>semantic locality</strong>, and the <strong>Semantic Thrash
+Threshold</strong>, and analyze how constitutional specification
+compresses coordination cost across development, maintenance, and
+organizational scales. The implications extend beyond software
+engineering to data center efficiency, enterprise coordination,
+environmental impact, and long-horizon AI system stability.</p>
+<hr />
+<h2 id="the-problem-of-semantic-overhead">1. The Problem of Semantic
+Overhead</h2>
+<p>In contemporary software systems, meaning is not localized. It is
+distributed across:</p>
+<ul>
+<li>source code</li>
+<li>documentation</li>
+<li>prompts and agent instructions</li>
+<li>issue trackers and tickets</li>
+<li>architectural diagrams</li>
+<li>implicit human knowledge</li>
+</ul>
+<p>This distribution forces every participant–human or machine–to
+repeatedly reconstruct intent.</p>
+<p>We define:</p>
+<blockquote>
+<p><strong>Definition (Semantic Overhead).</strong> Semantic overhead is
+the fraction of computational and human effort spent recovering,
+reconstructing, validating, or reconciling system meaning rather than
+executing or realizing it.</p>
+</blockquote>
+<p>This overhead manifests as:</p>
+<ul>
+<li>repeated prompting and regeneration</li>
+<li>validation cycles and test failures</li>
+<li>patching and rework</li>
+<li>cross-team misalignment</li>
+<li>drift between specification and implementation</li>
+</ul>
+<p>In agentic systems, this cost is amplified. Each model invocation
+operates under partial context, requiring inference to fill gaps. The
+result is not just inefficiency, but systematic redundancy.</p>
+<p>At a deeper level, semantic overhead is often a <strong>search
+problem over latent meaning space</strong>.</p>
+<p>Agents search for intent.</p>
+<p>Validation prunes the search.</p>
+<p>Retries expand it again.</p>
+<p>This paper argues that semantic overhead is the cost of unconstrained
+or weakly constrained search over latent semantic space.</p>
+<hr />
+<h2 id="formalizing-semantic-overhead">2. Formalizing Semantic
+Overhead</h2>
+<p>Semantic overhead may be modeled as: <span class="math display">$$
+SO = \frac{C_r + C_i + C_v + C_d}{C_t}
+$$</span> Where:</p>
+<ul>
+<li>(C_r) = reconstruction cost</li>
+<li>(C_i) = inference cost</li>
+<li>(C_v) = validation / reconciliation cost</li>
+<li>(C_d) = drift correction cost</li>
+<li>(C_t) = total compute or labor cost</li>
+</ul>
+<p>Thus: <span
+class="math display"><em>U</em><em>s</em><em>e</em><em>f</em><em>u</em><em>l</em> <em>C</em><em>o</em><em>m</em><em>p</em><em>u</em><em>t</em><em>e</em> <em>R</em><em>a</em><em>t</em><em>i</em><em>o</em> = 1 − <em>S</em><em>O</em></span>
+We may also define:</p>
+<blockquote>
+<p><strong>Semantic Compression Ratio (SCR)</strong> <span
+class="math display">$$
+SCR = \frac{SO_{before}}{SO_{after}}
+$$</span> This provides a measurable indicator of constitutional
+compression effectiveness.</p>
+</blockquote>
+<p>Semantic overhead exists in both machine and human form: <span
+class="math display"><em>S</em><em>O</em><sub><em>t</em><em>o</em><em>t</em><em>a</em><em>l</em></sub> = <em>S</em><em>O</em><sub><em>m</em><em>a</em><em>c</em><em>h</em><em>i</em><em>n</em><em>e</em></sub> + <em>S</em><em>O</em><sub><em>h</em><em>u</em><em>m</em><em>a</em><em>n</em></sub></span>
+Where human semantic overhead includes:</p>
+<ul>
+<li>meetings</li>
+<li>onboarding</li>
+<li>clarification loops</li>
+<li>architecture rediscovery</li>
+<li>organizational coordination</li>
+</ul>
+<hr />
+<h2 id="sources-of-wasted-compute">3. Sources of Wasted Compute</h2>
+<p>Semantic overhead arises from five primary conditions:</p>
+<h3 id="fragmented-meaning">3.1 Fragmented Meaning</h3>
+<p>No single artifact contains authoritative semantics. Instead:</p>
+<ul>
+<li>code encodes behavior</li>
+<li>docs describe intent</li>
+<li>prompts guide execution</li>
+<li>humans reconcile discrepancies</li>
+</ul>
+<p>Each layer is incomplete. Alignment must be re-derived
+continuously.</p>
+<hr />
+<h3 id="repeated-inference">3.2 Repeated Inference</h3>
+<p>Agents repeatedly infer:</p>
+<ul>
+<li>system structure</li>
+<li>constraints</li>
+<li>invariants</li>
+<li>intent behind code</li>
+</ul>
+<p>This produces cycles of:</p>
+<ul>
+<li>generation</li>
+<li>evaluation</li>
+<li>correction</li>
+</ul>
+<p>These cycles consume compute without advancing the system’s semantic
+state.</p>
+<hr />
+<h3 id="drift-and-reconciliation">3.3 Drift and Reconciliation</h3>
+<p>Over time:</p>
+<ul>
+<li>implementations diverge from intent</li>
+<li>documentation becomes stale</li>
+<li>teams develop inconsistent interpretations</li>
+</ul>
+<p>This creates reconciliation work:</p>
+<ul>
+<li>audits</li>
+<li>refactoring</li>
+<li>revalidation</li>
+</ul>
+<p>Drift converts prior compute investment into ongoing cost.</p>
+<hr />
+<h3 id="cold-start-penalty">3.4 Cold-Start Penalty</h3>
+<p>New agents or developers must:</p>
+<ul>
+<li>reconstruct system context</li>
+<li>infer architecture</li>
+<li>rediscover constraints</li>
+</ul>
+<p>This imposes repeated onboarding cost at every entry point.</p>
+<p>Cold-start cost is effectively a <strong>full semantic cache
+miss</strong>.</p>
+<p>Each new participant rebuilds the same semantic model, pays the same
+inference cost, and introduces variance.</p>
+<p>CAC introduces a shared semantic cache:</p>
+<p>the Codex.</p>
+<p>This shifts retrieval closer to O(1) lookup rather than O(n)
+reconstruction.</p>
+<hr />
+<h3 id="low-semantic-locality">3.5 Low Semantic Locality</h3>
+<p>We define:</p>
+<blockquote>
+<p><strong>Semantic Locality</strong>: the degree to which system
+meaning can be resolved from a bounded, authoritative artifact without
+external reconstruction.</p>
+</blockquote>
+<p>Traditional systems exhibit low semantic locality.</p>
+<p>Meaning is spread across artifacts and institutional memory.</p>
+<p>CAC increases semantic locality by concentrating meaning into
+governed constitutional artifacts.</p>
+<hr />
+<h2 id="semantic-debt">4. Semantic Debt</h2>
+<p>Semantic overhead is the current recurring cost of ambiguity.</p>
+<p>Semantic debt is the accumulated unresolved ambiguity likely to
+increase future semantic overhead.</p>
+<p>Examples include:</p>
+<ul>
+<li>undocumented assumptions</li>
+<li>stale documentation</li>
+<li>implicit architectural knowledge</li>
+<li>conflicting prompts or instructions</li>
+</ul>
+<p>Like technical debt, semantic debt compounds over time.</p>
+<p>Semantic debt is future overhead in latent form.</p>
+<hr />
+<h2 id="semantic-thrash-and-system-instability">5. Semantic Thrash and
+System Instability</h2>
+<p>Semantic overhead compounds over time, producing what can be
+described as <strong>semantic thrash</strong>:</p>
+<blockquote>
+<p>A regime in which meaning is no longer stable across interactions,
+requiring constant re-derivation.</p>
+</blockquote>
+<p>We define:</p>
+<blockquote>
+<p><strong>Semantic Thrash Threshold (STT)</strong> The point at which
+the marginal compute cost of maintaining semantic consistency exceeds
+the marginal compute value of new realization.</p>
+</blockquote>
+<p>Operationally: <span class="math display">$$
+\frac{dC_{overhead}}{dt} &gt; \frac{dC_{useful}}{dt}
+$$</span> Observable signals include:</p>
+<ul>
+<li>retries per task increasing</li>
+<li>divergence between outputs and intent widening</li>
+<li>validation cycles growing faster than feature output</li>
+</ul>
+<p>This aligns with systems that remain locally coherent but globally
+inconsistent.</p>
+<hr />
+<h2 id="constitutional-compression-of-meaning">6. Constitutional
+Compression of Meaning</h2>
+<p>CAC addresses semantic overhead by introducing a governed semantic
+pipeline:</p>
+<p><code>text id="4xdy7u" PCM v CONDEX v HVL v Codex v MCIR v PEIR</code></p>
+<p>This produces:</p>
+<blockquote>
+<p><strong>Semantic compression</strong> – the reduction of distributed
+meaning into governed constitutional form.</p>
+</blockquote>
+<p>More precisely:</p>
+<p>CAC converts <strong>semantic reconstruction</strong> into
+<strong>semantic reuse</strong>.</p>
+<p>Traditional systems recompute meaning.</p>
+<p>CAC persists and references prior crystallization.</p>
+<hr />
+<h3 id="pcm-pre-crystallized-material">6.1 PCM – Pre-Crystallized
+Material</h3>
+<p>Raw semantic matter:</p>
+<ul>
+<li>transcripts</li>
+<li>tickets</li>
+<li>notes</li>
+<li>documents</li>
+<li>chats</li>
+</ul>
+<hr />
+<h3 id="condex-context-index">6.2 CONDEX – Context Index</h3>
+<p>Indexed, authority-tagged evidence extracted from PCM.</p>
+<hr />
+<h3 id="hvl-human-validation-layer">6.3 HVL – Human Validation
+Layer</h3>
+<p>Human-governed coherence review before crystallization.</p>
+<hr />
+<h3 id="codex">6.4 Codex</h3>
+<p>Explicit invariants, configuration space, and realization
+scaffolds.</p>
+<hr />
+<h3 id="mcir">6.5 MCIR</h3>
+<p>Canonical machine-legible meaning representation.</p>
+<hr />
+<h3 id="peir">6.6 PEIR</h3>
+<p>Executable realization.</p>
+<hr />
+<h2 id="the-codex-as-semantic-concentration">7. The Codex as Semantic
+Concentration</h2>
+<p>The Constitutional Codex:</p>
+<ul>
+<li>encodes invariants (what cannot change)</li>
+<li>defines configuration space (what may vary)</li>
+<li>embeds reasoning scaffolds</li>
+<li>declares verification surfaces</li>
+</ul>
+<p>This eliminates the need to reconstruct meaning from multiple
+sources.</p>
+<hr />
+<h2 id="reduction-of-interpretation-cycles">8. Reduction of
+Interpretation Cycles</h2>
+<p>With constitutional compression:</p>
+<ul>
+<li>agents do not infer system structure–they read it</li>
+<li>constraints are explicit, not latent</li>
+<li>ambiguity is bounded, not explored</li>
+</ul>
+<p>This reduces:</p>
+<ul>
+<li>regeneration loops</li>
+<li>failed attempts</li>
+<li>corrective cycles</li>
+</ul>
+<p>Semantic overhead exists because systems repeatedly re-perform
+constitutional binding from scratch.</p>
+<p>CAC preserves prior crystallization.</p>
+<hr />
+<h2 id="compute-implications">9. Compute Implications</h2>
+<p>Semantic overhead is not just a cognitive cost–it is a
+<strong>compute cost</strong>.</p>
+<p>In agentic pipelines, overhead manifests as:</p>
+<ul>
+<li>excess model invocations</li>
+<li>repeated token consumption</li>
+<li>retries and backtracking</li>
+<li>validation reruns</li>
+</ul>
+<p>CAC reduces these costs by:</p>
+<ul>
+<li>constraining the search space</li>
+<li>eliminating redundant inference</li>
+<li>enabling first-pass correctness under bounds</li>
+</ul>
+<hr />
+<h3 id="from-exploration-to-execution">9.1 From Exploration to
+Execution</h3>
+<p>Current paradigm:</p>
+<blockquote>
+<p>generate broadly -&gt; validate late -&gt; repair repeatedly</p>
+</blockquote>
+<p>CAC paradigm:</p>
+<blockquote>
+<p>specify tightly -&gt; realize within bounds -&gt; verify directly</p>
+</blockquote>
+<p>This shifts compute from exploratory search to bounded execution.</p>
+<hr />
+<h3 id="example-case">9.2 Example Case</h3>
+<p>A useful comparison is not CAC versus no specification at all.</p>
+<p>A fairer comparison is:</p>
+<p><strong>CAC versus conventional specification.</strong></p>
+<p>A thorough design document or implementation spec already reduces
+semantic overhead significantly.</p>
+<p>CAC’s novelty is the <strong>constitutional delta</strong>:</p>
+<p>the additional reduction achieved through:</p>
+<ul>
+<li>invariant / configuration separation</li>
+<li>admissibility gates</li>
+<li>governed amendment pathways</li>
+<li>explicit verification surfaces</li>
+</ul>
+<p>Illustrative expected-value comparison:</p>
+<p><strong>No specification:</strong></p>
+<ul>
+<li>8 prompts</li>
+<li>3 failed tests</li>
+<li>2 regeneration loops</li>
+<li>1 architectural misunderstanding</li>
+</ul>
+<p><strong>Conventional detailed specification:</strong></p>
+<ul>
+<li>3 prompts</li>
+<li>1 failed test</li>
+<li>occasional regeneration</li>
+</ul>
+<p><strong>CAC workflow:</strong></p>
+<ul>
+<li>1 Codex load</li>
+<li>1 realization pass</li>
+<li>1 verification cycle</li>
+</ul>
+<p>The claim is not that specification itself is novel.</p>
+<p>The claim is that constitutional specification further reduces
+branching factor, lowers expected retries, and preserves reusable
+semantic crystallization.</p>
+<hr />
+<h3 id="data-center-and-environmental-impact">9.3 Data Center and
+Environmental Impact</h3>
+<p>At scale, reduced semantic overhead implies:</p>
+<ul>
+<li>fewer model calls</li>
+<li>reduced token throughput</li>
+<li>lower GPU time</li>
+<li>reduced energy consumption</li>
+<li>improved throughput</li>
+</ul>
+<p>The causal chain is direct:</p>
+<p>Semantic overhead -&gt; increased token throughput -&gt; increased
+GPU time -&gt; increased energy consumption</p>
+<p>Semantic inefficiency is environmental inefficiency.</p>
+<p>Wasted meaning is wasted electricity.</p>
+<p>Even modest reductions in thrash produce significant infrastructure
+savings.</p>
+<hr />
+<h2 id="organizational-coordination-effects">10. Organizational
+Coordination Effects</h2>
+<p>Semantic overhead is not confined to machines. It dominates human
+coordination cost.</p>
+<p>Organizations spend substantial effort on:</p>
+<ul>
+<li>aligning teams on intent</li>
+<li>maintaining consistency across artifacts</li>
+<li>auditing systems for correctness</li>
+<li>resolving mismatches between design and implementation</li>
+</ul>
+<p>CAC reduces this by:</p>
+<ul>
+<li>centralizing semantics</li>
+<li>making invariants explicit</li>
+<li>enabling direct verification</li>
+</ul>
+<hr />
+<h3 id="systems-as-living-constitutions">10.1 Systems as Living
+Constitutions</h3>
+<p>Under CAC, systems resemble <strong>living
+constitutions</strong>:</p>
+<ul>
+<li>governing structure is explicit</li>
+<li>changes are amendments, not rewrites</li>
+<li>invariants persist across versions</li>
+</ul>
+<p>This produces:</p>
+<ul>
+<li>lower regression risk</li>
+<li>clearer auditability</li>
+<li>reduced coordination overhead</li>
+</ul>
+<hr />
+<h3 id="reduced-cold-start-cost">10.2 Reduced Cold-Start Cost</h3>
+<p>New agents or developers:</p>
+<ul>
+<li>load the Codex</li>
+<li>immediately access system semantics</li>
+<li>do not reconstruct context from fragments</li>
+</ul>
+<p>This enables:</p>
+<ul>
+<li>faster onboarding</li>
+<li>consistent reasoning across participants</li>
+<li>reduced duplication of effort</li>
+</ul>
+<hr />
+<h2 id="maintenance-and-evolution">11. Maintenance and Evolution</h2>
+<p>The long-term impact of CAC is most pronounced in maintenance.</p>
+<p>Traditional systems accumulate:</p>
+<ul>
+<li>semantic entropy</li>
+<li>undocumented assumptions</li>
+<li>divergence between layers</li>
+</ul>
+<p>CAC mitigates this by:</p>
+<ul>
+<li>preserving semantics at the constitutional layer</li>
+<li>enabling regeneration of implementation</li>
+<li>decoupling meaning from code</li>
+</ul>
+<hr />
+<h3 id="structural-updates">11.1 Structural Updates</h3>
+<p>Changes become:</p>
+<ul>
+<li>targeted modifications to invariants or configuration</li>
+<li>propagated through realization</li>
+</ul>
+<p>Instead of:</p>
+<ul>
+<li>broad code rewrites</li>
+<li>manual synchronization across artifacts</li>
+</ul>
+<hr />
+<h3 id="reduced-entropy-growth">11.2 Reduced Entropy Growth</h3>
+<p>Because meaning is centralized:</p>
+<ul>
+<li>drift is detectable</li>
+<li>inconsistencies are localized</li>
+<li>updates do not require rediscovery of intent</li>
+</ul>
+<hr />
+<h2 id="beyond-software-generalized-coordination-compression">12. Beyond
+Software: Generalized Coordination Compression</h2>
+<p>Semantic overhead is a general phenomenon wherever:</p>
+<ul>
+<li>multiple agents coordinate</li>
+<li>meaning is distributed</li>
+<li>interpretation is required</li>
+</ul>
+<p>CAC suggests a broader pattern:</p>
+<blockquote>
+<p><strong>centralize semantics -&gt; reduce coordination
+cost</strong></p>
+</blockquote>
+<p>This applies to:</p>
+<ul>
+<li>enterprise workflows</li>
+<li>research pipelines</li>
+<li>government systems</li>
+<li>multi-agent AI environments</li>
+</ul>
+<hr />
+<h2 id="rebound-effects">13. Rebound Effects</h2>
+<p>Reducing semantic overhead may increase system ambition.</p>
+<p>Organizations may use saved compute and coordination capacity to
+build:</p>
+<ul>
+<li>larger systems</li>
+<li>more complex workflows</li>
+<li>more ambitious automation</li>
+</ul>
+<p>This resembles Jevons paradox.</p>
+<p>Efficiency gains may increase total system complexity.</p>
+<p>This does not negate the thesis.</p>
+<p>It reinforces the need for constitutional structure at scale.</p>
+<hr />
+<h2 id="limitations-and-boundary-conditions">14. Limitations and
+Boundary Conditions</h2>
+<p>CAC does not eliminate all overhead.</p>
+<p>Residual costs remain in:</p>
+<ul>
+<li>initial Codex authoring</li>
+<li>invariant correctness</li>
+<li>domain modeling accuracy</li>
+</ul>
+<p>Incorrect specifications produce:</p>
+<ul>
+<li>systematically wrong systems</li>
+<li>though still internally consistent</li>
+</ul>
+<p>There is also a dual failure mode:</p>
+<p><strong>over-compression.</strong></p>
+<p>If the Codex is:</p>
+<ul>
+<li>too rigid</li>
+<li>incorrectly abstracted</li>
+<li>prematurely constraining</li>
+</ul>
+<p>then the system may become efficiently wrong.</p>
+<p>Semantic thrash is too much entropy.</p>
+<p>Over-compression is too little flexibility.</p>
+<p>CAC must balance both.</p>
+<hr />
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Semantic overhead represents a major, under-recognized source of
+inefficiency in modern software and AI systems. It arises from the
+fragmentation and continual reconstruction of meaning across artifacts,
+agents, and time.</p>
+<p>Constitutional Agentic Compilation addresses this by:</p>
+<ul>
+<li>compressing semantics into a governed pipeline</li>
+<li>bounding interpretation</li>
+<li>enabling efficient realization</li>
+</ul>
+<p>The result is a shift from:</p>
+<blockquote>
+<p>high-entropy, interpretation-heavy systems</p>
+</blockquote>
+<p>to:</p>
+<blockquote>
+<p>lower-entropy, constitutionally governed systems</p>
+</blockquote>
+<p>This transformation has implications not only for developer
+productivity, but for:</p>
+<ul>
+<li>compute efficiency</li>
+<li>data center utilization</li>
+<li>environmental sustainability</li>
+<li>organizational coordination</li>
+<li>long-horizon system stability</li>
+</ul>
+<p>Constitutional systems do not merely reduce code generation cost;</p>
+<p>they reduce the <strong>computational thermodynamics of
+ambiguity</strong>.</p>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern software development–particularly in
+agentic and AI-assisted environments–incurs substantial hidden
+computational cost due to fragmented, ambiguous, and repeatedly
+reconstructed semantics. Its nearest external comparison fields are
+semantic, software, governance. The sources in [E1], [E2], [E3], [E4],
+[E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. Modularity, secure-development practice,
+and reproducibility reduce classes of failure but do not guarantee
+architectural coherence or user sovereignty. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E7]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Crystallization.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20310115</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848770">10.5281/zenodo.23848770</a></p>

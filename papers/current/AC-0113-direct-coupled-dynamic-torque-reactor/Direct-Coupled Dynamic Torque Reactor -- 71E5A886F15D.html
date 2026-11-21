@@ -1,0 +1,833 @@
+<h1 id="direct-coupled-dynamic-torque-reactor">Direct-Coupled Dynamic
+Torque Reactor</h1>
+<h2
+id="programmable-inertial-response-multi-actuator-torque-allocation-and-governed-electromechanical-propulsion">Programmable
+Inertial Response, Multi-Actuator Torque Allocation, and Governed
+Electromechanical Propulsion</h2>
+<h3
+id="similarity-to-series-hybrid-and-range-extender-topologies-must-be-treated-as-a-prior-art-and-identity-question-not-answered-by-terminology.">Similarity
+to series-hybrid and range-extender topologies must be treated as a
+prior-art and identity question, not answered by terminology.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>The <strong>Direct-Coupled Dynamic Torque Reactor (DCDTR)</strong> is
+a proposed propulsion architecture in which an internal-combustion or
+other thermal converter is mechanically coupled to a controllable
+motor-generator but decoupled from wheel speed. A DC electrical bus,
+traction motors, and one or more storage substrates mediate the path to
+the wheels. The principal design object is therefore not a mechanical
+gear hierarchy but a controlled energy-and-torque system coordinating
+generation, storage, traction, thermal state, emissions, and mission
+demand.</p>
+<p>The proposal combines several ideas: stabilized engine operating
+regions; fast generator-torque control; multi-timescale storage;
+wheel-level electric traction; state estimation; constrained energy
+management; and an explicit admissibility layer for safety, component
+limits, emissions, and degraded modes. Its strongest novel contribution
+may be the integrated governance and explanatory architecture rather
+than any single hardware element. Similarity to series-hybrid and
+range-extender topologies must be treated as a prior-art and identity
+question, not answered by terminology.</p>
+<p>This revision separates physical state, control input, disturbance,
+parameter, and output variables; distinguishes a constraint set from its
+controlled viability kernel; repairs the mission objective; bounds the
+programmable-inertia analogy; separates realizability, control
+feasibility, comparative benefit, and constitutional-reframing claims;
+and adds safety, fault, empirical, GMB/GSM, and realization-funnel
+surfaces. No engineering or external literature validation was
+performed.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. Its custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/direct-</code></p>
+<p><code>coupled-dynamic-torque-reactor/integration-</code><br />
+<code>custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>5E73E45896E564CE4323A0393BA5170F131D8014B717F55CA20F8FA50110E798</code>.
+The exact source remains unchanged.</p>
+<p>The DCDTR architecture, mechanisms, analogies, three-layer proposal,
+quantitative examples, cited technologies, falsification pathways, and
+bibliography are author material. The corrected formal partition,
+narrower claim ladder, safety obligations, GMB/GSM placement,
+realization funnel, countertests, and open editorial questions are AI
+editorial or synthetic contributions until adopted.</p>
+<p>No cited technology specification, commercial implementation,
+mathematical model, bibliography entry, or comparative claim was
+externally checked. No prototype, simulation, controller, stability
+proof, safety analysis, or drive-cycle study was performed. Nothing here
+authorizes construction or establishes safety, feasibility, novelty,
+superiority, conformance, canonical standing, or evidence readiness.</p>
+<h2 id="architectural-proposal">1. Architectural Proposal</h2>
+<p>The intended topology is:</p>
+<pre class="text"><code>thermal converter &lt;-&gt; directly coupled motor-generator
+                              |
+                           DC bus
+                    /          |          \
+              storage      auxiliaries   traction inverter(s)
+                                               |
+                                        electric wheel drive</code></pre>
+<p>“Direct-coupled” refers to the converter-to-generator shaft relation,
+not converter-to-wheel coupling. The engine or thermal converter may
+operate at selected speed-load regions while the electrical system
+supplies wheel demand. Ultracapacitors and a physical flywheel are
+optional configurations, not definitional requirements; their inclusion
+must be justified against mass, cost, loss, packaging, safety, and
+reliability.</p>
+<p>The term <strong>reactor</strong> is architectural metaphor: several
+energy substrates and actuators interact within controlled constraints.
+It does not imply nuclear reaction, new thermodynamics, or that ordinary
+energy-balance laws have been superseded.</p>
+<h2 id="four-claim-layers">2. Four Claim Layers</h2>
+<p>The source’s three layers are refined into four independently
+testable layers:</p>
+<ol type="1">
+<li><strong>Topology realizability:</strong> components with adequate
+ratings can be connected in the proposed topology.</li>
+<li><strong>Control feasibility and safety:</strong> a controller and
+estimator can keep the realized system stable and within constraints
+across nominal, transient, and fault conditions.</li>
+<li><strong>Comparative advantage:</strong> a specified DCDTR
+configuration outperforms named baselines on matched missions after
+mass, cost, losses, emissions, reliability, repairability, and lifecycle
+effects are included.</li>
+<li><strong>Constitutional reframing:</strong> governed multi-substrate
+composition is a productive explanatory and design abstraction for
+propulsion.</li>
+</ol>
+<p>Partial series-hybrid precedents could support Layer 1 while
+weakening novelty. They do not establish Layer 2 or 3. Formal coherence
+can motivate Layer 4 but cannot prove engineering benefit. Each claim
+must retain its own evidence and falsifiers.</p>
+<h2 id="repaired-state-space-model">3. Repaired State-Space Model</h2>
+<p>The source mixes states, controls, disturbances, and time in one set.
+A candidate model separates them:</p>
+<p><span
+class="math display"><em>x</em> = [<em>ω</em><sub><em>e</em></sub>, <em>E</em><sub><em>f</em></sub>, <em>V</em><sub><em>d</em><em>c</em></sub>, <em>z</em><sub><em>b</em></sub>, <em>z</em><sub><em>u</em></sub>, <em>T</em><sub><em>e</em></sub>, <em>T</em><sub><em>g</em></sub>, <em>T</em><sub><em>i</em></sub>, <em>T</em><sub><em>b</em></sub>, <em>ξ</em><sub><em>w</em></sub>]<sup><em>T</em></sup>,</span></p>
+<p>where <span class="math inline"><em>x</em></span> contains engine
+speed, optional flywheel energy, bus voltage, battery and optional
+ultracapacitor states, component thermal states, and cumulative wear or
+degradation state <span
+class="math inline"><em>ξ</em><sub><em>w</em></sub></span>.</p>
+<p><span
+class="math display"><em>u</em> = [<em>ṁ</em><sub><em>f</em></sub>, <em>τ</em><sub><em>g</em></sub>, <em>τ</em><sub><em>t</em><em>r</em></sub>, <em>P</em><sub><em>b</em></sub>, <em>P</em><sub><em>u</em></sub>, <em>τ</em><sub><em>f</em></sub>, <em>q</em><sub><em>t</em><em>h</em></sub>]<sup><em>T</em></sup></span></p>
+<p>contains fuel or thermal-converter command, generator torque,
+traction torque, storage powers, optional flywheel exchange, and
+thermal-management commands. Disturbance and mission input</p>
+<p><span
+class="math display"><em>d</em> = [<em>P</em><sub><em>d</em><em>e</em><em>m</em></sub>, <em>v</em>, <em>γ</em>, <em>T</em><sub><em>a</em><em>m</em><em>b</em></sub>, <em>μ</em><sub><em>r</em><em>o</em><em>a</em><em>d</em></sub>, <em>a</em><sub><em>a</em><em>u</em><em>x</em></sub>]<sup><em>T</em></sup></span></p>
+<p>contains demanded traction power, vehicle speed, road grade, ambient
+temperature, road friction, and auxiliary load. Parameters <span
+class="math inline"><em>θ</em></span> include component maps, masses,
+efficiencies, capacities, limits, degradation models, and controller
+versions. Outputs satisfy:</p>
+<p><span
+class="math display"><em>ẋ</em> = <em>f</em>(<em>x</em>, <em>u</em>, <em>d</em>; <em>θ</em>),   <em>y</em> = <em>h</em>(<em>x</em>, <em>u</em>, <em>d</em>; <em>θ</em>) + <em>η</em>.</span></p>
+<p>Exact state content is configuration-specific. A reduced model must
+state what omitted dynamics are bounded, observed, or left unknown.</p>
+<h2 id="constraint-set-and-viability-kernel">4. Constraint Set and
+Viability Kernel</h2>
+<p>Let the operating constraint set be:</p>
+<p><span
+class="math display"><em>K</em> = {(<em>x</em>, <em>u</em>, <em>d</em>) ∣ <em>c</em><sub><em>i</em></sub>(<em>x</em>, <em>u</em>, <em>d</em>; <em>θ</em>) ≤ 0, <em>i</em> = 1, …, <em>m</em>}.</span></p>
+<p><span class="math inline"><em>K</em></span> may contain thermal,
+electrical, mechanical, emissions, traction, drivability, storage,
+actuator-rate, vibration, and degraded-mode limits. It is not
+automatically a smooth manifold.</p>
+<p>The controlled viability kernel is the stronger object:</p>
+<p><span
+class="math display">Viab(<em>K</em>) = {<em>x</em><sub>0</sub> ∣ ∃<em>u</em>(⋅) such
+that (<em>x</em>(<em>t</em>), <em>u</em>(<em>t</em>), <em>d</em>(<em>t</em>)) ∈ <em>K</em> ∀<em>t</em> ∈ [0, <em>T</em>]}.</span></p>
+<p>A state can lie inside <span class="math inline"><em>K</em></span>
+yet be unable to remain there because of delay, energy shortage,
+actuator saturation, temperature momentum, or disturbance. The
+controller must reason about recoverability and future constraint
+satisfaction rather than current bounds alone.</p>
+<p>Mandatory safety, hardware, emissions, and authority constraints
+belong in CM1. Efficiency, comfort, wear, cost, and reserve preferences
+may shape CM2 only among admissible trajectories.</p>
+<h2 id="energy-balance-and-mission-objective">5. Energy Balance and
+Mission Objective</h2>
+<p>A model must conserve energy within declared losses and storage
+changes. At a chosen boundary:</p>
+<p><span class="math display">$$
+P_{fuel}+P_{grid}=P_{wheel}+P_{aux}+P_{loss}+\frac{dE_{store}}{dt}+\frac{dE_{rot}}{dt}.
+$$</span></p>
+<p>Terms and sign conventions must be configuration-specific. The
+architecture does not create energy; it allocates conversion, buffering,
+and loss across time.</p>
+<p>For a fixed mission, maximizing delivered traction energy is unsafe
+and ill-posed because mission demand normally constrains useful
+delivery. A candidate problem is:</p>
+<p><span
+class="math display">min<sub><em>u</em>(⋅)</sub>∫<sub>0</sub><sup><em>T</em></sup><em>ℓ</em>(<em>x</em>, <em>u</em>, <em>d</em>; <em>w</em>) <em>d</em><em>t</em> + <em>Φ</em>(<em>x</em>(<em>T</em>))</span></p>
+<p>subject to dynamics, <span class="math inline"><em>K</em></span>,
+mission tracking, reserve, and terminal constraints. The cost may
+include fuel, grid energy, emissions, degradation, thermal stress,
+noise/vibration/harshness, tracking error, and monetary or lifecycle
+terms. Weight vector <span class="math inline"><em>w</em></span> is a
+declared preference and jurisdictional choice, not a physical constant.
+Multi-objective or lexicographic formulations may be preferable where
+safety and stakeholder goals cannot be defensibly scalarized.</p>
+<h2 id="programmable-inertial-response">6. Programmable Inertial
+Response</h2>
+<p>Choose extraction-positive generator torque. An ideal shaft balance
+is:</p>
+<p><span
+class="math display"><em>I</em><sub><em>e</em></sub><em>ω̇</em><sub><em>e</em></sub> = <em>τ</em><sub><em>c</em></sub> − <em>τ</em><sub><em>g</em></sub> − <em>τ</em><sub><em>l</em><em>o</em><em>s</em><em>s</em></sub>.</span></p>
+<p>If an ideal controller commands</p>
+<p><span
+class="math display"><em>τ</em><sub><em>g</em></sub> = <em>τ</em><sub><em>b</em><em>a</em><em>s</em><em>e</em></sub> + <em>I</em><sub><em>v</em></sub><em>ω̇</em><sub><em>e</em></sub>,</span></p>
+<p>then algebraically</p>
+<p><span
+class="math display">(<em>I</em><sub><em>e</em></sub> + <em>I</em><sub><em>v</em></sub>)<em>ω̇</em><sub><em>e</em></sub> = <em>τ</em><sub><em>c</em></sub> − <em>τ</em><sub><em>b</em><em>a</em><em>s</em><em>e</em></sub> − <em>τ</em><sub><em>l</em><em>o</em><em>s</em><em>s</em></sub>.</span></p>
+<p>This motivates <strong>programmable inertial response</strong>, but
+it is not literal inertia. Real generator torque is delayed, filtered,
+quantized, saturated, energy-constrained, and coupled to bus voltage and
+storage acceptance. Estimation noise makes direct derivative feedback
+hazardous. Negative or rapidly varying <span
+class="math inline"><em>I</em><sub><em>v</em></sub></span> can reduce
+damping or destabilize the shaft. A realized claim requires closed-loop
+stability, passivity or energy bounds, torsional-mode analysis,
+saturation handling, and fault behavior.</p>
+<p>The controller may synthesize damping, speed regulation, transient
+shaping, or harmonic rejection. Each behavior should be named separately
+rather than treated as proof of one universal programmable mechanical
+property.</p>
+<h2 id="multi-timescale-torque-and-energy-allocation">7. Multi-Timescale
+Torque and Energy Allocation</h2>
+<p>The architecture coordinates converter power, generator torque,
+storage, traction motors, and optional flywheel response across
+timescales. To avoid conflict with the established wheel-level meaning
+of “torque vectoring,” the broader operation is called
+<strong>multi-actuator torque and energy allocation</strong> here.</p>
+<p>Allocation must respect actuator bandwidth, stored energy, conversion
+losses, thermal headroom, traction limits, reserve requirements, and
+forecast uncertainty. Fast response does not imply sustained energy.
+Ultracapacitors, flywheels, and batteries provide different
+power-energy-duration profiles and losses; none is universally
+required.</p>
+<p>A practical realization may use hierarchical control: fast inner
+current and torque loops, shaft-speed and bus-voltage loops, supervisory
+model-predictive or rule-based energy management, mission forecasting,
+and an independent safety layer. The paper does not select or validate
+such a controller.</p>
+<h2 id="efficiency-regions-and-comparative-baselines">8. Efficiency
+Regions and Comparative Baselines</h2>
+<p>Operating a thermal converter near favorable speed-load regions may
+reduce some conversion losses. The net vehicle result also depends on
+generator, inverter, bus, storage, traction motor, gearing, cooling,
+aftertreatment, start-stop, cold-start, and auxiliary losses. Stable
+engine operation can conflict with catalyst temperature, reserve, noise,
+or transient requirements.</p>
+<p>Comparison must include at least:</p>
+<ul>
+<li>a conventional internal-combustion drivetrain;</li>
+<li>a contemporary parallel or power-split hybrid;</li>
+<li>a well-tuned series hybrid or range extender;</li>
+<li>a battery-electric architecture where mission-feasible; and</li>
+<li>the DCDTR configuration with every optional substrate charged
+against mass, volume, cost, and loss.</li>
+</ul>
+<p>The relevant outcome is mission-level performance, not engine-map
+efficiency alone.</p>
+<h2 id="mechanical-coupling-claims">9. Mechanical-Coupling Claims</h2>
+<p>The source identifies several pathologies as sibling consequences of
+mechanically coupling combustion to wheel dynamics. This is a useful
+causal hypothesis, but removing that coupling does not automatically
+remove each pathology. Electric traction still uses gears, bearings,
+shafts, tires, and thermal systems; engine transients, catalyst warm-up,
+vibration, and storage constraints remain. Conventional hybrids already
+decouple some demands.</p>
+<p>Each claimed consequence should become a causal diagram and matched
+test. Total complexity must count power electronics, cooling, sensors,
+wiring, storage, software assurance, cybersecurity, repair tooling, and
+supply chain in addition to eliminated clutch or transmission
+elements.</p>
+<h2 id="fuel-and-infrastructure-modularity">10. Fuel and Infrastructure
+Modularity</h2>
+<p>Separating thermal conversion from wheel demand can localize some
+fuel-specific behavior, but alternative fuels still affect tanks, seals,
+injectors, combustion maps, safety systems, emissions aftertreatment,
+certification, packaging, mass, infrastructure, and service procedures.
+A common electrical interface is not a complete substrate
+abstraction.</p>
+<p>Vehicle-to-grid, vehicle-to-load, waste-heat use, and stationary
+dispatch are optional system capabilities, not unique consequences of
+DCDTR. The “energy shard” concept should be evaluated as a network
+profile with explicit authority, market, interconnection, cybersecurity,
+availability, and degradation constraints.</p>
+<h2 id="safety-faults-and-degraded-operation">11. Safety, Faults, and
+Degraded Operation</h2>
+<p>A credible architecture must specify independent protection and
+safe-state behavior for:</p>
+<ul>
+<li>generator torque loss, reversal, or saturation;</li>
+<li>engine overspeed or unintended fueling;</li>
+<li>inverter, bus, isolation, or contactor faults;</li>
+<li>battery or capacitor overcurrent and thermal events;</li>
+<li>flywheel containment and bearing faults where present;</li>
+<li>estimator divergence, sensor loss, timing delay, and data
+corruption;</li>
+<li>traction-motor or wheel-speed disagreement;</li>
+<li>controller crash, update failure, and cyber compromise;</li>
+<li>cooling failure and aftertreatment temperature excursions;</li>
+<li>common-mode power or communication loss; and</li>
+<li>towing, emergency shutdown, limp-home, and service isolation.</li>
+</ul>
+<p>The governance layer cannot be the same single point of failure as
+the controlled plant. Hardware limits, independent monitors, fault
+containment, and verified fallback paths are part of Layer 2 control
+feasibility, not later implementation detail.</p>
+<h2 id="evaluation-program">12. Evaluation Program</h2>
+<p>The recommended evidence sequence is:</p>
+<ol type="1">
+<li>define a bounded reference topology and matched baselines;</li>
+<li>publish component maps, mass, limits, losses, and
+uncertainties;</li>
+<li>build a reproducible plant and estimator model;</li>
+<li>establish controllability, observability, stability, and
+viable-region claims;</li>
+<li>test nominal and adversarial missions in simulation;</li>
+<li>perform hardware-in-the-loop controller and fault tests;</li>
+<li>construct a subscale or dynamometer realization;</li>
+<li>run matched drive cycles and transient tests;</li>
+<li>assess emissions, thermal behavior, degradation, reliability,
+repairability, cost, and lifecycle effects; and</li>
+<li>reproduce results independently.</li>
+</ol>
+<p>Layer 1 should be divided by subsystem and configuration rather than
+declared globally. Layer 3 succeeds only if constitutional reframing
+yields better specifications, tests, or designs than simpler
+series-hybrid language.</p>
+<h2 id="universal-gsm-and-realization-funnel">13. Universal GSM and
+Realization Funnel</h2>
+<p>DCDTR is a domain application of constitutional reframing and
+admissibility engineering. The universal GSM can represent plant states,
+controls, disturbances, component identities, physical constraints,
+safety invariants, preferences, claims, evidence, failures, and
+revisions without confusing a model with a built vehicle.</p>
+<p>The <strong>Governed Meaning Base (GMB)</strong> is the current name
+in the <code>CCF -&gt; CMB -&gt; GMB</code> lineage. GMB may carry the
+research objects and their standing; it does not govern a vehicle merely
+because the paper is indexed there. The Ableman Format Specification
+separates domain physics from configuration choices and realized
+instances. The Constitutional Observability Platform supplies an
+interface for evidence and operational claims. Event-Driven Craft
+Processes and Constitutional Reframing are comparison works, not proof
+that their domain analogy transfers.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> enumerate propulsion topologies,
+storage combinations, controls, missions, and fuel interfaces.</li>
+<li><strong>Specification:</strong> state physical laws, identities,
+safety invariants, interfaces, claim layers, and evidence
+requirements.</li>
+<li><strong>Configuration Manifold 1 (CM1):</strong> retain
+configurations meeting mandatory physics, control, safety, emissions,
+authority, and verification constraints.</li>
+<li><strong>Configuration Manifold 2 (CM2):</strong> prefer among
+admissible configurations by efficiency, cost, reliability,
+repairability, lifecycle, comfort, and sovereignty.</li>
+<li><strong>IC:</strong> select an <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong> for one
+vehicle and mission family. The names are interchangeable.</li>
+<li><strong>IR:</strong> construct an <strong>Instance
+Realization</strong> or <strong>Implementation Realization</strong> of
+that design. The names are interchangeable.</li>
+<li><strong>Evidence:</strong> retain models, tests, failures,
+calibration, receipts, uncertainty, and comparisons.</li>
+<li><strong>Revision:</strong> change models, constraints, hardware,
+software, and claims while preserving lineage.</li>
+</ul>
+<p>This paper occupies Possibility and Specification, with preliminary
+CM1/CM2 criteria. It grants no IC, IR, or construction authority.</p>
+<h2 id="governed-physical-system-configuration-case">Governed
+Physical-System Configuration Case</h2>
+<p>Across the completed P1 corpus, the Direct-Coupled Dynamic Torque
+Reactor is the <strong>governed physical-system configuration case for
+hybrid torque, energy, storage, and mechanical-coupling
+research</strong>. Its value to the corpus is that physical laws, safety
+invariants, estimator uncertainty, preferences, configuration choice,
+built realization, and measured evidence cannot be collapsed. It is not
+a demonstrated vehicle architecture, an efficiency result, or
+construction authorization.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Ableman Format
+Specification (AFS)</em><br />
+<strong>Supplies:</strong> Separation of domain physics, specification,
+configuration, instance choice, realization, evidence, and
+revision.<br />
+<strong>DCDTR boundary:</strong> DCDTR supplies one domain case whose
+physics and safety claims must survive that separation.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Admissibility
+Engineering</em><br />
+<strong>Supplies:</strong> Pathway enumeration, constraint binding,
+counterexample search, and reopenable saturation.<br />
+<strong>DCDTR boundary:</strong> It tests controller, fault, power, and
+effect paths without proving performance.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Projection of state estimates, constraints,
+warnings, claims, and evidence.<br />
+<strong>DCDTR boundary:</strong> Displays and estimators remain fallible
+views of the plant.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Event-Driven Craft Processes
+as State-Estimation Problems</em><br />
+<strong>Supplies:</strong> A neighboring partially observed hybrid-state
+formalism.<br />
+<strong>DCDTR boundary:</strong> Shared mathematics does not transfer
+empirical findings across domains.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutionally Governed
+Infrastructure</em><br />
+<strong>Supplies:</strong> Constitutional treatment of scheduling,
+allocation, liveness, and control machinery.<br />
+<strong>DCDTR boundary:</strong> DCDTR specializes those concerns to
+safety-critical physical energy allocation.</p></li>
+</ul>
+<p>A bounded configuration dossier should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;mission, plant, components, interfaces, states, controls, \\
+&amp;disturbances, estimators, constraints, \\
+&amp;safety\_architecture, objectives, baselines, faults, \\
+&amp;evidence, unknowns)
+\end{aligned}.
+$$</span></p>
+<p>The domain-physics layer must include energy and power conservation,
+component maps, thermal and mechanical limits, emissions, latency,
+degradation, and uncertainty. CM1 removes configurations that cannot
+satisfy mandatory physics and safety constraints. CM2 preferences such
+as efficiency, cost, repairability, fuel flexibility, comfort, or
+sovereignty cannot rescue a configuration excluded from CM1.</p>
+<p>The case also sharpens the corrected funnel vocabulary. IC may mean
+Instance Constitution or Instance Configuration; realization-stage IR
+may mean Instance Realization or Implementation Realization. A simulated
+controller, hardware-in-the-loop bench, dynamometer assembly, and road
+vehicle are different IR classes with different evidence and authority.
+None follows automatically from a paper-level specification.</p>
+<p>The universal GSM can type<br />
+<code>MODELS_PHYSICAL_PLANT</code>,
+<code>SELECTS_DCDTR_CONFIGURATION</code>,<br />
+<code>ESTIMATES_HYBRID_STATE</code>, <code>ALLOCATES_TORQUE</code>,
+<code>PRESERVES_ENERGY_BALANCE</code>,<br />
+<code>VIOLATES_SAFETY_INVARIANT</code>,
+<code>ENTERS_DEGRADED_MODE</code>,
+<code>COMPARES_MATCHED_BASELINE</code>,<br />
+<code>MEASURES_REALIZED_PERFORMANCE</code>,<br />
+and<br />
+<code>REMAINS_UNBUILT_PROPOSAL</code>. These relations make the domain
+case useful without laundering engineering standing.</p>
+<p>This integration establishes four editorial commitments: retain DCDTR
+as the governed physical-system configuration case; adopt the
+configuration dossier; require separate model, simulation, bench,
+prototype, vehicle, and comparative-performance claims; and keep every
+build, safety, regulatory, or deployment act behind a separate
+implementation gate.</p>
+<h2
+id="experience-research-nonrelation-os-runtime-boundary-and-governed-transformation-of-physical-control">Experience-Research
+Nonrelation, OS Runtime Boundary, and Governed Transformation of
+Physical Control</h2>
+<p>The clipped fixed-seed edge comparison with Qualia Binding and
+Realization Mapping, MosaiCOS, and Jnana II separates an irrelevant
+conceptual resemblance from two potentially useful implementation
+boundaries:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;mission, plant, components, interfaces, states, controls, \\
+&amp;disturbances, estimators, constraints, safety, \\
+&amp;objectives, OS\_profile, transformation\_profile, \\
+&amp;effect\_membrane, baselines, faults, evidence, unknowns)
+\end{aligned}.
+$$</span></p>
+<p>Qualia Binding and Realization Mapping has no material evidentiary
+relation to the DCDTR. Shared words such as state, dimension, binding,
+realization, observation, or mapping do not support a mechanical model,
+experience claim, control policy, or cross-domain empirical
+inference.</p>
+<p>MosaiCOS could be one candidate OS environment for deterministic
+scheduling, capability mediation, device identity, evidence custody,
+bootstrap, and succession. The DCDTR controller and plant remain
+distinct from the OS, and no OS architecture proves timing, safety, or
+physical performance.</p>
+<p>Jnana II could govern transformations to controller code,
+calibration, policies, models, dependencies, and effect paths through
+representation, law, capability, lowering, effect, witness, recovery,
+and exit planes. Physical construction and actuation still require a
+selected IC, a separately authorized IR, professional engineering
+review, safety analysis, hardware tests, regulation, and measured
+evidence.</p>
+<p>The universal GSM can type<br />
+<code>HAS_NO_MATERIAL_RELATION_TO_QUALIA_EVIDENCE</code>,<br />
+<code>RUNS_UNDER_OS_PROFILE</code>,
+<code>TRANSFORMED_UNDER_JNANA_PROFILE</code>,<br />
+<code>CROSSES_HARDWARE_EFFECT_MEMBRANE</code>,
+<code>REQUIRES_PHYSICAL_SAFETY_GATE</code>,<br />
+and<br />
+<code>REMAINS_UNBUILT_PROPOSAL</code>.</p>
+<p>This randomized review establishes four editorial commitments: record
+the qualia comparison as an explicit nonrelation; add an OS-runtime
+boundary without performance implication; define a governed
+controller-transformation profile; and preserve every physical build,
+actuation, safety, and regulatory effect behind separate authority and
+evidence gates.</p>
+<h2 id="a-cyber-physical-realization-stress-profile">A Cyber-Physical
+Realization Stress Profile</h2>
+<p>Four downstream uses position DCDTR as a stress profile rather than
+as evidence of a built vehicle. Jnana II tests whether governed
+transformation terminates at exact device capabilities, hardware
+identity, timing, interlocks, qualified authority, and measured plant
+behavior. MosaiCOS treats the controller and estimator as a
+cyber-physical domain profile whose effects cross an operating-system
+boundary. Event-driven craft work shares a partially observed
+hybrid-state formalism without empirical transfer. The Ableman Wheel is
+a distinct electromechanical case and supplies no anomaly evidence.</p>
+<p>The cyber-physical dossier is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;plant\_model, hardware\_identity, controller, estimator, \\
+&amp;device\_capabilities, timing, safety\_interlocks, \\
+&amp;calibration, mission, configuration, baselines, \\
+&amp;simulation, bench, prototype, vehicle, effects, failures, \\
+&amp;degraded\_modes, evidence, revision)
+\end{aligned}.
+$$</span></p>
+<p>Software proposal, lowering, scheduling, replay, rollback, and
+receipts stop at the physical boundary unless an independently observed
+plant result extends the evidence. Replaying controller state cannot
+restore torque, thermal state, stored energy, wear, emissions, or an
+external-world effect. A safe simulation, deterministic OS, or valid
+receipt cannot certify hardware timing, physical safety, or
+matched-mission performance.</p>
+<p>The claim ladder must stay stage-specific: architecture, model,
+simulation, bench subsystem, prototype, integrated vehicle, and
+comparative performance are different claims with different evidence and
+authority. Qualia Binding and Realization Mapping remains an
+explicit<br />
+<code>NO_MATERIAL_RELATION</code>; shared state, observation, dimension,
+or realization language transfers neither mechanical nor experiential
+evidence.</p>
+<p>The universal GSM can type<br />
+<code>INSTANTIATES_CYBER_PHYSICAL_STRESS_PROFILE</code>,<br />
+<code>BINDS_CONTROLLER_TO_HARDWARE_IDENTITY</code>,
+<code>MEDIATES_DEVICE_CAPABILITY</code>,<br />
+<code>OBSERVES_PLANT_EFFECT</code>,
+<code>CANNOT_REPLAY_PHYSICAL_STATE</code>,
+<code>ADVANCES_PHYSICAL_CLAIM_STAGE</code>,<br />
+and<br />
+<code>HAS_NO_QUALIA_EVIDENCE_RELATION</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the cyber-physical dossier; enforce the
+software-to-plant evidence boundary; retain the stage-specific physical
+claim ladder; and preserve the qualia nonrelation and all construction
+gates.</p>
+<h2 id="counterevidence-and-failure-modes">14. Counterevidence and
+Failure Modes</h2>
+<p>The proposal must narrow or fail where: (1) it is substantively
+equivalent to an existing series-hybrid profile; (2) component ratings
+or packaging are infeasible; (3) the viability kernel is empty for
+required missions; (4) controller delay destabilizes shaft dynamics; (5)
+virtual-inertia control amplifies noise or torsional modes; (6) bus or
+storage limits prevent transient buffering; (7) conversion-chain losses
+erase engine-island gains; (8) cold-start and aftertreatment dominate
+emissions; (9) optional storage adds more mass and loss than benefit;
+(10) software and power-electronic complexity exceeds removed mechanical
+complexity; (11) reliability or repairability worsens; (12) common-mode
+faults defeat redundancy; (13) cybersecurity creates unsafe actuation
+paths; (14) estimator errors violate constraints; (15) degraded modes
+cannot meet minimum safety; (16) fuel changes require whole-vehicle
+redesign; (17) V2G or heat integration accelerates degradation; (18)
+matched baselines outperform DCDTR; (19) lifecycle cost or environmental
+impact worsens; (20) users reject noise, response, or service
+characteristics; (21) infrastructure and certification costs dominate;
+(22) model uncertainty invalidates optimization; (23) constitutional
+language adds no testable design value; or (24) cited component and
+literature claims do not survive external review.</p>
+<h2
+id="a-governed-hybrid-architecture-remains-an-unvalidated-vehicle-system">A
+Governed Hybrid Architecture Remains an Unvalidated Vehicle System</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>The Direct-Coupled Dynamic Torque Reactor proposes a thermal
+converter mechanically coupled to a controllable motor-generator,
+electrically decoupled from wheel speed, with a DC bus, traction motors,
+optional storage, state estimation, and constraint-aware energy
+management. Its constitutional framing may make objectives, constraints,
+faults, and evidence clearer. It does not establish novelty,
+feasibility, safety, efficiency, emissions benefit, or superiority to
+series-hybrid and range-extender designs.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Prior-art-identity attack.</strong> New terminology obscures
+that the topology or control strategy is already standard, patented,
+commercial, or technically equivalent to an existing hybrid
+architecture.</li>
+<li><strong>Programmable-inertia attack.</strong> Fast generator torque
+is described as changing physical inertia rather than producing bounded
+closed-loop torque response with delay and saturation.</li>
+<li><strong>Energy-accounting attack.</strong> Conversion, storage,
+thermal, auxiliary, transient, and control losses disappear from
+system-level efficiency claims.</li>
+<li><strong>Viability-constraint attack.</strong> Pointwise component
+limits are mistaken for a controlled viability kernel under
+disturbances, delays, uncertainty, and failures.</li>
+<li><strong>Drive-cycle attack.</strong> Benefits on selected cycles or
+mission assumptions fail under cold start, grade, towing, heat, aging,
+low state of charge, or degraded operation.</li>
+<li><strong>Fault-propagation attack.</strong> DC-bus, inverter,
+isolation, cooling, storage, sensor, software, actuator, and mechanical
+faults combine outside the declared safety model.</li>
+<li><strong>Storage-option attack.</strong> Ultracapacitor, battery,
+flywheel, or other storage is included for conceptual completeness
+without mass, packaging, safety, cost, life, and maintenance
+justification.</li>
+<li><strong>Governance-safety attack.</strong> Receipts, admissibility
+rules, or explainable control are treated as substitutes for physical
+safety engineering and certification.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper provides a corrected system model, claim ladder, safety
+obligations, and evaluation plan. It does not establish a prototype,
+stable controller, viable kernel, physical safety, emissions compliance,
+efficiency improvement, fuel flexibility, component life, cost, novelty,
+or comparative advantage. Reactor and programmable inertia remain
+bounded architectural analogies.</p>
+<p>Any physical realization requires verified component data, prior-art
+and patent review, high-fidelity simulation, hardware-in-loop and fault
+injection, control and stability analysis, energy and emissions
+measurement, functional-safety engineering, regulatory review, and
+separately authorized construction and testing. None occurred in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The proposal is best read as a transparent way to define and test an
+electrified torque-and-energy architecture, with ordinary hybrid
+baselines allowed to win and safety permitted to rule out the
+configuration entirely.</p>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>DCDTR is best understood as a candidate governed series-propulsion
+architecture and research program. Its central insight is useful: once
+thermal conversion is decoupled from wheel speed, propulsion can be
+designed as coordinated control of generation, storage, traction,
+thermal state, emissions, and mission demand rather than as refinement
+of one mechanical path.</p>
+<p>The insight does not yet prove present feasibility, superiority,
+safety, or novelty. Those claims depend on exact topology, component
+maps, stable control, viable missions, matched baselines, fault
+behavior, lifecycle accounting, and external verification. By separating
+those questions and locating the work at Possibility, Specification, and
+early configuration analysis, the paper becomes a strong portable
+context artifact for disciplined engineering rather than an implicit
+authorization to build.</p>
+<h2 id="author-supplied-reference-note">Author-Supplied Reference
+Note</h2>
+<p>The source manuscript includes references in control theory,
+viability theory, optimal control, hybrid propulsion, power electronics,
+energy storage, and a companion craft-process paper. They remain
+author-supplied bibliography and were not externally verified in this
+pass. The exact source and bibliography are preserved under the custody
+hash above.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Instance Configuration.</strong> Existing source passages
+use this stage only as bounded context or an obligation. The paper does
+not claim an independently validated contribution at this stage.</li>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the Direct-Coupled Dynamic Torque Reactor
+(DCDTR) is a proposed propulsion architecture in which an
+internal-combustion or other thermal converter is mechanically coupled
+to a controllable motor-generator but decoupled from wheel speed. Its
+nearest external comparison fields are energy, cps. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Simulation and
+component analogies do not establish net energy performance,
+controllability, fatigue life, containment safety, or economic viability
+without physical validation. Runtime monitors and fallback controllers
+only protect modeled safety envelopes and can fail through sensor error,
+timing assumptions, unsafe recovery, or omitted hazards. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Thomas Bowen, Ilya Chernyakhovskiy, Kaifeng Xu,
+Sika Gadzanku, and Kamyria Coney. <em>USAID Grid-Scale Energy Storage
+Technologies Primer</em>. NREL/TP-6A20-76097, 2021. DOI:
+10.2172/1808490. https://doi.org/10.2172/1808490
+<strong>Relationship:</strong> External engineering baseline for
+flywheel architecture, response, lifetime, and energy-versus-power
+tradeoffs.</p>
+<p><strong>[E2]</strong> Thomas G. Habetler et al. “Direct Torque
+Control of Induction Machines Using Space Vector Modulation.” <em>IEEE
+Transactions on Industry Applications</em> 28(5), 1992, pp. 1045-1053.
+DOI: 10.1109/28.158828. https://doi.org/10.1109/28.158828
+<strong>Relationship:</strong> Predecessor electromechanical
+torque-control method; included to force clear differentiation from any
+novel reactor claim.</p>
+<p><strong>[E3]</strong> Edward R. Griffor et al. <em>Framework for
+Cyber-Physical Systems: Volume 1, Overview</em>. NIST SP 1500-201, 2017.
+DOI: 10.6028/NIST.SP.1500-201. https://doi.org/10.6028/NIST.SP.1500-201
+<strong>Relationship:</strong> Adjacent cyber-physical systems framework
+for trustworthiness, timing, data, and lifecycle concerns.</p>
+<p><strong>[E4]</strong> Nancy G. Leveson and John P. Thomas. <em>STPA
+Handbook</em>. MIT, 2018.
+https://psas.scripts.mit.edu/home/books-and-handbooks/
+<strong>Relationship:</strong> Adjacent systems-theoretic hazard
+analysis method; used to test treatment of unsafe control and
+system-level constraints.</p>
+<p><strong>[E5]</strong> J. Tanner Slagel et al. “A Formal Verification
+Framework for Runtime Assurance.” <em>NASA Formal Methods</em>, 2024.
+NASA NTRS 20230017350. https://ntrs.nasa.gov/citations/20230017350
+<strong>Relationship:</strong> Adjacent runtime-assurance formalization,
+useful for comparing failover safety with constitutional admission and
+effect recognition.</p>
+<p><strong>[E6]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Constitutionally Governed
+Infrastructure</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-EF5747107D56F516</code>;<br />
+source SHA-256<br />
+<code>9C708BA381108EEA252404DF33F7B3B1648EC9CF5F2ACF00BAB88C6A15540926</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Robotics</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18750683</code>;<br />
+source SHA-256<br />
+<code>D10DF9B6B7F742D9EEABF01BC5DFC3755BB4EBF548E8CB5F215BB9D94678F514</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>A Constitutional Syscall
+Architecture for Cyber-Physical Control Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F46D86D479F89BAC</code>;<br />
+source SHA-256<br />
+<code>5E696B753A10BD3C3D36B675A84B95CCF2234F024A6B277BF121E76BFCBCBD18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Ableman Wheel</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-224FDEED47E909A6</code>;<br />
+source SHA-256<br />
+<code>2E23634CE570B84E21854380ADD235EBF83C26C996402ADFF5EFF4A8CE329123</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Event-Driven Craft Processes
+as State-Estimation Problems</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-45D8DDF80127D803</code>;<br />
+source SHA-256<br />
+<code>936C0B8B481E811D204A60C0848B406BFFC90CA7D74711DD45C6A691E1924062</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Semantic Memory Hierarchies.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20793071</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847635">10.5281/zenodo.23847635</a></p>

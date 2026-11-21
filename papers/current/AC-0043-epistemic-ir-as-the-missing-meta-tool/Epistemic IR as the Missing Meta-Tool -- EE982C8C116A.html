@@ -1,0 +1,1070 @@
+<h1 id="epistemic-ir-as-the-missing-meta-tool">Epistemic IR as the
+Missing Meta-Tool</h1>
+<h2
+id="toward-auditable-and-contestable-constitutions-of-knowledge">Toward
+Auditable and Contestable Constitutions of Knowledge</h2>
+<h3
+id="mcir-already-proposes-a-canonical-intermediate-representation-for-governed-transformation.">MCIR
+already proposes a canonical intermediate representation for governed
+transformation.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Knowledge systems do more than store propositions. They decide what
+may count as a claim, which evidence may support it, whose judgment may
+alter its standing, when uncertainty requires deferment, and how
+decisions can be contested or revised. Those governance commitments are
+usually distributed across prose, software, institutional practice,
+standards, and tacit authority.</p>
+<p>This paper develops <strong>Epistemic Intermediate Representation
+(Epistemic IR)</strong> as a candidate representation profile for making
+that machinery explicit. An Epistemic IR artifact binds an exact claim
+to its interpretation, scope, epistemic posture, standing, provenance,
+evidence, applicable standards, authority dependencies, adjudication
+state, contest history, and revision lineage. An external, versioned
+admission regime may evaluate the artifact and emit a bounded decision
+receipt. The representation does not decide truth, manufacture
+authority, or make a receipt self-validating.</p>
+<p>Corpus-wide comparison produces an important compression. MCIR
+already proposes a canonical intermediate representation for governed
+transformation. Constitutional Epistemics, Epistemic Authority
+Governance, Epistemic Situational Awareness, Admissibility Engineering,
+reasoning receipts, and the Governed Knowledge Loop already supply much
+of the governance machinery. Epistemic IR should therefore remain a
+<strong>candidate epistemic profile of MCIR</strong> unless it
+demonstrates semantics or conformance obligations that the general
+representation cannot express. Its strongest present contribution is not
+another foundational substrate, but a portable claim-governance profile
+that makes admission, refusal, deferment, contest, and revision
+inspectable without confusing procedural standing with truth.</p>
+<h2 id="the-problem-knowledge-governance-is-usually-implicit">1. The
+Problem: Knowledge Governance Is Usually Implicit</h2>
+<p>A statement becomes consequential through more than its words. It may
+be reused as evidence, promoted into institutional memory, treated as
+precedent, bound to a decision, or translated into action. Each
+transition depends on hidden or distributed choices:</p>
+<ul>
+<li>which interpretation of the statement is in force;</li>
+<li>which evidence is admissible and sufficiently current;</li>
+<li>which standard and version applies;</li>
+<li>which actor has jurisdiction for the requested transition;</li>
+<li>which exceptions, private zones, and nonclaims remain attached;</li>
+<li>which outcome states and appeal paths are available;</li>
+<li>when a prior decision expires or must be revised.</li>
+</ul>
+<p>Ordinary prose rarely carries this structure in one inspectable
+artifact. Software often implements only a fragment of it. Institutional
+procedure may supply the remainder without machine-readable linkage. The
+result is not merely ambiguity. It is <strong>unlocated epistemic
+governance</strong>: a claim can acquire standing or downstream force
+without a single representation showing why that change was
+admissible.</p>
+<p>The source paper describes logic, scientific method, statistical
+inference, legal procedure, peer review, and philosophical epistemology
+as partial constitutions of knowledge. That is a useful research
+hypothesis, not yet a demonstrated historical survey. The stronger claim
+that no prior framework provides comparable machinery requires current
+primary-source research and must not support a novelty claim in this
+revision.</p>
+<h2 id="definition-and-nonclaims">2. Definition and Nonclaims</h2>
+<p><strong>Epistemic IR</strong> is a versioned, typed representation
+profile for carrying epistemic artifacts and the governance commitments
+that control their standing, reuse, contest, and revision across
+transformations.</p>
+<p>Its proposed minimum objects are:</p>
+<ol type="1">
+<li>claim artifacts;</li>
+<li>interpretations and semantic identities;</li>
+<li>epistemic postures and standing states;</li>
+<li>provenance and evidence bindings;</li>
+<li>standard, policy, and authority references;</li>
+<li>admission rules and outcome lattices;</li>
+<li>decision, refusal, deferment, and gap receipts;</li>
+<li>contests, appeals, exceptions, expiry, and revision lineage.</li>
+</ol>
+<p>An Epistemic IR artifact is not:</p>
+<ul>
+<li>a truth oracle;</li>
+<li>a proof that its evidence is accurate or sufficient;</li>
+<li>a source of institutional or democratic legitimacy;</li>
+<li>permission to bind a person or produce an external effect;</li>
+<li>a substitute for domain methods, law, peer review, or
+stewardship;</li>
+<li>proof that one ontology is neutral across communities;</li>
+<li>proof that an AI system is an epistemic authority;</li>
+<li>a completed schema, compiler, runtime, or conformance standard.</li>
+</ul>
+<p>The representation can expose a governance dependency. It cannot
+legitimate that dependency merely by naming it.</p>
+<h2 id="authorial-compression-profile-before-new-substrate">3. Authorial
+Compression: Profile Before New Substrate</h2>
+<p>The source presents Epistemic IR as a missing meta-tool. The corpus
+now contains a more general candidate substrate: <strong>MCIR</strong>,
+a canonical representation for governed transformation [MCIR]. MCIR
+already makes admissibility, authority, transformation semantics, and
+capability exposure structurally visible. Creating a separate
+foundational IR without a differential obligation would duplicate
+machinery and fracture the representation stack.</p>
+<p>The recommended provisional relation is:</p>
+<pre class="text"><code>MCIR                         general governed-transformation substrate
+  + epistemic profile claim, evidence, standard, standing, contest,
+  revision
+  = Epistemic IR candidate domain/profile name pending conformance
+  evidence</code></pre>
+<p>Epistemic IR earns distinct profile identity only if it specifies and
+tests obligations such as:</p>
+<ul>
+<li>claim-role and epistemic-posture separation;</li>
+<li>evidence support and evidence-freshness semantics;</li>
+<li>scoped admission to a named role rather than generic
+acceptance;</li>
+<li>authority-import and oracle-dependency disclosure;</li>
+<li>contest persistence through reuse and projection;</li>
+<li>standards migration and decision invalidation;</li>
+<li>false-admission, false-refusal, and premature-closure
+measurement.</li>
+</ul>
+<p>If these obligations can be expressed entirely as an ordinary MCIR
+schema, the novelty lies in the <strong>epistemic conformance
+profile</strong>, not in a second root representation. If MCIR cannot
+preserve one of them without semantic loss, a concrete counterexample
+should identify the missing capability before a new foundational
+identity is retained.</p>
+<p>This compression does not erase the paper. It sharpens its role: the
+paper specifies what governed knowledge claims require from an
+intermediate representation.</p>
+<h2 id="separate-the-epistemic-axes">4. Separate the Epistemic Axes</h2>
+<p>Epistemic systems become unsafe when distinct questions collapse into
+one status label.</p>
+<ul>
+<li><p><strong>Axis:</strong> artifact role<br />
+<strong>Example values:</strong> observation, report, inference,
+hypothesis, proposal, commitment, precedent, policy<br />
+<strong>Question:</strong> What kind of epistemic object is
+this?</p></li>
+<li><p><strong>Axis:</strong> posture<br />
+<strong>Example values:</strong> asserted, assumed, derived, estimated,
+reported, contested, unknown<br />
+<strong>Question:</strong> How is the content presented?</p></li>
+<li><p><strong>Axis:</strong> support state<br />
+<strong>Example values:</strong> absent, cited, checked, corroborated,
+contradicted, stale, disputed<br />
+<strong>Question:</strong> What support relationship has been
+evaluated?</p></li>
+<li><p><strong>Axis:</strong> procedural standing<br />
+<strong>Example values:</strong> draft, submitted, admitted, deferred,
+refused, contested, superseded, retired<br />
+<strong>Question:</strong> What happened under a named process?</p></li>
+<li><p><strong>Axis:</strong> authority scope<br />
+<strong>Example values:</strong> none, advisory, delegated, binding
+within scope<br />
+<strong>Question:</strong> What consequences may this actor or artifact
+legitimately carry?</p></li>
+<li><p><strong>Axis:</strong> effect state<br />
+<strong>Example values:</strong> no effect, proposed effect, authorized
+effect, executed effect, reverted effect<br />
+<strong>Question:</strong> What occurred outside the
+representation?</p></li>
+</ul>
+<p>Accuracy does not imply authority. Evidence does not imply truth.
+Validation does not compel admission. Admission does not authorize every
+reuse. A receipt does not prove its premises. Execution success does not
+prove understanding.</p>
+<p>The source uses <code>ADMIT</code>, <code>DEFER</code>,<br />
+and <code>REFUSE</code>. These are not universal judgments on content.
+They are outcomes relative to a declared jurisdiction, law or policy
+version, purpose, time, evidence state, and requested role. The complete
+statement is not “claim admitted” but “claim admitted as role R, for
+purpose P, within scope S, by authority A, under law L, at time T,
+subject to conditions C and expiry X.”</p>
+<h2 id="candidate-artifact-model">5. Candidate Artifact Model</h2>
+<p>Let an epistemic claim artifact be:</p>
+<p><span class="math display">$$
+\begin{aligned}
+C = \langle &amp;id, content, meaning, role, posture, standing, scope,
+\\
+&amp;provenance, evidence, lineage, conditions, exceptions, \\
+&amp;nonclaims\rangle
+\end{aligned}.
+$$</span></p>
+<p>Let the applicable governance context be:</p>
+<p><span class="math display">$$
+\begin{aligned}
+G = \langle &amp;jurisdiction, law, standards, authorities, oracleRefs,
+\\
+&amp;admissibility, outcomes, privacy, contest, time\rangle
+\end{aligned}.
+$$</span></p>
+<p>Let evaluation be a partial function:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Evaluate_G(C, request) \rightharpoonup \{&amp;ADMIT(role,scope),
+DEFER(requirements), REFUSE(reasons), \\
+&amp;GAP(missing)\}
+\end{aligned}.
+$$</span></p>
+<p>Partiality matters. A malformed artifact, unresolved identity, absent
+law head, missing authority evidence, or unsupported target may prevent
+a legitimate decision. Such a condition should become a typed gap rather
+than an invented answer.</p>
+<p>Every completed evaluation emits a decision record:</p>
+<p><span class="math display">$$
+\begin{aligned}
+R = \langle &amp;subjectHash, meaningRef, lawRef, evidenceRefs, \\
+&amp;authorityRef, request, decision, reasons, time, expiry, \\
+&amp;contestPath\rangle
+\end{aligned}.
+$$</span></p>
+<p>The record binds the decision to its inputs. It does not certify that
+the law was just, the evidence true, the authority legitimate outside
+its recorded scope, or the implementation correct. Those remain separate
+claims with separate evidence.</p>
+<h2 id="admission-is-a-transition-not-a-truth-predicate">6. Admission Is
+a Transition, Not a Truth Predicate</h2>
+<p>An epistemic lifecycle may include:</p>
+<pre class="text"><code>DRAFT -&gt; SUBMITTED -&gt; CHECKED -&gt; ADMITTED(role, scope)
+                     |          |
+                     | +-&gt; CONTESTED -&gt; REVISED | SUPERSEDED | RETIRED
+                     +-&gt; DEFERRED(requirements)
+                     +-&gt; REFUSED(reasons)
+                     +-&gt; GAP(missing structure)</code></pre>
+<p>No arrow is automatic. Each transition names:</p>
+<ul>
+<li>the source and target state;</li>
+<li>the actor and asserted authority;</li>
+<li>the applicable law or policy head;</li>
+<li>the evidence and standard versions inspected;</li>
+<li>the conditions, expiry, and nonclaims;</li>
+<li>the contest or appeal route;</li>
+<li>the resulting receipt.</li>
+</ul>
+<p>Role and state also remain distinct. An observation can be draft,
+submitted, admitted for a bounded purpose, contested, or superseded. A
+hypothesis does not become a fact merely by reaching
+<code>ADMITTED</code>. It earns only the standing that the named
+procedure is authorized to grant.</p>
+<h2 id="the-oracle-problem-is-an-authority-import-problem">7. The Oracle
+Problem Is an Authority-Import Problem</h2>
+<p>The source uses <strong>oracle</strong> for measurements, prior
+assignments, institutional standards, interpretive judgments, and
+peer-review bodies. These are heterogeneous. A measurement source, a
+normative authority, a semantic interpreter, and an adjudicator should
+not share one untyped role.</p>
+<p>A safer dependency record is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O = \langle &amp;id, kind, provider, claimType, jurisdiction, method, \\
+&amp;version, freshness, authorityBasis, contestPath, limits\rangle
+\end{aligned}.
+$$</span></p>
+<p>At minimum, <code>kind</code> distinguishes:</p>
+<ul>
+<li>observation or measurement source;</li>
+<li>evidentiary evaluator;</li>
+<li>semantic or interpretive dependency;</li>
+<li>standard or policy source;</li>
+<li>normative authority;</li>
+<li>adjudicator.</li>
+</ul>
+<p>Naming an oracle makes a dependency visible; it does not make the
+dependency authoritative. The system must still check provider identity,
+method, version, freshness, jurisdiction, delegation, revocation,
+conflicts, and contestability. An oracle output cannot widen its own
+scope, create the authority that validates it, or silently survive
+replacement of the applicable standard.</p>
+<h2 id="preservation-invariants">8. Preservation Invariants</h2>
+<p>An Epistemic IR profile should preserve at least these
+invariants:</p>
+<ol type="1">
+<li><strong>Exact-source custody.</strong> The artifact binds or
+resolves to the exact source it represents.</li>
+<li><strong>Meaning identity.</strong> Interpretation and semantic
+identity are explicit and versioned.</li>
+<li><strong>Axis separation.</strong> Role, posture, support, standing,
+authority, and effect remain distinct.</li>
+<li><strong>Support non-equivalence.</strong> Evidence support is not
+silently promoted to truth.</li>
+<li><strong>Validation non-equivalence.</strong> Structural validity is
+not admission or authorization.</li>
+<li><strong>Scoped admission.</strong> Every admission names role,
+purpose, scope, jurisdiction, law, and time.</li>
+<li><strong>Authority non-generation.</strong> A compiler, evaluator, or
+receipt cannot manufacture authority.</li>
+<li><strong>Dependency visibility.</strong> External observations,
+standards, interpretations, and authorities are typed.</li>
+<li><strong>Freshness.</strong> Expired evidence, standards,
+delegations, and decisions cannot remain current silently.</li>
+<li><strong>Contest persistence.</strong> Material objections travel
+with reuse, projection, and promotion.</li>
+<li><strong>Private-zone preservation.</strong> Governance does not
+imply universal disclosure of protected content.</li>
+<li><strong>Loss visibility.</strong> Translation and projection emit
+residual, omission, and uncertainty records.</li>
+<li><strong>Refusal and deferment.</strong> Missing conditions produce
+bounded negative or suspended outcomes.</li>
+<li><strong>No self-promotion.</strong> An artifact cannot grant itself
+higher standing or binding force.</li>
+<li><strong>Receipt boundedness.</strong> A receipt proves only the
+recorded procedure and bindings actually evidenced.</li>
+<li><strong>Revision lineage.</strong> Successors preserve what changed,
+why, under whose authority, and which prior decisions became
+invalid.</li>
+</ol>
+<p>These are candidate obligations, not claims that an implementation
+presently satisfies them.</p>
+<h2 id="worked-example-a-bounded-model-evaluation-claim">9. Worked
+Example: A Bounded Model-Evaluation Claim</h2>
+<p>Suppose a team submits:</p>
+<blockquote>
+<p>Model M meets the deployment reliability threshold.</p>
+</blockquote>
+<p>Ordinary prose hides several decisions. An Epistemic IR candidate
+separates them:</p>
+<pre class="text"><code>claim_role: REPORT
+posture: ASSERTED
+content: model M met metric R &gt;= 0.97
+meaning_ref: metric-registry/R/v3
+scope: benchmark B, dataset D, environment E
+evidence_refs: run-set H1, evaluator V2
+standard_ref: reliability-policy/v5
+requested_transition: ADMIT as deployment-supporting evidence
+authority_ref: evaluation-board/delegation-17
+freshness: valid through 2026-12-31
+nonclaims:
+  - no claim of safety outside E
+  - no authorization to deploy
+  - no claim that benchmark B captures every failure mode</code></pre>
+<p>If the evidence hash matches and the metric was computed correctly
+but the delegation expired, structural checking may pass while admission
+defers or refuses. If the policy changed from v5 to v6, the prior result
+may remain a historical fact while losing current standing. If the claim
+is admitted as <strong>deployment-supporting evidence</strong>, it still
+does not authorize deployment; an external effect regime must decide
+that separately.</p>
+<p>The example shows the value of the representation: it prevents a
+successful test result from silently becoming a universal reliability
+claim, an authority grant, and an execution command.</p>
+<h2 id="relation-to-the-ableman-corpus">10. Relation to the Ableman
+Corpus</h2>
+<p>Epistemic IR is most useful as a bridge among existing machinery:</p>
+<ul>
+<li><strong>MCIR</strong> supplies the candidate canonical
+governed-transformation substrate [MCIR].</li>
+<li><strong>Constitutional Epistemics</strong> distinguishes influence,
+confidence, jurisdiction, warrant, and binding authority [CE].</li>
+<li><strong>Epistemic Authority Governance</strong> provides claim
+types, promotion, binding, refusal, termination, contest persistence,
+and the governing question of the right to proceed [EAG].</li>
+<li><strong>Epistemic Situational Awareness</strong> locates acts,
+layers, authority consequences, and lawful stopping at runtime
+[ESA].</li>
+<li><strong>Admissibility Engineering</strong> separates candidate
+construction from admission under explicit conditions [AE].</li>
+<li><strong>Reasoning by Way of Receipts</strong> treats intermediate
+decisions as evidence-bearing but not self-proving [RWR].</li>
+<li><strong>The Governed Knowledge Loop</strong> places analysis,
+crystallization, structural integration, frontier detection, and
+revision inside a continuing knowledge lifecycle [GKL].</li>
+<li><strong>Constitutional Epistemology Under Adversarial Semantic
+Pressure</strong> supplies omission, laundering, posture, evidence, and
+authority threat surfaces [CESP].</li>
+<li><strong>The Three Hash Rule</strong> motivates separation among
+exact artifact custody, governing commitments, and meaning commitments
+[THR].</li>
+<li><strong>Governed Controlled Natural Language</strong> can provide a
+human-authorable front end, pending its own profile and identity
+adjudication [GCNL].</li>
+</ul>
+<p><strong>Governed Meaning Base (GMB)</strong> is the current name in
+the historical <code>CCF -&gt; CMB -&gt; GMB</code> lineage. GMB can
+store exact sources, candidate interpretations, Epistemic IR artifacts,
+evidence relations, admission decisions, contests, receipts, and
+revisions. Storage in GMB does not grant truth, standing, or permission.
+Hyperpedia can project the same governed objects for human study while
+preserving links back to exact sources and standing.</p>
+<p>A provisional representation path is:</p>
+<pre class="text"><code>source prose or GCNL candidate
+  -&gt; Epistemic IR profile candidate on MCIR
+  -&gt; external admission under declared epistemic law
+  -&gt; bounded promotion or GMB mutation
+  -&gt; optional operational lowering
+  -&gt; evidence, contest, and revision</code></pre>
+<p>This path is a comparison target, not an adjudicated universal
+stack.</p>
+<h2 id="configuration-manifold">11. Configuration Manifold</h2>
+<p>An Epistemic IR is not one inevitable schema. Its configuration
+manifold includes:</p>
+<ul>
+<li>centralized, federated, individual, institutional, and mixed
+authority models;</li>
+<li>closed, public, selectively disclosed, and privacy-preserving
+evidence regimes;</li>
+<li>strict, permissive, probabilistic, plural, and appeal-heavy
+admission policies;</li>
+<li>immutable, append-only, revisable, expiring, and revocable standing
+models;</li>
+<li>single-ontology, mapped-ontology, and explicitly incommensurable
+semantic regimes;</li>
+<li>human, machine, hybrid, and institutionally delegated
+adjudication;</li>
+<li>local, portable, federated, and cross-jurisdictional artifact
+exchange.</li>
+</ul>
+<p><strong>CM1</strong> contains configurations that satisfy the
+declared representation specification and basic non-generation, custody,
+and transition invariants. It can still include brittle, coercive,
+inaccessible, centralized, or surveillance-heavy realizations.</p>
+<p><strong>CM2</strong> prefers configurations that reduce authority
+concentration, disclosure pressure, ontology lock-in, false admission,
+false refusal, premature closure, contest erasure, translation loss, and
+authoring burden while improving auditability, accessibility, exit,
+forkability, correction, and evidence freshness.</p>
+<p><strong>Instance Configuration</strong> selects one exact schema,
+identity regime, law head, standards registry, authority registry,
+evidence store, evaluator, receipt format, privacy model, appeal path,
+projection set, and conformance suite for one realization.</p>
+<h2 id="candidate-mcir-epistemic-conformance-profile">Candidate MCIR
+Epistemic Conformance Profile</h2>
+<p>Across the completed P1 corpus, Epistemic IR is strongest as the
+<strong>candidate epistemic conformance profile on MCIR that requires
+claim role, meaning, evidence, standing, authority, scope, contest,
+expiry, loss, and revision to survive together</strong>. It is not yet a
+second foundational Intermediate Representation, a truth language, or an
+authority source. The unresolved architectural question is whether its
+obligations require a named profile or are already expressible through
+MCIR plus adjacent contracts.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Representational Topology in
+MCIR: AST, DAG, and Emergent Governance Capabilities</em><br />
+<strong>Supplies:</strong> Local AST, canonical DAG, and separate
+receipt-lineage topology.<br />
+<strong>Epistemic-IR boundary:</strong> Epistemic IR constrains what
+epistemic commitments those structures must carry.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Admissibility
+Engineering</em><br />
+<strong>Supplies:</strong> Candidate construction, constraint surfaces,
+negative outcomes, and evidence.<br />
+<strong>Epistemic-IR boundary:</strong> The profile represents admission
+requests and results without making admission truth.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Epistemic Situational
+Awareness and the Governed Knowledge Loop</em><br />
+<strong>Supplies:</strong> Runtime posture and temporal epistemic
+lifecycle.<br />
+<strong>Epistemic-IR boundary:</strong> Epistemic IR is a portable
+artifact profile feeding those capabilities.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Reasoning by Way of
+Receipts</em><br />
+<strong>Supplies:</strong> Bounded inference from procedure, decision,
+effect, and evidence records.<br />
+<strong>Epistemic-IR boundary:</strong> Receipts accompany conformance
+and admission without self-promoting the artifact.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Governed Knowledge
+Loop</em><br />
+<strong>Supplies:</strong> Observation, crystallization, integration,
+contradiction, evaluation, and revision.<br />
+<strong>Epistemic-IR boundary:</strong> The profile gives loop artifacts
+a shared machine-legible contract.</p></li>
+</ul>
+<p>A conforming artifact should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+E= (&amp;source, semantic\_identity, claim\_role, posture, \\
+&amp;support, standing, scope, evidence, authority, \\
+&amp;dependencies, contest, conditions, expiry, loss, \\
+&amp;nonclaims, lineage)
+\end{aligned}.
+$$</span></p>
+<p>The profile must prove a differential. If ordinary MCIR with declared
+schemas and lifecycle records preserves every obligation with equal
+authorability, interoperability, and assurance, the separate Epistemic
+IR name should be absorbed. If it remains, conformance means only that
+the artifact satisfies the named profile; truth, legitimacy,
+institutional authority, and effect permission remain external
+judgments.</p>
+<p>In this title, <code>IR</code> means Intermediate Representation. In
+the realization funnel,</p>
+<p><code>IR</code> means Instance Realization / Implementation
+Realization. An Epistemic IR artifact may be used within a
+realization-stage IR, but the acronym collision never creates identity
+between representation and realization.</p>
+<p>The universal GSM can type<br />
+<code>CONFORMS_TO_EPISTEMIC_PROFILE</code>,
+<code>REPRESENTS_CLAIM_ROLE</code>,<br />
+<code>HAS_EVIDENCE_POSTURE</code>,
+<code>REQUESTS_SCOPED_ADMISSION</code>,
+<code>PRESERVES_CONTEST</code>,<br />
+<code>EXPIRES_WITH_AUTHORITY</code>,
+<code>EMITS_TRANSLATION_LOSS</code>,
+<code>LOWERED_FROM_HUMAN_AUTHORING</code>,<br />
+<code>RETAINED_IN_GOVERNED_LOOP</code>,<br />
+and<br />
+<code>ABSORBED_IF_NO_DIFFERENTIAL</code>. These relations turn novelty
+into a testable architecture decision.</p>
+<p>This integration establishes four editorial commitments: classify
+Epistemic IR provisionally as an MCIR epistemic conformance profile;
+adopt the conformance envelope; require a differential comparison
+against unprofiled MCIR and simpler structured records; and preserve the
+Intermediate Representation versus Instance/Implementation Realization
+distinction in every use.</p>
+<h2 id="epistemic-obligation-placement-across-three-graphs">Epistemic
+Obligation Placement Across Three Graphs</h2>
+<p>The fixed-seed comparison with legitimacy, recursive motifs,
+Governance Witnesses, and the three-graph MCIR contract locates
+Epistemic IR obligations across distinct representations:</p>
+<p><span class="math display">$$
+\begin{aligned}
+E= (&amp;authoring\_assertion, canonical\_claim, witness\_set, \\
+&amp;receipt\_lineage, standing, contest, expiry, loss)
+\end{aligned}.
+$$</span></p>
+<p>The authoring AST preserves what was proposed and by whom. The
+canonical DAG identifies resolved claim, evidence, authority, and
+dependency objects under explicit equivalence rules. The receipt graph
+preserves admission, refusal, witness evaluation, standing change,
+contest, expiry, and revision. A hash or conformance result for one
+graph cannot stand in for the others.</p>
+<p>Governance Witnesses supplies the evidence-carrier contract.
+Epistemic IR can encode witness identity, method, coverage, relevance,
+and ceiling, but cannot convert the carrier into truth or sufficiency.
+<em>Legitimacy Without Self-Ratification</em> constrains promotion: an
+artifact must not ratify its own standing merely because it contains
+internally consistent authority and evidence fields.</p>
+<p>Recursive motifs remain <code>PEDAGOGICAL_ONLY</code>. A motif may
+help explain the proposed claim-gate-realization-evidence structure, but
+its recurrence supplies no differential for retaining Epistemic IR as a
+separate named profile. The profile survives only if it improves
+authorability, interoperability, preservation, or assurance over
+ordinary MCIR schemas.</p>
+<p>The universal GSM can type<br />
+<code>AUTHORED_AS_EPISTEMIC_AST</code>,<br />
+<code>RESOLVED_AS_CANONICAL_CLAIM_DAG</code>,
+<code>EVALUATED_IN_RECEIPT_GRAPH</code>,<br />
+<code>CARRIES_WITNESS_WITH_CEILING</code>,
+<code>REQUESTS_STANDING_WITHOUT_SELF_RATIFICATION</code>,<br />
+<code>PRESERVES_CONTEST_ACROSS_GRAPH</code>, and<br />
+<code>USES_MOTIF_AS_PEDAGOGY_ONLY</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the three-graph obligation placement; keep witness carrier, evaluation
+receipt, and standing decision separate; apply anti-self-ratification to
+epistemic promotion; and exclude motif fit from the profile
+differential.</p>
+<h2 id="an-mcir-epistemic-conformance-profile">An MCIR Epistemic
+Conformance Profile</h2>
+<p>Five downstream uses place Epistemic IR beside Cognitive ABI
+representations, Governance Witnesses, anti-self-ratification, recursive
+motifs, and MCIR topology. They confirm the paper’s own authorial
+compression: Epistemic IR is best treated as a candidate MCIR epistemic
+conformance profile, not a new universal substrate and not the
+realization-stage IR of the funnel.</p>
+<p><span class="math display">$$
+\begin{aligned}
+E^*= (&amp;claim, subject, scope, proposition, status, support, \\
+&amp;counterevidence, alternatives, uncertainty, authority, \\
+&amp;standing, obligations, witnesses, admission, expiry, \\
+&amp;revision)
+\end{aligned}.
+$$</span></p>
+<p>Claim status, evidence kind, warrant, confidence, authority,
+standing, and admission remain separate axes. A profile can represent an
+oracle’s output without importing the oracle’s authority. Missing,
+withheld, contradicted, unresolved, stale, and out-of-scope are typed
+states. Motifs, summaries, and model evaluations become claims about
+exact subjects rather than evidence merely by being encoded.</p>
+<p>Translations among Epistemic IR, Workflow IR, Action IR, GCNL, MCIR,
+and evidence graphs require explicit identity, preservation, and
+remainder contracts. A graph topology may aid traceability but cannot
+prove warrant. Promotion requires an external policy and standing
+decision; the artifact cannot ratify itself.</p>
+<p>The universal GSM can type<br />
+<code>CONFORMS_TO_EPISTEMIC_IR_PROFILE</code>,<br />
+<code>REPRESENTS_EPISTEMIC_CLAIM</code>,
+<code>CARRIES_COUNTEREVIDENCE</code>,
+<code>WITHHOLDS_EPISTEMIC_PROMOTION</code>,<br />
+<code>TRANSLATES_WITH_EPISTEMIC_REMAINDER</code>,
+<code>EXPIRES_EPISTEMIC_STATUS</code>,<br />
+and<br />
+<code>DOES_NOT_SELF_RATIFY</code>.</p>
+<p>This review establishes four editorial commitments: retain
+MCIR-profile standing; adopt the epistemic claim record; require typed
+negative and stale states plus translation remainder; and keep
+representation, evidence, warrant, authority, standing, admission, and
+truth distinct.</p>
+<h2 id="failure-modes-and-counterevidence">12. Failure Modes and
+Counterevidence</h2>
+<p>The proposal should weaken or fail under evidence that:</p>
+<ul>
+<li>ordinary signed records plus existing workflow standards preserve
+the same obligations with less complexity;</li>
+<li>MCIR already expresses the full epistemic profile without any
+distinct extension;</li>
+<li>authors cannot understand or reliably produce the artifacts;</li>
+<li>formalization suppresses tacit, minority, qualitative, or
+context-dependent knowledge;</li>
+<li>the ontology fixes one institution’s worldview and makes
+disagreement appear malformed;</li>
+<li>governance metadata creates unacceptable surveillance or coerced
+disclosure;</li>
+<li>receipts encourage procedural compliance theater while evidence
+quality declines;</li>
+<li>evaluators disagree materially on identical artifacts;</li>
+<li>false refusal blocks legitimate inquiry or false admission launders
+weak claims;</li>
+<li>admission thresholds become optimization targets and invite Goodhart
+effects;</li>
+<li>contest, appeal, and exit exist in the schema but not in deployed
+practice;</li>
+<li>mappings across communities erase distinctions or manufacture
+equivalence;</li>
+<li>stale decisions retain standing after evidence, authority, or
+standards change;</li>
+<li>operators, registries, or infrastructure providers become an
+undeclared sovereign layer;</li>
+<li>the cost of maintaining the representation exceeds its value for the
+target domain.</li>
+</ul>
+<p>Three source claims require particular qualification.</p>
+<p>First, the representation is not neutral. Every schema selects
+objects, relations, omissions, and decision states. It can make
+commitments explicit and comparable, but neutrality must not be inferred
+from structure.</p>
+<p>Second, machines are not logically necessary for epistemic
+governance. They may become operationally valuable at scale. The
+threshold at which they become necessary is an empirical and
+institutional question, not an axiom.</p>
+<p>Third, declared authority is insufficient. Authority may be clearly
+declared yet illegitimate, expired, coerced, mis-scoped, or
+unreviewable. Declaration is a prerequisite for inspection, not the
+completion of legitimacy.</p>
+<h2 id="conformance-and-evaluation-program">13. Conformance and
+Evaluation Program</h2>
+<p>Before making implementation-ready claims, the profile needs:</p>
+<ol type="1">
+<li>a normative schema and canonical encoding;</li>
+<li>exact semantic identity and reference-resolution rules;</li>
+<li>typed claim, evidence, standard, authority, decision, contest, and
+revision objects;</li>
+<li>positive, negative, boundary, malformed, stale, revoked, and
+ambiguous fixtures;</li>
+<li>independent encoders, decoders, and evaluators;</li>
+<li>mutation tests proving that governance-relevant changes alter the
+canonical artifact;</li>
+<li>replay tests binding decisions to exact law, evidence, authority,
+and time;</li>
+<li>translation-loss and round-trip tests;</li>
+<li>false-admission, false-refusal, and unresolved-gap measurement;</li>
+<li>expiry, revocation, appeal, contest-persistence, and
+successor-invalidation tests;</li>
+<li>privacy and selective-disclosure threat tests;</li>
+<li>plural-ontology and cross-jurisdiction mapping tests;</li>
+<li>authorability and accessibility studies;</li>
+<li>comparison against simpler structured-record and workflow
+baselines;</li>
+<li>one low-consequence end-to-end domain profile with independent
+review.</li>
+</ol>
+<p>Passing representation conformance cannot establish truth, justice,
+legal validity, institutional legitimacy, or authorization for external
+effect.</p>
+<h2 id="realization-funnel">14. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Epistemic IR role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore claim models, state lattices, evidence relations, standard
+regimes, authority structures, privacy models, contest mechanisms,
+ontologies, lowerings, and harmful or unusable configurations.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define grammar, schema, canonicalization, identities, types,
+lifecycle transitions, loss records, admission interface, receipts,
+failure codes, conformance, and nonclaims.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate all configurations satisfying the specification and
+minimum invariants, including centralized, expensive, brittle,
+exclusionary, or surveillance-heavy variants.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations with bounded authority, persistent contest,
+privacy, accessibility, semantic pluralism, correction, forkability, low
+loss, and measured refusal/admission error.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select the exact profile, law head, registries, stores, actors,
+evaluators, receipt format, privacy model, appeal path, targets,
+environment, and tests.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build encoders, validators, evaluators, registries, stores,
+projections, admission adapters, mutation interfaces, and receipt paths
+for that configuration.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Execute conformance, replay, mutation, adversarial, expiry, privacy,
+accessibility, authorability, comparison, and independent-implementation
+tests; retain disagreement.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Create successors when schema, meaning, evidence, standards,
+authority, law, outcomes, targets, or findings change; preserve
+migrations and invalidated claims.</td>
+</tr>
+</tbody>
+</table>
+<p>The source paper supplies a compelling possibility and architectural
+thesis. It does not yet supply a normative specification,
+implementation, or empirical evaluation.</p>
+<h2 id="epistemic-structure-without-epistemic-sovereignty">Epistemic
+Structure Without Epistemic Sovereignty</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Epistemic IR is an Intermediate Representation for claims, sources,
+standards, warrants, defeaters, adjudication, and outcome transitions.
+It makes epistemic governance inspectable and portable. The
+representation and the AI systems operating it do not become authorities
+over truth merely because reasoning has been structured.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Schema-as-truth attack.</strong> A claim fits the IR and is
+treated as correct. Well-formedness, admissibility, warrant, and truth
+remain distinct.</li>
+<li><strong>Imported-authority attack.</strong> A citation or
+institution is encoded with standing beyond its jurisdiction, date, or
+competence. Authority imports need scope and expiry.</li>
+<li><strong>Source-staleness attack.</strong> Evidence is superseded,
+retracted, inaccessible, or contextually obsolete. Dependency and
+invalidation propagation are required.</li>
+<li><strong>Adjudicator-capture attack.</strong> One model generates
+claims, assigns standards, weighs evidence, and promotes outcomes. Roles
+and human decision gates must remain visible.</li>
+<li><strong>Graph-inconsistency attack.</strong> Claim, evidence,
+authority, and receipt graphs disagree while each is locally valid.
+Cross-graph correspondence needs explicit tests.</li>
+<li><strong>Defeater-suppression attack.</strong> Negative evidence is
+omitted or down-ranked. Counterevidence custody and search remainder
+must be first-class.</li>
+<li><strong>Privacy and privilege attack.</strong> Structuring evidence
+exposes protected sources, identities, or deliberation. Visibility and
+use require separate policy.</li>
+<li><strong>Formalization-overreach.</strong> Numeric confidence or
+typed status suggests more precision than the evidence supports.
+Uncertainty and unresolved conflict must survive lowering.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper proposes an MCIR epistemic conformance profile and
+evaluation program. It does not establish a universal epistemology,
+automated truth adjudication, complete evidence collection, unbiased
+evaluation, or semantic equivalence across domains.</p>
+<p>Claims about argumentation systems, knowledge representation,
+evidence law, scientific inference, fact checking, or AI evaluation
+require external comparison and domain review. Internal examples
+demonstrate expressibility only. No external research was added in this
+pass.</p>
+<h3 id="terminology-boundary">Terminology boundary</h3>
+<p>In <strong>Epistemic IR</strong>, IR means <strong>Intermediate
+Representation</strong>. This is distinct from realization-stage IR,
+which may mean Instance Realization or Implementation Realization.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public value is an auditable claim path: what was asserted, which
+standard applied, which sources and defeaters were considered, who had
+authority to decide, and how later evidence can reopen the result.</p>
+<h2 id="research-agenda-and-open-questions">15. Research Agenda and Open
+Questions</h2>
+<ol type="1">
+<li>Decide whether Epistemic IR remains a distinct profile name, becomes
+an MCIR epistemic conformance profile, or is absorbed into EAG/CE
+machinery.</li>
+<li>Define the differential obligations that cannot be expressed by
+unprofiled MCIR.</li>
+<li>Replace the untyped oracle category with explicit dependency and
+authority kinds.</li>
+<li>Define the claim-role, posture, support, standing, authority, and
+effect axes.</li>
+<li>Define scoped admission, expiry, contest, appeal, and invalidation
+semantics.</li>
+<li>Define exact interaction with GMB, GCNL, MCIR, GSOL, EAG, ESA, GKL,
+and receipts without forcing a disputed universal stack.</li>
+<li>Select one low-consequence profile only under separate
+implementation authorization.</li>
+<li>Conduct primary-source research into knowledge representation,
+argumentation, provenance, scientific workflow, evidence standards,
+policy languages, legal knowledge representation, formal epistemology,
+and institutional governance before historical or novelty claims.</li>
+</ol>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>Epistemic IR identifies a real representational need: knowledge
+claims should not acquire standing, reuse authority, or downstream force
+through invisible transitions. A portable artifact can make claim role,
+interpretation, evidence, standards, authority dependencies, admission,
+contest, and revision inspectable.</p>
+<p>The corpus also changes the architectural conclusion. This need does
+not yet justify a second foundational IR. MCIR already supplies a
+general governed-transformation substrate; CE, EAG, ESA, Admissibility
+Engineering, receipts, GKL, and GMB supply adjacent governance and
+lifecycle machinery. Epistemic IR is presently strongest as the profile
+that asks whether those components preserve epistemic commitments
+together.</p>
+<p>The governing principle remains valuable but incomplete:</p>
+<blockquote>
+<p>Authority must be declared before it is exercised.</p>
+</blockquote>
+<p>To that principle this revision adds: declaration does not legitimate
+authority; admission does not establish truth; and structure must remain
+contestable, revisable, and bounded before it may carry
+consequences.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that knowledge systems do more than store
+propositions. Its nearest external comparison fields are formal,
+provenance, governance. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. A written constitution can
+legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E6]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E7]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[MCIR]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Exact
+reviewed source SHA-256<br />
+<code>762E10A91D94B949F5C862CEB732BE976A0CDF74C828061353AAED4CF5024510</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p><strong>[CE]</strong> Adam Ableman. <em>Constitutional
+Epistemics</em>. Exact reviewed source SHA-256<br />
+<code>AC27B7E22BBC4B4CD16D2AC6C78EAF4F82D6C984277693EE9B2AED10C9B12E3B</code>;
+publication identity overlap remains under review.</p>
+<p><strong>[EAG]</strong> Adam Ableman. <em>Epistemic Authority
+Governance Atlas v0.1</em>. Exact reviewed Markdown source SHA-256<br />
+<code>C1D4AFDBA6129E9D5A2E37351C168A455D0A55E41E3A520AC39AF42DF0B1CEBE</code>;
+the supplied registry contains a title-matched PDF publication record,
+which is not silently substituted for this source artifact.</p>
+<p><strong>[ESA]</strong> Adam Ableman. <em>Epistemic Situational
+Awareness</em>. Exact reviewed source SHA-256<br />
+<code>825352335C61AEAEB6AF1840CE86E4CB32049BFD925E8F181CFA2DD97B6F3275</code>;
+supplied Zenodo title match, with exact publication identity retained
+separately.</p>
+<p><strong>[AE]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Exact reviewed source SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>;
+separately custodied reviewed source.</p>
+<p><strong>[RWR]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Exact reviewed source SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>;
+separately custodied reviewed source.</p>
+<p><strong>[GKL]</strong> Adam Ableman. <em>The Governed Knowledge
+Loop</em>. Exact reviewed source SHA-256<br />
+<code>C8CF0E10ACD0A1CCD91789363F1B28E1D7E8DC1865396C27DAAB6A40C6D32C7C</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CESP]</strong> Adam Ableman. <em>Constitutional Epistemology
+Under Adversarial Semantic Pressure</em>. Exact reviewed source
+SHA-256<br />
+<code>909F67AD82D8D8C6119FFEABCC8F885EF8C0A095DE79BFA29A65FDB1DC9E64C3</code>;
+separately custodied reviewed source.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.20788617</code>. Exact reviewed Markdown source
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<p><strong>[GCNL]</strong> Adam Ableman. <em>Governed Controlled Natural
+Language</em>. Exact reviewed author source SHA-256<br />
+<code>B0317502B2B10790942DCE3CBFDE58C13E648890AB64A172BB9AE18CA1896D72</code>;
+the separate expanded revision remains an AI-assisted integrated
+edition.</p>
+<p>No external research was conducted in this pass. The source paper’s
+historical comparisons and the broader novelty claim require current
+primary-source verification for a future evidence-qualified revision
+readiness.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847641">10.5281/zenodo.23847641</a></p>

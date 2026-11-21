@@ -1,0 +1,492 @@
+<h1 id="constitutional-operating-systems">Constitutional Operating
+Systems</h1>
+<h2 id="making-the-governance-layer-of-computing-inspectable">Making the
+Governance Layer of Computing Inspectable</h2>
+<h3
+id="yet-in-contemporary-computing-stacks-this-constitutional-layer-is-rarely-explicit.">Yet
+in contemporary computing stacks this constitutional layer is rarely
+explicit.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Every operating system enforces a constitution. It determines which
+artifacts may bind, which effects may execute, who may amend system
+behavior, and under what authority changes become legitimate. Yet in
+contemporary computing stacks this constitutional layer is rarely
+explicit. It is distributed across codebases, build systems, vendor
+signing infrastructure, community governance processes, configuration
+files, and undocumented assumptions.</p>
+<p>This paper formalizes the “constitutional layer” of computing as a
+first-class, inspectable artifact–proposing a structural method to make
+authority, admissibility, and amendment in operating systems auditable
+by design. Using the Specification–Configuration–Implementation (SCI)
+lens and the Meta-Compilation Intermediate Representation (MCIR)
+substrate introduced in prior work , we analyze major OS families as
+distinct constitutional arrangements and outline how a constitutional
+operating system could render its governance layer structurally
+visible.</p>
+<p>The claim is architectural. It does not seek to centralize control or
+eliminate trust. It seeks to reveal the governance that already
+exists.</p>
+<hr />
+<h2 id="introduction-the-hidden-constitution-of-computing">1.
+Introduction: The Hidden Constitution of Computing</h2>
+<p>Operating systems are typically evaluated by performance, security
+posture, ecosystem compatibility, and usability. Rarely are they
+examined through a governance lens.</p>
+<p>Yet every operating system answers, implicitly or explicitly, the
+following questions:</p>
+<ul>
+<li>What artifacts are legitimate?</li>
+<li>Who may authorize change?</li>
+<li>What effects are permitted?</li>
+<li>Under what conditions may governing rules mutate?</li>
+<li>Where does ultimate authority reside?</li>
+</ul>
+<p>These questions are constitutional.</p>
+<p>In political systems, constitutions are textual, versioned, and
+publicly inspectable. In operating systems, constitutional structure is
+typically emergent. It resides in a composite of:</p>
+<ul>
+<li>Source repositories</li>
+<li>Build pipelines</li>
+<li>Vendor signing hierarchies</li>
+<li>Release processes</li>
+<li>Configuration conventions</li>
+<li>Institutional authority</li>
+</ul>
+<p>This distribution obscures the governance layer.</p>
+<p>The central thesis of this paper is:</p>
+<blockquote>
+<p>The governance layer of an operating system can be reified as a
+first-class, inspectable artifact.</p>
+</blockquote>
+<p>Making the constitution explicit does not create new authority. It
+clarifies the authority already present.</p>
+<hr />
+<h2 id="the-sci-lens">2. The S–C–I Lens</h2>
+<p>The Specification–Configuration–Implementation (Ableman’s Razor)
+model distinguishes three structural strata:</p>
+<p><strong>Specification</strong> The declared admissibility rules,
+invariants, and authority boundaries.</p>
+<p><strong>Configuration</strong> The instantiation of those rules into
+concrete policy artifacts and operational constraints.</p>
+<p><strong>Implementation</strong> The executable substrate enforcing
+those constraints.</p>
+<p>In most operating systems, Specification and Configuration collapse
+into Implementation. Law is encoded implicitly in code paths,
+undocumented defaults, and institutional process.</p>
+<p>This collapse produces constitutional opacity.</p>
+<p>A constitutional operating system separates these layers and reifies
+Specification and Configuration as inspectable artifacts rather than
+allowing them to dissolve into implementation details.</p>
+<hr />
+<h2 id="constitutional-modes-of-contemporary-os-families">3.
+Constitutional Modes of Contemporary OS Families</h2>
+<p>Operating systems differ not merely in architecture but in
+constitutional structure.</p>
+<h3 id="comparative-snapshot">3.1 Comparative Snapshot</h3>
+<ul>
+<li><p><strong>System:</strong> Windows<br />
+<strong>Constitutional Model:</strong> Centralized Sovereignty<br />
+<strong>Amendment Authority:</strong> Vendor root keys<br />
+<strong>Visibility:</strong> Low<br />
+<strong>Failure Mode:</strong> Trust dependence</p></li>
+<li><p><strong>System:</strong> macOS<br />
+<strong>Constitutional Model:</strong> Curated Capability
+Governance<br />
+<strong>Amendment Authority:</strong> Vendor attestation<br />
+<strong>Visibility:</strong> Moderate<br />
+<strong>Failure Mode:</strong> External dependency</p></li>
+<li><p><strong>System:</strong> Linux<br />
+<strong>Constitutional Model:</strong> Federated Fragmentation<br />
+<strong>Amendment Authority:</strong> Distributed maintainers<br />
+<strong>Visibility:</strong> High but diffuse<br />
+<strong>Failure Mode:</strong> Coordination decay</p></li>
+</ul>
+<h3 id="windows-centralized-sovereignty">3.2 Windows: Centralized
+Sovereignty</h3>
+<p>Windows enforces admissibility through:</p>
+<ul>
+<li>Vendor-controlled source and build processes</li>
+<li>Code-signing hierarchies</li>
+<li>Secure Boot enforcement</li>
+<li>Driver signing and policy frameworks</li>
+</ul>
+<p>The constitution exists and is strongly enforced, but its root
+authority is vendor-bound. Amendment power is centralized.</p>
+<p>The constitutional layer is coherent yet not artifact-native or
+publicly self-describing.</p>
+<h3 id="macos-curated-capability-governance">3.3 macOS: Curated
+Capability Governance</h3>
+<p>macOS emphasizes capability control via:</p>
+<ul>
+<li>Code signing and notarization</li>
+<li>Entitlement declarations</li>
+<li>Hardened runtime policies</li>
+<li>System integrity enforcement</li>
+</ul>
+<p>Capability boundaries are explicit at the application level, yet
+constitutional amendment authority remains vendor-defined.</p>
+<p>Governance is structured but externally rooted.</p>
+<h3 id="linux-federated-constitutional-fragmentation">3.4 Linux:
+Federated Constitutional Fragmentation</h3>
+<p>Linux distributes constitutional authority across:</p>
+<ul>
+<li>Kernel maintainership processes</li>
+<li>Distribution packaging policies</li>
+<li>Toolchain configurations</li>
+<li>Init systems</li>
+<li>Security modules</li>
+</ul>
+<p>Specification is visible but dispersed. Configuration regimes vary
+across distributions and deployments.</p>
+<p>Linux exhibits high transparency but diffuse constitutional
+coherence.</p>
+<hr />
+<h2 id="the-implicit-constitutional-layer">4. The Implicit
+Constitutional Layer</h2>
+<p>Across all families, certain invariants hold:</p>
+<ul>
+<li>Admissibility rules exist.</li>
+<li>Authority roots exist.</li>
+<li>Amendment pathways exist.</li>
+<li>Effect boundaries are enforced.</li>
+</ul>
+<p>What differs is not governance itself, but how it is structured and
+surfaced.</p>
+<p>In contemporary systems:</p>
+<ul>
+<li>The constitution is rarely a unified artifact.</li>
+<li>Authority transitions are often social rather than structural.</li>
+<li>Amendment procedures are partially implicit.</li>
+<li>Configuration becomes de facto law.</li>
+</ul>
+<p>This implicitness becomes more consequential under automated and
+AI-accelerated transformation regimes, where authority drift may occur
+procedurally rather than narratively.</p>
+<hr />
+<h2 id="mcir-and-constitutional-reification">5. MCIR and Constitutional
+Reification</h2>
+<p>MCIR (Meta-Compilation Intermediate Representation) provides a
+canonical substrate capable of representing not only program structure
+but admissibility rules, transformation regimes, and identity
+constraints .</p>
+<p>Within a constitutional operating system, MCIR can encode:</p>
+<ul>
+<li>Admissibility gates governing package or kernel module binding</li>
+<li>Policy artifacts defining signing requirements and trust roots</li>
+<li>Build rule sets as artifact-bound transformation regimes</li>
+<li>Capability envelopes and effect class declarations</li>
+<li>Amendment gates governing mutation of constitutional artifacts</li>
+</ul>
+<p>Three illustrative examples:</p>
+<ol type="1">
+<li><p><strong>Package Signing Policy as MCIR Artifact</strong> The
+trust root, signature requirements, and revocation logic are encoded as
+a canonical admissibility term evaluated before package
+binding.</p></li>
+<li><p><strong>Kernel Extension Gate</strong> A kernel module’s
+admissibility is governed by a structural term representing capability
+class, signing provenance, and declared effect surfaces.</p></li>
+<li><p><strong>Build Pipeline Governance</strong> Compiler flags,
+optimization passes, and backend targets are represented as
+artifact-bound transformation rules subject to admissibility law rather
+than ambient configuration.</p></li>
+</ol>
+<p>In this framing, compilers, policy engines, and build pipelines are
+not infrastructural assumptions. They are governed artifacts.</p>
+<p>Admissibility precedes execution.</p>
+<hr />
+<h2 id="making-governance-inspectable">6. Making Governance
+Inspectable</h2>
+<p>To make governance inspectable is to:</p>
+<ul>
+<li>Declare seed assumptions.</li>
+<li>Represent admissibility law canonically.</li>
+<li>Formalize amendment procedures.</li>
+<li>Receipt authority transitions.</li>
+<li>Bind effect surfaces explicitly.</li>
+</ul>
+<p>A build artifact becomes not merely a binary, but a constitutional
+event containing:</p>
+<ul>
+<li>The law version under which it was admitted</li>
+<li>The configuration regime applied</li>
+<li>The receipts of admissibility gates</li>
+<li>The declared effect classes</li>
+</ul>
+<p>Reproducibility becomes constitutional replayability.</p>
+<p>Inspection shifts from “Does this hash match?” to:</p>
+<p>“Under what declared law did this artifact become legitimate?”</p>
+<hr />
+<h2 id="constitutional-lockdown-and-fragmentation-revisited">7.
+Constitutional Lockdown and Fragmentation Revisited</h2>
+<p>Using the SCI model, we can characterize contemporary systems
+precisely:</p>
+<ul>
+<li><strong>Lockdown</strong> occurs when Specification and amendment
+authority are centralized and tightly vendor-bound.</li>
+<li><strong>Fragmentation</strong> occurs when Specification is visible
+but distributed across social and technical strata.</li>
+<li><strong>Opacity</strong> occurs when Specification collapses into
+Implementation without clear articulation.</li>
+</ul>
+<p>A constitutional operating system seeks clarity rather than
+centralization or diffusion.</p>
+<p>Clarity requires:</p>
+<ul>
+<li>Unified representation of Specification</li>
+<li>Artifact-bound Configuration</li>
+<li>Explicit amendment gates</li>
+<li>Structural receipts of authority transitions</li>
+<li>Declared effect membranes</li>
+</ul>
+<p>The novelty lies in explicitness, not enforcement strength.</p>
+<hr />
+<h2 id="limits-and-boundaries">8. Limits and Boundaries</h2>
+<p>A constitutional operating system does not:</p>
+<ul>
+<li>Eliminate trust</li>
+<li>Prevent institutional capture</li>
+<li>Resolve hardware nondeterminism</li>
+<li>Overcome undecidability</li>
+<li>Encode moral or political truth</li>
+</ul>
+<p>It enumerates dependencies.</p>
+<p>Seed assumptions remain:</p>
+<ul>
+<li>Cryptographic primitives</li>
+<li>Hardware semantics</li>
+<li>Bootstrapping trust anchors</li>
+<li>External entropy and time sources</li>
+</ul>
+<p>Explicit governance surfaces these assumptions rather than concealing
+them.</p>
+<hr />
+<h2 id="beyond-the-kernel">9. Beyond the Kernel</h2>
+<p>The constitutional framing generalizes beyond operating systems
+to:</p>
+<ul>
+<li>Cloud orchestration platforms</li>
+<li>AI deployment pipelines</li>
+<li>CI/CD transformation stacks</li>
+<li>Institutional workflow engines</li>
+</ul>
+<p>Each contains an implicit constitution governing admissibility,
+authority, and mutation.</p>
+<p>Reifying the constitutional layer transforms disputes about behavior
+into disputes about structural authority placement.</p>
+<hr />
+<h2 id="conclusion">10. Conclusion</h2>
+<p>Every operating system has a constitution. It determines legitimacy,
+authority, and effect boundaries whether explicitly acknowledged or
+not.</p>
+<p>In contemporary systems, this constitution is implicit, fragmented,
+or vendor-rooted.</p>
+<p>A constitutional operating system makes the governance layer
+inspectable. Specification and Configuration become first-class
+artifacts. Admissibility precedes execution. Amendment is formalized.
+Authority transitions are receipted.</p>
+<p>The objective is not expanded power, but structural clarity.</p>
+<p>A constitutional operating system does not seek more control; it
+reveals the control already there.</p>
+<h2 id="standing-and-claim-boundary">Standing and Claim Boundary</h2>
+<p>This paper is a conceptual, formal, or architectural contribution
+unless it explicitly binds a statement to a cited external source or an
+exact carried evidence artifact. Unbound statements about
+implementation, validation, performance, safety, universality, or proof
+are research claims or design obligations, not established operational
+facts. Corpus-internal references establish conceptual lineage and
+comparison, not independent external confirmation.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that every operating system enforces a
+constitution. Its nearest external comparison fields are governance,
+software, formal. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+Modularity, secure-development practice, and reproducibility reduce
+classes of failure but do not guarantee architectural coherence or user
+sovereignty. Formal assurance remains relative to the encoded model,
+trusted base, and refinement chain; proof does not remove specification
+error or unmodeled environmental behavior. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E2]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E3]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E6]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E7]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Legitimacy Without
+Self-Ratification</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-EF2382F9397335AC</code>;<br />
+source SHA-256<br />
+<code>0186A39C808F8FDDB5C8F42384DF1A26678928434BD50A0EAE8D4947390F68A2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848664">10.5281/zenodo.23848664</a></p>

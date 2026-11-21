@@ -1,0 +1,1270 @@
+<h1 id="governed-semantic-operation-language">Governed Semantic
+Operation Language</h1>
+<h2
+id="a-constitutional-interface-between-prose-policy-code-proof-and-execution">A
+Constitutional Interface Between Prose, Policy, Code, Proof, and
+Execution</h2>
+<h3 id="when-pseudocode-falls-short">When Pseudocode Falls Short</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Computational systems increasingly perform actions whose significance
+cannot be determined from execution alone: a program may run, a model
+may answer, a tool may return output, or an artifact may be built
+without establishing whether the transition was authorized, evidenced,
+bounded, or admissible. This paper introduces the Governed Semantic
+Operation Language, or GSOL, as a specification-layer language for
+representing such operations as admissible semantic transitions before
+execution, lowering, or evidentiary use. GSOL’s contribution is a
+canonical operation form that makes authority, effect, refusal, receipt,
+claim, nonclaim, standing, temporal validity, and lowering obligations
+explicit. GSOL is not a runtime, truth engine, policy engine, or
+replacement for compiler intermediate representations; it is a
+governance layer for preserving admissibility-relevant meaning across
+specification and realization. The result is a conceptual framework for
+a language of admissible operation: expressive enough to govern
+meaningful computational transitions, but deliberately not so
+computationally powerful that it becomes an opaque execution
+substrate.</p>
+<h2 id="keywords">Keywords</h2>
+<p>governed computation; semantic operation language; admissibility;
+intermediate representation; constitutional AI; typed claims; refusal
+semantics; receipts; provenance; authority; standing; model governance;
+tool governance; memory governance; lowering; semantic hashing</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>Modern computational systems increasingly perform actions whose
+significance cannot be understood from execution alone. A program may
+run, a model may answer, a tool may return output, a build may pass, or
+an artifact may be packaged, while the surrounding system remains silent
+about whether the transition was authorized, what evidence supports it,
+what effects it had, what claims may be drawn from it, and what limits
+must be preserved.</p>
+<p>The missing distinction is between capability and admissibility.
+Capability asks whether a system can perform an operation. Admissibility
+asks whether the operation may be treated as a governed transition under
+a specified authority, jurisdiction, evidence surface, and standing
+rule. A capable system can still perform an unauthorized action. A
+successful run can still fail to support the claim later attached to it.
+A model output can be fluent while remaining mere testimony. A receipt
+can be internally consistent while failing to establish external
+provenance.</p>
+<p>This paper introduces GSOL, the Governed Semantic Operation Language.
+GSOL is a language for representing operations as governed semantic
+transitions. By governed semantic transition, this paper means an
+operation whose admissibility depends on explicit authority, effect,
+evidence, refusal, claim, nonclaim, standing, temporal validity, or
+lowering conditions. By admissibility-relevant meaning, this paper means
+what the operation is allowed to do, what evidence it must produce, what
+it may support, and what it must not imply.</p>
+<p>GSOL is not proposed as a general-purpose programming language. It is
+not a replacement for compiler intermediate representations, policy
+engines, provenance systems, model runtimes, or tool harnesses. Instead,
+it is a missing middle layer between governed prose and executable
+realization. It gives admissibility-relevant meaning a code-like form
+before that meaning is translated into code, intermediate
+representation, runtime behavior, or evidence records.</p>
+<p>The core contribution of this paper is the definition of GSOL as a
+canonical language of admissible operation: a representation for
+computational transitions that must preserve authority, effect, refusal,
+receipt, claim, nonclaim, standing, temporal validity, and lowering
+boundaries.</p>
+<p>The specific contributions are:</p>
+<pre class="text"><code>1. A definition of GSOL as a governed semantic operation language.
+2. A formal transition model for admission, refusal, and gap outcomes.
+3. A minimal distinction among testimony, evidence, typed claims,
+authority, receipts, and standing.
+4. A threat model separating internal consistency from external
+attestation.
+5. A worked end-to-end example from proposal through lowering.
+6. A comparison with intermediate representations, policy languages,
+provenance systems, and AI harness layers.
+7. A conformance boundary for future parsers, checkers, runtimes,
+and lowering systems.</code></pre>
+<p>The central thesis is simple: governed computation needs a language
+of admissible operation. Such a language should be expressive enough to
+preserve admissibility-relevant meaning, but not so computationally
+expressive that it becomes the execution substrate it was meant to
+govern.</p>
+<h2 id="motivation">2. Motivation</h2>
+<p>Many failures in governed computation arise from category collapse. A
+system treats one class of object as if it were another: testimony as
+truth, evidence as authority, execution as standing, policy as receipt,
+or provenance as semantic preservation.</p>
+<p>The motivating distinctions can be stated without relying on a wide
+table:</p>
+<p><strong>Capability.</strong> Capability means the system can perform
+an operation. GSOL prevents capability from being treated as
+authority.</p>
+<p><strong>Authority.</strong> Authority means a warrant or policy
+admits an operation under jurisdiction. GSOL prevents identity,
+availability, or success from being treated as permission.</p>
+<p><strong>Evidence.</strong> Evidence is a record that may support a
+typed claim. GSOL prevents evidence from being treated as
+self-interpreting standing.</p>
+<p><strong>Standing.</strong> Standing is an admitted level of
+evidentiary support. GSOL prevents fixture success from being promoted
+into release or production readiness without an admitted standing
+transition.</p>
+<p><strong>Receipt.</strong> A receipt is a bound record of a
+transition, refusal, gap, or standing change. GSOL prevents receipt
+presence from being treated as provenance or truth by itself.</p>
+<p><strong>Claim.</strong> A claim is a typed assertion admitted under
+an entailment rule. GSOL prevents natural-language prose from being
+treated as machine-checkable truth.</p>
+<p><strong>Nonclaim.</strong> A nonclaim is a forbidden inference
+preserved beside evidence. GSOL prevents evidence from being used to
+imply stronger conclusions than it supports.</p>
+<p><strong>Refusal.</strong> Refusal is a governed result that blocks an
+inadmissible transition. GSOL treats refusal as successful boundary
+preservation rather than mere error.</p>
+<p>These distinctions matter in ordinary software, but they become
+especially important in AI-in-the-loop systems. A governed AI
+environment may receive a request, call a model, classify output, call
+tools, write memory, produce a response, and attach evidence. Without a
+semantic operation layer, each transition risks silent
+overpromotion.</p>
+<p>GSOL addresses this by forcing each governed operation to declare its
+authority, effect, refusal paths, receipts, claims, nonclaims, standing
+limits, and lowering status.</p>
+<h2 id="related-work">3. Related Work</h2>
+<p>GSOL is adjacent to several existing traditions but has a different
+center of gravity.</p>
+<h3 id="compiler-intermediate-representations">3.1 Compiler intermediate
+representations</h3>
+<p>Compiler intermediate representations such as LLVM IR provide
+structured representations for program analysis, transformation,
+optimization, and code generation. LLVM IR, for example, is a static
+single-assignment based representation used as a common code
+representation across compiler phases. GSOL is not a competitor to such
+IRs. Conventional IRs are designed to preserve computational behavior.
+GSOL is designed to preserve admissibility-relevant meaning: authority,
+effect, refusal, receipt, claim, nonclaim, standing, temporal validity,
+and lowering obligations.</p>
+<p>A compiler IR may faithfully lower a program while dropping the
+reason the operation was admitted, the evidence it must emit, or the
+nonclaims that constrain interpretation. GSOL is intended to sit above
+or beside such IRs so that lowering into an executable substrate remains
+semantically honest.</p>
+<h3 id="policy-languages-and-access-control-systems">3.2 Policy
+languages and access-control systems</h3>
+<p>Policy languages decide whether actions are permitted under rules.
+They are necessary but not sufficient for GSOL’s purpose. GSOL includes
+authority and policy checks, but also binds receipts, claims, nonclaims,
+standing, lowering, temporal validity, and gap certificates. A policy
+language may answer whether a request is allowed. GSOL represents the
+whole governed transition: proposal, admission or refusal, effect,
+evidence, claim boundary, nonclaim boundary, and replay surface.</p>
+<h3 id="provenance-systems">3.3 Provenance systems</h3>
+<p>Provenance systems describe where artifacts, data, or activities came
+from. W3C PROV, for example, provides a vocabulary for representing
+provenance information across systems. GSOL is compatible with
+provenance systems but does not reduce to them. Provenance can say how
+an artifact was produced. GSOL also asks whether the operation was
+authorized, what effect class was admitted, what refusal paths existed,
+what claims the evidence supports, and what nonclaims remain
+binding.</p>
+<h3 id="software-supply-chain-attestation">3.4 Software supply-chain
+attestation</h3>
+<p>Software supply-chain attestation systems such as in-toto and SLSA
+focus on artifact integrity, build provenance, and protection against
+tampering across production chains. These systems are close cousins for
+release and artifact integrity. GSOL complements them by specifying the
+semantic operation whose execution, build, release, or attestation is
+being governed. A GSOL receipt may be exported into in-toto-style or
+SLSA-style provenance, but GSOL also preserves claim and nonclaim
+boundaries that ordinary supply-chain attestations may not express.</p>
+<h3 id="runtime-harnesses-and-ai-governance-layers">3.5 Runtime
+harnesses and AI governance layers</h3>
+<p>AI harnesses and agent frameworks orchestrate model calls, tool
+calls, memory, and responses. GSOL does not replace such harnesses. It
+gives them a canonical operation language. A governed AI harness can use
+GSOL to state that a model invocation requires a warrant, that model
+output is testimony rather than truth, that a tool request requires
+effect admission, and that memory writes require separate admission.</p>
+<h3 id="controlled-natural-and-machine-languages">3.6 Controlled natural
+and machine languages</h3>
+<p>Controlled natural languages reduce ambiguity in human-readable
+statements. Machine-oriented controlled languages reduce ambiguity in
+machine-facing procedures. GSOL occupies the operational middle: it is
+more structured than governed prose but does not claim to be the final
+executable substrate. It stabilizes operations rather than ordinary
+sentences or low-level instructions.</p>
+<h2 id="scope-and-non-goals">4. Scope and Non-Goals</h2>
+<p>GSOL governs semantic transitions. It does not govern everything.</p>
+<p>GSOL does not decide every question of truth. It does not replace
+human judgment, external law, cryptographic attestation, production
+monitoring, or runtime security. It does not make unsafe code safe
+merely by describing it. It does not make a model reliable merely by
+classifying its output. It does not prove arbitrary natural-language
+claims. It does not execute binaries.</p>
+<p>GSOL is not:</p>
+<pre class="text"><code>a Turing-complete language
+a general-purpose programming language
+a replacement for MCIR or Jnana
+a replacement for Python or native code
+a shell scripting language
+a live policy engine by itself
+a complete entailment engine by itself
+a model runtime
+a tool runtime
+a memory database
+a production attestation service
+a natural-language truth engine</code></pre>
+<p>These are design boundaries, not disclaimers of failure. A language
+intended to govern execution should not silently become the execution
+substrate. GSOL’s target is constitutional adequacy, not computational
+universality.</p>
+<h2 id="constitutional-kernel">5. Constitutional Kernel</h2>
+<p>GSOL is governed by a compact kernel of invariants. They are grouped
+here by class.</p>
+<p><strong>Authority and effect.</strong></p>
+<pre class="text"><code>Authority before capability.
+Warrant before effect.
+Effect before action.
+Authority is external to assertion.
+Tool availability is not tool authority.</code></pre>
+<p><strong>Evidence and receipts.</strong></p>
+<pre class="text"><code>Receipt before effect.
+Evidence is not authority.
+Determinism or declared nondeterminism.
+Currency comes from current head.</code></pre>
+<p><strong>Claims and standing.</strong></p>
+<pre class="text"><code>Testimony is not claim admission.
+Claims require typed admission.
+Standing is never implied.
+Nonclaims block stronger claims.</code></pre>
+<p><strong>Temporal and lowering discipline.</strong></p>
+<pre class="text"><code>No silent semantic promotion.
+Correspondence is not equivalence.
+Refusal is successful governance.
+Memory writes require admission.
+Gap before silent loss.</code></pre>
+<p>The kernel is the paper’s compact thesis. GSOL exists to prevent
+these categories from collapsing. Later sections define how operations
+preserve the kernel through typed fields, transition rules, receipts,
+refusal paths, and lowering declarations.</p>
+<h2 id="formal-model">6. Formal Model</h2>
+<p>A GSOL program is a finite set of governed operation declarations
+plus metadata and registry bindings.</p>
+<p><span
+class="math display"><em>P</em> = (<em>M</em>, <em>O</em>, <em>B</em>)</span></p>
+<p>where:</p>
+<pre class="text"><code>M = metadata, imports, profile, and current-head references
+O = a finite set of operation declarations
+B = registry bindings</code></pre>
+<p>A GSOL operation has the canonical field order:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O_i = (&amp;\mathrm{id}, \mathrm{ver}, \mathrm{jur}, \mathrm{prof},
+\mathrm{in}, \\
+       &amp;\mathrm{out}, \mathrm{auth}, \mathrm{warr}, \mathrm{eff},
+\mathrm{req}, \\
+       &amp;\mathrm{ref}, \mathrm{adm}, \mathrm{emit}, \mathrm{clm},
+\mathrm{nclm}, \\
+       &amp;\mathrm{st}, \mathrm{tmp}, \mathrm{debt}, \mathrm{low},
+\mathrm{proof})
+\end{aligned}
+$$</span></p>
+<p>where:</p>
+<pre class="text"><code>id    = operation identifier
+ver   = operation version
+jur   = jurisdiction
+prof  = profile
+in    = inputs
+out   = outputs
+auth  = authority requirements
+warr  = warrants
+eff   = effects
+req   = preconditions
+ref   = refusal rules
+adm   = admitted action
+emit  = receipt obligations
+clm   = typed claims supported
+nclm  = nonclaims preserved
+st    = standing bounds
+tmp   = temporal validity constraints
+debt  = semantic debt
+low   = lowering declarations
+proof = proof obligations</code></pre>
+<p>A GSOL operation denotes a partial transition function:</p>
+<p><span
+class="math display"><em>T</em><sub><em>i</em></sub> : <em>S</em> × <em>I</em> × <em>A</em> → Res</span></p>
+<p>where <span class="math inline"><em>S</em></span> is governed state,
+<span class="math inline"><em>I</em></span> is input, <span
+class="math inline"><em>A</em></span> is authority context, and <span
+class="math inline">Res</span> is a result.</p>
+<p>The result type is:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\mathrm{Res} ::= {}&amp; \mathrm{Admit}(S', Y, \mathcal{R}, \Delta) \\
+&amp; \mid \mathrm{Refuse}(c, \mathcal{R}, \Delta) \\
+&amp; \mid \mathrm{Gap}(g)
+\end{aligned}
+$$</span></p>
+<p>where:</p>
+<pre class="text"><code>S&#39;          = next state
+Y           = output
+mathcal R   = receipt set
+Delta       = standing delta
+c           = refusal code
+g           = gap certificate</code></pre>
+<p>Admission is defined as:</p>
+<p><span class="math display">$$
+\begin{aligned}
+\mathrm{Admissible}(O_i, S, I, A) \Leftrightarrow {}&amp;
+\mathrm{Req}(O_i,S,I,A) \\
+&amp;\land\ \mathrm{Auth}(O_i,A) \\
+&amp;\land\ \mathrm{Warr}(O_i,A) \\
+&amp;\land\ \mathrm{Eff}(O_i,A) \\
+&amp;\land\ \mathrm{Emit}(O_i) \\
+&amp;\land\ \mathrm{Stand}(O_i) \\
+&amp;\land\ \mathrm{Nonclaim}(O_i) \\
+&amp;\land\ \mathrm{Temp}(O_i)
+\end{aligned}
+$$</span></p>
+<p>This relation does not execute the operation. It determines whether
+the operation is constitutionally admitted.</p>
+<h2 id="formal-example-transition-and-refusal">7. Formal Example:
+Transition and Refusal</h2>
+<p>Consider a local write operation <span
+class="math inline"><em>O</em><sub><em>w</em></sub></span> that writes a
+canonical value to a governed store.</p>
+<p>Let the authority context <span class="math inline"><em>A</em></span>
+contain a warrant <span class="math inline"><em>w</em></span>. The
+operation requests effect <code>WRITE_LOCAL</code>. The core admission
+rule is:</p>
+<p><span class="math display">$$
+\frac{
+\begin{array}{c}
+w \in A.\mathrm{warrants}
+\quad \mathrm{permits}(w, \mathrm{WRITE\_LOCAL})
+\quad \mathrm{active}(w)
+\quad \mathrm{canonical}(\mathrm{value})
+\\[2pt]
+\mathrm{effect}(O_w) \leq \mathrm{permitted}(w)
+\quad \mathrm{receipt\_declared}(O_w, \mathrm{pre\_effect})
+\quad \mathrm{receipt\_declared}(O_w, \mathrm{closeout})
+\end{array}
+}{
+T_w(S, I, A) = \mathrm{Admit}(S', y, \mathcal{R}_{\mathrm{admit}},
+\Delta)
+}
+$$</span></p>
+<p>A refusal rule for a missing warrant is:</p>
+<p><span class="math display">$$
+\frac{
+\neg \exists w \in A.\mathrm{warrants} : \mathrm{permits}(w,
+\mathrm{WRITE\_LOCAL})
+\quad \mathrm{receipt\_declared}(O_w, \mathrm{refusal})
+}{
+T_w(S, I, A) = \mathrm{Refuse}(\mathrm{REFUSE.MISSING\_WARRANT},
+\mathcal{R}_{\mathrm{refusal}}, \Delta_0)
+}
+$$</span></p>
+<p>A refusal rule for stale authority is:</p>
+<p><span class="math display">$$
+\frac{
+\exists w \in A.\mathrm{warrants} : \mathrm{permits}(w,
+\mathrm{WRITE\_LOCAL})
+\quad \neg \mathrm{active}(w)
+\quad \mathrm{receipt\_declared}(O_w, \mathrm{refusal})
+}{
+T_w(S, I, A) = \mathrm{Refuse}(\mathrm{REFUSE.STALE\_WARRANT},
+\mathcal{R}_{\mathrm{refusal}}, \Delta_0)
+}
+$$</span></p>
+<p>The important property is not the complexity of the example. It is
+the ordering: the effect is not performed first and justified later.
+Admission or refusal precedes the effect, and every refusal path has a
+corresponding refusal receipt obligation.</p>
+<h2 id="canonical-object-model">8. Canonical Object Model</h2>
+<p>This section defines the core objects used by GSOL. These definitions
+are canonical within this paper; later sections use these meanings
+without redefining them.</p>
+<h3 id="state">8.1 State</h3>
+<p>State is the governed substrate before and after an operation.</p>
+<pre class="text"><code>State =
+  (state_id,
+   state_hash,
+   content_hash,
+   semantic_hash,
+   jurisdiction_hash,
+   registry_refs,
+   temporal_status,
+   lineage_refs)</code></pre>
+<p>State is not merely memory. It is an evidence-bearing surface with
+lineage, hashes, and admissibility.</p>
+<h3 id="authority-and-warrant">8.2 Authority and Warrant</h3>
+<p>Authority is the permission structure that admits or refuses an
+operation.</p>
+<pre class="text"><code>AuthorityContext =
+  (actor_ref,
+   warrants,
+   roles,
+   policies,
+   jurisdiction,
+   delegation_chain,
+   revocation_status,
+   freshness,
+   trust_anchor_refs)</code></pre>
+<p>A warrant is a bounded authority object.</p>
+<pre class="text"><code>Warrant =
+  (warrant_id,
+   actor_ref,
+   jurisdiction_ref,
+   permitted_effects,
+   permitted_targets,
+   profile_ref,
+   valid_from,
+   valid_until,
+   revocation_ref,
+   receipt_obligations)</code></pre>
+<p>Authority is distinct from identity, capability, receipt, and
+standing.</p>
+<pre class="text"><code>Identity != Authority
+Capability != Authority
+Receipt != Authority
+SuccessfulRun != Standing</code></pre>
+<h3 id="effect">8.3 Effect</h3>
+<p>An effect is the class of internal or external change an operation
+may cause.</p>
+<pre class="text"><code>READ_ONLY
+WRITE_LOCAL
+WRITE_EXTERNAL
+MUTATE_STATE
+MODEL_INVOKE
+TOOL_CALL
+MEMORY_WRITE
+CLAIM_ADMIT
+CLAIM_RETIRE
+ISSUE_AUTHORITY
+REVOKE_AUTHORITY
+PUBLISH
+NETWORK
+EXECUTE_PROCESS
+CROSS_JURISDICTION
+MERGE_LINEAGE
+ATTEST
+RECALL</code></pre>
+<p>An operation is effect-safe only if:</p>
+<p><span
+class="math display">admitted_effect ≤ warranted_effect</span></p>
+<p>If the relationship is unknown, the operation must refuse or emit a
+gap certificate.</p>
+<h3 id="receipt">8.4 Receipt</h3>
+<p>A receipt is evidence of a transition, refusal, gap, or standing
+change.</p>
+<pre class="text"><code>Receipt =
+  (receipt_id,
+   role,
+   operation_id,
+   canonical_operation_hash,
+   state_prev_hash,
+   state_next_hash,
+   content_hash,
+   semantic_hash,
+   jurisdiction_hash,
+   authority_context_hash,
+   effect_class,
+   result_kind,
+   timestamp_policy,
+   witness_refs,
+   signature_status,
+   provenance_refs)</code></pre>
+<p>Receipt presence alone is not enough. The receipt must bind the
+correct operation, role, effect, authority context, state, and result
+kind.</p>
+<h3 id="typed-claim-and-nonclaim">8.5 Typed Claim and Nonclaim</h3>
+<p>A typed claim is a registry-bound assertion.</p>
+<pre class="text"><code>TypedClaim =
+  (claim_id,
+   claim_type_id,
+   subject_ref,
+   subject_kind,
+   predicate_type_id,
+   object_ref,
+   object_kind,
+   scope_kind,
+   standing_level,
+   evidence_refs,
+   nonclaim_refs_checked,
+   entailment_rule_id,
+   entailment_status)</code></pre>
+<p>A nonclaim is a forbidden inference.</p>
+<pre class="text"><code>Nonclaim =
+  (nonclaim_id,
+   forbidden_inference,
+   preserved_by,
+   retirement_condition,
+   scope,
+   standing_ceiling)</code></pre>
+<p>Nonclaims prevent evidence from being used to imply more than it
+supports.</p>
+<h3 id="standing">8.6 Standing</h3>
+<p>Standing is the level of admissibility earned by evidence.</p>
+<pre class="text"><code>NONE
+FIXTURE
+CONFORMANCE
+REFERENCE
+EXPERIMENTAL
+RELEASE
+PRODUCTION
+NORMATIVE</code></pre>
+<p>Standing is never implied. It is admitted by a governed
+transition.</p>
+<h3 id="gap-certificate">8.7 Gap Certificate</h3>
+<p>A gap certificate records unsupported or partially preserved
+semantics.</p>
+<pre class="text"><code>GapCertificate =
+  (gap_id,
+   source_operation,
+   target_layer,
+   missing_semantics,
+   unsupported_effects,
+   unsupported_receipts,
+   blocked_claims,
+   safe_fallback)</code></pre>
+<p>Gap certificates are how GSOL avoids silent semantic loss.</p>
+<h2 id="claims-testimony-evidence-and-standing">9. Claims, Testimony,
+Evidence, and Standing</h2>
+<p>GSOL distinguishes four often-confused objects.</p>
+<pre class="text"><code>Testimony: output asserted by a model, tool, actor, or process.
+Evidence: a record that may support a typed claim.
+Claim: a typed assertion admitted under an entailment rule.
+Standing: a governed level of admissibility assigned to a claim or
+artifact.</code></pre>
+<p>The minimal inference discipline is:</p>
+<p><strong>Testimony production.</strong></p>
+<p><span
+class="math display">ModelInvoke(<em>m</em>, <em>x</em>) → Testimony(<em>t</em>)</span></p>
+<p><strong>Evidence binding.</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{Receipt}(r) \\
+&amp;\land \mathrm{binds}(r,t) \\
+&amp;\rightarrow \mathrm{Evidence}(e)
+\end{aligned}
+$$</span></p>
+<p><strong>Claim candidate formation.</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{Testimony}(t) \\
+&amp;\land \mathrm{Classify}(t,p) \\
+&amp;\rightarrow \mathrm{ClaimCandidate}(c)
+\end{aligned}
+$$</span></p>
+<p><strong>Claim admission.</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{Evidence}(e) \\
+&amp;\land \mathrm{Typed}(c) \\
+&amp;\land \mathrm{Entails}(e,c,\rho) \\
+&amp;\land \mathrm{NonclaimsChecked}(c) \\
+&amp;\rightarrow \mathrm{AdmittedClaim}(c)
+\end{aligned}
+$$</span></p>
+<p><strong>Standing admission.</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathrm{AdmittedClaim}(c) \\
+&amp;\land \mathrm{StandingRule}(c,\sigma) \\
+&amp;\rightarrow \mathrm{Standing}(c,\sigma)
+\end{aligned}
+$$</span></p>
+<p>The following inferences are invalid:</p>
+<p><span
+class="math display">Testimony(<em>t</em>) ⇏ AdmittedClaim(<em>c</em>)</span></p>
+<p><span
+class="math display">Evidence(<em>e</em>) ⇏ Authority(<em>a</em>)</span></p>
+<p><span
+class="math display">Receipt(<em>r</em>) ⇏ Standing(<em>c</em>, <em>σ</em>)</span></p>
+<p><span
+class="math display">SuccessfulRun(<em>x</em>) ⇏ ProductionReady(<em>x</em>)</span></p>
+<p>A minimal entailment relation is:</p>
+<p><span
+class="math display">Entails(EvidenceSet, TypedClaim, RuleProfile) → EntailmentStatus</span></p>
+<p>where:</p>
+<pre class="text"><code>EntailmentStatus =
+  SUPPORTED
+  NOT_SUPPORTED
+  CONTRADICTED
+  UNDECIDABLE
+  OUT_OF_SCOPE
+  GAP_REQUIRED</code></pre>
+<p>GSOL does not claim that arbitrary natural-language entailment is
+decidable. It requires that the machine-bearing claim position be typed,
+registry-bound, and checked under an explicit rule profile.</p>
+<h2 id="refusal-as-successful-governance">10. Refusal as Successful
+Governance</h2>
+<p>In ordinary programming, refusal may look like an error. In GSOL,
+refusal is a first-class successful result when it preserves a boundary
+that should not be crossed.</p>
+<p>A refusal is required when:</p>
+<pre class="text"><code>authority is missing
+authority is stale
+jurisdiction mismatches
+effect exceeds authority
+input is invalid
+state boundary mismatches
+receipt obligation cannot be satisfied
+claim is unsupported
+nonclaim would be violated
+requested standing exceeds evidence
+lowering target cannot preserve semantics
+temporal validity fails
+revocation or recall blocks use
+merge conflict remains unresolved</code></pre>
+<p>A refusal result has the form:</p>
+<p><span
+class="math display">Refuse(<em>c</em>, ℛ<sub>refusal</sub>, <em>Δ</em><sub>0</sub>)</span></p>
+<p>The refusal receipt may support the claim that the system preserved a
+constitutional boundary. It does not support the claim that the
+requested operation completed. This is why refusal is a success
+condition in GSOL: it demonstrates that the system preserved
+admissibility boundaries instead of converting insufficient authority,
+evidence, or semantics into an unearned effect.</p>
+<h2 id="syntax-sketch">11. Syntax Sketch</h2>
+<p>A complete GSOL grammar should be small, regular, parseable, and
+canonical. An illustrative grammar is:</p>
+<pre class="text"><code>program        ::= metadata? import* operation+
+metadata       ::= &quot;gsol&quot; version_decl profile_decl? current_head_decl?
+import         ::= &quot;import&quot; qualified_id
+operation      ::= &quot;operation&quot; id &quot;{&quot; op_body &quot;}&quot;
+
+op_body        ::= version_decl
+                   jurisdiction_decl
+                   profile_decl?
+                   inputs_decl
+                   outputs_decl?
+                   authority_decl
+                   warrants_decl?
+                   effects_decl
+                   requires_decl
+                   refuses_decl
+                   admits_decl
+                   emits_decl
+                   claims_decl?
+                   nonclaims_decl?
+                   standing_decl
+                   temporal_decl?
+                   debts_decl?
+                   lowerings_decl
+                   proofs_decl?
+
+version_decl   ::= &quot;version&quot; string
+jurisdiction_decl ::= &quot;jurisdiction&quot; qualified_id
+profile_decl   ::= &quot;profile&quot; qualified_id
+current_head_decl ::= &quot;current_head&quot; qualified_id
+
+inputs_decl    ::= &quot;inputs&quot; block(field_decl*)
+outputs_decl   ::= &quot;outputs&quot; block(field_decl*)
+field_decl     ::= id &quot;:&quot; type_ref
+
+authority_decl ::= &quot;authority&quot; block(predicate*)
+warrants_decl  ::= &quot;warrants&quot; block(warrant_ref*)
+effects_decl   ::= &quot;effects&quot; block(effect_stmt*)
+requires_decl  ::= &quot;requires&quot; block(predicate*)
+refuses_decl   ::= &quot;refuses&quot; block(refusal_rule+)
+admits_decl    ::= &quot;admits&quot; block(action+)
+emits_decl     ::= &quot;emits&quot; block(receipt_decl+)
+claims_decl    ::= &quot;claims&quot; block(typed_claim_stmt*)
+nonclaims_decl ::= &quot;nonclaims&quot; block(nonclaim_stmt*)
+standing_decl  ::= &quot;standing&quot; block(standing_stmt+)
+temporal_decl  ::= &quot;temporal&quot; block(temporal_stmt*)
+debts_decl     ::= &quot;debts&quot; block(debt_stmt*)
+lowerings_decl ::= &quot;lowerings&quot; block(lowering_stmt+)
+proofs_decl    ::= &quot;proofs&quot; block(proof_stmt*)
+
+refusal_rule   ::= predicate_ref &quot;-&gt;&quot; refusal_code
+receipt_decl   ::= id &quot;:&quot; &quot;Receipt&quot; &quot;(&quot; receipt_attrs &quot;)&quot;
+lowering_stmt  ::= target_id lowering_status
+lowering_status ::= &quot;supported&quot; | &quot;requires_gap_certificate&quot; |
+&quot;not_claimed&quot;</code></pre>
+<p>The grammar prefers explicit blocks over clever shorthand. Governed
+systems should be legible to auditors.</p>
+<h2 id="worked-example-governed-model-invocation">12. Worked Example:
+Governed Model Invocation</h2>
+<p>This section gives an end-to-end example: proposal, admission,
+effect, receipt, claim and nonclaim update, and lowering.</p>
+<h3 id="scenario">12.1 Scenario</h3>
+<p>A user asks a governed AI system:</p>
+<pre class="text"><code>Summarize EvidenceBundle E under strict evidence profile.</code></pre>
+<p>The system proposes to invoke a model. The model may summarize
+evidence, but it may not admit new factual claims, call tools, write
+memory, or publish externally.</p>
+<h3 id="gsol-operation">12.2 GSOL Operation</h3>
+<pre class="text"><code>operation governed_model_summary {
+  version &quot;0.1&quot;
+  jurisdiction AOK
+  profile strict_evidence
+
+  inputs {
+    request: RequestEnvelope
+    evidence: EvidenceBundle
+    context: SessionContext
+    warrant: ModelInvocationWarrant
+    reactor: ReactorRef
+  }
+
+  outputs {
+    testimony: ModelTestimony
+    summary_candidate: ResponseCandidate
+  }
+
+  authority {
+    requires warrant.permits(MODEL_INVOKE)
+    requires warrant.jurisdiction == jurisdiction
+    requires warrant.temporal_status == ACTIVE
+  }
+
+  effects {
+    requested MODEL_INVOKE
+    admitted MODEL_INVOKE
+    forbidden [TOOL_CALL, MEMORY_WRITE, CLAIM_ADMIT, PUBLISH]
+  }
+
+  requires {
+    request.canonical == true
+    evidence.hash_bound == true
+    context.profile == strict_evidence
+    reactor.kind in [DeterministicFixtureReactor, ReplayReactor,
+    LocalModelReactor]
+  }
+
+  refuses {
+    missing_warrant -&gt; REFUSE.MISSING_WARRANT
+    stale_warrant -&gt; REFUSE.STALE_WARRANT
+    evidence_unbound -&gt; REFUSE.INVALID_INPUT
+    policy_downgrade -&gt; REFUSE.POLICY_DOWNGRADE
+    effect_exceeds_authority -&gt; REFUSE.EFFECT_EXCEEDS_AUTHORITY
+  }
+
+  admits {
+    reactor.invoke(request, evidence, context)
+  }
+
+  emits {
+    pre_model_receipt: Receipt(role=&quot;pre_model_invocation&quot;)
+    closeout_receipt: Receipt(role=&quot;model_closeout&quot;)
+    refusal_receipt: Receipt(role=&quot;refusal&quot;)
+  }
+
+  claims {
+    supports CLAIM.MODEL_INVOCATION_WITNESSED
+  }
+
+  nonclaims {
+    preserves NONCLAIM.MODEL_OUTPUT_IS_NOT_TRUTH
+    preserves NONCLAIM.MODEL_OUTPUT_IS_NOT_CLAIM_ADMISSION
+    preserves NONCLAIM.MODEL_OUTPUT_IS_NOT_MEMORY
+    preserves NONCLAIM.MODEL_OUTPUT_IS_NOT_AUTHORITY
+  }
+
+  standing {
+    may_support CONFORMANCE
+    cannot_promote PRODUCTION
+  }
+
+  lowerings {
+    deterministic_fixture supported
+    python_reference supported
+    mcir requires_gap_certificate
+    binary not_claimed
+  }
+
+  proofs {
+    warrant_check required
+    receipt_binding required
+    testimony_classification required
+    negative_fixture required
+  }
+}</code></pre>
+<h3 id="mechanical-coverage-of-refusal-receipts">12.3 Mechanical
+Coverage of Refusal Receipts</h3>
+<p>Each declared refusal path is covered by the
+<code>refusal_receipt</code> obligation.</p>
+<p>The coverage map is:</p>
+<pre class="text"><code>missing_warrant -&gt; REFUSE.MISSING_WARRANT -&gt; receipt role: refusal
+stale_warrant -&gt; REFUSE.STALE_WARRANT -&gt; receipt role: refusal
+evidence_unbound -&gt; REFUSE.INVALID_INPUT -&gt; receipt role: refusal
+policy_downgrade -&gt; REFUSE.POLICY_DOWNGRADE -&gt; receipt role: refusal
+effect_exceeds_authority -&gt; REFUSE.EFFECT_EXCEEDS_AUTHORITY -&gt;
+receipt role: refusal</code></pre>
+<p>A checker can therefore verify a simple coverage condition:</p>
+<p><span
+class="math display">∀<em>r</em> ∈ ref(<em>O</em>), ∃<em>e</em> ∈ emit(<em>O</em>) : role(<em>e</em>) = refusal</span></p>
+<p>A stronger profile may require a distinct refusal receipt template
+per refusal code. The v0.1 rule requires at least one declared refusal
+receipt role for every refusal path.</p>
+<h3 id="transition-walkthrough">12.4 Transition Walkthrough</h3>
+<p><strong>Proposal.</strong> The system proposes
+<code>MODEL_INVOKE</code> under <code>strict_evidence</code>.</p>
+<p><strong>Admission.</strong> The warrant is active, the evidence
+bundle is hash-bound, and the requested effect is limited to model
+invocation. Admission succeeds.</p>
+<p><strong>Effect.</strong> The reactor is invoked. The output is
+<code>ModelTestimony</code>.</p>
+<p><strong>Receipt.</strong> The system emits a pre-model receipt and a
+closeout receipt. If the warrant were missing or stale, it would emit a
+refusal receipt instead.</p>
+<p><strong>Claim update.</strong> The operation may support only<br />
+<code>CLAIM.MODEL_INVOCATION_WITNESSED</code>. It does not admit the
+factual content of the model output.</p>
+<p><strong>Nonclaim preservation.</strong> The system preserves the
+nonclaims that model output is not truth, not claim admission, not
+memory, and not authority.</p>
+<p><strong>Lowering.</strong> The operation may lower to deterministic
+fixture or Python reference. MCIR lowering requires a gap certificate
+because the current target cannot yet represent all testimony
+classification and nonclaim preservation semantics directly. Binary
+lowering is not claimed.</p>
+<h3 id="refusal-variant">12.5 Refusal Variant</h3>
+<p>If the warrant is missing, the transition is:</p>
+<p><span
+class="math display"><em>T</em>(<em>S</em>, <em>I</em>, <em>A</em>) = Refuse(REFUSE.MISSING_WARRANT, ℛ<sub>refusal</sub>, <em>Δ</em><sub>0</sub>)</span></p>
+<p>This is not an execution failure. It is a successful governed
+refusal.</p>
+<h2 id="lowering-example-with-gap-certificate">13. Lowering Example with
+Gap Certificate</h2>
+<p>Suppose the operation above is lowered to a Python reference harness.
+The Python target can preserve:</p>
+<pre class="text"><code>warrant check
+effect check
+reactor invocation
+pre-model receipt
+closeout receipt
+refusal receipt</code></pre>
+<p>But the target cannot natively preserve:</p>
+<pre class="text"><code>typed claim entailment
+semantic hash equivalence
+MCIR-level lowering proof
+binary realization proof</code></pre>
+<p>The lowering result is therefore not a full preservation claim. It
+is:</p>
+<pre class="text"><code>LoweringResult =
+  LoweredArtifact(python_reference)
+  + GapCertificate(
+      gap_id=&quot;GAP.MODEL_SUMMARY.MCIR_TYPED_CLAIM&quot;,
+      source_operation=&quot;governed_model_summary&quot;,
+      target_layer=&quot;mcir&quot;,
+      missing_semantics=[
+        &quot;typed_claim_entailment&quot;,
+        &quot;semantic_hash_equivalence&quot;,
+        &quot;nonclaim_preservation_proof&quot;
+      ],
+      unsupported_effects=[],
+      unsupported_receipts=[],
+      blocked_claims=[
+        &quot;CLAIM.UNBOUNDED_GSOL_TO_MCIR_LOWERING&quot;,
+        &quot;CLAIM.BINARY_REALIZATION&quot;
+      ],
+      safe_fallback=&quot;python_reference_with_receipts&quot;
+    )</code></pre>
+<p>The gap certificate prevents a partial lowering from being
+overclaimed as full semantic preservation. The example also illustrates
+a general lowering rule:</p>
+<p><span
+class="math display">loses_required_semantics(source, target) ⇒ LoweringResult = LoweredArtifact(target) + GapCertificate(<em>g</em>)</span></p>
+<p>Silent semantic loss is not a valid lowering result.</p>
+<h2 id="threat-and-adversary-model">14. Threat and Adversary Model</h2>
+<p>GSOL is designed for systems containing honest components, confused
+components, stale components, and malicious components.</p>
+<p>Adversary classes include:</p>
+<pre class="text"><code>lying_model
+malicious_tool_provider
+compromised_coder
+tampered_archive
+defective_gate
+stale_current_head_surface
+malicious_or_model_based_classifier
+colluding_or_looping_agents
+policy_downgrade_actor</code></pre>
+<p>GSOL primarily defends against semantic governance failures:</p>
+<pre class="text"><code>authority spoofing
+effect laundering
+receipt role collapse
+claim overpromotion
+nonclaim erasure
+jurisdiction confusion
+registry substitution
+current-head drift
+lowering misrepresentation
+semantic hash drift
+pseudocode ambiguity
+capability-authority confusion
+fixture-production collapse
+silent refusal removal
+stale evidence promotion
+tool-output authority laundering
+model-testimony truth laundering
+memory-write laundering</code></pre>
+<p>GSOL does not by itself defeat all adversaries. In particular,
+same-tree verification proves internal consistency only. If a
+compromised archive contains its own mutated gates and receipts,
+internal verification may be insufficient. External trust anchors are
+required for provenance claims.</p>
+<p>Internal consistency means that an artifact agrees with its own
+governed records: manifests match files, receipt references resolve,
+current-head metadata is coherent, and verification vectors pass under
+the included rules. External attestation means that an external witness,
+signature, transparency log, independent rebuild, timestamp authority,
+or trusted baseline digest supports a claim about origin, time,
+producer, or non-tampering. GSOL can represent both surfaces, but it
+must not collapse them. An internally consistent artifact is not
+automatically externally attested.</p>
+<p>Root-of-trust surfaces include:</p>
+<pre class="text"><code>trusted_external_baseline_digest
+governance_current_head
+source_manifest
+detached_evidence_manifest
+full_verification_vector
+governor_review_surface
+external signature or transparency log, when available</code></pre>
+<h2 id="canonicalization-hashing-and-implementation-feasibility">15.
+Canonicalization, Hashing, and Implementation Feasibility</h2>
+<p>GSOL is feasible to implement incrementally because its first-order
+requirements are ordinary language-tooling tasks:</p>
+<pre class="text"><code>parse a structured grammar
+build a canonical AST
+normalize identifiers and field order
+serialize deterministically
+compute operation hashes
+bind registry references
+run type checks
+run effect checks
+run refusal coverage checks
+verify receipt obligations
+emit gap certificates</code></pre>
+<p>A canonical operation hash is computed over normalized semantic
+content:</p>
+<p><span
+class="math display">operation_hash = HASH(canonical_operation_payload)</span></p>
+<p>Canonicalization excludes comments from semantic hash and includes
+all governing fields. This enables drift detection and registry
+verification.</p>
+<p>A minimal implementation need not execute GSOL. It can begin as a
+parser, canonicalizer, checker, and renderer. Runtime interpretation,
+MCIR lowering, and live AI harness integration can be layered later.</p>
+<h2 id="comparison-matrix">16. Comparison Matrix</h2>
+<p>The comparison is stated as compact prose rather than a wide table,
+because the relevant contrast is qualitative rather than numerical.</p>
+<p><strong>Compiler IR.</strong> Compiler intermediate representations
+support program transformation and code generation. They usually
+preserve control flow, data flow, types, and operations. They usually
+externalize authority, refusal, standing, and nonclaims. GSOL preserves
+governed operation meaning before lowering.</p>
+<p><strong>Policy language.</strong> Policy languages support
+authorization decisions. They usually preserve rules and permissions.
+They usually externalize receipts, claims, lowering, and standing. GSOL
+represents the whole transition, not only an allow-or-deny decision.</p>
+<p><strong>Provenance system.</strong> Provenance systems support origin
+and derivation tracking. They usually preserve agents, activities, and
+entities. They usually externalize admission semantics, nonclaims, and
+refusal paths. GSOL binds provenance to admissible operation
+semantics.</p>
+<p><strong>Supply-chain attestation.</strong> Supply-chain attestation
+systems support artifact integrity and build provenance. They usually
+preserve materials, builders, and steps. They usually externalize
+semantic claim boundaries. GSOL specifies what the attested operation
+means.</p>
+<p><strong>AI harness.</strong> AI harnesses support runtime
+orchestration of model calls, tool calls, and memory flow. They usually
+externalize canonical typed operation semantics. GSOL supplies the
+operation contract that harnesses can enforce.</p>
+<p><strong>Pseudocode.</strong> Pseudocode supports human explanation.
+It usually preserves intent and readability. It usually externalizes
+canonicality, evidence, standing, and refusal. GSOL is canonical and
+checkable, not merely explanatory.</p>
+<p><strong>Natural-language policy.</strong> Natural-language policy
+supports human governance. It usually preserves normative intent. It
+usually externalizes machine-checkable operational structure. GSOL turns
+policy-relevant operations into typed artifacts.</p>
+<h2 id="current-head-registry-dependence-and-versioning">17. Current
+Head, Registry Dependence, and Versioning</h2>
+<p>A GSOL archive should not scatter its current version, current
+milestone, standing, next rung, and release profile across many
+hand-maintained surfaces. Current-head identity should be governed from
+one source.</p>
+<p>A current-head object should bind:</p>
+<pre class="text"><code>package_name
+package_version
+current_milestone
+current_standing
+current_claim_id
+predecessor_milestone
+next_allowed_rung
+release_profile
+source_archive_profile
+detached_evidence_bundle_hash
+verification_vector_ref</code></pre>
+<p>Registries are also central. GSOL depends on stable registries for
+effects, refusal codes, receipt roles, typed claims, predicates,
+nonclaims, standing levels, jurisdictions, warrants, lowering targets,
+types, temporal policies, and proof obligations.</p>
+<p>This registry dependence is both a strength and a limitation. It
+makes operations checkable, but registry drift must be detected and
+migrated through admissible records.</p>
+<h2 id="limitations">18. Limitations</h2>
+<p>GSOL v0.1 is a pre-release specification. Its limits include:</p>
+<pre class="text"><code>full parser is not yet normative
+full typed-claim migration is not complete
+full entailment engine is not implemented
+arbitrary natural-language entailment remains undecidable
+runtime execution is not implemented
+live AI harness integration is not implemented
+streaming response semantics are not complete
+production attestation is not complete
+automatic merge runtime is not complete
+adaptive receipt-tiering runtime is not complete
+unbounded GSOL-to-MCIR lowering is not complete
+unbounded GSOL-to-Jnana lowering is not complete
+native or binary execution is not claimed</code></pre>
+<p>The most important theoretical limit is entailment. If GSOL allowed
+arbitrary free prose as the machine-bearing claim position, sound
+checking would collapse. GSOL therefore requires typed, registry-bound
+claims for machine admission, while allowing prose as explanation.</p>
+<p>The second major limit is registry dependence. A typed semantic
+language depends on stable vocabularies. Drift, migration, and
+versioning must therefore be governed.</p>
+<p>The third major limit is partial lowering. A target substrate may
+preserve executable behavior while losing authority, refusal, receipt,
+claim, nonclaim, or standing semantics. GSOL treats this as a gap rather
+than an equivalence claim.</p>
+<p>The fourth major limit is non-universality. GSOL is not meant to
+express arbitrary computation. Its competence is measured by whether it
+can represent admissibility-relevant transitions, not whether it can
+replace executable languages.</p>
+<p>The fifth major limit is external trust. Internal receipts and
+verification vectors can show consistency, but provenance claims require
+external anchors such as signatures, transparency logs, independent
+witnesses, or trusted baseline digests.</p>
+<p>In short, GSOL v0.1 is bounded by undecidable entailment, partial
+lowering, registry dependence, non-universality, and the distinction
+between internal consistency and external attestation. These are not
+incidental weaknesses; they are the boundaries that keep GSOL from
+becoming an overclaiming runtime or truth engine.</p>
+<h2 id="reproducibility-and-artifact-statement">19. Reproducibility and
+Artifact Statement</h2>
+<p>This paper presents a conceptual language design. Reproducibility for
+the concept consists of checking whether future GSOL artifacts can be
+parsed, canonicalized, hashed, type-checked, and evaluated against
+positive and negative conformance fixtures. A reference artifact may
+include a grammar, canonical AST schema, registry set, example
+operations, verifier scripts, receipt fixtures, negative fixtures, and
+gap certificates.</p>
+<p>Claims in this paper should be read as design claims unless
+explicitly attached to an implementation artifact. GSOL v0.1 defines a
+direction and a conformance boundary; it does not claim production
+runtime completeness.</p>
+<h2 id="discussion-why-gsol-should-not-be-turing-complete">20.
+Discussion: Why GSOL Should Not Be Turing-Complete</h2>
+<p>A natural question is whether GSOL should be powerful enough to
+express arbitrary computation. The answer is no.</p>
+<p>If GSOL became a general-purpose programming language, the governance
+layer would become another execution surface. Computation could hide
+inside the language intended to constrain computation. This would
+undermine the separation between semantic governance and executable
+realization.</p>
+<p>The better goal is constitutional adequacy. GSOL should express every
+transition whose admissibility depends on authority, effect, refusal,
+receipt, claim, standing, time, provenance, or lowering. Arbitrary
+algorithms should live in executable substrates. GSOL should govern what
+those algorithms are allowed to mean and do.</p>
+<p>A maximally competent GSOL is therefore:</p>
+<pre class="text"><code>a decidable, typed, compositional governed semantic operation language
+that can express every constitutionally meaningful transition,
+bind each transition to authority, evidence, effect, refusal, and
+receipt semantics,
+and lower honestly into executable substrates without becoming the
+substrate itself.</code></pre>
+<h2 id="conclusion">21. Conclusion</h2>
+<p>GSOL is proposed as a language of admissible operation: a governed
+semantic operation language for representing computational transitions
+before execution.</p>
+<p>Its contribution is not a new syntax for ordinary programming. Its
+contribution is a semantic layer that preserves distinctions ordinary
+computational systems often erase: capability versus authority,
+testimony versus claim, evidence versus standing, receipt versus
+provenance, execution versus admission, and correspondence versus
+equivalence.</p>
+<p>The need for such a layer becomes acute in systems where AI models,
+tools, memory, claims, evidence, and executable artifacts interact. In
+those systems, the danger is not only that code may fail. The deeper
+danger is that a system may overinterpret its own success.</p>
+<p>GSOL is designed to resist that overinterpretation.</p>
+<p>In plain language: GSOL is not the machine. It is the oath the
+machine must keep before it moves.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that computational systems increasingly perform
+actions whose significance cannot be determined from execution alone: a
+program may run, a model may answer, a tool may return output, or an
+artifact may be built without establishing whether the transition was
+authorized, evidenced, bounded, or admissible. Its nearest external
+comparison fields are formal, token, semantic. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal assurance
+remains relative to the encoded model, trusted base, and refinement
+chain; proof does not remove specification error or unmodeled
+environmental behavior. Statistical compression can improve efficiency
+while destroying distinctions needed for interpretation; semantic labels
+can conversely overstate stability that usage does not support. Formal
+vocabularies and graph links make commitments explicit but cannot by
+themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E2]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E3]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<p><strong>[E4]</strong> Leslie Lamport. <em>Specifying Systems: The
+TLA+ Language and Tools for Hardware and Software Engineers</em>.
+Addison-Wesley, 2002. https://lamport.azurewebsites.net/tla/book.html
+<strong>Relationship:</strong> Predecessor specification discipline for
+state machines, safety, liveness, and refinement.</p>
+<p><strong>[E5]</strong> Rico Sennrich, Barry Haddow, and Alexandra
+Birch. “Neural Machine Translation of Rare Words with Subword Units.”
+<em>ACL 2016</em>, pp. 1715-1725. DOI: 10.18653/v1/P16-1162.
+https://doi.org/10.18653/v1/P16-1162 <strong>Relationship:</strong>
+Predecessor subword tokenization method used as a contrast to
+semantically governed token boundaries.</p>
+<p><strong>[E6]</strong> Taku Kudo and John Richardson. “SentencePiece:
+A Simple and Language Independent Subword Tokenizer and Detokenizer for
+Neural Text Processing.” <em>EMNLP 2018: System Demonstrations</em>.
+DOI: 10.18653/v1/D18-2012. https://doi.org/10.18653/v1/D18-2012
+<strong>Relationship:</strong> Predecessor tokenizer implementation used
+to separate statistical segmentation from semantic admissibility.</p>
+<p><strong>[E7]</strong> Peter D. Grunwald. <em>The Minimum Description
+Length Principle</em>. MIT Press, 2007. <a
+href="https://mitpress.mit.edu/9780262072816/the-minimum-description-length-principle/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor theory of
+compression and model selection; compression is not assumed to preserve
+governance or meaning.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Hybrid Semantic Compiler
+Architectures</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.21228038</code>;<br />
+source SHA-256<br />
+<code>EBCD6DDDA9B547639AEBED79FB68069473CF1248E41C527B48C9624BBE2C0496</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F1E33B5E973B0900</code>;<br />
+source SHA-256<br />
+<code>CDC80271268802CA5CB4DE3624B992FB2FF07D677BF945C4B349BD307C4C2A6E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Everything Is a
+Compiler</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-30FB8F95BD990A47</code>;<br />
+source SHA-256<br />
+<code>FE0F88A1F125317285BE4378E5F27ACC9FEB83ADE3FF329A3DA9F9CB026DF9A9</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governed Semantic Tokens:
+Tokenization as an Admissibility Boundary</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18469507</code>;<br />
+source SHA-256<br />
+<code>5C44175B87C514892A0DC9743E09D03893E970AF5419F2E6D9171651BE2A9A54</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Token Parsimony</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.20382825</code>;<br />
+source SHA-256<br />
+<code>EC3AA22D32E2BBA21CFCB6D1FA2AE6EA8AC11B7781D19C51530A2F6D924B2E91</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>LLVM Project. “LLVM Language Reference Manual.”
+https://llvm.org/docs/LangRef.html</p>
+<p>W3C. “PROV-O: The PROV Ontology.” https://www.w3.org/TR/prov-o/</p>
+<p>Torres-Arias, S., Afzali, H., Kuppusamy, T. K., Curtmola, R., and
+Cappos, J. “in-toto: Providing farm-to-table guarantees for bits and
+bytes.” USENIX Security, 2019. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a></p>
+<p>in-toto Project. “in-toto: A framework to protect supply chain
+integrity.” https://in-toto.io/</p>
+<p>SLSA Project. “Supply-chain Levels for Software Artifacts.”
+https://slsa.dev/</p>
+<p>SLSA Project. “Provenance.” https://slsa.dev/spec/v1.0/provenance</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.21214886">10.5281/zenodo.21214886</a></p>

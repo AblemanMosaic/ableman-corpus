@@ -1,0 +1,2120 @@
+<h1 id="exigence-and-the-cognitive-kernel">Exigence and the Cognitive
+Kernel</h1>
+<h2 id="a-governed-account-of-what-calls-for-transition">A Governed
+Account of What Calls for Transition</h2>
+<h3
+id="pressure-is-not-authority-notice-is-not-truth-and-a-call-for-change-is-not-yet-permission-to-act.">Pressure
+is not authority, notice is not truth, and a call for change is not yet
+permission to act.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Computational systems routinely model tasks, priorities, deadlines,
+permissions, attention, and action, but they rarely possess a unified
+account of why a particular state presently calls for transition. This
+paper introduces <strong>Exigence</strong> as a first-class
+computational primitive: the graph-derived condition by which an object,
+process, agent, institution, or environment presently calls for some
+admissible change. Exigence is neither priority nor urgency. Priority is
+declared ordering; urgency concerns time sensitivity; Exigence arises
+from the live relationship between state, dependency, consequence,
+opportunity, authority, capability, care, safety, and constraint.</p>
+<p>The paper situates Exigence within a broader <strong>Cognitive
+Kernel</strong>, or CogK, that separates observation, salience,
+epistemic interpretation, Exigence, standing, attention, custody,
+sufficiency, policy, authorization, execution, receipt, and outcome.
+These elements are treated not as interchangeable stages but as distinct
+projections over shared governed reality. The separation allows systems
+to distinguish what is observed from what is believed, what matters from
+what may be done, and what may be done from what actually occurred.</p>
+<p>The resulting architecture supports lawful refusal,
+receipt-before-effect, context compilation, agent orchestration,
+institutional modeling, attention governance, household coordination,
+autonomous systems, games, simulated societies, and the progressive
+crystallization of expensive semantic reasoning into deterministic
+machinery. It also permits the modeling of pathological Exigence
+topologies such as fixation, suppression, inflation, avoidance,
+fragmentation, and over-propagation. These structures need not be used
+to diagnose humans. They can instead serve as integrity and
+execution-gate models for detecting recurrent computational trajectories
+that should be refused, escalated, reinterpreted, or repaired.</p>
+<p>The central claim is that Exigence is a candidate connective layer
+between a passive world model and governed transition. Its value depends
+on keeping an Exigence claim distinct from observation, salience,
+standing, attention, policy, authorization, effect, and outcome. The
+Cognitive Kernel thereby offers a general substrate for systems that
+must decide what currently matters, who holds the next move, what
+conditions are sufficient, what transitions are lawful, and when action
+must stop.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>A task list records work.</p>
+<p>A scheduler orders work.</p>
+<p>A notification system surfaces work.</p>
+<p>A planner proposes work.</p>
+<p>An executor performs work.</p>
+<p>None of these, by themselves, answer a more fundamental question:</p>
+<blockquote>
+<p>What in the present state of reality now calls for transition?</p>
+</blockquote>
+<p>Conventional systems usually approximate this question through
+combinations of priority labels, due dates, alerts, dependencies,
+service-level agreements, utility functions, interrupt classes, and
+human judgment. These mechanisms are useful but conceptually fragmented.
+A due date may indicate temporal pressure without indicating
+consequence. A high-priority task may remain inactionable because
+authority or evidence is missing. A loud notification may capture
+attention despite low significance. A slowly degrading bridge,
+medication supply, security boundary, or institutional capability may
+remain nearly invisible until failure becomes acute.</p>
+<p>The concept of <strong>Exigence</strong> addresses this gap.</p>
+<p>Exigence is the live, situated call for transition that emerges from
+the relationship between an object and its surrounding governed world.
+It is not simply stored on the object. It is derived from topology:
+dependencies, blocked successors, risks, temporal windows, obligations,
+institutional standing, available resources, human needs, and admissible
+futures.</p>
+<p>An unpaid bill approaching its due date may acquire Exigence. If
+payment is impossible because an account is locked, the actionable
+Exigence propagates toward resolving the account lock. If authority is
+missing, the authority request becomes the relevant next object. If
+repeated execution attempts fail without new evidence, model repair may
+become more exigent than another retry.</p>
+<p>This movement is central. Exigence does not merely rank objects. It
+helps locate where reality is actually waiting.</p>
+<p>The Cognitive Kernel introduced in this paper places Exigence within
+a governed architecture for perception, interpretation, attention,
+authority, execution, and learning. It is intended for systems in which
+action must be explainable, bounded, reversible where possible, and
+capable of lawful refusal.</p>
+<h2 id="exigence">2. Exigence</h2>
+<h3 id="definition">2.1 Definition</h3>
+<p>Exigence is:</p>
+<blockquote>
+<p>The graph-derived condition by which a present state calls for an
+admissible transition.</p>
+</blockquote>
+<p>The definition contains four important commitments.</p>
+<p>First, Exigence is <strong>state-relative</strong>. A condition may
+be non-exigent in one state and highly exigent in another.</p>
+<p>Second, it is <strong>graph-derived</strong>. Its significance arises
+through relationships rather than isolated object properties.</p>
+<p>Third, it is <strong>transition-oriented</strong>. Exigence concerns
+pressure toward change, not merely importance.</p>
+<p>Fourth, it is <strong>constitutionally bounded</strong>. A state may
+strongly call for change without authorizing every possible
+response.</p>
+<h3 id="priority-urgency-salience-and-exigence">2.2 Priority, Urgency,
+Salience, and Exigence</h3>
+<p>These terms should remain distinct.</p>
+<p><strong>Priority</strong> is a declared or computed ordering.</p>
+<p><strong>Urgency</strong> concerns diminishing time before consequence
+or opportunity loss.</p>
+<p><strong>Salience</strong> concerns what captures notice or
+processing.</p>
+<p><strong>Exigence</strong> concerns what the modeled reality presently
+calls to be resolved.</p>
+<p>A loud alarm may be salient but false.</p>
+<p>A maintenance defect may be low-salience but highly exigent.</p>
+<p>A project may be declared high-priority but presently blocked.</p>
+<p>A medical prescription may not yet be urgent, yet its refill process
+may already be exigent because pharmacy, insurance, and appointment
+delays require advance action.</p>
+<p>This distinction allows a system to preserve silent but meaningful
+states.</p>
+<p>For example:</p>
+<pre class="text"><code>Household object:
+Clean bathroom toilet
+
+Green:
+Tracked, available in household view, not shown in notifications
+
+Yellow:
+Visible in upcoming work
+
+Red:
+Eligible for active reminder
+
+Reevaluation:
+Daily</code></pre>
+<p>The object exists throughout. Its Exigence changes. Its visibility
+and interruption eligibility are separate projections.</p>
+<h3 id="exigence-as-topology">2.3 Exigence as Topology</h3>
+<p>Exigence may emerge through:</p>
+<ul>
+<li>dependency pressure;</li>
+<li>safety exposure;</li>
+<li>temporal decay;</li>
+<li>opportunity windows;</li>
+<li>care obligations;</li>
+<li>constitutional duties;</li>
+<li>maintenance accumulation;</li>
+<li>authority gaps;</li>
+<li>information deficits;</li>
+<li>resource shortages;</li>
+<li>social commitments;</li>
+<li>reversibility loss;</li>
+<li>downstream congestion;</li>
+<li>unresolved contradiction.</li>
+</ul>
+<p>Suppose a release is waiting on verification. The release itself may
+appear exigent, but the actionable transition belongs to the missing
+verifier artifact. If that artifact cannot be produced because the
+executor lacks access, custody may need to move to an authorized role.
+If no such role exists, the institutional design itself becomes the
+object of concern.</p>
+<p>Exigence therefore propagates toward the nearest unresolved
+prerequisite capable of changing the state.</p>
+<h3 id="formal-object-exigence-as-a-typed-claim">2.4 Formal Object:
+Exigence as a Typed Claim</h3>
+<p>Let the governed world at time <span
+class="math inline"><em>t</em></span> be a typed graph <span
+class="math inline"><em>G</em><sub><em>t</em></sub> = (<em>V</em><sub><em>t</em></sub>, <em>E</em><sub><em>t</em></sub>)</span>.
+For object <span class="math inline"><em>v</em></span>, an interpreting
+role may propose an Exigence claim</p>
+<p><span
+class="math display"><em>x</em><sub><em>t</em></sub>(<em>v</em>) = (<em>d</em>, <em>ρ</em>, <em>ω</em>, <em>κ</em>, <em>η</em>, <em>χ</em>, <em>λ</em>),</span></p>
+<p>where <span class="math inline"><em>d</em></span> is the typed
+transition demand, <span class="math inline"><em>ρ</em></span> its
+dependency and propagation path, <span
+class="math inline"><em>ω</em></span> its temporal window, <span
+class="math inline"><em>κ</em></span> its consequence and reversibility
+profile, <span class="math inline"><em>η</em></span> its evidence and
+uncertainty, <span class="math inline"><em>χ</em></span> its candidate
+custodian/capability relation, and <span
+class="math inline"><em>λ</em></span> its scope and jurisdiction. This
+is deliberately not one universal score.</p>
+<p>The claim becomes <em>admitted Exigence</em> only through a standing
+decision:</p>
+<p><span
+class="math display"><em>S</em>(<em>x</em><sub><em>t</em></sub>, <em>G</em><sub><em>t</em></sub>, <em>C</em><sub><em>t</em></sub>, <em>J</em><sub><em>t</em></sub>) ∈ {ADMIT , REFUSE , DEFER },</span></p>
+<p>under constitutional state <span
+class="math inline"><em>C</em><sub><em>t</em></sub></span> and
+jurisdiction <span
+class="math inline"><em>J</em><sub><em>t</em></sub></span>. Admission
+still does not authorize an effect. Policy, sufficiency, and authority
+must bind an exact candidate transition separately.</p>
+<p>The non-collapse invariants are therefore:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\text{salience} \not \\
+&amp;\Rightarrow \text{Exigence},\qquad \text{Exigence} \not \\
+&amp;\Rightarrow \text{standing},\qquad \text{standing} \not \\
+&amp;\Rightarrow \text{authorization},\qquad \text{authorization} \not
+\\
+&amp;\Rightarrow \text{successful outcome}
+\end{aligned}.
+$$</span></p>
+<p>Exigence may propagate toward one or more unresolved prerequisites,
+but there need not be a unique nearest prerequisite. Several
+incomparable blockers can coexist, and propagation itself is an
+evidence-bounded inference subject to contest and revision.</p>
+<h2 id="the-cognitive-kernel">3. The Cognitive Kernel</h2>
+<p>The Cognitive Kernel is a structured account of how a governed system
+notices, interprets, recognizes, orders, authorizes, acts, refuses, and
+learns.</p>
+<p>Its principal elements are:</p>
+<pre class="text"><code>OBSERVATION
+What information entered the system?
+
+SALIENCE
+What became noticeable?
+
+EPISTEMIC POSITION
+What does an interpreting role currently believe the observation means?
+
+EXIGENCE
+What state now appears to call for transition?
+
+STANDING
+Which asserted needs or claims are constitutionally recognized?
+
+ATTENTION
+What receives scarce processing or display capacity?
+
+CUSTODY
+Who or what presently holds the next move?
+
+SUFFICIENCY
+Are the required information, authority, capability, artifacts,
+resources, and opportunity present?
+
+POLICY
+What ordering, constraints, and precedence rules apply?
+
+AUTHORIZATION
+Which exact transition is presently permitted?
+
+EXECUTION
+What change is attempted?
+
+RECEIPT
+What was performed, refused, deferred, superseded, or failed?
+
+OUTCOME
+What actually changed in governed reality?</code></pre>
+<p>These elements should not be collapsed into a single score or opaque
+decision function. They are distinct projections, often produced by
+different roles and governed by different authorities.</p>
+<h3 id="observation">3.1 Observation</h3>
+<p>Observation records admitted information without prematurely
+converting it into meaning.</p>
+<p>Examples include:</p>
+<ul>
+<li>a sensor reports an obstacle at 0.8 feet;</li>
+<li>a bill is due in seven days;</li>
+<li>an agent has repeated the same repair six times;</li>
+<li>a bridge inspection reports material degradation;</li>
+<li>an NPC encounters smoke near a bakery;</li>
+<li>a user has postponed a task three times.</li>
+</ul>
+<p>Observations may themselves carry provenance, freshness, confidence,
+and admissibility status.</p>
+<h3 id="salience">3.2 Salience</h3>
+<p>Salience represents what became noticeable.</p>
+<p>It is not proof of significance. Systems are vulnerable when salience
+automatically governs action. Attackers, interfaces, institutional
+incentives, and noisy environments can manufacture salience.</p>
+<p>The Cognitive Kernel therefore treats salience as input to
+interpretation, not as authority.</p>
+<h3 id="epistemic-position">3.3 Epistemic Position</h3>
+<p>An Epistemic Position is an inspectable interpretation of admitted
+observations.</p>
+<p>It may include:</p>
+<ul>
+<li>a proposed meaning;</li>
+<li>confidence;</li>
+<li>supporting evidence;</li>
+<li>rival explanations;</li>
+<li>unresolved uncertainty;</li>
+<li>model assumptions;</li>
+<li>recommended next inquiry.</li>
+</ul>
+<p>For example:</p>
+<pre class="text"><code>Observation:
+Front sensor reports 0.8 feet.
+
+Epistemic Position:
+A nearby obstacle probably blocks safe forward acceleration.
+
+Confidence:
+High.
+
+Rival possibilities:
+sensor fault;
+temporary obstruction;
+calibration error.</code></pre>
+<p>The Epistemic Position may be rich, probabilistic, semantic, and
+expensive to produce. It need not itself authorize action.</p>
+<h3 id="exigence-1">3.4 Exigence</h3>
+<p>Exigence is inferred from the relationship between the interpreted
+state and the available transition graph.</p>
+<p>In the sensor example, the immediate Exigence may be:</p>
+<pre class="text"><code>Resolve forward-path safety before acceleration.</code></pre>
+<p>This is not equivalent to “stop forever.” It identifies what must be
+addressed before the requested transition becomes admissible.</p>
+<h3 id="standing">3.5 Standing</h3>
+<p>Standing determines which Exigence claims are recognized by the
+governing constitution.</p>
+<p>A system may receive many assertions:</p>
+<ul>
+<li>a user requests immediate execution;</li>
+<li>an agent claims a deadline;</li>
+<li>a department claims emergency authority;</li>
+<li>an NPC claims ownership;</li>
+<li>a service claims criticality.</li>
+</ul>
+<p>Standing prevents every asserted need from automatically governing
+action.</p>
+<p>An attacker may manufacture urgency. A supervisor may insist that all
+work is critical. A game faction may claim jurisdiction it does not
+possess. Standing asks whether the claim is recognized, by whom, and
+within what scope.</p>
+<h3 id="attention">3.6 Attention</h3>
+<p>Attention allocates scarce processing, presentation, and interruption
+capacity.</p>
+<p>An object may be fully modeled yet excluded from notifications.</p>
+<p>An object may remain retrievable yet absent from an LLM context
+window.</p>
+<p>An institutional problem may be visible to auditors but not interrupt
+a frontline executor.</p>
+<p>Attention is therefore a projection policy over admitted state and
+Exigence, not the same thing as Exigence itself.</p>
+<h3 id="custody">3.7 Custody</h3>
+<p>Custody answers:</p>
+<blockquote>
+<p>Who presently has the next move?</p>
+</blockquote>
+<p>Exigence answers:</p>
+<blockquote>
+<p>How strongly does the present state call for that move?</p>
+</blockquote>
+<p>The pairing is essential.</p>
+<p>An object can have high Exigence and no custodian.</p>
+<p>A role can hold custody but lack authority.</p>
+<p>Custody can be assigned nominally while the artifacts, information,
+or decision rights remain elsewhere. This produces phantom
+delegation.</p>
+<h3 id="sufficiency">3.8 Sufficiency</h3>
+<p>Sufficiency asks whether the custodian possesses what is required for
+transition.</p>
+<p>Relevant dimensions include:</p>
+<ul>
+<li>information;</li>
+<li>evidence;</li>
+<li>authority;</li>
+<li>capability;</li>
+<li>tools;</li>
+<li>artifacts;</li>
+<li>resources;</li>
+<li>time;</li>
+<li>opportunity;</li>
+<li>physical access;</li>
+<li>valid dependencies.</li>
+</ul>
+<p>Insufficiency should not be treated as personal failure. It should
+create a new object or redirect Exigence toward the missing
+condition.</p>
+<h3 id="policy">3.9 Policy</h3>
+<p>Policy orders recognized Exigencies and constrains possible
+responses.</p>
+<p>A constitutional policy might establish:</p>
+<ul>
+<li>safety before throughput;</li>
+<li>human dignity before productivity maximization;</li>
+<li>receipt before effect;</li>
+<li>provenance before execution;</li>
+<li>care obligations before routine convenience;</li>
+<li>irreversible harm before reversible delay;</li>
+<li>rest as possessing independent standing;</li>
+<li>no hidden authority expansion.</li>
+</ul>
+<p>Policy need not force all Exigencies into a total ordering. Many
+situations are better modeled by partial orders and hard precedence
+classes.</p>
+<h3 id="authorization">3.10 Authorization</h3>
+<p>Authorization binds a specific transition to a specific state,
+authority, scope, and set of predicates.</p>
+<p>It should answer:</p>
+<ul>
+<li>what may occur;</li>
+<li>by whom;</li>
+<li>against which object;</li>
+<li>under which evidence;</li>
+<li>within what time or freshness window;</li>
+<li>subject to which revalidation conditions.</li>
+</ul>
+<p>Authorization should not be assumed durable when its predicates may
+change.</p>
+<h3 id="execution">3.11 Execution</h3>
+<p>The Executor should remain as small as possible.</p>
+<p>It need not repeat the semantic work of the Steward or policy work of
+the Governor. It should determine whether the exact requested transition
+remains admissible under current critical facts.</p>
+<p>For example:</p>
+<pre class="text"><code>Requested transition:
+Accelerate from zero.
+
+Current trusted fact:
+Front distance = 0.8 feet.
+
+Rule:
+No forward acceleration below 1 foot.
+
+Result:
+Refuse.</code></pre>
+<p>The Executor may revalidate only the minimal predicates bound into
+authorization:</p>
+<ul>
+<li>sensor freshness;</li>
+<li>current state;</li>
+<li>authority validity;</li>
+<li>rule identity;</li>
+<li>environmental threshold.</li>
+</ul>
+<p>If these changed after the Epistemic Position was formed, the
+Executor should emit:</p>
+<pre class="text"><code>AUTHORIZATION_STALE
+RE-EVALUATION_REQUIRED</code></pre>
+<h3 id="receipt-and-outcome">3.12 Receipt and Outcome</h3>
+<p>Receipt records what the system did or refused to do and why.</p>
+<p>Outcome records what actually changed.</p>
+<p>These are not identical. An execution receipt may report that a
+transfer was attempted. The outcome may be that the bank rejected it.
+The resulting state generates new Exigence.</p>
+<p>Receipts make cognition and execution inspectable over time. They
+support replay, audit, model repair, accountability, and history
+generation.</p>
+<h2 id="roles-within-the-kernel">4. Roles Within the Kernel</h2>
+<p>The Cognitive Kernel can be projected across multiple constitutional
+roles.</p>
+<h3 id="steward">4.1 Steward</h3>
+<p>The Steward maintains the richest current interpretation.</p>
+<p>It asks:</p>
+<ul>
+<li>What changed?</li>
+<li>What does it mean?</li>
+<li>Which Exigencies arise?</li>
+<li>What evidence supports them?</li>
+<li>What rival explanations remain?</li>
+<li>What is uncertain?</li>
+<li>What deserves reevaluation?</li>
+</ul>
+<p>The Steward may use expensive semantic computation, including large
+language models, simulation, analogical reasoning, and contextual
+inference.</p>
+<h3 id="governor">4.2 Governor</h3>
+<p>The Governor determines:</p>
+<ul>
+<li>which claims have standing;</li>
+<li>which policies apply;</li>
+<li>which Exigencies outrank others;</li>
+<li>which tradeoffs are permitted;</li>
+<li>which authority may be delegated;</li>
+<li>which transitions require ratification;</li>
+<li>which rules may become binding.</li>
+</ul>
+<p>The Governor transforms interpretation into constitutional order.</p>
+<h3 id="executor">4.3 Executor</h3>
+<p>The Executor determines whether an exact transition is permitted
+now.</p>
+<p>Its minimality is a strength. Rich cognition belongs upstream. The
+Executor protects the effect boundary.</p>
+<h3 id="auditor-or-adjudicator">4.4 Auditor or Adjudicator</h3>
+<p>An Auditor or adjudicator evaluates:</p>
+<ul>
+<li>whether observations were admissible;</li>
+<li>whether interpretations exceeded evidence;</li>
+<li>whether standing was properly granted;</li>
+<li>whether authorization matched policy;</li>
+<li>whether execution matched authorization;</li>
+<li>whether receipts correspond to outcomes;</li>
+<li>whether new rules deserve admission.</li>
+</ul>
+<h3 id="foundry-or-model-repair-process">4.5 Foundry or Model-Repair
+Process</h3>
+<p>When recurring cases exceed the current model, the Foundry proposes
+new object types, predicates, pathology detectors, propagation rules,
+and deterministic machinery.</p>
+<p>The system may propose its own repair. It may not silently ratify
+itself.</p>
+<h2 id="pathological-exigence-topologies">5. Pathological Exigence
+Topologies</h2>
+<p>Cognitive and psychiatric literature contains rich descriptions of
+altered salience, fixation, avoidance, inhibition, compulsive
+repetition, fragmentation, suppression, and inappropriate
+generalization. A computational system need not use these models to
+diagnose humans. It can instead abstract them into formal topologies of
+malformed execution.</p>
+<p>The question becomes:</p>
+<blockquote>
+<p>Has the system entered a recurrent structural region in which its
+Exigence processing no longer responds lawfully to evidence, context,
+outcome, or constraint?</p>
+</blockquote>
+<h3 id="fixation">5.1 Fixation</h3>
+<p>One object remains dominant despite contradictory evidence, failed
+outcomes, or newly available alternatives.</p>
+<pre class="text"><code>Same strategy attempted repeatedly.
+No new evidence admitted.
+Failure receipts accumulate.
+Exigence ranking remains unchanged.</code></pre>
+<p>A gate may refuse another identical retry and require:</p>
+<ul>
+<li>model revision;</li>
+<li>new evidence;</li>
+<li>custody transfer;</li>
+<li>strategy diversification;</li>
+<li>Steward review.</li>
+</ul>
+<h3 id="avoidance">5.2 Avoidance</h3>
+<p>A class of high-Exigence objects is persistently displaced by easier,
+more visible, or more rewarding work.</p>
+<p>Examples include:</p>
+<ul>
+<li>cosmetic improvements displacing integrity repairs;</li>
+<li>easy tests displacing failing safety paths;</li>
+<li>visible production displacing maintenance;</li>
+<li>short-term institutional wins displacing structural
+obligations.</li>
+</ul>
+<p>The system should investigate whether avoidance arises from:</p>
+<ul>
+<li>insufficient capability;</li>
+<li>missing authority;</li>
+<li>poor specification;</li>
+<li>incentive design;</li>
+<li>hidden cost;</li>
+<li>inappropriate policy;</li>
+<li>malformed ontology.</li>
+</ul>
+<h3 id="inflation">5.3 Inflation</h3>
+<p>Too many objects are classified as acute.</p>
+<p>This destroys meaningful attention allocation and permits alert-based
+coercion.</p>
+<p>Possible repairs include:</p>
+<ul>
+<li>typed Exigence;</li>
+<li>evidence thresholds;</li>
+<li>propagation limits;</li>
+<li>hard distinction between safety and commercial pressure;</li>
+<li>partial ordering;</li>
+<li>notification budgets;</li>
+<li>adversarial review of elevation claims.</li>
+</ul>
+<h3 id="suppression">5.4 Suppression</h3>
+<p>Serious conditions remain underrepresented.</p>
+<p>Examples include:</p>
+<ul>
+<li>missing provenance treated as minor;</li>
+<li>maintenance debt hidden by successful operation;</li>
+<li>repeated refusal receipts ignored;</li>
+<li>human exhaustion excluded from planning;</li>
+<li>degraded redundancy treated as normal.</li>
+</ul>
+<p>Suppression can create the appearance of efficiency while
+accumulating systemic risk.</p>
+<h3 id="fragmentation">5.5 Fragmentation</h3>
+<p>Attention and custody shift so frequently that no bounded transition
+reaches closure.</p>
+<p>A system may generate many partial plans, context compilations, and
+attempts without finishing any admissible unit.</p>
+<p>A repair may freeze new admissions and require one bounded closure
+target.</p>
+<h3 id="over-propagation">5.6 Over-Propagation</h3>
+<p>A local condition spreads across too much of the graph.</p>
+<p>One failed test may halt an unrelated release. One rumor may trigger
+institutional panic. One sensor anomaly may disable an entire robot
+fleet.</p>
+<p>The system should require evidence for each propagation edge.</p>
+<h3 id="stale-exigence">5.7 Stale Exigence</h3>
+<p>A resolved object continues to govern attention and execution.</p>
+<p>Terminal receipts should collapse or transform its Exigence unless a
+new condition explicitly reopens it.</p>
+<h3 id="pathological-manifold-regions">5.8 Pathological Manifold
+Regions</h3>
+<p>These patterns can be understood as regions of a computational
+behavior manifold.</p>
+<p>A governed system may identify that it is:</p>
+<ul>
+<li>remaining trapped in a narrow transition basin;</li>
+<li>refusing to enter necessary state regions;</li>
+<li>repeatedly cycling through equivalent states;</li>
+<li>amplifying local signals into global prohibitions;</li>
+<li>suppressing evidence that would require model revision;</li>
+<li>collapsing all distinctions into one acute state.</li>
+</ul>
+<p>The purpose is not metaphorical diagnosis. It is to define integrity
+gates over recurrent execution structures.</p>
+<h2 id="receipt-before-effect">6. Receipt-Before-Effect</h2>
+<p>Receipt-before-effect makes the Cognitive Kernel operational at the
+execution boundary.</p>
+<p>A refusal should not merely return an error. It should identify:</p>
+<ul>
+<li>the pattern detected;</li>
+<li>the attempted effect;</li>
+<li>the evidence considered;</li>
+<li>the policy applied;</li>
+<li>the authority of the gate;</li>
+<li>the state that prevented execution;</li>
+<li>the permitted successor transitions.</li>
+</ul>
+<p>For example:</p>
+<pre class="text"><code>REFUSAL RECEIPT
+
+Pattern:
+EXIGENCE_FIXATION
+
+Attempted effect:
+Repeat repair strategy S.
+
+Evidence:
+Six previous failures.
+No new input.
+Strategy identity unchanged.
+Contradictory verifier result admitted.
+
+Permitted successors:
+Revise hypothesis.
+Acquire new evidence.
+Transfer custody.
+Escalate to Steward.</code></pre>
+<p>This creates lawful refusal space.</p>
+<p>The system does not merely say:</p>
+<pre class="text"><code>NO</code></pre>
+<p>It says:</p>
+<pre class="text"><code>NOT THIS TRANSITION,
+FROM THIS STATE,
+UNDER THIS EVIDENCE.
+
+THESE OTHER TRANSITIONS REMAIN AVAILABLE.</code></pre>
+<p>That distinction is foundational for safe agentic execution.</p>
+<h3 id="decision-effect-and-standing">6.1 Decision, Effect, and
+Standing</h3>
+<p>“Receipt-before-effect” is best understood as a non-bypassable
+authorization commitment at the effect boundary, not as a claim that all
+evidence can exist before the physical world is touched. The lifecycle
+separates:</p>
+<ol type="1">
+<li>proposal and current-state binding;</li>
+<li>admissibility decision or refusal/defer;</li>
+<li>effect attempt;</li>
+<li>effect observation;</li>
+<li>verification against the claim boundary;</li>
+<li>promotion to eligible standing; and</li>
+<li>later revision, revocation, or reconciliation.</li>
+</ol>
+<p>A decision receipt does not prove that the effect occurred. An
+execution report does not verify itself. If an effect occurs without
+conforming evidence, the result is an orphaned effect requiring
+reconciliation, not a clean non-event and not an automatically admitted
+state.</p>
+<p>This refinement connects the Cognitive Kernel to Reasoning by Way of
+Receipts: the durable object is a typed receipt graph, not one
+undifferentiated success record.</p>
+<h2 id="fsc-and-dsc">7. FSC and DSC</h2>
+<p>The Cognitive Kernel supports a progression from expensive semantic
+reasoning to deterministic execution.</p>
+<h3 id="fsc">7.1 FSC</h3>
+<p>The Flexible Semantic Compiler, or FSC, handles:</p>
+<ul>
+<li>ambiguous interpretation;</li>
+<li>latent Exigence discovery;</li>
+<li>rival hypothesis generation;</li>
+<li>novel topology recognition;</li>
+<li>contextual recommendation;</li>
+<li>ontology repair;</li>
+<li>policy proposal;</li>
+<li>explanation;</li>
+<li>semantic gap stitching.</li>
+</ul>
+<p>It may rely on LLMs or other broad inference systems.</p>
+<h3 id="dsc">7.2 DSC</h3>
+<p>The Deterministic Semantic Compiler, or DSC, handles admitted,
+structured, repeatable cases.</p>
+<p>Examples include:</p>
+<pre class="text"><code>IF prescription_days_remaining &lt;= 7
+AND refill_available = false
+THEN create MEDICATION_CONTINUITY exigence.</code></pre>
+<pre class="text"><code>IF task deferred three times
+AND each refusal cites AUTHORITY_MISSING
+THEN open AUTHORITY_TOPOLOGY_REVIEW.</code></pre>
+<pre class="text"><code>IF identical execution strategy fails repeatedly
+WITHOUT new evidence
+THEN refuse another retry
+AND require model revision.</code></pre>
+<p>The DSC provides:</p>
+<ul>
+<li>low cost;</li>
+<li>replayability;</li>
+<li>testability;</li>
+<li>boundedness;</li>
+<li>receipts;</li>
+<li>deterministic outcomes;</li>
+<li>inspectable policy.</li>
+</ul>
+<h3 id="crystallization">7.3 Crystallization</h3>
+<p>The maturation loop is:</p>
+<pre class="text"><code>Observed state
+    v
+DSC evaluates known predicates
+    v
+Bounded action or classification
+    v
+Receipt and outcome
+    v
+FSC reviews anomalies
+    v
+FSC proposes a richer model
+    v
+Adjudicator tests and recommends admission or rejection under the
+governing authority
+    v
+New DSC capability</code></pre>
+<p>The FSC remains available as semantic scout and model critic. The DSC
+progressively absorbs stabilized understanding.</p>
+<h2 id="self-bootstrapping-constitutional-exigence">8.
+Self-Bootstrapping Constitutional Exigence</h2>
+<p>A constitutional Exigence model bootstraps itself when the adequacy
+of its own model becomes an object of Exigence.</p>
+<p>A naive system may begin with:</p>
+<pre class="text"><code>Task
+Priority
+Due date
+Assignee</code></pre>
+<p>It then observes residual failures:</p>
+<ul>
+<li>high-priority work remains unresolved;</li>
+<li>low-priority prerequisites block entire projects;</li>
+<li>agents repeat failed strategies;</li>
+<li>authority gaps appear as performance failures;</li>
+<li>rest is ignored;</li>
+<li>alert volume destroys attention;</li>
+<li>context retrieval repeatedly includes irrelevant material.</li>
+</ul>
+<p>These unexplained residuals create a meta-Exigence:</p>
+<pre class="text"><code>The current model cannot adequately explain
+or govern observed transition failures.</code></pre>
+<p>The system may then propose:</p>
+<ul>
+<li>separate salience from Exigence;</li>
+<li>introduce custody;</li>
+<li>model authority;</li>
+<li>add refusal states;</li>
+<li>recognize restorative Exigence;</li>
+<li>constrain propagation;</li>
+<li>create pathology detectors;</li>
+<li>distinguish notification from state.</li>
+</ul>
+<p>The bootstrap sequence must remain constitutional:</p>
+<pre class="text"><code>observe
+propose
+simulate
+challenge
+adjudicate
+admit
+activate
+monitor
+rollback</code></pre>
+<p>The model may identify the need for its own growth. It may not
+self-ratify the resulting authority.</p>
+<p>What this offers the naive model is structured self-transcendence
+without uncontrolled self-modification.</p>
+<h2 id="context-compilation">9. Context Compilation</h2>
+<p>Context compilation for an LLM call is fundamentally an
+attention-allocation problem.</p>
+<p>The compiler must determine:</p>
+<blockquote>
+<p>Which parts of the available world presently bear on the next
+admissible transition?</p>
+</blockquote>
+<p>Similarity and recency are insufficient. A semantically similar
+artifact may be obsolete. A constitutionally controlling rule may be
+lexically distant. A resolved historical issue may pollute the call. A
+current refusal receipt may be indispensable.</p>
+<p>An Exigence-aware context compiler can assign roles such as:</p>
+<pre class="text"><code>CONSTITUTION
+ACTIVE_OBJECT
+CURRENT_EXIGENCE
+CUSTODY
+BLOCKING_ARTIFACT
+AUTHORITY
+RECENT_RECEIPT
+RIVAL_HYPOTHESIS
+RESOLVED_HISTORY
+BACKGROUND</code></pre>
+<p>It can then apply policies such as:</p>
+<pre class="text"><code>Always include:
+Controlling constitutional rules.
+Active custody.
+Current refusal conditions.
+Critical fresh observations.
+Relevant terminal receipts.
+
+Include when budget permits:
+Historical explanation.
+Analogous cases.
+Secondary preferences.
+
+Exclude:
+Superseded instructions.
+Resolved transient states.
+Untrusted claims.
+Inactive high-similarity material.</code></pre>
+<h3 id="fidelity-allocation">9.1 Fidelity Allocation</h3>
+<p>Exigence can also govern representation fidelity.</p>
+<pre class="text"><code>Red object:
+Full state, evidence, and receipts.
+
+Yellow object:
+Structured summary.
+
+Green object:
+Identifier, compact state, and retrieval pointer.
+
+Dormant object:
+Excluded.</code></pre>
+<p>This parallels notification policy.</p>
+<p>A household task may remain modeled but absent from the current
+context. A release authority chain may receive full fidelity even if it
+is not the most recent text.</p>
+<h3 id="context-compilation-receipts">9.2 Context Compilation
+Receipts</h3>
+<p>Before each call, the system may emit:</p>
+<pre class="text"><code>CONTEXT COMPILATION RECEIPT
+
+Target transition:
+Repair authorization failure.
+
+Included:
+Active failure receipt.
+Authority contract.
+Current implementation region.
+Previous failed strategy.
+
+Compressed:
+Roadmap.
+Historical architecture notes.
+
+Excluded:
+Unrelated UI discussion.
+
+Reason:
+Token budget allocated by admitted Exigence policy.</code></pre>
+<p>This makes model context inspectable and contestable.</p>
+<h3 id="meaning-base-and-crystal-context-integration">9.3 Meaning-Base
+and Crystal-Context Integration</h3>
+<p>An Exigence-aware compiler requires a governed semantic substrate.
+The CMB/Hyperpedia layer supplies source-bound concepts, relations,
+disputes, evidence, and standing; the compiler produces a bounded
+crystal context capsule for a specific target transition. The capsule
+should bind:</p>
+<ul>
+<li>target transition and current Exigence claim;</li>
+<li>controlling specification and configuration;</li>
+<li>included source regions and semantic entries;</li>
+<li>exclusions and compression losses;</li>
+<li>unresolved conflicts and explicit ignorance;</li>
+<li>authority and expiry boundary; and</li>
+<li>receipt and revision pointers.</li>
+</ul>
+<p>The Crystal Network can distribute candidate observations, Exigence
+claims, evidence, or context components, but each receiving jurisdiction
+re-evaluates standing. Network propagation is not attention entitlement
+and does not create authority by repetition.</p>
+<h2 id="aok-workspace">10. AOK Workspace</h2>
+<p>AOK Workspace is one application profile in which the Cognitive
+Kernel could support a unified operational environment; it is not the
+definition of the kernel.</p>
+<h3 id="exigence-map">10.1 Exigence Map</h3>
+<p>The workspace can show:</p>
+<ul>
+<li>rising objects;</li>
+<li>silent green objects;</li>
+<li>active yellow objects;</li>
+<li>interrupt-eligible red objects;</li>
+<li>blocked Exigencies;</li>
+<li>propagation paths;</li>
+<li>missing custodians;</li>
+<li>custody without sufficiency;</li>
+<li>authority congestion;</li>
+<li>model inadequacy.</li>
+</ul>
+<h3 id="quiet-state-computing">10.2 Quiet-State Computing</h3>
+<p>Most software treats modeled state as notification material.</p>
+<p>The Cognitive Kernel permits:</p>
+<pre class="text"><code>Green:
+Tracked but silent.
+
+Yellow:
+Visible but non-interrupting.
+
+Red:
+Eligible for interruption.
+
+Blue:
+Waiting on an external condition.
+
+Purple:
+Requires judgment.
+
+Black:
+Execution prohibited.</code></pre>
+<p>The exact colors are presentation policy, not ontology. The deeper
+distinction is between state, Exigence, visibility, and effect.</p>
+<h3 id="attention-budgets">10.3 Attention Budgets</h3>
+<p>Attention can be governed as a scarce resource.</p>
+<p>Examples include:</p>
+<ul>
+<li>maximum number of active red objects;</li>
+<li>protected focus periods;</li>
+<li>sleep and family-time suppression;</li>
+<li>override classes;</li>
+<li>maximum routine notifications;</li>
+<li>context-token budgets;</li>
+<li>agent invocation budgets;</li>
+<li>escalation limits.</li>
+</ul>
+<h3 id="agent-routing">10.4 Agent Routing</h3>
+<p>The kernel can route work by structure:</p>
+<pre class="text"><code>Known deterministic case:
+DSC worker.
+
+High ambiguity:
+FSC semantic agent.
+
+Authority conflict:
+Governor.
+
+Execution-ready transition:
+Executor.
+
+Persistent anomaly:
+Steward review.
+
+Novel topology:
+Foundry process.
+
+Disputed standing:
+Authorized adjudication path.</code></pre>
+<h3 id="lawful-refusal">10.5 Lawful Refusal</h3>
+<p>A human or agent can refuse by citing:</p>
+<ul>
+<li>missing authority;</li>
+<li>missing artifact;</li>
+<li>insufficient evidence;</li>
+<li>policy conflict;</li>
+<li>stale authorization;</li>
+<li>unsafe topology;</li>
+<li>capability deficit;</li>
+<li>unresolved rival interpretation.</li>
+</ul>
+<p>The refusal becomes a new governed object rather than a dead end.</p>
+<h3 id="idle-reflection">10.6 Idle Reflection</h3>
+<p>Idle compute can investigate:</p>
+<ul>
+<li>recurrent deferrals;</li>
+<li>unexplained Exigence;</li>
+<li>stale custody;</li>
+<li>hidden prerequisites;</li>
+<li>model pathology;</li>
+<li>FSC-to-DSC crystallization opportunities;</li>
+<li>context compilation failures;</li>
+<li>repeated user corrections;</li>
+<li>institutional bottlenecks.</li>
+</ul>
+<p>All findings remain inspectable hypotheses rather than hidden
+personality judgments.</p>
+<h2 id="household-and-personal-coordination">11. Household and Personal
+Coordination</h2>
+<p>The Cognitive Kernel can support ordinary life without turning it
+into an oppressive optimization system.</p>
+<p>A bill may be modeled as:</p>
+<pre class="text"><code>Green:
+Received, due in more than ten days.
+Tracked but silent.
+
+Yellow:
+Due within ten days.
+Visible in upcoming work.
+
+Red:
+Due within three days,
+autopay failed,
+or balance appears insufficient.</code></pre>
+<p>If payment is blocked:</p>
+<pre class="text"><code>Derived Exigence:
+Resolve account lock,
+transfer funds,
+or contact provider.</code></pre>
+<p>A household maintenance object may combine:</p>
+<ul>
+<li>elapsed time;</li>
+<li>visible condition;</li>
+<li>expected guests;</li>
+<li>available supplies;</li>
+<li>current capacity;</li>
+<li>care or hygiene standing;</li>
+<li>opportunity windows.</li>
+</ul>
+<p>Rest can also possess standing.</p>
+<p>It should not be modeled solely as a productivity input. Sleep,
+health care, social connection, hygiene, exercise, and recovery are
+legitimate human realities. A constitutional policy for human work
+should not optimize throughput at the expense of the person.</p>
+<p>The system should be able to conclude:</p>
+<pre class="text"><code>No acute admitted Exigence requires interruption.
+
+Rest is presently admissible and warranted.</code></pre>
+<h2 id="institutional-modeling">12. Institutional Modeling</h2>
+<p>Institutions can be represented as governed transition systems
+containing:</p>
+<ul>
+<li>roles;</li>
+<li>authorities;</li>
+<li>claims;</li>
+<li>standing;</li>
+<li>custody;</li>
+<li>obligations;</li>
+<li>artifacts;</li>
+<li>procedures;</li>
+<li>Exigencies;</li>
+<li>receipts;</li>
+<li>appeals;</li>
+<li>outcomes.</li>
+</ul>
+<h3 id="administrative-systems">12.1 Administrative Systems</h3>
+<p>Consider a permit application.</p>
+<pre class="text"><code>Current state:
+Awaiting structural review.
+
+Custody:
+Engineering department.
+
+Exigence:
+High.
+
+Reasons:
+Statutory review period nearing limit.
+Construction financing window closing.
+
+Blocker:
+Soil report absent.</code></pre>
+<p>The actionable Exigence may sit with the applicant or an external
+professional responsible for the report. The department may retain
+review custody while lacking sufficiency to proceed.</p>
+<p>This avoids falsely classifying every delay as departmental
+negligence.</p>
+<h3 id="government-queues">12.2 Government Queues</h3>
+<p>Public systems may distinguish:</p>
+<ul>
+<li>legal deadlines;</li>
+<li>severity of harm;</li>
+<li>reversibility;</li>
+<li>vulnerable populations;</li>
+<li>availability of alternatives;</li>
+<li>emergency status;</li>
+<li>public safety;</li>
+<li>constitutional rights;</li>
+<li>evidentiary confidence.</li>
+</ul>
+<p>A queue should not necessarily be governed by arrival time alone.</p>
+<h3 id="courts">12.3 Courts</h3>
+<p>Courts already reason about forms of Exigence when evaluating interim
+relief, irreparable harm, jurisdiction, standing, evidentiary
+sufficiency, and procedural timing.</p>
+<p>A formal model could expose:</p>
+<ul>
+<li>alleged harm;</li>
+<li>propagation path;</li>
+<li>reversibility;</li>
+<li>uncertainty;</li>
+<li>authority to intervene;</li>
+<li>harm created by intervention;</li>
+<li>duration of temporary standing;</li>
+<li>required revalidation.</li>
+</ul>
+<h3 id="governments">12.4 Governments</h3>
+<p>A government can publish distinct Epistemic Positions rather than
+collapsing all interpretation into one voice.</p>
+<p>Possible projections include:</p>
+<ul>
+<li>executive position;</li>
+<li>opposition position;</li>
+<li>fiscal analysis;</li>
+<li>judicial position;</li>
+<li>scientific advisory position;</li>
+<li>local government position;</li>
+<li>affected-community position.</li>
+</ul>
+<p>The system can preserve disagreement while still adjudicating
+action.</p>
+<h3 id="institutional-pathologies">12.5 Institutional Pathologies</h3>
+<p>The Cognitive Kernel can expose:</p>
+<p><strong>Authority congestion</strong> Many high-Exigence transitions
+converge on one approver.</p>
+<p><strong>Custody orphaning</strong> An important object has no present
+custodian.</p>
+<p><strong>Phantom delegation</strong> A task is assigned, but authority
+and artifacts remain elsewhere.</p>
+<p><strong>Epistemic monopoly</strong> Only one role may interpret
+evidence.</p>
+<p><strong>Notification inflation</strong> Everything is made acute.</p>
+<p><strong>Institutional avoidance</strong> Visible short-term work
+repeatedly displaces maintenance, safety, or low-salience claims.</p>
+<p><strong>Policy staleness</strong> Executors enforce rules based on
+conditions that no longer hold.</p>
+<p>These are structural findings, not moral verdicts.</p>
+<h2 id="computing-domains">13. Computing Domains</h2>
+<h3 id="operating-systems">13.1 Operating Systems</h3>
+<p>The kernel can describe:</p>
+<pre class="text"><code>Observation:
+Device buffer nearing overflow.
+
+Salience:
+Interrupt raised.
+
+Exigence:
+Service device before data loss.
+
+Attention:
+CPU time allocated.
+
+Custody:
+Driver.
+
+Sufficiency:
+Required lock available.
+
+Policy:
+Real-time service outranks background work.
+
+Execution:
+Drain buffer.
+
+Receipt:
+Operation completed.
+
+Outcome:
+Buffer restored to safe range.</code></pre>
+<p>This provides semantic governance above ordinary scheduler
+mechanics.</p>
+<h3 id="distributed-systems">13.2 Distributed Systems</h3>
+<p>A failed replica may be salient but low Exigence if redundancy
+remains healthy. A subtle checksum discrepancy may have low salience but
+high integrity Exigence.</p>
+<p>The system can distinguish:</p>
+<ul>
+<li>service impact;</li>
+<li>quorum risk;</li>
+<li>repair opportunity;</li>
+<li>replication debt;</li>
+<li>authority to reconfigure;</li>
+<li>evidence freshness;</li>
+<li>propagation scope.</li>
+</ul>
+<h3 id="security-and-integrity">13.3 Security and Integrity</h3>
+<p>Urgency is frequently used to bypass controls.</p>
+<p>The Cognitive Kernel can refuse:</p>
+<pre class="text"><code>High Exigence asserted.
+Standing absent.
+Provenance absent.
+Execution denied.</code></pre>
+<p>Receipt-before-effect prevents manufactured salience or urgency from
+becoming execution authority.</p>
+<h3 id="databases">13.4 Databases</h3>
+<p>Relevant Exigencies include:</p>
+<ul>
+<li>transaction contention;</li>
+<li>replication lag;</li>
+<li>backup freshness;</li>
+<li>schema migration;</li>
+<li>integrity repair;</li>
+<li>storage exhaustion;</li>
+<li>query latency;</li>
+<li>recovery readiness.</li>
+</ul>
+<p>The model can represent consequences and dependencies rather than
+only resource cost.</p>
+<h3 id="robotics">13.5 Robotics</h3>
+<p>A robot may observe unexpected resistance while moving an object.</p>
+<pre class="text"><code>Observation:
+Force exceeds expected range.
+
+Epistemic Position:
+Object may be obstructed or fragile.
+
+Exigence:
+Resolve environment uncertainty.
+
+Policy:
+Preserve safety before task completion.
+
+Authorization:
+Continued force revoked.
+
+Execution:
+Release force and inspect.
+
+Receipt:
+Motion halted.
+
+Outcome:
+No damage detected.</code></pre>
+<h3 id="autonomous-vehicles">13.6 Autonomous Vehicles</h3>
+<p>The Steward may maintain a rich environmental interpretation. The
+Governor admits driving policy. The Executor applies minimal, fresh
+predicates.</p>
+<pre class="text"><code>Do not accelerate from zero
+when trusted front distance is below threshold.</code></pre>
+<p>This separation permits semantic richness without bloating the effect
+gate.</p>
+<h2 id="games-and-simulated-societies">14. Games and Simulated
+Societies</h2>
+<p>Video games provide a compelling demonstration because they
+continuously model what matters to characters, factions, players, and
+worlds.</p>
+<p>Older simulation-heavy role-playing games introduced day and night
+cycles, schedules, work routines, and local pathing. These systems
+created the appearance of inhabited worlds, but their agents often
+remained trapped in brittle local rules. Two guards meeting in a narrow
+passage might repeatedly demand that the other stand aside because each
+possessed a rule without a higher-order account of congestion,
+alternative action, custody, social convention, or escalating model
+failure.</p>
+<p>The Cognitive Kernel offers a way beyond scripted routine.</p>
+<h3 id="characters-as-governed-agents">14.1 Characters as Governed
+Agents</h3>
+<p>A character may possess:</p>
+<ul>
+<li>identity;</li>
+<li>occupation;</li>
+<li>commitments;</li>
+<li>relationships;</li>
+<li>values;</li>
+<li>observations;</li>
+<li>Epistemic Positions;</li>
+<li>Exigencies;</li>
+<li>custody;</li>
+<li>capabilities;</li>
+<li>fatigue;</li>
+<li>resources;</li>
+<li>authority;</li>
+<li>memory;</li>
+<li>policy ordering.</li>
+</ul>
+<p>Personality can be modeled not merely as adjectives but as stable
+tendencies in adjudicating competing Exigencies.</p>
+<p>A guard may place public safety before self-preservation.</p>
+<p>A mercenary may place contract and payment before civic duty.</p>
+<p>A healer may prioritize care.</p>
+<p>A fanatic may elevate one mission above nearly all competing
+claims.</p>
+<p>The same world state can therefore produce different lawful
+interpretations and actions.</p>
+<h3 id="emergent-social-pressure">14.2 Emergent Social Pressure</h3>
+<p>Suppose a bakery catches fire.</p>
+<p>The event propagates differently:</p>
+<ul>
+<li>the baker experiences livelihood and family Exigence;</li>
+<li>nearby guards acquire public-safety custody;</li>
+<li>healers prepare for injury;</li>
+<li>water carriers gain suppression work;</li>
+<li>officials acquire coordination obligations;</li>
+<li>merchants anticipate supply disruption;</li>
+<li>thieves perceive opportunity;</li>
+<li>children seek safety.</li>
+</ul>
+<p>The event is not merely a scripted quest trigger. It changes the
+graph.</p>
+<h3 id="schedules-become-default-policies">14.3 Schedules Become Default
+Policies</h3>
+<p>Schedules remain useful but should become defeasible defaults.</p>
+<pre class="text"><code>08:00 Open shop.
+12:00 Eat.
+18:00 Visit tavern.
+22:00 Sleep.</code></pre>
+<p>A fire, missing child, arrest order, injury, blocked road, or urgent
+obligation may lawfully override routine.</p>
+<p>This yields characters who maintain life patterns without being
+imprisoned by them.</p>
+<h3 id="llm-gap-stitching">14.4 LLM Gap Stitching</h3>
+<p>Deterministic machinery can handle:</p>
+<ul>
+<li>pathing;</li>
+<li>ownership;</li>
+<li>inventories;</li>
+<li>schedules;</li>
+<li>money;</li>
+<li>authority;</li>
+<li>custody;</li>
+<li>combat rules;</li>
+<li>physical state;</li>
+<li>institutional procedures.</li>
+</ul>
+<p>LLM calls can activate when the simulation encounters semantic
+gaps:</p>
+<ul>
+<li>novel negotiation;</li>
+<li>ambiguous social conflict;</li>
+<li>improvised planning;</li>
+<li>explanation;</li>
+<li>dialogue;</li>
+<li>rumor interpretation;</li>
+<li>institutional argument;</li>
+<li>unusual composite events.</li>
+</ul>
+<p>The FSC interprets the novel case. Stable results may later
+crystallize into DSC rules.</p>
+<h3 id="event-driven-cognition">14.5 Event-Driven Cognition</h3>
+<p>Large societies need not simulate every character continuously.</p>
+<p>A sleeping farmer with no local change may remain dormant.</p>
+<p>A nearby attack, weather shift, market disruption, death, order, or
+family event awakens relevant graph regions.</p>
+<p>Exigence localizes computation.</p>
+<p>This permits very large populations with selective semantic
+depth.</p>
+<h3 id="institutions-in-games">14.6 Institutions in Games</h3>
+<p>Guilds, courts, armies, churches, markets, and governments can use
+the same kernel.</p>
+<p>A king differs from a stable worker not because the king uses a
+different cognitive architecture, but because the king possesses wider
+authority, custody, visibility, and institutional dependencies.</p>
+<p>Bureaucracy becomes simulated rather than decorative.</p>
+<p>Tax failures may delay repairs. Delayed repairs may degrade bridges.
+Trade may slow. Prices may rise. Crime may increase. Military readiness
+may fall.</p>
+<p>The resulting history emerges from connected receipts.</p>
+<h3 id="inspectable-history">14.7 Inspectable History</h3>
+<p>A simulation can be paused and queried:</p>
+<ul>
+<li>Why did this town decline?</li>
+<li>Why did the captain refuse promotion?</li>
+<li>Why did the famine spread?</li>
+<li>Which authority bottleneck caused the uprising?</li>
+<li>Which policy repeatedly suppressed maintenance?</li>
+<li>Why did two neighboring settlements diverge?</li>
+</ul>
+<p>The answer can be reconstructed from observation, interpretation,
+Exigence, custody, policy, execution, and outcome receipts.</p>
+<p>Games thereby become scientifically inspectable social
+simulations.</p>
+<h3 id="player-facing-projection">14.8 Player-Facing Projection</h3>
+<p>The same world state can be projected differently:</p>
+<pre class="text"><code>Green:
+Simulated but not shown.
+
+Yellow:
+Visible in journal or map.
+
+Red:
+Eligible for HUD interruption.
+
+Black:
+Action prohibited.
+
+Blue:
+Waiting on external state.
+
+Purple:
+Requires player judgment.</code></pre>
+<p>This reduces quest-log overload while preserving a living world.</p>
+<h3 id="emergent-narrative">14.9 Emergent Narrative</h3>
+<p>Narrative selection can ask:</p>
+<blockquote>
+<p>Which unresolved state has accumulated sufficient Exigence to call
+for a scene?</p>
+</blockquote>
+<p>Promises, betrayals, grief, political tension, hidden identity,
+institutional failure, and social debt can all accumulate transition
+pressure.</p>
+<p>A scene occurs because the world has become unstable in its present
+form, not merely because a timer fired.</p>
+<h2 id="general-society-modeling">15. General Society Modeling</h2>
+<p>The Cognitive Kernel can support simulations containing hundreds,
+thousands, or millions of agents.</p>
+<p>Each agent need not possess continuous human-level cognition. Most
+behavior can arise from:</p>
+<ul>
+<li>deterministic routines;</li>
+<li>local policies;</li>
+<li>event-driven reevaluation;</li>
+<li>bounded world models;</li>
+<li>role-specific standing;</li>
+<li>typed Exigence;</li>
+<li>selective FSC invocation;</li>
+<li>receipted memory.</li>
+</ul>
+<p>Such systems could model:</p>
+<ul>
+<li>cities;</li>
+<li>firms;</li>
+<li>armies;</li>
+<li>courts;</li>
+<li>families;</li>
+<li>markets;</li>
+<li>schools;</li>
+<li>political movements;</li>
+<li>religious institutions;</li>
+<li>supply networks;</li>
+<li>online communities;</li>
+<li>disaster response;</li>
+<li>robot swarms.</li>
+</ul>
+<p>The purpose is not necessarily predictive social science. It may be
+exploratory, educational, adversarial, artistic, or institutional.</p>
+<p>The critical advantage is inspectability. Outcomes can be explained
+through the same kernel that produced them.</p>
+<h2 id="anti-goodhart-constraints">16. Anti-Goodhart Constraints</h2>
+<p>Exigence must not become another target score.</p>
+<p>Optimizing directly for “low Exigence” could incentivize:</p>
+<ul>
+<li>hiding work;</li>
+<li>suppressing observations;</li>
+<li>closing objects dishonestly;</li>
+<li>transferring custody without support;</li>
+<li>lowering thresholds;</li>
+<li>fragmenting tasks;</li>
+<li>ignoring slow risks;</li>
+<li>manufacturing green status.</li>
+</ul>
+<p>The governing principle should be:</p>
+<blockquote>
+<p>Unresolved Exigence should increase understanding before increasing
+pressure.</p>
+</blockquote>
+<p>The system should optimize neither maximum urgency nor minimum
+visible backlog. It should seek healthy Exigence flow:</p>
+<ul>
+<li>accurate recognition;</li>
+<li>lawful ordering;</li>
+<li>adequate custody;</li>
+<li>sufficient support;</li>
+<li>bounded transition;</li>
+<li>honest receipt;</li>
+<li>model repair;</li>
+<li>legitimate rest.</li>
+</ul>
+<p>For machines, aggressive execution optimization may be appropriate
+within policy.</p>
+<p>For humans, optimization must preserve dignity, autonomy, health,
+recovery, and the right to refuse.</p>
+<h3 id="human-sovereignty-and-institutional-limits">16.1
+Human-Sovereignty and Institutional Limits</h3>
+<p>No Exigence model should infer human obligation merely from
+observability, predicted benefit, institutional demand, or repeated
+notification. In human-facing systems, detectability, refusal,
+renegotiation, privacy, explanation, appeal, and exit are
+non-substitutable constraints. A household or workplace profile must
+permit the person to reject the model’s interpretation, suppress
+non-safety projections, inspect what produced an escalation, and prevent
+latent personality or psychiatric judgments from acquiring standing.</p>
+<p>Institutional use adds further limits: unequal data visibility, power
+asymmetry, strategic reporting, missing affected communities, and
+contested values can make a topologically coherent Exigence map
+politically or morally illegitimate. The kernel can expose a decision
+structure; it cannot manufacture democratic, legal, clinical, or moral
+authority.</p>
+<h2 id="a-general-object-model">17. A General Object Model</h2>
+<p>A mature governed object may contain:</p>
+<pre class="text"><code>GovernedObject {
+    identity
+    state
+    observations[]
+    salience_events[]
+    epistemic_positions[]
+    exigence_claims[]
+    admitted_exigence
+    standing
+    attention_policy
+    custody
+    sufficiency
+    constraints
+    candidate_transitions[]
+    authorizations[]
+    execution_attempts[]
+    receipts[]
+    outcomes[]
+    presentation_policies[]
+    model_repair_history[]
+}</code></pre>
+<p>An Exigence representation should likely be typed rather than
+scalar.</p>
+<p>Possible dimensions include:</p>
+<ul>
+<li>safety;</li>
+<li>dependency;</li>
+<li>temporal;</li>
+<li>maintenance;</li>
+<li>constitutional;</li>
+<li>care;</li>
+<li>restorative;</li>
+<li>opportunity;</li>
+<li>integrity;</li>
+<li>social;</li>
+<li>economic;</li>
+<li>epistemic;</li>
+<li>environmental.</li>
+</ul>
+<p>The resulting structure may support partial ordering rather than
+forcing all conditions into one universal rank.</p>
+<h2
+id="need-to-attention-to-custody-control-loop">Need-to-Attention-to-Custody
+Control Loop</h2>
+<p>Across the completed P1 corpus, Exigence and the Cognitive Kernel
+(CogK) has one sharp role: it is the
+<strong>need-to-attention-to-custody control loop</strong> that governs
+when a perceived pressure becomes recognized work, receives resources,
+reaches sufficiency, or terminates. It does not convert urgency into
+authority, salience into truth, custody into ownership, or an attention
+decision into permission to effect change.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>The Well-Governed
+Mind</em><br />
+<strong>Supplies:</strong> The larger architecture of cognitive
+governance and self-revision.<br />
+<strong>CogK boundary:</strong> CogK supplies the control loop from
+observation through work and outcome.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Technical Brief: Recursive
+Semantic Orientation and Complex Systems Cognition</em><br />
+<strong>Supplies:</strong> The revisable investigation state, probes,
+countermodels, and stopping.<br />
+<strong>CogK boundary:</strong> RSO is an investigation method that CogK
+may schedule and reassess.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Responsibility, transfer, return, and
+terminal disposition for exact work.<br />
+<strong>CogK boundary:</strong> CogK identifies and prioritizes work;
+custody defines who must advance or disposition it.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Constitution for the
+Context Window</em><br />
+<strong>Supplies:</strong> Constitutional construction of invocation
+context.<br />
+<strong>CogK boundary:</strong> CogK can request context and set
+attention goals but cannot bypass context admission.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Cognitive ABI for
+Capability-Centered Computing</em><br />
+<strong>Supplies:</strong> Contracts, qualification, routing, and
+substitution for cognitive and effect capabilities.<br />
+<strong>CogK boundary:</strong> CogK calls capabilities through the ABI;
+attention is not eligibility or authority.</p></li>
+</ul>
+<p>A kernel cycle should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+K= (&amp;observation, salience, epistemic\_position, exigence, \\
+&amp;standing, attention, custody, sufficiency, policy, \\
+&amp;authorization, execution, outcome, receipt)
+\end{aligned}.
+$$</span></p>
+<p>Every arrow is defeasible. An observation may be wrong; salience may
+be manipulated; an exigence claim may be rejected; standing may be
+bounded; attention may be deferred; custody may transfer; sufficiency
+may fail; policy may refuse; authorization may expire; execution may
+diverge; and a receipt may establish less than the outcome claimed.</p>
+<p>Pathological topologies must remain observable: fixation, avoidance,
+inflation, suppression, fragmentation, over-propagation, and staleness.
+Reducing the number of visible exigencies is not success if the system
+hides, transfers, or prematurely closes work. Quiet-state computing is
+legitimate only when open obligations, deadlines, risks, and custody are
+still represented.</p>
+<p>The universal GSM can type <code>OBSERVED_AS</code>,
+<code>SALIENCE_ASSIGNED</code>, <code>CLAIMS_EXIGENCE</code>,<br />
+<code>HAS_EPISTEMIC_STANDING</code>, <code>ALLOCATED_ATTENTION</code>,
+<code>CUSTODIED_BY</code>, <code>SUFFICIENT_FOR</code>,<br />
+<code>GOVERNED_BY_POLICY</code>, <code>AUTHORIZED_FOR</code>,
+<code>EXECUTED_AS</code>, <code>RESULTED_IN</code>,
+<code>RECEIPTED_BY</code>,<br />
+and<br />
+<code>PATHOLOGICALLY_PROPAGATES_TO</code>. Source-native AOK application
+examples remain illustrations and do not enter the Ableman corpus as
+current system identity or standing through this integration.</p>
+<p>This integration establishes four editorial commitments: adopt
+need-to-attention-to-custody loop as CogK’s official corpus role; adopt
+the kernel-cycle object; require explicit defeasibility at every
+transition; and preserve quiet state as an accountable posture rather
+than absence of visible work.</p>
+<h2
+id="evidence-seeking-exigence-and-authority-safe-transition">Evidence-Seeking
+Exigence and Authority-Safe Transition</h2>
+<p>The fixed-seed comparison with Continuation Primacy, governed
+retrieval, Authority Laundering Theory, and Governance as Compilation
+expands the Cognitive Kernel from an attention loop into a bounded
+evidence-to-transition interface:</p>
+<p><span class="math display">$$
+\begin{aligned}
+K^*= (&amp;observation, exigence, purpose, retrieval, evidence, \\
+&amp;continuation\_options, attention, custody, \\
+&amp;stage\_contract, authority, execution, outcome, \\
+&amp;reconsideration)
+\end{aligned}.
+$$</span></p>
+<p>Governed retrieval can answer a CogK knowledge need, but retrieval
+rank, citation, institutional label, and repeated use do not create
+authority. Continuation Primacy supplies an option-classification lens
+over reachable, admissible, viable, preferred, and terminal
+trajectories; it does not dictate persistence or termination.</p>
+<p>Authority Laundering analysis tests whether felt urgency, allocated
+attention, custody, retrieved evidence, or organizational position is
+being promoted into normative warrant without a valid authority path.
+Governance as Compilation can carry an admitted proposal through typed
+stages with explicit input, output, loss, remainder, review, and refusal
+obligations.</p>
+<p>The universal GSM can type<br />
+<code>TRIGGERS_EVIDENCE_SEEKING</code>,
+<code>RETRIEVES_UNDER_PURPOSE</code>,<br />
+<code>CLASSIFIES_CONTINUATION_OPTIONS</code>,
+<code>AUDITS_EXIGENCE_AUTHORITY</code>,<br />
+<code>COMPILES_ADMITTED_TRANSITION</code>,
+<code>PRESERVES_UNRESOLVED_REMAINDER</code>,<br />
+and<br />
+<code>RECONSIDERS_AFTER_OUTCOME</code>.</p>
+<p>In a realization-funnel context, IC may mean Instance Constitution or
+Instance Configuration, and IR may mean Instance Realization or
+Implementation Realization. These interchangeable expansions do not turn
+the Cognitive Kernel into an implementation or authorize an effect.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the evidence-seeking kernel cycle; integrate continuation as an option
+lens; require anti-laundering review of urgency, attention, and
+retrieved authority; and define a typed compilation handoff for admitted
+transitions.</p>
+<h2 id="a-defeasible-need-to-transition-scheduler">A Defeasible
+Need-to-Transition Scheduler</h2>
+<p>Eight retained downstream uses place the Cognitive Kernel beside
+capability routing, context compilation, authority-laundering analysis,
+context lifecycle, continuation options, staged governance compilation,
+governed retrieval, and the pedagogical custody surface. They confirm a
+defeasible need-to-attention-to-custody scheduler: it determines what
+presently calls for transition and how the call is processed, not what
+is true or what may be done.</p>
+<p><span class="math display">$$
+\begin{aligned}
+K^*= (&amp;observation, source, salience, epistemic\_position, \\
+&amp;exigence, purpose, standing, continuation\_options, \\
+&amp;attention, custody, sufficiency, policy, capability, \\
+&amp;authorization, execution, outcome, reconsideration, \\
+&amp;receipt, expiry)
+\end{aligned}.
+$$</span></p>
+<p>Every transition may refuse, defer, narrow, transfer, expire, or
+reopen. Pressure is not authority; urgency is not priority; salience is
+not truth; attention is not custody; custody is not capability;
+sufficiency is not authorization; execution is not successful outcome.
+Evidence seeking must preserve purpose, source standing, cost,
+alternatives, and stopping.</p>
+<p>Fixation, avoidance, inflation, suppression, fragmentation,
+over-propagation, and staleness are graph and policy pathologies rather
+than mere scalar extremes. Quiet state is legitimate only when open
+obligations, latent risk, leases, deadlines, and recovery remain
+queryable. A scheduler that minimizes visible exigence by hiding work
+has failed.</p>
+<p>The universal GSM can type<br />
+<code>OBSERVES_FOR_EXIGENCE</code>,
+<code>CLAIMS_NEED_FOR_TRANSITION</code>,<br />
+<code>CLASSIFIES_CONTINUATION_OPTION</code>,
+<code>ALLOCATES_ATTENTION</code>,
+<code>ASSIGNS_NEXT_MOVE_CUSTODY</code>,<br />
+<code>TESTS_SUFFICIENCY</code>, <code>QUALIFIES_CAPABILITY</code>,
+<code>AUTHORIZES_TRANSITION_SEPARATELY</code>,<br />
+<code>RECONSIDERS_AFTER_OUTCOME</code>, and<br />
+<code>EXPIRES_EXIGENCE_CLAIM</code>.</p>
+<p>This review establishes four editorial commitments: adopt the
+complete defeasible scheduler record; preserve every non-substitution
+boundary; type pathological topology and accountable quiet state; and
+require purpose-bound evidence seeking, capability qualification,
+independent authorization, expiry, outcome review, and
+reconsideration.</p>
+<h2 id="need-does-not-confer-authority">Need Does Not Confer
+Authority</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Exigence names a graph-derived reason to consider transition: a
+mismatch, risk, opportunity, obligation, or unresolved condition becomes
+significant enough to demand attention. The Cognitive Kernel separates
+observation, belief, salience, recognition, actionability, authority,
+execution, and learning so urgency cannot silently become
+permission.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Urgency-inflation attack.</strong> A system raises salience
+to bypass ordinary review. Exigence intensity and authority remain
+separate.</li>
+<li><strong>Suppression attack.</strong> Institutionally inconvenient
+needs never reach attention. Detection coverage, dissent, and appeal
+need explicit paths.</li>
+<li><strong>False-belief attack.</strong> An erroneous model generates a
+coherent but spurious exigence. Evidence, uncertainty, and countermodels
+must travel with the proposal.</li>
+<li><strong>Fixation attack.</strong> One unresolved need monopolizes
+attention despite low marginal progress. Budgets, reconsideration, and
+competing obligations are required.</li>
+<li><strong>Fragmentation attack.</strong> Related signals are handled
+independently so no systemic need is recognized. Aggregation must
+preserve source and uncertainty.</li>
+<li><strong>Over-propagation attack.</strong> A local issue is
+generalized across domains, people, or institutions. Scope and
+jurisdiction must constrain propagation.</li>
+<li><strong>Authority-leap attack.</strong> Recognition of need becomes
+authorization to execute. Mandate, capability, effect grant, and
+adjudication remain independent gates.</li>
+<li><strong>Human-pathology projection.</strong> Computational integrity
+topologies are used to diagnose or control people. The paper prohibits
+clinical and person-level inference.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper contributes a computational scheduler and control-loop
+vocabulary. It does not establish a psychological theory, clinical
+model, complete account of motivation, or validated model of society.
+General-society examples are analogical research surfaces, not
+authorization for institutional deployment.</p>
+<p>Claims about human cognition, mental health, organizations, public
+policy, or social behavior require current external evidence,
+affected-party analysis, and qualified domain review. Internal corpus
+integration cannot validate these transfers. No external research was
+added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The accessible insight is that noticing a problem, believing it
+matters, deciding it is actionable, possessing authority, and actually
+intervening are different transitions. A safe agent must preserve those
+differences even under pressure.</p>
+<h2 id="theoretical-consequence">18. Theoretical Consequence</h2>
+<p>The Cognitive Kernel distinguishes four forms of computation that are
+often collapsed:</p>
+<pre class="text"><code>Descriptive computation:
+What is happening?
+
+Epistemic computation:
+What may it mean?
+
+Constitutional computation:
+Which meanings, claims, and needs have standing?
+
+Executive computation:
+What may happen next?</code></pre>
+<p>Exigence sits between interpretation and authorized transition.</p>
+<p>It states:</p>
+<blockquote>
+<p>Given the admitted model of reality, this state presently calls for
+change.</p>
+</blockquote>
+<p>It does not, by itself, determine:</p>
+<ul>
+<li>whether the call is legitimate;</li>
+<li>whether it may interrupt;</li>
+<li>who must answer;</li>
+<li>what response is lawful;</li>
+<li>whether sufficient conditions exist;</li>
+<li>whether execution remains safe;</li>
+<li>whether the resulting outcome is successful.</li>
+</ul>
+<p>Those questions belong to the rest of the kernel.</p>
+<h3 id="realization-funnel">18.1 Realization Funnel</h3>
+<ul>
+<li><p><strong>Stage:</strong> Possibility<br />
+<strong>Cognitive-Kernel work:</strong> A system may model what calls
+for transition without collapsing pressure into authority.<br />
+<strong>Current standing:</strong> Conceptual possibility.</p></li>
+<li><p><strong>Stage:</strong> Specification<br />
+<strong>Cognitive-Kernel work:</strong> Define observations,
+interpretations, Exigence claims, standing, attention, custody,
+sufficiency, policy, authorization, execution, receipts, and
+outcomes.<br />
+<strong>Current standing:</strong> Candidate specification.</p></li>
+<li><p><strong>Stage:</strong> CM1<br />
+<strong>Cognitive-Kernel work:</strong> Enumerate vector, graph,
+rule-based, probabilistic, human-reviewed, centralized, distributed,
+safe, unsafe, coercive, and minimal realizations.<br />
+<strong>Current standing:</strong> Partially explored.</p></li>
+<li><p><strong>Stage:</strong> CM2<br />
+<strong>Cognitive-Kernel work:</strong> Prefer non-scalar, inspectable,
+source-bound, contestable, quiet-by-default, APD-compatible, and
+failure-aware configurations.<br />
+<strong>Current standing:</strong> Preference criteria
+proposed.</p></li>
+<li><p><strong>Stage:</strong> Instance Configuration<br />
+<strong>Cognitive-Kernel work:</strong> Fix a domain, ontology,
+authorities, evidence, propagation rules, budgets, thresholds, rights,
+threat model, and stopping rules.<br />
+<strong>Current standing:</strong> Not fixed by this paper.</p></li>
+<li><p><strong>Stage:</strong> Implementation Realization<br />
+<strong>Cognitive-Kernel work:</strong> Build one configured kernel,
+compiler, workspace, simulation, or control system.<br />
+<strong>Current standing:</strong> Examples and profiles only; no
+universal implementation standing.</p></li>
+<li><p><strong>Stage:</strong> Evidence<br />
+<strong>Cognitive-Kernel work:</strong> Run replay, adversarial
+salience, false-positive/negative, propagation, orphaned-effect,
+human-impact, and cost tests.<br />
+<strong>Current standing:</strong> Required and incomplete.</p></li>
+<li><p><strong>Stage:</strong> Revision<br />
+<strong>Cognitive-Kernel work:</strong> Amend models and policies while
+preserving prior claims, receipts, harms, and dependent decisions.<br />
+<strong>Current standing:</strong> Required loop.</p></li>
+</ul>
+<p>The paper therefore reaches a detailed Specification with CM1 and CM2
+guidance. Its domain examples do not establish validated Instance
+Configurations.</p>
+<h3 id="counterevidence-and-falsification">18.2 Counterevidence and
+Falsification</h3>
+<p>The proposal is weakened if Exigence cannot be distinguished reliably
+from priority, urgency, salience, or utility; if propagation adds no
+explanatory or operational value; if the kernel produces more coercion
+or alert load than the systems it replaces; if a scalar score reappears
+implicitly through policy; if receipts fail to reconstruct why attention
+or authority moved; if humans cannot contest inferred needs; or if
+simpler domain-specific state machines perform equally well with fewer
+governance costs.</p>
+<p>Evidence should include negative and null cases, not only
+demonstrations in which the proposed taxonomy fits. Social simulations,
+households, institutions, robotics, and autonomous vehicles require
+separate validation and cannot borrow standing from one another.</p>
+<h2 id="conclusion">19. Conclusion</h2>
+<p>Exigence provides a computational account of what presently matters
+for transition.</p>
+<p>The Cognitive Kernel places that account inside a governed
+architecture that separates observation from interpretation,
+significance from salience, standing from assertion, attention from
+importance, custody from capability, authorization from execution, and
+receipt from outcome.</p>
+<p>This separation supports systems that can:</p>
+<ul>
+<li>remain quiet when states are healthy;</li>
+<li>surface rising conditions without coercion;</li>
+<li>redirect blocked work toward missing prerequisites;</li>
+<li>diagnose structural rather than merely personal failure;</li>
+<li>detect pathological execution topologies;</li>
+<li>refuse lawfully before effect;</li>
+<li>compile LLM context by live need;</li>
+<li>route work among semantic and deterministic agents;</li>
+<li>model institutions and governments;</li>
+<li>coordinate households and workplaces;</li>
+<li>govern autonomous machines;</li>
+<li>simulate societies and histories;</li>
+<li>progressively crystallize semantic understanding into deterministic
+rules;</li>
+<li>identify when their own models have become inadequate.</li>
+</ul>
+<p>The deepest contribution is not a better priority system.</p>
+<p>It is a model of how a governed system moves from reality to action
+without treating notice as truth, pressure as authority, or execution as
+success.</p>
+<p>The Cognitive Kernel asks:</p>
+<pre class="text"><code>What happened?
+
+What might it mean?
+
+What now calls for transition?
+
+Which claim has standing?
+
+What deserves attention?
+
+Who holds the next move?
+
+What is missing?
+
+What is lawful?
+
+What may execute now?
+
+What was refused or performed?
+
+What actually changed?
+
+What must the system learn?</code></pre>
+<p>A system capable of answering these questions is no longer merely
+processing tasks. It is maintaining an inspectable relationship between
+world, meaning, need, authority, action, and consequence.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that computational systems routinely model tasks,
+priorities, deadlines, permissions, attention, and action, but they
+rarely possess a unified account of why a particular state presently
+calls for transition. Its nearest external comparison fields are
+security, ai, provenance. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Unforgeable
+capabilities can constrain exercise of authority while still leaving
+allocation, delegation, revocation, and social legitimacy incorrectly
+specified. Retrieval, tool use, and policy layers can reduce unsupported
+output without eliminating model error, source error, omission, bias, or
+the environmental and institutional costs of scale. A complete
+provenance graph can faithfully record a false or unauthorized process;
+provenance is evidence about lineage, not automatic truth or legitimacy.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E2]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E3]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<p><strong>[E4]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<p><strong>[E5]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E6]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E7]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Syscalls</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737229</code>;<br />
+source SHA-256<br />
+<code>5F14356180812262778F8574C292F4F6B560993042E5358B02EAB9CF0F7DE14C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Adam Ableman. <em>Constitutional Computation</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20624488.</p>
+<p>Adam Ableman. <em>Ableman’s Razor: A Typed Grammar for Ontology
+Exploration, Configuration Collapse, and Implementation Feedback</em>.
+Zenodo, 2026. https://doi.org/10.5281/zenodo.18113475.</p>
+<p>Adam Ableman. <em>Epistemic Situational Awareness (ESA): Continuation
+Governance for Frontier AI Systems</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18123102.</p>
+<p>Adam Ableman. <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models</em>. Zenodo, 2026. https://doi.org/10.5281/zenodo.18453681.</p>
+<p>Adam Ableman. <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18601631.</p>
+<p>Adam Ableman. <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18633797.</p>
+<p>Adam Ableman. <em>Effect Sovereignty: System Calls as the
+Constitutional Interface for Reality-Touching Effects</em>. Zenodo,
+2026. https://doi.org/10.5281/zenodo.18737323.</p>
+<p>Adam Ableman. <em>Semantic Custody</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20300952.</p>
+<p>Adam Ableman. <em>Semantic Crystallization</em>. Zenodo, 2026.
+https://doi.org/10.5281/zenodo.20310115.</p>
+<p>Adam Ableman. <em>Reasoning by Way of Receipts</em>. Authorized
+Ableman Corpus current edition; canonical concept standing remains
+governed separately from publication.</p>
+<p>External sources are still required for the paper’s comparisons to
+attention theory, scheduling, human factors, psychiatric and cognitive
+literature, Goodhart effects, institutional decision-making, operating
+systems, distributed systems, robotics, autonomous vehicles, and
+simulation research. Those claims remain design analogies and research
+hypotheses until a source-by-source review is completed.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>Semantic Crystallization.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20310115</p>
+<p>Adam Ableman <em>Ableman’s Razor: A Typed Grammar for Ontology
+Exploration, Configuration Collapse, and Implementation Feedback.</em>
+Zenodo, 2026. doi:10.5281/zenodo.18113475</p>
+<p>Adam Ableman <em>Effect Sovereignty: System Calls as the
+Constitutional Interface for Reality-Touching Effects.</em> Zenodo,
+2026. doi:10.5281/zenodo.18737323</p>
+<p>Adam Ableman <em>Epistemic Situational Awareness (ESA): Continuation
+Governance for Frontier AI Systems.</em> Zenodo, 2026.
+doi:10.5281/zenodo.18123102</p>
+<p>Adam Ableman <em>Governed Context &amp; Memory (GCM): Context
+Configuration as Constitutional Surface, Semantic Hashing as
+Enforcement, and Explicit Ignorance as First-Class Success in
+Generational AI.</em> Zenodo, 2026. doi:10.5281/zenodo.18633797</p>
+<p>Adam Ableman <em>Receipt-Bound Capabilities: Membrane Tokens for
+Governed Interaction with Reality.</em> Zenodo, 2026.
+doi:10.5281/zenodo.18601631</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847744">10.5281/zenodo.23847744</a></p>

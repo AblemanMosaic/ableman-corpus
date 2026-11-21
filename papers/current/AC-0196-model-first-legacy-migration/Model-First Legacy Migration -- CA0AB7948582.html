@@ -1,0 +1,1137 @@
+<h1 id="model-first-legacy-migration">Model-First Legacy Migration</h1>
+<h2
+id="recovering-bounded-behavioral-models-without-confusing-observation-intention-and-law">Recovering
+Bounded Behavioral Models Without Confusing Observation, Intention, and
+Law</h2>
+<h3
+id="legacy-migration-is-usually-framed-as-translation-from-one-implementation-to-another.">Legacy
+migration is usually framed as translation from one implementation to
+another.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Legacy migration is usually framed as translation from one
+implementation to another. That framing leaves the most consequential
+uncertainty untouched: no one knows which observed behaviors are
+intended obligations, which are relied-upon accidents, which are
+defects, and which depend on an environment that the replacement does
+not reproduce. This paper develops a model-first alternative. A bounded
+behavioral model is extracted from exact source custody, static
+structure, observations, operational knowledge, policy, and downstream
+dependencies; it is then adjudicated before it may become normative.
+Candidate realizations are compared against both the model and the
+original system within declared envelopes, equivalence relations,
+observers, and claim ceilings.</p>
+<p>The proposal does not solve general program equivalence or infer
+intention from behavior alone. It replaces an unaudited rewrite with a
+governed chain of explicit models, gaps, assumptions, tests, promotion
+decisions, rollback paths, and revision records. Its strongest
+capability is not automatic modernization. It is the conversion of
+hidden dependencies into inspectable and contestable migration
+obligations while preserving a disciplined refusal to claim beyond
+observed and justified evidence.</p>
+<h2 id="the-migration-problem">1. The Migration Problem</h2>
+<p>A running legacy system combines at least five things that migration
+projects routinely collapse:</p>
+<ol type="1">
+<li>intended requirements;</li>
+<li>behavior on the states and environments actually observed;</li>
+<li>accidental behavior on unobserved or rare paths;</li>
+<li>behavior on which users or neighboring systems have come to
+rely;</li>
+<li>institutional rules about what a successor is allowed to preserve,
+change, or refuse.</li>
+</ol>
+<p>Calling the binary “the specification” is descriptively useful but
+normatively incomplete. The binary is authoritative evidence about what
+happened under particular conditions. It is not, by execution alone, an
+authority for what ought to continue. Conversely, a newly written
+specification is not faithful merely because it is legible.</p>
+<p>The model-first thesis is therefore narrower and stronger than
+“extract a model and regenerate the program”:</p>
+<blockquote>
+<p>A legacy migration becomes governable when behavior, intention,
+authority, realization, evidence, and residual uncertainty are
+represented separately; when every correspondence claim is bounded to an
+explicit envelope; and when a model becomes normative only through an
+authorized adjudication rather than through extraction alone.</p>
+</blockquote>
+<p>This changes the unit of migration from code translation to
+<strong>obligation reconstruction</strong>.</p>
+<h2 id="core-distinctions">2. Core Distinctions</h2>
+<h3 id="legacy-subject">2.1 Legacy subject</h3>
+<p>The <strong>legacy subject</strong> is an exactly identified system
+revision together with the dependencies and environment required to
+observe it. A filename, repository label, or deployed service name is
+insufficient custody.</p>
+<h3 id="descriptive-model-candidate">2.2 Descriptive model
+candidate</h3>
+<p>A <strong>descriptive model candidate</strong> records operations,
+state, invariants, effects, refusals, nondeterminism, resources,
+authority crossings, and known unknowns inferred from available
+evidence. It remains defeasible and does not become correct through
+serialization.</p>
+<h3 id="normative-migration-model">2.3 Normative migration model</h3>
+<p>A <strong>normative migration model</strong> is a descriptive
+candidate plus explicit decisions about what a successor must preserve,
+may vary, should repair, or must refuse. Its authority comes from an
+identified adjudication process, not from the extractor.</p>
+<h3 id="realization">2.4 Realization</h3>
+<p>A <strong>realization</strong> is an implementation configured to
+satisfy a particular normative model under a declared target profile. It
+is neither identical to the model nor automatically equivalent to the
+legacy subject.</p>
+<h3 id="correspondence-record">2.5 Correspondence record</h3>
+<p>A <strong>correspondence record</strong> identifies two subjects,
+their exact revisions, the comparison envelope, the observer and oracle,
+the equivalence relation, the test population, unexplained remainder,
+and the standing earned. Correspondence is a bounded relation, not an
+identity assertion.</p>
+<h3 id="claim-ceiling">2.6 Claim ceiling</h3>
+<p>A <strong>claim ceiling</strong> is the strongest conclusion
+justified by the evidence. It prevents success on an observed sample
+from becoming a claim about every reachable state, future environment,
+or hidden dependency.</p>
+<h2 id="a-bounded-formal-model">3. A Bounded Formal Model</h2>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>L</em></span> be an exact legacy
+subject;</li>
+<li><span class="math inline"><em>M</em><sub><em>d</em></sub></span> be
+a descriptive model candidate;</li>
+<li><span class="math inline"><em>M</em><sub><em>n</em></sub></span> be
+an adjudicated normative migration model;</li>
+<li><span class="math inline"><em>R</em></span> be a candidate
+realization;</li>
+<li><span class="math inline"><em>Ω</em></span> be a declared
+observation and disturbance envelope;</li>
+<li><span class="math inline"><em>Q</em></span> be a set of queries or
+test traces;</li>
+<li><span class="math inline">∼<sub><em>q</em></sub></span> be the
+accepted equivalence relation for query <span
+class="math inline"><em>q</em></span>;</li>
+<li><span class="math inline"><em>O</em></span> be the declared observer
+and oracle arrangement.</li>
+</ul>
+<p>Define an envelope as:</p>
+<p><span
+class="math display"><em>Ω</em> = ⟨<em>I</em>, <em>E</em>, <em>T</em>, <em>F</em>, <em>N</em>, <em>B</em>⟩</span></p>
+<p>where <span class="math inline"><em>I</em></span> is the input class,
+<span class="math inline"><em>E</em></span> the environment, <span
+class="math inline"><em>T</em></span> the time and scheduling
+conditions, <span class="math inline"><em>F</em></span> the injected
+faults, <span class="math inline"><em>N</em></span> the permitted
+nondeterminism, and <span class="math inline"><em>B</em></span> the
+resource bounds.</p>
+<p>A finite correspondence observation may be recorded as:</p>
+<p><span
+class="math display">ObsCorr<sub><em>Ω</em>, <em>Q</em>, <em>O</em></sub>(<em>A</em>, <em>B</em>) = ⋀<sub><em>q</em> ∈ <em>Q</em></sub>(Obs<sub><em>O</em></sub>(<em>A</em>, <em>q</em>)∼<sub><em>q</em></sub>Obs<sub><em>O</em></sub>(<em>B</em>, <em>q</em>))</span></p>
+<p>This says only that the declared observations correspond for the
+tested queries under the recorded conditions. It is not universal
+semantic equivalence.</p>
+<p>A migration claim must carry at least:</p>
+<p><span
+class="math display"><em>C</em> = ⟨<em>A</em>, <em>B</em>, <em>h</em><sub><em>A</em></sub>, <em>h</em><sub><em>B</em></sub>, <em>Ω</em>, <em>Q</em>, <em>O</em>, ∼,<em>Δ</em>, <em>U</em>, <em>S</em>, <em>V</em>⟩</span></p>
+<p>where <span
+class="math inline"><em>h</em><sub><em>A</em></sub></span> and <span
+class="math inline"><em>h</em><sub><em>B</em></sub></span> bind exact
+artifacts, <span class="math inline"><em>Δ</em></span> records
+divergences, <span class="math inline"><em>U</em></span> records
+unobserved or unresolved regions, <span
+class="math inline"><em>S</em></span> is the earned standing, and <span
+class="math inline"><em>V</em></span> is the revision lineage.</p>
+<p>The tempting inference</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{Corr}(L,M_n) \\
+&amp;\land \operatorname{Corr}(M_n,R) \\
+&amp;\Rightarrow \operatorname{Corr}(L,R)
+\end{aligned}
+$$</span></p>
+<p>is not valid without additional conditions. Composition requires
+compatible envelopes, observers, equivalence relations, state
+abstractions, effect models, and loss declarations. A safe rule is
+partial:</p>
+<p><span class="math display">$$
+\operatorname{ComposeCorr}(C_1,C_2)
+\rightarrow
+\begin{cases}
+C_3, &amp; \text{if compatibility and coverage obligations are
+discharged} \\
+\operatorname{Gap}(G), &amp; \text{if information or proof is missing}
+\\
+\operatorname{Refusal}(R), &amp; \text{if obligations conflict}
+\end{cases}
+$$</span></p>
+<p>Model-mediated migration is valuable precisely because it makes these
+missing conditions visible.</p>
+<h2 id="extracting-behavior-without-hallucinating-intention">4.
+Extracting Behavior Without Hallucinating Intention</h2>
+<p>Observation alone cannot distinguish a requirement from an accident.
+Static code alone cannot reveal every deployed environment or
+dependency. Interviews alone cannot establish actual behavior.
+Extraction therefore combines independent evidence channels:</p>
+<ul>
+<li><p><strong>Channel:</strong> exact source and binary custody<br />
+<strong>What it can support:</strong> what artifact was examined<br />
+<strong>What it cannot establish alone:</strong> deployed reachability
+or intended behavior</p></li>
+<li><p><strong>Channel:</strong> static structure<br />
+<strong>What it can support:</strong> potential operations, state,
+effects, and paths<br />
+<strong>What it cannot establish alone:</strong> which paths occur or
+are institutionally required</p></li>
+<li><p><strong>Channel:</strong> dynamic traces<br />
+<strong>What it can support:</strong> behavior under observed
+conditions<br />
+<strong>What it cannot establish alone:</strong> unobserved behavior or
+normative legitimacy</p></li>
+<li><p><strong>Channel:</strong> tests and incident records<br />
+<strong>What it can support:</strong> known expectations and
+failures<br />
+<strong>What it cannot establish alone:</strong> completeness or current
+deployment behavior</p></li>
+<li><p><strong>Channel:</strong> operator and user testimony<br />
+<strong>What it can support:</strong> intention, reliance, and tacit
+procedure<br />
+<strong>What it cannot establish alone:</strong> exact machine
+behavior</p></li>
+<li><p><strong>Channel:</strong> downstream dependency analysis<br />
+<strong>What it can support:</strong> behaviors on which other systems
+rely<br />
+<strong>What it cannot establish alone:</strong> whether those
+dependencies should be preserved</p></li>
+<li><p><strong>Channel:</strong> policy, law, and contracts<br />
+<strong>What it can support:</strong> authoritative obligations<br />
+<strong>What it cannot establish alone:</strong> actual implementation
+conformance</p></li>
+</ul>
+<p>Each candidate behavior receives one of four postures:</p>
+<ol type="1">
+<li><strong>required invariant</strong> - supported as an intended
+obligation;</li>
+<li><strong>relied-upon incident</strong> - not intended originally, but
+currently depended upon;</li>
+<li><strong>repair candidate</strong> - observed behavior proposed for
+correction;</li>
+<li><strong>unresolved</strong> - evidence is insufficient or
+contradictory.</li>
+</ol>
+<p>An extractor may propose these classifications. It may not promote
+them by itself.</p>
+<h2 id="the-behavioral-model">5. The Behavioral Model</h2>
+<p>A useful migration model is not merely an input/output table. For
+each bounded subsystem it records:</p>
+<p><span
+class="math display"><em>M</em> = ⟨<em>S</em>, <em>O</em><em>p</em>, <em>P</em><em>r</em><em>e</em>, <em>P</em><em>o</em><em>s</em><em>t</em>, <em>K</em>, <em>E</em><em>f</em><em>f</em>, <em>R</em><em>e</em><em>f</em>, <em>A</em><em>u</em><em>t</em><em>h</em>, <em>N</em><em>d</em>, <em>R</em><em>e</em><em>s</em>, <em>O</em><em>b</em><em>s</em>, <em>D</em><em>e</em><em>p</em>, <em>U</em><em>n</em><em>k</em>⟩</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>S</em></span> is state and state
+partitioning;</li>
+<li><span class="math inline"><em>O</em><em>p</em></span> is the
+operation set;</li>
+<li><span class="math inline"><em>P</em><em>r</em><em>e</em></span> and
+<span
+class="math inline"><em>P</em><em>o</em><em>s</em><em>t</em></span> are
+preconditions and postconditions;</li>
+<li><span class="math inline"><em>K</em></span> is the invariant
+set;</li>
+<li><span class="math inline"><em>E</em><em>f</em><em>f</em></span> is
+the effect surface;</li>
+<li><span class="math inline"><em>R</em><em>e</em><em>f</em></span> is
+the refusal and failure surface;</li>
+<li><span
+class="math inline"><em>A</em><em>u</em><em>t</em><em>h</em></span> is
+the authority and jurisdiction model;</li>
+<li><span class="math inline"><em>N</em><em>d</em></span> is permitted
+nondeterminism;</li>
+<li><span class="math inline"><em>R</em><em>e</em><em>s</em></span> is
+the resource model;</li>
+<li><span class="math inline"><em>O</em><em>b</em><em>s</em></span> is
+the observable projection;</li>
+<li><span class="math inline"><em>D</em><em>e</em><em>p</em></span> is
+the dependency and environment model;</li>
+<li><span class="math inline"><em>U</em><em>n</em><em>k</em></span> is
+the explicit unknown and disputed region.</li>
+</ul>
+<p>The inclusion of <span
+class="math inline"><em>U</em><em>n</em><em>k</em></span> is
+constitutive. A model that cannot represent its unknowns invites the
+migration team to confuse omission with absence.</p>
+<h2 id="migration-invariants">6. Migration Invariants</h2>
+<p>The following invariants govern a model-first migration
+candidate:</p>
+<ol type="1">
+<li><strong>Exact-subject binding.</strong> Every source, model,
+realization, test corpus, compiler, runtime, and policy head is
+revision-bound.</li>
+<li><strong>Description is not authority.</strong> Extraction does not
+grant a descriptive model normative standing.</li>
+<li><strong>Intent is not induced from execution.</strong> Normative
+classification requires declared authority and contrary evidence remains
+visible.</li>
+<li><strong>Envelope honesty.</strong> Every correspondence claim names
+inputs, environments, time, faults, nondeterminism, resources, and
+observers.</li>
+<li><strong>Unknown preservation.</strong> Unobserved, contradictory,
+and uninterpretable regions remain explicit gaps.</li>
+<li><strong>Effect completeness.</strong> External effects, denied
+effects, retries, timeouts, and partial failures are part of the
+model.</li>
+<li><strong>Refusal preservation.</strong> A successor may not convert a
+required refusal into silent success.</li>
+<li><strong>Authority non-expansion.</strong> Migration does not widen
+permissions, jurisdictions, or standing merely because the target can do
+more.</li>
+<li><strong>Correspondence non-transitivity.</strong> Bridge composition
+requires its own compatibility and loss review.</li>
+<li><strong>Stateful rollback.</strong> Promotion includes a
+state-reconciliation and rollback model, not only a deployable prior
+binary.</li>
+<li><strong>Independent challenge.</strong> Assurance claims expose
+their oracle, observer, shared trust roots, and opportunities for
+independent falsification.</li>
+<li><strong>Successor lineage.</strong> Changes to model,
+classification, envelope, realization, dependency, or evidence create a
+traceable successor rather than rewriting history.</li>
+</ol>
+<h2 id="governed-migration-lifecycle">7. Governed Migration
+Lifecycle</h2>
+<p>The source proposes extraction, realization, shadow operation,
+promotion, and outward repetition. A safer lifecycle separates candidate
+creation from standing:</p>
+<pre class="text"><code>EXACT_SUBJECT_BOUND
+        |
+        v
+DESCRIPTIVE_MODEL_CANDIDATE
+        |
+        v
+INTENT_AND_DEPENDENCY_ADJUDICATION
+        |
+        +---- gap / dispute / refusal
+        |
+        v
+NORMATIVE_MODEL_CANDIDATE
+        |
+        v
+REALIZATION_AND_STATIC_CHECKS
+        |
+        v
+SHADOW_OR_SIMULATION
+        |
+        +---- divergence / unsafe effect / rollback
+        |
+        v
+BOUNDED_QUALIFICATION
+        |
+        v
+CANARY_OR_PARTIAL_PROMOTION
+        |
+        +---- monitored rollback / state repair
+        |
+        v
+BOUNDED_PROMOTION_AND_CONTINUOUS_DRIFT_REVIEW</code></pre>
+<p>A “clean window” is not evidence that an open behavior space has been
+exhausted. Promotion requires an acceptance profile stating duration,
+traffic and state coverage, fault coverage, excluded regions, divergence
+threshold, severity policy, rollback readiness, and residual risk.
+High-consequence systems may never justify full replacement from
+observational evidence alone.</p>
+<p>Shadow execution also has costs and risks: production data may be
+duplicated, effects may accidentally escape, observers may perturb
+timing, and state may diverge. Shadowing therefore requires an effect
+membrane, privacy controls, resource limits, and evidence that the
+shadow remained non-authoritative.</p>
+<h2 id="realization-funnel">8. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Model-first migration role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore all plausible legacy interpretations, model boundaries,
+seams, target substrates, repair proposals, and migration paths,
+including unsafe and undesirable ones.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>State exact source custody, operations, state, invariants, effects,
+refusals, dependencies, authority, unknowns, observer model, and claim
+ceiling.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate admissible descriptive and normative model candidates
+consistent with the available evidence, including expensive,
+centralized, privacy-invasive, brittle, or minimally useful
+candidates.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer candidates that preserve justified obligations, minimize
+authority and effect surface, expose uncertainty, support substitution
+and rollback, protect users, and reduce future semantic debt.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select the exact subsystem, source and environment revisions, model
+candidate, equivalence classes, observer/oracle arrangement, target,
+thresholds, rollout scope, and rollback plan.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build extractors, model validators, realizations, membranes, shadow
+infrastructure, state synchronizers, comparison tools, and receipt paths
+for that configuration.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Run static, dynamic, fault, adversarial, historical, shadow, canary,
+rollback, drift, dependency, privacy, and independent-observer checks;
+retain divergences and coverage gaps.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Create successors as source behavior, obligations, dependencies,
+models, targets, evidence, and decisions change; preserve invalidated
+claims and migration history.</td>
+</tr>
+</tbody>
+</table>
+<p>The paper is primarily a Specification and process proposal. It does
+not authorize an Implementation Realization or establish that a
+particular migration has passed Evidence.</p>
+<h2 id="capabilities-restated-within-their-ceilings">9. Capabilities,
+Restated Within Their Ceilings</h2>
+<h3 id="substrate-independence">9.1 Substrate independence</h3>
+<p>A model can reduce dependence on the source implementation when the
+model captures the obligations relevant to the target and the
+correspondence bridges are independently adequate. It cannot make
+environmental assumptions or hardware behavior disappear.</p>
+<h3 id="composability">9.2 Composability</h3>
+<p>Subsystem models can reveal seams and typed dependencies. They do not
+guarantee good decomposition. At every composition boundary, the
+migration must identify which component, interface, mediator,
+environment, architecture, or policy carries each invariant [CBC].</p>
+<h3 id="behavior-preserving-change">9.3 Behavior-preserving change</h3>
+<p>A model can state what a change intends to preserve and can organize
+evidence about the affected envelope. It cannot generally prove that no
+other behavior changed. The honest deliverable is a bounded difference
+claim plus residual uncertainty.</p>
+<h3 id="intent-incident-separation">9.4 Intent-incident separation</h3>
+<p>The architecture makes the distinction recordable and adjudicable. It
+does not infer intention automatically. Relied-upon accidents may become
+successor obligations even when they were never original
+requirements.</p>
+<h3 id="reversible-cutover">9.5 Reversible cutover</h3>
+<p>Shadow, canary, receipts, and rollback can reduce cutover risk.
+Reversibility is incomplete when the new realization performs
+irreversible effects, changes persistent schemas, advances external
+protocols, or creates data the old system cannot interpret.</p>
+<h3 id="durable-knowledge-recovery">9.6 Durable knowledge recovery</h3>
+<p>The model, evidence, disputes, and lineage can preserve institutional
+knowledge more durably than unbound prose. They remain revisioned
+claims, not rot-proof or infallible documentation. GMB can retain this
+governed meaning without turning admission into truth [GMB].</p>
+<h2 id="model-first-continuity-application-profile">Model-First
+Continuity Application Profile</h2>
+<p>Across the completed P1 corpus, Model-First Legacy Migration is the
+<strong>application profile for recovering bounded behavioral and
+normative models, qualifying successor realizations, and preserving
+continuity across legacy replacement</strong>. It is not a new
+foundational representation theory, a proof of general program
+equivalence, or permission to treat observed legacy behavior as intended
+law.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em><br />
+<strong>Supplies:</strong> Exact predecessor, projection, decision, and
+successor lineage.<br />
+<strong>Migration-profile boundary:</strong> Migration uses lineage to
+preserve how each model and realization was derived.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Cold Boot Continuity as a
+Deployment Primitive</em><br />
+<strong>Supplies:</strong> Reconstructable resumption across
+environments and providers.<br />
+<strong>Migration-profile boundary:</strong> A successor must cold-boot
+its declared model, configuration, evidence, and recovery
+procedures.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Sovereign Software</em><br />
+<strong>Supplies:</strong> Inspectability, reconstructability,
+substitutability, and renegotiable user boundaries.<br />
+<strong>Migration-profile boundary:</strong> Migration is successful
+only within a declared sovereignty and dependency objective.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Fragmentation and
+Constitutional Structure</em><br />
+<strong>Supplies:</strong> Discovery of obligations split across code,
+data, operators, policy, and environment.<br />
+<strong>Migration-profile boundary:</strong> Fragmentation analysis
+identifies model gaps before a seam is trusted.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Heterogeneous observation and
+result-visibility structure.<br />
+<strong>Migration-profile boundary:</strong> Observers supply bounded
+correspondence evidence without making the legacy subject an
+oracle.</p></li>
+</ul>
+<p>A migration instance should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M= (&amp;legacy\_subject, descriptive\_model, \\
+&amp;normative\_decisions, unknowns, dependencies, target, \\
+&amp;realization, correspondence\_envelope, observers, \\
+&amp;promotion, rollback, lineage, residual\_risk)
+\end{aligned}.
+$$</span></p>
+<p>The descriptive model records observed behavior and gaps. Normative
+decisions separately classify obligations, defects, relied-upon
+accidents, repairs, and prohibited behaviors. The successor realization
+is evaluated against the adjudicated model within an explicit
+correspondence envelope; observation outside that envelope remains
+unknown rather than silently absent.</p>
+<p>Migration is not a single cutover. Shadowing, canary operation, state
+reconciliation, dependency substitution, rollback, provider exit, and
+continuing drift review are distinct configuration choices and evidence
+burdens. Irreversible effects and state-schema changes require forward
+recovery or compensation where rollback cannot restore the prior
+world.</p>
+<p>The universal GSM can type<br />
+<code>DESCRIBES_LEGACY_BEHAVIOR</code>,<br />
+<code>ADJUDICATES_AS_NORMATIVE_OBLIGATION</code>,
+<code>PRESERVES_EXPLICIT_UNKNOWN</code>,<br />
+<code>REALIZED_BY_SUCCESSOR</code>,
+<code>CORRESPONDS_WITHIN_ENVELOPE</code>,
+<code>OBSERVED_BY_INDEPENDENT_CHANNEL</code>,<br />
+<code>PROMOTED_UNDER_MIGRATION_PROFILE</code>,
+<code>ROLLS_BACK_WITH_STATE_RECONCILIATION</code>,<br />
+<code>EXITS_LEGACY_DEPENDENCY</code>,<br />
+and<br />
+<code>RETAINS_RESIDUAL_MIGRATION_RISK</code>. These relations compress
+the work into a reusable application profile.</p>
+<p>This integration establishes four editorial commitments: classify the
+work as a model-first continuity application profile; adopt the
+migration-instance envelope; require descriptive, normative,
+realization, and evidence postures to remain separate; and require
+cold-boot, rollback, dependency-exit, and residual-risk evidence before
+any bounded promotion claim.</p>
+<h2
+id="adversarially-challenged-migration-with-human-domain-exclusion-infrastructure-continuity-and-commitment-separation">Adversarially
+Challenged Migration with Human-Domain Exclusion, Infrastructure
+Continuity, and Commitment Separation</h2>
+<p>The fixed-seed comparison with adversarial alternation, The
+Well-Governed Mind, constitutionally governed infrastructure, and CHC
+expands the migration profile while making its domain exclusions
+explicit:</p>
+<p><span class="math display">$$
+\begin{aligned}
+M^*= (&amp;legacy\_subject, descriptive\_model, \\
+&amp;normative\_decisions, unknowns, dependencies, \\
+&amp;infrastructure\_controls, target, IC, IR, \\
+&amp;correspondence\_envelope, commitments, audits, promotion, \\
+&amp;rollback, exit, residual\_risk)
+\end{aligned}.
+$$</span></p>
+<p>Adversarial alternation can challenge model extraction, normative
+classification, successor behavior, effect membranes, rollback, and
+residual risk on exact subject generations. It does not prove
+equivalence beyond the attack and observation envelope.</p>
+<p>The Well-Governed Mind marks a domain exclusion: this engineering
+method must not redescribe a person, therapy, or contested human
+self-model as a legacy system awaiting replacement. Structural
+vocabulary may be compared only through an explicit transfer envelope,
+and no clinical or psychological inference is licensed here.</p>
+<p>Constitutionally governed infrastructure adds continuity obligations
+during migration. Scheduling, routing, credentials, fallbacks, data
+conversion, provider dependencies, and administrative reachability can
+make a formally available successor unusable in practice. Migration must
+therefore preserve or deliberately revise liveness, contestability,
+accessibility, remedy, and exit.</p>
+<p>CHC can commit separately to exact predecessor state, descriptive and
+normative claim envelopes, configuration, policy, and an epoch-relative
+admissibility decision. These commitments support custody and replay but
+do not prove model truth, semantic equivalence, authority, or safe
+promotion.</p>
+<p>Here IC means Instance Constitution or Instance Configuration and
+realization-stage IR means Instance Realization or Implementation
+Realization. Either expansion names the same stage; compiler
+Intermediate Representation remains a separate context-resolved
+sense.</p>
+<p>The universal GSM can type<br />
+<code>AUDITED_AGAINST_EXACT_LEGACY_GENERATION</code>,<br />
+<code>EXCLUDES_HUMAN_REPLACEMENT_ANALOGY</code>,
+<code>PRESERVES_PRACTICAL_CONTINUATION</code>,<br />
+<code>COMMITS_TO_MIGRATION_CLAIM_ENVELOPE</code>,
+<code>ADMITS_SUCCESSOR_AT_EPOCH</code>,
+<code>EXITS_DEPENDENCY</code>,<br />
+and<br />
+<code>RETAINS_RESIDUAL_MIGRATION_RISK</code>.</p>
+<p>This randomized review establishes four editorial commitments:
+integrate exact adversarial challenge into migration qualification; add
+an explicit human-domain exclusion; require practical infrastructure
+continuity and effective exit; and bind state, model claims,
+configuration, and admissibility through separate commitments.</p>
+<h2
+id="bounded-continuity-across-descriptive-normative-and-realized-layers">Bounded
+Continuity Across Descriptive, Normative, and Realized Layers</h2>
+<p>Six downstream uses apply model-first migration to cryptographic
+commitment limits, adversarial alternation, infrastructure continuity,
+ACG overlays, software sovereignty, and cross-domain clinical firewalls.
+They confirm a migration profile centered on explicit correspondence
+among an observed legacy subject, descriptive model, normative successor
+specification, selected configuration, realized system, and evidence. No
+layer is automatically identical to the one before it.</p>
+<p><span class="math display">$$
+\begin{aligned}
+M^*= (&amp;legacy\_subject, generation, environment, observations, \\
+&amp;descriptive\_model, normative\_decisions, \\
+&amp;preserved\_capabilities, excluded\_behavior, IC, IR, \\
+&amp;correspondence, evidence, cutover, rollback, \\
+&amp;stakeholders, remainder, revision)
+\end{aligned}.
+$$</span></p>
+<p>Observed behavior does not reveal intention, legitimacy, or required
+preservation. Bugs, workarounds, undocumented dependencies, operator
+practice, data conventions, timing, security assumptions, and
+institutional accommodations may be behaviorally real while remaining
+contested normative inputs. Human-domain expertise determines what may
+be removed, repaired, or preserved; the extraction system cannot decide
+this from traces alone.</p>
+<p>Correspondence must be claim-specific and challenged before and after
+cutover. Shadow operation, differential testing, adversarial cases,
+state and data reconciliation, rollback, provider exit, user remedy, and
+retained legacy access may all be required. A successful migration does
+not establish full semantic equivalence, complete dependency control, or
+transfer of the method into clinical or institutional judgment.</p>
+<p>The universal GSM can type<br />
+<code>OBSERVES_LEGACY_SUBJECT</code>,
+<code>EXTRACTS_DESCRIPTIVE_MODEL</code>,<br />
+<code>MAKES_NORMATIVE_MIGRATION_DECISION</code>,
+<code>SELECTS_MIGRATION_IC</code>,
+<code>REALIZES_MIGRATION_IR</code>,<br />
+<code>TESTS_CORRESPONDENCE</code>, <code>ROLLS_BACK_CUTOVER</code>,
+and<br />
+<code>RETAINS_LEGACY_REMAINDER</code>.</p>
+<p>This review establishes four editorial commitments: adopt the layered
+migration record; require explicit human-domain normative decisions;
+make correspondence claim-specific and adversarially tested; and bind
+cutover, reconciliation, rollback, exit, remedy, and remainder without
+claiming general equivalence.</p>
+<h2 id="failure-modes-and-counterevidence">10. Failure Modes and
+Counterevidence</h2>
+<p>The thesis is weakened or refuted for a given migration when:</p>
+<ul>
+<li>extraction cost and model complexity approach or exceed disciplined
+replacement cost;</li>
+<li>the system’s meaningful behavior depends on irreducible physical,
+social, or organizational context;</li>
+<li>operational traces systematically omit high-consequence paths;</li>
+<li>the old system itself is unsafe, inconsistent, compromised, or an
+unsuitable oracle;</li>
+<li>stakeholders cannot adjudicate intention, reliance, or repair
+proposals;</li>
+<li>dynamic code, undefined behavior, concurrency, timing, external
+services, or hardware defeat the chosen abstraction;</li>
+<li>observer effects make shadow correspondence misleading;</li>
+<li>the model becomes a second legacy system with its own opaque tooling
+and stale assumptions;</li>
+<li>seams optimize formal neatness while destroying operational or
+institutional coherence;</li>
+<li>a target preserves outputs while changing authority, privacy,
+performance, accessibility, or failure behavior;</li>
+<li>rollback cannot restore state or retract external effects;</li>
+<li>correspondence batteries share the same compiler, author, fixtures,
+assumptions, or blind spots as the realization;</li>
+<li>monitoring success is converted into standing beyond its declared
+envelope.</li>
+</ul>
+<p>The strongest alternative hypothesis is that migration safety comes
+primarily from socio-technical modernization practice - domain experts,
+incremental replacement, operational testing, and rollback - while a
+formal model adds cost without enough additional assurance. A credible
+evaluation must compare model-first migration with strong
+non-model-first baselines rather than with unaudited rewrites alone.</p>
+<h2 id="evidence-status-of-the-source-examples">11. Evidence Status of
+the Source Examples</h2>
+<p>The source reports a toy-scale stack involving ECA or Artifact IR
+models, correspondence batteries, deterministic rendering, hash and
+receipt binding, MCRM or replay, and a frontier discovery court. It also
+names trust-root and toolchain-reproduction work as prerequisites. These
+are valuable evidence leads, but the paper does not supply exact
+artifact paths, hashes, commands, test populations, negative controls,
+or independent reproduction records.</p>
+<p>This revision therefore preserves the claims as
+<strong>source-reported preliminary demonstrations</strong> rather than
+converting them into verified results. Evidence elevation requires an
+exact evidence appendix that binds:</p>
+<ol type="1">
+<li>each subject artifact and fixture set;</li>
+<li>each grammar and model profile;</li>
+<li>extraction and rendering commands;</li>
+<li>test and holdout selection;</li>
+<li>oracle and observer identities;</li>
+<li>compiler, runtime, and environment custody;</li>
+<li>expected and observed divergences;</li>
+<li>negative fixtures and refusal results;</li>
+<li>independent reproduction, where claimed;</li>
+<li>the exact claim ceiling earned.</li>
+</ol>
+<p>Custody-only excluded corpora were not used as Ableman semantic
+evidence for this candidate.</p>
+<h2 id="constitutional-computing-and-the-rule-of-law-analogy">12.
+Constitutional Computing and the Rule-of-Law Analogy</h2>
+<p>The source connects model-first migration to a movement from rule by
+opaque code toward rule through inspectable law. The comparison is
+illuminating if kept structural:</p>
+<ul>
+<li>promulgation corresponds to making obligations legible;</li>
+<li>congruence corresponds to testing realization against declared
+obligations;</li>
+<li>jurisdiction corresponds to a claim ceiling and authority
+boundary;</li>
+<li>constancy corresponds to revision-bound judgment;</li>
+<li>amendment corresponds to explicit successor and ratification
+processes;</li>
+<li>refusal corresponds to a first-class outcome rather than forced
+execution.</li>
+</ul>
+<p>Software conformance is not legal legitimacy, and a test harness is
+not a court merely because it is called one. Human institutions retain
+authority over purposes, rights, acceptable harms, evidence standards,
+and contested interpretations. Independence is also graded: a separately
+executed verifier may still share authorship, specifications, fixtures,
+dependencies, funding, or infrastructure with the system it
+evaluates.</p>
+<p>The constitutional contribution is therefore not a claim to have
+cured rule by code. It is an architecture for separating declaration,
+realization, observation, adjudication, and revision so that opaque
+execution no longer holds all of those roles by default.</p>
+<h2 id="corpus-integration">13. Corpus Integration</h2>
+<p>Model-first legacy migration is best understood as an application
+profile of existing corpus machinery rather than a new foundational
+primitive:</p>
+<ul>
+<li><strong>The Substrate Migration Principle</strong> explains why
+recurring migration failures may justify moving correspondence,
+authority, and refusal obligations into non-optional compiler, runtime,
+or deployment boundaries [SMP].</li>
+<li><strong>GOORRT</strong> prevents collapse among object or state
+models, operation semantics, and computational realizations. Migration
+uses correspondence records among these families rather than treating
+one representation as universally constitutive [GOORRT].</li>
+<li><strong>GSOL, MCIR, PEIR, and GCML</strong> provide candidate homes
+for governed operations, canonical commitments, execution-ready
+structure, and procedural preservation contracts. Their exact division
+remains an architecture question, not a premise this paper
+resolves.</li>
+<li><strong>Constraint-Bearing Composability</strong> supplies the
+deeper account of seams, invariant carriage, residual assumptions,
+disturbance envelopes, and diachronic preservation [CBC].</li>
+<li><strong>Semantic Fragmentation Analysis</strong> can locate
+obligations that remain split across source, database, operators,
+environment, policy, and neighboring systems before a seam is accepted
+[SFA].</li>
+<li><strong>The Constitutional Observability Platform</strong> supplies
+heterogeneous observers and result-visibility structures needed to
+compare declaration with runtime consequences without treating one
+monitor as the whole truth [COP].</li>
+<li><strong>Reasoning by Way of Receipts</strong> structures
+intermediate migration decisions, evidence, refusals, and gaps while
+denying that receipts prove their own truth [RWR].</li>
+<li><strong>The Three Hash Rule</strong> separates exact artifact
+custody, admissibility commitments, and meaning commitments across
+source, model, realization, and evidence [THR].</li>
+<li><strong>Semantic Project Lineage</strong> preserves reconstructible
+predecessors, projections, decisions, and revision relations through a
+long migration [SPL].</li>
+<li><strong>Cold-Boot Continuity</strong> tests whether the model,
+configuration, evidence, and procedures can orient a fresh environment
+without relying on invisible session memory [CBCB].</li>
+<li><strong>Sovereign Software</strong> supplies the user-facing
+objective: a successor should reduce coercive dependency and preserve
+inspectability, reconstructability, replaceability, and renegotiable
+boundaries rather than merely modernize implementation language
+[SS].</li>
+<li><strong>Dynatology and the realization funnel</strong> distinguish
+possible, admissible, preferable, selected, implemented, evidenced, and
+revised migrations [DYN].</li>
+<li><strong>GMB</strong>, the current Governed Meaning Base in the
+historical <code>CCF -&gt; CMB -&gt; GMB</code> lineage, can retain the
+model, disputes, evidence, standing, decisions, and successor graph. It
+is neither the legacy runtime nor the migration oracle [GMB].</li>
+</ul>
+<p>This compression matters. The paper contributes a migration profile
+and capability thesis; it should not duplicate the representational,
+compositional, observability, lineage, or meaning-base architectures it
+invokes.</p>
+<h2 id="research-program">14. Research Program</h2>
+<ol type="1">
+<li>Define a minimal migration-model schema including unknowns,
+authority, effects, nondeterminism, resources, dependencies, and claim
+ceilings.</li>
+<li>Define correspondence-record, gap, refusal, divergence, promotion,
+rollback, and revision schemas.</li>
+<li>Select one bounded, stateful, effectful legacy subsystem with exact
+custody and a safe observation environment.</li>
+<li>Establish a strong conventional incremental-migration baseline for
+comparison.</li>
+<li>Build independent static, dynamic, documentary, and stakeholder
+evidence channels.</li>
+<li>Measure extraction effort, model size, disagreement, coverage, false
+confidence, and maintenance cost.</li>
+<li>Construct adversarial and withheld traces, fault injection,
+environment changes, dependency substitutions, and malicious realization
+fixtures.</li>
+<li>Test bridge composition rather than assuming correspondence
+transitivity.</li>
+<li>Exercise shadow, canary, rollback, state reconciliation, and
+irreversible-effect cases.</li>
+<li>Study whether the model remains useful and current after the initial
+migration.</li>
+<li>Bind every empirical claim to exact artifacts, observers, commands,
+and negative controls.</li>
+<li>Conduct current primary-source research on program equivalence,
+specification mining, active automata learning, program synthesis,
+conformance testing, differential testing, refinement, verified
+compilation, strangler migrations, digital twins, software archaeology,
+and socio-technical modernization.</li>
+</ol>
+<h2 id="the-legacy-system-is-evidence-not-its-own-constitution">The
+Legacy System Is Evidence, Not Its Own Constitution</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Model-first legacy migration reconstructs a bounded behavioral model
+before selecting a successor realization. It separates observed
+behavior, intended obligation, relied-upon accident, defect, environment
+dependency, and authorized change. A descriptive model becomes normative
+only through adjudication; neither the running binary nor the extracted
+model decides by itself what must continue.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Observation-intention attack.</strong> Frequently observed
+behavior is treated as intended law, while rare or unobserved
+obligations disappear.</li>
+<li><strong>Golden-master attack.</strong> Exact output comparison
+preserves known defects, unstable ordering, obsolete constraints, unsafe
+behavior, or environment accidents.</li>
+<li><strong>Coverage-closure attack.</strong> Tests, traces, static
+analysis, interviews, and production logs are treated as complete over
+unreachable, secret, temporal, concurrent, or failure paths.</li>
+<li><strong>Model-oracle attack.</strong> The extracted representation
+is treated as correct because it is formal, executable, or internally
+consistent.</li>
+<li><strong>Stakeholder-erasure attack.</strong> Operators, users,
+downstream systems, regulators, and affected people are represented only
+through machine-observable behavior.</li>
+<li><strong>Equivalence-profile attack.</strong> A successor passes
+declared observers while violating performance, timing, resource,
+security, accessibility, legal, or social obligations outside them.</li>
+<li><strong>Cutover-irreversibility attack.</strong> Data
+transformation, dual writes, external integrations, or organizational
+change make rollback impossible despite a nominal plan.</li>
+<li><strong>Modernization-overreach attack.</strong> A bounded migration
+result is generalized into automatic substrate independence,
+composability, durable knowledge recovery, or general program
+understanding.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper offers an obligation-reconstruction architecture and
+capability thesis. It does not solve program equivalence, infer
+intention from behavior, guarantee complete models, establish normative
+authority, prove substrate independence, or demonstrate successful
+migration, reversible cutover, reduced risk, cost advantage, or
+organizational benefit. Source examples remain evidence at their
+recorded standing.</p>
+<p>Validation requires exact legacy custody and environment,
+multi-source model construction, adjudicated obligations, hidden and
+adversarial cases, property-specific equivalence, shadow operation, data
+and dependency reconciliation, rollback drills, affected-party review,
+and current external research. No migration or external research was
+performed in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The practical advance is not automatic rewriting. It is making every
+preservation, repair, refusal, and tolerated difference visible enough
+that people can decide what the successor owes before code is allowed to
+replace the system.</p>
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Model-first legacy migration is promising because it changes what a
+migration is allowed to hide. Instead of translating an opaque
+implementation into a new opaque implementation, it constructs an
+explicit, revisioned account of behavior, obligation, authority,
+uncertainty, and evidence between them.</p>
+<p>The model is not born sovereign. It begins as a descriptive
+candidate. It becomes normative only through adjudication, and every
+realization earns only bounded correspondence under declared conditions.
+This correction strengthens rather than weakens the original capability
+thesis: the goal is not a magical proof of equivalence, but an
+architecture in which uncertainty, disagreement, residual dependence,
+and failure can no longer masquerade as a successful rewrite.</p>
+<p>If that architecture proves cheaper, safer, and more reconstructible
+than strong conventional migration on real systems, it would support a
+new generation of inspectable and substrate-independent software
+continuity. Until then, it is a disciplined research program with a
+precise burden of proof.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Publication form.</strong> This work is retained as a
+standalone technical companion because its concrete migration method is
+useful independently; it remains subordinate to the architecture it
+explains.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that legacy migration is usually framed as
+translation from one implementation to another. Its nearest external
+comparison fields are software, open sovereign, ai. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Modularity,
+secure-development practice, and reproducibility reduce classes of
+failure but do not guarantee architectural coherence or user
+sovereignty. Source availability and reproducible builds improve
+inspectability but do not alone guarantee comprehensibility, practical
+exit, hardware control, or sustainable maintenance. Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. These limits are not generic disclaimers:
+they identify the assumptions that a later empirical, formal, or
+implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E2]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E3]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> Free Software Foundation. <em>The Free Software
+Definition</em>. https://www.gnu.org/philosophy/free-sw.html
+<strong>Relationship:</strong> Normative predecessor for user freedoms;
+the paper may add reconstruction, governance, or hardware-boundary
+obligations beyond license rights.</p>
+<p><strong>[E6]</strong> Open Source Initiative. <em>The Open Source
+Definition</em>. https://opensource.org/osd
+<strong>Relationship:</strong> Adjacent licensing baseline; source
+availability is not treated as sufficient for operational
+sovereignty.</p>
+<p><strong>[E7]</strong> Martin Kleppmann et al. “Local-First Software:
+You Own Your Data, in Spite of the Cloud.” <em>Onward! 2019</em>,
+pp. 154-178. DOI: 10.1145/3359591.3359737.
+https://www.inkandswitch.com/local-first/ <strong>Relationship:</strong>
+Adjacent local-first design program relevant to user custody, offline
+operation, and collaboration.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure in Software Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-B307F65B51C503DE</code>;<br />
+source SHA-256<br />
+<code>9D2A9D79DE8BC3F2F8ABECA073E4D3607F7623F4368E63F8036081E39B4C75C3</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governed Coding and
+Debugging</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18115533</code>;<br />
+source SHA-256<br />
+<code>2469EDA96DBC1E207855A9AD27314A7FAB59FA35E6EFEF9288C30F949376BF16</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Operating
+Systems</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F5FB8FA82270B989</code>;<br />
+source SHA-256<br />
+<code>E982E4D6BD4B519EED6A7438367844954D6D5F1C2C4CC0099AAAC4AB9A00D3AB</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Jnana</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-ECEAB04A620F163D</code>;<br />
+source SHA-256<br />
+<code>76D921D2975BDCD25D6DFB506F5E85F7AFDBF4D2CCC65F8C45394121F9D90060</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Jnana and the Next Open
+Source Revolution</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-473AD6FAA1659E24</code>;<br />
+source SHA-256<br />
+<code>E73859FD3B4AD4F7ED80E96F93F2D5A0DCB3A2D76C5741813F878B3874D7887D</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[SMP]</strong> Adam Ableman. <em>The Substrate Migration
+Principle</em>. Exact reviewed source:<br />
+<code>The_Substrate_Migration_Principle.md</code>,<br />
+SHA-256<br />
+<code>0B078CB21D7F14AD7439C605CF532D88306C94E6202A133EE4FB56DE891F36ED</code>.</p>
+<p><strong>[GOORRT]</strong> Adam Ableman. <em>GOORRT: The Governed
+Object-Operation-Realization Representation Triad</em>. Exact reviewed
+source:<br />
+<code>GOORRT- The Governed Object-Operation-</code></p>
+<p><code>Realization Representation Triad.md</code>,<br />
+SHA-256<br />
+<code>152AB6781AA827519858E0BD8A1811CB1F2C08F56599CD2A61896115742D1399</code>.</p>
+<p><strong>[CBC]</strong> Adam Ableman. <em>Constraint-Bearing
+Composability</em>. Exact reviewed source:<br />
+<code>Constraint-Bearing Composability.md</code>,<br />
+SHA-256<br />
+<code>BEEA0B56DBF7DC5274307E95E08AF0576A9F91A729C1962765361ADA34488B62</code>.</p>
+<p><strong>[SFA]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure</em>. Exact corpus head SHA-256<br />
+<code>4048182A492E8ED731505426801D7A89074DE7311C0B3D975ECD2A2478D845F8</code>;
+unpublished AI-assisted integrated edition, with no publication or
+canonical standing granted here.</p>
+<p><strong>[COP]</strong> Adam Ableman. <em>The Constitutional
+Observability Platform</em>. Exact corpus head SHA-256<br />
+<code>15CBE49A23A34F881A06EAB32AAFD95E9468EC0B7C19F47A795A34C854DF9E84</code>;
+unpublished AI-assisted integrated edition, with no publication or
+canonical standing granted here.</p>
+<p><strong>[RWR]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Exact corpus head SHA-256<br />
+<code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>;
+unpublished AI-assisted integrated edition, with no publication or
+canonical standing granted here.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.20788617</code>. Exact reviewed Markdown head
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<p><strong>[SPL]</strong> Adam Ableman. <em>From Content-Addressed
+Storage to Governed Semantic Project Lineage</em>. Exact corpus head
+SHA-256<br />
+<code>E6D6B39F9443E48CEA44CA8B17681AC73E4A40A8AAD56C1E31B84D8B5DA50499</code>;
+unpublished AI-assisted integrated edition, with no publication or
+canonical standing granted here.</p>
+<p><strong>[CBCB]</strong> Adam Ableman. <em>Cold Boot Continuity as a
+Deployment Primitive</em>. Exact corpus head SHA-256<br />
+<code>747CDF82833B2769317A3E63F0F6BA9D0A2CFA84C83E5A8CD72442F6E49C59F3</code>;
+unpublished AI-assisted integrated edition, with no publication or
+canonical standing granted here.</p>
+<p><strong>[SS]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Exact corpus head SHA-256<br />
+<code>D8A2707865C6636485A564546D91F2CCF45AAC80161B94AC56A3DA5CF2EB2C13</code>;
+unpublished AI-assisted integrated edition, with no publication or
+canonical standing granted here.</p>
+<p><strong>[DYN]</strong> Adam Ableman. <em>Dynatology</em>. Exact
+corpus head SHA-256<br />
+<code>8539BBB8D636C406800A38C7EC47BE36B1EEEBFA04FAE062FF6E53137099BEFC</code>;
+unpublished AI-assisted integrated edition, with no publication or
+canonical standing granted here.</p>
+<p><strong>[GMB]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Current corpus terminology under the author-confirmed
+historical lineage <code>CCF -&gt; CMB -&gt; GMB</code>; this
+terminology ruling grants no publication, implementation, conformance,
+or canonical standing.</p>
+<p>The source invokes Rice’s theorem, Hyrum’s Law, Lawrence Lessig, and
+Lon Fuller. Exact editions, page references, and the broader external
+literature remain to be researched and verified for a future
+evidence-qualified revision readiness.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Semantic Debt.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21111666</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848090">10.5281/zenodo.23848090</a></p>

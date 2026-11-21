@@ -1,0 +1,508 @@
+<h1 id="the-leap-42-calendar">The Leap 42 Calendar</h1>
+<h2 id="a-parsimonious-decimal-calendar-and-timekeeping-architecture">A
+Parsimonious Decimal Calendar and Timekeeping Architecture</h2>
+<h3 id="the-shape-of-a-simpler-year">The Shape of a Simpler Year</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern civil timekeeping remains structurally irregular: months vary
+in length, leap behavior is distributed through special rules, and clock
+time preserves sexagesimal divisions inherited from pre-digital systems.
+This paper presents <strong>Leap 42</strong>, a decimal calendar and
+timekeeping architecture whose primary design goal is the elimination of
+unnecessary irregularity through strict temporal parsimony. The system
+uses decimal time—ten hours per day, 100 minutes per hour, and 100
+seconds per minute—and a ten-month calendar in which months 1–9 each
+contain 36 days, while month 10 contains 41 days in standard years and
+42 days in leap years.</p>
+<p>The proposal does not claim novelty for decimal time, which directly
+echoes French Revolutionary decimal time. Its novelty lies in the
+calendar geometry: rather than placing balancing days outside the month
+system as intercalary or festival days, Leap 42 contains all
+irregularity inside a single terminal month. This creates a
+piecewise-regular temporal model: nine uniform months followed by one
+bounded balancing month. The year begins on the winter solstice,
+providing an astronomically stable and culturally neutral anchor that is
+independent of any particular civilization’s historical epoch.</p>
+<p>The paper defines the core model, temporal arithmetic, serialization,
+Gregorian and Unix interoperability, and derived properties. It argues
+that Leap 42 is unlikely to replace civil timekeeping in the near term,
+but may be useful as a computational time base for simulation systems,
+archival infrastructures, decentralized ledgers, digital governance, and
+machine-native scheduling environments.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Calendars are coordination machines.</p>
+<p>They organize agriculture, labor, memory, law, finance, software,
+ceremony, and computation. Yet the dominant Gregorian calendar is not a
+clean temporal architecture. It is a historical sediment: astronomical
+correction layered over Roman inheritance, religious authority, imperial
+administration, and later industrial synchronization.</p>
+<p>The result works socially, but it is computationally awkward. Months
+vary from 28 to 31 days. Leap rules require special handling. Weeks
+drift across months. Time itself is divided into 24 hours, 60 minutes,
+and 60 seconds, despite modern computation being overwhelmingly decimal
+or binary.</p>
+<p>Leap 42 asks a simple design question: What would a civil calendar
+look like if its governing value were parsimony?</p>
+<p>The answer proposed here is not perfect symmetry. Astronomical years
+do not permit perfect decimal subdivision without remainder. Instead,
+Leap 42 minimizes irregularity by containing it. The system keeps most
+of the calendar strictly regular and isolates the unavoidable remainder
+inside a single terminal month.</p>
+<hr />
+<h2 id="historical-context-and-related-work">2. Historical Context and
+Related Work</h2>
+<h3 id="french-revolutionary-decimal-time">2.1 French Revolutionary
+Decimal Time</h3>
+<p>French Revolutionary decimal time divided the day into 10 hours, 100
+minutes per hour, and 100 seconds per minute. Leap 42 adopts this same
+structure. Decimal time itself is therefore not novel. The value of
+reintroducing it here is architectural: decimal time completes the
+base-10 temporal model and gives the calendar a machine-native clock
+layer.</p>
+<h3 id="french-republican-calendar">2.2 French Republican Calendar</h3>
+<p>The French Republican Calendar used 12 months of 30 days, followed by
+complementary days outside the ordinary month structure. Leap 42 differs
+by avoiding extra-calendar days entirely.</p>
+<h3 id="positivist-and-fixed-calendar-systems">2.3 Positivist and Fixed
+Calendar Systems</h3>
+<p>The Positivist Calendar and International Fixed Calendar pursue
+regularity through different month structures, especially 13-month
+arrangements. These systems are useful comparators but do not share Leap
+42’s ten-month geometry or terminal balancing month.</p>
+<h3 id="global-decimal-calendar">2.4 Global Decimal Calendar</h3>
+<p>Robert Erasmus’s Global Decimal Calendar (2013) is the closest known
+structural predecessor. It uses 10 months of 36 days and handles
+remaining days as festival or intercalary periods outside ordinary
+months. Leap 42 differs in the key design choice: all days remain inside
+the calendar. The balancing days are absorbed into month 10.</p>
+<hr />
+<h2 id="core-temporal-model">3. Core Temporal Model</h2>
+<p>Leap 42 has two linked components: decimal time and decimal calendar
+geometry.</p>
+<h3 id="decimal-time">3.1 Decimal Time</h3>
+<p>A day is divided as follows: 1 day = 10 hours; 1 hour = 100 minutes;
+1 minute = 100 seconds. Thus:</p>
+<p><span class="math display">1 day = 100, 000 decimal
+seconds</span></p>
+<p>Each decimal second equals 0.864 SI seconds. Time is represented as
+the triple (h, m, s) where h is in [0, 9], m is in [0, 99], and s is in
+[0, 99]. A scalar time-of-day value is defined as:</p>
+<p><span
+class="math display"><em>T</em> = <em>h</em> ⋅ 10000 + <em>m</em> ⋅ 100 + <em>s</em>,  <em>T</em> ∈ [0, 99999]</span></p>
+<h3 id="calendar-geometry">3.2 Calendar Geometry</h3>
+<p>A Leap 42 year contains 10 months. Months 1–9 contain 36 days each.
+Month 10 contains 41 days in standard years and 42 days in leap
+years:</p>
+<p><span class="math display">Normal year:  9 × 36 + 41 = 365</span></p>
+<p><span class="math display">Leap year:  9 × 36 + 42 = 366</span></p>
+<h3 id="placeholder-month-names">3.3 Placeholder Month Names</h3>
+<p>The informal month names used during development are Oneuary through
+Tenuary (Oneuary, Twouary, Threeuary, Fouruary, Fiveuary, Sixuary,
+Sevenuary, Eightuary, Nineuary, Tenuary). These are placeholders only.
+Leap 42 does not prescribe culturally authoritative month names, nor
+does it prescribe a universal civilizational Year 0. Month names, epoch
+events, and hemisphere conventions are cultural decisions. The structure
+itself is mathematical.</p>
+<h3 id="year-start-and-astronomical-anchor">3.4 Year Start and
+Astronomical Anchor</h3>
+<p>The Leap 42 year begins on the winter solstice. Month 1, Day 1 of
+every year is defined as the day on which the winter solstice falls.
+This choice provides three properties: it is astronomically stable
+across millennia; it is culturally neutral relative to any particular
+civilization’s inherited calendar; and it gives the terminal month a
+physical interpretation—month 10 absorbs the remainder between the 365-
+or 366-day decimal year and the actual elapsed time between successive
+solstices.</p>
+<p>The winter solstice anchor does not fix the cultural Year 0. That
+remains an independent decision. The anchor fixes only the intra-year
+structure: wherever a given year begins, it begins at the solstice.</p>
+<h3 id="canonical-date-representation">3.5 Canonical Date
+Representation</h3>
+<p>The canonical date form is numeric: (Y, M, D), where Y is the year, M
+is in [1, 10], and D is the day of month. Month names are labels, not
+structural components.</p>
+<h3 id="leap-rule">3.6 Leap Rule</h3>
+<p>The simplest reference leap rule is Y mod 4 = 0, which produces a
+366-day year every fourth year and drifts by approximately one day every
+128 years. Because the year is anchored to the winter solstice, the leap
+predicate has a physical motivation: it keeps Month 1, Day 1 aligned
+with the solstice over long timescales. Production implementations
+should therefore substitute the Gregorian-style rule, which closely
+tracks the actual solar year:</p>
+<p><span
+class="math display">(<em>Y</em> mod  4 = 0) ∧ (<em>Y</em> mod  100 ≠ 0 ∨ <em>Y</em> mod  400 = 0)</span></p>
+<p>Leap 42 treats leap behavior as a predicate LeapRule(Y). The geometry
+remains unchanged as long as leap days are added only to month 10.</p>
+<hr />
+<h2 id="month-length-and-validity">4. Month Length and Validity</h2>
+<p>Month length is defined as:</p>
+<p><span class="math display">$$\text{Length}(Y, M) = \begin{cases} 36
+&amp; M \in [1, 9] \\ 41 + \mathbf{1}[\text{LeapRule}(Y)] &amp; M = 10
+\end{cases}$$</span></p>
+<p>A date (Y, M, D) is valid if and only if M is in [1, 10] and 1 &lt;=
+D &lt;= Length(Y, M). Year length is:</p>
+<p><span
+class="math display">YearLength(<em>Y</em>) = 365 + <strong>1</strong>[LeapRule(<em>Y</em>)]</span></p>
+<hr />
+<h2 id="temporal-arithmetic">5. Temporal Arithmetic</h2>
+<h3 id="ordinal-date">5.1 Ordinal Date</h3>
+<p>The ordinal day of year Ordinal(Y, M, D) is computed as follows. For
+months 1–9:</p>
+<p><span
+class="math display">Ordinal = 36(<em>M</em> − 1) + <em>D</em></span></p>
+<p>For month 10:</p>
+<p><span class="math display">Ordinal = 324 + <em>D</em></span></p>
+<p>The maximum ordinal is MaxOrdinal(Y) = 365 + 1 if LeapRule(Y) holds,
+and 1 &lt;= Ordinal &lt;= MaxOrdinal(Y).</p>
+<h3 id="inverse-ordinal-mapping">5.2 Inverse Ordinal Mapping</h3>
+<p>Given ordinal o: if o &lt;= 324, then M = ceil(o / 36) and D = o -
+36(M - 1). Otherwise M = 10 and D = o - 324. This makes date-to-ordinal
+and ordinal-to-date conversion fully invertible.</p>
+<h3 id="absolute-day-number">5.3 Absolute Day Number</h3>
+<p>The absolute day number ADN(Y, M, D) provides a monotonic integer
+timeline. Under the simple four-year leap rule:</p>
+<p><span
+class="math display">ADN = 365<em>Y</em> + ⌊<em>Y</em>/4⌋ + Ordinal(<em>Y</em>, <em>M</em>, <em>D</em>) − 1</span></p>
+<p>More generally:</p>
+<p><span class="math display">$$\text{ADN} = 365Y + \sum_{i=0}^{Y-1}
+\text{LeapRule}(i) + \text{Ordinal}(Y, M, D) - 1$$</span></p>
+<h3 id="successor-and-predecessor">5.4 Successor and Predecessor</h3>
+<p>Next(Y, M, D): if D &lt; Length(Y, M), return (Y, M, D+1); else if M
+&lt; 10, return (Y, M+1, 1); else return (Y+1, 1, 1). Prev(Y, M, D): if
+D &gt; 1, return (Y, M, D-1); else if M &gt; 1, return (Y, M-1,
+Length(Y, M-1)); else return (Y-1, 10, Length(Y-1, 10)).</p>
+<h3 id="timestamp">5.5 Timestamp</h3>
+<p>A complete timestamp is represented as (Y, M, D, T) or as the
+scalar:</p>
+<p><span class="math display">TS = ADN ⋅ 100000 + <em>T</em></span></p>
+<p>This gives a single integer timeline with deterministic ordering.</p>
+<hr />
+<h2 id="serialization-and-conversion">6. Serialization and
+Conversion</h2>
+<h3 id="canonical-string-format">6.1 Canonical String Format</h3>
+<p>The canonical date format is <code>YYYY-MM-DD</code>. The canonical
+timestamp format is</p>
+<p><code>YYYY-MM-DDThh.mm.ss</code>. Example:
+<code>0208-10-42T05.50.00</code>. Canonical padding rules: YYYY minimum
+four digits zero-padded; MM and DD exactly two digits; hh, mm, ss
+exactly two digits. Negative years are written as
+<code>-0001-01-01</code>.</p>
+<h3 id="parseserialize-invariant">6.2 Parse/Serialize Invariant</h3>
+<p>For all valid serialized timestamps, Serialize(Parse(x)) = x. Each
+valid timestamp has exactly one canonical serialization.</p>
+<h3 id="gregorian-conversion">6.3 Gregorian Conversion</h3>
+<p>Gregorian-to-Leap conversion requires: (1) compute the Gregorian
+day-of-year relative to the winter solstice (not January 1); (2) map
+that solstice-relative day count into Leap 42 month and day; (3) apply
+chosen epoch alignment and leap rules. Because Leap 42 years begin at
+the winter solstice, the solstice-relative day count differs from the
+standard Gregorian day-of-year by approximately ten to eleven days
+depending on the year. Implementations must account for this offset; a
+naive DOY-from-January-1 mapping will produce incorrect results.</p>
+<p>Once solstice-relative DOY is obtained, the month mapping follows: if
+DOY &lt;= 324 then M = ceil(DOY / 36) and D = DOY - 36(M - 1); otherwise
+M = 10 and D = DOY - 324. Inverse conversion maps (M, D) back via DOY =
+36(M-1)+D for M in [1, 9] and DOY = 324+D for M = 10. All conversions
+must specify source epoch, target epoch, source leap rule, target leap
+rule, solstice offset for the conversion year, and rounding behavior for
+time conversion.</p>
+<h3 id="reference-epoch">6.4 Reference Epoch</h3>
+<p>A software reference implementation may define the epoch as the
+winter solstice nearest a chosen anchor date. One convenient choice for
+Unix interoperability is to align Leap 42 Year 0, Month 1, Day 1 with
+the winter solstice of 1969 (December 22, 1969 UTC), placing the Unix
+epoch of 1970-01-01 at approximately Leap 42 Year 0, Month 1, Day 10.
+Implementations must record the exact solstice date used as part of the
+epoch specification.</p>
+<p>The cultural Year 0 remains an independent decision and is not
+prescribed by the reference epoch. Unix day and second offsets from the
+chosen epoch are:</p>
+<p><span
+class="math display">UnixDays = ADN − ADN<sub>epoch</sub></span></p>
+<p><span class="math display">$$\text{UnixSeconds} = (\text{ADN} -
+\text{ADN}_{\text{epoch}}) \cdot 86400 + \left\lfloor \frac{T \cdot
+86400}{100000} \right\rfloor$$</span></p>
+<p>Implementations requiring exactness should preserve rational
+remainders rather than silently discarding subsecond information.</p>
+<hr />
+<h2 id="derived-properties">7. Derived Properties</h2>
+<h3 id="bounded-irregularity">7.1 Bounded Irregularity</h3>
+<p>Only month 10 varies. The irregularity measure I = max_M Length(Y, M)
+- min_M Length(Y, M) = 42 - 36 = 6. All other months are identical in
+length across all years.</p>
+<h3 id="leap-locality">7.2 Leap Locality</h3>
+<p>Leap-year variation is confined to month 10. For all M in [1, 9]:
+Length(Y, M) = Length(Y+1, M).</p>
+<h3 id="continuous-calendrical-identity">7.3 Continuous Calendrical
+Identity</h3>
+<p>Every day belongs to a valid (Y, M, D). There are no festival days,
+blank days, or out-of-band dates.</p>
+<h3 id="constant-time-arithmetic">7.4 Constant-Time Arithmetic</h3>
+<p>Date-to-ordinal, ordinal-to-date, leap checking, timestamp
+comparison, and month length validation are all constant-time operations
+under the reference model.</p>
+<h3 id="statelessness">7.5 Statelessness</h3>
+<p>Once epoch and leap predicate are specified, all temporal values are
+fully determined by (Y, M, D, T). No hidden lookup table or historical
+exception list is required.</p>
+<h3 id="total-ordering">7.6 Total Ordering</h3>
+<p>Dates may be ordered by ADN. Timestamps may be ordered by TS = ADN *
+100000 + T. Lexicographic ordering of canonical timestamp tuples is
+equivalent to chronological ordering.</p>
+<hr />
+<h2 id="week-and-institutional-fit">8. Week and Institutional Fit</h2>
+<p>Leap 42 separates calendar geometry from week governance. A reference
+implementation may use a 6-day week because 36 = 6 x 6, giving every
+standard month exactly six weeks with no weekday drift across months
+1–9. Other week systems remain possible: 7-day continuity week, 10-day
+decimal week, or weekless computational scheduling.</p>
+<p>Institutionally, the system is well-suited to fiscal reporting,
+subscription billing, payroll modeling, simulation calendars, archival
+partitioning, distributed ledgers, and digital governance. The terminal
+month can function as an annual reconciliation period for audits,
+rollover, settlement, and closure.</p>
+<hr />
+<h2 id="limitations-and-adoption">9. Limitations and Adoption</h2>
+<p>Leap 42 is mathematically cleaner than Gregorian timekeeping, but
+social adoption would be difficult. Major limitations include:</p>
+<ul>
+<li>Entrenched Gregorian infrastructure</li>
+<li>Cultural attachment to the 7-day week</li>
+<li>Behavioral unfamiliarity of decimal hours (1 Leap 42 hour = 2.4
+conventional hours)</li>
+<li>Need for leap-rule precision over long time spans</li>
+<li>Transition costs for existing legal and financial systems</li>
+</ul>
+<p>The most plausible adoption path is therefore not immediate civil
+replacement, but computational use: machine-native timestamps,
+simulations, virtual worlds, archives, AI-agent environments, and
+decentralized systems.</p>
+<hr />
+<h2 id="novelty-claim">10. Novelty Claim</h2>
+<p>Leap 42 does not claim invention of decimal time. Its novelty claim
+is the combination of:</p>
+<ul>
+<li>Decimal time</li>
+<li>Ten-month calendar structure</li>
+<li>Nine uniform 36-day months</li>
+<li>One terminal month of 41 or 42 days</li>
+<li>Leap normalization localized to the terminal month</li>
+<li>Year start anchored to the winter solstice</li>
+<li>No intercalary or extra-calendar days</li>
+<li>Continuous date identity</li>
+<li>Simple ordinal and timestamp arithmetic</li>
+</ul>
+<p>The key architectural contribution is <strong>single-region
+irregularity containment</strong>: rather than distributing remainder
+days across the year or placing them outside the calendar, all irregular
+behavior is bounded within one terminal month. The winter solstice
+anchor gives this containment a physical meaning: month 10 holds the
+astronomical remainder between the decimal year and the solar year, and
+the leap predicate keeps that remainder bounded over long
+timescales.</p>
+<hr />
+<h2 id="conclusion">11. Conclusion</h2>
+<p>Timekeeping systems are not neutral containers. They encode inherited
+assumptions about order, labor, astronomy, authority, and
+computation.</p>
+<p>The Gregorian calendar is historically successful, but structurally
+irregular. Leap 42 offers a contrasting model: not a claim that society
+must abandon its inherited calendar, but a demonstration that
+timekeeping can be redesigned as a parsimonious information
+architecture.</p>
+<p>Its central move is simple: make most of the year regular, and place
+the unavoidable remainder in one bounded terminal month. That choice
+turns a calendar into a clean temporal data model.</p>
+<p>Whether used for civil reform, simulation, archival design, or
+machine-native chronology, Leap 42 shows that even one of civilization’s
+oldest coordination systems can still be reimagined.</p>
+<hr />
+<h2 id="appendix-a-example-date">Appendix A – Example Date</h2>
+<p>(Y, M, D) = (208, 10, 42) is the final day of a leap year.
+Placeholder label: Tenuary 42.</p>
+<hr />
+<h2 id="appendix-b-gregorian-conversion-example">Appendix B – Gregorian
+Conversion Example</h2>
+<p>Gregorian March 1 in a non-leap year is day 60.</p>
+<p><span
+class="math display"><em>M</em> = ⌈60/36⌉ = 2,  <em>D</em> = 60 − 36 = 24</span></p>
+<p>Equivalent Leap 42 date: (Y, 2, 24). Placeholder label: Twouary
+24.</p>
+<hr />
+<h2 id="appendix-c-decimal-time-example">Appendix C – Decimal Time
+Example</h2>
+<p>Given T = 55000, SI seconds since start of day:</p>
+<p><span class="math display">$$\left\lfloor \frac{55000 \times
+86400}{100000} \right\rfloor = 47520$$</span></p>
+<p>T = 55000 corresponds to 13:12:00 in conventional 24-hour time.</p>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern civil timekeeping remains structurally
+irregular: months vary in length, leap behavior is distributed through
+special rules, and clock time preserves sexagesimal divisions inherited
+from pre-digital systems. Its nearest external comparison fields are
+time, governance. The sources in [E1], [E2], [E3], [E4], [E5], [E6],
+[E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A precise
+representation of time or epoch does not resolve clock drift,
+jurisdictional calendar rules, synchronization failure, or the semantics
+of retroactive change. A written constitution can legitimate domination
+as easily as constrain it unless amendment, participation, enforcement,
+and appeal remain effective in practice. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> International Organization for Standardization.
+<em>ISO 8601-1:2019, Date and time - Representations for information
+interchange - Part 1: Basic rules</em>. 2019.
+https://www.iso.org/standard/70907.html <strong>Relationship:</strong>
+Adjacent civil-time representation standard; comparison separates
+notation from governance of calendars and epochs.</p>
+<p><strong>[E2]</strong> Leslie Lamport. “Time, Clocks, and the Ordering
+of Events in a Distributed System.” <em>Communications of the ACM</em>
+21(7), 1978, pp. 558-565. DOI: 10.1145/359545.359563.
+https://lamport.azurewebsites.net/pubs/time-clocks.pdf
+<strong>Relationship:</strong> Foundational predecessor for partial
+order, causality, and distributed event ordering.</p>
+<p><strong>[E3]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E4]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Cryptographic Phase: Declared
+Time, Semantic Stability, and Epochal Identity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.18503394</code>;<br />
+source SHA-256<br />
+<code>B8A014E0860027477AC8A6066B9501F0C5B8FE011D8E5425E50AA5833168CD89</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional
+Synchronization</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-012675C952D76CD2</code>;<br />
+source SHA-256<br />
+<code>A2147B7E6431FF6EEC1C6CE6D7A1EB644B04E37402E9514495C83909565F93C1</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Governance Engineering</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18749870</code>;<br />
+source SHA-256<br />
+<code>372169F315D192733856B1F4A3F1038BBC73F57CF3ED9ACABAE72B965A69C8D0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Universal Governance Kernel
+(UGK)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-1F9BFB2BF8370226</code>;<br />
+source SHA-256<br />
+<code>AA5106EA71E5DF120E141435C280DFC532715CA5DE0C75B8862BB7784ECCFACD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Blackburn, Bonnie, and Leofranc Holford-Strevens. <em>The Oxford
+Companion to the Year.</em> Oxford University Press, 1999.</p>
+<p>Comte, Auguste. <em>Positivist Calendar.</em> 1849.</p>
+<p>Erasmus, Robert. <em>Global Decimal Calendar.</em> 2013.</p>
+<p>Ableman, Adam. <em>Ableman’s Razor: A Typed Grammar for Ontology
+Exploration, Configuration Collapse, and Implementation Feedback.</em>
+Zenodo, 2026. doi:10.5281/zenodo.18113475</p>
+<p>Richards, E. G. <em>Mapping Time: The Calendar and Its History.</em>
+Oxford University Press, 1998.</p>
+<p>Romme, Gilbert. <em>French Republican Calendar Reforms.</em> National
+Convention of France, 1793.</p>
+<p>Zerubavel, Eviatar. <em>The Seven Day Circle.</em> University of
+Chicago Press, 1989.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20400858">10.5281/zenodo.20400858</a></p>

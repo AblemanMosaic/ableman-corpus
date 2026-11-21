@@ -1,0 +1,1134 @@
+<h1 id="governed-controlled-machine-language-gcml">Governed Controlled
+Machine Language (GCML)</h1>
+<h2
+id="procedural-stabilization-between-constitutional-meaning-and-machine-execution">Procedural
+Stabilization Between Constitutional Meaning and Machine Execution</h2>
+<h3
+id="under-the-interpretation-developed-here-gcml-does-not-decide-what-an-operation-means-or-whether-its-originating-semantic-artifact-deserves-admission.">Under
+the interpretation developed here, GCML does not decide what an
+operation means or whether its originating semantic artifact deserves
+admission.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Conventional compilation stacks translate programs through
+intermediate representations designed for transformation, optimization,
+portability, and execution. In governed computation, another question
+precedes machine emission: even when a semantic operation is admissible,
+does the selected procedure preserve its authority, capability, refusal,
+evidence, and effect obligations?</p>
+<p>This paper develops <strong>Governed Controlled Machine Language
+(GCML)</strong> as a candidate procedural stabilization layer between
+admitted constitutional meaning and execution-ready realization. Under
+the interpretation developed here, GCML does not decide what an
+operation means or whether its originating semantic artifact deserves
+admission. It binds an admitted operation to a target-neutral procedural
+plan whose dependency graph, capability budget, effect call sites,
+resource assumptions, nondeterminism, refusal branches, receipt
+obligations, and lowering contract are explicit before target-specific
+emission.</p>
+<p>The paper also identifies an unresolved architecture question. The
+source GCML paper places GCML after MCIR-Law, while the current GSOL
+v0.1 specification places GCML before MCIR and PEIR and permits several
+direct lowering targets. Program Execution Intermediate Representation
+(PEIR) already names the layer where canonical semantic artifacts become
+executable operational structures. GCML may therefore be a distinct
+language, a constrained profile of PEIR, a GSOL-to-PEIR lowering
+contract, or a restatement of machinery already present in those
+systems. This paper specifies a discriminating contract but does not
+settle that identity by assertion.</p>
+<p>The result is a meaning-to-machine gradient in which each boundary
+has separate responsibilities: language stabilization, governed
+operation semantics, canonical meaning, admissibility, procedural
+selection, execution realization, effect adjudication, and evidence. The
+proposal supplies formal obligations, an artifact schema, a worked
+example, conformance tests, failure modes, the full realization funnel,
+and corpus integration. It does not claim a production compiler,
+deterministic replay of arbitrary external worlds, universal hardware
+equivalence, or superiority to existing compiler and capability systems
+without direct research and implementation evidence.</p>
+<p><strong>Keywords:</strong> governed compilation; intermediate
+representation; procedural stabilization; MCIR; PEIR; GSOL; capability
+containment; effect membrane; lowering; replay; receipts.</p>
+<h2 id="the-procedural-governance-gap">1. The Procedural Governance
+Gap</h2>
+<p>Compilation pipelines commonly assume that once source semantics are
+accepted, backend construction of an execution plan is legitimate.
+Instruction selection, scheduling, resource allocation, runtime calls,
+optimization, fallback, and target adaptation are delegated to compilers
+and runtimes. In ordinary settings this may be appropriate. In systems
+that claim explicit authority, bounded capabilities, receipted effects,
+or auditable AI-generated transformations, it leaves a constitutional
+gap.</p>
+<p>The core question is:</p>
+<blockquote>
+<p>Even if an operation’s meaning is admissible, is the procedure chosen
+to realize it itself admissible under the operation’s declared
+constraints?</p>
+</blockquote>
+<p>Several failures can occur after semantic admission:</p>
+<ul>
+<li>a lowering introduces a capability absent from the source
+contract;</li>
+<li>an optimization removes a refusal or evidence branch;</li>
+<li>a target backend replaces a declared effect call with an ambient
+system call;</li>
+<li>scheduling creates a race where the source operation required
+ordering;</li>
+<li>resource fallback crosses a jurisdiction or privacy boundary;</li>
+<li>replay claims ignore time, randomness, external services, or mutable
+state;</li>
+<li>machine output remains byte-reproducible while semantic obligations
+drift.</li>
+</ul>
+<p>GCML is proposed as a boundary at which these procedural choices
+become explicit artifacts rather than ambient compiler discretion.</p>
+<h2 id="layer-responsibilities-and-the-identity-question">2. Layer
+Responsibilities and the Identity Question</h2>
+<p>The corpus contains several neighboring representations. Their
+responsibilities must be distinguished before GCML can justify a
+separate identity.</p>
+<ul>
+<li><p><strong>Layer or construct:</strong> GCNL<br />
+<strong>Primary responsibility:</strong> stabilize governed declarative
+language<br />
+<strong>What it should not silently decide:</strong> executable
+procedure</p></li>
+<li><p><strong>Layer or construct:</strong> GSOL<br />
+<strong>Primary responsibility:</strong> state canonical governed
+operation semantics, authority, effects, refusal, receipts, claims,
+nonclaims, standing, time, and lowering obligations<br />
+<strong>What it should not silently decide:</strong> target scheduling
+or machine instruction choice</p></li>
+<li><p><strong>Layer or construct:</strong> MCIR<br />
+<strong>Primary responsibility:</strong> carry canonical machine-legible
+semantic and constitutional commitments<br />
+<strong>What it should not silently decide:</strong> whether a
+particular backend procedure preserves them</p></li>
+<li><p><strong>Layer or construct:</strong> MCIR-Law<br />
+<strong>Primary responsibility:</strong> admit, refuse, or condition a
+semantic artifact under declared law<br />
+<strong>What it should not silently decide:</strong> target-specific
+execution strategy</p></li>
+<li><p><strong>Layer or construct:</strong> GCML candidate<br />
+<strong>Primary responsibility:</strong> bind an admitted operation to a
+target-neutral procedural graph and preservation contract<br />
+<strong>What it should not silently decide:</strong> redefine source
+meaning, widen authority, or grant effects</p></li>
+<li><p><strong>Layer or construct:</strong> PEIR<br />
+<strong>Primary responsibility:</strong> represent execution-ready
+operational structure, potentially including target or runtime
+realization<br />
+<strong>What it should not silently decide:</strong> retroactively alter
+admitted constitutional meaning</p></li>
+<li><p><strong>Layer or construct:</strong> Effect membrane /
+constitutional syscall<br />
+<strong>Primary responsibility:</strong> adjudicate an attempted
+authority crossing at the moment of effect<br />
+<strong>What it should not silently decide:</strong> infer authority
+from procedural reachability</p></li>
+<li><p><strong>Layer or construct:</strong> ReceiptLog or
+equivalent<br />
+<strong>Primary responsibility:</strong> retain evidence about decisions
+and effects<br />
+<strong>What it should not silently decide:</strong> prove truth,
+legitimacy, or semantic equivalence by existence alone</p></li>
+</ul>
+<p>This table is a proposed responsibility allocation, not an
+author-adjudicated ontology. Two source families currently conflict:</p>
+<ol type="1">
+<li>The GCML source orders
+<code>MCIR -&gt; MCIR-Law -&gt; GCML -&gt; Machine Code</code>.</li>
+<li>GSOL v0.1 orders<br />
+<code>GCNL -&gt; GSOL -&gt; GCML -&gt; MCIR / AI-HLIR /</code></li>
+</ol>
+<p><code>PEIR / CEIR / Jnana-facing IRs</code> and also allows GSOL to
+lower directly to several of those targets [GSOL, Sections 2 and
+33].</p>
+<p>The present candidate adopts the first placement provisionally
+because it gives GCML a testable role: a <strong>post-admission,
+pre-target procedural contract</strong>. It then inserts PEIR between
+GCML and machine code whenever PEIR is the execution-ready
+representation:</p>
+<pre class="text"><code>GCNL or other governed front end
+        |
+        v
+GSOL operation semantics
+        |
+        v
+MCIR canonical commitments
+        |
+        v
+MCIR-Law admission / refusal / conditions
+        |
+        v
+GCML target-neutral procedural contract
+        |
+        v
+PEIR or another declared execution IR
+        |
+        v
+target code and runtime
+        |
+        v
+effect membrane / constitutional syscalls
+        |
+        v
+receipts and observed consequences</code></pre>
+<p>If PEIR already carries every GCML field and invariant, GCML is
+better treated as a PEIR governance profile or a named lowering contract
+rather than an independent foundational language. A separate GCML
+identity is justified only by a demonstrable representational or
+verification capability not already supplied by GSOL, MCIR, PEIR, and
+their translation-edge contracts.</p>
+<h2 id="definition-and-nonclaims">3. Definition and Nonclaims</h2>
+<p><strong>Governed Controlled Machine Language (GCML)</strong> is
+provisionally defined as:</p>
+<blockquote>
+<p>A canonical, target-neutral procedural representation that binds an
+admitted semantic operation to an explicit dependency graph, capability
+budget, effect interface, resource and nondeterminism assumptions,
+refusal paths, receipt obligations, and lowering proof obligations
+before execution-ready or machine-specific emission.</p>
+</blockquote>
+<p>GCML is <strong>governed</strong> because every plan is bound to
+source authority, admission conditions, effect jurisdiction, and
+evidence obligations. It is <strong>controlled</strong> because its
+grammar and procedural forms are bounded enough for deterministic
+validation under a declared profile. It is
+<strong>machine-facing</strong> because its objects are procedural
+rather than discursive. It is a <strong>language</strong> only if it has
+a defined abstract syntax, static semantics, canonicalization,
+validation, and transformation contract.</p>
+<p>GCML does not by definition provide:</p>
+<ul>
+<li>a production compiler or runtime;</li>
+<li>general-purpose source programming;</li>
+<li>semantic admission or policy sovereignty;</li>
+<li>actual effect authority;</li>
+<li>deterministic replay across uncontrolled external state;</li>
+<li>proof that two hardware targets are behaviorally or semantically
+equivalent;</li>
+<li>proof that a receipt is truthful;</li>
+<li>a new foundational layer merely because it has a name.</li>
+</ul>
+<h2 id="artifact-model">4. Artifact Model</h2>
+<p>A GCML artifact <span class="math inline"><em>P</em></span> is
+represented as:</p>
+<p><span
+class="math display"><em>P</em> = ⟨<em>i</em>, <em>s</em>, <em>a</em>, <em>O</em>, <em>E</em><sub><em>d</em></sub>, <em>C</em>, <em>X</em>, <em>R</em>, <em>N</em>, <em>Q</em>, <em>L</em>, <em>V</em>⟩,</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>i</em></span> is the canonical plan
+identity;</li>
+<li><span class="math inline"><em>s</em></span> binds the exact semantic
+source, version, and meaning hash;</li>
+<li><span class="math inline"><em>a</em></span> binds the admission
+decision, authority, conditions, and expiry;</li>
+<li><span class="math inline"><em>O</em></span> is the set of procedural
+operations;</li>
+<li><span class="math inline"><em>E</em><sub><em>d</em></sub></span> is
+the dependency and ordering relation over operations;</li>
+<li><span class="math inline"><em>C</em></span> is the maximum
+capability budget;</li>
+<li><span class="math inline"><em>X</em></span> is the set of declared
+effect requests and membrane contracts;</li>
+<li><span class="math inline"><em>R</em></span> is the set of refusal,
+rollback, and recovery branches;</li>
+<li><span class="math inline"><em>N</em></span> declares nondeterminism,
+clocks, randomness, concurrency, and external inputs;</li>
+<li><span class="math inline"><em>Q</em></span> declares resource
+assumptions and bounds;</li>
+<li><span class="math inline"><em>L</em></span> is the lowering contract
+and target-feature requirement set;</li>
+<li><span class="math inline"><em>V</em></span> is the verification and
+receipt obligation set.</li>
+</ul>
+<p>An operation node contains at least:</p>
+<pre class="text"><code>operation_id
+operation_semantics_ref
+inputs and typed outputs
+preconditions
+required capabilities
+possible effect requests
+dependency predecessors
+failure and refusal successors
+resource and timing assumptions
+nondeterminism sources
+receipt obligations
+claim and nonclaim carry-forward</code></pre>
+<p>The graph does not itself grant a capability or effect. It states
+what would be required if the plan is admitted for realization. Effect
+authority remains at the applicable membrane or syscall boundary.</p>
+<h2 id="procedural-preservation-invariants">5. Procedural Preservation
+Invariants</h2>
+<p>A valid GCML profile should enforce at least the following proposed
+invariants.</p>
+<ol type="1">
+<li><strong>Exact source binding.</strong> The plan identifies the exact
+GSOL/MCIR source and applicable admission result; a plan cannot float
+free of the meaning it claims to realize.</li>
+<li><strong>Authority non-expansion.</strong> No operation, optimizer,
+backend, or runtime may acquire authority absent from the source
+contract and admission conditions.</li>
+<li><strong>Capability monotonicity.</strong> The required capability
+set of every lowering is a subset of, or explicitly authorized
+refinement within, the admitted capability budget.</li>
+<li><strong>Effect completeness.</strong> Every path capable of external
+effect reaches a declared membrane or syscall contract; ambient effect
+paths are invalid.</li>
+<li><strong>Refusal preservation.</strong> A source refusal, condition,
+nonclaim, or required hold cannot be optimized away.</li>
+<li><strong>Dependency closure.</strong> Every executed operation has
+its declared predecessors satisfied, refused, or explicitly bypassed
+under an authorized rule.</li>
+<li><strong>Nondeterminism declaration.</strong> Randomness, time,
+concurrency, scheduling freedom, external inputs, and
+implementation-defined behavior are explicit.</li>
+<li><strong>Resource honesty.</strong> Memory, compute, storage,
+bandwidth, and latency assumptions material to admissibility or behavior
+are declared rather than hidden in a backend.</li>
+<li><strong>Lowering conservation.</strong> Target lowering preserves
+required authority, capability, effect, refusal, receipt, claim,
+nonclaim, standing, and temporal obligations or emits a typed gap.</li>
+<li><strong>Receipt obligation.</strong> Decisions and effects produce
+the evidence required by the plan without converting evidence existence
+into proof of correctness.</li>
+<li><strong>Compiler non-sovereignty.</strong> A compiler may select
+among admitted procedural alternatives but cannot amend the governing
+contract by successful emission.</li>
+<li><strong>Revision lineage.</strong> Changes to source, law, plan,
+target profile, optimizer, runtime, or membrane produce a successor
+relation rather than silent replacement.</li>
+</ol>
+<p>These are profile obligations pending author and implementation
+review. They do not establish that a complete validator exists.</p>
+<h2 id="lowering-and-refusal-semantics">6. Lowering and Refusal
+Semantics</h2>
+<p>Let <span class="math inline"><em>M</em></span> be an admitted
+semantic artifact, <span class="math inline"><em>ρ</em></span> its
+admission receipt and conditions, and <span
+class="math inline"><em>τ</em></span> a declared procedural profile.
+GCML construction is a partial transformation:</p>
+<p><span
+class="math display">𝒢(<em>M</em>, <em>ρ</em>, <em>τ</em>) → <em>P</em> | Gap (<em>g</em>) | Refusal (<em>f</em>).</span></p>
+<p>A plan may be emitted only when the semantic source is admitted and a
+procedural realization exists that satisfies the preservation
+invariants:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\operatorname{EmitGCML}(P) \\
+&amp;\Rightarrow \operatorname{Admitted}(M,\rho) \\
+&amp;\land \operatorname{Realizes}(P,M) \\
+&amp;\land \bigwedge_{k \in K} k(P)
+\end{aligned}\tag{3}.
+$$</span></p>
+<p>The implication is one-way. Passing a GCML validator does not prove
+the originating meaning true, the policy legitimate, or the eventual
+runtime faithful. It establishes conformance only to the declared GCML
+profile and verified inputs.</p>
+<p>Lowering from GCML to target representation <span
+class="math inline"><em>T</em></span> returns a target artifact, a gap
+certificate, or refusal:</p>
+<p><span
+class="math display">ℒ(<em>P</em>, <em>T</em>) → <em>A</em><sub><em>T</em></sub> | Gap (<em>g</em><sub><em>T</em></sub>) | Refusal (<em>f</em><sub><em>T</em></sub>).</span></p>
+<p>Silent semantic loss is forbidden. An unsupported target feature,
+unrepresentable refusal branch, widened capability, unavailable evidence
+mechanism, or unresolved nondeterminism must produce a gap or refusal
+rather than an apparently successful target artifact.</p>
+<h2 id="constitutional-syscalls-and-effect-membranes">7. Constitutional
+Syscalls and Effect Membranes</h2>
+<p>A GCML effect node is a proposal to cross an authority boundary, not
+a direct grant of effect. It references a constitutional syscall or
+equivalent membrane contract containing:</p>
+<pre class="text"><code>effect class and requested operation
+target jurisdiction and resource
+required authority and warrant
+argument and disclosure schema
+preconditions and policy head
+possible execute, simulate, defer, refuse, or fail outcomes
+required evidence and receipt class
+rollback or compensation obligations</code></pre>
+<p>At runtime, the membrane re-evaluates current authority, policy,
+time, state, and revocation. A plan admitted yesterday may be refused
+today. GCML therefore carries effect requirements forward without
+claiming that precompilation can authorize every future crossing.</p>
+<h2 id="replay-reproducibility-and-evidence">8. Replay, Reproducibility,
+and Evidence</h2>
+<p>The source paper states that GCML supports deterministic replay. That
+claim requires qualification. Three replay levels should remain
+distinct:</p>
+<ol type="1">
+<li><strong>Plan replay:</strong> canonical parsing and validation
+recover the same procedural graph from the same exact artifact and
+profile.</li>
+<li><strong>Pure-step replay:</strong> deterministic operations over
+frozen inputs and declared runtime semantics reproduce the same
+outputs.</li>
+<li><strong>Effect replay:</strong> prior effect outcomes are simulated
+or re-presented from receipts without pretending that the external world
+has been reproduced.</li>
+</ol>
+<p>Live re-execution against clocks, networks, devices, mutable
+services, people, random sources, concurrent schedulers, or changed
+policy may legitimately differ or refuse. A receipt can bind what was
+observed, not guarantee that the observation was complete or
+truthful.</p>
+<p>Reproducible target emission additionally requires exact compiler,
+optimizer, target profile, environment, dependencies, and
+canonicalization. Byte-identical output is stronger than semantic
+conformance in one way and weaker in another: different bytes may
+validly realize one contract, while identical bytes do not prove the
+contract was legitimate.</p>
+<h2 id="worked-example-governed-report-generation">9. Worked Example:
+Governed Report Generation</h2>
+<p>Consider an admitted operation that reads an authorized dataset,
+computes a bounded aggregate, writes a report, and records evidence. Its
+semantic contract prohibits row-level disclosure and external network
+effects.</p>
+<p>A compact GCML-like projection might be:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span><span class="kw">:</span><span class="at"> report.aggregate.v1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span><span class="kw">:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">semantic_hash</span><span class="kw">:</span><span class="at"> m:example</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">admission_receipt</span><span class="kw">:</span><span class="at"> r:example</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">capability_budget</span><span class="kw">:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> read:dataset:authorized-view</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> compute:aggregate:count-and-mean</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> write:report:local-output</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">effects</span><span class="kw">:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> write-report</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">syscall</span><span class="kw">:</span><span class="at"> file.write.constitutional</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">target</span><span class="kw">:</span><span class="at"> local-output/report.json</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">outcomes</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">execute</span><span class="kw">,</span><span class="at"> simulate</span><span class="kw">,</span><span class="at"> defer</span><span class="kw">,</span><span class="at"> refuse</span><span class="kw">,</span><span class="at"> fail</span><span class="kw">]</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">operations</span><span class="kw">:</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> load-view</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">inputs</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">authorized-view</span><span class="kw">]</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">output</span><span class="kw">:</span><span class="at"> bounded-record-stream</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">forbids</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">raw-row-export</span><span class="kw">,</span><span class="at"> network</span><span class="kw">]</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> aggregate</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">after</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">load-view</span><span class="kw">]</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">output</span><span class="kw">:</span><span class="at"> aggregate-only</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> emit-report</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">after</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">aggregate</span><span class="kw">]</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">effect</span><span class="kw">:</span><span class="at"> write-report</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">refusal</span><span class="kw">:</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">if</span><span class="kw">:</span><span class="at"> view-not-authorized</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code</span><span class="kw">:</span><span class="at"> AUTHORITY_REQUIRED</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">if</span><span class="kw">:</span><span class="at"> backend-requires-network</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code</span><span class="kw">:</span><span class="at"> CAPABILITY_EXPANSION_REFUSED</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="fu">receipts</span><span class="kw">:</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> admission-decision</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> aggregate-input-commitment</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> effect-decision</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> output-artifact-hash</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="fu">nonclaims</span><span class="kw">:</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> aggregate-is-correct-without-independent-check</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> receipt-proves-source-truth</span></span></code></pre></div>
+<p>A backend that attempts cloud execution because local memory is
+insufficient cannot silently add network capability. It must select an
+admitted local alternative, produce a capability-expansion gap, or
+refuse. A backend may optimize the aggregation loop, but it may not
+introduce raw-row output or delete the effect refusal branch.</p>
+<p>This example is a specification fixture. No parser, validator,
+lowering engine, dataset, or runtime execution is supplied by the
+paper.</p>
+<h2 id="conformance-and-test-program">10. Conformance and Test
+Program</h2>
+<p>A GCML implementation claim requires more than a parser or
+serializer. A bounded conformance profile should verify:</p>
+<ul>
+<li>canonical parse and serialization;</li>
+<li>schema and type validity;</li>
+<li>exact semantic-source and admission binding;</li>
+<li>dependency acyclicity or explicitly typed cycles;</li>
+<li>capability containment on every path;</li>
+<li>complete effect routing through declared membranes;</li>
+<li>refusal and nonclaim preservation;</li>
+<li>nondeterminism and resource declarations;</li>
+<li>lowering conservation or typed gaps;</li>
+<li>receipt obligations and external receipt custody;</li>
+<li>target-profile and compiler identity;</li>
+<li>successor lineage after any material change.</li>
+</ul>
+<p>Negative fixtures should include hidden effect paths, widened
+capability, missing refusal, stale admission, revoked authority,
+unsupported target feature, nondeterministic operation without
+declaration, resource fallback across jurisdiction, forged or missing
+receipt, optimizer removal of evidence, and a compiler that emits code
+despite a gap.</p>
+<p>Cross-target tests should compare obligations and allowed observable
+behavior, not presume byte identity. Independent observers should verify
+at least some effect and evidence claims outside the compiled
+process.</p>
+<h2 id="realization-funnel">11. Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>GCML responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore ways admitted meaning might become procedure, including
+unsafe, overpowered, nondeterministic, unverifiable, and
+target-dependent possibilities.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define GCML syntax, static semantics, artifact schema, preservation
+invariants, gaps, refusal, canonicalization, conformance, and layer
+boundaries.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate procedural plans satisfying the specification, including
+inefficient, privacy-invasive, highly centralized, brittle, and
+otherwise undesirable admissible plans.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer plans minimizing capability and effect surface, preserving
+refusals and evidence, bounding resources and nondeterminism, supporting
+substitution, and avoiding unjustified target dependence.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Select the exact admitted source, law head, GCML profile, plan,
+target class, compiler, optimizer, runtime, membrane, resources,
+observers, and evidence obligations.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build and run the parser, validator, planner, lowerer, PEIR or
+target artifact, runtime, membrane adapters, and receipt path for that
+configuration.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Execute positive, negative, adversarial, cross-target,
+stale-authority, revocation, replay, effect, and independent-observer
+tests; retain gaps and unexplained remainder.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Create successors when schemas, obligations, plans, compilers,
+targets, policies, or evidence change; preserve predecessor hashes,
+migrations, incompatibilities, and failed claims.</td>
+</tr>
+</tbody>
+</table>
+<p>The source paper primarily proposes a Specification and sketches
+Implementation Realization. The present candidate adds CM1/CM2 criteria
+and an evidence program, but it does not supply an implementation.</p>
+<h2 id="procedural-preservation-profile">Procedural Preservation
+Profile</h2>
+<p>Across the completed P1 corpus, Governed Controlled Machine Language
+is best retained provisionally as the <strong>procedural preservation
+profile between admitted constitutional meaning and target-specific
+execution</strong>. It must show what procedural structure it preserves
+beyond MCIR, GSOL, and direct PEIR lowering before it earns a distinct
+language or system identity.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Human Legible Intermediate
+Representation</em><br />
+<strong>Supplies:</strong> Constitutional authoring surfaces and
+deterministic lowering into canonical representation.<br />
+<strong>GCML boundary:</strong> GCML begins after semantic admission and
+expresses governed procedure rather than human authoring
+intent.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance as
+Compilation</em><br />
+<strong>Supplies:</strong> Stage contracts, preservation, remainder,
+refusal, authority, and evidence.<br />
+<strong>GCML boundary:</strong> GCML is one candidate procedural
+stage/profile inside that larger theory.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Ableman Format
+Specification (AFS)</em><br />
+<strong>Supplies:</strong> Artifact roles, profiles, canonical
+encodings, validators, and test vectors.<br />
+<strong>GCML boundary:</strong> AFS can standardize GCML artifacts but
+does not supply their procedural semantics.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Semantic Fragmentation and
+Constitutional Structure</em><br />
+<strong>Supplies:</strong> Detection of authority, state, or evidence
+split across incoherent software surfaces.<br />
+<strong>GCML boundary:</strong> GCML should make those bindings explicit
+before backend emission.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Mechanics of
+Constitutional Enforcement</em><br />
+<strong>Supplies:</strong> Non-bypassable effect gates and classified
+outcomes.<br />
+<strong>GCML boundary:</strong> GCML can require gate participation but
+cannot prove a runtime is non-bypassable.</p></li>
+</ul>
+<p>A GCML artifact should preserve a procedural obligation vector:</p>
+<p><span class="math display">$$
+\begin{aligned}
+O_p= (&amp;authority, capabilities, resources, dependencies, \\
+&amp;preconditions, effects, refusals, nondeterminism, \\
+&amp;recovery, observation, receipts, remainder)
+\end{aligned}.
+$$</span></p>
+<p>For each lowering edge <span
+class="math inline"><em>f</em> : <em>L</em><sub><em>i</em></sub> → <em>L</em><sub><em>i</em> + 1</sub></span>,
+the relevant claim is not textual similarity but obligation
+carriage:</p>
+<p><span
+class="math display"><em>c</em><em>a</em><em>r</em><em>r</em><em>y</em><sub><em>f</em></sub>(<em>O</em><sub><em>p</em></sub>) = <em>P</em><em>R</em><em>E</em><em>S</em><em>E</em><em>R</em><em>V</em><em>E</em><em>D</em> ∣ <em>R</em><em>E</em><em>F</em><em>I</em><em>N</em><em>E</em><em>D</em> ∣ <em>D</em><em>E</em><em>F</em><em>E</em><em>R</em><em>R</em><em>E</em><em>D</em> ∣ <em>R</em><em>E</em><em>F</em><em>U</em><em>S</em><em>E</em><em>D</em> ∣ <em>G</em><em>A</em><em>P</em>.</span></p>
+<p><code>DEFERRED</code> must bind the named downstream mechanism that
+assumes the obligation;</p>
+<p><code>GAP</code> cannot compile as success. A target runtime may
+still violate a perfectly formed GCML artifact, so language conformance,
+compiler conformance, runtime conformance, and observed effect
+correctness remain separate.</p>
+<p>The universal GSM can type<br />
+<code>EXPRESSES_GOVERNED_PROCEDURE</code>,
+<code>LOWERS_FROM_ADMITTED_MCIR</code>,<br />
+<code>CARRIES_PROCEDURAL_OBLIGATION</code>,
+<code>DEFERS_OBLIGATION_TO_EFFECT_GATE</code>,
+<code>EMITS_PEIR</code>,<br />
+<code>REFUSES_UNBOUND_CAPABILITY</code>,
+<code>CLASSIFIES_NONDETERMINISM</code>,
+<code>BINDS_RECOVERY_SEMANTICS</code>,<br />
+<code>REPORTS_LOWERING_GAP</code>,<br />
+and<br />
+<code>REMAINS_IDENTITY_UNRESOLVED_AGAINST_EXISTING_</code><br />
+<code>IRS</code>. These relations make the comparison experimentally
+decidable rather than terminological.</p>
+<p>This integration establishes four editorial commitments: retain GCML
+provisionally as a procedural preservation profile; adopt the
+procedural-obligation vector and five-valued carriage result; require
+separate language, compiler, runtime, and effect claims; and defer
+distinct-language identity until a worked comparison demonstrates
+information or assurance not preserved by direct MCIR/GSOL-to-PEIR
+lowering.</p>
+<h2 id="procedural-obligation-handoff">Procedural Obligation
+Handoff</h2>
+<p>The fixed-seed comparison with communal computing, APD, Semantic
+Legitimacy Before Context, and enforcement mechanics makes deferred
+procedural obligations auditable:</p>
+<p><span class="math display">$$
+\begin{aligned}
+H= (&amp;obligation, source\_standing, GCML\_carrier, \\
+&amp;target\_mechanism, coverage, authority, evidence, status, \\
+&amp;remainder)
+\end{aligned}.
+$$</span></p>
+<p>SLBC determines whether source material may bind for the stated
+purpose. Admission does not itself create a procedure, and effect
+eligibility remains distinct from effect authority. GCML must preserve
+the source standing and purpose so that lowering cannot widen a narrowly
+admitted claim into a general operational rule.</p>
+<p>For <code>DEFERRED</code>, the artifact must name the mediator,
+court, syscall, runtime monitor, recovery mechanism, or other component
+that becomes load-bearing. The Mechanics of Constitutional Enforcement
+supplies placement and mediation tests; APD supplies the bounded
+effect-containment objective. A target name or interface declaration is
+not evidence that the mechanism is non-bypassable or covers the relevant
+effect.</p>
+<p>Communal computing is a domain profile in which admitted civic
+procedures may be made inspectable and lowered for execution. Procedural
+conformance cannot establish participant legitimacy, consent, privacy
+adequacy, jurisdiction, or social acceptance, and should preserve
+dissent and appeal paths as explicit obligations or remainder.</p>
+<p>The universal GSM can type<br />
+<code>CARRIES_ADMITTED_SOURCE_STANDING</code>,<br />
+<code>DEFERS_OBLIGATION_TO_NAMED_MECHANISM</code>,
+<code>TESTS_HANDOFF_COVERAGE</code>,<br />
+<code>WIDENS_PURPOSE_DURING_LOWERING</code>,
+<code>ENFORCED_BY_RUNTIME_MEDIATOR</code>,<br />
+<code>CONTAINED_UNDER_APD_SURFACE</code>, and<br />
+<code>PRESERVES_CIVIC_DISSENT_OBLIGATION</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the obligation-handoff record; require source standing and purpose to
+survive lowering; make every deferred obligation name and evidence its
+downstream mechanism; and keep civic procedure conformance below
+legitimacy, consent, and authority.</p>
+<h2 id="a-procedural-obligation-carriage-profile">A Procedural
+Obligation-Carriage Profile</h2>
+<p>Thirteen retained downstream uses place GCML between admitted
+meaning, capability requests, shared-reality procedures, governed object
+and operation records, term identities, compilation stages, controlled
+natural language, semantic cartography, human-legible representations,
+Jnana, semantic legitimacy, enforcement, and APD-bounded computation.
+The resulting role is narrower and stronger than a universal machine
+language: GCML is a candidate procedural obligation-carriage profile
+whose nonredundancy against MCIR, GSOL, and PEIR remains to be
+demonstrated.</p>
+<p><span class="math display">$$
+\begin{aligned}
+G^*= (&amp;source\_semantics, admission, operation\_graph, \\
+&amp;obligations, capabilities, resources, nondeterminism, \\
+&amp;effects, refusals, exceptions, recovery, observers, \\
+&amp;receipts, target\_profile, lowering, remainder, version)
+\end{aligned}.
+$$</span></p>
+<p>Every lowering edge must classify each obligation as
+<code>PRESERVED</code>, <code>REFINED</code>,
+<code>DEFERRED</code>,<br />
+<code>REFUSED</code>,<br />
+or <code>GAP</code>. <code>DEFERRED</code> names the exact downstream
+mechanism and its evidence; <code>GAP</code> cannot compile as success.
+Canonicalization must retain alternative plans and residual meaning
+where plan choice is constitutionally material. Capability minimization,
+effect mediation, replayability, and receipt production are separate
+claims, not consequences of a well-formed artifact.</p>
+<p>Four conformance subjects remain distinct: language artifact,
+compiler or lowerer, target runtime, and observed effect path. A
+conforming artifact can be compiled maliciously; a conforming compiler
+can target a bypassable runtime; a governed runtime can be invoked under
+stale authority. In the realization funnel, <code>IR</code> may mean
+Instance Realization or Implementation Realization. In PEIR, MCIR, and
+comparable representation names,</p>
+<p><code>IR</code> means Intermediate Representation; the two acronym
+senses must not be merged.</p>
+<p>The universal GSM can type<br />
+<code>CONFORMS_TO_GCML_PROFILE</code>,
+<code>CARRIES_PROCEDURAL_OBLIGATION</code>,<br />
+<code>DEFERS_TO_NAMED_MECHANISM</code>,
+<code>REPORTS_PROCEDURAL_GAP</code>,
+<code>LOWERS_UNDER_TARGET_PROFILE</code>,<br />
+<code>PRESERVES_PLAN_ALTERNATIVE</code>,
+<code>MEDIATES_GCML_EFFECT</code>, and<br />
+<code>OBSERVES_GCML_OUTCOME</code>.</p>
+<p>This review establishes four editorial commitments: retain GCML as a
+candidate procedural obligation-carriage profile; adopt the complete
+procedure record and five-valued carriage result; separate artifact,
+compiler, runtime, and effect conformance; and require a worked
+nonredundancy comparison before granting a distinct language or system
+identity.</p>
+<h2 id="failure-modes-and-counterevidence">12. Failure Modes and
+Counterevidence</h2>
+<p>GCML should be compressed into existing machinery or rejected as a
+separate layer if:</p>
+<ul>
+<li>PEIR already expresses and validates every proposed GCML field and
+invariant;</li>
+<li>GSOL lowering contracts plus MCIR sidecars preserve the same
+obligations without another artifact;</li>
+<li>the proposed target-neutral plan cannot remain independent of
+backend and runtime semantics;</li>
+<li>capability and effect guarantees cannot be checked
+compositionally;</li>
+<li>optimizations require proofs or analyses GCML cannot express;</li>
+<li>canonicalization hides meaningful procedural alternatives;</li>
+<li>plan size and verification cost exceed audit or safety benefit;</li>
+<li>receipts remain dependent on the process they claim to audit;</li>
+<li>real systems bypass the artifact through ambient runtime
+authority;</li>
+<li>cross-target conformance cannot be distinguished from superficial
+structural similarity;</li>
+<li>replay failures dominate practical workloads;</li>
+<li>implementation teams cannot maintain source, plan, target, and
+evidence lineage without drift.</li>
+</ul>
+<p>Security failure modes include malicious compilers, forged admission
+receipts, stale policy heads, confused-deputy syscalls, capability
+aliasing, hidden dynamic loading, undefined behavior, side channels,
+self-modifying code, opaque accelerators, dependency substitution, and
+observers sharing the same compromised root.</p>
+<p>The source comparison with LLVM IR, WebAssembly, microkernel
+capabilities, and replay systems remains a hypothesis surface, not a
+literature finding. Further evidentiary strengthening requires current
+primary-source research and concrete feature-by-feature comparison
+before claiming that those systems lack relevant governance, authority,
+effect, portability, or audit mechanisms.</p>
+<h2 id="corpus-integration">13. Corpus Integration</h2>
+<p>GCML connects existing corpus machinery through a proposed procedural
+profile:</p>
+<ul>
+<li><strong>GCNL</strong> stabilizes governed natural-language proposals
+before canonical operation semantics [GCNL].</li>
+<li><strong>GSOL</strong> defines the semantic operation, jurisdiction,
+authority, effects, refusals, receipts, claims, nonclaims, standing,
+time, and honest-lowering obligations that GCML must preserve
+[GSOL].</li>
+<li><strong>MCIR</strong> carries canonical semantic and constitutional
+commitments; <strong>MCIR-Law</strong> provides the admission decision
+and conditions that bind a post-admission plan [MCIR].</li>
+<li><strong>PEIR</strong> is the closest existing execution-layer
+comparison. The boundary between GCML and PEIR is unresolved and must be
+demonstrated rather than named [HLIR].</li>
+<li><strong>Constitutional Syscalls</strong> and <strong>Effect
+Sovereignty</strong> enforce present-time jurisdiction at external
+crossings; GCML records required call sites but does not grant them
+[CS].</li>
+<li><strong>Constraint-Bearing Composability</strong> requires
+obligations to survive module and plan composition; a GCML linker or
+composer would be a profile of that machinery unless it adds a distinct
+algorithm or assurance claim [CBC].</li>
+<li><strong>Reasoning by Way of Receipts</strong> separates
+evidence-bearing intermediate decisions from final-result narration
+while denying that receipts prove truth [RWR].</li>
+<li><strong>The Three Hash Rule</strong> separates exact artifact state,
+admissibility commitments, and meaning commitments across the
+source-plan-target chain [THR].</li>
+<li><strong>The Constitutional Observability Platform</strong> supplies
+heterogeneous observation and result-visibility surfaces for comparing
+declared GCML behavior with runtime effects [COP].</li>
+<li><strong>Semantic Fragmentation Analysis</strong> can diagnose where
+authority, lowering, fallback, target behavior, or receipts remain
+ambient despite a GCML declaration [SFA].</li>
+<li><strong>GMB</strong>, the current Governed Meaning Base in the
+historical <code>CCF -&gt; CMB -&gt; GMB</code> lineage, can retain
+definitions, obligations, conflicts, evidence, and revision lineage. It
+is not the procedural runtime and does not grant GCML conformance
+[GMB].</li>
+</ul>
+<p>This integration does not merge GCML with any neighbor. It identifies
+the comparisons that must be resolved before the architecture can claim
+a nonredundant layer.</p>
+<h2 id="a-governed-label-does-not-make-a-procedure-lawful">A Governed
+Label Does Not Make a Procedure Lawful</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>GCML addresses the gap between admitting an operation in principle
+and selecting the concrete procedure that will perform it. A
+target-neutral plan can expose capabilities, resources, nondeterminism,
+refusals, exceptions, effects, recovery, and receipt obligations before
+machine emission. The unresolved question is whether GCML is a distinct
+language or a profile already expressible through GSOL, MCIR, PEIR, and
+constraint-carriage machinery.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Redundancy attack.</strong> Existing GSOL-to-PEIR lowering
+plus MCIR obligations expresses every GCML field and check. A new name
+then increases stack complexity without new assurance.</li>
+<li><strong>Target-neutrality attack.</strong> Backend-specific
+concurrency, memory, exception, timing, resource, or effect semantics
+determine the plan despite claims of neutrality.</li>
+<li><strong>Malicious-compiler attack.</strong> A conforming artifact is
+lowered by a compiler that drops, widens, or fabricates
+obligations.</li>
+<li><strong>Bypass-runtime attack.</strong> The target runtime retains
+ambient authority, dynamic loading, undefined behavior, side channels,
+opaque acceleration, or direct effect paths outside GCML.</li>
+<li><strong>Canonical-plan attack.</strong> One normalized procedure
+erases materially different plans, resource costs, risks, or refusal
+behaviors.</li>
+<li><strong>Deferred-obligation attack.</strong> <code>DEFERRED</code>
+becomes a way to report success while no named downstream mechanism
+actually discharges the obligation.</li>
+<li><strong>Conformance-collapse attack.</strong> Artifact, compiler,
+runtime, effect path, and observed outcome are combined into one green
+status.</li>
+<li><strong>Replay-overclaim attack.</strong> Reproducible plan or
+target bytes are treated as reproducible behavior despite external
+state, nondeterminism, hardware, time, and services.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The strongest current claim is a candidate procedural
+obligation-carriage profile with five-valued lowering disposition:
+preserved, refined, deferred, refused, or gap. The paper does not
+establish a nonredundant language identity, target neutrality, secure
+compilation, complete capability mediation, deterministic execution, or
+cross-target equivalence.</p>
+<p>Distinct GCML standing requires a worked feature-by-feature
+comparison with GSOL, MCIR, PEIR, and existing constraint-carriage
+contracts, followed by negative fixtures and at least one exact lowering
+and runtime observation. Claims about LLVM, WebAssembly, microkernels,
+proof-carrying code, effect systems, or reproducible execution require
+current primary-source research. No external research was added in this
+pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public test is whether every obligation attached to an approved
+operation can be followed through the chosen plan, compiler, runtime,
+external effect, and receipt - with any missing handoff reported as a
+gap rather than hidden inside successful code generation.</p>
+<h2 id="research-and-implementation-agenda">14. Research and
+Implementation Agenda</h2>
+<ol type="1">
+<li>Adjudicate GCML’s placement relative to GSOL, MCIR, MCIR-Law, and
+PEIR.</li>
+<li>Define a minimal abstract syntax and static semantics for the
+artifact model in Section 4.</li>
+<li>Specify canonicalization and exact source/admission binding.</li>
+<li>Implement a validator for capability, effect, dependency, refusal,
+nondeterminism, resource, and receipt obligations.</li>
+<li>Define one GCML-to-PEIR or GCML-to-reference-runtime lowering with
+typed gaps.</li>
+<li>Build positive and negative fixtures, including a malicious or
+nonconforming backend.</li>
+<li>Compare a GCML profile with direct GSOL-to-PEIR lowering on
+expressivity, assurance, cost, and semantic loss.</li>
+<li>Test cross-target obligation preservation under exact compiler and
+runtime custody.</li>
+<li>Evaluate independent observation, replay levels, revocation, policy
+change, and external-state drift.</li>
+<li>Conduct current primary-source research across compiler IRs,
+proof-carrying code, typed effect systems, capability machines, secure
+compilation, reproducible builds, deterministic execution, sandboxing,
+policy-as-code, WebAssembly, LLVM, and microkernels.</li>
+</ol>
+<h2 id="conclusion">15. Conclusion</h2>
+<p>GCML names a genuine governance problem: semantic admission does not
+guarantee that a compiler-selected procedure preserves authority,
+capability, refusal, evidence, and effect boundaries. The procedure
+itself must become inspectable and challengeable before machine
+emission.</p>
+<p>The strongest current interpretation is not that GCML automatically
+completes a new universal stack. It is that GCML specifies a
+post-admission, target-neutral procedural contract whose obligations
+must survive into PEIR, target code, runtime effects, and receipts. That
+interpretation gives the proposal a testable burden.</p>
+<p>If existing PEIR and GSOL machinery already carries the same
+contract, authorial compression should treat GCML as a profile,
+serialization, or lowering discipline. If GCML can represent and verify
+procedural information those layers cannot preserve, a distinct language
+may be warranted. The paper leaves that decision open while making the
+comparison concrete.</p>
+<p>Computation does not become lawful because a plan is labeled
+governed. It becomes more governable when meaning, admission, procedure,
+target realization, effect jurisdiction, and evidence remain distinct;
+when translation loss becomes a gap rather than a hidden success; and
+when no compiler or runtime may widen authority merely because it can
+emit instructions.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> The present paper does not claim
+a complete possibility space treatment. That stage remains successor
+work and cannot be inferred from the architecture described here.</li>
+<li><strong>Revision.</strong> The present paper does not claim a
+complete revision treatment. That stage remains successor work and
+cannot be inferred from the architecture described here.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that conventional compilation stacks translate
+programs through intermediate representations designed for
+transformation, optimization, portability, and execution. Its nearest
+external comparison fields are token, formal, semantic. The sources in
+[E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Statistical
+compression can improve efficiency while destroying distinctions needed
+for interpretation; semantic labels can conversely overstate stability
+that usage does not support. Formal assurance remains relative to the
+encoded model, trusted base, and refinement chain; proof does not remove
+specification error or unmodeled environmental behavior. Formal
+vocabularies and graph links make commitments explicit but cannot by
+themselves establish correct identity, shared interpretation, or
+lossless translation between contexts. These limits are not generic
+disclaimers: they identify the assumptions that a later empirical,
+formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Rico Sennrich, Barry Haddow, and Alexandra
+Birch. “Neural Machine Translation of Rare Words with Subword Units.”
+<em>ACL 2016</em>, pp. 1715-1725. DOI: 10.18653/v1/P16-1162.
+https://doi.org/10.18653/v1/P16-1162 <strong>Relationship:</strong>
+Predecessor subword tokenization method used as a contrast to
+semantically governed token boundaries.</p>
+<p><strong>[E2]</strong> Taku Kudo and John Richardson. “SentencePiece:
+A Simple and Language Independent Subword Tokenizer and Detokenizer for
+Neural Text Processing.” <em>EMNLP 2018: System Demonstrations</em>.
+DOI: 10.18653/v1/D18-2012. https://doi.org/10.18653/v1/D18-2012
+<strong>Relationship:</strong> Predecessor tokenizer implementation used
+to separate statistical segmentation from semantic admissibility.</p>
+<p><strong>[E3]</strong> Peter D. Grunwald. <em>The Minimum Description
+Length Principle</em>. MIT Press, 2007. <a
+href="https://mitpress.mit.edu/9780262072816/the-minimum-description-length-principle/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor theory of
+compression and model selection; compression is not assumed to preserve
+governance or meaning.</p>
+<p><strong>[E4]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E5]</strong> George C. Necula. “Proof-Carrying Code.”
+<em>POPL ’97</em>, 1997, pp. 106-119. DOI: 10.1145/263699.263712.
+https://doi.org/10.1145/263699.263712 <strong>Relationship:</strong>
+Predecessor for binding machine-checkable evidence to executable
+artifacts; the present paper may demand broader semantic or
+constitutional obligations.</p>
+<p><strong>[E6]</strong> Xavier Leroy. “Formal Verification of a
+Realistic Compiler.” <em>Communications of the ACM</em> 52(7), 2009,
+pp. 107-115. DOI: 10.1145/1538788.1538814.
+https://doi.org/10.1145/1538788.1538814 <strong>Relationship:</strong>
+Predecessor verified-compilation result used to distinguish proven
+translation preservation from broader governance claims.</p>
+<p><strong>[E7]</strong> Patrick Cousot and Radhia Cousot. “Abstract
+Interpretation: A Unified Lattice Model for Static Analysis of Programs
+by Construction or Approximation of Fixpoints.” <em>POPL ’77</em>, 1977.
+DOI: 10.1145/512950.512973. https://doi.org/10.1145/512950.512973
+<strong>Relationship:</strong> Predecessor formal framework for sound
+approximation and fixpoint reasoning.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Governed Semantic Tokens:
+Tokenization as an Admissibility Boundary</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18469507</code>;<br />
+source SHA-256<br />
+<code>5C44175B87C514892A0DC9743E09D03893E970AF5419F2E6D9171651BE2A9A54</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Token Parsimony</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.20382825</code>;<br />
+source SHA-256<br />
+<code>EC3AA22D32E2BBA21CFCB6D1FA2AE6EA8AC11B7781D19C51530A2F6D924B2E91</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Constitutional Legends</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20330324</code>;<br />
+source SHA-256<br />
+<code>440CE8A83C2F86C020D1E9E482759F71D08F694F1C2250B5B624AEA0A4237AA7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governed Controlled Natural
+Language (GCNL)</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-99C179FB694070D1</code>;<br />
+source SHA-256<br />
+<code>75A4AE13167785A0761E1F9CB67A9975138166A7B2B06B4FDF37C1A895178193</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>MCIR: A Canonical
+Intermediate Representation for Governed Transformation</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.21095303</code>;<br />
+source SHA-256<br />
+<code>EA129ECBA95F7B07CAA7B33A54F91F52913C94A14DA227EB9A06CFD083E4E5BF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Governed Semantic
+Compilation</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18453681</code>;<br />
+source SHA-256<br />
+<code>5FF6C636550B04DB0E2F6F94C379BB75AA0BD8781E19B047D7D3BB6D49071AC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[GCNL]</strong> Adam Ableman. <em>Governed Controlled Natural
+Language (GCNL)</em>. Corpus paper family; exact publication and version
+identity must be resolved before citation finalization.</p>
+<p><strong>[GSOL]</strong> Adam Ableman. <em>GSOL v0.1: Governed
+Semantic Operation Language</em>. Exact reviewed source:<br />
+<code>GSOL v0.1 Specification.md</code>,<br />
+SHA-256<br />
+<code>44F8689BF2FD50670CD25347FB2363491115CA7C049C2BBF71D7286A226DD1AC</code>.
+The source is a pre-release specification, not a production runtime.</p>
+<p><strong>[MCIR]</strong> Adam Ableman. <em>MCIR</em> and
+<em>MCIR-Law</em> corpus materials. The universal GSM treats MCIR as a
+canonical constitutional/compilation intermediate representation and
+MCIR-Law as an admissibility boundary; exact work/version references
+require registry adjudication.</p>
+<p><strong>[HLIR]</strong> Adam Ableman. <em>Human-Legible Intermediate
+Representation: Constitutional Front-Ends for Governed Semantic
+Systems</em>. Exact reviewed source:<br />
+<code>Human_Legible_Intermediate_Representation.md</code>,<br />
+SHA-256<br />
+<code>FE8E5245282E84E1F04E9327AEBFCCB51878F9B8C6494CE2F1C3A42743BAB888</code>.
+This source defines PEIR as the layer where canonical artifacts become
+executable operational structures.</p>
+<p><strong>[CS]</strong> Adam Ableman. <em>Constitutional Syscalls</em>
+and <em>Effect Sovereignty</em> corpus paper families; exact publication
+and version identities require registry resolution.</p>
+<p><strong>[CBC]</strong> Adam Ableman. <em>Open Constraint-Bearing
+Composability</em> and related corpus materials; schema, algorithm, and
+assurance identities remain separate pending author adjudication.</p>
+<p><strong>[RWR]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; conceptual claims retain
+the standing stated in the work.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI: <code>10.5281/zenodo.20788617</code>.</p>
+<p><strong>[COP]</strong> Adam Ableman. <em>The Constitutional
+Observability Platform</em>. Ableman Corpus current edition; conceptual
+claims retain the standing stated in the work.</p>
+<p><strong>[SFA]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure in Software Systems</em>. Ableman Corpus
+current edition; conceptual claims retain the standing stated in the
+work.</p>
+<p><strong>[GMB]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Current corpus terminology under the author-confirmed
+historical lineage <code>CCF -&gt; CMB -&gt; GMB</code>; the terminology
+ruling grants no publication, implementation, conformance, or canonical
+standing.</p>
+<p>External scholarly and technical sources remain to be researched and
+verified for a future evidence-qualified revision readiness.</p>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>The Three Hash Rule.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20788617</p>
+<p>Adam Ableman <em>Governed Semantic Operation Language.</em> Zenodo,
+2026. doi:10.5281/zenodo.21214886</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<p>Adam Ableman <em>Semantic Memory Hierarchies.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20793071</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847878">10.5281/zenodo.23847878</a></p>

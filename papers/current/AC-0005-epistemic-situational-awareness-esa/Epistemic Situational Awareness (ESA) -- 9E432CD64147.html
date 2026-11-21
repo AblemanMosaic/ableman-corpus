@@ -1,0 +1,392 @@
+<h1 id="epistemic-situational-awareness-esa">Epistemic Situational
+Awareness (ESA)</h1>
+<h2 id="continuation-governance-for-frontier-ai-systems">Continuation
+Governance for Frontier AI Systems</h2>
+<h3
+id="when-esa-is-present-inadmissible-moves-are-not-merely-filtered-or-refused---they-cease-to-arise-as-candidates.">When
+ESA is present, inadmissible moves are not merely filtered or refused -
+they cease to arise as candidates.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Contemporary reasoning systems - human, institutional, and machine -
+exhibit increasing generative power without a corresponding ability to
+locate themselves epistemically. As a result, activity persists after
+admissibility has collapsed: provisional repairs harden into
+explanations, explanations into memory, and memory into authority
+without warrant.</p>
+<p>This paper introduces <strong>Epistemic Situational Awareness
+(ESA)</strong> as a system-level control property that governs <em>when
+reasoning may continue, escalate, bind, or lawfully terminate</em>. ESA
+is not a cognitive faculty, belief model, or form of consciousness. It
+is an emergent orientation produced when epistemic governance is
+enforced strongly enough to shape which continuations even appear
+possible.</p>
+<p>When ESA is present, inadmissible moves are not merely filtered or
+refused - they cease to arise as candidates. The paper defines ESA,
+distinguishes it from adjacent concepts, characterizes its behavioral
+signatures and failure modes, and explains what ESA enables that current
+reasoning systems lack. ESA does not add intelligence or optimize
+outcomes. It adds <strong>jurisdiction</strong>: the ability to know
+<em>what kind of epistemic act is occurring, what authority it would
+create if reused, and when stopping is the most disciplined move
+available</em>.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Failures in modern reasoning systems rarely stem from insufficient
+intelligence. They stem from <strong>unlocated continuation</strong>:
+reasoning proceeds without a stable sense of epistemic role, admissible
+evidence, promotable status, or lawful endpoints.</p>
+<p>This pathology appears across domains: large language models that
+continue producing plausible narratives after evidentiary exhaustion;
+institutions where provisional practices silently become binding
+doctrine; and human–AI workflows where successful execution substitutes
+for understanding.</p>
+<p>Most mitigations address outputs - filters, guardrails, refusals,
+confidence labeling - without addressing whether <em>continuation itself
+is warranted</em>. This paper governs something prior: the conditions
+under which reasoning is permitted to move, escalate, bind, or stop.</p>
+<p>The framework governs <strong>movement of epistemic
+artifacts</strong>: who may move what kind of artifact, from which role
+to which role, under what warrants, and with what consequences if
+reused.</p>
+<hr />
+<h2 id="definition-epistemic-situational-awareness">2. Definition:
+Epistemic Situational Awareness</h2>
+<p><strong>Epistemic Situational Awareness (ESA)</strong> is the
+continuous ability of a reasoning system to recognize:</p>
+<ol type="1">
+<li>what kind of epistemic act it is performing</li>
+<li>which epistemic layer the artifact it is acting on occupies</li>
+<li>what authority that artifact would acquire if reused</li>
+<li>what escalations of epistemic privilege are currently
+admissible</li>
+<li>when lawful termination - including non-decision - has been
+reached</li>
+</ol>
+<p>ESA is not knowledge of the world. It is knowledge of
+<strong>epistemic position</strong>. A system with ESA reasons with
+awareness of <em>what its reasoning is allowed to become</em>.</p>
+<hr />
+<h2 id="what-esa-is-not">3. What ESA Is Not</h2>
+<p>ESA is not introspection, belief modeling, confidence estimation,
+self-reflection, or consciousness. It does not require access to
+internal representations or subjective experience. The term
+<em>situational awareness</em> is used in its engineering sense, as in
+aviation and safety-critical systems: awareness as <strong>constraint on
+action</strong>, not awareness of meaning.</p>
+<p>ESA therefore denotes a <strong>control property</strong>, not a
+mental state.</p>
+<p>Governance under ESA applies only to <strong>epistemic
+artifacts</strong> - texts, traces, decisions, memories, instructions,
+or policies eligible for reuse. Internal reasoning and latent
+representations are unconstrained until externalized into such
+artifacts.</p>
+<hr />
+<h2 id="esa-as-an-emergent-control-property">4. ESA as an Emergent
+Control Property</h2>
+<p>ESA is not installed directly. It <strong>emerges</strong> when
+epistemic governance is enforced consistently enough to alter a system’s
+action horizon. In practice, this requires:</p>
+<ul>
+<li>explicit separation between epistemic <strong>modes</strong> of
+reasoning</li>
+<li>typed epistemic actions with bounded scope</li>
+<li>declared observation policy</li>
+<li>fail-closed promotion semantics</li>
+<li>lawful termination states, including <em>Blocked</em> and
+<em>Undecidable</em></li>
+</ul>
+<h3 id="epistemic-modes">4.1 Epistemic Modes</h3>
+<p>Epistemic modes classify <em>the intent of an epistemic act</em>, not
+its correctness, confidence, or layer. The standing modes are:</p>
+<ul>
+<li><strong>Exploration</strong> - generating candidate ideas or
+hypotheses without authority to bind or explain</li>
+<li><strong>Refinement</strong> - narrowing or improving candidate
+structures without asserting correctness</li>
+<li><strong>Repair</strong> - modifying an existing artifact to restore
+known behavior without explaining cause</li>
+<li><strong>Expansion</strong> - promoting an artifact into a role with
+greater downstream reuse or authority</li>
+</ul>
+<p>Modes do not imply movement across epistemic layers. They describe
+<em>how</em> an artifact is being worked on, not <em>what kind of
+thing</em> the artifact is.</p>
+<h3 id="epistemic-layers">4.2 Epistemic Layers</h3>
+<p>Epistemic layers describe the <strong>ontological role</strong> an
+artifact occupies:</p>
+<ul>
+<li><strong>Specification</strong> - what counts as correctness or
+meaning independent of execution</li>
+<li><strong>Configuration</strong> - which degrees of freedom are
+currently fixed to produce behavior</li>
+<li><strong>Implementation</strong> - concrete execution, artifacts, and
+observable behavior</li>
+</ul>
+<p>Layer transitions are separate, governed acts. No mode, by itself,
+authorizes movement between layers.</p>
+<p>When these constraints are applied reliably, a qualitative shift
+occurs: <strong>inadmissible moves do not merely become forbidden; they
+cease to appear as candidates</strong>. This distinguishes ESA from
+post-hoc filtering or refusal systems, which still generate inadmissible
+continuations and suppress them later.</p>
+<p>Operationally, ESA is enforced at the interface between generation
+and system-level acts - memory writes, escalations, bindings, or
+external actions - rather than within token selection itself.</p>
+<hr />
+<h2 id="behavioral-signatures">5. Behavioral Signatures</h2>
+<h3 id="lawful-termination">5.1 Lawful Termination</h3>
+<p>In systems without ESA, uncertainty triggers further generation.
+Activity substitutes for progress. With ESA, termination is a correct
+epistemic outcome. Silence is not absence; it is a formally valid state
+under fixed observation policy.</p>
+<h3 id="separation-of-execution-and-understanding">5.2 Separation of
+Execution and Understanding</h3>
+<p>Execution success is a fact; understanding is a claim. ESA enforces
+this distinction operationally. Restored behavior does not self-promote
+into explanation without explicit authorization.</p>
+<h3 id="situated-refusal">5.3 Situated Refusal</h3>
+<p>Refusal under ESA is not brittle. It is situated: a structured
+declaration that a move is inadmissible <em>here</em>, under current
+mode and layer, coupled with a legible path to escalation if
+warranted.</p>
+<h3 id="reduced-thrash">5.4 Reduced Thrash</h3>
+<p>Most agent thrashing is epistemic, not computational. ESA introduces
+epistemic exhaustion as a visible state, reducing cycles that add no new
+warrant.</p>
+<h3 id="oversight-with-leverage">5.5 Oversight with Leverage</h3>
+<p>ESA creates clear procedural hooks for oversight - authorize
+escalation, contest promotion, modify observation policy, accept or
+reject termination - without inspecting raw reasoning.</p>
+<hr />
+<h2 id="responsibility-as-admissibility">6. Responsibility as
+Admissibility</h2>
+<p>ESA reframes responsibility as <strong>jurisdictional boundary
+crossing under declared constraints</strong>. Accountability attaches
+not to intent or outcome, but to escalation, binding, or reuse without
+admissible warrant. This localization moves responsibility upstream of
+harm and scales across humans, institutions, and machines.</p>
+<hr />
+<h2 id="authority-laundering-and-time-decay">7. Authority Laundering and
+Time Decay</h2>
+<p>A primary harm vector is <strong>authority laundering</strong>:
+exploratory or provisional artifacts accrue authority through reuse over
+time. The artifact remains unchanged; its role changes.</p>
+<p>In this paper, <strong>binding</strong> refers to the procedural act
+by which an artifact is permitted to acquire ongoing epistemic authority
+- such as reuse without re-derivation, reference as precedent,
+enforcement, or institutional memory. Binding is not belief, agreement,
+or semantic truth. It determines what consequences reuse may
+legitimately carry.</p>
+<p>ESA blocks illegitimate binding by requiring explicit authorization
+at each jurisdictional boundary.</p>
+<hr />
+<h2 id="failure-modes">8. Failure Modes</h2>
+<p>ESA can degrade in predictable ways: ritualized enforcement,
+over-pruning, shadow escalation through untyped channels, and mode
+confusion. These failures function as diagnostics rather than
+refutations.</p>
+<hr />
+<h2 id="a-unifying-grammar">9. A Unifying Grammar</h2>
+<p>ESA can be operationalized through four standing questions:</p>
+<ol type="1">
+<li><strong>Mode</strong> - What kind of epistemic act is
+occurring?</li>
+<li><strong>Evidence</strong> - What observation is admissible
+here?</li>
+<li><strong>Binding</strong> - What authority would reuse create?</li>
+<li><strong>Termination</strong> - How does this end lawfully?</li>
+</ol>
+<p>These questions do not guarantee correctness. They guarantee
+<strong>orientation</strong>.</p>
+<hr />
+<h2 id="conclusion">10. Conclusion</h2>
+<p>Epistemic Situational Awareness names a missing capability in modern
+reasoning systems: the ability to locate oneself epistemically and act
+accordingly. ESA does not ask systems to be wiser. It teaches them
+<strong>jurisdiction</strong>.</p>
+<p>Correctness, under ESA, is not the right answer. It is the
+<strong>right to answer at all</strong>.</p>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that contemporary reasoning systems - human,
+institutional, and machine - exhibit increasing generative power without
+a corresponding ability to locate themselves epistemically. Its nearest
+external comparison fields are consciousness, governance, ai. The
+sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Structural and
+computational correspondences remain insufficient as phenomenal evidence
+unless linked to discriminating empirical predictions against competing
+theories. A written constitution can legitimate domination as easily as
+constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. Retrieval, tool use, and policy layers can
+reduce unsupported output without eliminating model error, source error,
+omission, bias, or the environmental and institutional costs of scale.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> David J. Chalmers. “Facing Up to the Problem of
+Consciousness.” <em>Journal of Consciousness Studies</em> 2(3), 1995,
+pp. 200-219. https://consc.net/papers/facing.html
+<strong>Relationship:</strong> Foundational framing of the explanatory
+gap; cited to bound, not resolve, phenomenal claims.</p>
+<p><strong>[E2]</strong> Larissa Albantakis et al. “Integrated
+Information Theory (IIT) 4.0: Formulating the Properties of Phenomenal
+Existence in Physical Terms.” <em>PLOS Computational Biology</em>
+19(10), 2023, e1011465. DOI: 10.1371/journal.pcbi.1011465.
+https://doi.org/10.1371/journal.pcbi.1011465
+<strong>Relationship:</strong> Competing formal theory of consciousness
+included for explicit contrast and counterevidence obligations.</p>
+<p><strong>[E3]</strong> Stanislas Dehaene and Jean-Pierre Changeux.
+“Experimental and Theoretical Approaches to Conscious Processing.”
+<em>Neuron</em> 70(2), 2011, pp. 200-227. DOI:
+10.1016/j.neuron.2011.03.018.
+https://doi.org/10.1016/j.neuron.2011.03.018
+<strong>Relationship:</strong> Competing global-workspace account
+included to prevent a corpus-native ontology from substituting for
+empirical neuroscience.</p>
+<p><strong>[E4]</strong> Nikolaus Kriegeskorte, Marieke Mur, and Peter
+A. Bandettini. “Representational Similarity Analysis - Connecting the
+Branches of Systems Neuroscience.” <em>Frontiers in Systems
+Neuroscience</em> 2, 2008, 4. DOI: 10.3389/neuro.06.004.2008.
+https://doi.org/10.3389/neuro.06.004.2008 <strong>Relationship:</strong>
+Predecessor empirical method for comparing representational
+geometries.</p>
+<p><strong>[E5]</strong> Francesco Locatello et al. “Challenging Common
+Assumptions in the Unsupervised Learning of Disentangled
+Representations.” <em>PMLR</em> 97, 2019, pp. 4114-4124.
+https://proceedings.mlr.press/v97/locatello19a.html
+<strong>Relationship:</strong> Counterevidence showing that desired
+latent factorization is not identifiable from unsupervised data without
+inductive biases.</p>
+<p><strong>[E6]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E7]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Ableman Consciousness
+Ontology (ACO)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18203749</code>;<br />
+source SHA-256<br />
+<code>ACD97032780DA7B3A36750702BE1F47BCB2E6361EF6E74ECA8B441D7C6A25DDE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Locus of Qualia</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-AF27E66B81811DB1</code>;<br />
+source SHA-256<br />
+<code>7B83EBD0FFDCFEBFA522A715AE0E4D1049FCA0B4CE0618C2017F8BB9206E5424</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Phenomenal Aperture</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-4B275CBB7EFF1A4F</code>;<br />
+source SHA-256<br />
+<code>B6AE95D72B89DAF47778BED3982843A1ECE350CA363750108AA60D5A4C63D763</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Possible Minds: Against the
+Provincialization of Consciousness</em>. Ableman Corpus current edition;
+work identity <code>PAPER.PUB.20681869</code>;<br />
+source SHA-256<br />
+<code>77F381A29E2EF801085938DB369F3F432321CCEB8B9DD3969330337C24BA4998</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Admissibility Theory of
+Consciousness</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-8FDC994841DA6CF3</code>;<br />
+source SHA-256<br />
+<code>F409652555CEC4898DBEC1E8BBB179CEE020E7FF35F4C8F307CDA82253D6F49F</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<ol type="1">
+<li>Ableman Adam Ableman <em>Governed Coding and Debugging: A
+Claim-Governance Grammar for Human–AI Agentic Workflows</em>. 2025.</li>
+<li>Ableman Adam Ableman <em>Ableman’s Razor: Epistemic Authority and
+Illegitimate Claim Migration</em>. 2024.</li>
+<li>Ableman Adam Ableman <em>Constitutional Epistemics (CE): Governance
+of Epistemic Authority in Hybrid Systems</em>. 2024.</li>
+<li>Endsley, M. R. “Toward a Theory of Situation Awareness in Dynamic
+Systems.” <em>Human Factors</em>, 1995.</li>
+<li>Floridi, L., et al. “AI Governance and the Problem of Control.”
+<em>Philosophy &amp; Technology</em>, 2018.</li>
+<li>Amodei, D., et al. “Concrete Problems in AI Safety.”
+arXiv:1606.06565.</li>
+<li>Klein, G. “A Recognition-Primed Decision Model of Rapid Decision
+Making.” <em>Military Operations Research</em>, 1993.</li>
+</ol>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18123102">10.5281/zenodo.18123102</a></p>

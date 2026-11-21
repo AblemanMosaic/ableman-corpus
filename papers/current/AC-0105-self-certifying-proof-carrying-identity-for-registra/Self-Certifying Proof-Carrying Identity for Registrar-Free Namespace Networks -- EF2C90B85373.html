@@ -1,0 +1,556 @@
+<h1
+id="self-certifying-proof-carrying-identity-for-registrar-free-namespace-networks">Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks</h1>
+<h2 id="toward-functionally-sovereign-self-certifying-identity">Toward
+Functionally Sovereign Self-Certifying Identity</h2>
+<h3
+id="self-certifying-proof-carrying-identity-for-registrar-free-namespace-networks-binds-what-happened-without-claiming-more-than-the-evidence-proves.">Self-Certifying
+Proof-Carrying Identity for Registrar-Free Namespace Networks binds what
+happened without claiming more than the evidence proves.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern network identity systems rely heavily upon external trust
+authorities for namespace legitimacy, continuity, and authenticity.
+Domain registrars, certificate authorities, centralized identity
+providers, and socially maintained trust graphs all place institutional
+governance layers above the cryptographic substrate itself.</p>
+<p>This paper proposes a registrar-free identity architecture based on
+self-certifying cryptographic identifiers, proof-carrying attribution
+lineage, and authenticated operational continuity. Rather than treating
+identity legitimacy as institutionally granted, the framework treats
+identity legitimacy as emerging from admissible cryptographic continuity
+under a declared threat model.</p>
+<p>The proposed framework introduces several compositional
+primitives:</p>
+<p>• self-certifying identifier derivation</p>
+<p>• potentially unsquattable under the assumed cryptographic threat
+model</p>
+<p>• proof-carrying identity continuity</p>
+<p>• provenance-scoped attribution validity</p>
+<p>• continuity-sensitive session establishment</p>
+<p>• operational attribution lineage</p>
+<p>• scalable provenance density gradients</p>
+<p>• collision-complete namespace derivation</p>
+<p>The paper distinguishes authorship continuity, operational
+continuity, and semantic continuity as separate but composable
+continuity classes. The framework primarily addresses authorship
+continuity and operational continuity while leaving semantic continuity
+and constitutional meaning governance explicitly outside scope.</p>
+<p>The resulting architecture permits self-announcing participants to
+exist within a mathematically self-certifying namespace while
+continuously proving attributable operational continuity without
+centralized registration authorities or externally delegated namespace
+legitimacy.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>Most network identity systems depend upon institutional legitimacy
+structures.</p>
+<p>DNS names require registrars.</p>
+<p>TLS systems require certificate authorities.</p>
+<p>Social identity systems require platform ownership.</p>
+<p>Even decentralized cryptographic systems frequently rely upon
+externally distributed trust anchors, manually exchanged keys, or
+socially maintained trust relationships.</p>
+<p>This creates a persistent architectural pattern:</p>
+<p>identity legitimacy exists above the cryptography rather than
+emerging directly from it.</p>
+<p>Cryptographic signatures prove authorship of messages.</p>
+<p>They do not independently establish sovereign ownership of the
+namespace itself.</p>
+<p>As a result, operational identity continuity is often externalized
+into institutions, social trust systems, administrative infrastructure,
+or manual coordination.</p>
+<p>This paper explores an alternative model.</p>
+<p>Instead of treating identity legitimacy as institutionally assigned,
+identity legitimacy is treated as cryptographically emergent under an
+explicitly declared threat model.</p>
+<p>The namespace becomes self-certifying.</p>
+<p>Ownership becomes proof-carrying.</p>
+<p>Continuity becomes attributable.</p>
+<p>Operational legitimacy emerges through admissible cryptographic
+lineage rather than delegated institutional authority.</p>
+<h2 id="scope-and-threat-model">2. Scope and Threat Model</h2>
+<p>The framework addresses a bounded class of identity and attribution
+problems.</p>
+<p>The paper does not claim universal identity security under arbitrary
+adversarial conditions.</p>
+<p>Instead, the framework operates under the following assumptions:</p>
+<p>• modern asymmetric cryptographic primitives remain computationally
+secure</p>
+<p>• participants maintain custody of private keys</p>
+<p>• implementations correctly execute the specified protocols</p>
+<p>• session integrity mechanisms are uncompromised</p>
+<p>• cryptographic hashes remain collision resistant under practical
+adversarial constraints</p>
+<p>The framework is specifically designed to resist:</p>
+<p>• namespace squatting under correct cryptographic operation</p>
+<p>• unauthorized attribution forgery</p>
+<p>• replay across invalid operational scopes</p>
+<p>• operational impersonation without key possession</p>
+<p>• continuity disruption through non-authoritative message
+injection</p>
+<p>The following classes remain explicitly outside scope:</p>
+<p>• physical device compromise</p>
+<p>• coercive key extraction</p>
+<p>• malicious hardware</p>
+<p>• social engineering</p>
+<p>• side-channel attacks</p>
+<p>• catastrophic cryptographic failure</p>
+<p>• semantic governance disputes</p>
+<p>• constitutional meaning drift</p>
+<p>This boundary is important.</p>
+<p>The framework primarily addresses cryptographic authorship continuity
+and operational attribution continuity.</p>
+<p>It does not independently solve semantic legitimacy or
+governance-layer meaning disputes.</p>
+<h2 id="definitions">3. Definitions</h2>
+<p>Definition (Self-Certifying Identifier)</p>
+<p>An identifier deterministically derived from cryptographic key
+material such that ownership claims may be mechanically verified without
+external registration authority.</p>
+<p>Definition (Proof-Carrying Identity)</p>
+<p>An identity model in which operational legitimacy derives from
+admissible cryptographic attribution continuity rather than static
+institutional assignment.</p>
+<p>Definition (Authorship Continuity)</p>
+<p>Persistence of attributable authorship under continuous possession of
+a cryptographic authority surface.</p>
+<p>Definition (Operational Continuity)</p>
+<p>Persistence of attributable participation across authenticated
+operational transitions.</p>
+<p>Definition (Semantic Continuity)</p>
+<p>Persistence of meaning equivalence across evolving interpretive or
+governance contexts.</p>
+<p>Definition (Provenance Scope)</p>
+<p>A cryptographically authenticated operational boundary within which
+attribution artifacts remain admissible.</p>
+<p>Examples include:</p>
+<p>• session scope</p>
+<p>• transport scope</p>
+<p>• routing scope</p>
+<p>• relay scope</p>
+<p>• operational epoch scope</p>
+<h2 id="the-identity-problem">4. The Identity Problem</h2>
+<p>Network identity systems must address three distinct properties:</p>
+<ol type="1">
+<li><p>uniqueness</p></li>
+<li><p>authenticity</p></li>
+<li><p>continuity</p></li>
+</ol>
+<p>Most existing systems solve only subsets of these simultaneously.</p>
+<p><strong>4.1 Uniqueness</strong></p>
+<p>An identifier must distinguish one participant from all others.</p>
+<p>Traditional systems frequently achieve uniqueness through centralized
+namespace arbitration.</p>
+<p>Examples include:</p>
+<p>• DNS allocation</p>
+<p>• certificate issuance</p>
+<p>• account registration</p>
+<p>• authority-managed identity spaces</p>
+<p>This introduces institutional dependency into namespace
+legitimacy.</p>
+<p><strong>4.2 Authenticity</strong></p>
+<p>A participant must prove authorship of communications associated with
+an identifier.</p>
+<p>Public-key cryptography solves this effectively.</p>
+<p>A valid signature proves possession of the corresponding authority
+surface.</p>
+<p>However, authenticity alone does not establish namespace
+sovereignty.</p>
+<p><strong>4.3 Continuity</strong></p>
+<p>Identity is not merely instantaneous.</p>
+<p>Meaningful operational identity persists across sessions, transports,
+and evolving operational states.</p>
+<p>Traditional systems frequently externalize continuity into
+institutional infrastructure or social trust relationships.</p>
+<p>The framework proposed here internalizes continuity directly into the
+attribution lineage itself.</p>
+<h2 id="self-certifying-namespace-construction">5. Self-Certifying
+Namespace Construction</h2>
+<p>The foundational primitive is a self-certifying identifier derived
+directly from public key material.</p>
+<p>Example construction:</p>
+<p><span
+class="math inline">NodeID = BLAKE3(Ed25519 Public Key)</span></p>
+<p>The resulting identifier possesses several important properties:</p>
+<p>• deterministic derivation</p>
+<p>• topology independence</p>
+<p>• registrar independence</p>
+<p>• authority independence</p>
+<p>• public verifiability</p>
+<p>• practical collision resistance</p>
+<p>No external institution grants the identifier.</p>
+<p>No registrar validates namespace ownership.</p>
+<p>The namespace becomes self-certifying because identity emerges
+directly from the cryptographic substrate itself.</p>
+<h2 id="potentially-unsquattable-namespace-ownership">6. Potentially
+Unsquattable Namespace Ownership</h2>
+<p>A critical distinction exists between:</p>
+<p>identifier uniqueness</p>
+<p>and</p>
+<p>namespace sovereignty.</p>
+<p>Uniqueness alone is insufficient.</p>
+<p>An adversary may publicly announce another participant’s identifier
+without possessing operational authority over it.</p>
+<p>Namespace sovereignty emerges only when operational legitimacy is
+inseparable from cryptographic authorship continuity.</p>
+<p>The framework therefore does not claim absolute unsquattability.</p>
+<p>Instead, the framework aims to provide a potentially unsquattable
+namespace under the assumed cryptographic threat model.</p>
+<p>Operational ownership derives from admissible signed attribution
+continuity rather than public announcement alone.</p>
+<p>This distinction is foundational.</p>
+<p>Anyone may announce a public identifier.</p>
+<p>Only the holder of the corresponding private key may produce
+admissible attribution lineage associated with it.</p>
+<p>The namespace therefore becomes effectively resistant to squatting
+under correct cryptographic operation and uncompromised key custody
+assumptions.</p>
+<h2 id="proof-carrying-identity">7. Proof-Carrying Identity</h2>
+<p>The framework introduces proof-carrying identity as a continuity
+model.</p>
+<p>Identity legitimacy is not statically granted.</p>
+<p>It is continuously re-proven through attributable cryptographic
+lineage.</p>
+<p>Each signed attribution artifact becomes evidence of:</p>
+<p>• authorship continuity</p>
+<p>• operational continuity</p>
+<p>• namespace authority continuity</p>
+<p>• attributable participation continuity</p>
+<p>This transforms identity from a static registration object into an
+accumulated continuity structure.</p>
+<p>Traditional systems authenticate isolated events.</p>
+<p>Proof-carrying identity authenticates attributable operational
+persistence through time.</p>
+<p>This distinction is important.</p>
+<p>The framework does not claim that continuity itself proves semantic
+legitimacy or governance legitimacy.</p>
+<p>It claims only that continuity establishes attributable operational
+persistence under cryptographic authority continuity.</p>
+<h2 id="attribution-lineage">8. Attribution Lineage</h2>
+<p>Attribution lineage consists of cryptographically authenticated
+continuity artifacts.</p>
+<p>Examples include:</p>
+<p>• session establishment artifacts</p>
+<p>• transport transition artifacts</p>
+<p>• continuity receipts</p>
+<p>• relay acknowledgements</p>
+<p>• operational checkpoint signatures</p>
+<p>• scope transition declarations</p>
+<p>Each artifact extends the operational continuity surface associated
+with the identity.</p>
+<p>Over time, attribution lineage accumulates historical structure.</p>
+<p>A newly generated identifier possesses mathematical legitimacy but
+minimal operational continuity evidence.</p>
+<p>A mature identifier accumulates thick attribution lineage.</p>
+<p>This distinction enables continuity-sensitive trust assessment
+without centralized authorities.</p>
+<h2 id="provenance-scope">9. Provenance Scope</h2>
+<p>A valid attribution artifact is admissible only within its
+authenticated provenance scope.</p>
+<p>Examples include:</p>
+<p>• session scope</p>
+<p>• relay scope</p>
+<p>• routing scope</p>
+<p>• operational epoch scope</p>
+<p>A provenance scope declaration contains:</p>
+<p>• scope identifier</p>
+<p>• scope authority surface</p>
+<p>• scope validity duration</p>
+<p>• transition lineage reference</p>
+<p>• admissibility constraints</p>
+<p>Scope declarations are themselves signed attribution artifacts.</p>
+<p>This is important.</p>
+<p>Replay resistance derives not merely from signature validity but from
+provenance admissibility.</p>
+<p>A valid signature replayed outside its authenticated provenance scope
+becomes operationally inadmissible despite remaining cryptographically
+authentic.</p>
+<h2 id="session-establishment-and-operational-continuity">10. Session
+Establishment and Operational Continuity</h2>
+<p>A simplified operational flow proceeds as follows:</p>
+<ol type="1">
+<li><p>Node derives self-certifying identifier from public key
+material.</p></li>
+<li><p>Node announces signed session establishment artifact.</p></li>
+<li><p>Peer verifies authorship proof.</p></li>
+<li><p>Peers establish authenticated session through asymmetric key
+exchange.</p></li>
+<li><p>Session integrity transitions to symmetric transport
+protection.</p></li>
+<li><p>Operational continuity artifacts accumulate through ongoing
+attributable participation.</p></li>
+</ol>
+<p>This architecture separates:</p>
+<p>identity authentication</p>
+<p>from</p>
+<p>high-frequency transport integrity.</p>
+<p>The attribution surface remains anchored in asymmetric cryptographic
+continuity while operational traffic benefits from efficient symmetric
+integrity enforcement.</p>
+<h2 id="provenance-density-gradients">11. Provenance Density
+Gradients</h2>
+<p>The framework permits variable attribution density.</p>
+<p>Instead of asymmetrically signing every transport frame, participants
+may periodically produce signed attribution checkpoints while
+maintaining continuous symmetric session integrity.</p>
+<p>Example:</p>
+<p>N = 1</p>
+<p>Every frame carries asymmetric attribution proof.</p>
+<p>N &gt; 1</p>
+<p>Periodic frames carry asymmetric attribution while intermediate
+frames rely upon symmetric session integrity.</p>
+<p>This optimization exists to reduce computational overhead while
+preserving meaningful authorship continuity evidence.</p>
+<p>Unlike Byzantine sampling systems, the purpose here is not
+adversarial unpredictability.</p>
+<p>The purpose is scalable provenance continuity under authenticated
+session integrity.</p>
+<h2 id="collision-completeness">12. Collision Completeness</h2>
+<p>Cryptographic collisions within sufficiently large hash spaces are
+operationally improbable.</p>
+<p>However, protocol completeness requires explicit collision
+semantics.</p>
+<p>The framework therefore permits cascading derivation under detected
+collision conditions.</p>
+<p>Example:</p>
+<p>Generation 1:</p>
+<p>ID_1=<span
+class="math inline">BLAKE3(<em>P</em><em>K</em>)</span></p>
+<p>Generation 2:</p>
+<p>ID_2=<span
+class="math inline">BLAKE3(<em>I</em><em>D</em><sub>1</sub> ∥ <em>P</em><em>K</em> ∥ <em>S</em><em>c</em><em>o</em><em>p</em><em>e</em>)</span></p>
+<p>Generation 3:</p>
+<p>ID_3=<span
+class="math inline">BLAKE3(<em>I</em><em>D</em><sub>2</sub> ∥ <em>P</em><em>K</em> ∥ <em>S</em><em>c</em><em>o</em><em>p</em><em>e</em> ∥ <em>C</em><em>o</em><em>u</em><em>n</em><em>t</em><em>e</em><em>r</em>)</span></p>
+<p>The cascade mechanism exists for operational completeness rather than
+primary security.</p>
+<p>Namespace legitimacy derives primarily from:</p>
+<p>• private-key possession</p>
+<p>• attributable continuity</p>
+<p>• admissible provenance scope</p>
+<p>• cryptographic integrity</p>
+<h2 id="comparative-analysis">13. Comparative Analysis</h2>
+<ul>
+<li><p><strong>Property:</strong> Registrar-Free<br />
+<strong>TLS PKI:</strong> No<br />
+<strong>PGP:</strong> Yes<br />
+<strong>Manual Keys:</strong> Yes<br />
+<strong>Proposed Framework:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Self-Certifying IDs<br />
+<strong>TLS PKI:</strong> Partial<br />
+<strong>PGP:</strong> Partial<br />
+<strong>Manual Keys:</strong> Partial<br />
+<strong>Proposed Framework:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Namespace Sovereignty<br />
+<strong>TLS PKI:</strong> Institutional<br />
+<strong>PGP:</strong> Social<br />
+<strong>Manual Keys:</strong> Local<br />
+<strong>Proposed Framework:</strong> Cryptographic</p></li>
+<li><p><strong>Property:</strong> Attribution Continuity<br />
+<strong>TLS PKI:</strong> Weak<br />
+<strong>PGP:</strong> Weak<br />
+<strong>Manual Keys:</strong> Manual<br />
+<strong>Proposed Framework:</strong> Native</p></li>
+<li><p><strong>Property:</strong> Provenance Scope Binding<br />
+<strong>TLS PKI:</strong> Limited<br />
+<strong>PGP:</strong> Minimal<br />
+<strong>Manual Keys:</strong> Manual<br />
+<strong>Proposed Framework:</strong> Explicit</p></li>
+<li><p><strong>Property:</strong> Continuity Lineage<br />
+<strong>TLS PKI:</strong> No<br />
+<strong>PGP:</strong> Informal<br />
+<strong>Manual Keys:</strong> Manual<br />
+<strong>Proposed Framework:</strong> Native</p></li>
+<li><p><strong>Property:</strong> Session Integrity Separation<br />
+<strong>TLS PKI:</strong> Yes<br />
+<strong>PGP:</strong> No<br />
+<strong>Manual Keys:</strong> Partial<br />
+<strong>Proposed Framework:</strong> Yes</p></li>
+<li><p><strong>Property:</strong> Replay Scope Awareness<br />
+<strong>TLS PKI:</strong> Limited<br />
+<strong>PGP:</strong> Minimal<br />
+<strong>Manual Keys:</strong> Manual<br />
+<strong>Proposed Framework:</strong> Explicit</p></li>
+</ul>
+<h2 id="limitations">14. Limitations</h2>
+<p>The framework intentionally does not solve:</p>
+<p>• semantic legitimacy</p>
+<p>• constitutional governance</p>
+<p>• interpretive meaning stability</p>
+<p>• trustworthiness of participant intent</p>
+<p>• endpoint integrity</p>
+<p>• hardware compromise</p>
+<p>• human deception</p>
+<p>These remain distinct problem domains.</p>
+<p>This limitation is intentional rather than accidental.</p>
+<p>The framework focuses specifically on registrar-free cryptographic
+identity continuity and attributable operational participation.</p>
+<h2 id="conclusion">15. Conclusion</h2>
+<p>Traditional network identity systems place institutional legitimacy
+layers above the cryptographic substrate.</p>
+<p>The framework proposed here attempts to relocate legitimacy directly
+into attributable cryptographic continuity itself.</p>
+<p>Identity becomes self-certifying.</p>
+<p>Ownership becomes proof-carrying.</p>
+<p>Continuity becomes attributable.</p>
+<p>The resulting architecture permits self-announcing participants to
+operate within a potentially unsquattable namespace under the assumed
+cryptographic threat model while continuously proving attributable
+operational continuity without centralized registration authorities or
+socially delegated namespace governance.</p>
+<p>This suggests a meaningful architectural transition:</p>
+<p>from institutionally delegated identity legitimacy</p>
+<p>to mathematically attributable identity continuity.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern network identity systems rely heavily
+upon external trust authorities for namespace legitimacy, continuity,
+and authenticity. Its nearest external comparison fields are crypto,
+security, distributed. The sources in [E1], [E2], [E3], [E4], [E5],
+[E6], [E7] are cited as predecessor literature, adjacent standards, or
+counterpressure - not as evidence that they caused the Ableman framework
+or that they validate its novel claims. The comparison isolates where
+established work already supplies provenance, formal assurance,
+institutional constraint, empirical method, or engineering practice, and
+where this paper adds a distinct claim about admissibility, authority,
+semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A valid hash,
+signature, or inclusion proof establishes a bounded cryptographic
+relation, not meaning, authority, safety, or jurisdiction by itself.
+Unforgeable capabilities can constrain exercise of authority while still
+leaving allocation, delegation, revocation, and social legitimacy
+incorrectly specified. Convergence and consensus establish agreement
+under a fault model; they do not establish that the agreed state is
+true, authorized, desirable, or semantically equivalent. These limits
+are not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E2]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<p><strong>[E3]</strong> Manu Sporny et al., eds. <em>Decentralized
+Identifiers (DIDs) v1.0</em>. W3C Recommendation, 19 July 2022.
+https://www.w3.org/TR/did-core/ <strong>Relationship:</strong> Adjacent
+decentralized identity standard; identifier resolution is not assumed to
+settle semantic standing or jurisdiction.</p>
+<p><strong>[E4]</strong> Juan Benet. “IPFS - Content Addressed,
+Versioned, P2P File System.” 2014. arXiv:1407.3561.
+https://arxiv.org/abs/1407.3561 <strong>Relationship:</strong>
+Predecessor content-addressed network architecture; content identity is
+compared with, not treated as sufficient for, semantic jurisdiction.</p>
+<p><strong>[E5]</strong> Jerome H. Saltzer and Michael D. Schroeder.
+“The Protection of Information in Computer Systems.” <em>Proceedings of
+the IEEE</em> 63(9), 1975, pp. 1278-1308. DOI: 10.1109/PROC.1975.9939.
+https://doi.org/10.1109/PROC.1975.9939 <strong>Relationship:</strong>
+Foundational protection principles used as a comparison point for least
+authority, mediation, and inspectability.</p>
+<p><strong>[E6]</strong> Mark S. Miller. <em>Robust Composition: Towards
+a Unified Approach to Access Control and Concurrency Control</em>. PhD
+dissertation, Johns Hopkins University, 2006.
+http://www.erights.org/talks/thesis/ <strong>Relationship:</strong>
+Predecessor object-capability treatment of authority and compositional
+security.</p>
+<p><strong>[E7]</strong> Gerwin Klein et al. “seL4: Formal Verification
+of an OS Kernel.” <em>SOSP ’09</em>, 2009, pp. 207-220. DOI:
+10.1145/1629575.1629596. https://doi.org/10.1145/1629575.1629596
+<strong>Relationship:</strong> Predecessor for machine-checked
+implementation correspondence and capability-based kernel design.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Semantic Hashing: Hashes as
+Declared Equivalence Classes of Meaning</em>. Ableman Corpus current
+edition; work identity <code>PAPER.PUB.18500533</code>;<br />
+source SHA-256<br />
+<code>7DA63A76DDF492FFC289F486923FB430879DC148CF3BB16EB0E755E2D4AB9C14</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Receipt-Bound Capabilities:
+Membrane Tokens for Governed Interaction with Reality</em>. Ableman
+Corpus current edition; work identity
+<code>PAPER.PUB.18601631</code>;<br />
+source SHA-256<br />
+<code>6DE46F821594AB11BFB7F8373368C452BD89E5BD4EB172B88D9467E87CF74C33</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Integrity Enforcement
+Layer</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-505307E9E6571B63</code>;<br />
+source SHA-256<br />
+<code>F858AB32E0937B796353CAE573DD4183FDF4F179A3E1E7E40C4E0C6BF1AB0018</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.20114888">10.5281/zenodo.20114888</a></p>

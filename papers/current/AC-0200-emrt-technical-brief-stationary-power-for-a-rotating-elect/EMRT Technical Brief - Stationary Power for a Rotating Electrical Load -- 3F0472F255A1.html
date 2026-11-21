@@ -1,0 +1,288 @@
+<h1 id="emrt-technical-brief">EMRT Technical Brief</h1>
+<h2 id="stationary-power-for-a-rotating-electrical-load">Stationary
+Power for a Rotating Electrical Load</h2>
+<h3 id="the-load-may-rotate-the-ledger-still-has-to-balance.">The load
+may rotate; the ledger still has to balance.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>The Electro-Mechanical Rotational Transformer (EMRT) is a two-machine
+arrangement that delivers electrical power to a rotating load without a
+galvanic stationary-to-rotating contact in the modeled transfer path. A
+stationary-case motor drives a carrier. A second machine carries its
+case, windings, converter, capacitor, and load on that carrier while its
+rotor shaft is fixed to the housing. The carrier supplies the
+generator’s mechanical power, so reaction torque, source power, stored
+energy, losses, and heat must remain explicit. A bounded Windows
+simulator demonstrates this accounting under assigned parameters and
+produces a bench-validation plan. It does not demonstrate a finished
+machine, a safe construction, comparative efficiency, historical
+priority, or a new energy mechanism.</p>
+<h2 id="publication-and-evidence-standing">1. Publication and evidence
+standing</h2>
+<p>This is an AI-assisted editorial conversion of the sealed EMRT C1
+technical brief, reviewed and authorized by the author for publication.
+Hardware was not run, calibration was not supplied, and all current
+performance values are simulation results under assigned parameters.
+Electro-Mechanical Rotational Transformer (EMRT) is the author-confirmed
+name and expansion used by this publication.</p>
+<p>The Direct-Coupled Dynamic Torque Reactor and the Ableman Wheel are
+comparison targets, not alternate names for this module. No identity
+merger or construction authority follows from this document.</p>
+<h2 id="architecture-in-one-page">2. Architecture in one page</h2>
+<figure>
+<img src="../assets/emrt-topology.png"
+alt="Two-machine EMRT topology and reference frames." />
+<figcaption aria-hidden="true">Two-machine EMRT topology and reference
+frames.</figcaption>
+</figure>
+<ul>
+<li><strong>M1:</strong> fixed case, rotating shaft, drives the carrier
+from a stationary electrical source.</li>
+<li><strong>Carrier:</strong> supports M1’s driven shaft, M2’s rotating
+case, M2 converter, capacitor, and load.</li>
+<li><strong>M2:</strong> rotating case and windings, fixed rotor shaft,
+converts carrier mechanical power into onboard electrical power.</li>
+<li><strong>Fixed housing:</strong> reacts the M2 rotor torque at zero
+laboratory shaft speed.</li>
+<li><strong>Rotating DC link:</strong> supplies an onboard resistor in
+the C1 model.</li>
+</ul>
+<p>M2’s fixed shaft may carry nonzero torque at zero laboratory power.
+The rotating case is still a mechanical power port. When M2 generates,
+its case torque brakes the carrier. M1 or stored kinetic energy must
+supply that demand.</p>
+<h2 id="what-the-current-application-provides">3. What the current
+application provides</h2>
+<p>The Windows application exposes assigned speed, stationary source
+voltage, rotating bus voltage, load resistance, capacitance, and ambient
+temperature. Mosaic UI controls select compensation policies, fault
+experiments, and scientific trace sets. Plots show power, torque, speed,
+voltage, current, fundamental reactive power, temperature, and balance
+residuals. Export preserves the exact run configuration and traces in a
+fresh hash-bound directory.</p>
+<p>The application is a bounded synchronous simulator, not real-time
+firmware. It has no hardware or network-control path. Current, voltage,
+speed, bus, temperature, and sensor-validity limits stop future
+prediction, but those screens are not hardware ratings or independent
+protection.</p>
+<h2 id="baseline-result">4. Baseline result</h2>
+<p>The assigned reference case runs at 100 rad/s. The load steps from 24
+W to 48 W. With filtered M2 reaction-torque feedforward plus M1 speed
+feedback:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th style="text-align: right;">C1 result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maximum carrier-speed deviation</td>
+<td style="text-align: right;">0.02879 rad/s</td>
+</tr>
+<tr>
+<td>Stationary-source energy, 2 s</td>
+<td style="text-align: right;">127.782 J</td>
+</tr>
+<tr>
+<td>Rotating-load energy, 2 s</td>
+<td style="text-align: right;">86.398 J</td>
+</tr>
+<tr>
+<td>Minimum rotating-bus voltage</td>
+<td style="text-align: right;">23.97785 V</td>
+</tr>
+<tr>
+<td>Maximum integrated energy residual</td>
+<td style="text-align: right;">1.18e-08 J</td>
+</tr>
+<tr>
+<td>Final load operating point</td>
+<td style="text-align: right;">48.000 W at 24.000 V and 2.000 A</td>
+</tr>
+<tr>
+<td>M2 electromagnetic braking magnitude</td>
+<td style="text-align: right;">0.54800 N m</td>
+</tr>
+</tbody>
+</table>
+<p>These values verify one software configuration. They are not
+component ratings, uncertainty bounds, or measured hardware
+performance.</p>
+<h2 id="what-the-control-comparison-shows">5. What the control
+comparison shows</h2>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 40%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr>
+<th>M1 policy</th>
+<th style="text-align: right;">Maximum speed error (rad/s)</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixed torque</td>
+<td style="text-align: right;">19.67918</td>
+<td>Stored rotation supplies part of the load; service degrades.</td>
+</tr>
+<tr>
+<td>Speed feedback</td>
+<td style="text-align: right;">0.38119</td>
+<td>Feedback restores speed but reacts after error.</td>
+</tr>
+<tr>
+<td>Torque feedforward</td>
+<td style="text-align: right;">0.03222</td>
+<td>Filtered fixed-shaft reaction torque anticipates load.</td>
+</tr>
+<tr>
+<td>Feedforward plus feedback</td>
+<td style="text-align: right;">0.02879</td>
+<td>Best result in the assigned C1 comparison.</td>
+</tr>
+</tbody>
+</table>
+<p>The comparison does not show that one policy is generally optimal. It
+shows that a causal fixed-shaft torque observation can improve the
+assigned model without assuming direct access to the onboard load
+signal.</p>
+<p>Reducing the capacitor from 50 mF to 5 mF increases bus disturbance.
+Restricting the source to 12 V produces 53.853 rad/s maximum speed error
+and degrades delivered service. Isolating the stationary source gives
+exactly zero source energy and runs the load from initial stored energy.
+None of these cases permits energy to appear without a declared source
+or store.</p>
+<h2 id="evidence-and-accounting-rules">6. Evidence and accounting
+rules</h2>
+<figure>
+<img src="../assets/emrt-energy-ledger.png"
+alt="Declared power and energy paths." />
+<figcaption aria-hidden="true">Declared power and energy
+paths.</figcaption>
+</figure>
+<p>The following rules are mandatory for interpreting any EMRT
+result:</p>
+<ol type="1">
+<li>calculate electrical and mechanical terminal power
+independently;</li>
+<li>retain equal-and-opposite M2 reaction torque;</li>
+<li>account for kinetic, magnetic, and capacitor storage;</li>
+<li>declare copper, iron, converter, bearing, windage, dump, and thermal
+ports;</li>
+<li>compare controllers under matched service and storage
+conditions;</li>
+<li>distinguish assigned, measured, identified, and calibrated
+parameters;</li>
+<li>treat a small numerical residual as accounting evidence, not
+hardware validation; and</li>
+<li>retain the exact configuration and source binding for each
+result.</li>
+</ol>
+<h2 id="communication-options">7. Communication options</h2>
+<p>The mechanical downlink modulates M1 torque and observes M2 terminal
+<span class="math inline"><em>q</em></span> voltage on the carrier. The
+uplink modulates onboard conductance and observes stationary source
+current. One deterministic 192-bit frame at 10 bit/s was recovered in
+each direction under assigned Gaussian observation noise. Zero errors in
+one short simulation is not a characterized channel error rate.</p>
+<p>The separate optical concept uses complementary detector sums for
+data and normalized differences for track phase. Under assigned 20/30
+kHz carriers, 80 kHz detector bandwidth, and 320 ksample/s sampling, it
+recovers eight bits with approximately 0.000140 rad RMS track-angle
+error. The angle is modulo one track, not an absolute revolution
+identity. Data-off and dropout controls produce erasures. Ten percent
+detector-gain mismatch raises the RMS angle error.</p>
+<p>Neither channel supplies authentication, clock-acquisition proof,
+permission to actuate machinery, or a hardware data-rate result.</p>
+<h2 id="what-must-precede-a-prototype">8. What must precede a
+prototype</h2>
+<ul>
+<li>Select actual machines, converters, sensors, bearings, support
+geometry, and a low-power dummy load.</li>
+<li>Measure resistance, inductance, magnet flux, inertia, losses, sensor
+delay, sensor noise, and thermal response.</li>
+<li>Establish phase and line conventions, ratings, precharge, fusing,
+grounding, insulation, guarding, containment, overspeed protection,
+overcurrent protection, thermal protection, watchdog behavior, and a
+regenerative sink or rated dissipation path.</li>
+<li>Close electrical, torque, speed, storage, loss, and thermal ledgers
+with calibrated instruments.</li>
+<li>Compare policies from matched initial and terminal storage while
+delivering identical service.</li>
+<li>Compare against slip rings, inductive rotary transfer, and relevant
+existing machines before claiming an advantage.</li>
+</ul>
+<p>The near-term research target is a guarded, low-power resistor-load
+demonstrator with independent energy accounting. The present software is
+a basis for designing that experiment, not permission to operate a
+rig.</p>
+<h2 id="corpus-position">9. Corpus position</h2>
+<ul>
+<li><em>Direct-Coupled Dynamic Torque Reactor</em> is a broader
+governed-energy framework; it does not specify or validate EMRT.</li>
+<li><em>The Ableman Wheel</em> supplies an adjacent example of narrow
+experimental jurisdiction and falsifiability; it is a separate apparatus
+and work identity.</li>
+<li><em>Reasoning by Way of Receipts</em> helps keep successful
+computation bound to its configuration and claim ceiling.</li>
+<li><em>Effect Sovereignty</em> helps distinguish observation from
+permission to produce physical effects.</li>
+</ul>
+<p>These are contextual bridges only. They do not establish derivation,
+endorsement, identity, novelty, or implementation authority.</p>
+<h2 id="review-decision">10. Review decision</h2>
+<p>The work is published as a simulation paper and experimental plan. It
+is not ready to be represented as validated electromechanical hardware.
+The technical brief and schematics are separately citable companions to
+the academic manuscript.</p>
+<h2 id="references">References</h2>
+<p>[1] MathWorks. <a
+href="https://www.mathworks.com/help/simscape-electrical/ref/pmsm.html"><em>PMSM
+documentation</em></a>.</p>
+<p>[2] Modelica Association. <a
+href="https://doc.modelica.org/Modelica%203.2.3/Resources/helpWSM/Modelica/Modelica.Electrical.Machines.Interfaces.PartialBasicMachine.html"><em>PartialBasicMachine
+interface</em></a>.</p>
+<p>[3] National Bureau of Standards. <a
+href="https://nvlpubs.nist.gov/nistpubs/Legacy/hb/nbshandbook100.pdf"><em>Copper
+Wire Tables</em></a>. Handbook 100.</p>
+<p>[4] Texas Instruments. <a
+href="https://www.ti.com/lit/an/spracl1b/spracl1b.pdf"><em>Quick
+Response Control of PMSM Using Fast Current Loop</em></a>. SPRACL1B,
+2020.</p>
+<p>[5] Fraunhofer IPMS. <a
+href="https://www.ipms.fraunhofer.de/en/Components-and-Systems/Components-and-Systems-Data-Communication/Li-Fi-Data-Communication/Li-Fi-Ligion.html"><em>Li-Fi
+Ligion</em></a>.</p>
+<p>[A1] Adam Ableman. <em>Direct-Coupled Dynamic Torque Reactor</em>.
+Exact source head SHA-256
+<code>1A88545BA054458260F82862F7BB9D658000C1326CDF8CA63216A2E4FBCA8B91</code>.</p>
+<p>[A2] Adam Ableman. <em>The Ableman Wheel</em>. Exact source head
+SHA-256
+<code>D011E7E025951AF869FDDBE768950719D0F15FCF6CFCBF9830131A9E1BFB2343</code>.</p>
+<h2 id="research-provenance-and-artifact-statement">Research,
+provenance, and artifact statement</h2>
+<p>This brief is an AI-assisted conversion of sealed local evidence,
+authorized by the author for publication after review. No external
+research, hardware run, calibration, safety review, corpus identity
+merger, or implementation authorization occurred during conversion.</p>
+<hr />
+<p>Corpus source and companion formats:<br />
+<a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a><br />
+DOI: <a
+href="https://doi.org/10.5281/zenodo.23933289">https://doi.org/10.5281/zenodo.23933289</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23933289">10.5281/zenodo.23933289</a></p>

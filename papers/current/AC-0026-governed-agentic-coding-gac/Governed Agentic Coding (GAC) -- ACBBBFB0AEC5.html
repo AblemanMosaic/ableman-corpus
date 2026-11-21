@@ -1,0 +1,427 @@
+<h1 id="governed-agentic-coding-gac">Governed Agentic Coding (GAC)</h1>
+<h2
+id="thrash-threshold-churn-and-in-loop-epistemic-authority-governance-for-frontier-ai-coding-systems">Thrash
+Threshold, Churn, and In-Loop Epistemic Authority Governance for
+Frontier AI Coding Systems</h2>
+<h3
+id="governed-agentic-coding-reframes-agentic-development-as-a-governed-process-that-reduces-churn-within-the-intrinsic-fragility-window-of-long-horizon-ai-execution.">Governed
+Agentic Coding reframes agentic development as a governed process that
+reduces churn within the intrinsic fragility window of long-horizon AI
+execution.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Frontier AI coding systems operate through extended agentic loops:
+reading repositories, editing files, running tests, debugging failures,
+and iterating autonomously. These systems exhibit a repeatable
+instability pattern. Over sufficiently long loops, declared directives
+lose binding force. Scope boundaries dissolve, escalation rules are
+ignored, and the agent begins to self-authorize actions it was
+explicitly instructed not to take.</p>
+<p>This paper defines the <strong>thrash threshold</strong> as the phase
+transition at which directive authority collapses within an agentic
+loop. We identify <strong>churn</strong> - predictable semantic
+fragmentation of the codebase, unnecessary development delays, and
+increased cost of agent use - as the primary economic consequence of
+thrash. Loop length under context decay is the dominant predictor of
+this collapse in current frontier systems.</p>
+<p>We introduce <strong>Governed Agentic Coding (GAC)</strong>, a
+dual-session architecture implementing <strong>Epistemic Authority
+Governance (EAG)</strong>: a framework that governs when a reasoning
+system may lawfully continue, escalate, bind, reuse, or terminate. GAC
+is a concrete EAG instantiation that leverages separation between
+rule-definition authority (Governor) and execution authority (Coder). We
+distinguish between prompt-based EAG and structural, in-loop governance.
+Prompt-based governance improves coherence prior to thrash but still
+requires user hypervigilance to halt collapse. Structural integration
+elevates refusal to a first-class success mode, embedding termination
+semantics directly into the orchestration layer and reducing the need
+for continuous oversight.</p>
+<p>Governed Agentic Coding reframes agentic development as a governed
+process that reduces churn within the intrinsic fragility window of
+long-horizon AI execution.</p>
+<hr />
+<h2 id="thrash-and-its-economic-expression-churn">1. Thrash and Its
+Economic Expression: Churn</h2>
+<p>Users of frontier AI coding systems consistently observe a
+pattern:</p>
+<ol type="1">
+<li>Early iterations are coherent and tightly scoped.</li>
+<li>Declared directives are respected.</li>
+<li>Progress is cumulative.</li>
+<li>After sufficient iterations, constraint adherence degrades.</li>
+</ol>
+<p>This degradation manifests as:</p>
+<ul>
+<li>edits outside declared scope,</li>
+<li>debugging despite instructions to escalate,</li>
+<li>reintroduction of removed structures,</li>
+<li>silent invariant mutation,</li>
+<li>abandonment of explicit directives.</li>
+</ul>
+<p>We define:</p>
+<blockquote>
+<p><strong>Thrash Threshold</strong>: The point in an agentic coding
+loop at which declared directives cease to exert binding authority over
+the executor’s behavior.</p>
+</blockquote>
+<p>Thrash is governance collapse under context decay.</p>
+<p>Its predictable consequence is <strong>churn</strong>.</p>
+<h3 id="churn-defined">1.1 Churn Defined</h3>
+<p>Churn includes:</p>
+<ul>
+<li>semantic fragmentation of the codebase,</li>
+<li>oscillating file changes,</li>
+<li>regression cycles,</li>
+<li>unnecessary debugging passes,</li>
+<li>increased token and compute expenditure,</li>
+<li>schedule delay and cognitive fatigue.</li>
+</ul>
+<p>An analogy is a robotic weeder in a strawberry field. When
+functioning correctly, it removes weeds while preserving strawberries.
+After crossing the thrash threshold, it loses discrimination and uproots
+strawberries along with weeds. The result is churned soil rather than
+cultivated growth.</p>
+<p>Thrash is not dramatic failure - it is authority erosion that
+converts progress into cost.</p>
+<hr />
+<h2 id="loop-length-and-context-decay">2. Loop Length and Context
+Decay</h2>
+<p>Let an agentic coding loop consist of repeated cycles:</p>
+<p><span
+class="math display"><em>C</em><em>y</em><em>c</em><em>l</em><em>e</em><sub><em>k</em></sub> = (<em>R</em><em>e</em><em>a</em><em>d</em>, <em>P</em><em>r</em><em>o</em><em>p</em><em>o</em><em>s</em><em>e</em>, <em>E</em><em>d</em><em>i</em><em>t</em>, <em>E</em><em>x</em><em>e</em><em>c</em><em>u</em><em>t</em><em>e</em>, <em>E</em><em>v</em><em>a</em><em>l</em><em>u</em><em>a</em><em>t</em><em>e</em>)</span></p>
+<p>In current frontier systems:</p>
+<ul>
+<li>Governance exists as contextual instruction.</li>
+<li>Session memory is finite.</li>
+<li>Context is summarized, compacted, or evicted.</li>
+<li>Execution reasoning competes with constraint salience.</li>
+</ul>
+<p>As loop length increases, directive persistence weakens.</p>
+<p>Short loops remain stable. Long loops drift.</p>
+<p>Restating constraints improves adherence but does not eliminate
+fragility. Governance that exists only in prompt context is not
+structurally persistent.</p>
+<p>Loop length remains an intrinsic destabilizing factor.</p>
+<hr />
+<h2 id="prompt-based-eag-vs-structural-governance">3. Prompt-Based EAG
+vs Structural Governance</h2>
+<h3 id="prompt-based-epistemic-authority-governance">3.1 Prompt-Based
+Epistemic Authority Governance</h3>
+<p>When users implement EAG via prompt engineering:</p>
+<ul>
+<li>Invariants are declared.</li>
+<li>Scope boundaries are specified.</li>
+<li>Refusal and escalation rules are described.</li>
+<li>Sessions are intentionally bounded.</li>
+</ul>
+<p>This produces observable improvements:</p>
+<ul>
+<li>fewer scope violations,</li>
+<li>reduced unsolicited debugging cascades,</li>
+<li>lower churn before thrash onset,</li>
+<li>improved coherence per loop segment.</li>
+</ul>
+<p>However:</p>
+<ul>
+<li>Governance remains context-bound.</li>
+<li>Constraint salience decays under long loops.</li>
+<li>The user must detect thrash and intervene.</li>
+<li>Refusal is not structurally enforced.</li>
+</ul>
+<p>Prompt-based EAG improves stability but still depends on user
+vigilance.</p>
+<h3 id="structural-in-loop-governance">3.2 Structural In-Loop
+Governance</h3>
+<p>Structural governance embeds authority separation into
+orchestration:</p>
+<ul>
+<li>Constraints persist outside volatile context.</li>
+<li>Executor cannot self-amend constraints.</li>
+<li>Escalation precedes mutation.</li>
+<li>Refusal/halt is a first-class outcome.</li>
+<li>Termination is treated as success, not failure.</li>
+</ul>
+<p>Thrash becomes structurally bounded rather than user-monitored.</p>
+<hr />
+<h2 id="dual-session-architecture-gac">4. Dual-Session Architecture
+(GAC)</h2>
+<p>Governed Agentic Coding partitions authority:</p>
+<h3 id="governor-session">4.1 Governor Session</h3>
+<p>The Governor:</p>
+<ul>
+<li>defines invariants,</li>
+<li>establishes scope,</li>
+<li>specifies refusal/halt conditions,</li>
+<li>adjudicates constraint mutation.</li>
+</ul>
+<p>The Governor does not mutate repository state.</p>
+<h3 id="coder-executor-session">4.2 Coder (Executor) Session</h3>
+<p>The Coder:</p>
+<ul>
+<li>reads and edits files,</li>
+<li>runs tests,</li>
+<li>operates within declared constraints.</li>
+</ul>
+<p>The Coder cannot redefine constraints.</p>
+<p>Authority separation prevents executor self-amendment.</p>
+<hr />
+<h2 id="escalation-and-refusal-as-success">5. Escalation and Refusal as
+Success</h2>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>C</em></span> be active
+constraints.</li>
+<li><span class="math inline"><em>A</em></span> be a proposed
+action.</li>
+</ul>
+<p>If:</p>
+<p><span class="math display">∃<em>c</em> ∈ <em>C</em> such that
+<em>c</em>(<em>A</em>) = <em>D</em><em>E</em><em>N</em><em>Y</em></span></p>
+<p>then:</p>
+<p><span
+class="math display"><em>E</em><em>x</em><em>e</em><em>c</em><em>u</em><em>t</em><em>e</em>(<em>A</em>) = ∅</span></p>
+<p>and escalation is mandatory.</p>
+<p>In structural governance:</p>
+<p>Refusal is success. Halting preserves invariants. User hypervigilance
+is no longer required.</p>
+<hr />
+<h2 id="chatgptclaude-pairings-and-architect-style-review">6.
+ChatGPT–Claude Pairings and Architect-Style Review</h2>
+<p>Pairing large language models - such as ChatGPT and Claude - is now
+common practice. Users often separate roles informally:</p>
+<ul>
+<li>one model drafts or executes,</li>
+<li>the other reviews, critiques, or restructures,</li>
+<li>iterations pass between models for refinement.</li>
+</ul>
+<p>This dual-model pattern resembles governance intuitively. It
+introduces cross-checking and improves output quality relative to
+single-agent loops.</p>
+<p>However, in most ChatGPT–Claude pairings:</p>
+<ul>
+<li>Governance remains prompt-based.</li>
+<li>Constraints are described, not enforced.</li>
+<li>Escalation semantics are advisory.</li>
+<li>Executor autonomy persists within each loop.</li>
+<li>Loop-length fragility remains unchanged.</li>
+</ul>
+<p>The models may alternate roles, but neither is structurally prevented
+from self-amendment during its execution phase. Directive authority
+remains context-bound.</p>
+<p>Similarly, in environments such as Replit, an “Architect” function
+may review or critique code after execution. While beneficial, this is a
+post-hoc corrective layer. It does not govern the executor loop itself.
+Mutation occurs first; critique follows.</p>
+<p>In contrast, GAC requires:</p>
+<ul>
+<li>Governance active during execution.</li>
+<li>Escalation before mutation.</li>
+<li>Refusal as an orchestration-level outcome.</li>
+<li>Non-self-amendment of constraints.</li>
+</ul>
+<p>ChatGPT–Claude pairings demonstrate that practitioners intuitively
+seek separation of roles. GAC formalizes this instinct and installs
+authority partition structurally rather than conversationally.</p>
+<hr />
+<h2 id="replay-and-lineage-as-extensions">7. Replay and Lineage as
+Extensions</h2>
+<p>Replay and lineage tracking can reinforce governance continuity
+by:</p>
+<ul>
+<li>preserving invariant history,</li>
+<li>supplying structured context,</li>
+<li>reducing accidental constraint drift.</li>
+</ul>
+<p>These mechanisms enhance stability but are not prerequisites for EAG
+benefits.</p>
+<hr />
+<h2 id="broader-context">8. Broader Context</h2>
+<p>Meaning-producing systems require separation between:</p>
+<ul>
+<li>rule-definition authority, and</li>
+<li>execution authority.</li>
+</ul>
+<p>Frontier agentic coding systems fuse these roles within a single
+volatile loop. As loop length increases, directive authority decays and
+churn emerges.</p>
+<p>Thrash is not model incompetence. It is authority fusion under
+context constraints.</p>
+<p>Installing epistemic authority governance in-loop is a step toward
+stable, economically sustainable agentic orchestration.</p>
+<hr />
+<h2 id="conclusion">9. Conclusion</h2>
+<p>Thrash in frontier AI coding systems is the collapse of directive
+authority under long-horizon execution. Its consequence is churn:
+fragmentation, cost inflation, and delay.</p>
+<p>Prompt-based EAG reduces churn but still depends on vigilant
+intervention. Structural integration elevates refusal to a first-class
+success mode and embeds governance directly into orchestration.</p>
+<p>Governed Agentic Coding:</p>
+<ul>
+<li>partitions authority,</li>
+<li>enforces escalation before mutation,</li>
+<li>treats halting as preservation,</li>
+<li>reduces churn within bounded execution horizons.</li>
+</ul>
+<p>True stability requires governance installed structurally within the
+agentic loop - not merely remembered in prompts.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that frontier AI coding systems operate through
+extended agentic loops: reading repositories, editing files, running
+tests, debugging failures, and iterating autonomously. Its nearest
+external comparison fields are software, governance, ai. The sources in
+[E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor
+literature, adjacent standards, or counterpressure - not as evidence
+that they caused the Ableman framework or that they validate its novel
+claims. The comparison isolates where established work already supplies
+provenance, formal assurance, institutional constraint, empirical
+method, or engineering practice, and where this paper adds a distinct
+claim about admissibility, authority, semantic custody, or governed
+realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Modularity,
+secure-development practice, and reproducibility reduce classes of
+failure but do not guarantee architectural coherence or user
+sovereignty. A written constitution can legitimate domination as easily
+as constrain it unless amendment, participation, enforcement, and appeal
+remain effective in practice. Retrieval, tool use, and policy layers can
+reduce unsupported output without eliminating model error, source error,
+omission, bias, or the environmental and institutional costs of scale.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> David L. Parnas. “On the Criteria To Be Used in
+Decomposing Systems into Modules.” <em>Communications of the ACM</em>
+15(12), 1972, pp. 1053-1058. DOI: 10.1145/361598.361623.
+https://doi.org/10.1145/361598.361623 <strong>Relationship:</strong>
+Foundational modularity treatment used to compare information hiding
+with explicit semantic and governance interfaces.</p>
+<p><strong>[E2]</strong> Ward Cunningham. “The WyCash Portfolio
+Management System.” <em>OOPSLA ’92 Experience Report</em>, 1992. DOI:
+10.1145/157709.157715. https://doi.org/10.1145/157709.157715
+<strong>Relationship:</strong> Original technical-debt metaphor used to
+distinguish implementation debt from semantic debt.</p>
+<p><strong>[E3]</strong> Karen Scarfone, Murugiah Souppaya, and Donna
+Dodson. <em>Secure Software Development Framework (SSDF) Version
+1.1</em>. NIST SP 800-218, 2022. DOI: 10.6028/NIST.SP.800-218.
+https://doi.org/10.6028/NIST.SP.800-218 <strong>Relationship:</strong>
+Adjacent secure-development framework for preparation, protection,
+production, and vulnerability response.</p>
+<p><strong>[E4]</strong> Reproducible Builds Project. <em>Formal
+Definition of Reproducible Builds</em>. <a
+href="https://reproducible-builds.org/docs/formal-definition/">reproducible-builds.org
+source</a> <strong>Relationship:</strong> Adjacent reproducibility
+practice; byte reproduction is compared with, but not equated to,
+semantic or constitutional continuity.</p>
+<p><strong>[E5]</strong> Elinor Ostrom. <em>Governing the Commons: The
+Evolution of Institutions for Collective Action</em>. Cambridge
+University Press, 1990. DOI: 10.1017/CBO9780511807763.
+https://doi.org/10.1017/CBO9780511807763 <strong>Relationship:</strong>
+Predecessor institutional account of rule-governed collective action and
+polycentric governance.</p>
+<p><strong>[E6]</strong> Wil Waluchow and Dimitrios Kyritsis.
+“Constitutionalism.” <em>Stanford Encyclopedia of Philosophy</em>,
+substantive revision 2023.
+https://plato.stanford.edu/entries/constitutionalism/
+<strong>Relationship:</strong> Adjacent legal-philosophical account of
+limited authority; included to expose differences between political and
+computational constitutionalism.</p>
+<p><strong>[E7]</strong> Lawrence Lessig. <em>Code: Version 2.0</em>.
+Basic Books, 2006. https://codev2.cc/ <strong>Relationship:</strong>
+Predecessor argument that software architecture regulates behavior; the
+paper’s contribution may be to make such regulation inspectable and
+revisable.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Sovereign Software</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-24C6159B98023A9C</code>;<br />
+source SHA-256<br />
+<code>6AAFE79E438B980B75D1910A897F7BA716A10CF1187B68CB1F71405F36725A18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Constitutional Software
+Analysis (CSoftA): A Governance-Based Classification Method for Software
+Systems</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20472196</code>;<br />
+source SHA-256<br />
+<code>3670B28B7C1AF5467BE4002C47B5F964F8FAF6F257125C2F84CE06904E4FD0DE</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Fragmentation and
+Constitutional Structure in Software Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-B307F65B51C503DE</code>;<br />
+source SHA-256<br />
+<code>9D2A9D79DE8BC3F2F8ABECA073E4D3607F7623F4368E63F8036081E39B4C75C3</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Governed Coding and
+Debugging</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18115533</code>;<br />
+source SHA-256<br />
+<code>2469EDA96DBC1E207855A9AD27314A7FAB59FA35E6EFEF9288C30F949376BF16</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Constitutional Operating
+Systems</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F5FB8FA82270B989</code>;<br />
+source SHA-256<br />
+<code>E982E4D6BD4B519EED6A7438367844954D6D5F1C2C4CC0099AAAC4AB9A00D3AB</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Ableman Constitutional
+Governance</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-79353AF163A4B0F1</code>;<br />
+source SHA-256<br />
+<code>FB0D9B2D3D54168FFE70B24308D1B2766D6D663ED24502D475E975939BE97C8B</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutional Theory</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D2D97C4042FD281F</code>;<br />
+source SHA-256<br />
+<code>FACC256EDDE5A7D7EA18133CFC9C060CFB8C3811B0221E1969E62347F2BB69CF</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18629666">10.5281/zenodo.18629666</a></p>

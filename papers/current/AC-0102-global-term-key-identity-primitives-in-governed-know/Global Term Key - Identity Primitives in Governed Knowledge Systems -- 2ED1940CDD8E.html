@@ -1,0 +1,1245 @@
+<h1
+id="global-term-key-identity-primitives-in-governed-knowledge-systems">Global
+Term Key: Identity Primitives in Governed Knowledge Systems</h1>
+<h2
+id="disambiguated-semantic-binding-as-a-governed-lexical-interface">Disambiguated
+Semantic Binding as a Governed Lexical Interface</h2>
+<h3
+id="knowledge-systems-often-use-a-surface-word-embedding-neighborhood-graph-node-uri-or-schema-type-as-though-it-were-already-a-stable-semantic-identity.">Knowledge
+systems often use a surface word, embedding neighborhood, graph node,
+URI, or schema type as though it were already a stable semantic
+identity.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Knowledge systems often use a surface word, embedding neighborhood,
+graph node, URI, or schema type as though it were already a stable
+semantic identity. These devices are valuable, but none alone decides
+whether two uses carry the same binding, whether one term names several
+bindings, or whether a binding may be used for a consequential claim.
+When similarity, co-occurrence, or shared spelling is silently promoted
+to identity, concept drift, hub gravity, semantic smearing, and
+polysemy-driven conflation follow.</p>
+<p>This paper develops the <strong>Global Term Key (GTK)</strong> as a
+governed lexical interface around a disambiguated semantic binding. Its
+original three-part insight remains: a GTK exposes (1) the active
+binding identity, (2) the aliases admitted for that binding, and (3) the
+competing bindings reachable from the same surface forms. Corpus
+integration sharpens the architecture. The coordinate that locates a
+binding belongs to the Semantic Coordinate Identity Layer at
+Representation-Pointer Zoom 0 (CSIL/RPZ0). GTK lives at RPZ1: it
+supplies the governed bound-term, named renderings, aliases,
+inflections, and competing-binding fan through which that coordinate
+becomes humanly and computationally navigable. A disambiguation context
+<span class="math inline"><em>D</em></span> selects among candidates
+without converting probability or convenience into semantic
+authority.</p>
+<p>The invariant floor, definition, and admissible variation associated
+with a binding are therefore linked specification at RPZ2 and beyond,
+not all compressed into the key itself. Likewise, adjacency is not
+universally established by removing one alleged invariant. It is a
+typed, lens-relative relation that must state which features, ontology,
+metric, registry, authority, and evidence make two bindings neighbors.
+Content addressing preserves exact record identity under a declared
+schema; it does not prove that the record is semantically correct.</p>
+<p>GTK thereby becomes a bridge among lexical resolution, semantic
+coordinates, the Governed Meaning Base (GMB), semantic hashing, governed
+context formation, and machine-operable semantic languages. The proposal
+is architectural rather than empirical. It specifies a resolution
+contract, failure semantics, realization funnel, conformance questions,
+and counterevidence program. It does not claim that all concepts possess
+crisp necessary-and-sufficient invariants, that automated disambiguation
+is infallible, or that this paper establishes novelty relative to
+current lexical and knowledge-representation research.</p>
+<h2 id="the-identity-problem">1. The Identity Problem</h2>
+<h3 id="similarity-is-not-identity">1.1 Similarity is not identity</h3>
+<p>A knowledge system may place two terms close together because they
+share tokens, contexts, embeddings, citations, relations, or users.
+Proximity can be useful evidence. It is not by itself an identity
+decision.</p>
+<p>Three relations must remain distinct:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Relation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identity</td>
+<td>Two references are admitted as reaching the same governed binding
+under a named registry and version.</td>
+</tr>
+<tr>
+<td>Similarity</td>
+<td>Two distinct bindings share features, contexts, functions, or
+relations under a declared lens.</td>
+</tr>
+<tr>
+<td>Conflation</td>
+<td>A system treats distinct bindings as one without adequate warrant or
+an explicit equivalence decision.</td>
+</tr>
+</tbody>
+</table>
+<p>The distinction is constitutional because identity decisions affect
+what can be inherited. If a claim, constraint, permission, or evidence
+record attached to one binding silently transfers to a merely similar
+binding, the system launders semantic standing through proximity.</p>
+<h3 id="surface-form-primacy">1.2 Surface-form primacy</h3>
+<p>Words such as <code>bank</code>, <code>chair</code>,
+<code>consensus</code>, <code>art</code>,<br />
+and <code>game</code> can participate in several bindings. The question
+“what does this word mean?” is underspecified until the system knows the
+domain, use, context, registry, purpose, and candidate sense
+inventory.</p>
+<p>GTK replaces surface-form primacy with binding-oriented
+resolution:</p>
+<blockquote>
+<p>Which registered binding is being invoked, through which name, under
+which context and authority, with what uncertainty and alternatives?</p>
+</blockquote>
+<p>This does not make bindings eternally stable. It creates a place
+where stability, contest, uncertainty, and revision can be represented
+rather than hidden inside a token.</p>
+<h3 id="identity-layers">1.3 Identity layers</h3>
+<p>At least five identity questions recur:</p>
+<ol type="1">
+<li>Are these the same exact bytes?</li>
+<li>Are these the same record version?</li>
+<li>Are these references assigned the same registry coordinate?</li>
+<li>Are these two records declared semantically equivalent under a named
+lens?</li>
+<li>Do these artifacts concern the same broader concept or work despite
+remaining distinct versions or projections?</li>
+</ol>
+<p>A hash can answer the first question when the canonical bytes and
+algorithm are known. A registry may answer the third. Neither
+automatically answers the fourth or fifth. GTK must preserve these
+layers rather than collapse them into a single word called identity.</p>
+<h2 id="the-integrated-gtk-definition">2. The Integrated GTK
+Definition</h2>
+<h3 id="coordinate-name-intension-and-manifold">2.1 Coordinate, name,
+intension, and manifold</h3>
+<p>The current corpus-wide representation stack distinguishes:</p>
+<ul>
+<li><p><strong>Zoom:</strong> RPZ0<br />
+<strong>Function:</strong> Locate<br />
+<strong>Typical content:</strong> CSIL integer, glyph, URI, or integrity
+hash bound to a coordinate.</p></li>
+<li><p><strong>Zoom:</strong> RPZ1<br />
+<strong>Function:</strong> Name<br />
+<strong>Typical content:</strong> Bound-term, orthographic and phonetic
+forms, acronym, aliases, inflections, and competing-binding fan. GTK
+lives here.</p></li>
+<li><p><strong>Zoom:</strong> RPZ2<br />
+<strong>Function:</strong> Explain<br />
+<strong>Typical content:</strong> Intension, definition, criteria,
+invariant candidates, qualifications, and scope.</p></li>
+<li><p><strong>Zoom:</strong> RPZ3<br />
+<strong>Function:</strong> Relate<br />
+<strong>Typical content:</strong> Typed manifold of dependencies,
+adjacencies, conflicts, realizations, evidence, and provenance.</p></li>
+</ul>
+<p>The disambiguation component <span
+class="math inline"><em>D</em></span> is carried with a representation
+when a surface form does not select one coordinate by itself. In compact
+form:</p>
+<p><span
+class="math display">CSIL = RPZ0 + <em>D</em>,   GTK = RPZ1 + <em>D</em>.</span></p>
+<p>This is a functional distinction, not a claim that one database or
+implementation must use these exact field names.</p>
+<h3 id="the-original-three-part-gtk">2.2 The original three-part
+GTK</h3>
+<p>The source paper and its distinct local companion define a GTK
+through [GTK-SOURCE] [GTK-COMPANION]:</p>
+<ol type="1">
+<li><strong>Binding identity</strong>: the coordinate selected as
+active.</li>
+<li><strong>Alias set</strong>: other admitted names for that
+binding.</li>
+<li><strong>Competing binding set</strong>: other coordinates reachable
+from one or more of those surface forms.</li>
+</ol>
+<p>That structure remains the GTK’s minimum lexical view. The
+integration correction is that the binding identity is referenced by GTK
+rather than manufactured by its name record, while the invariant floor
+and full relational neighborhood remain linked semantic structures
+rather than being treated as mere strings inside the key.</p>
+<p>For registry version <span class="math inline"><em>v</em></span>, an
+operational GTK record can be represented as:</p>
+<p><span
+class="math display"><em>G</em><sub><em>v</em></sub>(<em>c</em>) = ⟨<em>c</em>, <em>N</em><sub><em>c</em></sub>, <em>A</em><sub><em>c</em></sub>, <em>P</em><sub><em>c</em></sub>, <em>L</em><sub><em>c</em></sub>, <em>γ</em><sub><em>c</em></sub>⟩,</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline"><em>c</em></span> is the registry
+coordinate;</li>
+<li><span class="math inline"><em>N</em><sub><em>c</em></sub></span> is
+the set of admitted named renderings, including orthographic, phonetic,
+and acronym forms;</li>
+<li><span class="math inline"><em>A</em><sub><em>c</em></sub></span> is
+the set of aliases asserted to reach the same coordinate under a
+declared equivalence regime;</li>
+<li><span class="math inline"><em>P</em><sub><em>c</em></sub></span> is
+the competing-binding fan for surfaces shared with other
+coordinates;</li>
+<li><span class="math inline"><em>L</em><sub><em>c</em></sub></span> is
+version and predecessor lineage; and</li>
+<li><span class="math inline"><em>γ</em><sub><em>c</em></sub></span>
+carries provenance, authority, standing, jurisdiction, and governance
+metadata.</li>
+</ul>
+<p>The record may link to RPZ2 definitions and RPZ3 relations. It should
+not pretend that naming, definition, graph topology, evidence, and
+governance are the same field.</p>
+<h3 id="a-bound-term-is-not-necessarily-one-word">2.3 A bound-term is
+not necessarily one word</h3>
+<p>A GTK can name a multiword concept, proper noun, acronym, symbolic
+expression, cross-lingual equivalence candidate, or other governed
+surface. Conversely, one written word can reach many GTKs. This
+many-to-many structure is the lexical lattice:</p>
+<pre class="text"><code>surface form -&gt; candidate coordinates
+coordinate -&gt; governed named renderings
+coordinate -&gt; admitted aliases
+surface form -&gt; competing coordinates
+coordinate -&gt; linked RPZ2 specifications
+coordinate -&gt; typed RPZ3 relations
+coordinate version -&gt; predecessor and successor lineage</code></pre>
+<p>Calling this structure a lattice is architectural shorthand unless
+the implemented ordering actually satisfies lattice laws. A realization
+should say whether it provides a mathematical lattice, a typed graph, a
+hypergraph, a registry plus indexes, or another structure.</p>
+<h2 id="resolution-is-a-governed-operation">3. Resolution is a Governed
+Operation</h2>
+<p>Let <span class="math inline"><em>s</em></span> be an observed
+surface, <span class="math inline"><em>k</em></span> a context bundle,
+<span class="math inline"><em>p</em></span> a declared purpose, and
+<span class="math inline"><em>R</em><sub><em>v</em></sub></span> a
+registry version. Candidate generation returns:</p>
+<p><span
+class="math display">Cand<sub><em>R</em><sub><em>v</em></sub></sub>(<em>s</em>) = {<em>c</em><sub>1</sub>, …, <em>c</em><sub><em>n</em></sub>}.</span></p>
+<p>A resolver may rank these candidates, but ranking is not admission.
+The governed resolution operation is:</p>
+<p><span class="math display">$$
+\mathrm{Resolve}(s,k,p,R_v)\rightarrow
+\begin{cases}
+\mathrm{BIND}(c,q,e),\\
+\mathrm{DEFER}(r),\\
+\mathrm{REFUSE}(r),\\
+\mathrm{GAP}(r),\\
+\mathrm{CONTESTED}(C,r),
+\end{cases}
+$$</span></p>
+<p>where <span class="math inline"><em>q</em></span> is a calibrated
+scope or confidence statement, <span
+class="math inline"><em>e</em></span> is the evidence and receipt
+binding, <span class="math inline"><em>r</em></span> is a reason, and
+<span class="math inline"><em>C</em></span> is an unresolved candidate
+set.</p>
+<p>These outcomes distinguish several cases that a forced classifier
+would collapse:</p>
+<ul>
+<li><code>BIND</code>: one coordinate is admitted for the named purpose
+and scope.</li>
+<li><code>DEFER</code>: evidence, authority, or context may become
+sufficient later.</li>
+<li><code>REFUSE</code>: the requested binding operation is
+inadmissible, unsafe, or outside authority.</li>
+<li><code>GAP</code>: the registry lacks an adequate candidate or
+required schema.</li>
+<li><code>CONTESTED</code>: multiple candidates or communities retain
+material standing.</li>
+</ul>
+<p>An exploratory search need not generate the same receipt as a binding
+used to authorize action. The effect surface determines the evidence and
+authority burden.</p>
+<h3 id="no-silent-invention">3.1 No silent invention</h3>
+<p>A resolver may propose a new candidate coordinate, alias, or
+relation. It must not silently create canonical standing merely because
+no existing entry fits. Proposed growth belongs in a candidate working
+registry with provenance and fresh identity until an authorized
+promotion decision occurs.</p>
+<h3 id="context-helps-context-does-not-self-authorize">3.2 Context
+helps; context does not self-authorize</h3>
+<p>Context can narrow candidate bindings. It can also be poisoned,
+incomplete, private, biased, or constructed under the wrong purpose. The
+governed-context work in the corpus therefore precedes binding effect:
+the system records which sources were admitted, transformed, omitted, or
+withheld before treating context as warrant.</p>
+<h2 id="lexical-specification-and-invariant-floors">4. Lexical
+Specification and Invariant Floors</h2>
+<h3 id="what-an-invariant-floor-can-mean">4.1 What an invariant floor
+can mean</h3>
+<p>The source paper attaches an invariant floor to each binding. The
+defensible integrated claim is narrower:</p>
+<blockquote>
+<p>A binding may carry a versioned specification of criteria whose
+violation is declared sufficient to refuse a proposed use or instance
+under a named domain, purpose, and ontology.</p>
+</blockquote>
+<p>This can be valuable without asserting that every natural-language
+concept has one timeless essence. Some bindings have crisp formal
+criteria. Others are prototypes, clusters, family-resemblance
+structures, contested social classifications, open-textured legal terms,
+or historically changing practices.</p>
+<p>Let <span
+class="math inline"><em>I</em><sub><em>v</em></sub>(<em>c</em>)</span>
+be a versioned set of declared criteria and <span
+class="math inline"><em>x</em></span> a proposed instance. A configured
+admission test may use:</p>
+<p><span
+class="math display">Admit<sub><em>v</em>, <em>p</em></sub>(<em>x</em>, <em>c</em>) = 1  only
+if  ∀<em>i</em> ∈ <em>I</em><sub><em>v</em></sub>(<em>c</em>), Eval<sub><em>v</em>, <em>p</em></sub>(<em>x</em>, <em>i</em>) ∈ {SAT, QUALIFIED}.</span></p>
+<p>The equation describes one policy family. It does not prove that
+<span
+class="math inline"><em>I</em><sub><em>v</em></sub>(<em>c</em>)</span>
+is complete, universally accepted, or correctly measured.
+<code>UNKNOWN</code>,<br />
+<code>CONTESTED</code>,<br />
+and inapplicable criteria must remain visible rather than being
+converted to failure or success by convenience.</p>
+<h3 id="specification-is-not-the-key">4.2 Specification is not the
+key</h3>
+<p>The GTK names and resolves the binding. Its linked RPZ2 specification
+explains the criteria, definitions, and qualifications. Keeping these
+layers separate permits:</p>
+<ul>
+<li>several definitions or community views to reference one coordinate
+without silent equivalence;</li>
+<li>a successor definition to preserve coordinate lineage while changing
+its version;</li>
+<li>a contested binding to retain multiple scoped specifications;</li>
+<li>a machine code to stay short while its explanation remains thick;
+and</li>
+<li>the system to distinguish a name change from a semantic
+amendment.</li>
+</ul>
+<h3 id="correction-of-the-chair-and-bird-examples">4.3 Correction of the
+chair and bird examples</h3>
+<p>Examples such as chairs and birds are pedagogically useful but cannot
+establish universal invariant floors. Stools may still support seated
+bodies; floor chairs may not elevate the body in the expected way;
+penguins do not show that flight can simply be removed from a generic
+bird definition; bats do not become adjacent to birds merely because
+feathers are removed.</p>
+<p>The better use of ablation is diagnostic. Remove or alter a declared
+criterion, then ask which existing coordinates become plausible under
+the same ontology and lens. The result is a candidate adjacency or
+counterexample, not an automatic taxonomic fact.</p>
+<h2 id="adjacency-is-typed-and-lens-relative">5. Adjacency is Typed and
+Lens-Relative</h2>
+<p>The source proposal defines neighbors as GTKs whose invariant floors
+differ by one invariant. That is one possible Hamming-style
+configuration, not a universal law of semantic adjacency.</p>
+<p>For lens <span class="math inline"><em>ℓ</em></span>, registry
+version <span class="math inline"><em>v</em></span>, and relation type
+<span class="math inline"><em>t</em></span>, define:</p>
+<p><span
+class="math display">Adj<sub><em>v</em>, <em>ℓ</em>, <em>t</em></sub>(<em>c</em><sub><em>i</em></sub>, <em>c</em><sub><em>j</em></sub>)</span></p>
+<p>only when the relation contract states:</p>
+<ul>
+<li>the compared features or definitions;</li>
+<li>how missing, disputed, or weighted features are handled;</li>
+<li>the distance or structural rule;</li>
+<li>the direction and relation type;</li>
+<li>the authority and evidence for the edge;</li>
+<li>the applicable domain and time; and</li>
+<li>the edge’s standing and revision triggers.</li>
+</ul>
+<p>Possible relation types include <code>ALIAS_OF</code>,
+<code>COMPETES_FOR_SURFACE</code>, <code>BROADER_THAN</code>,<br />
+<code>NARROWER_THAN</code>, <code>FUNCTIONALLY_SIMILAR_TO</code>,
+<code>HISTORICAL_SUCCESSOR_OF</code>, <code>CONFLICTS_WITH</code>,<br />
+and<br />
+<code>ABLATION_CANDIDATE_OF</code>. They should not be collapsed into a
+generic neighbor edge.</p>
+<p>This correction connects GTK to Governed Semantic Cartography:
+navigation occurs over registered coordinates and typed paths, while GTK
+provides the bound-term surface used to name and disambiguate those
+coordinates.</p>
+<h2 id="content-addressing-and-semantic-hashing">6. Content Addressing
+and Semantic Hashing</h2>
+<p>If a canonical GTK record is serialized under schema <span
+class="math inline"><em>S</em><sub><em>v</em></sub></span> and
+canonicalization function <span
+class="math inline"><em>C</em><sub><em>v</em></sub></span>, a record
+hash may be:</p>
+<p><span
+class="math display"><em>h</em> = <em>H</em>(<em>S</em><sub><em>v</em></sub> ∥ <em>C</em><sub><em>v</em></sub>(<em>G</em><sub><em>v</em></sub>(<em>c</em>))).</span></p>
+<p>This commitment can establish that two parties possess the same
+canonical bytes under the declared scheme. It can detect record drift
+and bind a receipt to an exact version. It does not establish that:</p>
+<ul>
+<li>the coordinate denotes the correct concept;</li>
+<li>the alias set is complete or fair;</li>
+<li>competing bindings were not omitted;</li>
+<li>the invariant criteria are true;</li>
+<li>the registry authority is legitimate; or</li>
+<li>two different canonical records are semantically unequal in every
+respect.</li>
+</ul>
+<p>These limitations are the direct contribution of Semantic Hashing,
+Constitutional Semantic Hashing, and the Three Hash Rule to GTK [SH]
+[CSH] [THR]. Hash identity, constitutional identity, semantic
+equivalence, and evidentiary sufficiency are separate claims.</p>
+<h2 id="gtk-in-the-governed-meaning-base">7. GTK in the Governed Meaning
+Base</h2>
+<p>The current architecture name is <strong>Governed Meaning Base
+(GMB)</strong> in the author-confirmed lineage
+<code>CCF -&gt; CMB -&gt; GMB</code> [GMB-HISTORICAL-SOURCE]. Historical
+papers and titles using CCF or CMB remain valid source records, but new
+current-architecture synthesis uses GMB.</p>
+<p>GMB can host the coordinates, GTK records, definition versions, typed
+relations, evidence bindings, negative edges, disputes, and revision
+lineage required by the proposal. It does not make a GTK valid merely by
+storing it. Admission still requires declared authority, policy,
+evidence, schema, and predecessor state.</p>
+<p>The <strong>Constitutional Dictionary (CD)</strong> is best treated
+here as a candidate lexical profile or projection of GMB unless the
+author establishes differential obligations that justify independent
+system standing. A CD interface might expose:</p>
+<ul>
+<li>surface and alias lookup;</li>
+<li>candidate and competing bindings;</li>
+<li>selected coordinate and registry version;</li>
+<li>RPZ2 definitions and qualifications;</li>
+<li>RPZ3 typed relations;</li>
+<li>evidence, standing, authority, and lineage; and</li>
+<li>proposal, contest, refusal, and amendment operations.</li>
+</ul>
+<p>This compression is provisional. It does not merge CD and GMB
+identities or decide whether a future implementation should separate
+their services.</p>
+<h2 id="relationship-to-other-corpus-machinery">8. Relationship to Other
+Corpus Machinery</h2>
+<h3 id="meaning-as-binding">8.1 Meaning as Binding</h3>
+<p>Meaning as Binding supplies the relational thesis: a term becomes
+usable through a governed relation among symbol, target, context,
+authority, and consequence [MAB]. GTK is the lexical resolution profile
+of that broader binding relation, not a replacement for the theory.</p>
+<h3 id="semantic-legitimacy-before-context">8.2 Semantic Legitimacy
+Before Context</h3>
+<p>Semantic Legitimacy Before Context prevents a useful-looking context
+from laundering an unsupported binding [SLBC]. GTK supplies a coordinate
+and named candidate; legitimacy requires provenance, authority,
+evidence, jurisdiction, and a declared use.</p>
+<h3 id="governed-semantic-cartography">8.3 Governed Semantic
+Cartography</h3>
+<p>Cartography supplies coordinates, projections, typed traversal, and
+path governance [GSC]. GTK supplies RPZ1 names and competing-binding
+routes around those coordinates. An atlas without GTK may be addressable
+but lexically opaque; GTK without an atlas may resolve names but lack
+navigable relational structure.</p>
+<h3 id="governed-semantic-tokens">8.4 Governed Semantic Tokens</h3>
+<p>A governed semantic token controls when an observed signal may enter
+a semantic system and with what provenance [GST]. GTK controls which
+named binding that admitted signal is proposed to invoke. Token
+admission and binding resolution are adjacent gates, not identical
+operations.</p>
+<h3 id="gcnl-and-gcml">8.5 GCNL and GCML</h3>
+<p>Governed Controlled Natural Language can require explicit GTK or
+coordinate references where ordinary words remain ambiguous [GCNL].
+Governed Controlled Machine Language can lower those references into
+schema-valid machine forms [GCML]. Neither language should infer
+canonical identity merely from an identical spelling.</p>
+<h3 id="constitutional-binding-theory">8.6 Constitutional Binding
+Theory</h3>
+<p>Constitutional Binding Theory generalizes anchor resolution across
+semantic and operational systems [CBT]. GTK is a lexical specialization.
+The specialization should retain the general theory’s authority,
+context, evidence, refusal, and revision obligations without claiming
+that every binding problem is lexical.</p>
+<h3 id="csil-rpz-and-the-semantic-index">8.7 CSIL, RPZ, and the Semantic
+Index</h3>
+<p>CSIL answers where a registered concept is located. RPZ determines
+how much representation is loaded. GTK supplies the RPZ1 bound-term
+surface. The semantic index uses stable slugs and coordinates to
+retrieve them. These are complementary profiles of one semantic access
+architecture, not four competing definitions of the same object.</p>
+<h2 id="worked-resolution-example">9. Worked Resolution Example</h2>
+<p>Consider the surface form <code>consensus</code> in a document about
+governance and distributed systems.</p>
+<p>Candidate bindings might include:</p>
+<ul>
+<li><span class="math inline"><em>c</em><sub>1</sub></span>: agreement
+among participants;</li>
+<li><span class="math inline"><em>c</em><sub>2</sub></span>: a
+distributed-protocol decision property;</li>
+<li><span class="math inline"><em>c</em><sub>3</sub></span>: a political
+claim of broad social assent; and</li>
+<li><span class="math inline"><em>c</em><sub>4</sub></span>: an
+organizational decision procedure.</li>
+</ul>
+<p>The context contains words such as <code>quorum</code>,
+<code>fault</code>, and <code>replica</code>,<br />
+so a statistical resolver ranks <span
+class="math inline"><em>c</em><sub>2</sub></span> first. A GTK-aware
+pipeline still asks:</p>
+<ol type="1">
+<li>Which registry and version supplied the candidate set?</li>
+<li>Does the document use <code>consensus</code> technically,
+metaphorically, or both?</li>
+<li>Is the purpose retrieval, explanation, evidence, or
+authorization?</li>
+<li>What evidence supports <span
+class="math inline"><em>c</em><sub>2</sub></span> and what passages
+still support <span class="math inline"><em>c</em><sub>3</sub></span> or
+<span class="math inline"><em>c</em><sub>4</sub></span>?</li>
+<li>Would a wrong binding transfer institutional legitimacy to a
+technical quorum, or technical assurance to a political claim?</li>
+</ol>
+<p>For exploratory retrieval, the system may return all four with ranks.
+For a binding assertion in a formal specification, it may emit
+<code>BIND(c_2)</code> only for the exact clause and preserve a receipt.
+If the text deliberately trades on both technical and political
+meanings, the correct outcome may be</p>
+<p><code>CONTESTED({c_2,c_3})</code> or an explicit multi-binding
+annotation rather than forced disambiguation.</p>
+<p>This example shows why polysemy is topological but not harmless. The
+competing-binding fan makes alternatives visible; governance determines
+whether one may be selected for a particular effect.</p>
+<h2 id="the-realization-funnel">10. The Realization Funnel</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>GTK work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Possibility</td>
+<td>Explore alternative identity schemes, sense inventories, graph
+models, community ontologies, alias policies, harmful mergers,
+fragmentation, and open-world growth.</td>
+</tr>
+<tr>
+<td>Specification</td>
+<td>Define coordinate, GTK, rendering, alias, competing binding,
+definition, relation, lineage, authority, outcome, receipt, privacy, and
+revision contracts.</td>
+</tr>
+<tr>
+<td>CM1</td>
+<td>Enumerate admissible registry and resolver configurations, including
+expensive, fragmented, centralized, biased, privacy-invasive, and
+low-recall forms.</td>
+</tr>
+<tr>
+<td>CM2</td>
+<td>Prefer configurations with explicit uncertainty, plural views,
+false-merge resistance, recoverability, low authority concentration,
+inspectable provenance, and proportional cost.</td>
+</tr>
+<tr>
+<td>Instance Configuration</td>
+<td>Bind the exact registry version, schemas, languages, domains,
+candidate generators, models, thresholds, authorities, evidence sources,
+privacy policy, and effect surface.</td>
+</tr>
+<tr>
+<td>Implementation Realization</td>
+<td>Build registry storage, indexes, resolver, proposal and review
+interfaces, receipts, typed graph, lineage, access control, and export
+formats.</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Test exact replay, resolution, abstention, false merge and split,
+alias integrity, multilingual behavior, adversarial poisoning, fairness,
+privacy, drift, and recovery.</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Produce successor coordinates, names, aliases, definitions,
+relations, policies, models, and claims while retaining predecessor
+custody and disputes.</td>
+</tr>
+</tbody>
+</table>
+<p>The source paper reaches a substantial Specification in the
+corpus-wide realization funnel associated with Ableman’s Razor [RAZOR].
+It does not by itself establish an evidence-qualified Implementation
+Realization.</p>
+<h2 id="evidence-and-evaluation">11. Evidence and Evaluation</h2>
+<p>A GTK implementation should not be evaluated by lookup success alone.
+Useful dimensions include:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Candidate coverage</td>
+<td>Was the applicable binding present in the candidate set?</td>
+</tr>
+<tr>
+<td>Resolution accuracy</td>
+<td>Was the selected coordinate appropriate under the declared
+annotation and purpose?</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>Do confidence and abstention statements track observed error?</td>
+</tr>
+<tr>
+<td>False merge</td>
+<td>How often are distinct bindings collapsed?</td>
+</tr>
+<tr>
+<td>False split</td>
+<td>How often is one binding fragmented without warrant?</td>
+</tr>
+<tr>
+<td>Alias integrity</td>
+<td>Do aliases preserve scope, register, language, and community
+differences?</td>
+</tr>
+<tr>
+<td>Competing-set recall</td>
+<td>Are material alternative bindings visible?</td>
+</tr>
+<tr>
+<td>Lineage continuity</td>
+<td>Can prior states and amendment reasons be reconstructed?</td>
+</tr>
+<tr>
+<td>Adversarial robustness</td>
+<td>Can poisoned context, hub gravity, or alias injection force standing
+transfer?</td>
+</tr>
+<tr>
+<td>Contestability</td>
+<td>Can affected users inspect, challenge, fork, or refuse a
+binding?</td>
+</tr>
+<tr>
+<td>Privacy</td>
+<td>Does resolution avoid unnecessary disclosure of sensitive
+context?</td>
+</tr>
+<tr>
+<td>Portability</td>
+<td>Can a fresh environment reconstruct the claimed registry and results
+from exact artifacts?</td>
+</tr>
+</tbody>
+</table>
+<p>Any empirical claim must bind the exact corpus, registry, annotation
+protocol, language, domain, resolver, model, prompt, threshold, seeds,
+adjudicators, metrics, uncertainty, and failure set. This paper supplies
+no such completed package.</p>
+<h2 id="gtk-record-resolver-and-conformance-profile">GTK Record,
+Resolver, and Conformance Profile</h2>
+<p>Across the completed P1 corpus, this paper is best compressed as the
+<strong>engineering specification for GTK records, governed resolution,
+adjacency, hashing, and conformance</strong>, while <em>Global Term Key:
+Constitutional Lexical Identity Through Disambiguated Semantic
+Binding</em> remains the broader lexical-identity theory. This is a
+companion relationship, not an automatic logical-work or
+publication-identity merger.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Global Term Key:
+Constitutional Lexical Identity Through Disambiguated Semantic
+Binding</em><br />
+<strong>Supplies:</strong> The foundational lexical-identity,
+coordinate, binding, and disambiguation thesis.<br />
+<strong>Engineering-paper boundary:</strong> This paper specifies the
+implementable record and resolver surface.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Binding
+Theory: Governed Anchor Resolution as a Universal Pattern in Semantic
+Systems</em><br />
+<strong>Supplies:</strong> The general anchor-resolution pattern.<br />
+<strong>Engineering-paper boundary:</strong> GTK is the lexical
+specialization with registry and term-specific obligations.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional/Crystallized
+Meaning Base (CMB)</em><br />
+<strong>Supplies:</strong> The historical meaning-base paper in the
+current GMB lineage.<br />
+<strong>Engineering-paper boundary:</strong> Current GMB can host GTK
+records; storage does not settle their identity or standing.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governed Semantic
+Cartography</em><br />
+<strong>Supplies:</strong> Coordinates, projections, traversals, and
+atlas coherence.<br />
+<strong>Engineering-paper boundary:</strong> GSC consumes resolved
+coordinates; GTK does not determine every map or path.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Meaning as Binding</em><br />
+<strong>Supplies:</strong> The compact ontology of semantic relations
+under context and constraint.<br />
+<strong>Engineering-paper boundary:</strong> GTK addresses and
+disambiguates bindings; it does not exhaust their meaning.</p></li>
+</ul>
+<p>A GTK record should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+G= (&amp;coordinate, names, intension, extensions, jurisdictions, \\
+&amp;aliases, exclusions, adjacencies, resolver\_policy, \\
+&amp;evidence, standing, revision)
+\end{aligned}.
+$$</span></p>
+<p>The coordinate, preferred name, source label, lexical sense,
+definition, extension, concept identity, and rendered slug remain
+separate. A content hash can identify an exact record encoding but does
+not establish cross-version semantic identity. Resolution must return a
+typed result, ambiguity set, gap, or refusal rather than silently
+inventing a coordinate.</p>
+<p>Conformance tests should cover alias collision, polysemy, homography,
+multilingual names, compound terms, historical names, unresolved
+references, competing registries, jurisdiction shifts, version
+migration, and negative adjacency. Resolver accuracy, refusal
+calibration, explanation quality, and identity stability are independent
+measures.</p>
+<p>The universal GSM can type <code>REGISTERED_AS_GTK</code>,
+<code>HAS_PREFERRED_NAME</code>, <code>HAS_ALIAS</code>,<br />
+<code>EXCLUDES_SENSE</code>, <code>VALID_IN_JURISDICTION</code>,
+<code>ADJACENT_UNDER_LENS</code>, <code>RESOLVED_BY_POLICY</code>,<br />
+<code>AMBIGUOUS_WITH</code>, <code>REFUSED_AS_UNRESOLVED</code>,
+<code>MIGRATED_TO_GTK_VERSION</code>,<br />
+and<br />
+<code>HASH_IDENTIFIES_RECORD</code>. This preserves lexical identity
+without overloading the key.</p>
+<p>This integration establishes four editorial commitments: classify
+this work as the GTK engineering companion rather than a duplicate
+foundational paper; adopt the GTK-record envelope; require typed
+ambiguity/gap/refusal results; and adopt the multi-axis conformance
+program.</p>
+<h2 id="resolver-to-use-contract">Resolver-to-Use Contract</h2>
+<p>The fixed-seed comparison with the constitutional syscall
+architecture, <em>Who Has the Ball?</em>, Terminability, and the
+Water/MCIR projection shows that resolving a term is only the beginning
+of an operational use:</p>
+<p><span class="math display">$$
+\begin{aligned}
+U= (&amp;GTK, record\_version, resolver\_policy, result, consumer, \\
+&amp;purpose, jurisdiction, authority, effect, receipt, \\
+&amp;remainder)
+\end{aligned}.
+$$</span></p>
+<p>A syscall consumer needs exact capability, target, safety-profile,
+outcome, and recovery identities, but a resolved term does not grant the
+capability or authorize the effect. A custody interface needs exact work
+and subject identities, but the GTK is not the work head, custody
+record, or transfer receipt.</p>
+<p>Terminability makes jurisdiction and sense especially consequential:
+ending a process, deleting state, interrupting an episode, foreclosing a
+continuation, and ending a subject cannot share one unqualified key. GTK
+resolution can expose ambiguity and route the claim to the correct
+definition; it cannot decide moral standing or the ending
+disposition.</p>
+<p>Water’s flow terms require the opposite direction of discipline. A
+metaphor label such as source, channel, confluence, leak, gate, or sink
+should resolve to an exact MCIR/GSM object or remain explicitly
+pedagogical. Registering the metaphor in GTK does not make the mapping
+technically valid or causally explanatory.</p>
+<p>The universal GSM can type<br />
+<code>RESOLVES_GTK_FOR_USE</code>,
+<code>CONSUMES_RESOLUTION_UNDER_PURPOSE</code>,<br />
+<code>REQUIRES_SEPARATE_CAPABILITY_AUTHORITY</code>,
+<code>DISTINGUISHES_WORK_KEY_FROM_WORK_HEAD</code>,<br />
+<code>DISAMBIGUATES_ENDING_EVENT</code>,
+<code>MAPS_METAPHOR_TO_TYPED_OBJECT</code>,<br />
+and<br />
+<code>RECEIPTS_RESOLUTION_REMAINDER</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the resolver-to-use contract; require consumer, purpose, jurisdiction,
+and version at consequential use sites; keep lexical identity distinct
+from capability, custody, moral standing, and authority; and require
+technical metaphor mappings to resolve to typed objects or remain
+pedagogical.</p>
+<h2 id="lexical-identity-record-and-resolver-interface">Lexical Identity
+Record and Resolver Interface</h2>
+<p>Seven downstream uses apply this paper to hash commitments,
+consciousness discourse, the companion GTK theory, admissibility-gated
+retrieval, qualia mappings, and shared-experience bridges. They support
+a concrete lexical identity record and resolver interface. They do not
+yet settle whether this paper and <em>Global Term Key: Constitutional
+Lexical Identity Through Disambiguated Semantic Binding</em> are one
+version family, complementary papers, or partially overlapping
+restatements; that identity decision remains with the author.</p>
+<p><span class="math display">$$
+\begin{aligned}
+K^*= (&amp;surface, occurrence, namespace, term\_identity, sense, \\
+&amp;scope, jurisdiction, registry, version, candidates, \\
+&amp;resolution, bindings, standing, aliases, conflicts, \\
+&amp;provenance, expiry)
+\end{aligned}.
+$$</span></p>
+<p>The key identifies a governed lexical candidate under a registry and
+disambiguation context. It is not the full definition, the referent, the
+truth of a statement, or a permission to act. Same spelling can resolve
+to different identities; different spellings can alias one identity; one
+historical identity can split; and an apparent merge can retain
+unresolved remainder. Unknown and contested are valid resolver
+outcomes.</p>
+<p>Every consumer must bind registry generation and preserve original
+surface form, context, candidates, decision basis, and standing so
+re-resolution is possible. Hashing can commit to canonical bytes after
+resolution but cannot decide the semantic identity. Cross-person or
+qualia terms require additional subject, measurement, and bridge
+records.</p>
+<p>The universal GSM can type<br />
+<code>IDENTIFIES_GTK_RECORD</code>,
+<code>RESOLVES_OCCURRENCE_UNDER_REGISTRY</code>,<br />
+<code>ALIASES_LEXICAL_SURFACE</code>, <code>SPLITS_TERM_IDENTITY</code>,
+<code>RETURNS_CONTESTED_GTK</code>,<br />
+<code>RERESOLVES_AFTER_REGISTRY_CHANGE</code>, and<br />
+<code>DOES_NOT_IDENTIFY_REFERENT_BY_HASH</code>.</p>
+<p>This review establishes four editorial commitments: classify the work
+as the identity-record and resolver companion pending author
+adjudication; adopt the versioned record; require typed unknown,
+conflict, split, merge, and expiry; and keep lexical identity below full
+meaning, reference, truth, authority, and phenomenal identity.</p>
+<h2 id="failure-modes-and-counterevidence">12. Failure Modes and
+Counterevidence</h2>
+<p>GTK is weakened or refuted in a claimed domain when:</p>
+<ul>
+<li>the applicable concepts do not support stable coordinate assignments
+at the claimed resolution;</li>
+<li>community or historical disagreement is erased by one canonical
+registry;</li>
+<li>the sense inventory is circularly defined by the same model used to
+validate it;</li>
+<li>aliases encode cultural or political hierarchy as neutral
+identity;</li>
+<li>an invariant floor mistakes a prototype or family resemblance for an
+essence;</li>
+<li>one-invariant ablation produces nonsensical or ontology-dependent
+neighbors;</li>
+<li>cross-lingual aliases erase non-equivalent conceptual
+structure;</li>
+<li>open-world novelty is forced into the nearest existing
+coordinate;</li>
+<li>context poisoning, prompt injection, or hub gravity redirects
+binding;</li>
+<li>content-addressed equality is presented as semantic
+correctness;</li>
+<li>a registry administrator can revise bindings without contest or
+lineage;</li>
+<li>receipts expose private context or create disproportionate
+surveillance;</li>
+<li>canonicalization cost exceeds the consequence of the use; or</li>
+<li>ordinary scoped identifiers and typed relations provide the same
+assurance more simply.</li>
+</ul>
+<p>The strongest counterexample is a genuinely contested concept for
+which no single invariant floor or canonical alias set can be justified
+without suppressing legitimate plural meanings. A mature GTK system must
+represent the contest, scope, and authority rather than declaring one
+party’s definition universal.</p>
+<h2 id="authorial-compression">13. Authorial Compression</h2>
+<p>Several labels in the source may describe profiles of existing
+machinery rather than independent systems:</p>
+<ul>
+<li>GTK is the RPZ1 bound-term and resolution profile around CSIL
+coordinates.</li>
+<li>The Constitutional Dictionary may be a GMB lexical projection.</li>
+<li>The GTK lattice may be a typed subgraph or index within Governed
+Semantic Cartography.</li>
+<li>GTK content addressing is an application of Semantic Hashing and
+record custody.</li>
+<li>GTK admission is an application of Admissibility Engineering
+[AE].</li>
+</ul>
+<p>The test is differential obligation: retain a separate name only when
+it introduces a stable contract, operation, evidence burden, or failure
+mode not already supplied by the compared architecture. A useful profile
+can deserve a name without being promoted to a foundational primitive or
+independent system.</p>
+<p>The current recommendation is to retain GTK as a distinct lexical
+interface because it defines the bound-term, alias, competing-binding,
+and resolution contract. Treat CD as a candidate GMB profile pending
+author decision. Treat one-invariant adjacency as an optional configured
+operator rather than part of GTK’s universal definition.</p>
+<h2 id="conformance-questions">14. Conformance Questions</h2>
+<p>A bounded GTK conformance claim should answer:</p>
+<ol type="1">
+<li>What exact coordinate and registry schemas are used?</li>
+<li>What belongs to RPZ0, RPZ1, RPZ2, and RPZ3?</li>
+<li>How are aliases distinguished from mere similarity and translation
+candidates?</li>
+<li>How are competing bindings generated, reviewed, and versioned?</li>
+<li>Which outcomes exist besides forced binding?</li>
+<li>What authority may create, amend, deprecate, merge, split, or fork a
+coordinate?</li>
+<li>How are historical and community-specific definitions
+preserved?</li>
+<li>How are hash, semantic-equivalence, and conformance claims
+separated?</li>
+<li>How are typed adjacencies justified and challenged?</li>
+<li>What evidence binds a resolution used for consequential action?</li>
+<li>How are privacy, purpose limitation, and context minimization
+enforced?</li>
+<li>Can the registry and claimed results be cold-booted from exact
+artifacts?</li>
+<li>What false-merge, false-split, abstention, drift, and adversarial
+results are reported?</li>
+<li>What does the conformance claim explicitly not establish?</li>
+</ol>
+<p>Passing such a profile would establish conformance only for the named
+version, configuration, evidence, and scope. It would not establish
+universal semantic truth.</p>
+<h2 id="research-agenda-and-open-questions">15. Research Agenda and Open
+Questions</h2>
+<ol type="1">
+<li>Decide whether this paper and <em>Global Term Key: Constitutional
+Lexical Identity Through Disambiguated Semantic Binding</em> are one
+version family, companion papers, or distinct works. No merger is
+presumed here.</li>
+<li>Confirm GTK as <code>RPZ1 + D</code> around a CSIL/RPZ0 coordinate,
+or revise the coordinate/name boundary.</li>
+<li>Decide whether the invariant floor is required linked RPZ2
+specification, optional profile data, or part of the GTK record
+itself.</li>
+<li>Decide whether Constitutional Dictionary is an independent
+architecture or a lexical GMB profile.</li>
+<li>Accept typed, lens-relative adjacency as the general rule and
+one-invariant ablation as an optional configured operator.</li>
+<li>Define the normative GTK, coordinate, alias, competing-binding,
+definition, lineage, authority, outcome, and receipt schemas.</li>
+<li>Define treatment of contested, family-resemblance, multilingual,
+evolving, and community-specific concepts.</li>
+<li>Select a low-consequence reference corpus and evaluation protocol
+only under separate implementation authority.</li>
+<li>Authorize external primary-source research before novelty,
+comparative, or Evidence-Readiness claims.</li>
+</ol>
+<h2 id="lexical-identity-without-semantic-dictatorship">Lexical Identity
+Without Semantic Dictatorship</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Global Term Key provides a durable identity for a governed lexical
+binding so aliases, revisions, competing meanings, and lineage need not
+collapse into strings or similarity scores. A GTK identifies a declared
+binding under authority and evidence. It does not make that binding
+true, universally accepted, complete, or permanent.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Namespace-capture attack.</strong> One issuer controls
+identities across communities. GTKs require issuer and jurisdiction
+fields plus federation and fork behavior.</li>
+<li><strong>Alias-poisoning attack.</strong> A misleading alias
+redirects retrieval to the wrong binding. Alias admission needs context,
+evidence, collision checks, and revocation.</li>
+<li><strong>False-unification attack.</strong> Similar definitions are
+merged despite material differences. Competing bindings and non-identity
+must remain first-class.</li>
+<li><strong>Version-drift attack.</strong> A term’s invariant floor
+changes while the key remains stable. Material semantic change requires
+a successor or explicit versioned binding, not silent
+reinterpretation.</li>
+<li><strong>Resolver-bias attack.</strong> Frequency, embedding
+similarity, or institutional preference determines the target. Resolver
+policy, candidate set, evidence, refusal, and appeal must be
+visible.</li>
+<li><strong>Inaccessible-definition attack.</strong> The key resolves to
+a source the user cannot inspect. Custody, access, and disclosure gaps
+must be typed.</li>
+<li><strong>Context-collapse attack.</strong> One key is used across
+jurisdictions where obligations differ. Lexical identity does not imply
+policy or legal equivalence.</li>
+<li><strong>Privacy attack.</strong> A binding exposes sensitive
+provenance, participants, or suppressed terms. Identity and public
+visibility require separate authority.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>GTK is an identity and resolution proposal. It does not establish a
+global registry, universal adoption, semantic uniqueness, ontology
+completeness, or automatic interoperability. Conformance requires
+canonical encoding, collision behavior, resolver tests, governance,
+federation, and recovery evidence.</p>
+<p>Internal corpus use demonstrates architectural demand and candidate
+interfaces. Claims about terminology systems, standards, knowledge
+graphs, identifiers, or adoption require resolvable external comparison.
+No external research was added in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public benefit is that a system can say not only which word
+appeared, but which governed meaning was intended, who declared it, what
+alternatives existed, how the choice was made, and how later revisions
+relate without rewriting history.</p>
+<h2 id="conclusion">16. Conclusion</h2>
+<p>The durable contribution of Global Term Key is the move from
+ungoverned surface forms to explicit, inspectable bindings. The
+integrated architecture makes that move without asking one object to do
+every semantic job.</p>
+<p>CSIL/RPZ0 locates a coordinate. GTK/RPZ1 names it, exposes admitted
+aliases, and keeps competing bindings visible under disambiguation. RPZ2
+carries definitions, criteria, and qualifications. RPZ3 carries the
+typed manifold. GMB preserves the governed records, provenance,
+standing, and lineage. Semantic hashing binds exact versions but does
+not certify meaning. Admissibility and receipts govern when a proposed
+resolution may acquire consequence.</p>
+<p>This layering strengthens rather than abandons the source thesis.
+Polysemy becomes navigable topology; similarity stops masquerading as
+identity; uncertain or contested resolution can stop lawfully; and
+semantic revision becomes explicit. The result is not a universal
+dictionary of final meanings. It is a governed interface through which
+named meanings can be located, examined, contested, used, and revised
+without silently transferring authority across a shared word.</p>
+<hr />
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+</ul>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that knowledge systems often use a surface word,
+embedding neighborhood, graph node, URI, or schema type as though it
+were already a stable semantic identity. Its nearest external comparison
+fields are semantic, crypto, observation. The sources in [E1], [E2],
+[E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. A valid hash, signature, or inclusion
+proof establishes a bounded cryptographic relation, not meaning,
+authority, safety, or jurisdiction by itself. Telemetry can be complete
+at the instrumented boundary while omitting the causal variable,
+real-world effect, or authority question that matters. These limits are
+not generic disclaimers: they identify the assumptions that a later
+empirical, formal, or implementation review must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> Anders Rundgren, Bret Jordan, and Samuel
+Erdtman. <em>JSON Canonicalization Scheme (JCS)</em>. RFC 8785, 2020.
+https://www.rfc-editor.org/rfc/rfc8785 <strong>Relationship:</strong>
+Adjacent canonicalization standard relevant to stable cryptographic
+commitments.</p>
+<p><strong>[E7]</strong> Ben Laurie et al. <em>Certificate Transparency
+Version 2.0</em>. RFC 9162, 2021. https://www.rfc-editor.org/rfc/rfc9162
+<strong>Relationship:</strong> Adjacent append-only Merkle-log standard
+for inclusion and consistency evidence.</p>
+<h4
+id="source-head-external-references-retained-under-original-labels">Source-head
+external references retained under original labels</h4>
+<p><strong>[MILLER]</strong> Miller, George A. 1995. “WordNet: A Lexical
+Database for English.” <em>Communications of the ACM</em> 38(11): 39-41.
+Bibliographic entry retained from the exact author source and not
+independently verified in this pass.</p>
+<p>No external research was conducted in this pass. Current
+primary-source comparison and a conventional bibliography are required
+for a future evidence-qualified revision-readiness, novelty, or
+empirical-improvement claims.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Ableman Corpus
+current edition; work identity <code>PAPER.PUB.20248734</code>;<br />
+source SHA-256<br />
+<code>B1DAC3E2CD4D57BAFBF6462BA6ACFFF7CF120CDB7FA37D0C173525744CC0A2F0</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Cryptographic Admissibility
+and Jurisdiction</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20602448</code>;<br />
+source SHA-256<br />
+<code>6094338D8706F63E8787A5E8DCF40F8A651C0FC3E5EA776DD61791566D094D38</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h4 id="ableman-corpus-references">Ableman Corpus references</h4>
+<p><strong>[GTK-SOURCE]</strong> Adam Ableman. <em>Global Term Key:
+Identity Primitives in Governed Knowledge Systems</em>. Exact author
+source SHA-256<br />
+<code>4DADDB53C80AB79435E3B634F11B64E70A319991248169B665C18C5AAE03BB1D</code>;
+unpublished source revised here as an AI-assisted integrated
+edition.</p>
+<p><strong>[GTK-COMPANION]</strong> Adam Ableman. <em>Global Term Key:
+Constitutional Lexical Identity Through Disambiguated Semantic
+Binding</em>. Exact author source SHA-256<br />
+<code>5F4A36BE1B9CB7DA3A174FCA32AEE74974678D628950F9E2600C647045BD24BB</code>;
+distinct local work pending author identity adjudication.</p>
+<p><strong>[GMB-HISTORICAL-SOURCE]</strong> Adam Ableman.
+<em>Constitutional/Crystallized Meaning Base (CMB)</em>. Exact
+historical-title source SHA-256<br />
+<code>8680F801CDCA0B4C81F7751A788106454D34923993B4E7BBFF68F35A83ED0DA0</code>;
+current terminology is Governed Meaning Base (GMB) under the
+author-confirmed</p>
+<p><code>CCF -&gt; CMB -&gt; GMB</code> lineage.</p>
+<p><strong>[MAB]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Exact reviewed source SHA-256<br />
+<code>A9EA6370E77A71A997F1D1CAC18EF6213125C6F3E13BEEBC9F5E8BFB94FE0B45</code>;
+separately custodied reviewed source.</p>
+<p><strong>[CBT]</strong> Adam Ableman. <em>Constitutional Binding
+Theory: Governed Anchor Resolution as a Universal Pattern in Semantic
+Systems</em>. Exact reviewed source SHA-256<br />
+<code>AD0EF1999F2CD00BFD4128E31D3CE755F746BB7160423C041921875FFF1D2DDC</code>;
+separately custodied reviewed source.</p>
+<p><strong>[SLBC]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Exact reviewed source SHA-256<br />
+<code>1E9058F212FCB00E42E35E927DF2E7F830BC9C9499AAFF469FE65FF8AE137B68</code>;
+separately custodied reviewed source.</p>
+<p><strong>[GSC]</strong> Adam Ableman. <em>Governed Semantic
+Cartography</em>. Exact reviewed source SHA-256<br />
+<code>EB64EFEA1CCFD1DB7DA65E0989F9372DE3C30E0B974A260554D1FE4A089B1AD3</code>;
+separately custodied reviewed source.</p>
+<p><strong>[GST]</strong> Adam Ableman. <em>Governed Semantic Tokens:
+Tokenization as an Admissibility Boundary</em>. Exact reviewed source
+SHA-256<br />
+<code>9613BB5E6DD226EF18DA862C7F3BB784B93534A27E2746F5378835AEF76737FF</code>;
+supplied Zenodo title match, with publication identity retained
+separately.</p>
+<p><strong>[SH]</strong> Adam Ableman. 2026. <em>Semantic Hashing:
+Hashes as Declared Equivalence Classes of Meaning</em>. Zenodo.
+DOI:<br />
+<code>10.5281/zenodo.18500533</code>. Exact reviewed source
+SHA-256<br />
+<code>0AD135E1A89CE3EE136F36C703C3A415E1209B02FB16A59182F8E29F69127061</code>.</p>
+<p><strong>[CSH]</strong> Adam Ableman. <em>Constitutional Semantic
+Hashing: Governed Commitment Schemes for Semantic Provenance,
+Admissibility, and Constitutional Continuity</em>. Exact reviewed source
+SHA-256<br />
+<code>1EA97A14C6966F1FA8CCF587E9A95DA1821C152B801561EFE0A908994184F525</code>;
+supplied Zenodo title match, with publication identity retained
+separately.</p>
+<p><strong>[AE]</strong> Adam Ableman. <em>Admissibility
+Engineering</em>. Exact reviewed source SHA-256<br />
+<code>FA80D5895A569839958193735B754BE62EE20E1B399A06CB3BA959614DEBF7A3</code>;
+separately custodied reviewed source.</p>
+<p><strong>[GCNL]</strong> Adam Ableman. <em>Governed Controlled Natural
+Language</em>. Exact reviewed source SHA-256<br />
+<code>B0317502B2B10790942DCE3CBFDE58C13E648890AB64A172BB9AE18CA1896D72</code>;
+separately custodied reviewed source.</p>
+<p><strong>[GCML]</strong> Adam Ableman. <em>Governed Controlled Machine
+Language</em>. Exact reviewed source SHA-256<br />
+<code>D4E5D935108BDA55157CADDEAD84B94F14868CEDD5CBF72F5184994983AFFB9A</code>;
+separately custodied reviewed source.</p>
+<p><strong>[THR]</strong> Adam Ableman. 2026. <em>The Three Hash
+Rule</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.20788617</code>. Exact reviewed source
+SHA-256<br />
+<code>03F60317CC9AFB36DDBCF9BF1C6D185611666CC4D9AB290BD4BCC17DF4579B7C</code>.</p>
+<p><strong>[RAZOR]</strong> Adam Ableman. 2026. <em>Ableman’s Razor: A
+Typed Grammar for Ontology Exploration, Configuration Collapse, and
+Implementation Feedback</em>. Zenodo. DOI:<br />
+<code>10.5281/zenodo.18113475</code>. Publication reference retained
+from the exact source bibliography; no local source identity was
+inferred.</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847760">10.5281/zenodo.23847760</a></p>

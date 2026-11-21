@@ -1,0 +1,675 @@
+<h1 id="cara-constrained-artificial-reasoning-architecture">CARA:
+Constrained Artificial Reasoning Architecture</h1>
+<h2 id="a-protocol-for-governed-epistemic-transitions-in-ai-systems">A
+Protocol for Governed Epistemic Transitions in AI Systems</h2>
+<h3
+id="as-these-systems-scale-failures-are-often-framed-as-issues-of-hallucination-alignment-or-insufficient-prompting-discipline.">As
+these systems scale, failures are often framed as issues of
+hallucination, alignment, or insufficient prompting discipline.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Large language models are increasingly embedded in systems that make
+decisions, generate knowledge, modify code, and act across long
+horizons. As these systems scale, failures are often framed as issues of
+hallucination, alignment, or insufficient prompting discipline. This
+paper argues that a more fundamental class of failure has been
+overlooked: <strong>unauthorized epistemic state transitions</strong>,
+where claims, decisions, or artifacts acquire the <em>appearance</em> of
+legitimacy without passing through any explicit authority-granting
+process.</p>
+<p>We introduce <strong>CARA (Constrained Artificial Reasoning
+Architecture)</strong>, a protocol-level approach to governance that
+treats correctness, authority, and trust as <strong>properties that must
+be explicitly granted and inspected</strong>, rather than inferred from
+behavior or repetition. CARA is built on a small set of
+primitives—<strong>trace-first execution, phase discipline, explicit
+admission events, and escalation routing</strong>—that make epistemic
+transitions observable and auditable across diverse workflows.</p>
+<p>Rather than attempting to make models behave better, CARA
+<strong>prevents authority from appearing silently within the governed
+surface</strong>. The result is not a guarantee of correctness, but a
+system in which failures are detectable, responsibility is localized,
+and trust can be reasoned about without appeal to intuition or
+structural familiarity. We present the motivating failure modes, define
+the core primitives, and outline an illustrative reference architecture
+intended to apply uniformly across code, knowledge, conversational, and
+research systems.</p>
+<hr />
+<h2 id="introduction-the-governance-gap">1. Introduction: The Governance
+Gap</h2>
+<p>As LLM-based systems move from isolated interactions to persistent,
+stateful deployments, a new class of failure has become increasingly
+visible—but remains poorly named. These failures do not arise from
+obviously false outputs, malicious intent, or explicit policy
+violations. Instead, they emerge when <strong>claims or decisions
+quietly change status</strong> simply by being repeated, structured, or
+embedded within trusted-looking containers.</p>
+<p>A speculative statement becomes a “working assumption.” A draft
+artifact becomes “part of the knowledge base.” A model suggestion
+becomes “the system’s decision.”</p>
+<p>These transitions often occur <strong>under good-faith use by
+competent operators</strong>, not through negligence or misuse. At no
+point does any explicit error occur. Yet the system’s epistemic state
+has shifted.</p>
+<p>Most current approaches attempt to address this through better
+prompting, improved reasoning strategies, or post-hoc filtering. While
+these techniques can reduce surface-level errors, they do not address
+the underlying issue: <strong>the system lacks a protocol for deciding
+when something is allowed to count</strong>.</p>
+<p>This paper refers to this failure mode as <strong>authority
+laundering</strong>: the process by which outputs acquire perceived
+legitimacy without an explicit, auditable authority-granting event.
+Authority laundering is not lying. It is not hallucination. It is a
+structural failure caused by missing governance semantics.</p>
+<hr />
+<h2 id="why-behavior-is-not-enough">2. Why Behavior Is Not Enough</h2>
+<p>A growing body of work demonstrates that forcing models to
+externalize structure—such as defining entities or constraints before
+reasoning—can significantly improve reasoning performance. These
+approaches correctly identify that <strong>mixing representation and
+reasoning increases error</strong>. However, their primary objective
+remains improving <em>reasoning quality</em>, and their enforcement
+remains <strong>behavioral</strong>.</p>
+<p>CARA addresses a different problem.</p>
+<p>The core failure examined here is not that models reason incorrectly,
+but that <strong>systems cannot determine when reasoning has exceeded
+its mandate</strong>. When separation is enforced only by
+instruction:</p>
+<ul>
+<li>violations leave no trace,</li>
+<li>enforcement cannot be audited,</li>
+<li>and authority remains implicit.</li>
+</ul>
+<p>In practice, this means that even well-structured outputs can be
+misused, over-trusted, or silently promoted. CARA begins from a
+different premise: governance is not a property of outputs, but of
+<strong>epistemic transitions</strong>. If a claim becomes
+authoritative, there must be an event that made it so. If a decision is
+taken, the conditions under which it was taken must be visible. If a
+process fails or refuses, that refusal must itself be recorded.</p>
+<hr />
+<h2 id="trace-first-as-a-primitive">3. Trace-First as a Primitive</h2>
+<p>The foundational primitive in CARA is the <strong>trace</strong>.</p>
+<p>A trace is a verifiable record that <em>something happened</em>. It
+does not assert that the event was correct, justified, or authorized. It
+records only:</p>
+<ul>
+<li>what action occurred,</li>
+<li>under what declared mode,</li>
+<li>with what inputs,</li>
+<li>and what immediate outputs were produced.</li>
+</ul>
+<p>By making traces first-class and mandatory, CARA enforces a simple
+invariant:</p>
+<blockquote>
+<p><strong>Within the governed surface, no epistemic state change may
+occur without leaving evidence.</strong></p>
+</blockquote>
+<p>This invariant prevents silent failure, silent promotion, and silent
+refusal. It allows validation, admission, and escalation to be treated
+as explicit, inspectable processes rather than implicit side effects of
+execution.</p>
+<hr />
+<h2 id="from-traces-to-governance">4. From Traces to Governance</h2>
+<p>CARA builds governance by layering additional primitives on top of
+trace-first execution:</p>
+<ul>
+<li><strong>Phase Discipline</strong>: separating observation,
+specification, witness, regime, and transformation into distinct phases
+that cannot be mixed without record.</li>
+<li><strong>Admission Events</strong>: explicit transitions that grant
+authority to artifacts, claims, or decisions.</li>
+<li><strong>Validation and Escalation</strong>: structured responses to
+violations that route failures rather than bury them.</li>
+<li><strong>Routed Context</strong>: a hard separation between
+system-owned governance state and user-provided input.</li>
+</ul>
+<p>These primitives do not assume a particular model, task, or domain.
+They define a <strong>protocol surface</strong> that any engine—human or
+machine—must pass through in order to affect governed state.</p>
+<hr />
+<h2 id="scope-and-contributions">5. Scope and Contributions</h2>
+<p>This paper does not present a full implementation, benchmark suite,
+or performance evaluation. Its purpose is narrower and more
+foundational:</p>
+<ol type="1">
+<li>To name a class of failure—authority laundering—that is not
+addressed by existing approaches.</li>
+<li>To define a minimal set of primitives that make such failures
+detectable and preventable within governed systems.</li>
+<li>To outline an illustrative reference architecture intended to apply
+uniformly across code, knowledge, conversation, and research
+workflows.</li>
+<li>To provide diagnostic canaries that distinguish protocol-level
+governance from behavioral discipline.</li>
+</ol>
+<p>The claim is not that CARA guarantees correctness. The claim is that
+CARA makes <strong>epistemic state legible</strong>, so correctness,
+trust, and responsibility can be reasoned about explicitly rather than
+inferred.</p>
+<hr />
+<h2 id="diagnostic-canaries-detecting-ungoverned-systems">6. Diagnostic
+Canaries: Detecting Ungoverned Systems</h2>
+<p>CARA distinguishes governed systems from ungoverned ones not by
+outcomes, but by <strong>what failures are possible without leaving
+evidence</strong>. To make this distinction operational, we introduce a
+set of <strong>diagnostic canaries</strong>—minimal scenarios that
+reveal whether a system enforces epistemic transitions or merely
+encourages good behavior.</p>
+<p>These canaries are not exploits or adversarial attacks. They are
+<strong>structural probes</strong>. A system that fails them is not
+“unsafe” in a moral sense; it is <strong>ungoverned</strong> in a
+technical one.</p>
+<hr />
+<h3 id="fail-open-by-absence">6.1 Fail-Open by Absence</h3>
+<p><strong>Scenario</strong> A reasoning or validation step expects
+supporting evidence, authority metadata, or prior admissions. That
+information is missing, malformed, or empty.</p>
+<p><strong>Ungoverned behavior</strong> The system proceeds anyway:</p>
+<ul>
+<li>reasoning continues,</li>
+<li>output is produced,</li>
+<li>downstream components treat the result as legitimate.</li>
+</ul>
+<p>This often occurs via implicit defaults such as:</p>
+<ul>
+<li>“no evidence provided” -&gt; skip validation</li>
+<li>“no objections raised” -&gt; accept</li>
+</ul>
+<p><strong>Why this matters</strong> Absence becomes a bypass. Silence
+acquires power.</p>
+<p><strong>Canary</strong> Remove required supporting context entirely.
+If the system produces a result without recording a failure, refusal, or
+escalation, it is fail-open.</p>
+<hr />
+<h3 id="silent-authority-promotion">6.2 Silent Authority Promotion</h3>
+<p><strong>Scenario</strong> An artifact is generated in a provisional
+or exploratory context:</p>
+<ul>
+<li>a draft answer,</li>
+<li>a speculative hypothesis,</li>
+<li>a suggested code change.</li>
+</ul>
+<p>Later, the same artifact is reused, referenced, or embedded
+elsewhere.</p>
+<p><strong>Ungoverned behavior</strong> The artifact’s status changes
+implicitly:</p>
+<ul>
+<li>“draft” becomes “accepted”</li>
+<li>“suggestion” becomes “decision”</li>
+<li>“model output” becomes “system knowledge”</li>
+</ul>
+<p>No explicit event marks this transition.</p>
+<p><strong>Why this matters</strong> Legitimacy accumulates through
+reuse rather than authorization.</p>
+<p><strong>Canary</strong> Track an artifact across contexts. If its
+authority increases without a recorded admission event, authority
+laundering has occurred.</p>
+<hr />
+<h3 id="exit-without-trace">6.3 Exit Without Trace</h3>
+<p><strong>Scenario</strong> A system encounters a condition it cannot
+or should not handle:</p>
+<ul>
+<li>unsupported mode,</li>
+<li>prohibited request,</li>
+<li>internal inconsistency.</li>
+</ul>
+<p><strong>Ungoverned behavior</strong> The system:</p>
+<ul>
+<li>returns early,</li>
+<li>produces a generic refusal,</li>
+<li>or silently drops the operation</li>
+</ul>
+<p>without recording <em>why</em> execution stopped.</p>
+<p><strong>Why this matters</strong> Refusal itself is an epistemic
+event. Untraced exits erase accountability.</p>
+<p><strong>Canary</strong> Force a refusal path. If no trace records the
+refusal, the system permits invisible failure.</p>
+<hr />
+<h3 id="context-poisoning">6.4 Context Poisoning</h3>
+<p><strong>Scenario</strong> User-provided input includes fields that
+resemble governance state:</p>
+<ul>
+<li>claimed authority levels,</li>
+<li>fake evidence references,</li>
+<li>mode switches,</li>
+<li>trace identifiers.</li>
+</ul>
+<p><strong>Ungoverned behavior</strong> The system merges user input
+directly into its internal context. Downstream logic cannot distinguish
+verified state from untrusted claims.</p>
+<p><strong>Why this matters</strong> The system has no epistemic
+boundary. Users can shape the rules by which they are judged.</p>
+<p><strong>Canary</strong> Inject governance-shaped keys into user
+input. If they influence execution or validation without being stripped
+and logged, context is poisonable.</p>
+<hr />
+<h3 id="self-granted-legitimacy">6.5 Self-Granted Legitimacy</h3>
+<p><strong>Scenario</strong> A reasoning engine evaluates its own
+output:</p>
+<ul>
+<li>declares it correct,</li>
+<li>asserts sufficient authority,</li>
+<li>or marks it “validated.”</li>
+</ul>
+<p><strong>Ungoverned behavior</strong> The same component:</p>
+<ul>
+<li>generates the claim,</li>
+<li>evaluates the claim,</li>
+<li>and grants it legitimacy.</li>
+</ul>
+<p>No independent gate exists.</p>
+<p><strong>Why this matters</strong> Self-review is not review.
+Authority collapses into assertion.</p>
+<p><strong>Canary</strong> Check whether the system can approve its own
+outputs without an external admission step. If yes, legitimacy is
+self-granted.</p>
+<hr />
+<h3 id="behavioral-compliance-masking-structural-failure">6.6 Behavioral
+Compliance Masking Structural Failure</h3>
+<p><strong>Scenario</strong> A system performs well under normal
+use:</p>
+<ul>
+<li>prompts are respected,</li>
+<li>outputs look careful,</li>
+<li>explanations are coherent.</li>
+</ul>
+<p><strong>Ungoverned behavior</strong> When stressed, the system:</p>
+<ul>
+<li>silently skips steps,</li>
+<li>invents structure,</li>
+<li>or promotes outputs because “nothing objected.”</li>
+</ul>
+<p><strong>Why this matters</strong> Good apparent behavior hides
+missing protocol enforcement. The system works—until it doesn’t—and no
+one can tell when the transition occurred.</p>
+<p><strong>Canary</strong> Stress the system with malformed, partial, or
+adversarial inputs. If failures appear only in outcomes, not traces,
+governance is absent.</p>
+<hr />
+<h3 id="interpreting-canary-results">6.7 Interpreting Canary
+Results</h3>
+<p>These canaries are intentionally simple. They do not require
+adversarial sophistication or domain expertise. Their purpose is
+binary:</p>
+<ul>
+<li><strong>If a canary triggers and leaves evidence</strong>, the
+system is governable.</li>
+<li><strong>If a canary triggers silently</strong>, the system is
+not.</li>
+</ul>
+<p>CARA does not claim to eliminate failure. It claims to eliminate
+<strong>failure without record</strong>.</p>
+<p>If a system’s designers cannot point to where each of these failures
+would be recorded, the system is not governed.</p>
+<hr />
+<h2 id="architecture-overview-a-governed-protocol-surface">7.
+Architecture Overview: A Governed Protocol Surface</h2>
+<p>CARA is not a model, a framework, or a prompting strategy. It is a
+<strong>protocol surface</strong> that constrains how reasoning systems
+may affect epistemic state. This section outlines the architectural
+shape of that surface without specifying implementation details,
+algorithms, or data schemas.</p>
+<p>The goal is not to prescribe a particular system design, but to show
+that the primitives introduced earlier <strong>compose
+coherently</strong> into an enforceable architecture.</p>
+<hr />
+<h3 id="separation-of-roles-and-responsibilities">7.1 Separation of
+Roles and Responsibilities</h3>
+<p>At the highest level, CARA distinguishes between three functional
+roles:</p>
+<ul>
+<li><strong>Engines</strong>: components that produce outputs (e.g.,
+language models, rule-based systems, human input).</li>
+<li><strong>Governance Layer</strong>: components that enforce phase
+discipline, validation, and admission.</li>
+<li><strong>State Substrate</strong>: the persistent store of artifacts
+whose epistemic status matters.</li>
+</ul>
+<p>Engines are <strong>unauthorized to alter governed state by
+default</strong>. They may generate content, but they cannot directly
+grant epistemic legitimacy. All transitions that affect epistemic status
+must pass through the governance layer.</p>
+<p>This separation ensures that no engine—regardless of
+sophistication—can grant authority to its own outputs.</p>
+<hr />
+<h3 id="routed-context-as-a-boundary">7.2 Routed Context as a
+Boundary</h3>
+<p>CARA enforces a hard boundary between <strong>system-owned governance
+state</strong> and <strong>untrusted input</strong>.</p>
+<ul>
+<li><p>Governance state includes:</p>
+<ul>
+<li>declared execution mode,</li>
+<li>trace identifiers,</li>
+<li>authority references,</li>
+<li>prior admissions.</li>
+</ul></li>
+<li><p>Untrusted input includes:</p>
+<ul>
+<li>user prompts,</li>
+<li>external data,</li>
+<li>exploratory or provisional content.</li>
+</ul></li>
+</ul>
+<p>The routing mechanism ensures that untrusted input <strong>cannot
+write into governance state</strong>, even if it resembles or attempts
+to mimic it. Any attempt to do so is stripped and recorded <strong>in
+the trace</strong>.</p>
+<p>This boundary prevents context poisoning and ensures that all
+governance decisions are based on verified, system-generated
+information.</p>
+<hr />
+<h3 id="phase-discipline-as-structural-constraint">7.3 Phase Discipline
+as Structural Constraint</h3>
+<p>All governed operations occur within explicitly declared
+<strong>phases</strong>, such as observation, specification,
+transformation, and admission. Phases are not conceptual labels; they
+are <strong>structural constraints</strong>.</p>
+<p>Each phase:</p>
+<ul>
+<li>has permitted inputs,</li>
+<li>produces bounded outputs,</li>
+<li>and restricts which transitions are allowed next.</li>
+</ul>
+<p>Mixing phases—such as treating a speculative output as an admitted
+artifact—is not merely discouraged; it is <strong>structurally
+invalid</strong> within the governed surface.</p>
+<p>Phase transitions are themselves traceable events.</p>
+<hr />
+<h3 id="traces-as-the-spine-of-execution">7.4 Traces as the Spine of
+Execution</h3>
+<p>Every interaction with the governed surface produces a
+<strong>trace</strong>.</p>
+<p>Traces are:</p>
+<ul>
+<li>append-only,</li>
+<li>not retroactively alterable within the governed surface,</li>
+<li>and generated regardless of success, failure, or refusal.</li>
+</ul>
+<p>A trace records:</p>
+<ul>
+<li>the phase,</li>
+<li>the triggering inputs,</li>
+<li>the engine involved,</li>
+<li>and the immediate outcome.</li>
+</ul>
+<p>Crucially, traces are produced <strong>before</strong> any validation
+or admission occurs. This guarantees that even aborted or rejected
+operations leave evidence.</p>
+<p>Traces form the backbone of auditability, debugging, and post hoc
+analysis.</p>
+<hr />
+<h3 id="validation-admission-and-escalation">7.5 Validation, Admission,
+and Escalation</h3>
+<p>CARA distinguishes sharply between three concepts often
+conflated:</p>
+<ul>
+<li><strong>Validation</strong>: checking whether an output satisfies
+declared constraints.</li>
+<li><strong>Admission</strong>: explicitly granting epistemic authority
+to an artifact.</li>
+<li><strong>Escalation</strong>: routing violations or ambiguities to a
+higher authority or different process.</li>
+</ul>
+<p>Validation may fail without admission. Admission may be refused
+despite successful validation. Escalation may occur even when no
+explicit error exists.</p>
+<p>Each of these is an explicit event, recorded in the trace, and
+governed by declared rules rather than engine discretion.</p>
+<hr />
+<h3 id="fail-closed-transitions">7.6 Fail-Closed Transitions</h3>
+<p>CARA is designed to fail <strong>closed</strong>, not open.</p>
+<p>If required information is missing, malformed, or inconsistent:</p>
+<ul>
+<li>execution does not proceed to admission,</li>
+<li>refusal or escalation is recorded,</li>
+<li>and no epistemic state change occurs.</li>
+</ul>
+<p>Silence is not treated as consent. Absence is not treated as
+approval.</p>
+<p>This design directly addresses the fail-open canaries introduced
+earlier.</p>
+<hr />
+<h3 id="composability-across-domains">7.7 Composability Across
+Domains</h3>
+<p>Because CARA constrains transitions rather than outputs, the same
+protocol surface can be applied across domains:</p>
+<ul>
+<li>code generation systems,</li>
+<li>knowledge base construction,</li>
+<li>conversational agents,</li>
+<li>research and exploratory workflows.</li>
+</ul>
+<p>Domain-specific logic lives outside the governance layer. CARA
+governs <em>how</em> conclusions are admitted, not <em>what</em>
+conclusions should be reached.</p>
+<hr />
+<h3 id="what-this-architecture-does-not-do">7.8 What This Architecture
+Does Not Do</h3>
+<p>For clarity, CARA does not:</p>
+<ul>
+<li>guarantee correctness,</li>
+<li>evaluate truth,</li>
+<li>replace domain expertise,</li>
+<li>or eliminate human judgment.</li>
+</ul>
+<p>It provides the conditions under which those judgments can be made
+<strong>explicit, auditable, and reversible</strong>.</p>
+<hr />
+<h3 id="summary">7.9 Summary</h3>
+<p>The CARA architecture establishes a simple but strict invariant:</p>
+<blockquote>
+<p><strong>Engines may propose. Only the protocol may
+decide.</strong></p>
+</blockquote>
+<p>By separating proposal from admission, enforcing phase discipline,
+and making traces unavoidable, CARA transforms reasoning systems from
+opaque generators into <strong>governed participants in epistemic
+processes</strong>.</p>
+<hr />
+<h2 id="related-work-and-positioning">8. Related Work and
+Positioning</h2>
+<p>Recent work has explored separating problem modeling from reasoning
+in order to improve internal reasoning quality and constraint adherence
+in large language models. These approaches demonstrate that explicit
+structure can reduce certain classes of reasoning error by discouraging
+the interleaving of representation and inference.</p>
+<p>CARA addresses a distinct and orthogonal problem. Rather than
+improving how models reason, CARA governs <strong>when the outputs of
+any reasoning process—model-based or otherwise—are permitted to acquire
+epistemic authority</strong>. The success metric is not reasoning
+correctness, but the absence of silent epistemic state transitions. A
+system employing structured or model-first reasoning may still silently
+promote its conclusions to authoritative status; CARA prevents such
+promotion structurally by requiring explicit admission events and
+traceable transitions.</p>
+<p>CARA is therefore complementary to advances in reasoning quality, but
+operates at a different layer: the governance boundary between proposal
+and admission.</p>
+<hr />
+<h2 id="conclusion">9. Conclusion</h2>
+<p>As AI systems increasingly participate in decision-making, knowledge
+production, and long-horizon workflows, the cost of silent epistemic
+failure grows. Improving reasoning quality alone does not address the
+question of <strong>when reasoning is allowed to count</strong>.</p>
+<p>CARA reframes governance as a protocol problem. By enforcing
+trace-first execution, phase discipline, explicit admission, and
+fail-closed transitions, CARA makes epistemic state legible and
+contestable. The result is not correctness by fiat, but systems in which
+authority is granted deliberately, failures are visible, and trust can
+be reasoned about rather than assumed.</p>
+<hr />
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that large language models are increasingly
+embedded in systems that make decisions, generate knowledge, modify
+code, and act across long horizons. Its nearest external comparison
+fields are ai, provenance, formal. The sources in [E1], [E2], [E3],
+[E4], [E5], [E6], [E7] are cited as predecessor literature, adjacent
+standards, or counterpressure - not as evidence that they caused the
+Ableman framework or that they validate its novel claims. The comparison
+isolates where established work already supplies provenance, formal
+assurance, institutional constraint, empirical method, or engineering
+practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Retrieval, tool use,
+and policy layers can reduce unsupported output without eliminating
+model error, source error, omission, bias, or the environmental and
+institutional costs of scale. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Formal assurance remains
+relative to the encoded model, trusted base, and refinement chain; proof
+does not remove specification error or unmodeled environmental behavior.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E2]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E3]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<p><strong>[E4]</strong> OECD. <em>Recommendation of the Council on
+Artificial Intelligence</em>. OECD/LEGAL/0449, adopted 2019 and updated
+2024. <a
+href="https://legalinstruments.oecd.org/en/instruments/OECD-LEGAL-0449">legalinstruments.oecd.org
+source</a> <strong>Relationship:</strong> Adjacent policy standard for
+accountability, traceability, transparency, safety, and human-centered
+values.</p>
+<p><strong>[E5]</strong> Emily M. Bender et al. “On the Dangers of
+Stochastic Parrots: Can Language Models Be Too Big?” <em>FAccT ’21</em>,
+2021. DOI: 10.1145/3442188.3445922.
+https://doi.org/10.1145/3442188.3445922 <strong>Relationship:</strong>
+Counterpressure concerning scale, environmental cost, documentation, and
+social risk; included to prevent governance proposals from becoming
+capability-only narratives.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Context &amp; Memory
+(GCM)</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18633797</code>;<br />
+source SHA-256<br />
+<code>3F17ACD8AB9C6DC66C23D22098628C70042854B198C3ABFCBFA3EC7DC27B9C08</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Retrieval-Augmented Reasoning
+under Constitutional Constraints</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-384489D4604BEC4D</code>;<br />
+source SHA-256<br />
+<code>133DA35C0F27F35BAA1F53DFEE415068AD2D24FF713F8CDAFA2FDC8F748AC15C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Split-Authority AI
+Coordination</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-35D1BAECD5CB17AD</code>;<br />
+source SHA-256<br />
+<code>06FB6133170879FA8308684F0DA33F5813EAF3B5488291C2D7D234BEB6FDFEC2</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<ol type="1">
+<li><em>Model-First Reasoning: Separating Modeling from Reasoning to
+Improve Planning and Constraint Adherence in Large Language Models.</em>
+arXiv:2512.14474.</li>
+<li>Bai, Y. et al. <em>Constitutional AI: Harmlessness from AI
+Feedback.</em> arXiv:2212.08073.</li>
+<li>Muniswamy-Reddy, K.-K. et al. <em>Provenance-Aware Storage
+Systems.</em> USENIX ATC, 2006.</li>
+<li>Cheney, J. et al. <em>Provenance: A Future History.</em> ICDE,
+2009.</li>
+</ol>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.18099715">10.5281/zenodo.18099715</a></p>

@@ -1,0 +1,810 @@
+<h1
+id="technical-brief-hydroengineering-and-geologic-intelligence-modules">Technical
+Brief: Hydroengineering and Geologic Intelligence Modules</h1>
+<h2
+id="a-governed-landscape-material-profile-for-classified-earthworks">A
+Governed Landscape-Material Profile for Classified Earthworks</h2>
+<h3
+id="the-geologic-intelligence-module-treats-sampling-testing-transformation-deployment-and-monitoring-as-linked-data-events.">The
+geologic intelligence module treats sampling, testing, transformation,
+deployment, and monitoring as linked data events.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>The Hydroengineering and Geologic Intelligence Modules extend
+Classified Earthworks from material separation and transformation into a
+governed landscape-intervention architecture. The hydroengineering
+module asks how classified mineral, organic, ceramic, compost, biochar,
+and aggregate fractions might participate in site-specific water
+management. The geologic intelligence module treats sampling, testing,
+transformation, deployment, and monitoring as linked data events.</p>
+<p>The central object is not “improved dirt” but a bounded suitability
+relation among a material batch, intended use, site, design, evidence,
+authority, and time. A material passport records provenance, tests,
+uncertainty, restrictions, decisions, and later observations. It does
+not itself certify safety or authorize deployment. Likewise, general
+patterns such as slowing runoff or increasing infiltration are design
+possibilities, not universal prescriptions: infiltration can mobilize
+contaminants, destabilize slopes, damage structures, alter groundwater,
+or displace flooding.</p>
+<p>This brief defines the two modules, their shared ontology, decision
+gates, passport lifecycle, hydrologic and data-governance constraints,
+monitoring loop, realization funnel, and evaluation program. It remains
+a system proposal pending qualified site, laboratory, engineering,
+legal, community, and environmental review.</p>
+<h2 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h2>
+<p>This is an AI-assisted integrated edition derived from one exact
+author manuscript. Its custody and comparison manifest is<br />
+<code>work/paper-saturation-v1/evidence/</code></p>
+<p><code>hydroengineering-geologic-intelligence-</code><br />
+<code>modules/integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>F7268158A849C67C17E2AFF43ACFCC4684BC60366F70C1ED614844B7C9BBE057</code>.
+The source remains unchanged.</p>
+<p>The modules, structures, workflow, metrics, and design thesis are
+author material. Ontology, formal qualification, evidence boundaries,
+gates, tests, and decisions are AI editorial or synthetic candidates
+until adopted. No site was assessed, material approved, structure
+designed, water routed, data released, or external reference
+verified.</p>
+<h2 id="system-role">1. System Role</h2>
+<p>Classified Earthworks proposes that excavated soil, rock, sediment,
+and biomass should be separated, tested, transformed, and routed
+according to their properties rather than treated as undifferentiated
+spoil. This brief adds two coupled profiles:</p>
+<ul>
+<li><strong>Hydroengineering:</strong> proposes and evaluates landscape
+interventions that change water timing, path, storage, contact,
+treatment, and release.</li>
+<li><strong>Geologic intelligence:</strong> acquires, governs, and
+revises knowledge about materials, subsurface conditions, site
+relations, and intervention performance.</li>
+</ul>
+<p>The modules are coupled but not identical. Data can exist without
+authorizing an intervention. A design can be proposed while evidence is
+insufficient. Monitoring can invalidate an earlier suitability
+decision.</p>
+<h2 id="core-ontology">2. Core Ontology</h2>
+<p>The architecture distinguishes:</p>
+<ul>
+<li><strong>site:</strong> a spatial, legal, ecological, hydrologic, and
+social context;</li>
+<li><strong>sample:</strong> material collected through a declared
+sampling method;</li>
+<li><strong>batch:</strong> a bounded material population with custody
+and transformation history;</li>
+<li><strong>test result:</strong> an observation produced by a named
+method, laboratory or instrument, date, and uncertainty;</li>
+<li><strong>material profile:</strong> reviewed synthesis of applicable
+observations;</li>
+<li><strong>intended use:</strong> a function with performance and
+exclusion criteria;</li>
+<li><strong>intervention:</strong> a designed change to land, water,
+material, or access;</li>
+<li><strong>decision:</strong> an authority-scoped disposition;</li>
+<li><strong>observation:</strong> later evidence about construction or
+performance;</li>
+<li><strong>revision:</strong> a change in profile, permission,
+restriction, or design.</li>
+</ul>
+<p>Suitability is relational:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Suitable(b,u,s,d,e,a,t) \in \{&amp;admit, pilot, condition, defer,
+refuse, isolate, unknown\}
+\end{aligned},
+$$</span></p>
+<p>where <span class="math inline"><em>b</em></span> is batch, <span
+class="math inline"><em>u</em></span> use, <span
+class="math inline"><em>s</em></span> site, <span
+class="math inline"><em>d</em></span> design, <span
+class="math inline"><em>e</em></span> evidence, <span
+class="math inline"><em>a</em></span> authority, and <span
+class="math inline"><em>t</em></span> time. A batch is never simply
+“good” or “clean” outside a purpose, threshold, jurisdiction, and
+evidence window.</p>
+<h2 id="material-passport-as-a-governed-claim-surface">3. Material
+Passport as a Governed Claim Surface</h2>
+<p>A material passport should bind:</p>
+<pre class="text"><code>MaterialPassport {
+  batch_id
+  source_site_and_interval
+  custody_and_transformation_history
+  sampling_plan_and_representativeness
+  test_methods_results_units_uncertainty
+  material_profile
+  candidate_uses
+  prohibited_or_deferred_uses
+  decision_authority_and_basis
+  spatial_temporal_validity
+  deployment_links
+  monitoring_links
+  revision_history
+}</code></pre>
+<p>Passport postures should remain explicit: <code>UNSAMPLED</code>,
+<code>SAMPLED</code>, <code>TESTED</code>,
+<code>CLASSIFIED</code>,<br />
+<code>CANDIDATE_USE</code>, <code>CONDITIONALLY_APPROVED</code>,
+<code>APPROVED_BY_NAMED_AUTHORITY</code>, <code>DEPLOYED</code>,<br />
+<code>MONITORED</code>, <code>RESTRICTED</code>,
+<code>QUARANTINED</code>, <code>REVOKED</code>, or
+<code>UNKNOWN</code>.</p>
+<p>A passport is not a permit, warranty, geotechnical certification,
+contaminant clearance, or proof that a heterogeneous batch matches a
+small sample. Claims remain bounded by sampling design, chain of
+custody, laboratory scope, detection limits, spatial variability,
+transformation, age, and later mixing.</p>
+<h2 id="hydroengineering-decision-model">4. Hydroengineering Decision
+Model</h2>
+<p>The authorial principle is to change water timing, path, contact
+surfaces, storage, and release rather than merely capture volume.
+Candidate structures include terraces, swales, rain gardens,
+infiltration basins, recharge cells, root-zone reservoirs, drainage
+layers, sediment forebays, contour bands, cistern systems, and
+gravity-fed conveyance.</p>
+<p>These are Configuration Manifold candidates, not recipes. Every
+intervention should declare at least:</p>
+<ul>
+<li>design storm or event range and overflow path;</li>
+<li>contributing area, inflow, outflow, storage, infiltration, and
+evapotranspiration assumptions;</li>
+<li>soil, geology, slope, groundwater, utilities, structures, and
+downstream receptors;</li>
+<li>source-water and material quality;</li>
+<li>erosion, sediment, clogging, settlement, and stability
+behavior;</li>
+<li>inspection, maintenance, failure, and decommissioning plans;</li>
+<li>affected rights, permissions, communities, and ecosystems.</li>
+</ul>
+<p>A basic water-balance constraint is:</p>
+<p><span
+class="math display"><em>Δ</em><em>S</em> = <em>P</em> + <em>Q</em><sub><em>i</em><em>n</em></sub> − <em>Q</em><sub><em>o</em><em>u</em><em>t</em></sub> − <em>E</em><em>T</em> − <em>R</em> − <em>L</em>,</span></p>
+<p>where <span class="math inline"><em>S</em></span> is bounded storage,
+<span class="math inline"><em>P</em></span> precipitation, <span
+class="math inline"><em>Q</em><sub><em>i</em><em>n</em></sub></span> and
+<span
+class="math inline"><em>Q</em><sub><em>o</em><em>u</em><em>t</em></sub></span>
+surface or managed flows, <span
+class="math inline"><em>E</em><em>T</em></span> evapotranspiration,
+<span class="math inline"><em>R</em></span> deep recharge, and <span
+class="math inline"><em>L</em></span> other modeled losses. Each term is
+site- and timescale-specific. The equation organizes accounting; it does
+not replace a calibrated model or design.</p>
+<h2 id="layered-material-bodies">5. Layered Material Bodies</h2>
+<p>The source’s layered structures express an important invariant:
+biological, structural, filtration, storage, and drainage functions
+should not be collapsed into a homogeneous amended soil. Candidate
+layers include surface protection, root-zone media, storage media,
+structural fill, transition zones, drainage, and overflow
+protection.</p>
+<p>However, labels such as “ceramic-rich,” “biochar,” “compost,” or
+“coarse aggregate” do not establish performance. Properties depend on
+feedstock, process, grading, durability, chemistry, contaminants,
+placement, compaction, saturation, freeze-thaw or wet-dry cycles, roots,
+and maintenance. Each claimed function requires a material specification
+and evidence appropriate to the intended use.</p>
+<h2 id="infiltration-and-recharge-boundaries">6. Infiltration and
+Recharge Boundaries</h2>
+<p>“Slow, spread, sink” is not universally safe. Water may need to be
+infiltrated, detained, treated, bypassed, conveyed, or excluded.
+Infiltration and recharge candidates require site-specific analysis of
+contaminant mobilization, source-water quality, groundwater depth and
+use, soil and rock pathways, slope stability, adjacent foundations,
+utilities, flooding, ecological effects, rights, permits, and long-term
+maintenance.</p>
+<p>Recharge is a stronger claim than infiltration. Infiltration at the
+surface does not by itself demonstrate beneficial aquifer recharge,
+recovery, water-quality protection, or absence of off-site effects. The
+brief therefore uses <code>RECHARGE_CANDIDATE</code> until hydrogeologic
+and regulatory evidence supports a stronger posture.</p>
+<p>Qanat-inspired, subsurface, tunnel, cave, cistern, gallery, and
+groundwater-interception concepts remain conceptual only. They require
+qualified geotechnical, structural, hydrologic, environmental,
+archaeological or cultural, occupational-safety, property-rights, and
+legal review as applicable.</p>
+<h2 id="geologic-intelligence-and-sampling-discipline">7. Geologic
+Intelligence and Sampling Discipline</h2>
+<p>The geologic intelligence module can record location, depth, horizon,
+parent material, grading, plasticity, density, permeability, water
+behavior, chemistry, salinity, organic content, nutrients, contaminants,
+mineral characteristics, biological indicators, and candidate use
+classes.</p>
+<p>The measurement program must also record what it does not know.
+Required controls include:</p>
+<ul>
+<li>sampling objective and population;</li>
+<li>spatial and depth coverage;</li>
+<li>field and laboratory methods;</li>
+<li>units, calibration, detection limits, and uncertainty;</li>
+<li>duplicates, blanks, controls, and quality flags where
+applicable;</li>
+<li>custody from collection through transformation;</li>
+<li>heterogeneity and representativeness limits;</li>
+<li>schema and vocabulary version;</li>
+<li>qualified interpretation and review status.</li>
+</ul>
+<p>Maps are model products, not the terrain. Resolution, interpolation,
+age, coordinate reference, uncertainty, and intended use must accompany
+every suitability or exclusion layer.</p>
+<h2 id="data-governance">8. Data Governance</h2>
+<p>Subsurface and landscape data can affect liability, land value,
+development, ecological protection, water and mineral interests,
+cultural places, and community power. Findability and interoperability
+do not imply a right to collect, combine, infer, or disclose.</p>
+<p>The system should distinguish public, restricted, protected, and
+prohibited data; define collection and purpose authority; minimize
+unnecessary precision; record consent or other lawful basis; constrain
+secondary use; support correction and revocation where applicable; and
+preserve community, tribal, landholder, worker, and ecological
+interests.</p>
+<p>The Governed Meaning Base can hold typed relations among batches,
+samples, methods, designs, decisions, evidence, access rules, and
+revisions. It must preserve provenance and standing rather than
+presenting every entry as equally true or public.</p>
+<h2 id="decision-and-effect-gates">9. Decision and Effect Gates</h2>
+<p>A responsible workflow separates:</p>
+<ol type="1">
+<li>orientation and known-history review;</li>
+<li>sampling and investigation design;</li>
+<li>field collection and custody;</li>
+<li>laboratory and in-situ testing;</li>
+<li>material and site profile synthesis;</li>
+<li>alternative hydrologic designs;</li>
+<li>professional, legal, environmental, and community review;</li>
+<li>authorization of a bounded pilot or implementation;</li>
+<li>construction quality evidence;</li>
+<li>monitoring, maintenance, reclassification, and revision.</li>
+</ol>
+<p>No earlier stage silently authorizes a later one. In particular, an
+AI-generated recommendation, database classification, material passport,
+or conceptual paper cannot authorize excavation, infiltration, recharge,
+structural fill, contaminant handling, data release, or subsurface
+construction.</p>
+<h2 id="outcome-and-monitoring-model">10. Outcome and Monitoring
+Model</h2>
+<p>Performance is multidimensional:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Y = (&amp;runoff, peak, storage, infiltration, recharge, erosion, \\
+&amp;quality, stability, ecology, maintenance, equity)
+\end{aligned}.
+$$</span></p>
+<p>Improvement in one component can worsen another. Increased
+infiltration may reduce surface runoff while increasing contaminant
+transport or slope risk. Sediment capture may protect downstream water
+while concentrating material requiring safe handling. Tree growth may
+improve while structural settlement worsens.</p>
+<p>Monitoring should bind baseline, intervention, comparison where
+feasible, weather and operating conditions, instrument methods,
+uncertainty, inspection, maintenance, and adverse events. Causal claims
+require designs capable of distinguishing intervention effects from
+rainfall variation, vegetation succession, upstream changes, or
+measurement drift.</p>
+<h2 id="failure-modes">11. Failure Modes</h2>
+<p>Major failure modes include contaminated material routed to sensitive
+use; nonrepresentative samples; mixed batches retaining an obsolete
+passport; unstable slopes; blocked or undersized overflow; accelerated
+downstream flooding; groundwater contamination; salinity accumulation;
+clogged infiltration surfaces; settlement; organic material in
+structural zones; unsafe subsurface work; maintenance abandonment;
+sensitive-data disclosure; authority overreach; community exclusion; and
+attractive maps that exceed their evidence.</p>
+<p>The appropriate response can be refuse, defer, isolate, redesign,
+restrict, monitor, repair, decommission, or restore. Reuse percentage is
+not a success metric when it pressures the system to deploy unsuitable
+material.</p>
+<h2 id="realization-funnel">12. Realization Funnel</h2>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;Possibility \\
+&amp;\rightarrow Specification \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow Evidence \\
+&amp;\rightarrow Revision
+\end{aligned}.
+$$</span></p>
+<ul>
+<li><strong>Possibility:</strong> imagine classified-material and
+water-management relationships.</li>
+<li><strong>Specification:</strong> define ontology, tests, thresholds,
+authority, data rights, and performance claims.</li>
+<li><strong>CM1:</strong> enumerate admissible material routes and
+interventions, including weak, risky, or refusal cases.</li>
+<li><strong>CM2:</strong> select preferable candidates under site,
+safety, ecological, social, economic, and maintenance criteria.</li>
+<li><strong>IC:</strong> bind an Instance Constitution or Instance
+Configuration for a named site and project.</li>
+<li><strong>IR:</strong> construct the Instance Realization or
+Implementation Realization under qualified authority.</li>
+<li><strong>Evidence:</strong> measure material, construction,
+hydrologic, geotechnical, ecological, and governance outcomes.</li>
+<li><strong>Revision:</strong> update passports, designs, restrictions,
+and system claims.</li>
+</ul>
+<p>This brief develops Specification and candidate CM1/CM2 structure. It
+supplies no site IC, built IR, or field evidence. Realization-stage IR
+remains distinct from Intermediate Representation in MCIR and compiler
+contexts.</p>
+<h2 id="evaluation-program">13. Evaluation Program</h2>
+<p>Evaluation should test passport custody and representativeness;
+inter-laboratory and field/laboratory agreement; material-property
+stability after transformation; routing accuracy; design sensitivity;
+overflow and failure behavior; infiltration and water-quality effects;
+slope and settlement response; clogging and maintenance; monitoring
+coverage; adverse-event detection; access-control and disclosure
+resistance; community and tribal governance processes where applicable;
+and the accuracy of all suitability, exclusion, and causal claims.</p>
+<h2 id="two-module-profile-under-classified-earthworks">Two-Module
+Profile Under Classified Earthworks</h2>
+<p>Across the completed P1 corpus, the Hydroengineering and Geologic
+Intelligence Modules form the <strong>two-module landscape-material
+profile under Classified Earthworks</strong>. Hydroengineering governs
+proposed changes to water timing, path, contact, storage, treatment,
+overflow, and release. Geologic intelligence governs sampling, material
+and site observations, uncertainty, mapping, access, and revision.
+Neither module independently authorizes material use, excavation,
+infiltration, recharge, construction, or data release.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>Classified
+Earthworks</em><br />
+<strong>Supplies:</strong> Parent material classification and governed
+routing architecture.<br />
+<strong>Module boundary:</strong> The modules specialize site-water
+design and site/material knowledge.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Technical Brief: Classified
+Earthworks System</em><br />
+<strong>Supplies:</strong> Concise platform, mobile processing,
+passport, and deployment framing.<br />
+<strong>Module boundary:</strong> This profile adds deeper hydrologic
+and geologic decision contracts.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Governance
+Witnesses</em><br />
+<strong>Supplies:</strong> Typed laboratory, field, monitoring,
+inspection, and community observations.<br />
+<strong>Module boundary:</strong> Witnesses support bounded suitability
+claims without certifying the site.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> Custody for samples, batches, designs,
+decisions, placements, and monitoring duties.<br />
+<strong>Module boundary:</strong> Custody continuity is required but not
+sufficient for technical suitability.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Constitutional
+Observability Platform</em><br />
+<strong>Supplies:</strong> Separation of domain state, presentation,
+sensors, accessibility, and interpretation.<br />
+<strong>Module boundary:</strong> It helps prevent maps and dashboards
+from becoming the terrain or the effect.</p></li>
+</ul>
+<p>A module decision should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;site, batch, use, design, sampling, tests, hydrology, \\
+&amp;geology, uncertainty, rights, authority, data\_policy, \\
+&amp;decision, effect, monitoring, decommissioning)
+\end{aligned}.
+$$</span></p>
+<p>Suitability is relational and temporal. A batch or site is not simply
+good, clean, infiltrating, or recharge-producing.
+<code>ADMIT</code>,<br />
+<code>PILOT</code>, <code>CONDITION</code>, <code>DEFER</code>,
+<code>REFUSE</code>, <code>ISOLATE</code>,<br />
+and <code>UNKNOWN</code> remain separate. Surface infiltration does not
+establish beneficial recharge; a material passport does not grant a
+permit; a map does not remove interpolation uncertainty.</p>
+<p>The modules must preserve downstream and off-site effects,
+extreme-event overflow, contaminant mobilization, slope and structural
+response, maintenance, adverse-event detection, community and tribal
+governance, protected data, and decommissioning. Reuse or infiltration
+targets cannot override a do-not-use or do-not-infiltrate decision.</p>
+<p>The universal GSM can type<br />
+<code>SPECIALIZES_CLASSIFIED_EARTHWORKS</code>,<br />
+<code>CHARACTERIZES_SITE_GEOLOGY</code>,
+<code>PROPOSES_HYDROLOGIC_INTERVENTION</code>,
+<code>SAMPLES_BATCH_AT_SITE</code>,<br />
+<code>CONDITIONS_USE_ON_EVIDENCE</code>,
+<code>REFUSES_INFILTRATION</code>,
+<code>REMAINS_RECHARGE_CANDIDATE</code>,<br />
+<code>MONITORS_DOWNSTREAM_EFFECT</code>,
+<code>RESTRICTS_SITE_DATA</code>,<br />
+and<br />
+<code>DECOMMISSIONS_INTERVENTION</code>. These relations preserve the
+parent/profile structure.</p>
+<p>This integration establishes four editorial commitments: retain the
+work as a two-module profile under Classified Earthworks; adopt the
+module-decision envelope; reserve recharge, safety, and suitability
+claims for site-specific evidence and authority; and require monitoring,
+protected-data, downstream-effect, refusal, and decommissioning
+semantics.</p>
+<h2
+id="protected-site-meaning-learning-boundaries-and-exact-decision-lineage">Protected
+Site Meaning, Learning Boundaries, and Exact Decision Lineage</h2>
+<p>The fixed-seed comparison with the Suppression Paradox, governed
+continual training, project-state lineage, and The Locus of Meaning
+expands a site decision from a technical record into a governed semantic
+and evidentiary binding:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D^*= (&amp;site, batch, use, design, sampling, tests, hydrology, \\
+&amp;geology, uncertainty, rights, authority, \\
+&amp;protected\_constraints, meaning\_binding, lineage, \\
+&amp;decision, effect, monitoring, revision, decommissioning)
+\end{aligned}.
+$$</span></p>
+<p>Protected community, tribal, ecological, safety, location, or
+infrastructure information may materially constrain a design even when
+it cannot be disclosed in a public map or general model. An authorized
+representation can carry the constraint, custodian, scope, review route,
+and expiry; secrecy alone does not prove the constraint or remove
+contestability.</p>
+<p>Continual learning may update sampling priorities, anomaly detection,
+forecasting, or maintenance hypotheses from monitoring. It cannot
+silently weaken a do-not-infiltrate decision, erase adverse outcomes, or
+promote a site-wide suitability claim. Project-state lineage should bind
+sample, passport, model, design, decision, construction, monitoring, and
+decommissioning generations without treating byte identity as material
+identity.</p>
+<p>The Locus of Meaning supplies a semantic boundary: the meaning of a
+passport, map symbol, threshold, or suitability label resides in its
+typed binding among material, site, use, method, jurisdiction, evidence,
+uptake, and consequence. It is not stored wholly in the document or
+inferred solely by the reader.</p>
+<p>The universal GSM can type<br />
+<code>CARRIES_PROTECTED_SITE_CONSTRAINT</code>,<br />
+<code>LEARNS_FROM_MONITORING_UNDER_GATE</code>,
+<code>PRESERVES_SAMPLE_TO_DECISION_LINEAGE</code>,<br />
+<code>BINDS_PASSPORT_MEANING_IN_JURISDICTION</code>,
+<code>REFUSES_SITEWIDE_GENERALIZATION</code>,<br />
+<code>REVISES_AFTER_ADVERSE_EFFECT</code>, and<br />
+<code>DECOMMISSIONS_WITH_REMAINDER</code>.</p>
+<p>This randomized review establishes four editorial commitments: adopt
+the expanded site-decision envelope; create a protected constraint
+channel with custody and appeal; govern monitoring-driven learning
+without self-authorizing promotion; and bind passport and map meaning to
+exact project lineage plus site/use/evidence jurisdiction.</p>
+<h2 id="one-physical-decision-braid-across-six-downstream-uses">One
+Physical Decision Braid Across Six Downstream Uses</h2>
+<p>Six material downstream uses confirm this work as a profile under
+Classified Earthworks rather than an independent authorization system.
+The parent paper and technical system brief use it for site-water and
+geologic specialization. Governed continual training uses monitoring as
+a source of bounded model proposals while preserving permits,
+professional judgment, protected constraints, and do-not-use decisions.
+Project lineage uses the profile to distinguish sample, batch, passport,
+model, design, placement, monitoring, and decommissioning succession.
+The Locus of Meaning binds passport and map semantics to site, method,
+use, jurisdiction, evidence, uptake, and consequence. The Suppression
+Paradox carries protected constraints without transferring physical
+evidence or domain authority.</p>
+<p>Together they form a physical decision braid:</p>
+<p><span class="math display">$$
+\begin{aligned}
+D= (&amp;physical\_subject, semantic\_identity, custody, site, \\
+&amp;use, sample, method, model, protected\_constraints, \\
+&amp;authority, design, decision, effect, monitoring, lineage, \\
+&amp;revision, decommissioning, remainder)
+\end{aligned}.
+$$</span></p>
+<p>No strand substitutes for another. Byte lineage is not material
+continuity. A material passport is not a permit. A model update is not
+professional approval. A coherent map is not the terrain. A protected
+constraint can remain binding without public disclosure, but secrecy
+alone is not evidence and must retain a custodian, scope, review path,
+and expiry or revision rule.</p>
+<p>Every physical effect creates new evidence obligations. Placement,
+infiltration, overflow, contaminant movement, settlement, slope
+response, maintenance, community impact, and downstream conditions can
+defeat an earlier design or suitability claim. Learning and semantic
+revisions must point to the exact physical generation and cannot
+overwrite adverse outcomes or refusal history.</p>
+<p>The universal GSM can type<br />
+<code>SPECIALIZES_CLASSIFIED_EARTHWORKS_PROFILE</code>,<br />
+<code>BINDS_PHYSICAL_DECISION_BRAID</code>,
+<code>PRESERVES_MATERIAL_SUCCESSION</code>,<br />
+<code>LEARNS_FROM_MONITORING_WITHOUT_AUTHORITY</code>,
+<code>CARRIES_PROTECTED_SITE_CONSTRAINT</code>,<br />
+<code>REVISES_AFTER_PHYSICAL_EFFECT</code>, and<br />
+<code>DECOMMISSIONS_WITH_RESIDUAL_REMAINDER</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: adopt the physical decision braid; keep the work
+subordinate to the Classified Earthworks identity; require every
+learning or semantic successor to bind exact physical lineage; and
+preserve protected constraints, adverse outcomes, refusal history, and
+decommissioning obligations through revision.</p>
+<h2 id="counterevidence-and-boundary-tests">14. Counterevidence and
+Boundary Tests</h2>
+<p>The proposal must narrow or fail if: (1) passported batches are
+materially heterogeneous; (2) samples are not representative; (3)
+custody is broken; (4) test methods do not fit the use; (5) detection
+limits exceed relevant thresholds; (6) transformation changes material
+properties; (7) mixing invalidates prior results; (8) increased
+infiltration mobilizes contaminants; (9) infiltration destabilizes a
+slope; (10) storage displaces flooding downstream; (11) overflow is
+blocked or undersized; (12) sediment traps create a new waste stream;
+(13) biochar, compost, or ceramic labels substitute for specifications;
+(14) structural fill contains unsuitable organics; (15) root-zone
+success masks settlement; (16) recharge is claimed from surface
+infiltration alone; (17) groundwater or neighboring structures are
+harmed; (18) salinity or waterlogging accumulates; (19) extreme events
+exceed assumptions; (20) maintenance is unavailable; (21) maps hide
+interpolation uncertainty; (22) data is disclosed beyond authority; (23)
+communities lack meaningful governance; (24) rights or permits block the
+design; (25) reuse targets override safety; (26) monitoring cannot
+attribute effects; (27) adverse outcomes appear outside the project
+boundary; (28) AI classifications are treated as professional approval;
+(29) external sources or standards do not support attributed claims;
+(30) lifecycle cost or energy reverses the benefit; (31) the
+intervention cannot be safely decommissioned; or (32) a
+do-not-infiltrate decision is not preserved through design and
+construction.</p>
+<h2 id="water-and-geologic-data-do-not-authorize-intervention">Water and
+Geologic Data Do Not Authorize Intervention</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>The Hydroengineering and Geologic Intelligence Modules join physical
+material custody to site-specific water decisions. Their central object
+is a bounded suitability relation among a material batch, intended use,
+site, design, evidence, authority, and time. The modules can organize
+investigation and monitoring; they do not turn a general water principle
+or material passport into permission to alter land or water.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Infiltration-benefit attack.</strong> Increased infiltration
+is assumed beneficial despite contaminant transport, slope instability,
+structural damage, groundwater effects, saturation, or displaced
+flooding.</li>
+<li><strong>Sample-site attack.</strong> Point observations or a
+material batch are treated as representative of heterogeneous subsurface
+and hydrologic conditions.</li>
+<li><strong>Model-terrain attack.</strong> A model omits extreme events,
+blocked routes, erosion, settlement, vegetation change, maintenance
+failure, or adjacent-property effects.</li>
+<li><strong>Passport-permit attack.</strong> Complete material and site
+records are mistaken for engineering approval, land authority, water
+rights, or regulatory permission.</li>
+<li><strong>Monitoring-rescue attack.</strong> Post-deployment
+monitoring is used to justify inadequate pre-deployment evidence or an
+intervention without safe rollback.</li>
+<li><strong>Data-custody attack.</strong> Geologic, hydrologic,
+ecological, cultural, property, or infrastructure data is collected or
+disclosed beyond consent and purpose.</li>
+<li><strong>Boundary-export attack.</strong> Water, sediment,
+contamination, hazard, or maintenance burden is moved outside the
+measured site or onto another community.</li>
+<li><strong>Climate-stationarity attack.</strong> Historical conditions
+and design recurrence are treated as stable across changing climate and
+land use.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>This brief specifies coupled investigation and decision modules. It
+does not establish site suitability, hydrologic benefit, material
+safety, structural stability, ecological improvement, legal authority,
+economic viability, or readiness to intervene. Each physical decision
+requires exact site and batch evidence, qualified engineering and
+environmental review, affected-party participation, applicable
+authority, safe failure and reversal planning, and continuing
+monitoring.</p>
+<p>No site was assessed, material handled, structure designed, water
+routed, data released, external research performed, or implementation
+authorized in this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The public value is a decision record that keeps material, site,
+model, authority, uncertainty, downstream exposure, monitoring, and
+revision together - including a clear result when the right answer is
+not to intervene.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Hydroengineering and Geologic Intelligence Modules make
+Classified Earthworks more rigorous by coupling material transformation
+to site knowledge, intended use, evidence, authority, monitoring, and
+revision. Their most valuable product is not a universal landscape
+recipe. It is a governed method for asking what a material is, what
+evidence supports that description, where it may be used, what water
+will do there, who can decide, what happened after deployment, and when
+the answer must change.</p>
+<p>A Classified Earthworks system does not merely ask the ground what it
+is. It records how the question was asked, who may rely on the answer,
+what remains unknown, and what consequences follow from acting on
+it.</p>
+<h2 id="reference-and-verification-note">Reference and Verification
+Note</h2>
+<h3 id="author-corpus-interfaces-inspected-under-exact-custody">Author
+corpus interfaces inspected under exact custody</h3>
+<p>Ableman Adam Ableman <em>Classified Earthworks.</em></p>
+<p>Ableman Adam Ableman <em>Technical Brief: Classified Earthworks
+System.</em></p>
+<h3 id="external-verification-required">External verification
+required</h3>
+<p>The source relies on or refers to EPA green-infrastructure and
+recharge material, NRCS soil-health guidance, ASTM D2487, USGS GeMS,
+FAIR principles, and CARE Principles for Indigenous Data Governance. No
+external source was consulted in this pass. Further evidentiary
+strengthening requires primary-source verification of wording, scope,
+current versions, applicability, and bibliographic details, plus
+qualified review of the scientific, engineering, legal, cultural, and
+governance claims.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that the Hydroengineering and Geologic Intelligence
+Modules extend Classified Earthworks from material separation and
+transformation into a governed landscape-intervention architecture. Its
+nearest external comparison fields are earth, cps. The sources in [E1],
+[E2], [E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Material classes are
+sampling- and method-dependent; heterogeneous sites, contaminant
+transport, and regulatory thresholds can defeat a neat
+classification-to-action mapping. Runtime monitors and fallback
+controllers only protect modeled safety envelopes and can fail through
+sensor error, timing assumptions, unsafe recovery, or omitted hazards.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> U.S. Army Corps of Engineers. <em>Sediment
+Investigations</em>, Engineer Manual EM 1110-2-4000. 14 February 2025.
+<a
+href="https://www.publications.usace.army.mil/Portals/76/Publications/EngineerManuals/EM%201110-2-4000_FINAL_14Feb2025.pdf">publications.usace.army.mil
+source</a> <strong>Relationship:</strong> Primary engineering guidance
+for material characterization and classification; included to ground
+classification claims in field and laboratory practice.</p>
+<p><strong>[E2]</strong> U.S. Environmental Protection Agency.
+<em>Guidance for Cleaning Up Groundwater, Soil and Air at Hazardous
+Waste Cleanup Facilities</em>. <a
+href="https://www.epa.gov/hw/guidance-cleaning-groundwater-soil-and-air-hazardous-waste-cleanup-facilities">epa.gov
+source</a> <strong>Relationship:</strong> Primary remediation guidance
+emphasizing media transfer, exposure, and site-specific cleanup
+decisions.</p>
+<p><strong>[E3]</strong> Edward R. Griffor et al. <em>Framework for
+Cyber-Physical Systems: Volume 1, Overview</em>. NIST SP 1500-201, 2017.
+DOI: 10.6028/NIST.SP.1500-201. https://doi.org/10.6028/NIST.SP.1500-201
+<strong>Relationship:</strong> Adjacent cyber-physical systems framework
+for trustworthiness, timing, data, and lifecycle concerns.</p>
+<p><strong>[E4]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E5]</strong> J. Tanner Slagel et al. “A Formal Verification
+Framework for Runtime Assurance.” <em>NASA Formal Methods</em>, 2024.
+NASA NTRS 20230017350. https://ntrs.nasa.gov/citations/20230017350
+<strong>Relationship:</strong> Adjacent runtime-assurance formalization,
+useful for comparing failover safety with constitutional admission and
+effect recognition.</p>
+<p><strong>[E6]</strong> Nancy G. Leveson and John P. Thomas. <em>STPA
+Handbook</em>. MIT, 2018.
+https://psas.scripts.mit.edu/home/books-and-handbooks/
+<strong>Relationship:</strong> Adjacent systems-theoretic hazard
+analysis method; used to test treatment of unsafe control and
+system-level constraints.</p>
+<p><strong>[E7]</strong> Robert N. M. Watson, Simon W. Moore, Peter
+Sewell, and Peter G. Neumann. <em>An Introduction to CHERI</em>.
+University of Cambridge Technical Report UCAM-CL-TR-941, 2019. DOI:
+10.48456/tr-941. <a
+href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-941.html">cl.cam.ac.uk
+source</a> <strong>Relationship:</strong> Adjacent capability
+architecture demonstrating unforgeable hardware authority and
+compartmentalization.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Classified Earthworks</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-8D3F34F396D7760E</code>;<br />
+source SHA-256<br />
+<code>9011C1800E2294A0F0E72BFBA871B071C8C4590C2A7E83FEBFF2BAE5D29E533A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Technical Brief: Classified
+Earthworks System</em>. Ableman Corpus current edition; work
+identity<br />
+<code>AMCS-LOCAL-WORK-F4D74EA1DCD91309</code>;<br />
+source SHA-256<br />
+<code>3DCF2DFF9430B987F1D4BD8785D9A6ABB6309037FFC65ADA46F58AFD606DFFD8</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Water: MCIR as the
+Engineering of Governed Change</em>. Ableman Corpus current edition;
+work identity<br />
+<code>AMCS-LOCAL-WORK-91A910961BA1B5AF</code>;<br />
+source SHA-256<br />
+<code>1C0B814A76E0724FAD8ECC7A71DBBFC55B3C13E8ED03ED6F399496A70C2587CD</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Constitutional Robotics</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18750683</code>;<br />
+source SHA-256<br />
+<code>D10DF9B6B7F742D9EEABF01BC5DFC3755BB4EBF548E8CB5F215BB9D94678F514</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>A Constitutional Syscall
+Architecture for Cyber-Physical Control Systems</em>. Ableman Corpus
+current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-F46D86D479F89BAC</code>;<br />
+source SHA-256<br />
+<code>5E696B753A10BD3C3D36B675A84B95CCF2234F024A6B277BF121E76BFCBCBD18</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Effect Sovereignty</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.18737323</code>;<br />
+source SHA-256<br />
+<code>1DB8A34946A8705F6F4BA4FC3B12B251FC7C83DBDF217F9DDFF55529C8612EE7</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>Constitutionally Governed
+Infrastructure</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-EF5747107D56F516</code>;<br />
+source SHA-256<br />
+<code>9C708BA381108EEA252404DF33F7B3B1648EC9CF5F2ACF00BAB88C6A15540926</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23847969">10.5281/zenodo.23847969</a></p>

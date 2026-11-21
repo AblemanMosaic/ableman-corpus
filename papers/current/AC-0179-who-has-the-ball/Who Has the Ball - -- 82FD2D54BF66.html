@@ -1,0 +1,990 @@
+<h1 id="who-has-the-ball">Who Has the Ball?</h1>
+<h2 id="work-custody-as-a-primitive-of-human-agent-collaboration">Work
+Custody as a Primitive of Human-Agent Collaboration</h2>
+<h3
+id="yet-they-routinely-fail-to-answer-one-of-the-simplest-operational-questions-who-has-the-ball">Yet
+they routinely fail to answer one of the simplest operational questions:
+Who has the ball?</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Modern collaboration systems successfully model many aspects of
+cooperative work, including projects, documents, conversations, tasks,
+ownership, permissions, workflows, and automation. Yet they routinely
+fail to answer one of the simplest operational questions:</p>
+<blockquote>
+<p><strong>Who has the ball?</strong></p>
+</blockquote>
+<p>This question is deceptively fundamental. It does not ask who owns a
+project, who is accountable for an outcome, who was originally assigned
+a task, or who possesses authority over a resource. Rather, it asks who
+currently holds the live responsibility, context, and expectation to
+advance a particular unit of work.</p>
+<p>Existing collaboration systems approximate this concept through
+fragmented mechanisms such as assignees, ownership fields, Kanban cards,
+RACI matrices, incident handoffs, or chain-of-custody procedures.
+However, these mechanisms typically model planning, accountability, or
+artifact provenance rather than the current possession of
+responsibility-bearing work.</p>
+<p>This paper proposes <strong>Work Custody</strong> as a first-class
+primitive of collaboration. Work Custody is a temporally bounded
+constitutional relation describing which participant or execution role
+presently holds an accepted, scoped obligation to advance a work object,
+how custody is acquired and transferred, and how the collaboration
+system maintains shared queryable recognition among authorized
+participants. The record does not itself confer capability, authority,
+accountability, or moral or legal responsibility.</p>
+<p>The proposed protocol grammar can be used across human-human,
+human-agent, and agent-agent collaboration, while participant type,
+capability, authority, accountability, and legal or moral responsibility
+remain distinct. It offers a candidate operational primitive for
+constitutional collaboration environments.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Organizations spend extraordinary effort discovering something their
+software should already know.</p>
+<p>Questions such as:</p>
+<ul>
+<li>Who is working on this?</li>
+<li>Who needs to act next?</li>
+<li>Where is this blocked?</li>
+<li>Why has nothing happened for three days?</li>
+<li>Who is waiting on me?</li>
+<li>Who currently owns the next move?</li>
+</ul>
+<p>are among the most common questions in engineering, research,
+medicine, manufacturing, military operations, government, and knowledge
+work.</p>
+<p>Most collaboration tools answer these questions indirectly.</p>
+<p>They expose:</p>
+<ul>
+<li>assignments,</li>
+<li>ownership,</li>
+<li>comments,</li>
+<li>timestamps,</li>
+<li>workflow stages,</li>
+<li>tickets,</li>
+<li>chat histories,</li>
+<li>notifications.</li>
+</ul>
+<p>Humans then reconstruct current operational reality through meetings,
+memory, and inference.</p>
+<p>This reconstruction is both expensive and error-prone.</p>
+<p>The missing abstraction is not another project-management
+feature.</p>
+<p>It is the absence of an explicit model of current operational
+possession.</p>
+<hr />
+<h2 id="the-ball">2. The “Ball”</h2>
+<p>Teams often describe responsibility informally by saying:</p>
+<blockquote>
+<p>“Alice has the ball.”</p>
+</blockquote>
+<p>This phrase carries several meanings simultaneously.</p>
+<p>It implies:</p>
+<ul>
+<li>Alice knows she possesses the work.</li>
+<li>Others know Alice possesses the work.</li>
+<li>Alice is expected to advance it.</li>
+<li>The work is not presently waiting on another custodian.</li>
+<li>Responsibility will eventually be transferred.</li>
+<li>The transfer will be observable.</li>
+</ul>
+<p>Despite its ubiquity, few collaboration systems model this state
+directly.</p>
+<p>Instead, users infer it from unrelated metadata.</p>
+<hr />
+<h2 id="existing-partial-models">3. Existing Partial Models</h2>
+<p>Many existing systems contain fragments of Work Custody.</p>
+<h3 id="assignment">3.1 Assignment</h3>
+<p>Assignments answer:</p>
+<blockquote>
+<p>Who should perform this task?</p>
+</blockquote>
+<p>Assignments do not necessarily imply:</p>
+<ul>
+<li>acceptance,</li>
+<li>awareness,</li>
+<li>active responsibility,</li>
+<li>possession,</li>
+<li>transfer,</li>
+<li>current operational state.</li>
+</ul>
+<hr />
+<h3 id="ownership">3.2 Ownership</h3>
+<p>Ownership is generally persistent.</p>
+<p>Repositories, documents, or projects may have owners.</p>
+<p>Ownership rarely changes during execution.</p>
+<p>Custody changes frequently.</p>
+<hr />
+<h3 id="accountability">3.3 Accountability</h3>
+<p>Frameworks such as RACI distinguish responsibility and
+accountability.</p>
+<p>These are planning constructs.</p>
+<p>They do not generally model live possession of work.</p>
+<hr />
+<h3 id="workflow-state">3.4 Workflow State</h3>
+<p>Workflow engines model stage transitions.</p>
+<p>They answer:</p>
+<blockquote>
+<p>What state is this work in?</p>
+</blockquote>
+<p>They often cannot answer:</p>
+<blockquote>
+<p>Who currently possesses the obligation to move it?</p>
+</blockquote>
+<hr />
+<h3 id="chain-of-custody">3.5 Chain of Custody</h3>
+<p>Evidence handling records every transfer of physical or digital
+artifacts.</p>
+<p>This concept is remarkably close to the proposed model.</p>
+<p>However, it protects artifact provenance rather than operational
+collaboration.</p>
+<p>This paper generalizes custody from artifacts to
+responsibility-bearing work.</p>
+<hr />
+<h2 id="work-custody">4. Work Custody</h2>
+<p>We define Work Custody as follows.</p>
+<p><strong>Definition</strong></p>
+<p>Work Custody is a constitutional relation naming the participant or
+execution role currently expected to attempt, route, monitor, or
+otherwise advance a scoped work object until custody is transferred,
+released, completed, expired, revoked, or escalated under declared
+rules.</p>
+<p>Unlike ownership, custody is expected to change.</p>
+<p>Unlike assignment, custody requires acceptance.</p>
+<p>Unlike authority, custody does not imply unlimited decision
+rights.</p>
+<p>Unlike accountability, custody is operational rather than
+managerial.</p>
+<hr />
+<h2 id="core-relations">5. Core Relations</h2>
+<p>A collaboration system should distinguish at least the following
+relations.</p>
+<pre class="text"><code>OWNS
+
+HAS_AUTHORITY
+
+IS_ACCOUNTABLE
+
+HAS_CUSTODY
+
+WAITING_ON
+
+DEPENDS_ON</code></pre>
+<p>These relations are not interchangeable.</p>
+<p>A participant may own an artifact while another participant has
+authority to approve changes, while a third currently holds custody of
+today’s work.</p>
+<hr />
+<h2 id="custody-lifecycle">6. Custody Lifecycle</h2>
+<p>Work Custody proceeds through explicit states.</p>
+<pre class="text"><code>UNASSIGNED -&gt; OFFERED -&gt; ACCEPTED -&gt; ACTIVE_CUSTODY
+ACTIVE_CUSTODY -&gt; TRANSFER_PENDING -&gt; ACTIVE_CUSTODY(successor)
+ACTIVE_CUSTODY -&gt; RELEASED | COMPLETED | EXPIRED | REVOKED | ESCALATED</code></pre>
+<p>A transfer may require more than one event. During a pending handoff,
+the predecessor remains visible, the proposed successor is identified,
+acceptance is unresolved, and the protocol states who retains active
+custody. This makes ambiguous and failed handoffs representable rather
+than assuming that a sent message completed the transfer.</p>
+<hr />
+<h2 id="constitutional-invariants">7. Constitutional Invariants</h2>
+<p>A collaboration environment adopting Work Custody should satisfy
+several invariants.</p>
+<h3 id="i.-conditional-exclusive-custody">I. Conditional Exclusive
+Custody</h3>
+<p>An atomic active obligation has exactly one active custodian unless
+joint, replicated, quorum, or partitioned custody is explicitly
+declared. The work object must be decomposed when different participants
+hold different advancement obligations.</p>
+<hr />
+<h3 id="ii.-assignment-does-not-create-custody">II. Assignment Does Not
+Create Custody</h3>
+<p>Assigning work merely proposes a future custody relationship.</p>
+<p>Acceptance is separate.</p>
+<hr />
+<h3 id="iii.-custody-requires-recognition">III. Custody Requires
+Recognition</h3>
+<p>Custody exists only after explicit acquisition.</p>
+<p>Silent assumptions are insufficient.</p>
+<hr />
+<h3 id="iv.-transfer-is-explicit">IV. Transfer Is Explicit</h3>
+<p>Custody changes only through recognized transfer events.</p>
+<hr />
+<h3 id="v.-shared-queryable-recognition">V. Shared Queryable
+Recognition</h3>
+<p>All authorized collaborators can resolve the current custody record
+within the disclosure and freshness limits of the workflow. A queryable
+record improves coordination; it does not by itself prove that every
+participant noticed or understood the state.</p>
+<p>Operational responsibility hidden only inside private mental models
+defeats the purpose of the representation.</p>
+<hr />
+<h3 id="vi.-every-transfer-produces-history">VI. Every Transfer Produces
+History</h3>
+<p>Custody transfers become historical records.</p>
+<p>Questions such as:</p>
+<ul>
+<li>Who previously held this?</li>
+<li>Why was it transferred?</li>
+<li>How long did each participant hold it?</li>
+</ul>
+<p>become mechanically answerable.</p>
+<hr />
+<h2 id="waiting">8. Waiting</h2>
+<p>Work frequently cannot progress because another participant possesses
+a prerequisite.</p>
+<p>Accordingly, Work Custody introduces an additional constitutional
+relation:</p>
+<pre class="text"><code>WAITING_ON</code></pre>
+<p>This relation identifies the external dependency preventing the
+custodian from advancing work.</p>
+<p>This distinction allows the system to differentiate:</p>
+<p>“I have the ball.”</p>
+<p>from</p>
+<p>“I have the ball, but someone else must act first.”</p>
+<hr />
+<h2 id="one-protocol-grammar-different-kinds-of-participants">9. One
+Protocol Grammar, Different Kinds of Participants</h2>
+<p>The custody protocol can address humans, organizations, AI agents,
+deterministic components, workflow engines, courts, and external
+services through one typed participant interface. That syntactic
+symmetry is useful for orchestration, but it must not erase substantive
+differences.</p>
+<p>A human or institution may bear moral, professional, contractual,
+managerial, or legal responsibility. An AI agent or deterministic
+component can occupy an operational custody slot only because an
+authorized constitution treats it as the currently expected executor,
+router, monitor, or holder of a bounded work lease. The non-human
+component does not acquire rights, accountability, authority, or
+standing merely because a database names it as custodian. A court
+normally adjudicates or qualifies rather than advancing the work itself;
+an external service participates only for the operations its contract
+and capabilities actually support.</p>
+<p>Accordingly, every custody record should identify the participant
+kind, capability basis, authority basis, escalation principal, and
+accountable human or institution where the jurisdiction requires one.
+Protocol uniformity supports composition. Typed differences prevent
+responsibility and authority laundering.</p>
+<p>Example:</p>
+<pre class="text"><code>Researcher -&gt; Research Agent -&gt; Validator -&gt; Review Court -&gt; Publisher</code></pre>
+<p>This line is not one undifferentiated chain of responsibility. The
+researcher may authorize and remain accountable; the agent may draft;
+the validator may test; the court may adjudicate a bounded claim; and
+the publisher may possess a distinct release authority. Each transition
+must say which work object and obligation moved, which did not, and what
+acceptance means for the successor.</p>
+<h2 id="shared-queryable-recognition">10. Shared Queryable
+Recognition</h2>
+<p>The practical contribution is not merely recording custody but making
+the current record available and intelligible to authorized
+collaborators. The source called this common operational knowledge.
+Formal common knowledge is stronger than visibility or queryability:
+every participant knowing a fact does not necessarily establish that
+everyone knows that everyone knows it. This paper therefore claims
+<strong>shared queryable recognition</strong>, not an unproved epistemic
+fixed point.</p>
+<p>At minimum, an authorized collaborator should be able to resolve the
+current custody record, its freshness, scope, acceptance state, blocking
+relations, and transfer status without reconstructing chat history.
+Systems may add notifications, acknowledgements, subscriptions, or
+quorum rules when a workflow requires stronger awareness. A hidden,
+stale, partitioned, or access-denied record does not support the same
+operational claim as a current record witnessed by the affected
+participants.</p>
+<p>The collaboration surface should answer:</p>
+<blockquote>
+<p>Who has the ball, for which obligation, under what authority, until
+when, and who must act if the custodian cannot continue?</p>
+</blockquote>
+<p>That longer question exposes the conditions concealed by a bare
+assignee field.</p>
+<h2 id="consequences-for-collaboration-systems">11. Consequences for
+Collaboration Systems</h2>
+<p>A system supporting Work Custody can answer questions such as:</p>
+<ul>
+<li>Who currently has the ball?</li>
+<li>Which work has no custodian?</li>
+<li>Which work has ambiguous custody?</li>
+<li>Which work has been idle longest?</li>
+<li>Who is overloaded?</li>
+<li>Who is waiting on me?</li>
+<li>Who am I waiting on?</li>
+<li>Which transfers repeatedly fail?</li>
+<li>Where does work become trapped?</li>
+</ul>
+<p>These become simple runtime queries rather than organizational
+investigations.</p>
+<hr />
+<h2 id="relation-to-constitutional-collaboration">12. Relation to
+Constitutional Collaboration</h2>
+<p>Within a constitutional collaboration architecture, Work Custody
+complements rather than replaces existing primitives.</p>
+<p>A work object may simultaneously possess:</p>
+<ul>
+<li>an owner,</li>
+<li>an accountable party,</li>
+<li>authority constraints,</li>
+<li>standing,</li>
+<li>current custodian,</li>
+<li>waiting relations,</li>
+<li>execution receipts.</li>
+</ul>
+<p>Separating these concepts reduces ambiguity while making
+collaborative state machine-checkable.</p>
+<hr />
+<h2 id="discussion">13. Discussion</h2>
+<p>The novelty of Work Custody does not arise from inventing the notion
+of custody itself.</p>
+<p>Evidence handling, emergency management, clinical handoffs, and
+logistics all contain custody-like concepts.</p>
+<p>The contribution is their unification into a domain-independent
+collaboration primitive governing live responsibility-bearing work.</p>
+<p>This synthesis permits collaboration systems to model operational
+possession with the same precision that version-control systems model
+source code or databases model transactions.</p>
+<hr />
+<h2 id="a-minimal-work-custody-contract">14. A Minimal Work-Custody
+Contract</h2>
+<p>The paper is the pedagogical entry point; <em>A Formal Theory of Work
+Custody</em> is the technical companion. A minimal record can be
+represented as:</p>
+<p><span
+class="math display"><em>κ</em> = (<em>w</em>, <em>c</em>, <em>m</em>, <em>s</em>, <em>a</em>, <em>e</em>, <em>g</em>, <em>h</em>, <em>x</em>, <em>q</em>),</span></p>
+<p>where <span class="math inline"><em>w</em></span> is exact work
+identity, <span class="math inline"><em>c</em></span> the current
+custodian, <span class="math inline"><em>m</em></span> participant and
+custody mode, <span class="math inline"><em>s</em></span> the scoped
+advancement obligation, <span class="math inline"><em>a</em></span>
+acceptance evidence, <span class="math inline"><em>e</em></span> expiry
+or review condition, <span class="math inline"><em>g</em></span>
+authority basis, <span class="math inline"><em>h</em></span> context or
+handoff-root identity, <span class="math inline"><em>x</em></span>
+current status and blocking relations, and <span
+class="math inline"><em>q</em></span> the escalation or accountability
+route. This is a candidate schema, not an adopted canonical form.</p>
+<p>The governing invariants become more precise:</p>
+<ol type="1">
+<li><strong>Identity:</strong> custody applies to an exact work object
+or declared partition, not a title-shaped approximation.</li>
+<li><strong>Acceptance:</strong> offer or assignment alone does not
+create accepted custody.</li>
+<li><strong>Conditional exclusivity:</strong> an atomic active
+obligation has one custodian unless joint, replicated, quorum, or
+partitioned custody is explicitly modeled.</li>
+<li><strong>Non-laundering:</strong> custody grants no authority,
+standing, capability, ownership, or accountability not independently
+present.</li>
+<li><strong>Continuity:</strong> while transfer is pending, the protocol
+states whether the predecessor retains custody, joint custody applies,
+or an explicit escrow role holds it.</li>
+<li><strong>Context sufficiency:</strong> the successor receives or can
+resolve the information required for the accepted scope; a receipt that
+proves transfer but omits indispensable context does not prove a usable
+handoff.</li>
+<li><strong>Freshness and liveness:</strong> custody expires, renews,
+escalates, or becomes visibly stalled under declared rules; it cannot
+persist silently forever.</li>
+<li><strong>Waiting transparency:</strong> <code>WAITING_ON</code> names
+a typed dependency and expected actor or condition without pretending
+that the current custodian can satisfy it.</li>
+<li><strong>Receipt boundary:</strong> a receipt establishes a recorded
+transition under its witnesses; it does not prove awareness, competence,
+progress, or successful outcome beyond its evidence.</li>
+<li><strong>Recovery:</strong> orphaned, declined, abandoned, revoked,
+expired, partitioned, or unreachable custody has a declared resolution
+path.</li>
+</ol>
+<h2 id="universal-gsm-and-realization-funnel-placement">15. Universal
+GSM and Realization-Funnel Placement</h2>
+<p>In the universal <strong>Governed Semantic Model (GSM)</strong>, Work
+Custody is a typed relation among a work identity, participant identity,
+scoped obligation, acceptance state, authority basis, context root,
+evidence, time, and revision history. The <strong>Governed Meaning Base
+(GMB)</strong> is the current name in the author-confirmed
+<code>CCF -&gt; CMB -&gt; GMB</code> lineage. A GMB can preserve custody
+meanings, records, receipts, and projections; it does not itself assign
+custody or authorize work.</p>
+<p>The complete realization funnel locates the proposal:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;P \\
+&amp;\rightarrow S \\
+&amp;\rightarrow CM_1 \\
+&amp;\rightarrow CM_2 \\
+&amp;\rightarrow IC \\
+&amp;\rightarrow IR \\
+&amp;\rightarrow E \\
+&amp;\rightarrow R
+\end{aligned}.
+$$</span></p>
+<p><strong>Possibility</strong> contains alternative custody models,
+modes, and handoff protocols. <strong>Specification</strong> defines
+work identity, roles, states, transitions, invariants, refusal, expiry,
+and evidence obligations. <strong>Configuration Manifold 1
+(CM1)</strong> contains all custody configurations satisfying mandatory
+admissibility. <strong>Configuration Manifold 2 (CM2)</strong> selects
+preferable admissible arrangements under declared objectives such as low
+coordination burden, clear escalation, privacy, fairness, load, and
+resilience. <strong>IC</strong> may mean <strong>Instance
+Constitution</strong> or <strong>Instance Configuration</strong>
+interchangeably; it binds one workflow’s custody rules, participants,
+clocks, authority, and evidence profile. <strong>IR</strong> may mean
+<strong>Instance Realization</strong> or <strong>Implementation
+Realization</strong> interchangeably; it is the actual database,
+orchestration engine, user interface, notifications, receipts, and
+agent-runtime behavior. <strong>Evidence</strong> tests whether custody
+is queryable, accepted, current, useful, and correctly transferred.
+<strong>Revision</strong> repairs the model when handoffs fail, agents
+lose context, workload shifts, authority changes, or empirical results
+contradict the design.</p>
+<p>For agentic orchestration, a custody record is a control-plane
+orientation primitive: it tells a newly booted agent what work it may
+attempt, the context capsule it must resolve, what evidence is owed, who
+can accept a handoff, and where refusal or escalation goes. It does not
+replace a capability grant, execution authorization, or exact artifact
+boundary.</p>
+<h2 id="direct-corpus-interfaces">16. Direct Corpus Interfaces</h2>
+<p>The formal companion owns the state-machine and algebraic
+development. <em>Reasoning by Way of Receipts</em> explains how custody
+transitions can become attributable evidence without turning the receipt
+into authority. Cognitive ABI supplies typed capability and
+qualification information needed before a participant can accept
+custody. <em>Split-Authority AI Coordination</em> prevents one custody
+holder from collapsing proposal, checking, adoption, and execution
+powers. <em>Authority Laundering Theory</em> explains why an assignee,
+active agent, or completed step must not be mistaken for an authorized
+decision-maker. ACG supplies a larger development workflow in which
+custody can move among agents, validators, courts, and effect
+boundaries. GMB preserves the cross-paper meaning and lineage of these
+relations.</p>
+<p>These are interfaces, not mergers. Work Custody answers who presently
+holds a scoped advancement obligation. Authority answers what actions
+are permitted. Capability answers what can be performed. Accountability
+answers who answers for outcomes. Standing answers what may count.
+Receipts answer what transition was recorded under which evidence.
+Waiting relations answer what condition currently blocks
+advancement.</p>
+<h2 id="human-facing-work-custody-protocol">Human-Facing Work-Custody
+Protocol</h2>
+<p>The completed P1 corpus indicates that Who Has the Ball? should be
+retained as the <strong>human-facing collaboration protocol and
+pedagogical surface for Work Custody</strong>, not as a second
+foundational theory. The formal theory defines work identity, custody,
+transfer, leases, conflict, and completion; this paper makes the live
+question legible to mixed human-agent teams.</p>
+<ul>
+<li><p><strong>Adjacent work:</strong> <em>A Formal Theory of Work
+Custody</em><br />
+<strong>Supplies:</strong> The general formal model, invariants,
+concurrency, leases, and evidence obligations.<br />
+<strong>This paper’s boundary:</strong> Who Has the Ball? supplies the
+minimal interaction grammar and reader-facing explanation.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Exigence and the Cognitive
+Kernel</em><br />
+<strong>Supplies:</strong> Recognition, attention, sufficiency, and
+transition of work pressure.<br />
+<strong>This paper’s boundary:</strong> CogK helps determine what
+deserves work; custody states who currently bears the duty to advance
+it.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>The Optional
+Coordinator</em><br />
+<strong>Supplies:</strong> Conditions under which coordination can
+remain local and substitutable.<br />
+<strong>This paper’s boundary:</strong> Queryable custody can reduce
+coordinator dependence without proving all coordination
+optional.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Cold Boot Continuity as a
+Deployment Primitive</em><br />
+<strong>Supplies:</strong> Resumption of exact workfront and custody
+state.<br />
+<strong>This paper’s boundary:</strong> A capsule carries custody
+evidence; a valid transfer still requires recognition and
+acceptance.</p></li>
+<li><p><strong>Adjacent work:</strong> <em>Constitutional Collective
+with Optional Overmind (CCOO)</em><br />
+<strong>Supplies:</strong> A bounded collective topology with optional
+coordination.<br />
+<strong>This paper’s boundary:</strong> Work custody is one coordination
+primitive usable in that topology, not the collective architecture
+itself.</p></li>
+</ul>
+<p>The human-facing custody view should bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+Ball= (&amp;work\_id, head, custodian, participants, status, \\
+&amp;blockers, next\_action, transfer\_offer, acceptance, \\
+&amp;lease, receipt)
+\end{aligned}.
+$$</span></p>
+<p>The metaphor must not obscure the non-collapse rules: assignment is
+not custody; ownership is not custody; activity is not custody;
+possession of files is not custody; attention is not custody; and an
+offered transfer is not completed until accepted under the protocol.
+Joint custody requires an explicit profile rather than an unstructured
+list of responsible parties.</p>
+<p>Waiting is a governed state only when the dependency, expected actor
+or event, review time, expiry, escalation path, and retained custodian
+are known. Otherwise <code>WAITING</code> can conceal orphaned work. A
+completed task likewise requires a terminal disposition and evidence
+appropriate to the work, not merely a status label.</p>
+<p>The universal GSM can type <code>CUSTODIED_BY</code>,
+<code>ASSIGNED_TO</code>, <code>OFFERS_TRANSFER_TO</code>,<br />
+<code>ACCEPTS_CUSTODY</code>, <code>WAITS_ON</code>,
+<code>BLOCKED_BY</code>, <code>LEASED_UNTIL</code>,
+<code>JOINTLY_CUSTODIED_UNDER</code>,<br />
+<code>RETURNS_TO</code>, <code>TERMINALLY_DISPOSITIONED_AS</code>,<br />
+and <code>RECEIPTED_BY</code>. The view projects the formal model
+without replacing it.</p>
+<p>This integration establishes four editorial commitments: classify the
+paper as the human-facing protocol companion to the formal theory; adopt
+the Ball view; require explicit joint-custody profiles; and require
+waiting and completion to expose their evidence and escalation
+contracts.</p>
+<h2 id="custody-subject-and-terminal-semantics">Custody Subject and
+Terminal Semantics</h2>
+<p>The fixed-seed comparison with HLIR, the constitutional syscall
+architecture, GTK, and Terminability reveals a necessary question before
+asking who has the ball: <strong>custody of what exact subject and
+toward what terminal condition?</strong></p>
+<p><span class="math display">$$
+\begin{aligned}
+C= (&amp;work\_id, subject, head, purpose, custodian, \\
+&amp;authority\_surface, live\_effects, dependencies, \\
+&amp;terminal\_criteria, disposition, evidence)
+\end{aligned}.
+$$</span></p>
+<p>GTK can resolve a work name, subject term, status, or dependency
+without establishing that two records identify the same live work. HLIR
+proposal custody may end at admission, refusal, withdrawal, or accepted
+handoff. A cyber-physical effect intent remains live through late,
+partial, or unknown outcomes until reconciliation or an explicitly
+bounded terminal disposition.</p>
+<p>Terminability concerns the moral and decision structure of ending a
+subject or continuation under uncertainty. Work completion,
+cancellation, or archival is not automatically the ending of the work’s
+subject. Conversely, a custodian responsible for an ending decision does
+not acquire moral, legal, device, or institutional authority merely
+through custody. The authority surface and escalation path must be
+separately named.</p>
+<p>This prevents a dangerous status collapse: <code>DONE</code> for a
+drafting task,</p>
+<p><code>REFUSED</code> for an effect request, <code>STOPPED</code> for
+a process, <code>DELETED</code> for state, and <code>FORECLOSED</code>
+for a continuation thread have different objects and consequences. A
+human-facing Ball view should render the subject and terminal semantics,
+not only the assignee and status label.</p>
+<p>The universal GSM can type<br />
+<code>CUSTODIES_WORK_ABOUT_SUBJECT</code>,<br />
+<code>RESOLVES_WORK_IDENTITY_WITH_GTK</code>,
+<code>DISTINGUISHES_TASK_END_FROM_SUBJECT_END</code>,<br />
+<code>RETAINS_CUSTODY_FOR_UNKNOWN_EFFECT</code>,
+<code>LACKS_ENDING_AUTHORITY_DESPITE_CUSTODY</code>,<br />
+and<br />
+<code>TERMINALLY_DISPOSITIONS_EXACT_WORK_SUBJECT</code>.</p>
+<p>This randomized review establishes four editorial commitments: add
+exact subject and purpose to the Ball view; type terminal criteria and
+dispositions by object; keep custody distinct from ending and effect
+authority; and retain custody while consequential outcomes remain
+partial, late, or unknown.</p>
+<h2 id="the-ball-view-as-a-governed-custody-projection">The Ball View as
+a Governed Custody Projection</h2>
+<p>Six downstream uses confirm that this paper is the human-facing
+projection of Work Custody rather than a second custody theory. The
+formal companion supplies the state machine; Cognitive ABI uses custody
+as a separately evidenced invocation condition; the constitutional
+syscall paper retains a custodian while physical effects are pending or
+unknown; GTK resolves the identity of the work; HLIR carries proposal
+custody across review and lowering; and Terminability separates ending a
+task from ending its subject.</p>
+<p>The queryable projection should therefore bind:</p>
+<p><span class="math display">$$
+\begin{aligned}
+B^*= (&amp;work\_identity, subject, generation, scope, purpose, \\
+&amp;custodian, recognition\_set, eligibility, \\
+&amp;authority\_boundary, state, next\_move, dependencies, \\
+&amp;lease, transfer, evidence, terminal\_disposition, \\
+&amp;remainder, view\_policy)
+\end{aligned}.
+$$</span></p>
+<p>The record shown to one participant may legitimately differ from the
+record shown to another because privacy, labor, safety, or institutional
+constraints can limit visibility. The underlying custody claim must
+still have an exact generation, shared resolution rule, and authorized
+query path. A dashboard is a projection of the custody relation, not its
+source of truth; stale, partitioned, or inaccessible views must expose
+their freshness and uncertainty.</p>
+<p>Custody persists across delegated work when the original custodian
+retains the duty to observe, reconcile, escalate, or disposition the
+result. It cannot be silently dropped merely because a request was sent,
+an agent is active, a device acknowledged receipt, or a court began
+review. A transfer closes only when the offered subject, obligations,
+context, authority boundary, evidence debt, and recovery path are
+accepted for the same work generation.</p>
+<p>The universal GSM can type <code>PROJECTS_BALL_VIEW</code>,
+<code>RECOGNIZES_CUSTODY_GENERATION</code>,<br />
+<code>RETAINS_CUSTODY_DURING_DELEGATION</code>,
+<code>ACCEPTS_CUSTODY_ENVELOPE</code>,
+<code>EXPOSES_VIEW_FRESHNESS</code>,<br />
+<code>WITHHOLDS_CUSTODY_DETAIL_UNDER_POLICY</code>,
+<code>DISTINGUISHES_WORK_FROM_EVIDENCE_CUSTODY</code>,<br />
+and<br />
+<code>DOES_NOT_GRANT_EFFECT_AUTHORITY</code>.</p>
+<p>This reverse-dependency review establishes four editorial
+commitments: retain the paper as the governed human-facing projection of
+the formal theory; adopt the expanded Ball record; require transfer of
+obligations, context, evidence debt, and recovery conditions; and make
+privacy, freshness, and partial visibility explicit without permitting
+hidden orphaning.</p>
+<h2 id="counterevidence-and-failure-modes">17. Counterevidence and
+Failure Modes</h2>
+<p>The proposal should be narrowed or rejected where: (1) teams can
+answer the same questions reliably from existing assignment and workflow
+fields without extra protocol cost; (2) acceptance clicks create ritual
+rather than accurate state; (3) exclusive custody discourages
+collaboration or hides shared responsibility; (4) participants game
+custody to avoid workload metrics or blame; (5) a dashboard is stale,
+partitioned, or inaccessible; (6) agents accept work they cannot
+perform; (7) custody is used to launder execution authority; (8)
+transfer receipts exist but context is missing; (9) joint or federated
+work cannot be decomposed without distortion; (10)
+<code>WAITING_ON</code> becomes a blame graph; (11) expiry produces
+churn or unsafe abandonment; (12) privacy and labor concerns make
+universal visibility harmful; (13) optimization rewards rapid handoff
+over completion quality; (14) automated reassignment breaks legitimate
+discretion or continuity; (15) the system confuses process state with
+moral or legal responsibility; or (16) measured coordination benefit
+does not exceed the modeling and maintenance burden.</p>
+<p>Empirical comparison should measure handoff ambiguity, orphaned work,
+time to identify the next actor, context loss, false ownership
+inference, stall duration, escalation burden, user comprehension, and
+adverse strategic behavior against competent assignment-based and
+workflow-based baselines. Meeting reduction is a hypothesis, not a
+present finding.</p>
+<h2 id="the-ball-is-a-human-facing-projection-of-work-custody">The Ball
+Is a Human-Facing Projection of Work Custody</h2>
+<h3 id="public-orientation">Public orientation</h3>
+<p>Who Has the Ball? introduces Work Custody through the everyday
+question of who currently holds the accepted, scoped duty and context to
+advance a work object. Its role is pedagogical and interface-facing. The
+formal state-machine, bitemporal, generation, lease, recovery, and
+concurrency details belong in the companion Formal Theory of Work
+Custody; this paper should project them without creating a second
+incompatible protocol.</p>
+<h3 id="adversarial-tests">Adversarial tests</h3>
+<ol type="1">
+<li><strong>Assignee-custodian attack.</strong> Assignment, ownership,
+accountability, workflow state, or artifact possession is displayed as
+live accepted custody.</li>
+<li><strong>Ball-authority attack.</strong> Holding the next move grants
+approval, disclosure, publication, execution, or decision
+authority.</li>
+<li><strong>Silent-handoff attack.</strong> A message, meeting
+statement, status update, or reassignment is treated as accepted
+transfer.</li>
+<li><strong>Stale-dashboard attack.</strong> The interface hides
+version, scope, generation, expiry, capability, or a failed receiver and
+still shows one confident name.</li>
+<li><strong>One-ball attack.</strong> Work that legitimately needs
+joint, shard, quorum, alternate, or recovery custody is forced into a
+single-owner metaphor.</li>
+<li><strong>Human-agent-equivalence attack.</strong> Shared protocol
+syntax implies equal consent, persistence, accountability, legal status,
+or moral responsibility.</li>
+<li><strong>Common-knowledge attack.</strong> Queryable state is
+described as formally common knowledge although access, interpretation,
+freshness, and system mediation differ.</li>
+<li><strong>Projection-kernel drift attack.</strong> The simple
+reader-facing model changes transfer semantics or creates standing
+inconsistent with the formal companion.</li>
+</ol>
+<h3 id="claim-and-evidence-ceiling">Claim and evidence ceiling</h3>
+<p>The paper offers a human-facing concept and minimal contract. It does
+not establish novelty, formal common knowledge, organizational
+improvement, meeting reduction, live acceptance, complete mediation,
+legal or moral responsibility, or a tested implementation. It is a
+projection of the Work Custody architecture, not an independent identity
+merger or competing kernel.</p>
+<p>Evaluation requires matched human and agent handoffs, stale and
+failed-transfer cases, nonexclusive configurations, accessibility and
+privacy review, comprehension studies, and conformance to the formal
+companion. No runtime, organization, or external research was tested in
+this pass.</p>
+<h3 id="reader-facing-consequence">Reader-facing consequence</h3>
+<p>The interface succeeds if a collaborator can see who has the next
+move, for which exact work and scope, whether they accepted it, whether
+they can act, when custody expires, who is waiting, and what recovery is
+underway.</p>
+<h2 id="corpus-integration-sources">19. Corpus Integration Sources</h2>
+<p>This pass used exact local heads for the formal companion
+(SHA-256<br />
+<code>49C38F60B95E107F8B3D864ACAFB4C49067A146C807E5248307DE7B009AD4696</code>),
+<em>Reasoning by Way of Receipts</em> (</p>
+<p><code>8D884B96597EA6303A324173A7CE2D8C735A952E91FBE4C9EB6509FA6D6B195F</code>),
+Cognitive ABI (<br />
+<code>F7A7034BB9E382C91AEA693BD656040A93C5C5B504FE70425A31561CEECDC084</code>),
+<em>Split-Authority AI Coordination</em> (<br />
+<code>AB9D992A4668946DB17F530B31BDD6DD35C6C247769D33F4C48897E29B337064</code>),
+<em>Authority Laundering Theory</em> (<br />
+<code>DC7233E10A7597BB3802E54D5A7C5154700A425CF6332203C38592918413D47E</code>),
+ACG (<br />
+<code>99E107467C6A3EE1368EC97A7D49065B5686227863879785E2CBE53755229AC1</code>),
+and GMB semantic-manifold documentation (<br />
+<code>49A05A424F226A21C81D638727E1165DE1AD55AB1CBDC56EA65D67A1362A4B08</code>).
+Exact comparison custody does not establish truth, identity merger,
+implementation, or standing.</p>
+<h2 id="future-work">20. Future Work</h2>
+<p>Several research directions remain.</p>
+<p>These include:</p>
+<ul>
+<li>formal custody algebra,</li>
+<li>joint custody semantics,</li>
+<li>distributed custody across organizations,</li>
+<li>custody transfer protocols,</li>
+<li>human-agent negotiation,</li>
+<li>constitutional governance integration,</li>
+<li>empirical measurement of meeting reduction,</li>
+<li>visualization of custody flow,</li>
+<li>custody-aware workflow optimization.</li>
+</ul>
+<hr />
+<h2 id="conclusion">21. Conclusion</h2>
+<p>Many collaboration failures arise not because work is poorly defined
+but because responsibility is poorly localized in time.</p>
+<p>Ownership is too persistent.</p>
+<p>Assignment is too static.</p>
+<p>Authority is too broad.</p>
+<p>Workflow stages are too impersonal.</p>
+<p>Work Custody identifies the missing operational primitive:</p>
+<p>the current, explicitly recognized possession of
+responsibility-bearing work.</p>
+<p>When combined with explicit transfer semantics and common operational
+knowledge, collaboration systems gain the ability to answer one of the
+oldest questions in organized work:</p>
+<blockquote>
+<p><strong>Who has the ball?</strong></p>
+</blockquote>
+<p>Answering that question accurately, continuously, and
+constitutionally may reduce a class of coordination overhead that
+organizations currently address through meetings, reminders, and
+informal social reconstruction.</p>
+<h2 id="realization-scope-and-evidence-boundary">Realization Scope and
+Evidence Boundary</h2>
+<p>This successor makes the paper’s stage boundary explicit. It narrows
+claims rather than manufacturing missing evidence: a stage named as
+context is not thereby claimed as implemented, validated, or
+complete.</p>
+<ul>
+<li><strong>Possibility Space.</strong> Existing source passages use
+this stage only as bounded context or an obligation. The paper does not
+claim an independently validated contribution at this stage.</li>
+<li><strong>Revision.</strong> Existing source passages use this stage
+only as bounded context or an obligation. The paper does not claim an
+independently validated contribution at this stage.</li>
+</ul>
+<hr />
+<h2 id="editorial-provenance-and-standing">Editorial Provenance and
+Standing</h2>
+<h3 id="source-evidence-and-standing">Source, Evidence, and
+Standing</h3>
+<p>This is an AI-prepared successor revision candidate derived from one
+exact author manuscript. The integration custody manifest is<br />
+<code>work/paper-saturation-v1/evidence/who-has-the-</code></p>
+<p><code>ball/integration-custody-manifest.v0.1.json</code>,<br />
+SHA-256<br />
+<code>C0E755BCBED77ED9038BDE37E2950FCC574299C08025CF46B33C1C42EF1B03B8</code>.
+The exact source remains unchanged. The entry question, Work Custody
+proposal, distinctions from
+assignment/ownership/authority/accountability, lifecycle, waiting
+relation, collaboration queries, and original conclusion are author
+material. This pass standardizes the Ableman paper header and hierarchy,
+distinguishes one custody protocol from identical responsibility, adds a
+scoped custody record and transfer rules, places the idea in the
+universal GSM and realization funnel, links its formal companion and
+direct corpus interfaces, and adds counterevidence and open editorial
+questions. Those changes are AI editorial or synthetic contributions
+until adopted. No runtime, organization, handoff, custody ledger, or
+agent orchestration was tested. The paper does not establish novelty,
+meeting reduction, common knowledge in the formal epistemic sense, or
+that a non-human component can bear moral or legal responsibility. It
+proposes a governance representation for review. No publication,
+canonical standing, identity merger, conformance assignment, or
+implementation authority is granted.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that modern collaboration systems successfully
+model many aspects of cooperative work, including projects, documents,
+conversations, tasks, ownership, permissions, workflows, and automation.
+Its nearest external comparison fields are provenance, ai, governance.
+The sources in [E1], [E2], [E3], [E4], [E5], [E6], [E7] are cited as
+predecessor literature, adjacent standards, or counterpressure - not as
+evidence that they caused the Ableman framework or that they validate
+its novel claims. The comparison isolates where established work already
+supplies provenance, formal assurance, institutional constraint,
+empirical method, or engineering practice, and where this paper adds a
+distinct claim about admissibility, authority, semantic custody, or
+governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: A complete provenance
+graph can faithfully record a false or unauthorized process; provenance
+is evidence about lineage, not automatic truth or legitimacy. Retrieval,
+tool use, and policy layers can reduce unsupported output without
+eliminating model error, source error, omission, bias, or the
+environmental and institutional costs of scale. A written constitution
+can legitimate domination as easily as constrain it unless amendment,
+participation, enforcement, and appeal remain effective in practice.
+These limits are not generic disclaimers: they identify the assumptions
+that a later empirical, formal, or implementation review must try to
+break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E2]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<p><strong>[E3]</strong> OpenSSF. <em>Supply-chain Levels for Software
+Artifacts (SLSA), Version 1.2</em>. 2026. https://slsa.dev/spec/v1.2/
+<strong>Relationship:</strong> Adjacent software-supply-chain assurance
+standard, especially relevant to provenance and verification
+boundaries.</p>
+<p><strong>[E4]</strong> OpenTelemetry Authors. <em>OpenTelemetry
+Specification</em>. https://opentelemetry.io/docs/specs/otel/
+<strong>Relationship:</strong> Adjacent observability standard for
+traces, metrics, logs, and context propagation; telemetry is not equated
+with adjudicated evidence.</p>
+<p><strong>[E5]</strong> Patrick Lewis et al. “Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks.” <em>NeurIPS 2020</em>.
+arXiv:2005.11401. https://arxiv.org/abs/2005.11401
+<strong>Relationship:</strong> Predecessor retrieval architecture;
+comparison centers on provenance, admission, and fail-closed constraints
+not supplied by retrieval alone.</p>
+<p><strong>[E6]</strong> Shunyu Yao et al. “ReAct: Synergizing Reasoning
+and Acting in Language Models.” <em>ICLR 2023</em>. arXiv:2210.03629.
+https://arxiv.org/abs/2210.03629 <strong>Relationship:</strong>
+Predecessor agent pattern for interleaving reasoning and action; used to
+distinguish action traces from governed effects.</p>
+<p><strong>[E7]</strong> Elham Tabassi. <em>Artificial Intelligence Risk
+Management Framework (AI RMF 1.0)</em>. NIST AI 100-1, 2023. DOI:
+10.6028/NIST.AI.100-1. https://doi.org/10.6028/NIST.AI.100-1
+<strong>Relationship:</strong> Adjacent risk-management framework used
+to test whether the paper operationalizes governance beyond voluntary
+process guidance.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>The Three Hash Rule</em>.
+Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20788617</code>;<br />
+source SHA-256<br />
+<code>F6FA73D083B70711A8C817F7779751D1506FEBA0E356DB9805BB1570663731B5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>A Formal Theory of Work
+Custody</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-C8F2F9BF38C45E29</code>;<br />
+source SHA-256<br />
+<code>A80657E21BA277ADF1C229A2AAE221963B97A62EA2AF3EBC36434A916A8EEA44</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Governance Witnesses</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-9E8DA0EFE860DE5D</code>;<br />
+source SHA-256<br />
+<code>8BF8C3646040F6E1F5222A8AA92C1106AA1F841E8A2C65402F468C83D59D06E5</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>CARA: Constrained Artificial
+Reasoning Architecture</em>. Ableman Corpus current edition; work
+identity <code>PAPER.PUB.18099715</code>;<br />
+source SHA-256<br />
+<code>F8F74F0CD58F5414D9A29EBE958E49751892D07A028CB51197F8201B18AAB40E</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>A Constitution for the
+Context Window</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-CF26BA0E123F472F</code>;<br />
+source SHA-256<br />
+<code>60395402368E146F115CCE53D0E5A15B8FB23C90ED5B24CA92AB8515B2009965</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>The entries below are corpus-internal comparison and dependency
+sources. Their inclusion does not establish external validation of this
+paper’s empirical, safety, novelty, or performance claims.</p>
+<p>Adam Ableman <em>CARA: Constrained Artificial Reasoning
+Architecture.</em> Zenodo, 2025. doi:10.5281/zenodo.18099715</p>
+<p>Adam Ableman <em>A Theory of Agentic Observation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20437813</p>
+<p>Adam Ableman <em>Constitutional Computation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20624488</p>
+<p>Adam Ableman <em>Constraint-Bearing Composability.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21632061</p>
+<p>Adam Ableman <em>Fractal Governance Architecture.</em> Zenodo, 2026.
+doi:10.5281/zenodo.20754189</p>
+<p>Adam Ableman <em>Governed Semantic Compilation: Lawful Continuation,
+Refusal Semantics, and Epistemic Promotion in Large Language
+Models.</em> Zenodo, 2026. doi:10.5281/zenodo.18453681</p>
+<p>Adam Ableman <em>MCIR: A Canonical Intermediate Representation for
+Governed Transformation.</em> Zenodo, 2026.
+doi:10.5281/zenodo.21095303</p>
+<p>Adam Ableman <em>Semantic Coordinate Identity Tokenization
+(SCIT).</em> Zenodo, 2026. doi:10.5281/zenodo.20532070</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.23848568">10.5281/zenodo.23848568</a></p>

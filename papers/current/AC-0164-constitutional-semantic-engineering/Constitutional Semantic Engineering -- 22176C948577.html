@@ -1,0 +1,1558 @@
+<h1 id="constitutional-semantic-engineering">Constitutional Semantic
+Engineering</h1>
+<h2
+id="a-discipline-for-software-whose-meaning-must-survive-execution-refactor-migration-and-governance">A
+Discipline for Software Whose Meaning Must Survive Execution, Refactor,
+Migration, and Governance</h2>
+<h3
+id="the-code-may-run-the-question-is-whether-its-meaning-can-still-stand.">The
+code may run; the question is whether its meaning can still stand.</h3>
+<hr />
+<p><strong>Author</strong><br />
+Adam Ableman<br />
+Constitutional Computing<br />
+Contact: ableman.research@gmail.com</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Software systems often remain operational long after their meaning
+has begun to decay. Tests may pass while authority assumptions disappear
+into helper functions; non-binding traces may accumulate while evidence
+remains inadmissible; documentation may describe an earlier standing
+while current artifacts silently imply another. Existing software
+practices address parts of this problem. Domain-Driven Design protects
+domain language and bounded contexts. Hexagonal architecture separates
+application cores from external devices and databases. Functional-core
+patterns separate deterministic logic from impure effects. Event
+sourcing and provenance systems support reconstructability. Architecture
+Decision Records preserve design rationale. Capability systems sharpen
+authority and least privilege. Yet these practices are rarely unified
+into a discipline that treats meaning, authority, evidence, refusal,
+standing, and non-claims as first-class software artifacts.</p>
+<p>This paper proposes Constitutional Semantic Engineering (CSE): a
+software-engineering discipline for systems whose behavior must not
+merely execute, but remain semantically admissible across change. CSE
+introduces a standing-aware model of software development in which
+transitions are explicitly authorized, effects are mediated,
+receipt-bound artifacts serve as evidence, refusals are positive
+governance events, and claims are constrained by written non-claims. Its
+purpose is to prevent semantic debt, especially semantic locality debt:
+the cost incurred when meaning exists somewhere in a system but not in a
+stable, canonical, recoverable home.</p>
+<p>CSE is organized across three layers. First, conceptual axioms define
+the discipline: semantic locality, explicit authority, evidence-bound
+claims, refusal as success, scoped standing, written non-claims, and
+semantic refactor discipline. Second, canonical governance artifacts
+make those axioms operational: receipts, policies, standing records,
+claim ledgers, migration contracts, glossaries, and non-claim surfaces.
+Third, machine-checkable invariants allow tooling to inspect whether a
+package preserves effect separation, authority completeness, receipt
+binding, refusal totality, non-claim preservation, standing
+monotonicity, replay determinism, and anti-self-ratification: the
+requirement that protected standing never rest on an evidentiary route
+wholly controlled by the subject whose standing is at issue.</p>
+<p>CSE does not replace established practices. It constitutionalizes
+them. It treats ports as authority boundaries, events as evidence
+candidates, tests as insufficient without claim discipline, and
+refactors as potentially semantic operations. The resulting capability
+is not simply cleaner code, but governable software: software whose
+meaning can be admitted, refused, replayed, migrated, audited, and
+compared without semantic archaeology.</p>
+<h2 id="introduction-software-can-work-while-its-meaning-decays">1.
+Introduction: Software Can Work While Its Meaning Decays</h2>
+<p>A software system can continue to run while losing the meaning needed
+to govern it. This is not a paradox. Operational success and semantic
+admissibility are different properties.</p>
+<p>A test suite may confirm that output remains unchanged while no
+longer revealing why that output is authorized. A database migration may
+preserve fields while losing the distinction between validation,
+admission, execution, and standing. A refactor may reduce code length
+while merging policy, effect, and authority into a single convenience
+function. A runtime trace may record that something happened while
+failing to bind the event to the state, policy, artifact, and authority
+that would make the event admissible as evidence.</p>
+<p>This paper begins from a simple observation:</p>
+<blockquote>
+<p>Software does not only accumulate technical debt. It accumulates
+semantic debt.</p>
+</blockquote>
+<p>Technical debt traditionally concerns the future cost of suboptimal
+implementation decisions. Kruchten, Nord, and Ozkaya describe the debt
+metaphor as an attempt to organize the landscape of software-development
+compromises and their future consequences (Kruchten, Nord, and Ozkaya,
+2012). More recent discussions have extended the frame toward cognitive
+and intent debt: the erosion of shared understanding and the loss of
+captured rationale needed by humans and machines to safely evolve
+systems (Storey, 2026). Semantic debt is adjacent but distinct. It
+concerns not merely code quality, team understanding, or documented
+intent, but the recoverability and admissibility of meaning itself.</p>
+<p>A system has semantic debt when its names, categories, boundaries,
+procedures, authority assumptions, evidence, or claims become
+underdefined, contradictory, stale, fragmented, opaque, overcoupled, or
+overclaimed. The system may still compile. It may still ship. It may
+still pass tests. But it has lost some of the structure needed to
+answer: what does this behavior mean, who or what authorized it, what
+standing does it have, what evidence supports it, and what remains
+unclaimed?</p>
+<p>Constitutional Semantic Engineering is proposed as a discipline for
+preventing and repaying that debt.</p>
+<h2 id="definition">2. Definition</h2>
+<p>Constitutional Semantic Engineering is a software-engineering
+discipline for building systems whose meaning, authority, effects,
+evidence, refusals, standings, and non-claims remain explicit and
+recoverable across execution, refactor, migration, automation, and
+governance.</p>
+<p>In shorter form:</p>
+<blockquote>
+<p>CSE is engineering for software whose behavior must remain
+semantically admissible.</p>
+</blockquote>
+<p>The word constitutional is used deliberately. A constitution is not
+merely a document of aspirations. It defines authority, boundaries,
+procedures, permitted transitions, refusals, and claims that may not be
+made without standing. In CSE, software is modeled not only as
+executable behavior but as a governed semantic system. Its transitions
+must be admissible. Its effects must be authorized. Its evidence must be
+receipt-bound. Its claims must not outrun its receipts.</p>
+<p>The discipline can be summarized by seven commitments:</p>
+<ol type="1">
+<li>Meaning must have locality. Every meaningful distinction should have
+a stable home.</li>
+<li>Authority must be explicit. Effects and transitions are not
+justified merely because code can perform them.</li>
+<li>Evidence must bind claims. Non-binding traces are not enough; claims
+require structured, replayable support.</li>
+<li>Refusal is a success condition. A correctly refused transition
+preserves the system.</li>
+<li>Standing must be scoped. Validation, admission, execution, standing,
+equivalence, and self-hosting are different statuses.</li>
+<li>Non-claims must be written. A system must say what it does not yet
+prove.</li>
+<li>Refactor must preserve semantics, not only behavior. A cleanup that
+destroys recoverable meaning creates semantic debt.</li>
+<li>Evidence for protected standing must not be wholly self-controlled.
+A system must not be able to establish its own high-consequence standing
+from evidence it alone produces, alters, suppresses, or selects.</li>
+</ol>
+<h2 id="formal-model">3. Formal Model</h2>
+<p>This section gives a minimal calculus for CSE. The purpose is not to
+replace programming languages, proof assistants, or runtime systems. The
+purpose is to make the central discipline mechanically checkable.</p>
+<p>Let:</p>
+<ul>
+<li><span class="math inline"><em>S</em></span> be system state.</li>
+<li><span class="math inline"><em>C</em><em>t</em><em>x</em></span> be
+governed context, including authority references, policy version,
+capability set, time source, and replay parameters.</li>
+<li><span class="math inline"><em>C</em><em>m</em><em>d</em></span> be a
+command.</li>
+<li><span class="math inline"><em>S</em><sup>′</sup></span> be successor
+state.</li>
+<li><span class="math inline"><em>R</em></span> be a receipt.</li>
+<li><span
+class="math inline"><em>E</em><em>f</em><em>f</em><sup>*</sup></span> be
+a sequence or set of effect requests and effect decisions.</li>
+<li><span
+class="math inline"><em>R</em><em>e</em><em>f</em><sup>*</sup></span> be
+a sequence or set of refusals.</li>
+<li><span class="math inline"><em>s</em><em>t</em></span> be current
+standing.</li>
+<li><span class="math inline"><em>N</em><em>C</em></span> be the active
+set of non-claims.</li>
+</ul>
+<h3 id="transition-judgment">3.1 Transition Judgment</h3>
+<p>A governed transition has the form:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\langle S, Ctx, \\
+&amp;Cmd \rangle \overset{auth,pol}{\Longrightarrow} \langle S', \\
+&amp;R, Eff^*, Ref^* \rangle
+\end{aligned}
+$$</span></p>
+<p>This states that, under explicit authority and policy, a command
+applied to a prior state and governed context produces successor state,
+receipt, effects, and refusals.</p>
+<p>The judgment is not merely an execution trace. It is a semantic
+transition claim. It can be checked for policy totality, authority
+completeness, receipt binding, effect mediation, refusal totality, and
+standing validity.</p>
+<h3 id="receipt-admissibility-predicate">3.2 Receipt Admissibility
+Predicate</h3>
+<p>A receipt is admissible only if it binds the relevant transition
+fields and violates no governing invariant:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathsf{adm}(R) \\
+&amp;\iff \mathsf{bind}(R.S_{prev}, R.S_{next}, R.auth, R.pol, R.hashes)
+\\
+&amp;\land  \\
+&amp;\ne g \mathsf{viol}(R)
+\end{aligned}
+$$</span></p>
+<p>The predicate <span class="math inline">bind</span> requires the
+receipt to bind at least prior state, next state, authority reference,
+policy version, and relevant artifact hashes. The predicate <span
+class="math inline">viol</span> detects invariant failure, unsupported
+standing transition, missing authority, unauthorized effect, schema
+mismatch, or contradiction with active non-claims.</p>
+<h3 id="standing-transition">3.3 Standing Transition</h3>
+<p>Standing evolves by a governed standing-transition function:</p>
+<p><span
+class="math display"><em>s</em><em>t</em><sup>′</sup> = <em>δ</em><sub><em>s</em><em>t</em></sub>(<em>s</em><em>t</em>, <em>R</em>)</span></p>
+<p>The transition is constrained by monotonicity unless an explicit
+revocation or downgrade record exists. In ordinary ascent, standing
+cannot increase by implication. It must be granted by an admissible
+receipt whose operation and policy entail that standing transition.</p>
+<p>For example:</p>
+<pre class="text"><code>validated
+  does not imply admitted
+
+admitted
+  does not imply governed execution standing
+
+governed execution standing
+  does not imply schema-conformant receipt standing</code></pre>
+<h3 id="claim-rule">3.4 Claim Rule</h3>
+<p>A claim <span class="math inline"><em>k</em></span> is admissible
+only when admissible receipts entail it and active non-claims do not
+contradict it:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathsf{claim}(k) \\
+&amp;\Rightarrow \exists R_1..R_n : \left( \bigwedge_i \mathsf{adm}(R_i)
+\right) \\
+&amp;\land \mathsf{entails}(R_1..R_n, k) \\
+&amp;\land  \\
+&amp;\ne g \mathsf{contradicted}(k, NC)
+\end{aligned}
+$$</span></p>
+<p>This is the constitutional center of CSE: claims must be earned. A
+system cannot merely assert standing, equivalence, execution authority,
+or self-hosting. It must exhibit admissible receipts that entail the
+claim and must not be blocked by active non-claims.</p>
+<h3 id="what-the-formal-model-adds">3.5 What the Formal Model Adds</h3>
+<p>The formal model turns CSE from a conceptual discipline into a
+checkable discipline. It provides:</p>
+<ul>
+<li>a bridge from prose claims to governance artifacts;</li>
+<li>a way to evaluate refactoring and migration as semantic
+operations;</li>
+<li>a basis for automated claim evaluation;</li>
+<li>a method for distinguishing validation, admission, execution, and
+standing;</li>
+<li>a structure for blocking unsupported claims through active
+non-claims.</li>
+</ul>
+<p>The formal model is intentionally minimal. Its value is not in
+mathematical ornament. Its value is in giving tools something exact to
+check.</p>
+<h2 id="canonical-governance-artifacts">4. Canonical Governance
+Artifacts</h2>
+<p>CSE requires canonical artifacts for receipts, policies, standing
+records, claims, glossaries, and non-claims. These artifacts are
+normative within a CSE package because they define the surfaces by which
+meaning becomes inspectable.</p>
+<h3 id="receipt-v0">4.1 Receipt v0</h3>
+<p>Receipt v0 is a canonical, content-addressed structure. All fields
+should be serialized canonically, hashed, and included in the relevant
+evidence chain.</p>
+<p>Required fields:</p>
+<pre class="text"><code>rid
+schema
+op
+ts
+S_prev
+S_next
+in_hash
+art_hashes
+auth_ref
+pol_ver
+cap_set
+eff_req
+eff_adm
+eff_ref
+ref_codes
+nc_refs
+st_prev
+st_next
+sigs</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>rid</code> is the receipt identifier.</li>
+<li><code>schema</code> is the receipt schema version.</li>
+<li><code>op</code> is the operation.</li>
+<li><code>ts</code> is a timestamp or timestamp placeholder; replay
+comparison may normalize it.</li>
+<li><code>S_prev</code> is the prior-state hash and optional Merkle
+root.</li>
+<li><code>S_next</code> is the next-state hash and optional Merkle
+root.</li>
+<li><code>in_hash</code> is the command or input hash.</li>
+<li><code>art_hashes</code> are relevant artifact hashes.</li>
+<li><code>auth_ref</code> is the authority reference.</li>
+<li><code>pol_ver</code> is the policy version.</li>
+<li><code>cap_set</code> is the capability set in force.</li>
+<li><code>eff_req</code> is the set of effect requests.</li>
+<li><code>eff_adm</code> is the set of admitted effects.</li>
+<li><code>eff_ref</code> is the set of refused effects.</li>
+<li><code>ref_codes</code> are typed refusal codes.</li>
+<li><code>nc_refs</code> are non-claims in force.</li>
+<li><code>st_prev</code> is prior standing.</li>
+<li><code>st_next</code> is next standing.</li>
+<li><code>sigs</code> are optional attestations or signatures.</li>
+</ul>
+<p>A receipt is not required to contain all payload content directly. It
+may bind content by hash, Merkle root, or content-addressed reference.
+But the binding fields must be sufficient to support replay, audit, and
+claim evaluation.</p>
+<p>A non-binding trace says something happened. A receipt says what
+happened in a form that can support or refuse a claim.</p>
+<h3 id="policy-surface">4.2 Policy Surface</h3>
+<p>A policy surface is total, versioned, deterministic, side-effect
+free, and diffable across versions.</p>
+<p>The minimal policy form is:</p>
+<p><span
+class="math display"><em>π</em> : (<em>C</em><em>m</em><em>d</em>, <em>S</em>, <em>C</em><em>t</em><em>x</em>) → {<em>p</em><em>e</em><em>r</em><em>m</em><em>i</em><em>t</em>, <em>r</em><em>e</em><em>f</em><em>u</em><em>s</em><em>e</em>(<em>c</em><em>o</em><em>d</em><em>e</em>)}</span></p>
+<p>A policy must not fall through silently. Every command, state, and
+context triple must either be permitted or refused with a typed refusal
+code.</p>
+<p>Policy versions must be diffable because policy changes are semantic
+changes. A policy diff is not merely a code diff. It may widen
+authority, narrow authority, change refusal behavior, change standing
+ascent, or alter admissible claims.</p>
+<h3 id="standing-record">4.3 Standing Record</h3>
+<p>A standing record binds a standing transition to an admissible
+receipt. It should include:</p>
+<pre class="text"><code>standing_record_id
+subject_ref
+subject_hash
+st_prev
+st_next
+transition_op
+receipt_ref
+policy_ref
+authority_ref
+scope
+revocation_terms
+nonclaims_preserved</code></pre>
+<p>Standing records prevent status drift. They make it impossible, or at
+least mechanically detectable, for validation to become admission,
+admission to become execution standing, or fixture standing to become
+broad standing by implication.</p>
+<h3 id="glossary">4.4 Glossary</h3>
+<p>A glossary is not decorative documentation. It is part of the
+semantic surface. A CSE glossary should define:</p>
+<ul>
+<li>acronyms;</li>
+<li>standing terms;</li>
+<li>receipt terms;</li>
+<li>policy terms;</li>
+<li>refusal codes;</li>
+<li>claim names;</li>
+<li>non-claim names;</li>
+<li>deprecated names;</li>
+<li>migration mappings for renamed concepts.</li>
+</ul>
+<p>No new verifier acronym, standing term, claim kind, refusal code, or
+policy category should be considered name-complete until entered into
+the glossary.</p>
+<h3 id="non-claims-surface">4.5 Non-Claims Surface</h3>
+<p>A non-claims surface records what the system does not assert. It
+should include:</p>
+<pre class="text"><code>nonclaim_id
+blocked_claim
+reason
+scope
+introduced_by
+active_since
+revocation_conditions
+revoked_by</code></pre>
+<p>Non-claims persist until revoked by admissible record. A missing
+non-claim is not proof that a claim is admissible; it is merely absence
+of an explicit block. But deletion of an active non-claim without
+revocation is a semantic violation.</p>
+<h2 id="machine-checkable-invariants">5. Machine-Checkable
+Invariants</h2>
+<p>CSE can be supported by machine-checkable invariants. These
+invariants are intentionally lightweight. They can be checked by static
+analysis, schema validation, fixture replay, or specialized tools.</p>
+<h3 id="effect-separation">5.1 Effect Separation</h3>
+<p>All effects must occur through adapters or mediated effect
+surfaces.</p>
+<p><span
+class="math display">∀<em>t</em>, Eff(<em>t</em>) ⊆ <em>a</em><em>d</em><em>a</em><em>p</em><em>t</em><em>e</em><em>r</em><em>s</em></span></p>
+<p>The deterministic core may request effects. It must not perform
+unauthorized world-touching operations directly.</p>
+<h3 id="authority-completeness">5.2 Authority Completeness</h3>
+<p>Every admitted effect must have an authority reference.</p>
+<p><span
+class="math display">∀<em>t</em>, Eff<sub><em>a</em><em>d</em><em>m</em></sub>(<em>t</em>) ⇒ <em>a</em><em>u</em><em>t</em><em>h</em>_<em>r</em><em>e</em><em>f</em>(<em>t</em>) ≠ ⌀</span></p>
+<p>Ability to perform an effect is not authority to perform it.</p>
+<h3 id="receipt-binding">5.3 Receipt Binding</h3>
+<p>Every transition receipt must bind prior and successor state.</p>
+<p><span
+class="math display">∀<em>t</em>, <em>h</em><em>a</em><em>s</em><em>h</em>(<em>S</em><sub><em>p</em><em>r</em><em>e</em><em>v</em></sub>), <em>h</em><em>a</em><em>s</em><em>h</em>(<em>S</em><sub><em>n</em><em>e</em><em>x</em><em>t</em></sub>) ∈ <em>R</em></span></p>
+<p>A transition that does not bind its prior and successor states cannot
+support a strong standing or migration claim.</p>
+<h3 id="refusal-totality">5.4 Refusal Totality</h3>
+<p>The policy surface must be total. There must be no implicit
+fallthrough.</p>
+<p><span
+class="math display">∀<em>C</em><em>m</em><em>d</em>, <em>S</em>, <em>C</em><em>t</em><em>x</em>, <em>π</em>(<em>C</em><em>m</em><em>d</em>, <em>S</em>, <em>C</em><em>t</em><em>x</em>) ∈ {<em>p</em><em>e</em><em>r</em><em>m</em><em>i</em><em>t</em>, <em>r</em><em>e</em><em>f</em><em>u</em><em>s</em><em>e</em>(<em>c</em><em>o</em><em>d</em><em>e</em>)}</span></p>
+<p>A missing case is not permission. It is an invalid policy
+surface.</p>
+<h3 id="non-claim-preservation">5.5 Non-Claim Preservation</h3>
+<p>Non-claims persist unless explicitly revoked by an admissible
+record.</p>
+<p><span
+class="math display"><em>N</em><em>C</em><sub><em>t</em> + 1</sub> ⊇ <em>N</em><em>C</em><sub><em>t</em></sub> \ {<em>n</em><em>c</em> ∣ revoked(<em>n</em><em>c</em>, <em>R</em>) ∧ adm(<em>R</em>)}</span></p>
+<p>This prevents non-claims from silently disappearing during refactor,
+migration, or standing ascent.</p>
+<h3 id="standing-monotonicity">5.6 Standing Monotonicity</h3>
+<p>Standing does not ascend without a standing-transition record.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;st_{t+1} \geq st_t \\
+&amp;\Rightarrow \exists R : \mathsf{adm}(R) \\
+&amp;\land \delta_{st}(st_t,R)=st_{t+1}
+\end{aligned}
+$$</span></p>
+<p>The symbol <span class="math inline">≥</span> here denotes an
+ordering in a standing graph, not ordinary numeric comparison. If the
+standing graph is partial rather than total, the invariant applies along
+declared ascent edges.</p>
+<p>Downgrade, revocation, and quarantine are permitted only by explicit
+record.</p>
+<h3 id="replay-determinism">5.7 Replay Determinism</h3>
+<p>Core replay over fixtures must yield identical receipts modulo
+explicitly normalized fields such as timestamps.</p>
+<p><span
+class="math display"><em>R</em><em>e</em><em>p</em><em>l</em><em>a</em><em>y</em>(<em>c</em><em>o</em><em>r</em><em>e</em>, <em>f</em><em>i</em><em>x</em><em>t</em><em>u</em><em>r</em><em>e</em>)<sub>1</sub> ≡ <em>R</em><em>e</em><em>p</em><em>l</em><em>a</em><em>y</em>(<em>c</em><em>o</em><em>r</em><em>e</em>, <em>f</em><em>i</em><em>x</em><em>t</em><em>u</em><em>r</em><em>e</em>)<sub>2</sub> (mod  <em>N</em><em>o</em><em>r</em><em>m</em>)</span></p>
+<p>The normalization set <span
+class="math inline"><em>N</em><em>o</em><em>r</em><em>m</em></span> must
+be explicit. Hidden nondeterminism is semantic debt.</p>
+<h3 id="anti-self-ratification">5.8 Anti-Self-Ratification</h3>
+<p>Protected standing must not be obtainable through an evidentiary
+route lying wholly under the control of the subject whose standing is
+being decided.</p>
+<p>Let <span class="math inline"><em>Θ</em></span> be a declared control
+model, let <span
+class="math inline"><em>c</em><em>t</em><em>l</em><sub><em>Θ</em></sub>(<em>x</em>, <em>e</em>)</span>
+hold when actor <span class="math inline"><em>x</em></span> can
+unilaterally create, alter, suppress, substitute, or select evidence
+item <span class="math inline"><em>e</em></span>, and let <span
+class="math inline">suff(<em>E</em><sup>′</sup>)</span> hold when
+support set <span class="math inline"><em>E</em><sup>′</sup></span> is
+sufficient for the requested standing under a fixed adjudicative
+context.</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\mathsf{asr}(t) \\
+&amp;\iff  \\
+&amp;\ne xists E' \subseteq E^{+}_{t} : \mathsf{suff}(E') \\
+&amp;\land \forall e \in E',\ ctl_{\Theta}(subj(t), e)
+\end{aligned}
+$$</span></p>
+<p>The quantifier is existential and it is the whole content of the
+invariant. A weaker rule would require that the winning evidence merely
+include an independent element. This rule forbids the existence of any
+self-controlled sufficient route, even when an independent route also
+exists. A system that keeps an apparently independent path while leaving
+a self-ratifying bypass available does not satisfy this invariant.</p>
+<p>Two consequences follow for tooling.</p>
+<p>First, independence is a control relation rather than a location.
+Separate files, processes, containers, model invocations, or
+organizational names do not establish independence if the subject
+controls the inputs, configuration, executable, signing key, or output
+selection of the nominally separate source. The declared <span
+class="math inline"><em>Θ</em></span> is what makes <span
+class="math inline"><em>c</em><em>t</em><em>l</em><sub><em>Θ</em></sub></span>
+decidable, and an independence rank over genuinely distinct control
+domains is what prevents nominal plurality from counting as
+independence.</p>
+<p>Second, the invariant is checked by ablation rather than by
+inspection. Remove a claimed independent element from the support set
+and re-run the adjudication. If standing survives, that element was
+ceremonial rather than load-bearing.</p>
+<p>Exhaustive search over support subsets is exponential in the size of
+the evidence bundle. A conforming implementation must therefore
+distinguish a bounded check from an exact one, and must report a bounded
+result as bounded. Where an exact check is required and infeasible, the
+correct outcome is not-established rather than an approximate pass.</p>
+<p>This invariant is the one that most directly protects the claim
+ledger of Section 7 and the anti-overclaim posture of Section 14.3.
+Without it, a package can satisfy every other invariant in this section
+and still promote itself to its highest standing on receipts it alone
+produced.</p>
+<h2 id="static-and-dynamic-checks">6. Static and Dynamic Checks</h2>
+<p>CSE supports two broad families of checks.</p>
+<h3 id="static-checks">6.1 Static Checks</h3>
+<p>Static checks inspect the package without necessarily executing the
+governed transition.</p>
+<p>Examples:</p>
+<ul>
+<li>policy totality;</li>
+<li>authority plumbing;</li>
+<li>adapter isolation;</li>
+<li>absence of world-touching calls in core logic;</li>
+<li>glossary coverage;</li>
+<li>non-claim coverage;</li>
+<li>standing graph validity;</li>
+<li>schema completeness;</li>
+<li>claim vocabulary consistency;</li>
+<li>package manifest consistency;</li>
+<li>forbidden import or subprocess usage in core;</li>
+<li>policy diff classification;</li>
+<li>migration contract completeness;</li>
+<li>control-model declaration coverage for evidence sources.</li>
+</ul>
+<h3 id="dynamic-checks">6.2 Dynamic Checks</h3>
+<p>Dynamic checks execute fixture replay, verifier lanes, or controlled
+transitions.</p>
+<p>Examples:</p>
+<ul>
+<li>receipt schema conformance;</li>
+<li>replay equivalence;</li>
+<li>refusal coverage;</li>
+<li>claim-to-evidence satisfiability;</li>
+<li>policy-permit and policy-refuse behavior;</li>
+<li>standing transition validation;</li>
+<li>receipt diff stability;</li>
+<li>artifact hash consistency;</li>
+<li>archive hygiene;</li>
+<li>evidence ablation for protected standing transitions.</li>
+</ul>
+<h3 id="example-claim-check">6.3 Example Claim Check</h3>
+<p>Given the claim:</p>
+<pre class="text"><code>export_admitted</code></pre>
+<p>A checker may verify:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\exists R : R.op = export \\
+&amp;\land R.eff\_adm \\
+&amp;\neq \varnothing \\
+&amp;\land \pi = permit \\
+&amp;\land \mathsf{adm}(R)
+\end{aligned}
+$$</span></p>
+<p>If no such receipt exists, the claim is inadmissible. If an active
+non-claim blocks it, the claim is also inadmissible, even if a
+superficially supporting trace exists.</p>
+<h2 id="claim-ledger">7. Claim Ledger</h2>
+<p>CSE benefits from a first-class claim ledger: a graph connecting
+claims, receipts, non-claims, and derivations.</p>
+<p>Let:</p>
+<ul>
+<li>claims be nodes <span class="math inline"><em>k</em></span>;</li>
+<li>receipts be nodes <span class="math inline"><em>R</em></span>;</li>
+<li>non-claims be nodes <span
+class="math inline"><em>N</em><em>C</em></span>;</li>
+<li>support edges have the form <span
+class="math inline"><em>R</em> → <em>k</em></span>;</li>
+<li>blocking edges have the form <span
+class="math inline"><em>N</em><em>C</em> ⊣ <em>k</em></span>;</li>
+<li>derivation edges have the form <span
+class="math inline"><em>R</em> → <em>R</em><sup>′</sup></span>.</li>
+</ul>
+<p>The admissible claim frontier is:</p>
+<p><span
+class="math display">𝒦<sub><em>a</em><em>d</em><em>m</em></sub> = {<em>k</em> ∣ <em>s</em><em>u</em><em>p</em><em>p</em><em>o</em><em>r</em><em>t</em><em>s</em>(<em>k</em>) ∧ ¬<em>b</em><em>l</em><em>o</em><em>c</em><em>k</em><em>e</em><em>d</em>(<em>k</em>)}</span></p>
+<p>The claim ledger allows a system to query what it may currently
+assert. It also allows auditors, agents, or admission tools to detect
+claim inflation.</p>
+<p>Example questions:</p>
+<ul>
+<li>What claims are supported by admissible receipts?</li>
+<li>Which claims are blocked by active non-claims?</li>
+<li>Which receipts derive from which prior receipts?</li>
+<li>Which claims would become admissible if a specific non-claim were
+revoked by record?</li>
+<li>Which standing transitions lack admissible support?</li>
+<li>Which supported claims have a sufficient support route lying wholly
+within a single control domain?</li>
+</ul>
+<p>The claim ledger is the memory of what the system is allowed to
+say.</p>
+<h2 id="validation-admission-execution-and-standing">8. Validation,
+Admission, Execution, and Standing</h2>
+<p>CSE reserves four terms that are often blurred in ordinary software
+practice.</p>
+<p>Validation means syntactic or semantic checking. A validator may
+establish that an artifact conforms to a schema, passes a test,
+satisfies a fixture, or obeys a local invariant. Validation does not by
+itself admit the artifact.</p>
+<p>Admission means a policy permits an artifact, command, transition, or
+effect request within a defined scope. Admission is a governed decision,
+not a synonym for test success.</p>
+<p>Execution means effects have been admitted and performed, or that a
+runtime transition has occurred under a defined execution authority.
+Execution is not implied merely by admission.</p>
+<p>Standing means a governed status that may persist beyond a single
+check or event. Standing is granted by explicit standing transition
+rules and remains scoped by those rules.</p>
+<p>In short:</p>
+<pre class="text"><code>validation != admission
+admission != execution
+execution != standing
+standing != broad maturity claim</code></pre>
+<p>This distinction is central to CSE. Many semantic failures arise when
+one of these terms is used to smuggle another.</p>
+<h2 id="the-problem-cse-addresses">9. The Problem CSE Addresses</h2>
+<p>Modern software practice already knows how to make code more modular,
+testable, observable, and maintainable. Yet many systems still suffer
+from meaning drift. CSE names several recurring failure modes.</p>
+<h3 id="behavior-without-standing">9.1 Behavior Without Standing</h3>
+<p>A package can pass tests without being admitted. It can be admitted
+without having governed execution standing. It can execute without
+producing schema-conformant receipts. It can produce receipts without
+earning equivalence, self-hosting, or maturity standing.</p>
+<p>When these statuses collapse into a single vague notion of “works,”
+software becomes semantically unsafe. The system can no longer
+distinguish validation from admission, admission from execution,
+execution from standing, or standing from broad claim.</p>
+<h3 id="effects-without-authority">9.2 Effects Without Authority</h3>
+<p>Ordinary programs often treat side effects as implementation details.
+A function writes to disk, reads the environment, opens a network
+connection, launches a subprocess, or mutates a database because it has
+the technical ability to do so.</p>
+<p>CSE treats this as incomplete. Every effect-bearing operation should
+be represented as an authority-bearing act. The question is not merely
+“can this function write?” but “under what authority does it request or
+perform the write, and what evidence records that authority?”</p>
+<p>Capability-based security and object-capability systems already
+provide important foundations for authority discipline. Miller, Yee, and
+Shapiro argue that capability systems provide strong support for
+least-privilege operation and avoiding confused-deputy problems (Miller,
+Yee, and Shapiro, 2003). CSE borrows this instinct but applies it
+semantically: authority is not only a security primitive but a meaning
+primitive.</p>
+<h3 id="non-binding-traces-without-evidence">9.3 Non-Binding Traces
+Without Evidence</h3>
+<p>A system may have logs, metrics, traces, test reports, and
+screenshots. CSE does not treat these as evidence by default. They are
+non-binding traces until they are bound into receipts, manifests,
+attestations, or other canonical artifacts capable of supporting
+claims.</p>
+<p>Provenance frameworks such as W3C PROV-O model entities, activities,
+agents, and relationships such as generation, usage, derivation, and
+attribution (Lebo et al., 2013). CSE shares this concern with
+provenance, but adds standing and refusal. The evidence question
+becomes: what claim does this artifact support, under what authority, at
+what standing, with what non-claims preserved?</p>
+<h3 id="clean-refactors-that-damage-meaning">9.4 Clean Refactors That
+Damage Meaning</h3>
+<p>Some refactors improve implementation structure while damaging
+semantic structure. A developer may merge modules, rename fields, remove
+“redundant” status states, collapse receipts into logs, or move policy
+checks into UI code. The result may be cleaner by ordinary code metrics
+and worse by constitutional metrics.</p>
+<p>This is improper semantic defragmentation: rearranging a system so it
+appears simpler while making its meaning less recoverable.</p>
+<p>CSE therefore treats refactor as a semantic operation. It asks not
+only whether behavior was preserved, but whether state meaning,
+authority boundaries, refusal modes, receipt semantics, and standing
+claims were preserved.</p>
+<h2 id="existing-practices-and-their-limits">10. Existing Practices and
+Their Limits</h2>
+<p>CSE is not born in a vacuum. It is a synthesis of long-standing
+software-engineering practices.</p>
+<h3 id="modular-decomposition-and-information-hiding">10.1 Modular
+Decomposition and Information Hiding</h3>
+<p>Parnas argued that modularization should be judged by the criteria
+used to divide a system, and that decompositions based on information
+hiding can improve flexibility and comprehensibility (Parnas, 1972). CSE
+extends this insight from implementation decisions to semantic
+decisions: a module should hide volatile implementation details, but it
+should not hide authority, standing, or claim boundaries.</p>
+<h3 id="domain-driven-design">10.2 Domain-Driven Design</h3>
+<p>Domain-Driven Design provides bounded contexts, ubiquitous language,
+and model-driven alignment between software and domain knowledge.
+Evans’s work places domain meaning at the center of software design and
+emphasizes language as a binding force between model and implementation
+(Evans, 2003).</p>
+<p>CSE accepts this but asks for stronger admissibility. A bounded
+context tells us where a model’s language holds. CSE asks what authority
+permits transitions inside that context, what evidence proves those
+transitions, and what standing the resulting state has.</p>
+<h3 id="hexagonal-architecture">10.3 Hexagonal Architecture</h3>
+<p>Cockburn’s hexagonal architecture, also called ports and adapters,
+aims to let an application be driven by users, programs, automated
+tests, or batch scripts while remaining isolated from runtime devices
+and databases (Cockburn, 2005).</p>
+<p>CSE constitutionalizes ports. A port is not merely a technical seam.
+It is a possible authority boundary. An adapter is not merely
+infrastructure. It is a mediated world-contact surface. A test harness
+is not merely a driver. It is a candidate evidence generator.</p>
+<h3 id="functional-core-imperative-shell">10.4 Functional Core,
+Imperative Shell</h3>
+<p>The functional-core pattern separates deterministic computation from
+impure effects. CSE adopts this as a practical default: the core should
+produce semantic transitions and effect requests; adapters should
+mediate contact with the world. But CSE adds claim discipline. The
+important distinction is not only pure versus impure, but admissible
+versus inadmissible, authorized versus unauthorized, standing-preserving
+versus standing-smuggling.</p>
+<h3 id="event-sourcing-and-provenance">10.5 Event Sourcing and
+Provenance</h3>
+<p>Event sourcing stores state changes as a sequence of events, enabling
+reconstruction of application state and history (Fowler, 2005). CSE
+treats events as evidence candidates, not automatically as evidence. An
+event becomes constitutionally useful when bound to state hashes,
+authority references, policy versions, refusal semantics, and explicit
+claims. The event tells what happened. The receipt tells why it can
+stand.</p>
+<h3 id="architecture-decision-records">10.6 Architecture Decision
+Records</h3>
+<p>Architecture Decision Records preserve important architectural
+decisions, their context, and their consequences. The ADR movement is
+commonly associated with Michael Nygard’s “Documenting Architecture
+Decisions” and later tooling and templates that make decision records
+part of development practice.</p>
+<p>CSE extends decision records into standing records. A decision is not
+only architectural memory. It may be an authority transition: admit,
+refuse, defer, grant standing, deny standing, migrate standing, or
+preserve non-claim.</p>
+<h2 id="the-gap">11. The Gap</h2>
+<p>Existing practices answer many questions well:</p>
+<ul>
+<li>DDD asks: what does the domain mean?</li>
+<li>Hexagonal architecture asks: where is the application boundary?</li>
+<li>Functional-core design asks: what is deterministic and what is
+effectful?</li>
+<li>Event sourcing asks: what changed?</li>
+<li>Provenance asks: what produced what?</li>
+<li>ADRs ask: why was this decision made?</li>
+<li>Capability security asks: what authority can access which
+resource?</li>
+</ul>
+<p>CSE asks all of these, but under a unified constitutional
+question:</p>
+<blockquote>
+<p>What may this system now claim, under what authority, on what
+evidence, within what scope, after what admissible transition, with what
+refusals and non-claims preserved?</p>
+</blockquote>
+<p>That is the gap. Without this question, systems often drift from
+behavior to confidence, from confidence to trust, and from trust to
+authority without an explicit standing transition.</p>
+<h2 id="core-concepts">12. Core Concepts</h2>
+<h3 id="semantic-locality">12.1 Semantic Locality</h3>
+<p>Semantic locality is the principle that every meaningful distinction
+should have a stable, recoverable home.</p>
+<p>Examples:</p>
+<ul>
+<li>State shape belongs in a canonical model.</li>
+<li>Authority rules belong in policy surfaces.</li>
+<li>Effect boundaries belong in adapters or ports.</li>
+<li>Evidence belongs in receipts or manifests.</li>
+<li>Claims and non-claims belong in claim surfaces.</li>
+<li>Terms belong in a glossary.</li>
+<li>Standing transitions belong in decision records.</li>
+</ul>
+<p>Loss of semantic locality creates semantic locality debt. The meaning
+still exists somewhere, but the system cannot recover it locally and
+canonically. It must infer meaning from scattered code, comments,
+non-binding traces, tests, conventions, and memory.</p>
+<h3 id="authority">12.2 Authority</h3>
+<p>Authority is the declared basis on which a transition or effect may
+occur.</p>
+<p>CSE distinguishes ability from authority. A function may be
+technically able to write a file, but unless the operation is authorized
+under the relevant context, policy, standing, and capability, the write
+is inadmissible.</p>
+<p>A CSE-oriented system therefore passes authority explicitly:</p>
+<pre class="text"><code>Command + State + GovernedContext -&gt; TransitionResult</code></pre>
+<p>The context should identify authority references, policy version,
+time source, input hashes, and any relevant capability or scope.</p>
+<h3 id="effect-mediation">12.3 Effect Mediation</h3>
+<p>Effects are world-touching operations: filesystem writes, network
+calls, database mutations, process launches, compiler invocations, clock
+reads, randomness, external API calls, or substrate mutations.</p>
+<p>CSE prefers that deterministic cores request effects rather than
+directly perform them. The effect request can then be inspected,
+admitted, refused, logged, or transformed by an adapter.</p>
+<p>This creates a governable distinction:</p>
+<pre class="text"><code>meaningful transition requested an effect
+governor or adapter admitted or refused the effect
+receipt recorded the result</code></pre>
+<h3 id="receipt">12.4 Receipt</h3>
+<p>A receipt is a structured record binding a transition to its
+evidence.</p>
+<p>A minimal receipt should identify:</p>
+<ul>
+<li>receipt schema;</li>
+<li>operation;</li>
+<li>input hash;</li>
+<li>prior state hash;</li>
+<li>new state hash;</li>
+<li>authority reference;</li>
+<li>policy version;</li>
+<li>effects requested;</li>
+<li>effects admitted or refused;</li>
+<li>refusal modes;</li>
+<li>non-claims;</li>
+<li>artifact hashes;</li>
+<li>standing before and after, if applicable.</li>
+</ul>
+<p>A non-binding trace says something happened. A receipt says what
+happened in a form that can support or refuse a claim.</p>
+<h3 id="refusal">12.5 Refusal</h3>
+<p>Refusal is a first-class outcome. In CSE, a refusal is not merely an
+error. It is a successful preservation of a boundary.</p>
+<p>Examples:</p>
+<ul>
+<li>missing authority;</li>
+<li>noncanonical path;</li>
+<li>invalid standing transition;</li>
+<li>stale schema;</li>
+<li>effect outside allowed root;</li>
+<li>claim unsupported by evidence;</li>
+<li>execution attempted before standing exists.</li>
+</ul>
+<p>A system that cannot refuse cannot govern.</p>
+<h3 id="standing">12.6 Standing</h3>
+<p>Standing is the scoped status a package, artifact, transition,
+receipt, or subsystem has under a governance model.</p>
+<p>Standing is not confidence. It is not mere test success. It is a
+governed semantic status.</p>
+<p>Examples:</p>
+<pre class="text"><code>not_admitted_validation_only
+package_admitted_fixture_scoped
+governed_package_execution_standing_fixture_scoped
+schema_conformant_receipt_standing
+MCIR standing
+equivalence standing
+self-hosting standing</code></pre>
+<p>Standing must be granted, refused, deferred, or revoked by explicit
+transition records. It must not be inferred casually from adjacency.</p>
+<h3 id="non-claims">12.7 Non-Claims</h3>
+<p>A non-claim is an explicit statement of what the system does not
+assert.</p>
+<p>Examples:</p>
+<pre class="text"><code>This package is not yet Jnana-admitted.
+This validation does not grant governed execution standing.
+This receipt is not schema-conformant C-D.MS standing.
+This fixture success is not a self-hosting claim.
+This migration does not establish equivalence.</code></pre>
+<p>Non-claims are not disclaimers in the weak legal sense. They are
+semantic guardrails. They prevent implication from becoming unauthorized
+authority.</p>
+<h2 id="the-cse-application-pattern">13. The CSE Application
+Pattern</h2>
+<p>A CSE-compatible application should be organized so a future governor
+can inspect it without reverse-engineering its meaning.</p>
+<p>A practical structure is:</p>
+<pre class="text"><code>my_app/
+  README.md
+  GLOSSARY.md
+  NONCLAIMS.md
+  package_manifest.json
+  src/
+    my_app/
+      core/
+        model.py
+        logic.py
+        policy.py
+      adapters/
+        filesystem.py
+        network.py
+        subprocesses.py
+        clock.py
+        randomness.py
+      receipts/
+        schema.py
+        emit.py
+      cli.py
+  tests/
+    test_core.py
+    test_policy.py
+    test_refusals.py
+    test_receipts.py
+    test_golden_fixtures.py
+  fixtures/
+    input/
+    expected/
+  evidence/
+    golden_runs/
+  scripts/
+    run_fixture.py
+    verify.py
+    clean_hygiene.py</code></pre>
+<p>The governing separation is:</p>
+<pre class="text"><code>core/      = deterministic meaning and policy
+adapters/  = mediated side effects
+receipts/  = evidence surfaces
+fixtures/  = replay surfaces
+tests/     = success and refusal checks</code></pre>
+<p>The core should express transitions. The adapters should touch the
+world. The receipts should bind what happened. The tests should prove
+both success and refusal. The non-claims should prevent standing
+inflation.</p>
+<h2 id="why-prefer-cse">14. Why Prefer CSE?</h2>
+<p>CSE is not necessary for every script. It is most useful when the
+cost of semantic drift is high: governed AI systems, compiler
+bootstrapping, self-hosting systems, audit-sensitive software,
+scientific workflows, election or civic infrastructure, financial
+systems, long-lived protocols, agent-built codebases, and systems
+expected to migrate across substrates.</p>
+<p>You would prefer CSE because it provides capabilities that ordinary
+development practices do not usually provide together.</p>
+<h3 id="governed-refactoring">14.1 Governed Refactoring</h3>
+<p>CSE allows refactors to be checked for semantic preservation, not
+merely behavioral preservation.</p>
+<p>The governing question becomes:</p>
+<blockquote>
+<p>Did the refactor preserve state meaning, authority boundaries,
+refusal modes, receipt semantics, standing claims, and non-claims?</p>
+</blockquote>
+<p>This makes it possible to detect improper semantic defragmentation:
+cleanups that repay code debt by creating semantic debt.</p>
+<h3 id="admission-ready-software">14.2 Admission-Ready Software</h3>
+<p>CSE prepares software for future admission into stronger governance
+systems. A package with manifests, fixtures, receipts, refusal tests,
+authority surfaces, and non-claims can be evaluated without semantic
+archaeology.</p>
+<p>The package already presents handles for governance.</p>
+<h3 id="anti-overclaim-architecture">14.3 Anti-Overclaim
+Architecture</h3>
+<p>CSE makes it difficult to smuggle authority through vague
+language.</p>
+<p>It distinguishes:</p>
+<pre class="text"><code>validated != admitted
+admitted != execution standing
+execution standing != execution occurred
+receipt exists != schema-conformant receipt standing
+fixture success != broad maturity
+equivalence fixture != self-hosting
+self-produced evidence != independent ratification
+bounded check != exact proof</code></pre>
+<p>This is an architecture against false ascent.</p>
+<h3 id="semantic-observability">14.4 Semantic Observability</h3>
+<p>Modern observability says what happened operationally: a function
+ran, a request returned, a process exited, a file changed.</p>
+<p>CSE adds semantic observability:</p>
+<pre class="text"><code>transition admitted
+authority present
+effect requested
+effect mediated
+receipt emitted
+refusal preserved
+standing changed
+non-claims maintained</code></pre>
+<p>This is a different class of visibility.</p>
+<h3 id="cross-substrate-migration">14.5 Cross-Substrate Migration</h3>
+<p>When software moves from Python to C, from scripts to MCIR, from
+local execution to governed substrate, or from prototype to protocol,
+ordinary portability is insufficient. The system must preserve
+meaning.</p>
+<p>CSE gives migration a checklist:</p>
+<ul>
+<li>Which states must remain equivalent?</li>
+<li>Which effects must remain mediated?</li>
+<li>Which authority references must survive?</li>
+<li>Which receipts must map?</li>
+<li>Which refusal modes must be preserved?</li>
+<li>Which standings are retained, lost, or newly earned?</li>
+<li>Which claims remain non-claims?</li>
+</ul>
+<p>This is semantic portability.</p>
+<h3 id="agent-safe-development">14.6 Agent-Safe Development</h3>
+<p>AI coding agents can generate plausible code that silently changes
+meaning. CSE gives agents constraints:</p>
+<ul>
+<li>no new standing without decision record;</li>
+<li>no new acronym without glossary entry;</li>
+<li>no authority boundary change without policy update;</li>
+<li>no effect in core logic;</li>
+<li>no deletion of non-claims;</li>
+<li>no claim without evidence;</li>
+<li>no validation-to-admission leap;</li>
+<li>no passing-test-to-standing leap.</li>
+</ul>
+<p>CSE therefore serves as a harness for agentic development.</p>
+<h2 id="cse-and-semantic-debt">15. CSE and Semantic Debt</h2>
+<p>CSE is the constructive counterpart to semantic debt.</p>
+<p>Semantic debt has several subdomains:</p>
+<ul>
+<li>lexical debt: unclear or drifting terms;</li>
+<li>ontological debt: wrong or collapsed categories;</li>
+<li>boundary debt: meaning crosses contexts without translation;</li>
+<li>procedural debt: transitions and decisions lack semantics;</li>
+<li>evidentiary debt: meaning cannot be proven;</li>
+<li>authority debt: action lacks declared permission;</li>
+<li>claim debt: assertions outrun evidence.</li>
+</ul>
+<p>Fragmentation is cross-cutting. Authority can be fragmented. Evidence
+can be fragmented. Claims can be fragmented. Terminology can be
+fragmented. The specific subtype most relevant to CSE is semantic
+locality debt: meaning exists, but not in a stable canonical home.</p>
+<p>CSE repays semantic debt by restoring locality, boundary, authority,
+evidence, refusal, and standing.</p>
+<h2 id="minimal-cse-profile">16. Minimal CSE Profile</h2>
+<p>A minimal CSE-ready package should include:</p>
+<pre class="text"><code>[ ] deterministic core separated from adapters
+[ ] typed state and command models
+[ ] explicit governed context
+[ ] authority surfaces named
+[ ] side effects mediated through adapters
+[ ] receipt schema
+[ ] refusal vocabulary
+[ ] success and refusal tests
+[ ] replayable fixtures
+[ ] package manifest
+[ ] glossary
+[ ] non-claims file
+[ ] claim-to-evidence map
+[ ] archive hygiene script
+[ ] dependency lockfile
+[ ] no hidden bytecode or cache artifacts in release archive</code></pre>
+<p>This profile is intentionally modest. It does not require a full
+formal methods stack. It does not require a finished MCIR substrate. It
+simply makes ordinary software legible to future governance.</p>
+<h2 id="cse-equivalence">17. CSE-Equivalence</h2>
+<p>CSE-equivalence, abbreviated CSE-Eq, is a semantic equivalence
+relation between two versions of a package or system.</p>
+<p>Two versions <span class="math inline"><em>V</em></span> and <span
+class="math inline"><em>V</em><sup>′</sup></span> are CSE-equivalent
+only if they preserve behavior and constitutional semantics.</p>
+<h3 id="behavioral-equivalence">17.1 Behavioral Equivalence</h3>
+<p>For all declared fixtures, outputs must match:</p>
+<p><span
+class="math display">∀<em>f</em><em>i</em><em>x</em><em>t</em><em>u</em><em>r</em><em>e</em><em>s</em>, <em>o</em><em>u</em><em>t</em><em>p</em><em>u</em><em>t</em><em>s</em><sub><em>V</em></sub> = <em>o</em><em>u</em><em>t</em><em>p</em><em>u</em><em>t</em><em>s</em><sub><em>V</em><sup>′</sup></sub></span></p>
+<p>This is necessary but not sufficient.</p>
+<h3 id="policy-equivalence-or-governed-policy-migration">17.2 Policy
+Equivalence or Governed Policy Migration</h3>
+<p>Policies must be equivalent, or the policy migration must carry proof
+obligations:</p>
+<p><span
+class="math display"><em>π</em><sub><em>V</em></sub> ≡ <em>π</em><sub><em>V</em><sup>′</sup></sub></span></p>
+<p>or:</p>
+<p><span
+class="math display"><em>π</em><sub><em>V</em></sub> → <em>π</em><sub><em>V</em><sup>′</sup></sub> with
+migration receipt and obligations</span></p>
+<p>A policy change that widens authority is not a harmless refactor.</p>
+<h3 id="receipt-bisimulation">17.3 Receipt Bisimulation</h3>
+<p>Receipts must be bisimilar, preserving binding fields except for
+allowed renames under an explicit mapping <span
+class="math inline"><em>μ</em></span>:</p>
+<p><span
+class="math display"><em>R</em><sub><em>V</em></sub>∼<sub><em>μ</em></sub><em>R</em><sub><em>V</em><sup>′</sup></sub></span></p>
+<p>Allowed renames must be declared. A receipt field cannot disappear
+silently if it contributes to admissibility, authority, standing, or
+claim support.</p>
+<h3 id="standing-graph-preservation">17.4 Standing Graph
+Preservation</h3>
+<p>The standing graph must be preserved up to isomorphism:</p>
+<p><span
+class="math display"><em>G</em><sub><em>s</em><em>t</em></sub><sup><em>V</em></sup> ≅ <em>G</em><sub><em>s</em><em>t</em></sub><sup><em>V</em><sup>′</sup></sup></span></p>
+<p>If the standing graph changes, the change is a governed semantic
+migration, not an ordinary refactor.</p>
+<p>CSE-Eq therefore defines a stronger refactor standard:</p>
+<pre class="text"><code>same output
+same or governed policy
+same receipt meaning
+same standing graph
+same non-claim force</code></pre>
+<h2 id="migration-contracts">18. Migration Contracts</h2>
+<p>CSE migration contracts support cross-substrate lift: for example,
+from Python to C, from scripts to MCIR, from local package to governed
+runtime, or from one receipt schema to another.</p>
+<p>A migration contract defines mappings:</p>
+<p><span
+class="math display"><em>μ</em><sub><em>S</em></sub>, <em>μ</em><sub><em>R</em></sub>, <em>μ</em><sub><em>π</em></sub></span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline"><em>μ</em><sub><em>S</em></sub></span>
+maps source states to target states.</li>
+<li><span class="math inline"><em>μ</em><sub><em>R</em></sub></span>
+maps source receipts to target receipts.</li>
+<li><span class="math inline"><em>μ</em><sub><em>π</em></sub></span>
+maps source policy surfaces to target policy surfaces.</li>
+</ul>
+<h3 id="state-equivalence">18.1 State Equivalence</h3>
+<p>The migrated state must preserve declared state meaning:</p>
+<p><span
+class="math display"><em>μ</em><sub><em>S</em></sub>(<em>S</em>) ≈ <em>S</em><sup>′</sup></span></p>
+<p>The relation <span class="math inline">≈</span> must be defined by
+the migration contract. It may be exact equality, canonical equivalence,
+observational equivalence, or a domain-specific relation.</p>
+<h3 id="receipt-preservation">18.2 Receipt Preservation</h3>
+<p>Mapped receipts must retain binding fields:</p>
+<p><span
+class="math display">bind(<em>μ</em><sub><em>R</em></sub>(<em>R</em>).<em>S</em><sub><em>p</em><em>r</em><em>e</em><em>v</em></sub>, <em>μ</em><sub><em>R</em></sub>(<em>R</em>).<em>S</em><sub><em>n</em><em>e</em><em>x</em><em>t</em></sub>, <em>μ</em><sub><em>R</em></sub>(<em>R</em>).<em>a</em><em>u</em><em>t</em><em>h</em>, <em>μ</em><sub><em>R</em></sub>(<em>R</em>).<em>p</em><em>o</em><em>l</em>, <em>μ</em><sub><em>R</em></sub>(<em>R</em>).<em>h</em><em>a</em><em>s</em><em>h</em><em>e</em><em>s</em>)</span></p>
+<p>A migrated receipt that loses authority, policy, state, or artifact
+binding cannot support the same claims.</p>
+<h3 id="policy-refinement">18.3 Policy Refinement</h3>
+<p>The target policy must not widen authority without explicit
+authorization:</p>
+<p><span
+class="math display"><em>π</em><sup>′</sup> ⊑ <em>π</em></span></p>
+<p>Here <span class="math inline">⊑</span> denotes policy refinement:
+the target policy is at least as restrictive as the source policy with
+respect to protected actions, unless a widening is explicitly admitted
+by a migration record.</p>
+<h3 id="dual-hash-migration-receipts">18.4 Dual-Hash Migration
+Receipts</h3>
+<p>A migration should produce receipts that bind both source and target
+artifacts:</p>
+<pre class="text"><code>source_state_hash
+target_state_hash
+source_receipt_hash
+target_receipt_hash
+source_policy_hash
+target_policy_hash
+migration_contract_hash</code></pre>
+<p>A cross-substrate lift without dual hashes risks semantic
+amnesia.</p>
+<h2 id="minimal-tooling-interface">19. Minimal Tooling Interface</h2>
+<p>CSE can be supported by a minimal command-line interface. The
+following commands are illustrative rather than prescriptive.</p>
+<h3 id="cse-check">19.1 cse check</h3>
+<p>Runs static invariants and schema validation.</p>
+<p>Typical checks:</p>
+<pre class="text"><code>policy totality
+authority plumbing
+adapter isolation
+glossary coverage
+non-claim coverage
+standing graph validity
+receipt schema validity
+package manifest consistency</code></pre>
+<h3 id="cse-replay">19.2 cse replay</h3>
+<p>Runs fixture replay and emits receipt diffs.</p>
+<p>Typical checks:</p>
+<pre class="text"><code>fixture output equivalence
+receipt stability
+normalized timestamp handling
+refusal behavior
+state hash consistency</code></pre>
+<h3 id="cse-claim">19.3 cse claim</h3>
+<p>Evaluates the claim ledger.</p>
+<p>Typical checks:</p>
+<pre class="text"><code>supported claims
+blocked claims
+unsupported claims
+stale claims
+claim-to-evidence satisfiability</code></pre>
+<h3 id="cse-diff">19.4 cse diff</h3>
+<p>Produces a semantic diff.</p>
+<p>Typical checks:</p>
+<pre class="text"><code>policy diff
+standing graph diff
+receipt schema diff
+non-claim diff
+glossary diff
+authority surface diff
+adapter boundary diff</code></pre>
+<h3 id="cse-pack">19.5 cse pack</h3>
+<p>Produces an admission-ready artifact.</p>
+<p>Typical outputs:</p>
+<pre class="text"><code>manifest
+lockfile
+glossary
+non-claims
+receipt schemas
+fixtures
+evidence chains
+claim ledger
+archive hygiene report</code></pre>
+<p>The tooling interface is intentionally small. Its purpose is to make
+CSE operational without requiring a finished constitutional runtime.</p>
+<h2 id="worked-derivation-admitted-claim-and-blocked-claim">20. Worked
+Derivation: Admitted Claim and Blocked Claim</h2>
+<p>Consider a report-export operation.</p>
+<h3 id="core-transition">20.1 Core Transition</h3>
+<p>The core receives:</p>
+<pre class="text"><code>S_prev
+Ctx
+Cmd = export_report(path, report_spec)</code></pre>
+<p>The core checks policy and emits an effect request rather than
+directly writing the file:</p>
+<p><span
+class="math display"><em>R</em><sub>0</sub> : <em>e</em><em>f</em><em>f</em>_<em>r</em><em>e</em><em>q</em> = {<em>w</em><em>r</em><em>i</em><em>t</em><em>e</em>(<em>p</em><em>a</em><em>t</em><em>h</em>, <em>b</em><em>y</em><em>t</em><em>e</em><em>s</em>)}</span></p>
+<h3 id="adapter-decision">20.2 Adapter Decision</h3>
+<p>The adapter or governing layer evaluates the effect request:</p>
+<p><span
+class="math display"><em>π</em>(<em>w</em><em>r</em><em>i</em><em>t</em><em>e</em>, <em>C</em><em>t</em><em>x</em>) = <em>p</em><em>e</em><em>r</em><em>m</em><em>i</em><em>t</em> ⇒ <em>e</em><em>f</em><em>f</em>_<em>a</em><em>d</em><em>m</em> = {<em>w</em><em>r</em><em>i</em><em>t</em><em>e</em>(<em>p</em><em>a</em><em>t</em><em>h</em>, <em>b</em><em>y</em><em>t</em><em>e</em><em>s</em>)}</span></p>
+<p>If the path is noncanonical, the effect may instead be refused:</p>
+<p><span
+class="math display"><em>π</em>(<em>w</em><em>r</em><em>i</em><em>t</em><em>e</em>, <em>C</em><em>t</em><em>x</em>) = <em>r</em><em>e</em><em>f</em><em>u</em><em>s</em><em>e</em>(<em>n</em><em>o</em><em>n</em><em>c</em><em>a</em><em>n</em><em>o</em><em>n</em><em>i</em><em>c</em><em>a</em><em>l</em>_<em>p</em><em>a</em><em>t</em><em>h</em>)</span></p>
+<h3 id="final-receipt">20.3 Final Receipt</h3>
+<p>The final receipt includes:</p>
+<pre class="text"><code>op = export_report
+S_prev = hash(S_prev)
+S_next = hash(S_next)
+auth_ref = A_7
+pol_ver = 3.2
+eff_req = {write(path, bytes)}
+eff_adm = {write(path, bytes)}
+eff_ref = {}
+ref_codes = {}
+nc_refs = {no_equivalence, no_self_hosting,
+no_schema_conformant_standing}</code></pre>
+<h3 id="admitted-claim">20.4 Admitted Claim</h3>
+<p>The claim:</p>
+<pre class="text"><code>export_admitted</code></pre>
+<p>is admissible when the claim ledger can derive:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;\exists R : R.op = export\_report \\
+&amp;\land R.eff\_adm \\
+&amp;\neq \varnothing \\
+&amp;\land \pi(write,Ctx)=permit \\
+&amp;\land \mathsf{adm}(R)
+\end{aligned}
+$$</span></p>
+<p>If these conditions hold and no active non-claim blocks
+<code>export_admitted</code>, then</p>
+<p><code>export_admitted</code> belongs to the admissible claim
+frontier:</p>
+<p><span
+class="math display"><em>e</em><em>x</em><em>p</em><em>o</em><em>r</em><em>t</em>_<em>a</em><em>d</em><em>m</em><em>i</em><em>t</em><em>t</em><em>e</em><em>d</em> ∈ 𝒦<sub><em>a</em><em>d</em><em>m</em></sub></span></p>
+<h3 id="blocked-claim">20.5 Blocked Claim</h3>
+<p>The claim:</p>
+<pre class="text"><code>schema_conformant_standing</code></pre>
+<p>does not follow merely because a receipt exists. It holds only if the
+receipt conforms to the relevant schema and a standing transition record
+grants that standing:</p>
+<p><span class="math display">$$
+\begin{aligned}
+&amp;schema(R)=v0 \\
+&amp;\land check(R)=true \\
+&amp;\land \exists R_{st} : \mathsf{adm}(R_{st}) \\
+&amp;\land \delta_{st}(st,R_{st})=schema\_conformant\_standing
+\end{aligned}
+$$</span></p>
+<p>If the active non-claims include:</p>
+<pre class="text"><code>no_schema_conformant_standing</code></pre>
+<p>then:</p>
+<p><span
+class="math display"><em>N</em><em>C</em> ⊣ <em>s</em><em>c</em><em>h</em><em>e</em><em>m</em><em>a</em>_<em>c</em><em>o</em><em>n</em><em>f</em><em>o</em><em>r</em><em>m</em><em>a</em><em>n</em><em>t</em>_<em>s</em><em>t</em><em>a</em><em>n</em><em>d</em><em>i</em><em>n</em><em>g</em></span></p>
+<p>and therefore:</p>
+<p><span
+class="math display"><em>s</em><em>c</em><em>h</em><em>e</em><em>m</em><em>a</em>_<em>c</em><em>o</em><em>n</em><em>f</em><em>o</em><em>r</em><em>m</em><em>a</em><em>n</em><em>t</em>_<em>s</em><em>t</em><em>a</em><em>n</em><em>d</em><em>i</em><em>n</em><em>g</em> ∉ 𝒦<sub><em>a</em><em>d</em><em>m</em></sub></span></p>
+<p>The claim is blocked until an admissible record revokes the non-claim
+and grants the standing. This is the core CSE distinction: receipt
+existence is not standing; schema validation is not admission; execution
+is not maturity.</p>
+<h2 id="improper-semantic-defragmentation">21. Improper Semantic
+Defragmentation</h2>
+<p>CSE clarifies why some cleanups are harmful.</p>
+<p>A cleanup is suspicious when it:</p>
+<ul>
+<li>merges policy and execution;</li>
+<li>deletes refusal tests;</li>
+<li>replaces receipts with non-binding traces;</li>
+<li>removes non-claims;</li>
+<li>renames standings without migration;</li>
+<li>collapses distinct statuses into a generic <code>status</code>;</li>
+<li>moves side effects into core logic;</li>
+<li>treats test success as admission;</li>
+<li>treats admission as execution authority;</li>
+<li>updates a roadmap without updating the index;</li>
+<li>adds acronyms without glossary entries.</li>
+</ul>
+<p>Such changes may reduce visible complexity while increasing semantic
+debt. CSE calls this improper semantic defragmentation.</p>
+<p>Proper semantic defragmentation does the opposite. It moves meaning
+toward stable homes, clarifies boundaries, binds evidence, separates
+statuses, names refusals, and preserves non-claims.</p>
+<h2 id="open-problems">22. Open Problems</h2>
+<p>CSE is a proposed discipline, not a completed formal system. Several
+problems remain open.</p>
+<h3 id="compositional-standing-across-federated-systems">22.1
+Compositional Standing Across Federated Systems</h3>
+<p>How should standing compose when multiple systems, each with its own
+policies and receipts, participate in one larger transition? The problem
+is not merely distributed consensus. It is distributed semantic
+admissibility. Section 5.8 sharpens the question rather than answering
+it: federated composition must also establish that the participants
+occupy genuinely distinct control domains, since a federation of
+nominally separate systems under one controller composes standing
+without composing independence.</p>
+<h3 id="cryptographic-attestation-standards-for-receipts">22.2
+Cryptographic Attestation Standards for Receipts</h3>
+<p>Receipts can be content-addressed and signed, but CSE requires
+conventions for what is signed, by whom, under what authority, and with
+what revocation or freshness semantics.</p>
+<h3 id="policy-diff-proofs-at-scale">22.3 Policy Diff Proofs at
+Scale</h3>
+<p>Policies must be diffable, but large policies may require proof
+obligations to show that a change narrows, preserves, or widens
+authority. Practical tools are needed for policy-diff
+classification.</p>
+<h3 id="automated-non-claim-synthesis">22.4 Automated Non-Claim
+Synthesis</h3>
+<p>A system may infer non-claims from test gaps, missing evidence,
+unproven migrations, unsupported standings, or unresolved schema
+changes. Automated NC synthesis could prevent claim inflation, but risks
+both overblocking and underblocking.</p>
+<h3 id="category-theoretic-model-of-standing-transitions">22.5
+Category-Theoretic Model of Standing Transitions</h3>
+<p>Standing transitions may admit a categorical model, with systems as
+objects, admissible transitions as morphisms, and standing
+transformations as functorial structure over state categories. This
+remains speculative, but may offer a rigorous account of compositional
+standing and migration.</p>
+<h3 id="control-model-declaration-and-verification">22.6 Control-Model
+Declaration and Verification</h3>
+<p>Section 5.8 depends on a declared control model, but declaring one is
+easier than verifying it. Which control channels must a declaration
+enumerate, how should shared infrastructure degrade an independence
+claim, how should correlated failure affect standing, and can control
+separation itself be attested rather than asserted? A control model that
+is merely stated by the subject inherits the problem it was introduced
+to solve.</p>
+<h3 id="human-factors-and-developer-adoption">22.7 Human Factors and
+Developer Adoption</h3>
+<p>CSE must avoid becoming ceremony. Its tooling and documents must be
+light enough that developers will use them before a crisis. The
+discipline succeeds only if it improves ordinary development while
+preserving future admissibility.</p>
+<h2 id="relationship-to-jnana-and-mcir">23. Relationship to Jnana and
+MCIR</h2>
+<p>CSE can be practiced before Jnana, MCIR, or any constitutional
+runtime is complete.</p>
+<p>This is important. Developers can write ordinary Python applications
+today in a way that makes them easier to adapt later. The goal is not to
+imitate unfinished internals. The goal is to preserve semantic
+handles:</p>
+<ul>
+<li>deterministic core transitions;</li>
+<li>effect requests;</li>
+<li>authority contexts;</li>
+<li>receipts;</li>
+<li>refusal vocabularies;</li>
+<li>fixtures;</li>
+<li>non-claims;</li>
+<li>glossary entries;</li>
+<li>manifest standing.</li>
+</ul>
+<p>When Jnana or MCIR later provides stronger admission, representation,
+execution, or equivalence machinery, CSE-ready applications will be
+easier to lift. They will already distinguish what they mean from what
+they do to the world.</p>
+<p>The invariant of Section 5.8 has a more developed treatment
+elsewhere. A companion manuscript develops anti-self-ratification as a
+constitutional theory of legitimate state transition in reflexive
+systems, including the closure conditions under which the invariant
+cannot be circumvented by rewriting the rules that define it, the
+independence-rank machinery that resists nominal plurality, the liveness
+complement that prevents a fail-closed system from becoming permanently
+entrenched, and the boundary between amending an order and replacing it
+(Ableman, 2026). A governance kernel has separately realized much of
+that machinery under construction discipline, including exact and
+bounded anti-self-ratification search, control-domain declarations,
+conjunct-ablation courts that demonstrate each closure term is
+load-bearing, and anti-entrenchment reachability analysis.</p>
+<p>The relation between the two is a division of labor rather than an
+overlap. This paper is the engineering discipline: make meaning,
+authority, evidence, refusal, standing, and non-claims recoverable
+across change. The companion is the constitutional theory: establish
+under what conditions a system may confer standing on itself at all. A
+package can be CSE-conforming without the second, and the second is
+difficult to realize in software that lacks the first.</p>
+<h2 id="conclusion">24. Conclusion</h2>
+<p>Constitutional Semantic Engineering begins from a skeptical premise:
+running code is not enough. A system may execute while its meaning
+fragments, its authority assumptions hide, its evidence remains
+inadmissible, and its claims drift beyond what its artifacts can
+support.</p>
+<p>Existing software practices offer powerful partial remedies.
+Domain-Driven Design protects language. Hexagonal architecture protects
+boundaries. Functional-core patterns protect determinism. Event sourcing
+and provenance protect reconstructability. ADRs protect decision memory.
+Capability systems protect authority. Testing protects behavior.</p>
+<p>CSE composes these into a constitutional discipline.</p>
+<p>It asks software to preserve not only behavior but standing; not only
+non-binding traces but receipts; not only errors but refusals; not only
+claims but non-claims; not only modularity but semantic locality; not
+only execution but admissibility.</p>
+<p>The result is software that can be governed without being rewritten,
+migrated without semantic amnesia, refactored without invisible
+authority loss, and admitted without relying on human memory.</p>
+<p>The code may run. CSE asks whether its meaning can still stand.</p>
+<h2 id="corpus-wide-reference-positioning">Corpus-Wide Reference
+Positioning</h2>
+<p>This paper argues that software systems often remain operational long
+after their meaning has begun to decay. Its nearest external comparison
+fields are semantic, provenance, software. The sources in [E1], [E2],
+[E3], [E4], [E5], [E6], [E7] are cited as predecessor literature,
+adjacent standards, or counterpressure - not as evidence that they
+caused the Ableman framework or that they validate its novel claims. The
+comparison isolates where established work already supplies provenance,
+formal assurance, institutional constraint, empirical method, or
+engineering practice, and where this paper adds a distinct claim about
+admissibility, authority, semantic custody, or governed realization.</p>
+<p>Within the Ableman corpus, the highest-priority current cross-links
+are [A1], [A2], [A3], [A4], [A5], [A6], [A7]. These are links among
+separately custodied works, not silent identity mergers. Their role is
+to expose mutual dependencies, terminology collisions, and places where
+a reader should traverse the corpus before treating this paper as
+self-sufficient.</p>
+<h3 id="reference-pass-counterevidence-and-limit-search">Reference-pass
+counterevidence and limit search</h3>
+<p>The pass applied the following pressure tests: Formal vocabularies
+and graph links make commitments explicit but cannot by themselves
+establish correct identity, shared interpretation, or lossless
+translation between contexts. A complete provenance graph can faithfully
+record a false or unauthorized process; provenance is evidence about
+lineage, not automatic truth or legitimacy. Modularity,
+secure-development practice, and reproducibility reduce classes of
+failure but do not guarantee architectural coherence or user
+sovereignty. These limits are not generic disclaimers: they identify the
+assumptions that a later empirical, formal, or implementation review
+must try to break.</p>
+<h3 id="reference-pass-influence-and-novelty-boundary">Reference-pass
+influence and novelty boundary</h3>
+<p>No newly added external source is asserted to be a documented
+authorial influence unless the predecessor source already said so.
+<code>Predecessor</code> means earlier relevant work;</p>
+<p><code>adjacent</code> means a useful comparison;
+<code>standard</code> means an interoperability or assurance baseline;
+and <code>counterevidence</code> marks work that narrows or pressures a
+claim. Novelty therefore remains a reviewable, claim-level question
+rather than an inference from a low similarity score or an absent
+citation.</p>
+<h2 id="references">References</h2>
+<h3 id="external-scholarship-standards-and-prior-art">External
+scholarship, standards, and prior art</h3>
+<p><strong>[E1]</strong> Richard Cyganiak, David Wood, and Markus
+Lanthaler, eds. <em>RDF 1.1 Concepts and Abstract Syntax</em>. W3C
+Recommendation, 25 February 2014. https://www.w3.org/TR/rdf11-concepts/
+<strong>Relationship:</strong> Adjacent graph data model and identity
+baseline.</p>
+<p><strong>[E2]</strong> Alistair Miles and Sean Bechhofer,
+eds. <em>SKOS Simple Knowledge Organization System Reference</em>. W3C
+Recommendation, 18 August 2009. https://www.w3.org/TR/skos-reference
+<strong>Relationship:</strong> Adjacent standard for concepts, labels,
+schemes, notes, and semantic mappings.</p>
+<p><strong>[E3]</strong> W3C OWL Working Group. <em>OWL 2 Web Ontology
+Language Document Overview</em>, Second Edition. W3C Recommendation, 11
+December 2012. https://www.w3.org/TR/owl2-overview/
+<strong>Relationship:</strong> Adjacent formal ontology standard used to
+compare declared semantics and inference commitments.</p>
+<p><strong>[E4]</strong> Mark D. Wilkinson et al. “The FAIR Guiding
+Principles for Scientific Data Management and Stewardship.”
+<em>Scientific Data</em> 3, 2016, 160018. DOI: 10.1038/sdata.2016.18.
+https://doi.org/10.1038/sdata.2016.18 <strong>Relationship:</strong>
+Predecessor stewardship principles for findability, accessibility,
+interoperability, and reuse.</p>
+<p><strong>[E5]</strong> Peter Gardenfors. <em>Conceptual Spaces: The
+Geometry of Thought</em>. MIT Press, 2000. <a
+href="https://mitpress.mit.edu/9780262572194/conceptual-spaces/">mitpress.mit.edu
+source</a> <strong>Relationship:</strong> Predecessor geometric
+treatment of concepts; cited as comparison, not as validation of the
+paper’s manifold terminology.</p>
+<p><strong>[E6]</strong> W3C. <em>PROV-O: The PROV Ontology</em>. W3C
+Recommendation, 30 April 2013. https://www.w3.org/TR/prov-o/
+<strong>Relationship:</strong> Adjacent provenance standard; it models
+entities, activities, and agents, but does not by itself establish the
+paper’s stronger authority or standing claims.</p>
+<p><strong>[E7]</strong> Santiago Torres-Arias et al. “in-toto:
+Providing Farm-to-Table Guarantees for Bits and Bytes.” <em>28th USENIX
+Security Symposium</em>, 2019, pp. 1393-1410. <a
+href="https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias">usenix.org
+source</a> <strong>Relationship:</strong> Predecessor supply-chain
+lineage system used for comparison; no influence claim is made unless
+the source head already documents one.</p>
+<h3 id="ableman-corpus">Ableman corpus</h3>
+<p><strong>[A1]</strong> Adam Ableman. <em>Meaning as Binding</em>.
+Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-5F976917F0B283EA</code>;<br />
+source SHA-256<br />
+<code>A470D1A0B9ED7C3CEAB6BB88BE4B642A2BA36427447F787764329FD574DA0C97</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A2]</strong> Adam Ableman. <em>Governed Meaning Base
+(GMB)</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-D95CCC4FB7B58BFB</code>;<br />
+source SHA-256<br />
+<code>A3B62E50F8BEE125FDAE0D38C2839AFD1CCC138296268BF93217481E38AA48EA</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A3]</strong> Adam Ableman. <em>Semantic Manifold
+Topology</em>. Ableman Corpus current edition; work identity
+<code>PAPER.PUB.20257244</code>;<br />
+source SHA-256<br />
+<code>B8F28CC652A73A3EE4CF6FD0E23C1ABC922A6660319B2FB4CC1CCAAA606EC64A</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A4]</strong> Adam Ableman. <em>Global Term Key: Identity
+Primitives in Governed Knowledge Systems</em>. Ableman Corpus current
+edition; work identity<br />
+<code>AMCS-LOCAL-WORK-358AC09F5A13587E</code>;<br />
+source SHA-256<br />
+<code>AFB29CFCB4B58A78B79709AD453CEE9088CCB2AE40F30A70260F1B54F5160579</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A5]</strong> Adam Ableman. <em>Semantic Legitimacy Before
+Context</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-091E34BA93992CE4</code>;<br />
+source SHA-256<br />
+<code>DEB7626CE1AB54F4B541347DCC3C4E14DC4F682230ACCCE1A93D1D536A50C44C</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A6]</strong> Adam Ableman. <em>Reasoning by Way of
+Receipts</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-04E427F6F4D94454</code>;<br />
+source SHA-256<br />
+<code>AF86A66CCD6A103DD75208500AE99148911A6453B6DFDF36A954279F21AB8489</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<p><strong>[A7]</strong> Adam Ableman. <em>The Epistemic Lineage
+Engine</em>. Ableman Corpus current edition; work identity<br />
+<code>AMCS-LOCAL-WORK-E0EC3DC7EABF5060</code>;<br />
+source SHA-256<br />
+<code>CDD74D9AFAB6532645E68F7F6C9F0F7A9E472D9B8E717290522566FF8DC01F11</code>.
+<strong>Corpus relationship:</strong> priority cross-link selected by
+corpus profile and similarity review; no identity merger or publication
+effect.</p>
+<h3 id="editorial-source-notes-retained-from-predecessor">Editorial
+source notes retained from predecessor</h3>
+<p>Cockburn, A. (2005). Hexagonal architecture: The original 2005
+article. HaT Technical Report 2005.02.
+https://alistair.cockburn.us/hexagonal-architecture</p>
+<p>Evans, E. (2003). Domain-Driven Design: Tackling Complexity in the
+Heart of Software. Addison-Wesley Professional.</p>
+<p>Fowler, M. (2005). Event sourcing. MartinFowler.com.
+https://martinfowler.com/eaaDev/EventSourcing.html</p>
+<p>Kruchten, P., Nord, R. L., and Ozkaya, I. (2012). Technical debt:
+From metaphor to theory and practice. IEEE Software, 29(6), 18-21. DOI:
+10.1109/MS.2012.167.</p>
+<p>Lebo, T., Sahoo, S., McGuinness, D., Belhajjame, K., Cheney, J.,
+Corsar, D., Garijo, D., Soiland-Reyes, S., Zednik, S., and Zhao, J.
+(2013). PROV-O: The PROV Ontology. W3C Recommendation, 30 April 2013.
+https://www.w3.org/TR/prov-o/</p>
+<p>Miller, M. S. (2006). Robust Composition: Towards a Unified Approach
+to Access Control and Concurrency Control. Doctoral dissertation, Johns
+Hopkins University. http://www.erights.org/talks/thesis/</p>
+<p>Adam Ableman (2026). Legitimacy Without Self-Ratification:
+Constitutional Computing and the Provenance of Authority in Reflexive
+Systems. Manuscript.</p>
+<p>Miller, M. S., Yee, K. P., and Shapiro, J. S. (2003). Capability
+myths demolished. Systems Research Laboratory, Johns Hopkins University.
+http://srl.cs.jhu.edu/pubs/SRL2003-02.pdf</p>
+<p>Nygard, M. (2011). Documenting architecture decisions. Cognitect
+Blog. <a
+href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions">cognitect.com
+source</a></p>
+<p>Parnas, D. L. (1972). On the criteria to be used in decomposing
+systems into modules. Communications of the ACM, 15(12), 1053-1058. DOI:
+10.1145/361598.361623.</p>
+<p>Storey, M. A. (2026). From Technical Debt to Cognitive and Intent
+Debt: Rethinking Software Health in the Age of AI. arXiv.
+https://arxiv.org/abs/2603.22106</p>
+<hr />
+<p>Corpus source and companion formats: <a
+href="https://github.com/AblemanMosaic/ableman-corpus">https://github.com/AblemanMosaic/ableman-corpus</a><br />
+License: <a
+href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></p>
+<hr />
+<p>DOI: <a
+href="https://doi.org/10.5281/zenodo.21111455">10.5281/zenodo.21111455</a></p>
